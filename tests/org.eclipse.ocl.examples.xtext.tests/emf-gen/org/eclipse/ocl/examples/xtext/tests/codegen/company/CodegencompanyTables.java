@@ -23,6 +23,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 
+import java.lang.Object;
+import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
@@ -90,7 +92,9 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Class = CodegencompanyTables.PACKid_$metamodel$.getClassId("Class", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Company = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore.getClassId("Company", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Employee = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore.getClassId("Employee", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EBoolean = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_emf_s_2002_s_Ecore.getDataTypeId("EBoolean", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EInt = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_emf_s_2002_s_Ecore.getDataTypeId("EInt", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EString = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_emf_s_2002_s_Ecore.getDataTypeId("EString", 0);
 	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_CompanySizeKind = CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore.getEnumerationId("CompanySizeKind");
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf("0");
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_100 = ValueUtil.integerValueOf("100");
@@ -103,19 +107,18 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__1 = IdManager.getTuplePartId(0, "message", TypeId.STRING);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__2 = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer_0 = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull String STR_Employee_32_must_32_have_32_a_32_name = "Employee must have a name";
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Employee = TypeId.BAG.getSpecializedId(CodegencompanyTables.CLSSid_Employee, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Employee = TypeId.BAG.getSpecializedId(CodegencompanyTables.CLSSid_Employee, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_large = CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("large");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_medium = CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("medium");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_small = CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("small");
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Employee = TypeId.ORDERED_SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Employee_0 = TypeId.ORDERED_SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull OrderedSetValue OrderedSet = ValueUtil.createOrderedSetOfEach(CodegencompanyTables.ORD_NULLid);
-	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(0, "range", CodegencompanyTables.SEQ_PRIMid_Integer_0);
+	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(0, "range", CodegencompanyTables.SEQ_PRIMid_Integer);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(1, "size", CodegencompanyTables.ENUMid_CompanySizeKind);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Employee = TypeId.SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_DATAid_EString = TypeId.SET.getSpecializedId(CodegencompanyTables.DATAid_EString, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid__0 = IdManager.getTupleTypeId("Tuple", CodegencompanyTables.PARTid__1, CodegencompanyTables.PARTid__2);
 	public static final /*@NonInvalid*/ @NonNull IntegerRange global_0 = ValueUtil.createRange(CodegencompanyTables.INT_0, CodegencompanyTables.INT_49);
 	public static final /*@NonInvalid*/ @NonNull IntegerRange global_4 = ValueUtil.createRange(CodegencompanyTables.INT_1000, CodegencompanyTables.INT_1000000);
@@ -130,6 +133,16 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull TupleValue global_3 = ValueUtil.createTupleOfEach(CodegencompanyTables.TUPLid_, CodegencompanyTables.Sequence_0, CodegencompanyTables.ELITid_medium);
 	public static final /*@NonInvalid*/ @NonNull SetValue table = ValueUtil.createSetOfEach(CodegencompanyTables.SET_TUPLid_, CodegencompanyTables.global_1, CodegencompanyTables.global_3, CodegencompanyTables.global_5);
 
+
+	// CTOR http://www.eclipse.org/emf/2002/Ecore
+	// CTOR http://www.eclipse.org/ocl/2015/Library
+	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
+	// CTOR platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/genModel/Company.ecore
+
+	// CTOR $$
+	// CTOR ocl
+	// CTOR ecore
+	// CTOR company
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -183,6 +196,16 @@ public class CodegencompanyTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR ecore::EBoolean
+	// CTOR company::CompanySizeKind
+	// CTOR OclElement
+	// CTOR OclEnumeration
+	// CTOR company::Bug418716
+	// CTOR company::Company
+	// CTOR company::Employee
+	// CTOR Bag(company::Employee)
+	// CTOR OrderedSet(company::Employee)
+	// CTOR Set(company::Employee)
 
 	/**
 	 *	The fragment descriptors for the local elements of each type and its supertypes.
@@ -220,7 +243,34 @@ public class CodegencompanyTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR company::Bug418716::AttributeWithInitital
+	// CTOR company::Bug418716::AttributeWithoutInitital
+	// CTOR company::Company::employees
+	// CTOR company::Company::name
+	// CTOR company::Company::size
+	// CTOR company::Employee::Employee
+	// CTOR company::Employee::Employee
+	// CTOR company::Employee::Employee
+	// CTOR company::Employee::Employee
+	// CTOR company::Employee::allReports
+	// CTOR company::Employee::company
+	// CTOR company::Employee::directReports
+	// CTOR company::Employee::hasNameAsAttribute
+	// CTOR company::Employee::manager
+	// CTOR company::Employee::name
+	// CTOR company::Employee::reportingChain
+	// CTOR company::Employee::hasNameAsOperation() : ecore::EBoolean[1]
+	// CTOR company::Employee::reportsTo(company::Employee[?]) : ecore::EBoolean[1]
+	// OPERATIONS company::CompanySizeKind
+	// OPERATIONS company::Bug418716
+	// OPERATIONS company::Company
+	// PROPERTIES company::CompanySizeKind
+	// SUPER_CLASSES company::CompanySizeKind
+	// SUPER_CLASSES company::Bug418716
+	// SUPER_CLASSES company::Company
+	// SUPER_CLASSES company::Employee
 
+	// OPERATIONS company::Employee
 	/**
 	 *	The parameter type lists shared by operations.
 	 *
@@ -244,6 +294,72 @@ public class CodegencompanyTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// PROPERTIES company::Bug418716
+	// PROPERTIES company::Company
+	// PROPERTIES company::Employee
+	// TYPE company::Employee::hasNameAsOperation() : ecore::EBoolean[1]
+	// TYPE company::Employee::reportsTo(company::Employee[?]) : ecore::EBoolean[1]
+
+	/**
+	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
+	 */
+	public static class TypeFragments {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		private static final @NonNull FlatFragment @NonNull [] _Bug418716 =
+		{
+			Fragments._Bug418716__OclAny /* 0 */,
+			Fragments._Bug418716__OclElement /* 1 */,
+			Fragments._Bug418716__Bug418716 /* 2 */
+		};
+		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Company =
+		{
+			Fragments._Company__OclAny /* 0 */,
+			Fragments._Company__OclElement /* 1 */,
+			Fragments._Company__Company /* 2 */
+		};
+		private static final int @NonNull [] __Company = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
+		{
+			Fragments._CompanySizeKind__OclAny /* 0 */,
+			Fragments._CompanySizeKind__OclElement /* 1 */,
+			Fragments._CompanySizeKind__OclType /* 2 */,
+			Fragments._CompanySizeKind__OclEnumeration /* 3 */,
+			Fragments._CompanySizeKind__CompanySizeKind /* 4 */
+		};
+		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Employee =
+		{
+			Fragments._Employee__OclAny /* 0 */,
+			Fragments._Employee__OclElement /* 1 */,
+			Fragments._Employee__Employee /* 2 */
+		};
+		private static final int @NonNull [] __Employee = { 1,1,1 };
+
+		/**
+		 *	Install the fragment descriptors in the class descriptors.
+		 */
+		static {
+			Types._Bug418716.initFragments(_Bug418716, __Bug418716);
+			Types._Company.initFragments(_Company, __Company);
+			Types._CompanySizeKind.initFragments(_CompanySizeKind, __CompanySizeKind);
+			Types._Employee.initFragments(_Employee, __Employee);
+
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of CodegencompanyTables::TypeFragments and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
 
 	/**
 	 *	The operation descriptors for each operation of each type.
@@ -255,10 +371,10 @@ public class CodegencompanyTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			TypeFragments.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Employee,
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation("reportsTo", Parameters._Employee, Types._Employee,
 			1, TemplateParameters.EMPTY_LIST, null);
@@ -271,6 +387,7 @@ public class CodegencompanyTables extends AbstractTables
 		 * Force initialization of the fields of CodegencompanyTables::Operations and all preceding sub-packages.
 		 */
 		public static void init() {}
+
 	}
 
 	/**
@@ -315,73 +432,12 @@ public class CodegencompanyTables extends AbstractTables
 	}
 
 	/**
-	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
-	 */
-	public static class TypeFragments {
-		static {
-			Init.initStart();
-			Properties.init();
-		}
-
-		private static final @NonNull FlatFragment @NonNull [] _Bug418716 =
-			{
-				Fragments._Bug418716__OclAny /* 0 */,
-				Fragments._Bug418716__OclElement /* 1 */,
-				Fragments._Bug418716__Bug418716 /* 2 */
-			};
-		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Company =
-			{
-				Fragments._Company__OclAny /* 0 */,
-				Fragments._Company__OclElement /* 1 */,
-				Fragments._Company__Company /* 2 */
-			};
-		private static final int @NonNull [] __Company = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
-			{
-				Fragments._CompanySizeKind__OclAny /* 0 */,
-				Fragments._CompanySizeKind__OclElement /* 1 */,
-				Fragments._CompanySizeKind__OclType /* 2 */,
-				Fragments._CompanySizeKind__OclEnumeration /* 3 */,
-				Fragments._CompanySizeKind__CompanySizeKind /* 4 */
-			};
-		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Employee =
-			{
-				Fragments._Employee__OclAny /* 0 */,
-				Fragments._Employee__OclElement /* 1 */,
-				Fragments._Employee__Employee /* 2 */
-			};
-		private static final int @NonNull [] __Employee = { 1,1,1 };
-
-		/**
-		 *	Install the fragment descriptors in the class descriptors.
-		 */
-		static {
-			Types._Bug418716.initFragments(_Bug418716, __Bug418716);
-			Types._Company.initFragments(_Company, __Company);
-			Types._CompanySizeKind.initFragments(_CompanySizeKind, __CompanySizeKind);
-			Types._Employee.initFragments(_Employee, __Employee);
-
-			Init.initEnd();
-		}
-
-		/**
-		 * Force initialization of the fields of CodegencompanyTables::TypeFragments and all preceding sub-packages.
-		 */
-		public static void init() {}
-	}
-
-	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
 	 */
 	public static class FragmentOperations {
 		static {
 			Init.initStart();
-			TypeFragments.init();
+			Properties.init();
 		}
 
 		private static final @NonNull Operation @NonNull [] _Bug418716__Bug418716 = {};
@@ -556,6 +612,7 @@ public class CodegencompanyTables extends AbstractTables
 		public static void init() {}
 	}
 
+
 	/**
 	 *	The lists of local properties for the local fragment of each type.
 	 */
@@ -614,6 +671,7 @@ public class CodegencompanyTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+
 
 	/**
 	 *	The lists of enumeration literals for each enumeration.

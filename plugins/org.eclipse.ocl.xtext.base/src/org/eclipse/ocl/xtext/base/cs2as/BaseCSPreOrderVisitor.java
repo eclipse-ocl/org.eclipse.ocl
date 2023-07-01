@@ -15,18 +15,21 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -267,12 +270,11 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				if (csTemplateBinding != null)  {
 					for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 						TypeRefCS ownedActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-						if (ownedActualParameter instanceof WildcardTypeRefCS) {
-							return true;
-						}
-						Type actualParameterClass = (Type) ownedActualParameter.getPivot();
-						if (actualParameterClass == null) {
-							return false;
+						if (!(ownedActualParameter instanceof WildcardTypeRefCS)) {
+							Type actualParameterClass = (Type) ownedActualParameter.getPivot();
+							if (actualParameterClass == null) {
+								return false;
+							}
 						}
 					}
 				}
@@ -530,6 +532,11 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitDataTypeCS(@NonNull DataTypeCS csDataType) {
+		DataType pivotElement = PivotUtil.getPivot(DataType.class, csDataType);
+		if (pivotElement instanceof PrimitiveType) {
+			CompleteClassInternal completeClass = context.getEnvironmentFactory().getCompleteModel().getCompleteClass(pivotElement);
+			completeClass.addClass(pivotElement);
+		}
 		return null;
 	}
 

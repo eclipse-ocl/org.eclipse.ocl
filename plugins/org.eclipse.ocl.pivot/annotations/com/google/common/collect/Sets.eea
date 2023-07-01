@@ -3,5 +3,11 @@ newHashSet
  <E:Ljava/lang/Object;>(Ljava/lang/Iterable<+TE;>;)Ljava/util/HashSet<TE;>;
  <E:Ljava/lang/Object;>(Ljava/lang/Iterable<+TE;>;)L1java/util/HashSet<TE;>;
 newHashSet
+ <E:Ljava/lang/Object;>(Ljava/util/Iterator<+TE;>;)Ljava/util/HashSet<TE;>;
+ <E:Ljava/lang/Object;>(Ljava/util/Iterator<+TE;>;)L1java/util/HashSet<TE;>;
+newHashSet
  <E:Ljava/lang/Object;>([TE;)Ljava/util/HashSet<TE;>;
  <E:Ljava/lang/Object;>([TE;)L1java/util/HashSet<TE;>;
+newHashSetWithExpectedSize
+ <E:Ljava/lang/Object;>(I)Ljava/util/HashSet<TE;>;
+ <E:Ljava/lang/Object;>(I)L1java/util/HashSet<TE;>;

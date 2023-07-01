@@ -136,6 +136,17 @@ public interface PivotAnnotationsPackage extends EPackage {
 	EClass getCollection_ETypedElement();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#getKind()
+	 * @see #getCollection_ETypedElement()
+	 * @generated
+	 */
+	EAttribute getCollection_ETypedElement_Kind();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree <em>Null Free</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -311,6 +322,13 @@ public interface PivotAnnotationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass COLLECTION_ETYPED_ELEMENT = eINSTANCE.getCollection_ETypedElement();
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLECTION_ETYPED_ELEMENT__KIND = eINSTANCE.getCollection_ETypedElement_Kind();
 		/**
 		 * The meta object literal for the '<em><b>Null Free</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->

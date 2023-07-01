@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -133,8 +132,6 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getOwnedCompletePackage(String name);
 
 	void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI);
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 	//	@NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);

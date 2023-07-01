@@ -58,6 +58,11 @@ public class OCLstdlibTables extends AbstractTables
 	 */
 	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(OCLstdlibPackage.eINSTANCE, IdManager.METAMODEL);
 
+
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
+
+	// CTOR ocl
+	// CTOR $$
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -169,6 +174,44 @@ public class OCLstdlibTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR Boolean
+	// CTOR Integer
+	// CTOR Real
+	// CTOR String
+	// CTOR UnlimitedNatural
+	// CTOR OclAny
+	// CTOR BooleanType
+	// CTOR Class
+	// CTOR CollectionType
+	// CTOR Enumeration
+	// CTOR EnumerationLiteral
+	// CTOR InvalidType
+	// CTOR MapType
+	// CTOR OclComparable
+	// CTOR OclElement
+	// CTOR OclEnumeration
+	// CTOR OclLambda
+	// CTOR OclMessage
+	// CTOR OclState
+	// CTOR OclStereotype
+	// CTOR OclSummable
+	// CTOR OclTuple
+	// CTOR OclType
+	// CTOR State
+	// CTOR Stereotype
+	// CTOR Type
+	// CTOR VoidType
+	// CTOR OclInvalid
+	// CTOR OclSelf
+	// CTOR OclVoid
+	// CTOR Collection(T)
+	// CTOR OrderedCollection(T)
+	// CTOR UniqueCollection(T)
+	// CTOR Map(K,V)
+	// CTOR Bag(T)
+	// CTOR OrderedSet(T)
+	// CTOR Sequence(T)
+	// CTOR Set(T)
 
 	/**
 	 *	The fragment descriptors for the local elements of each type and its supertypes.
@@ -292,7 +335,538 @@ public class OCLstdlibTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR CollectionType::lower
+	// CTOR CollectionType::upper
+	// CTOR Collection(T)::elementType
+	// CTOR Collection(T)::lower
+	// CTOR Collection(T)::upper
+	// CTOR Map(K,V)::keyType
+	// CTOR Map(K,V)::valueType
+	// CTOR OclAny::OclInvalid
+	// CTOR OclElement::OclElement
+	// CTOR Type::CollectionType
+	// CTOR Type::MapType
+	// CTOR Type::MapType
+	// CTOR Bag.T
+	// CTOR Collection.T
+	// CTOR Map.K
+	// CTOR Map.V
+	// CTOR OrderedCollection.T
+	// CTOR OrderedSet.T
+	// CTOR Sequence.T
+	// CTOR Set.T
+	// CTOR UniqueCollection.T
+	// CTOR Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T)
+	// CTOR Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
+	// CTOR Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V)
+	// CTOR Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
+	// CTOR Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
+	// CTOR Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T)
+	// CTOR Collection(T).any(Collection.T[1] | Lambda T() : Boolean[1]) : Collection.T[?]
+	// CTOR Collection(T).collectBy(V)(Collection.T[?] | Lambda T() : V[?]) : Map(Collection.T[?],collectBy.V[?])[1]
+	// CTOR Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V)
+	// CTOR Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V)
+	// CTOR Collection(T).exists(Collection.T[?], Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).exists(Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).exists(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).forAll(Collection.T[?], Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).forAll(Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).forAll(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// CTOR Collection(T).isUnique(Collection.T[?] | Lambda T() : OclAny[?]) : Boolean[1]
+	// CTOR Collection(T).iterate(Tacc)(Collection.T[?]; iterate.Tacc[?] | Lambda T() : Tacc[?]) : iterate.Tacc[?]
+	// CTOR Collection(T).one(Collection.T[?] | Lambda T() : Boolean[1]) : Boolean[1]
+	// CTOR Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
+	// CTOR Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
+	// CTOR Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T)
+	// CTOR Map(K,V).any(Map.K[1] | Lambda K() : Boolean[1]) : Map.K[?]
+	// CTOR Map(K,V).collectBy(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectBy.V2[?])[1]
+	// CTOR Map(K,V).collectNested(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectNested.V2[?])[1]
+	// CTOR Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2)
+	// CTOR Map(K,V).exists(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).exists(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).exists(Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).forAll(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).forAll(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).forAll(Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// CTOR Map(K,V).isUnique(Map.K[?] | Lambda K() : OclAny[?]) : Boolean[1]
+	// CTOR Map(K,V).iterate(Tacc)(Map.K[?]; iterate.Tacc[?] | Lambda K() : Tacc[?]) : iterate.Tacc[?]
+	// CTOR Map(K,V).one(Map.K[?] | Lambda K() : Boolean[1]) : Boolean[1]
+	// CTOR Map(K,V).reject(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
+	// CTOR Map(K,V).select(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
+	// CTOR OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
+	// CTOR OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
+	// CTOR OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T)
+	// CTOR Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T)
+	// CTOR Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
+	// CTOR Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
+	// CTOR Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
+	// CTOR Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
+	// CTOR Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T)
+	// CTOR Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T)
+	// CTOR Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
+	// CTOR Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V)
+	// CTOR Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
+	// CTOR Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
+	// CTOR Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T)
+	// CTOR UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T)
+	// CTOR Boolean::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Boolean::=(OclSelf[?]) : Boolean[1]
+	// CTOR Boolean::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR Boolean::and(Boolean[?]) : Boolean[?]
+	// CTOR Boolean::and2(Boolean[1]) : Boolean[1]
+	// CTOR Boolean::implies(Boolean[?]) : Boolean[?]
+	// CTOR Boolean::implies2(Boolean[1]) : Boolean[1]
+	// CTOR Boolean::not() : Boolean[?]
+	// CTOR Boolean::not2() : Boolean[1]
+	// CTOR Boolean::or(Boolean[?]) : Boolean[?]
+	// CTOR Boolean::or2(Boolean[1]) : Boolean[1]
+	// CTOR Boolean::toString() : String[1]
+	// CTOR Boolean::xor(Boolean[?]) : Boolean[?]
+	// CTOR Boolean::xor2(Boolean[1]) : Boolean[1]
+	// CTOR Integer::*(OclSelf[1]) : Integer[1]
+	// CTOR Integer::+(OclSelf[1]) : Integer[1]
+	// CTOR Integer::-() : Integer[1]
+	// CTOR Integer::-(OclSelf[1]) : Integer[1]
+	// CTOR Integer::/(OclSelf[1]) : Real[1]
+	// CTOR Integer::abs() : Integer[1]
+	// CTOR Integer::div(Integer[1]) : Integer[1]
+	// CTOR Integer::max(OclSelf[1]) : Integer[1]
+	// CTOR Integer::min(OclSelf[1]) : Integer[1]
+	// CTOR Integer::mod(Integer[1]) : Integer[1]
+	// CTOR Integer::toString() : String[1]
+	// CTOR Integer::toUnlimitedNatural() : UnlimitedNatural[1]
+	// CTOR Real::*(OclSelf[1]) : Real[1]
+	// CTOR Real::+(OclSelf[1]) : Real[1]
+	// CTOR Real::-() : Real[1]
+	// CTOR Real::-(OclSelf[1]) : Real[1]
+	// CTOR Real::/(OclSelf[1]) : Real[1]
+	// CTOR Real::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Real::=(OclSelf[?]) : Boolean[1]
+	// CTOR Real::abs() : Real[1]
+	// CTOR Real::floor() : Integer[1]
+	// CTOR Real::max(OclSelf[1]) : Real[1]
+	// CTOR Real::min(OclSelf[1]) : Real[1]
+	// CTOR Real::round() : Integer[1]
+	// CTOR Real::toString() : String[1]
+	// CTOR String::+(String[?]) : String[1]
+	// CTOR String::<(OclSelf[1]) : Boolean[1]
+	// CTOR String::<=(OclSelf[1]) : Boolean[1]
+	// CTOR String::<>(OclSelf[?]) : Boolean[1]
+	// CTOR String::=(OclSelf[?]) : Boolean[1]
+	// CTOR String::>(OclSelf[1]) : Boolean[1]
+	// CTOR String::>=(OclSelf[1]) : Boolean[1]
+	// CTOR String::at(Integer[1]) : String[1]
+	// CTOR String::characters() : Sequence(String)
+	// CTOR String::compareTo(OclSelf[1]) : Integer[1]
+	// CTOR String::concat(String[?]) : String[1]
+	// CTOR String::endsWith(String[1]) : Boolean[1]
+	// CTOR String::equalsIgnoreCase(String[1]) : Boolean[1]
+	// CTOR String::indexOf(String[1]) : Integer[1]
+	// CTOR String::lastIndexOf(String[1]) : Integer[1]
+	// CTOR String::matches(String[1]) : Boolean[1]
+	// CTOR String::replaceAll(String[1],String[1]) : String[1]
+	// CTOR String::replaceFirst(String[1],String[1]) : String[1]
+	// CTOR String::size() : Integer[1]
+	// CTOR String::startsWith(String[1]) : Boolean[1]
+	// CTOR String::substituteAll(String[1],String[1]) : String[1]
+	// CTOR String::substituteFirst(String[1],String[1]) : String[1]
+	// CTOR String::substring(Integer[1],Integer[1]) : String[1]
+	// CTOR String::toBoolean() : Boolean[?]
+	// CTOR String::toInteger() : Integer[?]
+	// CTOR String::toLower() : String[1]
+	// CTOR String::toLowerCase() : String[1]
+	// CTOR String::toReal() : Real[?]
+	// CTOR String::toString() : String[1]
+	// CTOR String::toUpper() : String[1]
+	// CTOR String::toUpperCase() : String[1]
+	// CTOR String::tokenize() : Sequence(String)
+	// CTOR String::tokenize(String[1]) : Sequence(String)
+	// CTOR String::tokenize(String[1],Boolean[1]) : Sequence(String)
+	// CTOR String::trim() : String[1]
+	// CTOR UnlimitedNatural::max(OclSelf[1]) : UnlimitedNatural[1]
+	// CTOR UnlimitedNatural::min(OclSelf[1]) : UnlimitedNatural[1]
+	// CTOR UnlimitedNatural::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// CTOR UnlimitedNatural::toInteger() : Integer[?]
+	// CTOR Bag(T)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Bag(T)::=(OclSelf[?]) : Boolean[1]
+	// CTOR Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T)
+	// CTOR Bag(T)::excludingAll(Collection(Bag.T)) : Bag(Bag.T)
+	// CTOR Bag(T)::flatten(T2)() : Bag(flatten.T2)
+	// CTOR Bag(T)::including(Bag.T[?]) : Bag(Bag.T)
+	// CTOR Bag(T)::includingAll(Collection(Bag.T)) : Bag(Bag.T)
+	// CTOR Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT)
+	// CTOR Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT)
+	// CTOR BooleanType::allInstances() : Set(OclSelf)
+	// CTOR Class::allInstances() : Set(OclSelf)
+	// CTOR Collection(T)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Collection(T)::=(OclSelf[?]) : Boolean[1]
+	// CTOR Collection(T)::asBag() : Bag(Collection.T)
+	// CTOR Collection(T)::asOrderedSet() : OrderedSet(Collection.T)
+	// CTOR Collection(T)::asSequence() : Sequence(Collection.T)
+	// CTOR Collection(T)::asSet() : Set(Collection.T)
+	// CTOR Collection(T)::count(Collection.T[?]) : Integer[1]
+	// CTOR Collection(T)::excludes(Collection.T[?]) : Boolean[1]
+	// CTOR Collection(T)::excludesAll(T2)(Collection(excludesAll.T2)) : Boolean[1]
+	// CTOR Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T)
+	// CTOR Collection(T)::excludingAll(Collection(Collection.T)) : Collection(Collection.T)
+	// CTOR Collection(T)::flatten(T2)() : Collection(flatten.T2)
+	// CTOR Collection(T)::includes(Collection.T[?]) : Boolean[1]
+	// CTOR Collection(T)::includesAll(T2)(Collection(includesAll.T2)) : Boolean[1]
+	// CTOR Collection(T)::including(Collection.T[?]) : Collection(Collection.T)
+	// CTOR Collection(T)::includingAll(Collection(Collection.T)) : Collection(Collection.T)
+	// CTOR Collection(T)::intersection(Collection(Collection.T)) : Bag(Collection.T)
+	// CTOR Collection(T)::intersection(UniqueCollection(Collection.T)) : Set(Collection.T)
+	// CTOR Collection(T)::isEmpty() : Boolean[1]
+	// CTOR Collection(T)::max() : Collection.T[1]
+	// CTOR Collection(T)::min() : Collection.T[1]
+	// CTOR Collection(T)::notEmpty() : Boolean[1]
+	// CTOR Collection(T)::product(T2)(Collection(product.T2)) : Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// CTOR Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT)
+	// CTOR Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT)
+	// CTOR Collection(T)::size() : Integer[1]
+	// CTOR Collection(T)::sum() : Collection.T[1]
+	// CTOR Collection(T)::union(Collection(Collection.T)) : Bag(Collection.T)
+	// CTOR Enumeration::allInstances() : Set(OclSelf)
+	// CTOR InvalidType::allInstances() : Set(OclSelf)
+	// CTOR Map(K,V)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Map(K,V)::=(OclSelf[?]) : Boolean[1]
+	// CTOR Map(K,V)::at(Map.K[?]) : Map.V[?]
+	// CTOR Map(K,V)::excludes(Map.K[?]) : Boolean[1]
+	// CTOR Map(K,V)::excludes(Map.K[?],Map.V[?]) : Boolean[1]
+	// CTOR Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2)) : Boolean[1]
+	// CTOR Map(K,V)::excludesMap(K2,V2)(Map(excludesMap.K2,excludesMap.V2)[1]) : Boolean[1]
+	// CTOR Map(K,V)::excludesValue(Map.V[?]) : Boolean[1]
+	// CTOR Map(K,V)::excluding(Map.K[?]) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::excluding(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::excludingAll(Collection(Map.K)) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::excludingMap(K2,V2)(Map(excludingMap.K2,excludingMap.V2)[1]) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::includes(Map.K[?]) : Boolean[1]
+	// CTOR Map(K,V)::includes(Map.K[?],Map.V[?]) : Boolean[1]
+	// CTOR Map(K,V)::includesAll(K2)(Collection(includesAll.K2)) : Boolean[1]
+	// CTOR Map(K,V)::includesMap(K2,V2)(Map(includesMap.K2,includesMap.V2)[1]) : Boolean[1]
+	// CTOR Map(K,V)::includesValue(Map.V[?]) : Boolean[1]
+	// CTOR Map(K,V)::including(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::includingMap(K2,V2)(Map(includingMap.K2,includingMap.V2)[1]) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::isEmpty() : Boolean[1]
+	// CTOR Map(K,V)::keys() : Set(Map.K)
+	// CTOR Map(K,V)::notEmpty() : Boolean[1]
+	// CTOR Map(K,V)::size() : Integer[1]
+	// CTOR Map(K,V)::values() : Bag(Map.V)
+	// CTOR OclAny::<>(OclSelf[?]) : Boolean[1]
+	// CTOR OclAny::=(OclSelf[?]) : Boolean[1]
+	// CTOR OclAny::oclAsSet() : Set(OclSelf)
+	// CTOR OclAny::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// CTOR OclAny::oclIsInState(OclState[?]) : Boolean[1]
+	// CTOR OclAny::oclIsInvalid() : Boolean[1]
+	// CTOR OclAny::oclIsKindOf(OclType[1]) : Boolean[1]
+	// CTOR OclAny::oclIsNew() : Boolean[1]
+	// CTOR OclAny::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// CTOR OclAny::oclIsUndefined() : Boolean[1]
+	// CTOR OclAny::oclLog() : OclSelf[1]
+	// CTOR OclAny::oclLog(String[1]) : OclSelf[1]
+	// CTOR OclAny::oclType() : OclSelf[1]
+	// CTOR OclAny::oclTypes() : Set(OclSelf)
+	// CTOR OclAny::toString() : String[1]
+	// CTOR OclComparable::<(OclSelf[1]) : Boolean[1]
+	// CTOR OclComparable::<=(OclSelf[1]) : Boolean[1]
+	// CTOR OclComparable::>(OclSelf[1]) : Boolean[1]
+	// CTOR OclComparable::>=(OclSelf[1]) : Boolean[1]
+	// CTOR OclComparable::compareTo(OclSelf[1]) : Integer[1]
+	// CTOR OclElement::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclElement::oclAsModelType(TT)(oclAsModelType.TT[1]) : oclAsModelType.TT[1]
+	// CTOR OclElement::oclBase() : OclType[?]
+	// CTOR OclElement::oclBase(OclType[1]) : OclType[?]
+	// CTOR OclElement::oclContainer() : OclElement[?]
+	// CTOR OclElement::oclContents() : Set(OclElement)
+	// CTOR OclElement::oclExtension(OclStereotype[1]) : OclElement[?]
+	// CTOR OclElement::oclExtensions() : Set(OclElement)
+	// CTOR OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement)
+	// CTOR OclElement::oclIsModelKindOf(OclType[1]) : Boolean[1]
+	// CTOR OclElement::oclModelType() : OclSelf[1]
+	// CTOR OclElement::oclModelTypes() : Set(OclSelf)
+	// CTOR OclEnumeration::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclInvalid::<>(OclSelf[?]) : Boolean[1]
+	// CTOR OclInvalid::=(OclSelf[?]) : Boolean[1]
+	// CTOR OclInvalid::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclInvalid::and(Boolean[?]) : Boolean[?]
+	// CTOR OclInvalid::implies(Boolean[?]) : Boolean[?]
+	// CTOR OclInvalid::oclAsSet() : Set(OclSelf)
+	// CTOR OclInvalid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// CTOR OclInvalid::oclBadOperation() : OclAny[?]
+	// CTOR OclInvalid::oclIsInvalid() : Boolean[1]
+	// CTOR OclInvalid::oclIsKindOf(OclType[1]) : Boolean[1]
+	// CTOR OclInvalid::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// CTOR OclInvalid::oclIsUndefined() : Boolean[1]
+	// CTOR OclInvalid::oclType() : OclSelf[1]
+	// CTOR OclInvalid::or(Boolean[?]) : Boolean[?]
+	// CTOR OclInvalid::toString() : String[1]
+	// CTOR OclMessage::hasReturned() : Boolean[1]
+	// CTOR OclMessage::isOperationCall() : Boolean[1]
+	// CTOR OclMessage::isSignalSent() : Boolean[1]
+	// CTOR OclMessage::result() : OclAny[?]
+	// CTOR OclStereotype::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclSummable::sum(OclSelf[1]) : OclSelf[1]
+	// CTOR OclSummable::zero() : OclSelf[1]
+	// CTOR OclTuple::<>(OclSelf[?]) : Boolean[1]
+	// CTOR OclTuple::=(OclSelf[?]) : Boolean[1]
+	// CTOR OclType::conformsTo(OclType[?]) : Boolean[1]
+	// CTOR OclVoid::+(String[?]) : String[1]
+	// CTOR OclVoid::<>(OclSelf[?]) : Boolean[1]
+	// CTOR OclVoid::=(OclSelf[?]) : Boolean[1]
+	// CTOR OclVoid::allInstances(Integer[1]) : Set(OclSelf[*|?])
+	// CTOR OclVoid::and(Boolean[?]) : Boolean[?]
+	// CTOR OclVoid::concat(String[?]) : String[1]
+	// CTOR OclVoid::implies(Boolean[?]) : Boolean[?]
+	// CTOR OclVoid::not() : Boolean[?]
+	// CTOR OclVoid::oclAsSet() : Set(OclSelf)
+	// CTOR OclVoid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[?]
+	// CTOR OclVoid::oclIsInvalid() : Boolean[1]
+	// CTOR OclVoid::oclIsKindOf(OclType[1]) : Boolean[1]
+	// CTOR OclVoid::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// CTOR OclVoid::oclIsUndefined() : Boolean[1]
+	// CTOR OclVoid::oclType() : OclSelf[1]
+	// CTOR OclVoid::oclTypes() : Set(OclSelf)
+	// CTOR OclVoid::or(Boolean[?]) : Boolean[?]
+	// CTOR OclVoid::toString() : String[1]
+	// CTOR OclVoid::xor(Boolean[?]) : Boolean[?]
+	// CTOR OrderedCollection(T)::at(Integer[1]) : OrderedCollection.T[?]
+	// CTOR OrderedCollection(T)::first() : OrderedCollection.T[?]
+	// CTOR OrderedCollection(T)::indexOf(OrderedCollection.T[?]) : Integer[?]
+	// CTOR OrderedCollection(T)::last() : OrderedCollection.T[?]
+	// CTOR OrderedSet(T)::-(UniqueCollection(OclAny)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR OrderedSet(T)::=(OclSelf[?]) : Boolean[1]
+	// CTOR OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::excludingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2)
+	// CTOR OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::includingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT)
+	// CTOR OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT)
+	// CTOR OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T)
+	// CTOR Sequence(T)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Sequence(T)::=(OclSelf[?]) : Boolean[1]
+	// CTOR Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::appendAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::excludingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::flatten(T2)() : Sequence(flatten.T2)
+	// CTOR Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::includingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::prependAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
+	// CTOR Sequence(T)::reverse() : Sequence(Sequence.T)
+	// CTOR Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT)
+	// CTOR Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT)
+	// CTOR Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T)
+	// CTOR Set(T)::-(UniqueCollection(OclAny)) : Set(Set.T)
+	// CTOR Set(T)::<>(OclSelf[?]) : Boolean[1]
+	// CTOR Set(T)::=(OclSelf[?]) : Boolean[1]
+	// CTOR Set(T)::excluding(Set.T[?]) : Set(Set.T)
+	// CTOR Set(T)::excludingAll(Collection(Set.T)) : Set(Set.T)
+	// CTOR Set(T)::flatten(T2)() : Set(flatten.T2)
+	// CTOR Set(T)::including(Set.T[?]) : Set(Set.T)
+	// CTOR Set(T)::includingAll(Collection(Set.T)) : Set(Set.T)
+	// CTOR Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT)
+	// CTOR Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT)
+	// CTOR Stereotype::allInstances() : Set(OclSelf)
+	// CTOR Type::conformsTo(Type[?]) : Boolean[1]
+	// CTOR UniqueCollection(T)::-(UniqueCollection(OclAny)) : UniqueCollection(UniqueCollection.T)
+	// CTOR UniqueCollection(T)::intersection(Collection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// CTOR UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny)) : Set(UniqueCollection.T)
+	// CTOR UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// CTOR VoidType::allInstances() : Set(OclSelf[*|?])
+	// OPERATIONS CollectionType
+	// OPERATIONS EnumerationLiteral
+	// OPERATIONS MapType
+	// OPERATIONS OclLambda
+	// OPERATIONS OclState
+	// OPERATIONS State
+	// OPERATIONS OclSelf
+	// PROPERTIES Boolean
+	// PROPERTIES Integer
+	// PROPERTIES Real
+	// PROPERTIES String
+	// PROPERTIES UnlimitedNatural
+	// PROPERTIES BooleanType
+	// PROPERTIES Class
+	// PROPERTIES Enumeration
+	// PROPERTIES EnumerationLiteral
+	// PROPERTIES InvalidType
+	// PROPERTIES OclComparable
+	// PROPERTIES OclEnumeration
+	// PROPERTIES OclLambda
+	// PROPERTIES OclMessage
+	// PROPERTIES OclState
+	// PROPERTIES OclStereotype
+	// PROPERTIES OclSummable
+	// PROPERTIES OclTuple
+	// PROPERTIES OclType
+	// PROPERTIES State
+	// PROPERTIES Stereotype
+	// PROPERTIES VoidType
+	// PROPERTIES OclSelf
+	// PROPERTIES OclVoid
+	// PROPERTIES OrderedCollection(T)
+	// PROPERTIES UniqueCollection(T)
+	// PROPERTIES Bag(T)
+	// PROPERTIES OrderedSet(T)
+	// PROPERTIES Sequence(T)
+	// PROPERTIES Set(T)
+	// SUPER_CLASSES Boolean
+	// SUPER_CLASSES Integer
+	// SUPER_CLASSES Real
+	// SUPER_CLASSES String
+	// SUPER_CLASSES UnlimitedNatural
+	// SUPER_CLASSES BooleanType
+	// SUPER_CLASSES Class
+	// SUPER_CLASSES CollectionType
+	// SUPER_CLASSES Enumeration
+	// SUPER_CLASSES EnumerationLiteral
+	// SUPER_CLASSES InvalidType
+	// SUPER_CLASSES MapType
+	// SUPER_CLASSES OclComparable
+	// SUPER_CLASSES OclElement
+	// SUPER_CLASSES OclEnumeration
+	// SUPER_CLASSES OclLambda
+	// SUPER_CLASSES OclMessage
+	// SUPER_CLASSES OclState
+	// SUPER_CLASSES OclStereotype
+	// SUPER_CLASSES OclSummable
+	// SUPER_CLASSES OclTuple
+	// SUPER_CLASSES OclType
+	// SUPER_CLASSES State
+	// SUPER_CLASSES Stereotype
+	// SUPER_CLASSES Type
+	// SUPER_CLASSES VoidType
+	// SUPER_CLASSES OclInvalid
+	// SUPER_CLASSES OclSelf
+	// SUPER_CLASSES OclVoid
+	// SUPER_CLASSES Collection(T)
+	// SUPER_CLASSES Map(K,V)
 
+	// CTOR oclAsType.TT
+	// CTOR collectNested.V
+	// CTOR collect.V
+	// CTOR flatten.T2
+	// CTOR selectByKind.TT
+	// CTOR selectByType.TT
+	// CTOR collectBy.V
+	// CTOR collectNested.V
+	// CTOR collect.V
+	// CTOR excludesAll.T2
+	// CTOR flatten.T2
+	// CTOR includesAll.T2
+	// CTOR iterate.Tacc
+	// CTOR product.T2
+	// CTOR selectByKind.TT
+	// CTOR selectByType.TT
+	// CTOR collectBy.V2
+	// CTOR collectNested.V2
+	// CTOR collect.V2
+	// CTOR excludesAll.K2
+	// CTOR excludesMap.K2
+	// CTOR excludesMap.V2
+	// CTOR excludingMap.K2
+	// CTOR excludingMap.V2
+	// CTOR includesAll.K2
+	// CTOR includesMap.K2
+	// CTOR includesMap.V2
+	// CTOR includingMap.K2
+	// CTOR includingMap.V2
+	// CTOR iterate.Tacc
+	// CTOR oclAsType.TT
+	// CTOR oclAsModelType.TT
+	// CTOR oclAsType.TT
+	// CTOR oclAsType.TT
+	// CTOR collectNested.V
+	// CTOR collect.V
+	// CTOR flatten.T2
+	// CTOR selectByKind.TT
+	// CTOR selectByType.TT
+	// CTOR collectNested.V
+	// CTOR collect.V
+	// CTOR flatten.T2
+	// CTOR selectByKind.TT
+	// CTOR selectByType.TT
+	// CTOR collectNested.V
+	// CTOR collect.V
+	// CTOR flatten.T2
+	// CTOR selectByKind.TT
+	// CTOR selectByType.TT
+	// CTOR Collection(Integer)
+	// CTOR Collection(String)
+	// CTOR Collection(Bag.T)
+	// CTOR Collection(CollectionType)
+	// CTOR Collection(Collection.T)
+	// CTOR Collection(MapType)
+	// CTOR Collection(Map.K)
+	// CTOR Collection(Map.V)
+	// CTOR Collection(OclAny)
+	// CTOR Collection(OclElement)
+	// CTOR Collection(OclInvalid)
+	// CTOR Collection(OclSelf)
+	// CTOR Collection(OrderedCollection.T)
+	// CTOR Collection(OrderedSet.T)
+	// CTOR Collection(Sequence.T)
+	// CTOR Collection(Set.T)
+	// CTOR Collection(UniqueCollection.T)
+	// CTOR Map(Map.K,Map.V)
+	// CTOR Map(Map.K[?],Map.V[?])
+	// CTOR Lambda T() : Boolean
+	// CTOR Lambda T() : OclAny
+	// CTOR Lambda T() : Boolean
+	// CTOR Lambda T() : OclAny
+	// CTOR Lambda K() : Boolean
+	// CTOR Lambda K() : OclAny
+	// CTOR Lambda T() : Boolean
+	// CTOR Lambda T() : OclAny
+	// CTOR Lambda T() : Boolean
+	// CTOR Lambda T() : OclAny
+	// CTOR Lambda T() : Boolean
+	// CTOR Lambda T() : OclAny
+	// CTOR Lambda T() : OclAny
+	// OPERATIONS Boolean
+	// OPERATIONS Integer
+	// OPERATIONS Real
+	// OPERATIONS String
+	// OPERATIONS UnlimitedNatural
+	// OPERATIONS OclAny
+	// OPERATIONS BooleanType
+	// OPERATIONS Class
+	// OPERATIONS Enumeration
+	// OPERATIONS InvalidType
+	// OPERATIONS OclComparable
+	// OPERATIONS OclElement
+	// OPERATIONS OclEnumeration
+	// OPERATIONS OclMessage
+	// OPERATIONS OclStereotype
+	// OPERATIONS OclSummable
+	// OPERATIONS OclTuple
+	// OPERATIONS OclType
+	// OPERATIONS Stereotype
+	// OPERATIONS Type
+	// OPERATIONS VoidType
+	// OPERATIONS OclInvalid
+	// OPERATIONS OclVoid
+	// OPERATIONS Collection(T)
+	// OPERATIONS OrderedCollection(T)
+	// OPERATIONS UniqueCollection(T)
+	// OPERATIONS Map(K,V)
+	// OPERATIONS Bag(T)
+	// OPERATIONS OrderedSet(T)
+	// OPERATIONS Sequence(T)
+	// OPERATIONS Set(T)
 	/**
 	 *	The parameter type lists shared by operations.
 	 *
@@ -350,6 +924,628 @@ public class OCLstdlibTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// PROPERTIES OclAny
+	// PROPERTIES Type
+	// PROPERTIES Collection(T)
+	// PROPERTIES Map(K,V)
+	// TYPE Boolean::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Boolean::=(OclSelf[?]) : Boolean[1]
+	// TYPE Boolean::and(Boolean[?]) : Boolean[?]
+	// TYPE Boolean::and2(Boolean[1]) : Boolean[1]
+	// TYPE Boolean::implies(Boolean[?]) : Boolean[?]
+	// TYPE Boolean::implies2(Boolean[1]) : Boolean[1]
+	// TYPE Boolean::not() : Boolean[?]
+	// TYPE Boolean::not2() : Boolean[1]
+	// TYPE Boolean::or(Boolean[?]) : Boolean[?]
+	// TYPE Boolean::or2(Boolean[1]) : Boolean[1]
+	// TYPE Boolean::toString() : String[1]
+	// TYPE Boolean::xor(Boolean[?]) : Boolean[?]
+	// TYPE Boolean::xor2(Boolean[1]) : Boolean[1]
+	// TYPE Integer::*(OclSelf[1]) : Integer[1]
+	// TYPE Integer::+(OclSelf[1]) : Integer[1]
+	// TYPE Integer::-() : Integer[1]
+	// TYPE Integer::-(OclSelf[1]) : Integer[1]
+	// TYPE Integer::/(OclSelf[1]) : Real[1]
+	// TYPE Integer::abs() : Integer[1]
+	// TYPE Integer::div(Integer[1]) : Integer[1]
+	// TYPE Integer::max(OclSelf[1]) : Integer[1]
+	// TYPE Integer::min(OclSelf[1]) : Integer[1]
+	// TYPE Integer::mod(Integer[1]) : Integer[1]
+	// TYPE Integer::toString() : String[1]
+	// TYPE Integer::toUnlimitedNatural() : UnlimitedNatural[1]
+	// TYPE Real::*(OclSelf[1]) : Real[1]
+	// TYPE Real::+(OclSelf[1]) : Real[1]
+	// TYPE Real::-() : Real[1]
+	// TYPE Real::-(OclSelf[1]) : Real[1]
+	// TYPE Real::/(OclSelf[1]) : Real[1]
+	// TYPE Real::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Real::=(OclSelf[?]) : Boolean[1]
+	// TYPE Real::abs() : Real[1]
+	// TYPE Real::floor() : Integer[1]
+	// TYPE Real::max(OclSelf[1]) : Real[1]
+	// TYPE Real::min(OclSelf[1]) : Real[1]
+	// TYPE Real::round() : Integer[1]
+	// TYPE Real::toString() : String[1]
+	// TYPE String::+(String[?]) : String[1]
+	// TYPE String::<(OclSelf[1]) : Boolean[1]
+	// TYPE String::<=(OclSelf[1]) : Boolean[1]
+	// TYPE String::<>(OclSelf[?]) : Boolean[1]
+	// TYPE String::=(OclSelf[?]) : Boolean[1]
+	// TYPE String::>(OclSelf[1]) : Boolean[1]
+	// TYPE String::>=(OclSelf[1]) : Boolean[1]
+	// TYPE String::at(Integer[1]) : String[1]
+	// TYPE String::compareTo(OclSelf[1]) : Integer[1]
+	// TYPE String::concat(String[?]) : String[1]
+	// TYPE String::endsWith(String[1]) : Boolean[1]
+	// TYPE String::equalsIgnoreCase(String[1]) : Boolean[1]
+	// TYPE String::indexOf(String[1]) : Integer[1]
+	// TYPE String::lastIndexOf(String[1]) : Integer[1]
+	// TYPE String::matches(String[1]) : Boolean[1]
+	// TYPE String::replaceAll(String[1],String[1]) : String[1]
+	// TYPE String::replaceFirst(String[1],String[1]) : String[1]
+	// TYPE String::size() : Integer[1]
+	// TYPE String::startsWith(String[1]) : Boolean[1]
+	// TYPE String::substituteAll(String[1],String[1]) : String[1]
+	// TYPE String::substituteFirst(String[1],String[1]) : String[1]
+	// TYPE String::substring(Integer[1],Integer[1]) : String[1]
+	// TYPE String::toBoolean() : Boolean[?]
+	// TYPE String::toInteger() : Integer[?]
+	// TYPE String::toLower() : String[1]
+	// TYPE String::toLowerCase() : String[1]
+	// TYPE String::toReal() : Real[?]
+	// TYPE String::toString() : String[1]
+	// TYPE String::toUpper() : String[1]
+	// TYPE String::toUpperCase() : String[1]
+	// TYPE String::trim() : String[1]
+	// TYPE UnlimitedNatural::max(OclSelf[1]) : UnlimitedNatural[1]
+	// TYPE UnlimitedNatural::min(OclSelf[1]) : UnlimitedNatural[1]
+	// TYPE UnlimitedNatural::toInteger() : Integer[?]
+	// TYPE Bag(T)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Bag(T)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Collection(T)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Collection(T)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Collection(T)::count(Collection.T[?]) : Integer[1]
+	// TYPE Collection(T)::excludes(Collection.T[?]) : Boolean[1]
+	// TYPE Collection(T)::includes(Collection.T[?]) : Boolean[1]
+	// TYPE Collection(T)::isEmpty() : Boolean[1]
+	// TYPE Collection(T)::max() : Collection.T[1]
+	// TYPE Collection(T)::min() : Collection.T[1]
+	// TYPE Collection(T)::notEmpty() : Boolean[1]
+	// TYPE Collection(T)::size() : Integer[1]
+	// TYPE Collection(T)::sum() : Collection.T[1]
+	// TYPE Map(K,V)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Map(K,V)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Map(K,V)::at(Map.K[?]) : Map.V[?]
+	// TYPE Map(K,V)::excludes(Map.K[?]) : Boolean[1]
+	// TYPE Map(K,V)::excludes(Map.K[?],Map.V[?]) : Boolean[1]
+	// TYPE Map(K,V)::excludesValue(Map.V[?]) : Boolean[1]
+	// TYPE Map(K,V)::includes(Map.K[?]) : Boolean[1]
+	// TYPE Map(K,V)::includes(Map.K[?],Map.V[?]) : Boolean[1]
+	// TYPE Map(K,V)::includesValue(Map.V[?]) : Boolean[1]
+	// TYPE Map(K,V)::isEmpty() : Boolean[1]
+	// TYPE Map(K,V)::notEmpty() : Boolean[1]
+	// TYPE Map(K,V)::size() : Integer[1]
+	// TYPE OclAny::<>(OclSelf[?]) : Boolean[1]
+	// TYPE OclAny::=(OclSelf[?]) : Boolean[1]
+	// TYPE OclAny::oclIsInState(OclState[?]) : Boolean[1]
+	// TYPE OclAny::oclIsInvalid() : Boolean[1]
+	// TYPE OclAny::oclIsKindOf(OclType[1]) : Boolean[1]
+	// TYPE OclAny::oclIsNew() : Boolean[1]
+	// TYPE OclAny::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// TYPE OclAny::oclIsUndefined() : Boolean[1]
+	// TYPE OclAny::oclLog() : OclSelf[1]
+	// TYPE OclAny::oclLog(String[1]) : OclSelf[1]
+	// TYPE OclAny::oclType() : OclSelf[1]
+	// TYPE OclAny::toString() : String[1]
+	// TYPE OclComparable::<(OclSelf[1]) : Boolean[1]
+	// TYPE OclComparable::<=(OclSelf[1]) : Boolean[1]
+	// TYPE OclComparable::>(OclSelf[1]) : Boolean[1]
+	// TYPE OclComparable::>=(OclSelf[1]) : Boolean[1]
+	// TYPE OclComparable::compareTo(OclSelf[1]) : Integer[1]
+	// TYPE OclElement::oclBase() : OclType[?]
+	// TYPE OclElement::oclBase(OclType[1]) : OclType[?]
+	// TYPE OclElement::oclContainer() : OclElement[?]
+	// TYPE OclElement::oclExtension(OclStereotype[1]) : OclElement[?]
+	// TYPE OclElement::oclIsModelKindOf(OclType[1]) : Boolean[1]
+	// TYPE OclElement::oclModelType() : OclSelf[1]
+	// TYPE OclInvalid::<>(OclSelf[?]) : Boolean[1]
+	// TYPE OclInvalid::=(OclSelf[?]) : Boolean[1]
+	// TYPE OclInvalid::and(Boolean[?]) : Boolean[?]
+	// TYPE OclInvalid::implies(Boolean[?]) : Boolean[?]
+	// TYPE OclInvalid::oclBadOperation() : OclAny[?]
+	// TYPE OclInvalid::oclIsInvalid() : Boolean[1]
+	// TYPE OclInvalid::oclIsKindOf(OclType[1]) : Boolean[1]
+	// TYPE OclInvalid::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// TYPE OclInvalid::oclIsUndefined() : Boolean[1]
+	// TYPE OclInvalid::oclType() : OclSelf[1]
+	// TYPE OclInvalid::or(Boolean[?]) : Boolean[?]
+	// TYPE OclInvalid::toString() : String[1]
+	// TYPE OclMessage::hasReturned() : Boolean[1]
+	// TYPE OclMessage::isOperationCall() : Boolean[1]
+	// TYPE OclMessage::isSignalSent() : Boolean[1]
+	// TYPE OclMessage::result() : OclAny[?]
+	// TYPE OclSummable::sum(OclSelf[1]) : OclSelf[1]
+	// TYPE OclSummable::zero() : OclSelf[1]
+	// TYPE OclTuple::<>(OclSelf[?]) : Boolean[1]
+	// TYPE OclTuple::=(OclSelf[?]) : Boolean[1]
+	// TYPE OclType::conformsTo(OclType[?]) : Boolean[1]
+	// TYPE OclVoid::+(String[?]) : String[1]
+	// TYPE OclVoid::<>(OclSelf[?]) : Boolean[1]
+	// TYPE OclVoid::=(OclSelf[?]) : Boolean[1]
+	// TYPE OclVoid::and(Boolean[?]) : Boolean[?]
+	// TYPE OclVoid::concat(String[?]) : String[1]
+	// TYPE OclVoid::implies(Boolean[?]) : Boolean[?]
+	// TYPE OclVoid::not() : Boolean[?]
+	// TYPE OclVoid::oclIsInvalid() : Boolean[1]
+	// TYPE OclVoid::oclIsKindOf(OclType[1]) : Boolean[1]
+	// TYPE OclVoid::oclIsTypeOf(OclType[1]) : Boolean[1]
+	// TYPE OclVoid::oclIsUndefined() : Boolean[1]
+	// TYPE OclVoid::oclType() : OclSelf[1]
+	// TYPE OclVoid::or(Boolean[?]) : Boolean[?]
+	// TYPE OclVoid::toString() : String[1]
+	// TYPE OclVoid::xor(Boolean[?]) : Boolean[?]
+	// TYPE OrderedCollection(T)::at(Integer[1]) : OrderedCollection.T[?]
+	// TYPE OrderedCollection(T)::first() : OrderedCollection.T[?]
+	// TYPE OrderedCollection(T)::indexOf(OrderedCollection.T[?]) : Integer[?]
+	// TYPE OrderedCollection(T)::last() : OrderedCollection.T[?]
+	// TYPE OrderedSet(T)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE OrderedSet(T)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Sequence(T)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Sequence(T)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Set(T)::<>(OclSelf[?]) : Boolean[1]
+	// TYPE Set(T)::=(OclSelf[?]) : Boolean[1]
+	// TYPE Type::conformsTo(Type[?]) : Boolean[1]
+
+	// CTOR Collection(collectNested.V)
+	// CTOR Collection(collect.V)
+	// CTOR Collection(flatten.T2)
+	// CTOR Collection(selectByKind.TT)
+	// CTOR Collection(selectByType.TT)
+	// CTOR Collection(collectNested.V)
+	// CTOR Collection(collect.V)
+	// CTOR Collection(excludesAll.T2)
+	// CTOR Collection(flatten.T2)
+	// CTOR Collection(includesAll.T2)
+	// CTOR Collection(product.T2)
+	// CTOR Collection(selectByKind.TT)
+	// CTOR Collection(selectByType.TT)
+	// CTOR Collection(collect.V2)
+	// CTOR Collection(excludesAll.K2)
+	// CTOR Collection(includesAll.K2)
+	// CTOR Collection(collectNested.V)
+	// CTOR Collection(collect.V)
+	// CTOR Collection(flatten.T2)
+	// CTOR Collection(selectByKind.TT)
+	// CTOR Collection(selectByType.TT)
+	// CTOR Collection(collectNested.V)
+	// CTOR Collection(collect.V)
+	// CTOR Collection(flatten.T2)
+	// CTOR Collection(selectByKind.TT)
+	// CTOR Collection(selectByType.TT)
+	// CTOR Collection(collectNested.V)
+	// CTOR Collection(collect.V)
+	// CTOR Collection(flatten.T2)
+	// CTOR Collection(selectByKind.TT)
+	// CTOR Collection(selectByType.TT)
+	// CTOR Map(Collection.T[?],collectBy.V[?])
+	// CTOR Map(excludesMap.K2,excludesMap.V2)
+	// CTOR Map(excludingMap.K2,excludingMap.V2)
+	// CTOR Map(includesMap.K2,includesMap.V2)
+	// CTOR Map(includingMap.K2,includingMap.V2)
+	// CTOR Map(Map.K[?],collectBy.V2[?])
+	// CTOR Map(Map.K[?],collectNested.V2[?])
+	// CTOR Tuple(first:Collection.T[1],second:product.T2[1])
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : Tacc
+	// CTOR Lambda K() : V2
+	// CTOR Lambda K() : V2
+	// CTOR Lambda K() : V2
+	// CTOR Lambda K() : Tacc
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// CTOR Lambda T() : V
+	// OPERATIONS Collection(Integer)
+	// OPERATIONS Collection(String)
+	// OPERATIONS Collection(Bag.T)
+	// OPERATIONS Collection(CollectionType)
+	// OPERATIONS Collection(Collection.T)
+	// OPERATIONS Collection(MapType)
+	// OPERATIONS Collection(Map.K)
+	// OPERATIONS Collection(Map.V)
+	// OPERATIONS Collection(OclAny)
+	// OPERATIONS Collection(OclElement)
+	// OPERATIONS Collection(OclInvalid)
+	// OPERATIONS Collection(OclSelf)
+	// OPERATIONS Collection(OrderedCollection.T)
+	// OPERATIONS Collection(OrderedSet.T)
+	// OPERATIONS Collection(Sequence.T)
+	// OPERATIONS Collection(Set.T)
+	// OPERATIONS Collection(UniqueCollection.T)
+	// OPERATIONS Map(Map.K,Map.V)
+	// OPERATIONS Map(Map.K[?],Map.V[?])
+	// OPERATIONS Lambda T() : Boolean
+	// OPERATIONS Lambda T() : OclAny
+	// OPERATIONS Lambda T() : Boolean
+	// OPERATIONS Lambda T() : OclAny
+	// OPERATIONS Lambda K() : Boolean
+	// OPERATIONS Lambda K() : OclAny
+	// OPERATIONS Lambda T() : Boolean
+	// OPERATIONS Lambda T() : OclAny
+	// OPERATIONS Lambda T() : Boolean
+	// OPERATIONS Lambda T() : OclAny
+	// OPERATIONS Lambda T() : Boolean
+	// OPERATIONS Lambda T() : OclAny
+	// OPERATIONS Lambda T() : OclAny
+	// PROPERTIES Collection(Integer)
+	// PROPERTIES Collection(String)
+	// PROPERTIES Collection(Bag.T)
+	// PROPERTIES Collection(CollectionType)
+	// PROPERTIES Collection(Collection.T)
+	// PROPERTIES Collection(MapType)
+	// PROPERTIES Collection(Map.K)
+	// PROPERTIES Collection(Map.V)
+	// PROPERTIES Collection(OclAny)
+	// PROPERTIES Collection(OclElement)
+	// PROPERTIES Collection(OclInvalid)
+	// PROPERTIES Collection(OclSelf)
+	// PROPERTIES Collection(OrderedCollection.T)
+	// PROPERTIES Collection(OrderedSet.T)
+	// PROPERTIES Collection(Sequence.T)
+	// PROPERTIES Collection(Set.T)
+	// PROPERTIES Collection(UniqueCollection.T)
+	// PROPERTIES Map(Map.K,Map.V)
+	// PROPERTIES Map(Map.K[?],Map.V[?])
+	// PROPERTIES Lambda T() : Boolean
+	// PROPERTIES Lambda T() : OclAny
+	// PROPERTIES Lambda T() : Boolean
+	// PROPERTIES Lambda T() : OclAny
+	// PROPERTIES Lambda K() : Boolean
+	// PROPERTIES Lambda K() : OclAny
+	// PROPERTIES Lambda T() : Boolean
+	// PROPERTIES Lambda T() : OclAny
+	// PROPERTIES Lambda T() : Boolean
+	// PROPERTIES Lambda T() : OclAny
+	// PROPERTIES Lambda T() : Boolean
+	// PROPERTIES Lambda T() : OclAny
+	// PROPERTIES Lambda T() : OclAny
+	// SUPER_CLASSES Collection(Integer)
+	// SUPER_CLASSES Collection(String)
+	// SUPER_CLASSES Collection(Bag.T)
+	// SUPER_CLASSES Collection(CollectionType)
+	// SUPER_CLASSES Collection(Collection.T)
+	// SUPER_CLASSES Collection(MapType)
+	// SUPER_CLASSES Collection(Map.K)
+	// SUPER_CLASSES Collection(Map.V)
+	// SUPER_CLASSES Collection(OclAny)
+	// SUPER_CLASSES Collection(OclElement)
+	// SUPER_CLASSES Collection(OclInvalid)
+	// SUPER_CLASSES Collection(OclSelf)
+	// SUPER_CLASSES Collection(OrderedCollection.T)
+	// SUPER_CLASSES Collection(OrderedSet.T)
+	// SUPER_CLASSES Collection(Sequence.T)
+	// SUPER_CLASSES Collection(Set.T)
+	// SUPER_CLASSES Collection(UniqueCollection.T)
+	// SUPER_CLASSES OrderedCollection(T)
+	// SUPER_CLASSES UniqueCollection(T)
+	// SUPER_CLASSES Map(Map.K,Map.V)
+	// SUPER_CLASSES Map(Map.K[?],Map.V[?])
+	// SUPER_CLASSES Bag(T)
+	// SUPER_CLASSES Lambda T() : Boolean
+	// SUPER_CLASSES Lambda T() : OclAny
+	// SUPER_CLASSES Lambda T() : Boolean
+	// SUPER_CLASSES Lambda T() : OclAny
+	// SUPER_CLASSES Lambda K() : Boolean
+	// SUPER_CLASSES Lambda K() : OclAny
+	// SUPER_CLASSES Lambda T() : Boolean
+	// SUPER_CLASSES Lambda T() : OclAny
+	// SUPER_CLASSES Lambda T() : Boolean
+	// SUPER_CLASSES Lambda T() : OclAny
+	// SUPER_CLASSES Lambda T() : Boolean
+	// SUPER_CLASSES Lambda T() : OclAny
+	// SUPER_CLASSES Lambda T() : OclAny
+	// TYPE Collection(T).any(Collection.T[1] | Lambda T() : Boolean[1]) : Collection.T[?]
+	// TYPE Collection(T).exists(Collection.T[?], Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).exists(Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).exists(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).forAll(Collection.T[?], Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).forAll(Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).forAll(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
+	// TYPE Collection(T).isUnique(Collection.T[?] | Lambda T() : OclAny[?]) : Boolean[1]
+	// TYPE Collection(T).one(Collection.T[?] | Lambda T() : Boolean[1]) : Boolean[1]
+	// TYPE Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
+	// TYPE Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
+	// TYPE Map(K,V).any(Map.K[1] | Lambda K() : Boolean[1]) : Map.K[?]
+	// TYPE Map(K,V).exists(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).exists(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).exists(Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).forAll(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).forAll(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).forAll(Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
+	// TYPE Map(K,V).isUnique(Map.K[?] | Lambda K() : OclAny[?]) : Boolean[1]
+	// TYPE Map(K,V).one(Map.K[?] | Lambda K() : Boolean[1]) : Boolean[1]
+	// TYPE Map(K,V).reject(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
+	// TYPE Map(K,V).select(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
+	// TYPE UnlimitedNatural::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// TYPE Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T)
+	// TYPE Collection(T)::excludingAll(Collection(Collection.T)) : Collection(Collection.T)
+	// TYPE Collection(T)::including(Collection.T[?]) : Collection(Collection.T)
+	// TYPE Collection(T)::includingAll(Collection(Collection.T)) : Collection(Collection.T)
+	// TYPE Map(K,V)::excluding(Map.K[?]) : Map(Map.K,Map.V)[1]
+	// TYPE Map(K,V)::excluding(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
+	// TYPE Map(K,V)::excludingAll(Collection(Map.K)) : Map(Map.K,Map.V)[1]
+	// TYPE Map(K,V)::including(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
+	// TYPE OclAny::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// TYPE OclElement::oclAsModelType(TT)(oclAsModelType.TT[1]) : oclAsModelType.TT[1]
+	// TYPE OclInvalid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
+	// TYPE OclVoid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[?]
+	/**
+	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
+	 */
+	public static class TypeFragments {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		private static final @NonNull FlatFragment @NonNull [] _Bag =
+		{
+			Fragments._Bag__OclAny /* 0 */,
+			Fragments._Bag__Collection /* 1 */,
+			Fragments._Bag__Bag /* 2 */
+		};
+		private static final int @NonNull [] __Bag = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Boolean =
+		{
+			Fragments._Boolean__OclAny /* 0 */,
+			Fragments._Boolean__Boolean /* 1 */
+		};
+		private static final int @NonNull [] __Boolean = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Collection =
+		{
+			Fragments._Collection__OclAny /* 0 */,
+			Fragments._Collection__Collection /* 1 */
+		};
+		private static final int @NonNull [] __Collection = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Integer =
+		{
+			Fragments._Integer__OclAny /* 0 */,
+			Fragments._Integer__OclComparable /* 1 */,
+			Fragments._Integer__OclSummable /* 1 */,
+			Fragments._Integer__Real /* 2 */,
+			Fragments._Integer__Integer /* 3 */
+		};
+		private static final int @NonNull [] __Integer = { 1,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Map =
+		{
+			Fragments._Map__OclAny /* 0 */,
+			Fragments._Map__Map /* 1 */
+		};
+		private static final int @NonNull [] __Map = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclAny =
+		{
+			Fragments._OclAny__OclAny /* 0 */
+		};
+		private static final int @NonNull [] __OclAny = { 1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclComparable =
+		{
+			Fragments._OclComparable__OclAny /* 0 */,
+			Fragments._OclComparable__OclComparable /* 1 */
+		};
+		private static final int @NonNull [] __OclComparable = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclElement =
+		{
+			Fragments._OclElement__OclAny /* 0 */,
+			Fragments._OclElement__OclElement /* 1 */
+		};
+		private static final int @NonNull [] __OclElement = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclEnumeration =
+		{
+			Fragments._OclEnumeration__OclAny /* 0 */,
+			Fragments._OclEnumeration__OclElement /* 1 */,
+			Fragments._OclEnumeration__OclType /* 2 */,
+			Fragments._OclEnumeration__OclEnumeration /* 3 */
+		};
+		private static final int @NonNull [] __OclEnumeration = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclInvalid =
+		{
+			Fragments._OclInvalid__OclAny /* 0 */,
+			Fragments._OclInvalid__OclVoid /* 1 */,
+			Fragments._OclInvalid__OclInvalid /* 2 */
+		};
+		private static final int @NonNull [] __OclInvalid = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclLambda =
+		{
+			Fragments._OclLambda__OclAny /* 0 */,
+			Fragments._OclLambda__OclLambda /* 1 */
+		};
+		private static final int @NonNull [] __OclLambda = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclMessage =
+		{
+			Fragments._OclMessage__OclAny /* 0 */,
+			Fragments._OclMessage__OclMessage /* 1 */
+		};
+		private static final int @NonNull [] __OclMessage = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclSelf =
+		{
+			Fragments._OclSelf__OclAny /* 0 */,
+			Fragments._OclSelf__OclSelf /* 1 */
+		};
+		private static final int @NonNull [] __OclSelf = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclState =
+		{
+			Fragments._OclState__OclAny /* 0 */,
+			Fragments._OclState__OclState /* 1 */
+		};
+		private static final int @NonNull [] __OclState = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclStereotype =
+		{
+			Fragments._OclStereotype__OclAny /* 0 */,
+			Fragments._OclStereotype__OclElement /* 1 */,
+			Fragments._OclStereotype__OclType /* 2 */,
+			Fragments._OclStereotype__OclStereotype /* 3 */
+		};
+		private static final int @NonNull [] __OclStereotype = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclSummable =
+		{
+			Fragments._OclSummable__OclAny /* 0 */,
+			Fragments._OclSummable__OclSummable /* 1 */
+		};
+		private static final int @NonNull [] __OclSummable = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclTuple =
+		{
+			Fragments._OclTuple__OclAny /* 0 */,
+			Fragments._OclTuple__OclTuple /* 1 */
+		};
+		private static final int @NonNull [] __OclTuple = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclType =
+		{
+			Fragments._OclType__OclAny /* 0 */,
+			Fragments._OclType__OclElement /* 1 */,
+			Fragments._OclType__OclType /* 2 */
+		};
+		private static final int @NonNull [] __OclType = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OclVoid =
+		{
+			Fragments._OclVoid__OclAny /* 0 */,
+			Fragments._OclVoid__OclVoid /* 1 */
+		};
+		private static final int @NonNull [] __OclVoid = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OrderedCollection =
+		{
+			Fragments._OrderedCollection__OclAny /* 0 */,
+			Fragments._OrderedCollection__Collection /* 1 */,
+			Fragments._OrderedCollection__OrderedCollection /* 2 */
+		};
+		private static final int @NonNull [] __OrderedCollection = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OrderedSet =
+		{
+			Fragments._OrderedSet__OclAny /* 0 */,
+			Fragments._OrderedSet__Collection /* 1 */,
+			Fragments._OrderedSet__OrderedCollection /* 2 */,
+			Fragments._OrderedSet__UniqueCollection /* 2 */,
+			Fragments._OrderedSet__OrderedSet /* 3 */
+		};
+		private static final int @NonNull [] __OrderedSet = { 1,1,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Real =
+		{
+			Fragments._Real__OclAny /* 0 */,
+			Fragments._Real__OclComparable /* 1 */,
+			Fragments._Real__OclSummable /* 1 */,
+			Fragments._Real__Real /* 2 */
+		};
+		private static final int @NonNull [] __Real = { 1,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Sequence =
+		{
+			Fragments._Sequence__OclAny /* 0 */,
+			Fragments._Sequence__Collection /* 1 */,
+			Fragments._Sequence__OrderedCollection /* 2 */,
+			Fragments._Sequence__Sequence /* 3 */
+		};
+		private static final int @NonNull [] __Sequence = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Set =
+		{
+			Fragments._Set__OclAny /* 0 */,
+			Fragments._Set__Collection /* 1 */,
+			Fragments._Set__UniqueCollection /* 2 */,
+			Fragments._Set__Set /* 3 */
+		};
+		private static final int @NonNull [] __Set = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _String =
+		{
+			Fragments._String__OclAny /* 0 */,
+			Fragments._String__OclComparable /* 1 */,
+			Fragments._String__OclSummable /* 1 */,
+			Fragments._String__String /* 2 */
+		};
+		private static final int @NonNull [] __String = { 1,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _UniqueCollection =
+		{
+			Fragments._UniqueCollection__OclAny /* 0 */,
+			Fragments._UniqueCollection__Collection /* 1 */,
+			Fragments._UniqueCollection__UniqueCollection /* 2 */
+		};
+		private static final int @NonNull [] __UniqueCollection = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNatural =
+		{
+			Fragments._UnlimitedNatural__OclAny /* 0 */,
+			Fragments._UnlimitedNatural__OclComparable /* 1 */,
+			Fragments._UnlimitedNatural__UnlimitedNatural /* 2 */
+		};
+		private static final int @NonNull [] __UnlimitedNatural = { 1,1,1 };
+
+		/**
+		 *	Install the fragment descriptors in the class descriptors.
+		 */
+		static {
+			Types._Bag.initFragments(_Bag, __Bag);
+			Types._Boolean.initFragments(_Boolean, __Boolean);
+			Types._Collection.initFragments(_Collection, __Collection);
+			Types._Integer.initFragments(_Integer, __Integer);
+			Types._Map.initFragments(_Map, __Map);
+			Types._OclAny.initFragments(_OclAny, __OclAny);
+			Types._OclComparable.initFragments(_OclComparable, __OclComparable);
+			Types._OclElement.initFragments(_OclElement, __OclElement);
+			Types._OclEnumeration.initFragments(_OclEnumeration, __OclEnumeration);
+			Types._OclInvalid.initFragments(_OclInvalid, __OclInvalid);
+			Types._OclLambda.initFragments(_OclLambda, __OclLambda);
+			Types._OclMessage.initFragments(_OclMessage, __OclMessage);
+			Types._OclSelf.initFragments(_OclSelf, __OclSelf);
+			Types._OclState.initFragments(_OclState, __OclState);
+			Types._OclStereotype.initFragments(_OclStereotype, __OclStereotype);
+			Types._OclSummable.initFragments(_OclSummable, __OclSummable);
+			Types._OclTuple.initFragments(_OclTuple, __OclTuple);
+			Types._OclType.initFragments(_OclType, __OclType);
+			Types._OclVoid.initFragments(_OclVoid, __OclVoid);
+			Types._OrderedCollection.initFragments(_OrderedCollection, __OrderedCollection);
+			Types._OrderedSet.initFragments(_OrderedSet, __OrderedSet);
+			Types._Real.initFragments(_Real, __Real);
+			Types._Sequence.initFragments(_Sequence, __Sequence);
+			Types._Set.initFragments(_Set, __Set);
+			Types._String.initFragments(_String, __String);
+			Types._UniqueCollection.initFragments(_UniqueCollection, __UniqueCollection);
+			Types._UnlimitedNatural.initFragments(_UnlimitedNatural, __UnlimitedNatural);
+
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of OCLstdlibTables::TypeFragments and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
 
 	/**
 	 *	The operation descriptors for each operation of each type.
@@ -361,7 +1557,7 @@ public class OCLstdlibTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			TypeFragments.init();
 		}
 
 		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Bag,
@@ -378,7 +1574,7 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Bag,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Bag,
+		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Bag,
 			7, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Bag,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -403,7 +1599,7 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._Boolean,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._Boolean,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation.INSTANCE);
@@ -415,11 +1611,11 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies2 = LIBRARY.createOperation("implies2", Parameters._Boolean, Types._Boolean,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__or2 = LIBRARY.createOperation("or2", Parameters._Boolean, Types._Boolean,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__xor2 = LIBRARY.createOperation("xor2", Parameters._Boolean, Types._Boolean,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
@@ -430,13 +1626,13 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__any = LIBRARY.createOperation("any", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Collection,
 			7, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -460,7 +1656,7 @@ public class OCLstdlibTables extends AbstractTables
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__0_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			18, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__2_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
@@ -480,17 +1676,17 @@ public class OCLstdlibTables extends AbstractTables
 			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_T_OclAny, Types._Collection,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_T_1_Tacc, Types._Collection,
 			30, TypeUtil.createTemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__one = LIBRARY.createOperation("one", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
@@ -504,11 +1700,11 @@ public class OCLstdlibTables extends AbstractTables
 			38, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Collection,
 			39, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			40, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Collection,
 			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation("union", Parameters._Collection__0_T__, Types._Collection,
 			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
@@ -517,13 +1713,13 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Integer,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Integer,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___div_ = LIBRARY.createOperation("/", Parameters._OclSelf, Types._Integer,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__div = LIBRARY.createOperation("div", Parameters._Integer, Types._Integer,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivOperation.INSTANCE);
@@ -533,9 +1729,9 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__mod = LIBRARY.createOperation("mod", Parameters._Integer, Types._Integer,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericModOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
 
 		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Map,
@@ -596,15 +1792,15 @@ public class OCLstdlibTables extends AbstractTables
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includingMap = LIBRARY.createOperation("includingMap", Parameters._Map__2_K2_3_V2__, Types._Map,
 			28, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_K_OclAny, Types._Map,
 			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Map__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_K_2_Tacc, Types._Map,
 			31, TypeUtil.createTemplateParameters(TypeParameters._2_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
-		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__one = LIBRARY.createOperation("one", Parameters._Lambda_0_K_Boolean, Types._Map,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
@@ -612,40 +1808,40 @@ public class OCLstdlibTables extends AbstractTables
 			35, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
 		public static final @NonNull Operation _Map__select = LIBRARY.createOperation("select", Parameters._Lambda_0_K_Boolean, Types._Map,
 			36, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
-		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			38, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclAny___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclAny,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclAny,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclAny,
 			3, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsInState = LIBRARY.createOperation("oclIsInState", Parameters._OclState, Types._OclAny,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclAny,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclAny,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__1_oclLog = LIBRARY.createOperation("oclLog", Parameters._String, Types._OclAny,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation("<", Parameters._OclSelf, Types._OclComparable,
@@ -663,25 +1859,25 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclAsModelType = LIBRARY.createOperation("oclAsModelType", Parameters._0_TT, Types._OclElement,
 			1, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__1_oclBase = LIBRARY.createOperation("oclBase", Parameters._OclType, Types._OclElement,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation("oclExtension", Parameters._OclStereotype, Types._OclElement,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation("oclExtensions", Parameters._OclStereotype, Types._OclElement,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation("oclIsModelKindOf", Parameters._OclType, Types._OclElement,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclEnumeration__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclEnumeration,
@@ -699,32 +1895,32 @@ public class OCLstdlibTables extends AbstractTables
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclInvalid,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclInvalid,
 			7, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			8, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclInvalid,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclInvalid,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclStereotype__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclStereotype,
@@ -732,7 +1928,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _OclSummable__sum = LIBRARY.createOperation("sum", Parameters._OclSelf, Types._OclSummable,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclSummable,
+		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclSummable,
 			1, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclTuple,
@@ -753,7 +1949,7 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._OclVoid,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._OclVoid,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
@@ -763,32 +1959,32 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__concat = LIBRARY.createOperation("concat", Parameters._String, Types._OclVoid,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclVoid,
 			11, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclVoid,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclVoid,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedCollection__at = LIBRARY.createOperation("at", Parameters._Integer, Types._OrderedCollection,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
+		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedCollection,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedCollection__indexOf = LIBRARY.createOperation("indexOf", Parameters._0_T, Types._OrderedCollection,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
+		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedCollection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._OrderedSet,
@@ -811,7 +2007,7 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._OrderedSet,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
+		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedSet,
 			10, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__including = LIBRARY.createOperation("including", Parameters._0_T, Types._OrderedSet,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -825,7 +2021,7 @@ public class OCLstdlibTables extends AbstractTables
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
+		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedSet,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
@@ -842,7 +2038,7 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Real___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Real,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Real___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Real,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
@@ -852,17 +2048,17 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Real___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Real,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
-		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
 		public static final @NonNull Operation _Real__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._Real,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull Operation _Real__min = LIBRARY.createOperation("min", Parameters._OclSelf, Types._Real,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
-		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
-		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Sequence,
@@ -883,7 +2079,7 @@ public class OCLstdlibTables extends AbstractTables
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Sequence,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
+		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Sequence,
 			9, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Sequence,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -897,7 +2093,7 @@ public class OCLstdlibTables extends AbstractTables
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Sequence,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
+		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Sequence,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Sequence,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
@@ -926,7 +2122,7 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Set__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Set,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Set,
+		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Set,
 			8, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Set__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Set,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -959,7 +2155,7 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String__at = LIBRARY.createOperation("at", Parameters._Integer, Types._String,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
-		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCharactersOperation.INSTANCE);
 		public static final @NonNull Operation _String__compareTo = LIBRARY.createOperation("compareTo", Parameters._OclSelf, Types._String,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCompareToOperation.INSTANCE);
@@ -979,7 +2175,7 @@ public class OCLstdlibTables extends AbstractTables
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation.INSTANCE);
 		public static final @NonNull Operation _String__replaceFirst = LIBRARY.createOperation("replaceFirst", Parameters._String___String, Types._String,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation.INSTANCE);
-		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__startsWith = LIBRARY.createOperation("startsWith", Parameters._String, Types._String,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
@@ -989,29 +2185,29 @@ public class OCLstdlibTables extends AbstractTables
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation.INSTANCE);
 		public static final @NonNull Operation _String__substring = LIBRARY.createOperation("substring", Parameters._Integer___Integer, Types._String,
 			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToBooleanOperation.INSTANCE);
-		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToIntegerOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToRealOperation.INSTANCE);
-		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__1_tokenize = LIBRARY.createOperation("tokenize", Parameters._String, Types._String,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__2_tokenize = LIBRARY.createOperation("tokenize", Parameters._String___Boolean, Types._String,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
-		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
 
 		public static final @NonNull Operation _UniqueCollection___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
@@ -1031,7 +2227,7 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
 		public static final @NonNull Operation _UnlimitedNatural__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._UnlimitedNatural,
 			2, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._UnlimitedNatural,
+		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPES, Types._UnlimitedNatural,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 
 		static {
@@ -1042,7 +2238,242 @@ public class OCLstdlibTables extends AbstractTables
 		 * Force initialization of the fields of OCLstdlibTables::Operations and all preceding sub-packages.
 		 */
 		public static void init() {}
+
 	}
+	// CTOR $$::Tuple::first
+	// CTOR $$::Tuple::second
+	// CTOR Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// CTOR OrderedCollection(Integer)
+	// CTOR OrderedCollection(String)
+	// CTOR OrderedCollection(Bag.T)
+	// CTOR OrderedCollection(Collection.T)
+	// CTOR OrderedCollection(collectNested.V)
+	// CTOR OrderedCollection(collect.V)
+	// CTOR OrderedCollection(flatten.T2)
+	// CTOR OrderedCollection(selectByKind.TT)
+	// CTOR OrderedCollection(selectByType.TT)
+	// CTOR OrderedCollection(OrderedSet.T)
+	// CTOR OrderedCollection(collectNested.V)
+	// CTOR OrderedCollection(collect.V)
+	// CTOR OrderedCollection(flatten.T2)
+	// CTOR OrderedCollection(selectByKind.TT)
+	// CTOR OrderedCollection(selectByType.TT)
+	// CTOR OrderedCollection(Sequence.T)
+	// CTOR OrderedCollection(Set.T)
+	// CTOR OrderedCollection(UniqueCollection.T)
+	// CTOR UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// CTOR UniqueCollection(Bag.T)
+	// CTOR UniqueCollection(Collection.T)
+	// CTOR UniqueCollection(Map.K)
+	// CTOR UniqueCollection(OclAny)
+	// CTOR UniqueCollection(OclElement)
+	// CTOR UniqueCollection(OclSelf)
+	// CTOR UniqueCollection(flatten.T2)
+	// CTOR UniqueCollection(selectByKind.TT)
+	// CTOR UniqueCollection(selectByType.TT)
+	// CTOR UniqueCollection(OrderedSet.T)
+	// CTOR UniqueCollection(Sequence.T)
+	// CTOR UniqueCollection(flatten.T2)
+	// CTOR UniqueCollection(selectByKind.TT)
+	// CTOR UniqueCollection(selectByType.TT)
+	// CTOR UniqueCollection(Set.T)
+	// CTOR UniqueCollection(UniqueCollection.T)
+	// CTOR Bag(collectNested.V)
+	// CTOR Bag(collect.V)
+	// CTOR Bag(flatten.T2)
+	// CTOR Bag(selectByKind.TT)
+	// CTOR Bag(selectByType.TT)
+	// CTOR Bag(Bag.T)
+	// CTOR Bag(CollectionType)
+	// CTOR Bag(Collection.T)
+	// CTOR Bag(MapType)
+	// CTOR Bag(collect.V2)
+	// CTOR Bag(Map.V)
+	// CTOR Bag(OclElement)
+	// CTOR Bag(OclInvalid)
+	// CTOR Bag(collectNested.V)
+	// CTOR Bag(collect.V)
+	// OPERATIONS Collection(collectNested.V)
+	// OPERATIONS Collection(collect.V)
+	// OPERATIONS Collection(flatten.T2)
+	// OPERATIONS Collection(selectByKind.TT)
+	// OPERATIONS Collection(selectByType.TT)
+	// OPERATIONS Collection(collectNested.V)
+	// OPERATIONS Collection(collect.V)
+	// OPERATIONS Collection(excludesAll.T2)
+	// OPERATIONS Collection(flatten.T2)
+	// OPERATIONS Collection(includesAll.T2)
+	// OPERATIONS Collection(product.T2)
+	// OPERATIONS Collection(selectByKind.TT)
+	// OPERATIONS Collection(selectByType.TT)
+	// OPERATIONS Collection(collect.V2)
+	// OPERATIONS Collection(excludesAll.K2)
+	// OPERATIONS Collection(includesAll.K2)
+	// OPERATIONS Collection(collectNested.V)
+	// OPERATIONS Collection(collect.V)
+	// OPERATIONS Collection(flatten.T2)
+	// OPERATIONS Collection(selectByKind.TT)
+	// OPERATIONS Collection(selectByType.TT)
+	// OPERATIONS Collection(collectNested.V)
+	// OPERATIONS Collection(collect.V)
+	// OPERATIONS Collection(flatten.T2)
+	// OPERATIONS Collection(selectByKind.TT)
+	// OPERATIONS Collection(selectByType.TT)
+	// OPERATIONS Collection(collectNested.V)
+	// OPERATIONS Collection(collect.V)
+	// OPERATIONS Collection(flatten.T2)
+	// OPERATIONS Collection(selectByKind.TT)
+	// OPERATIONS Collection(selectByType.TT)
+	// OPERATIONS Map(Collection.T[?],collectBy.V[?])
+	// OPERATIONS Map(excludesMap.K2,excludesMap.V2)
+	// OPERATIONS Map(excludingMap.K2,excludingMap.V2)
+	// OPERATIONS Map(includesMap.K2,includesMap.V2)
+	// OPERATIONS Map(includingMap.K2,includingMap.V2)
+	// OPERATIONS Map(Map.K[?],collectBy.V2[?])
+	// OPERATIONS Map(Map.K[?],collectNested.V2[?])
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : Tacc
+	// OPERATIONS Lambda K() : V2
+	// OPERATIONS Lambda K() : V2
+	// OPERATIONS Lambda K() : V2
+	// OPERATIONS Lambda K() : Tacc
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// OPERATIONS Lambda T() : V
+	// PROPERTIES Collection(collectNested.V)
+	// PROPERTIES Collection(collect.V)
+	// PROPERTIES Collection(flatten.T2)
+	// PROPERTIES Collection(selectByKind.TT)
+	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Collection(collectNested.V)
+	// PROPERTIES Collection(collect.V)
+	// PROPERTIES Collection(excludesAll.T2)
+	// PROPERTIES Collection(flatten.T2)
+	// PROPERTIES Collection(includesAll.T2)
+	// PROPERTIES Collection(product.T2)
+	// PROPERTIES Collection(selectByKind.TT)
+	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Collection(collect.V2)
+	// PROPERTIES Collection(excludesAll.K2)
+	// PROPERTIES Collection(includesAll.K2)
+	// PROPERTIES Collection(collectNested.V)
+	// PROPERTIES Collection(collect.V)
+	// PROPERTIES Collection(flatten.T2)
+	// PROPERTIES Collection(selectByKind.TT)
+	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Collection(collectNested.V)
+	// PROPERTIES Collection(collect.V)
+	// PROPERTIES Collection(flatten.T2)
+	// PROPERTIES Collection(selectByKind.TT)
+	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Collection(collectNested.V)
+	// PROPERTIES Collection(collect.V)
+	// PROPERTIES Collection(flatten.T2)
+	// PROPERTIES Collection(selectByKind.TT)
+	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Map(Collection.T[?],collectBy.V[?])
+	// PROPERTIES Map(excludesMap.K2,excludesMap.V2)
+	// PROPERTIES Map(excludingMap.K2,excludingMap.V2)
+	// PROPERTIES Map(includesMap.K2,includesMap.V2)
+	// PROPERTIES Map(includingMap.K2,includingMap.V2)
+	// PROPERTIES Map(Map.K[?],collectBy.V2[?])
+	// PROPERTIES Map(Map.K[?],collectNested.V2[?])
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : Tacc
+	// PROPERTIES Lambda K() : V2
+	// PROPERTIES Lambda K() : V2
+	// PROPERTIES Lambda K() : V2
+	// PROPERTIES Lambda K() : Tacc
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// PROPERTIES Lambda T() : V
+	// SUPER_CLASSES Collection(collectNested.V)
+	// SUPER_CLASSES Collection(collect.V)
+	// SUPER_CLASSES Collection(flatten.T2)
+	// SUPER_CLASSES Collection(selectByKind.TT)
+	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Collection(collectNested.V)
+	// SUPER_CLASSES Collection(collect.V)
+	// SUPER_CLASSES Collection(excludesAll.T2)
+	// SUPER_CLASSES Collection(flatten.T2)
+	// SUPER_CLASSES Collection(includesAll.T2)
+	// SUPER_CLASSES Collection(product.T2)
+	// SUPER_CLASSES Collection(selectByKind.TT)
+	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Collection(collect.V2)
+	// SUPER_CLASSES Collection(excludesAll.K2)
+	// SUPER_CLASSES Collection(includesAll.K2)
+	// SUPER_CLASSES Collection(collectNested.V)
+	// SUPER_CLASSES Collection(collect.V)
+	// SUPER_CLASSES Collection(flatten.T2)
+	// SUPER_CLASSES Collection(selectByKind.TT)
+	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Collection(collectNested.V)
+	// SUPER_CLASSES Collection(collect.V)
+	// SUPER_CLASSES Collection(flatten.T2)
+	// SUPER_CLASSES Collection(selectByKind.TT)
+	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Collection(collectNested.V)
+	// SUPER_CLASSES Collection(collect.V)
+	// SUPER_CLASSES Collection(flatten.T2)
+	// SUPER_CLASSES Collection(selectByKind.TT)
+	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Map(Collection.T[?],collectBy.V[?])
+	// SUPER_CLASSES Map(excludesMap.K2,excludesMap.V2)
+	// SUPER_CLASSES Map(excludingMap.K2,excludingMap.V2)
+	// SUPER_CLASSES Map(includesMap.K2,includesMap.V2)
+	// SUPER_CLASSES Map(includingMap.K2,includingMap.V2)
+	// SUPER_CLASSES Map(Map.K[?],collectBy.V2[?])
+	// SUPER_CLASSES Map(Map.K[?],collectNested.V2[?])
+	// SUPER_CLASSES Tuple(first:Collection.T[1],second:product.T2[1])
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : Tacc
+	// SUPER_CLASSES Lambda K() : V2
+	// SUPER_CLASSES Lambda K() : V2
+	// SUPER_CLASSES Lambda K() : V2
+	// SUPER_CLASSES Lambda K() : Tacc
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// SUPER_CLASSES Lambda T() : V
+	// TYPE Collection(T).collectBy(V)(Collection.T[?] | Lambda T() : V[?]) : Map(Collection.T[?],collectBy.V[?])[1]
+	// TYPE Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V)
+	// TYPE Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V)
+	// TYPE Collection(T).iterate(Tacc)(Collection.T[?]; iterate.Tacc[?] | Lambda T() : Tacc[?]) : iterate.Tacc[?]
+	// TYPE Map(K,V).collectBy(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectBy.V2[?])[1]
+	// TYPE Map(K,V).collectNested(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectNested.V2[?])[1]
+	// TYPE Map(K,V).iterate(Tacc)(Map.K[?]; iterate.Tacc[?] | Lambda K() : Tacc[?]) : iterate.Tacc[?]
+	// TYPE Collection(T)::excludesAll(T2)(Collection(excludesAll.T2)) : Boolean[1]
+	// TYPE Collection(T)::flatten(T2)() : Collection(flatten.T2)
+	// TYPE Collection(T)::includesAll(T2)(Collection(includesAll.T2)) : Boolean[1]
+	// TYPE Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT)
+	// TYPE Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT)
+	// TYPE Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2)) : Boolean[1]
+	// TYPE Map(K,V)::excludesMap(K2,V2)(Map(excludesMap.K2,excludesMap.V2)[1]) : Boolean[1]
+	// TYPE Map(K,V)::excludingMap(K2,V2)(Map(excludingMap.K2,excludingMap.V2)[1]) : Map(Map.K,Map.V)[1]
+	// TYPE Map(K,V)::includesAll(K2)(Collection(includesAll.K2)) : Boolean[1]
+	// TYPE Map(K,V)::includesMap(K2,V2)(Map(includesMap.K2,includesMap.V2)[1]) : Boolean[1]
+	// TYPE Map(K,V)::includingMap(K2,V2)(Map(includingMap.K2,includingMap.V2)[1]) : Map(Map.K,Map.V)[1]
 
 	/**
 	 *	The property descriptors for each property of each type.
@@ -1082,268 +2513,412 @@ public class OCLstdlibTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR CollectionType::elementType
+	// CTOR MapType::keyType
+	// CTOR MapType::valueType
+	// CTOR OclElement::oclContainer
+	// CTOR OclElement::oclContents
+	// CTOR OclInvalid::oclBadProperty
+	// OPERATIONS Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// OPERATIONS OrderedCollection(Integer)
+	// OPERATIONS OrderedCollection(String)
+	// OPERATIONS OrderedCollection(Bag.T)
+	// OPERATIONS OrderedCollection(Collection.T)
+	// OPERATIONS OrderedCollection(collectNested.V)
+	// OPERATIONS OrderedCollection(collect.V)
+	// OPERATIONS OrderedCollection(flatten.T2)
+	// OPERATIONS OrderedCollection(selectByKind.TT)
+	// OPERATIONS OrderedCollection(selectByType.TT)
+	// OPERATIONS OrderedCollection(OrderedSet.T)
+	// OPERATIONS OrderedCollection(collectNested.V)
+	// OPERATIONS OrderedCollection(collect.V)
+	// OPERATIONS OrderedCollection(flatten.T2)
+	// OPERATIONS OrderedCollection(selectByKind.TT)
+	// OPERATIONS OrderedCollection(selectByType.TT)
+	// OPERATIONS OrderedCollection(Sequence.T)
+	// OPERATIONS OrderedCollection(Set.T)
+	// OPERATIONS OrderedCollection(UniqueCollection.T)
+	// OPERATIONS UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// OPERATIONS UniqueCollection(Bag.T)
+	// OPERATIONS UniqueCollection(Collection.T)
+	// OPERATIONS UniqueCollection(Map.K)
+	// OPERATIONS UniqueCollection(OclAny)
+	// OPERATIONS UniqueCollection(OclElement)
+	// OPERATIONS UniqueCollection(OclSelf)
+	// OPERATIONS UniqueCollection(flatten.T2)
+	// OPERATIONS UniqueCollection(selectByKind.TT)
+	// OPERATIONS UniqueCollection(selectByType.TT)
+	// OPERATIONS UniqueCollection(OrderedSet.T)
+	// OPERATIONS UniqueCollection(Sequence.T)
+	// OPERATIONS UniqueCollection(flatten.T2)
+	// OPERATIONS UniqueCollection(selectByKind.TT)
+	// OPERATIONS UniqueCollection(selectByType.TT)
+	// OPERATIONS UniqueCollection(Set.T)
+	// OPERATIONS UniqueCollection(UniqueCollection.T)
+	// OPERATIONS Bag(collectNested.V)
+	// OPERATIONS Bag(collect.V)
+	// OPERATIONS Bag(flatten.T2)
+	// OPERATIONS Bag(selectByKind.TT)
+	// OPERATIONS Bag(selectByType.TT)
+	// OPERATIONS Bag(Bag.T)
+	// OPERATIONS Bag(CollectionType)
+	// OPERATIONS Bag(Collection.T)
+	// OPERATIONS Bag(MapType)
+	// OPERATIONS Bag(collect.V2)
+	// OPERATIONS Bag(Map.V)
+	// OPERATIONS Bag(OclElement)
+	// OPERATIONS Bag(OclInvalid)
+	// OPERATIONS Bag(collectNested.V)
+	// OPERATIONS Bag(collect.V)
+	// PROPERTIES Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// PROPERTIES OrderedCollection(Integer)
+	// PROPERTIES OrderedCollection(String)
+	// PROPERTIES OrderedCollection(Bag.T)
+	// PROPERTIES OrderedCollection(Collection.T)
+	// PROPERTIES OrderedCollection(collectNested.V)
+	// PROPERTIES OrderedCollection(collect.V)
+	// PROPERTIES OrderedCollection(flatten.T2)
+	// PROPERTIES OrderedCollection(selectByKind.TT)
+	// PROPERTIES OrderedCollection(selectByType.TT)
+	// PROPERTIES OrderedCollection(OrderedSet.T)
+	// PROPERTIES OrderedCollection(collectNested.V)
+	// PROPERTIES OrderedCollection(collect.V)
+	// PROPERTIES OrderedCollection(flatten.T2)
+	// PROPERTIES OrderedCollection(selectByKind.TT)
+	// PROPERTIES OrderedCollection(selectByType.TT)
+	// PROPERTIES OrderedCollection(Sequence.T)
+	// PROPERTIES OrderedCollection(Set.T)
+	// PROPERTIES OrderedCollection(UniqueCollection.T)
+	// PROPERTIES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// PROPERTIES UniqueCollection(Bag.T)
+	// PROPERTIES UniqueCollection(Collection.T)
+	// PROPERTIES UniqueCollection(Map.K)
+	// PROPERTIES UniqueCollection(OclAny)
+	// PROPERTIES UniqueCollection(OclElement)
+	// PROPERTIES UniqueCollection(OclSelf)
+	// PROPERTIES UniqueCollection(flatten.T2)
+	// PROPERTIES UniqueCollection(selectByKind.TT)
+	// PROPERTIES UniqueCollection(selectByType.TT)
+	// PROPERTIES UniqueCollection(OrderedSet.T)
+	// PROPERTIES UniqueCollection(Sequence.T)
+	// PROPERTIES UniqueCollection(flatten.T2)
+	// PROPERTIES UniqueCollection(selectByKind.TT)
+	// PROPERTIES UniqueCollection(selectByType.TT)
+	// PROPERTIES UniqueCollection(Set.T)
+	// PROPERTIES UniqueCollection(UniqueCollection.T)
+	// PROPERTIES Bag(collectNested.V)
+	// PROPERTIES Bag(collect.V)
+	// PROPERTIES Bag(flatten.T2)
+	// PROPERTIES Bag(selectByKind.TT)
+	// PROPERTIES Bag(selectByType.TT)
+	// PROPERTIES Bag(Bag.T)
+	// PROPERTIES Bag(CollectionType)
+	// PROPERTIES Bag(Collection.T)
+	// PROPERTIES Bag(MapType)
+	// PROPERTIES Bag(collect.V2)
+	// PROPERTIES Bag(Map.V)
+	// PROPERTIES Bag(OclElement)
+	// PROPERTIES Bag(OclInvalid)
+	// PROPERTIES Bag(collectNested.V)
+	// PROPERTIES Bag(collect.V)
+	// SUPER_CLASSES Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// SUPER_CLASSES OrderedCollection(Integer)
+	// SUPER_CLASSES OrderedCollection(String)
+	// SUPER_CLASSES OrderedCollection(Bag.T)
+	// SUPER_CLASSES OrderedCollection(Collection.T)
+	// SUPER_CLASSES OrderedCollection(collectNested.V)
+	// SUPER_CLASSES OrderedCollection(collect.V)
+	// SUPER_CLASSES OrderedCollection(flatten.T2)
+	// SUPER_CLASSES OrderedCollection(selectByKind.TT)
+	// SUPER_CLASSES OrderedCollection(selectByType.TT)
+	// SUPER_CLASSES OrderedCollection(OrderedSet.T)
+	// SUPER_CLASSES OrderedCollection(collectNested.V)
+	// SUPER_CLASSES OrderedCollection(collect.V)
+	// SUPER_CLASSES OrderedCollection(flatten.T2)
+	// SUPER_CLASSES OrderedCollection(selectByKind.TT)
+	// SUPER_CLASSES OrderedCollection(selectByType.TT)
+	// SUPER_CLASSES OrderedCollection(Sequence.T)
+	// SUPER_CLASSES OrderedCollection(Set.T)
+	// SUPER_CLASSES OrderedCollection(UniqueCollection.T)
+	// SUPER_CLASSES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// SUPER_CLASSES UniqueCollection(Bag.T)
+	// SUPER_CLASSES UniqueCollection(Collection.T)
+	// SUPER_CLASSES UniqueCollection(Map.K)
+	// SUPER_CLASSES UniqueCollection(OclAny)
+	// SUPER_CLASSES UniqueCollection(OclElement)
+	// SUPER_CLASSES UniqueCollection(OclSelf)
+	// SUPER_CLASSES UniqueCollection(flatten.T2)
+	// SUPER_CLASSES UniqueCollection(selectByKind.TT)
+	// SUPER_CLASSES UniqueCollection(selectByType.TT)
+	// SUPER_CLASSES UniqueCollection(OrderedSet.T)
+	// SUPER_CLASSES UniqueCollection(Sequence.T)
+	// SUPER_CLASSES UniqueCollection(flatten.T2)
+	// SUPER_CLASSES UniqueCollection(selectByKind.TT)
+	// SUPER_CLASSES UniqueCollection(selectByType.TT)
+	// SUPER_CLASSES UniqueCollection(Set.T)
+	// SUPER_CLASSES UniqueCollection(UniqueCollection.T)
+	// SUPER_CLASSES Bag(collectNested.V)
+	// SUPER_CLASSES Bag(collect.V)
+	// SUPER_CLASSES Bag(flatten.T2)
+	// SUPER_CLASSES Bag(selectByKind.TT)
+	// SUPER_CLASSES Bag(selectByType.TT)
+	// SUPER_CLASSES Bag(Bag.T)
+	// SUPER_CLASSES Bag(CollectionType)
+	// SUPER_CLASSES Bag(Collection.T)
+	// SUPER_CLASSES Bag(MapType)
+	// SUPER_CLASSES Bag(collect.V2)
+	// SUPER_CLASSES Bag(Map.V)
+	// SUPER_CLASSES Bag(OclElement)
+	// SUPER_CLASSES Bag(OclInvalid)
+	// SUPER_CLASSES Bag(collectNested.V)
+	// SUPER_CLASSES Bag(collect.V)
+	// SUPER_CLASSES OrderedSet(T)
+	// SUPER_CLASSES Sequence(T)
+	// SUPER_CLASSES Set(T)
+	// TYPE Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
+	// TYPE Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V)
+	// TYPE Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
+	// TYPE Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
+	// TYPE Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2)
+	// TYPE Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
+	// TYPE Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V)
+	// TYPE Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T)
+	// TYPE Bag(T)::excludingAll(Collection(Bag.T)) : Bag(Bag.T)
+	// TYPE Bag(T)::flatten(T2)() : Bag(flatten.T2)
+	// TYPE Bag(T)::including(Bag.T[?]) : Bag(Bag.T)
+	// TYPE Bag(T)::includingAll(Collection(Bag.T)) : Bag(Bag.T)
+	// TYPE Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT)
+	// TYPE Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT)
+	// TYPE Collection(T)::asBag() : Bag(Collection.T)
+	// TYPE Collection(T)::intersection(Collection(Collection.T)) : Bag(Collection.T)
+	// TYPE Collection(T)::union(Collection(Collection.T)) : Bag(Collection.T)
+	// TYPE Map(K,V)::values() : Bag(Map.V)
+	// TYPE UniqueCollection(T)::-(UniqueCollection(OclAny)) : UniqueCollection(UniqueCollection.T)
 
-	/**
-	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
-	 */
-	public static class TypeFragments {
-		static {
-			Init.initStart();
-			Properties.init();
-		}
+	// CTOR OrderedSet(Collection.T)
+	// CTOR OrderedSet(flatten.T2)
+	// CTOR OrderedSet(selectByKind.TT)
+	// CTOR OrderedSet(selectByType.TT)
+	// CTOR OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(Sequence.T)
+	// CTOR OrderedSet(Set.T)
+	// CTOR OrderedSet(UniqueCollection.T)
+	// CTOR Sequence(Integer)
+	// CTOR Sequence(String)
+	// CTOR Sequence(Bag.T)
+	// CTOR Sequence(Collection.T)
+	// CTOR Sequence(collectNested.V)
+	// CTOR Sequence(collect.V)
+	// CTOR Sequence(collectNested.V)
+	// CTOR Sequence(collect.V)
+	// CTOR Sequence(flatten.T2)
+	// CTOR Sequence(selectByKind.TT)
+	// CTOR Sequence(selectByType.TT)
+	// CTOR Sequence(Sequence.T)
+	// CTOR Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// CTOR Set(Bag.T)
+	// CTOR Set(Collection.T)
+	// CTOR Set(Map.K)
+	// CTOR Set(OclElement)
+	// CTOR Set(OclSelf)
+	// CTOR Set(OclSelf[*|?])
+	// CTOR Set(flatten.T2)
+	// CTOR Set(selectByKind.TT)
+	// CTOR Set(selectByType.TT)
+	// CTOR Set(Set.T)
+	// CTOR Set(UniqueCollection.T)
+	// PROPERTIES CollectionType
+	// PROPERTIES MapType
+	// PROPERTIES OclInvalid
 
-		private static final @NonNull FlatFragment @NonNull [] _Bag =
-			{
-				Fragments._Bag__OclAny /* 0 */,
-				Fragments._Bag__Collection /* 1 */,
-				Fragments._Bag__Bag /* 2 */
-			};
-		private static final int @NonNull [] __Bag = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Boolean =
-			{
-				Fragments._Boolean__OclAny /* 0 */,
-				Fragments._Boolean__Boolean /* 1 */
-			};
-		private static final int @NonNull [] __Boolean = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Collection =
-			{
-				Fragments._Collection__OclAny /* 0 */,
-				Fragments._Collection__Collection /* 1 */
-			};
-		private static final int @NonNull [] __Collection = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Integer =
-			{
-				Fragments._Integer__OclAny /* 0 */,
-				Fragments._Integer__OclComparable /* 1 */,
-				Fragments._Integer__OclSummable /* 1 */,
-				Fragments._Integer__Real /* 2 */,
-				Fragments._Integer__Integer /* 3 */
-			};
-		private static final int @NonNull [] __Integer = { 1,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Map =
-			{
-				Fragments._Map__OclAny /* 0 */,
-				Fragments._Map__Map /* 1 */
-			};
-		private static final int @NonNull [] __Map = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclAny =
-			{
-				Fragments._OclAny__OclAny /* 0 */
-			};
-		private static final int @NonNull [] __OclAny = { 1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclComparable =
-			{
-				Fragments._OclComparable__OclAny /* 0 */,
-				Fragments._OclComparable__OclComparable /* 1 */
-			};
-		private static final int @NonNull [] __OclComparable = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclElement =
-			{
-				Fragments._OclElement__OclAny /* 0 */,
-				Fragments._OclElement__OclElement /* 1 */
-			};
-		private static final int @NonNull [] __OclElement = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclEnumeration =
-			{
-				Fragments._OclEnumeration__OclAny /* 0 */,
-				Fragments._OclEnumeration__OclElement /* 1 */,
-				Fragments._OclEnumeration__OclType /* 2 */,
-				Fragments._OclEnumeration__OclEnumeration /* 3 */
-			};
-		private static final int @NonNull [] __OclEnumeration = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclInvalid =
-			{
-				Fragments._OclInvalid__OclAny /* 0 */,
-				Fragments._OclInvalid__OclVoid /* 1 */,
-				Fragments._OclInvalid__OclInvalid /* 2 */
-			};
-		private static final int @NonNull [] __OclInvalid = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclLambda =
-			{
-				Fragments._OclLambda__OclAny /* 0 */,
-				Fragments._OclLambda__OclLambda /* 1 */
-			};
-		private static final int @NonNull [] __OclLambda = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclMessage =
-			{
-				Fragments._OclMessage__OclAny /* 0 */,
-				Fragments._OclMessage__OclMessage /* 1 */
-			};
-		private static final int @NonNull [] __OclMessage = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclSelf =
-			{
-				Fragments._OclSelf__OclAny /* 0 */,
-				Fragments._OclSelf__OclSelf /* 1 */
-			};
-		private static final int @NonNull [] __OclSelf = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclState =
-			{
-				Fragments._OclState__OclAny /* 0 */,
-				Fragments._OclState__OclState /* 1 */
-			};
-		private static final int @NonNull [] __OclState = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclStereotype =
-			{
-				Fragments._OclStereotype__OclAny /* 0 */,
-				Fragments._OclStereotype__OclElement /* 1 */,
-				Fragments._OclStereotype__OclType /* 2 */,
-				Fragments._OclStereotype__OclStereotype /* 3 */
-			};
-		private static final int @NonNull [] __OclStereotype = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclSummable =
-			{
-				Fragments._OclSummable__OclAny /* 0 */,
-				Fragments._OclSummable__OclSummable /* 1 */
-			};
-		private static final int @NonNull [] __OclSummable = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclTuple =
-			{
-				Fragments._OclTuple__OclAny /* 0 */,
-				Fragments._OclTuple__OclTuple /* 1 */
-			};
-		private static final int @NonNull [] __OclTuple = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclType =
-			{
-				Fragments._OclType__OclAny /* 0 */,
-				Fragments._OclType__OclElement /* 1 */,
-				Fragments._OclType__OclType /* 2 */
-			};
-		private static final int @NonNull [] __OclType = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OclVoid =
-			{
-				Fragments._OclVoid__OclAny /* 0 */,
-				Fragments._OclVoid__OclVoid /* 1 */
-			};
-		private static final int @NonNull [] __OclVoid = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OrderedCollection =
-			{
-				Fragments._OrderedCollection__OclAny /* 0 */,
-				Fragments._OrderedCollection__Collection /* 1 */,
-				Fragments._OrderedCollection__OrderedCollection /* 2 */
-			};
-		private static final int @NonNull [] __OrderedCollection = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OrderedSet =
-			{
-				Fragments._OrderedSet__OclAny /* 0 */,
-				Fragments._OrderedSet__Collection /* 1 */,
-				Fragments._OrderedSet__OrderedCollection /* 2 */,
-				Fragments._OrderedSet__UniqueCollection /* 2 */,
-				Fragments._OrderedSet__OrderedSet /* 3 */
-			};
-		private static final int @NonNull [] __OrderedSet = { 1,1,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Real =
-			{
-				Fragments._Real__OclAny /* 0 */,
-				Fragments._Real__OclComparable /* 1 */,
-				Fragments._Real__OclSummable /* 1 */,
-				Fragments._Real__Real /* 2 */
-			};
-		private static final int @NonNull [] __Real = { 1,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Sequence =
-			{
-				Fragments._Sequence__OclAny /* 0 */,
-				Fragments._Sequence__Collection /* 1 */,
-				Fragments._Sequence__OrderedCollection /* 2 */,
-				Fragments._Sequence__Sequence /* 3 */
-			};
-		private static final int @NonNull [] __Sequence = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Set =
-			{
-				Fragments._Set__OclAny /* 0 */,
-				Fragments._Set__Collection /* 1 */,
-				Fragments._Set__UniqueCollection /* 2 */,
-				Fragments._Set__Set /* 3 */
-			};
-		private static final int @NonNull [] __Set = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _String =
-			{
-				Fragments._String__OclAny /* 0 */,
-				Fragments._String__OclComparable /* 1 */,
-				Fragments._String__OclSummable /* 1 */,
-				Fragments._String__String /* 2 */
-			};
-		private static final int @NonNull [] __String = { 1,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _UniqueCollection =
-			{
-				Fragments._UniqueCollection__OclAny /* 0 */,
-				Fragments._UniqueCollection__Collection /* 1 */,
-				Fragments._UniqueCollection__UniqueCollection /* 2 */
-			};
-		private static final int @NonNull [] __UniqueCollection = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNatural =
-			{
-				Fragments._UnlimitedNatural__OclAny /* 0 */,
-				Fragments._UnlimitedNatural__OclComparable /* 1 */,
-				Fragments._UnlimitedNatural__UnlimitedNatural /* 2 */
-			};
-		private static final int @NonNull [] __UnlimitedNatural = { 1,1,1 };
-
-		/**
-		 *	Install the fragment descriptors in the class descriptors.
-		 */
-		static {
-			Types._Bag.initFragments(_Bag, __Bag);
-			Types._Boolean.initFragments(_Boolean, __Boolean);
-			Types._Collection.initFragments(_Collection, __Collection);
-			Types._Integer.initFragments(_Integer, __Integer);
-			Types._Map.initFragments(_Map, __Map);
-			Types._OclAny.initFragments(_OclAny, __OclAny);
-			Types._OclComparable.initFragments(_OclComparable, __OclComparable);
-			Types._OclElement.initFragments(_OclElement, __OclElement);
-			Types._OclEnumeration.initFragments(_OclEnumeration, __OclEnumeration);
-			Types._OclInvalid.initFragments(_OclInvalid, __OclInvalid);
-			Types._OclLambda.initFragments(_OclLambda, __OclLambda);
-			Types._OclMessage.initFragments(_OclMessage, __OclMessage);
-			Types._OclSelf.initFragments(_OclSelf, __OclSelf);
-			Types._OclState.initFragments(_OclState, __OclState);
-			Types._OclStereotype.initFragments(_OclStereotype, __OclStereotype);
-			Types._OclSummable.initFragments(_OclSummable, __OclSummable);
-			Types._OclTuple.initFragments(_OclTuple, __OclTuple);
-			Types._OclType.initFragments(_OclType, __OclType);
-			Types._OclVoid.initFragments(_OclVoid, __OclVoid);
-			Types._OrderedCollection.initFragments(_OrderedCollection, __OrderedCollection);
-			Types._OrderedSet.initFragments(_OrderedSet, __OrderedSet);
-			Types._Real.initFragments(_Real, __Real);
-			Types._Sequence.initFragments(_Sequence, __Sequence);
-			Types._Set.initFragments(_Set, __Set);
-			Types._String.initFragments(_String, __String);
-			Types._UniqueCollection.initFragments(_UniqueCollection, __UniqueCollection);
-			Types._UnlimitedNatural.initFragments(_UnlimitedNatural, __UnlimitedNatural);
-
-			Init.initEnd();
-		}
-
-		/**
-		 * Force initialization of the fields of OCLstdlibTables::TypeFragments and all preceding sub-packages.
-		 */
-		public static void init() {}
-	}
+	// CTOR OclElement::OclElement
+	// CTOR Lambda T() : Set(Bag.T)
+	// CTOR Lambda T() : OrderedSet(OrderedSet.T)
+	// CTOR Lambda T() : OrderedSet(Sequence.T)
+	// CTOR Lambda T() : Set(Set.T)
+	// OPERATIONS OrderedSet(Collection.T)
+	// OPERATIONS OrderedSet(flatten.T2)
+	// OPERATIONS OrderedSet(selectByKind.TT)
+	// OPERATIONS OrderedSet(selectByType.TT)
+	// OPERATIONS OrderedSet(OrderedSet.T)
+	// OPERATIONS OrderedSet(Sequence.T)
+	// OPERATIONS OrderedSet(Set.T)
+	// OPERATIONS OrderedSet(UniqueCollection.T)
+	// OPERATIONS Sequence(Integer)
+	// OPERATIONS Sequence(String)
+	// OPERATIONS Sequence(Bag.T)
+	// OPERATIONS Sequence(Collection.T)
+	// OPERATIONS Sequence(collectNested.V)
+	// OPERATIONS Sequence(collect.V)
+	// OPERATIONS Sequence(collectNested.V)
+	// OPERATIONS Sequence(collect.V)
+	// OPERATIONS Sequence(flatten.T2)
+	// OPERATIONS Sequence(selectByKind.TT)
+	// OPERATIONS Sequence(selectByType.TT)
+	// OPERATIONS Sequence(Sequence.T)
+	// OPERATIONS Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// OPERATIONS Set(Bag.T)
+	// OPERATIONS Set(Collection.T)
+	// OPERATIONS Set(Map.K)
+	// OPERATIONS Set(OclElement)
+	// OPERATIONS Set(OclSelf)
+	// OPERATIONS Set(OclSelf[*|?])
+	// OPERATIONS Set(flatten.T2)
+	// OPERATIONS Set(selectByKind.TT)
+	// OPERATIONS Set(selectByType.TT)
+	// OPERATIONS Set(Set.T)
+	// OPERATIONS Set(UniqueCollection.T)
+	// PROPERTIES OrderedSet(Collection.T)
+	// PROPERTIES OrderedSet(flatten.T2)
+	// PROPERTIES OrderedSet(selectByKind.TT)
+	// PROPERTIES OrderedSet(selectByType.TT)
+	// PROPERTIES OrderedSet(OrderedSet.T)
+	// PROPERTIES OrderedSet(Sequence.T)
+	// PROPERTIES OrderedSet(Set.T)
+	// PROPERTIES OrderedSet(UniqueCollection.T)
+	// PROPERTIES Sequence(Integer)
+	// PROPERTIES Sequence(String)
+	// PROPERTIES Sequence(Bag.T)
+	// PROPERTIES Sequence(Collection.T)
+	// PROPERTIES Sequence(collectNested.V)
+	// PROPERTIES Sequence(collect.V)
+	// PROPERTIES Sequence(collectNested.V)
+	// PROPERTIES Sequence(collect.V)
+	// PROPERTIES Sequence(flatten.T2)
+	// PROPERTIES Sequence(selectByKind.TT)
+	// PROPERTIES Sequence(selectByType.TT)
+	// PROPERTIES Sequence(Sequence.T)
+	// PROPERTIES Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// PROPERTIES Set(Bag.T)
+	// PROPERTIES Set(Collection.T)
+	// PROPERTIES Set(Map.K)
+	// PROPERTIES Set(OclElement)
+	// PROPERTIES Set(OclSelf)
+	// PROPERTIES Set(OclSelf[*|?])
+	// PROPERTIES Set(flatten.T2)
+	// PROPERTIES Set(selectByKind.TT)
+	// PROPERTIES Set(selectByType.TT)
+	// PROPERTIES Set(Set.T)
+	// PROPERTIES Set(UniqueCollection.T)
+	// SUPER_CLASSES OrderedSet(Collection.T)
+	// SUPER_CLASSES OrderedSet(flatten.T2)
+	// SUPER_CLASSES OrderedSet(selectByKind.TT)
+	// SUPER_CLASSES OrderedSet(selectByType.TT)
+	// SUPER_CLASSES OrderedSet(OrderedSet.T)
+	// SUPER_CLASSES OrderedSet(Sequence.T)
+	// SUPER_CLASSES OrderedSet(Set.T)
+	// SUPER_CLASSES OrderedSet(UniqueCollection.T)
+	// SUPER_CLASSES Sequence(Integer)
+	// SUPER_CLASSES Sequence(String)
+	// SUPER_CLASSES Sequence(Bag.T)
+	// SUPER_CLASSES Sequence(Collection.T)
+	// SUPER_CLASSES Sequence(collectNested.V)
+	// SUPER_CLASSES Sequence(collect.V)
+	// SUPER_CLASSES Sequence(collectNested.V)
+	// SUPER_CLASSES Sequence(collect.V)
+	// SUPER_CLASSES Sequence(flatten.T2)
+	// SUPER_CLASSES Sequence(selectByKind.TT)
+	// SUPER_CLASSES Sequence(selectByType.TT)
+	// SUPER_CLASSES Sequence(Sequence.T)
+	// SUPER_CLASSES Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// SUPER_CLASSES Set(Bag.T)
+	// SUPER_CLASSES Set(Collection.T)
+	// SUPER_CLASSES Set(Map.K)
+	// SUPER_CLASSES Set(OclElement)
+	// SUPER_CLASSES Set(OclSelf)
+	// SUPER_CLASSES Set(OclSelf[*|?])
+	// SUPER_CLASSES Set(flatten.T2)
+	// SUPER_CLASSES Set(selectByKind.TT)
+	// SUPER_CLASSES Set(selectByType.TT)
+	// SUPER_CLASSES Set(Set.T)
+	// SUPER_CLASSES Set(UniqueCollection.T)
+	// TYPE Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T)
+	// TYPE Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T)
+	// TYPE OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
+	// TYPE OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
+	// TYPE OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T)
+	// TYPE Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
+	// TYPE Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
+	// TYPE Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
+	// TYPE Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
+	// TYPE Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T)
+	// TYPE Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
+	// TYPE Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
+	// TYPE Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T)
+	// TYPE UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T)
+	// TYPE Boolean::allInstances(Integer[1]) : Set(OclSelf)
+	// TYPE String::characters() : Sequence(String)
+	// TYPE String::tokenize() : Sequence(String)
+	// TYPE String::tokenize(String[1]) : Sequence(String)
+	// TYPE String::tokenize(String[1],Boolean[1]) : Sequence(String)
+	// TYPE BooleanType::allInstances() : Set(OclSelf)
+	// TYPE Class::allInstances() : Set(OclSelf)
+	// TYPE Collection(T)::asOrderedSet() : OrderedSet(Collection.T)
+	// TYPE Collection(T)::asSequence() : Sequence(Collection.T)
+	// TYPE Collection(T)::asSet() : Set(Collection.T)
+	// TYPE Collection(T)::intersection(UniqueCollection(Collection.T)) : Set(Collection.T)
+	// TYPE Collection(T)::product(T2)(Collection(product.T2)) : Set(Tuple(first:Collection.T[1],second:product.T2[1]))
+	// TYPE Enumeration::allInstances() : Set(OclSelf)
+	// TYPE InvalidType::allInstances() : Set(OclSelf)
+	// TYPE Map(K,V)::keys() : Set(Map.K)
+	// TYPE OclAny::oclAsSet() : Set(OclSelf)
+	// TYPE OclAny::oclTypes() : Set(OclSelf)
+	// TYPE OclElement::allInstances(Integer[1]) : Set(OclSelf)
+	// TYPE OclElement::oclContents() : Set(OclElement)
+	// TYPE OclElement::oclExtensions() : Set(OclElement)
+	// TYPE OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement)
+	// TYPE OclElement::oclModelTypes() : Set(OclSelf)
+	// TYPE OclEnumeration::allInstances(Integer[1]) : Set(OclSelf)
+	// TYPE OclInvalid::allInstances(Integer[1]) : Set(OclSelf)
+	// TYPE OclInvalid::oclAsSet() : Set(OclSelf)
+	// TYPE OclStereotype::allInstances(Integer[1]) : Set(OclSelf)
+	// TYPE OclVoid::allInstances(Integer[1]) : Set(OclSelf[*|?])
+	// TYPE OclVoid::oclAsSet() : Set(OclSelf)
+	// TYPE OclVoid::oclTypes() : Set(OclSelf)
+	// TYPE OrderedSet(T)::-(UniqueCollection(OclAny)) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::excludingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2)
+	// TYPE OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::includingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T)
+	// TYPE OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT)
+	// TYPE OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT)
+	// TYPE OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T)
+	// TYPE Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::appendAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::excludingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::flatten(T2)() : Sequence(flatten.T2)
+	// TYPE Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::includingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::prependAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
+	// TYPE Sequence(T)::reverse() : Sequence(Sequence.T)
+	// TYPE Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT)
+	// TYPE Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT)
+	// TYPE Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T)
+	// TYPE Set(T)::-(UniqueCollection(OclAny)) : Set(Set.T)
+	// TYPE Set(T)::excluding(Set.T[?]) : Set(Set.T)
+	// TYPE Set(T)::excludingAll(Collection(Set.T)) : Set(Set.T)
+	// TYPE Set(T)::flatten(T2)() : Set(flatten.T2)
+	// TYPE Set(T)::including(Set.T[?]) : Set(Set.T)
+	// TYPE Set(T)::includingAll(Collection(Set.T)) : Set(Set.T)
+	// TYPE Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT)
+	// TYPE Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT)
+	// TYPE Stereotype::allInstances() : Set(OclSelf)
+	// TYPE UniqueCollection(T)::intersection(Collection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// TYPE UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny)) : Set(UniqueCollection.T)
+	// TYPE UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// TYPE VoidType::allInstances() : Set(OclSelf[*|?])
 
 	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
@@ -1351,7 +2926,7 @@ public class OCLstdlibTables extends AbstractTables
 	public static class FragmentOperations {
 		static {
 			Init.initStart();
-			TypeFragments.init();
+			Properties.init();
 		}
 
 		private static final @NonNull Operation @NonNull [] _Bag__Bag = {
@@ -2740,6 +4315,24 @@ public class OCLstdlibTables extends AbstractTables
 		public static void init() {}
 	}
 
+	// OPERATIONS Lambda T() : Set(Bag.T)
+	// OPERATIONS Lambda T() : OrderedSet(OrderedSet.T)
+	// OPERATIONS Lambda T() : OrderedSet(Sequence.T)
+	// OPERATIONS Lambda T() : Set(Set.T)
+	// PROPERTIES OclElement
+	// PROPERTIES Lambda T() : Set(Bag.T)
+	// PROPERTIES Lambda T() : OrderedSet(OrderedSet.T)
+	// PROPERTIES Lambda T() : OrderedSet(Sequence.T)
+	// PROPERTIES Lambda T() : Set(Set.T)
+	// SUPER_CLASSES Lambda T() : Set(Bag.T)
+	// SUPER_CLASSES Lambda T() : OrderedSet(OrderedSet.T)
+	// SUPER_CLASSES Lambda T() : OrderedSet(Sequence.T)
+	// SUPER_CLASSES Lambda T() : Set(Set.T)
+	// TYPE Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T)
+	// TYPE OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T)
+	// TYPE Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T)
+	// TYPE Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T)
+
 	/**
 	 *	The lists of local properties for the local fragment of each type.
 	 */
@@ -2888,6 +4481,7 @@ public class OCLstdlibTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+
 
 	/**
 	 *	The lists of enumeration literals for each enumeration.

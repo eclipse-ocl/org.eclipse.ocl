@@ -86,16 +86,16 @@ public interface CompleteClass extends NamedElement
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
-	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter);
-	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter);
+	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
 	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty);
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
-	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
-	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	@Nullable Property getProperty(@NonNull String propertyName);
-	@NonNull Iterable<@NonNull State>  getStates();
-	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
-	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();
+	@NonNull Iterable<@NonNull CompleteClass> getSelfAndAllSuperCompleteClasses();
+	@NonNull Iterable<@NonNull State> getStates();
+	@NonNull Iterable<@NonNull State> getStates(@Nullable String name);
 } // CompleteClass

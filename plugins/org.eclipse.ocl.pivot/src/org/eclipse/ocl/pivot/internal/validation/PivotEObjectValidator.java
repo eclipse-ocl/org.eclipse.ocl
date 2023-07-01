@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -193,7 +192,7 @@ public class PivotEObjectValidator implements EValidator
 		//			}
 		ExpressionInOCL query;
 		try {
-			query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+			query = ((EnvironmentFactoryInternal)environmentFactory).parseSpecification(specification);
 		} catch (ParserException e) {
 			String message = e.getLocalizedMessage();
 			return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });

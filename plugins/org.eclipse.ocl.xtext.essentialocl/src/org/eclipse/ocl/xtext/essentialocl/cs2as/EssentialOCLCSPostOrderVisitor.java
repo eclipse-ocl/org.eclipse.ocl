@@ -69,8 +69,8 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						OCLExpression asExpression = context.visitLeft2Right(OCLExpression.class, csStatusExpression);
 						asSpecification.setOwnedBody(asExpression);
 						boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-						helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
 						PivotUtil.setBody(asSpecification, asExpression, statusText);
+						asSpecification.setType(context.getStandardLibrary().getBooleanType());
 					}
 					else {
 						TupleLiteralPart asStatusTuplePart = PivotUtilInternal.getNonNullAst(TupleLiteralPart.class, csStatusSpecification);
@@ -81,15 +81,17 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						OCLExpression asMessageExpression = csMessageExpression != null ? context.visitLeft2Right(OCLExpression.class, csMessageExpression) : null;
 						asMessageTuplePart.setOwnedInit(asMessageExpression);
 						@SuppressWarnings("null")@NonNull OCLExpression asTuplePartExp = asSpecification.getOwnedBody();
-						helper.setType(asSpecification, asTuplePartExp.getType(), true);
+					//	helper.setType(asSpecification, asTuplePartExp.getType(), true);
 						String messageText = csMessageExpression != null ? ElementUtil.getExpressionText(csMessageExpression) : "null";
 						String tupleText = PivotUtil.createTupleValuedConstraint(statusText, null, messageText);
 						PivotUtil.setBody(asSpecification, asTuplePartExp, tupleText);
+						asSpecification.setType(context.getStandardLibrary().getBooleanType());
 					}
 				}
 				else {
 					@SuppressWarnings("null")@NonNull LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
 					asSpecification.setBody(csStatusSpecification.getExprString());
+					asSpecification.setType(context.getStandardLibrary().getBooleanType());
 				}
 			}
 			return null;

@@ -884,7 +884,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				elementType = valueType;
 			}
 			else {
-				elementType = elementType.getCommonType(this, valueType);
+				elementType = standardLibrary.getCommonType(elementType, valueType);
 			}
 		}
 		if (elementType == null) {
@@ -902,7 +902,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				elementType = valueType;
 			}
 			else {
-				elementType = elementType.getCommonType(this, valueType);
+				elementType = standardLibrary.getCommonType(elementType, valueType);
 			}
 		}
 		return elementType;
@@ -1050,7 +1050,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		TemplateParameter templateParameter = staticType.isTemplateParameter();
 		if (templateParameter != null) {
-			return PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+			return standardLibrary.getLowerBound(templateParameter);
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -1067,7 +1067,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if ((assessedTypeKeys == null) ? (anotherTypeId != bestTypeId) : !assessedTypeKeys.contains(anotherTypeId)) {
 				Type anotherType = key2type.get(anotherTypeId);
 				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
+				Type commonType = standardLibrary.getCommonType(bestType, anotherType);
 				if ((commonType != bestType) && (commonType instanceof org.eclipse.ocl.pivot.Class)) {
 					if (assessedTypeKeys == null) {
 						assessedTypeKeys = new ArrayList<>();
@@ -1098,7 +1098,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if ((assessedTypeKeys == null) ? (anotherTypeKey != bestTypeKey) : !assessedTypeKeys.contains(anotherTypeKey)) {
 				Type anotherType = key2type.get(anotherTypeKey);
 				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
+				Type commonType = standardLibrary.getCommonType(bestType, anotherType);
 				if (commonType != bestType) {
 					if (assessedTypeKeys == null) {
 						assessedTypeKeys = new ArrayList<>();
@@ -1244,7 +1244,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			assert typeKey != null;
 			Type type = key2type.get(typeKey);
 			if (type == null) {
-				type = getFlatClass(typeKey).getPivotClass();
+				type = getFlatClass(typeKey).getASClass();
 				assert type != null;
 				key2type.put(typeKey, type);
 			}

@@ -330,8 +330,9 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			 * reportsTo(self)
 			 */
 			final /*@NonInvalid*/ boolean reportsTo = _1.reportsTo(this);
+			final /*@NonInvalid*/ @NonNull Boolean BOXED_reportsTo = reportsTo;
 			//
-			if (reportsTo) {
+			if (BOXED_reportsTo) {
 				accumulator.add(_1);
 			}
 		}
@@ -557,7 +558,8 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 						}
 						else {
 							final /*@NonInvalid*/ boolean hasNameAsAttribute = this.isHasNameAsAttribute();
-							if (!hasNameAsAttribute) {
+							final /*@NonInvalid*/ @NonNull Boolean BOXED_hasNameAsAttribute = hasNameAsAttribute;
+							if (!BOXED_hasNameAsAttribute) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -580,7 +582,8 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 					}
 					else {
 						final /*@NonInvalid*/ boolean hasNameAsOperation = this.hasNameAsOperation();
-						if (!hasNameAsOperation) {
+						final /*@NonInvalid*/ @NonNull Boolean BOXED_hasNameAsOperation = hasNameAsOperation;
+						if (!BOXED_hasNameAsOperation) {
 							status = ValueUtil.FALSE_VALUE;
 						}
 						else {
@@ -654,7 +657,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 					/*@Caught*/ @NonNull Object CAUGHT_notEmpty;
 					try {
 						final /*@NonInvalid*/ @Nullable String name = this.getName();
-						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, CodegencompanyTables.SET_PRIMid_String, name);
+						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, CodegencompanyTables.SET_DATAid_EString, name);
 						final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
 						CAUGHT_notEmpty = notEmpty;
 					}

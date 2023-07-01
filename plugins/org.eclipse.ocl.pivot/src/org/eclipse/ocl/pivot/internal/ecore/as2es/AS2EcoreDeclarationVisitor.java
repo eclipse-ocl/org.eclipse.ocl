@@ -65,12 +65,14 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -82,7 +84,6 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
@@ -259,8 +260,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
-		String name = pivotNamedElement.getName();
-		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
+		String name = NameUtil.getName(pivotNamedElement);
+		String validName = getValidName(pivotNamedElement);
 		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
 			EObject eContainer = pivotNamedElement.eContainer();
 			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
@@ -305,6 +306,124 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eAnnotation;
 	}
 
+	public @NonNull String getValidName(@NonNull NamedElement pivotNamedElement) {
+		String name = NameUtil.getName(pivotNamedElement);
+		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
+		if (pivotNamedElement instanceof Operation) {	// Ecore signatures ignore Collection aspects so Collection overloads need new names
+			Operation asOperation1 = (Operation)pivotNamedElement;
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation1);
+			int ambiguities = 0;
+			int thisAmbiguity = -1;
+			for (@NonNull Operation asOperation2 : PivotUtil.getOwnedOperations(asClass)) {
+				if (asOperation1 == asOperation2) {
+					thisAmbiguity = ambiguities;
+				}
+				else if (name.equals(asOperation2.getName())) {
+					if (!isDistinctInEcore(asOperation1, asOperation2)) {
+						ambiguities++;
+					}
+				}
+			}
+			if (ambiguities > 0) {
+				validName = validName + "_" + thisAmbiguity;
+			}
+		}
+		return validName;
+	}
+
+	private boolean isDistinctInEcore(@NonNull Operation asOperation1, @NonNull Operation asOperation2) {
+		List<@NonNull Parameter> asParameters1 = PivotUtilInternal.getOwnedParametersList(asOperation1);
+		List<@NonNull Parameter> asParameters2 = PivotUtilInternal.getOwnedParametersList(asOperation2);
+		if (isDistinctInEcore(asParameters1, asParameters2)) {
+			return true;
+		}
+		boolean isIteration1 = asOperation1 instanceof Iteration;
+		boolean isIteration2 = asOperation2 instanceof Iteration;
+		if (isIteration1 && isIteration2) {
+			@NonNull Iteration asIteration1 = (Iteration)asOperation1;
+			@NonNull Iteration asIteration2 = (Iteration)asOperation2;
+			List<@NonNull Parameter> asIterators1 = PivotUtilInternal.getOwnedIteratorsList(asIteration1);
+			List<@NonNull Parameter> asIterators2 = PivotUtilInternal.getOwnedIteratorsList(asIteration2);
+			if (isDistinctInEcore(asIterators1, asIterators2)) {
+				return true;
+			}
+			List<@NonNull Parameter> asAccumulators1 = PivotUtilInternal.getOwnedAccumulatorsList(asIteration1);
+			List<@NonNull Parameter> asAccumulators2 = PivotUtilInternal.getOwnedAccumulatorsList(asIteration2);
+			if (isDistinctInEcore(asAccumulators1, asAccumulators2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isDistinctInEcore(@NonNull List<@NonNull Parameter> asParameters1, @NonNull List<@NonNull Parameter> asParameters2) {
+		int iSize = asParameters1.size();
+		if (iSize != asParameters2.size()) {
+			return true;
+		}
+		for (int i = 0; i < iSize; i++) {
+			@NonNull Parameter asParameter1 = asParameters1.get(i);
+			@NonNull Parameter asParameter2 = asParameters2.get(i);
+			@NonNull Type asType1 = PivotUtil.getType(asParameter1);
+			@NonNull Type asType2 = PivotUtil.getType(asParameter2);
+			@NonNull TypeId asTypeId1 = asType1.getTypeId();
+			@NonNull TypeId asTypeId2 = asType2.getTypeId();
+			if (asTypeId1 instanceof CollectionTypeId) asTypeId1 = ((CollectionTypeId)asTypeId1).getElementTypeId();
+			if (asTypeId2 instanceof CollectionTypeId) asTypeId2 = ((CollectionTypeId)asTypeId2).getElementTypeId();
+			if (asTypeId1 != asTypeId2) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Return all namespaces imported by pivotModel.
+	 *
+	 * Accurately identifying whether a reference is from an Ecore/OCL specialization is too hard.
+	 *
+	private @NonNull Set<@NonNull Namespace> resolveImportedNamespaces(@NonNull Model pivotModel) {
+		Set<@NonNull Namespace> importedNamespaces = new HashSet<>();
+		Map<EObject, Collection<Setting>> eObject2settings = EcoreUtil.ExternalCrossReferencer.find(pivotModel);
+		for (Map.Entry<EObject, Collection<Setting>> entry : eObject2settings.entrySet()) {
+			EObject eTarget = entry.getKey();
+			for (EObject eContainer1 = eTarget; eContainer1 != null; eContainer1 = eContainer1.eContainer()) {
+				if ((eContainer1 instanceof org.eclipse.ocl.pivot.Package) || (eContainer1 instanceof Model)) {
+					Namespace importedNamespace = (Namespace)eContainer1;
+					for (Setting setting : entry.getValue()) {
+						EObject eSource = setting.getEObject();
+						EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+						for (EObject eContainer2 = eSource; eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
+							if ((eContainer2 instanceof VariableDeclaration) && eStructuralFeature == PivotPackage.Literals.TYPED_ELEMENT__TYPE ) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							}
+							else if ((eContainer2 instanceof TemplateParameterSubstitution) && eStructuralFeature == PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL ) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							}
+						/*	else if ((eContainer2 instanceof VariableDeclaration) /*|| (eContainer2 instanceof OCLExpression) || (eContainer2 instanceof ExpressionInOCL)* /) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							} * /
+							else if ((eContainer2 instanceof Feature)) {
+								if (eTarget instanceof Element) {
+									EObject esObject = ((Element)eTarget).getESObject();
+									if ((esObject != EcorePackage.Literals.EBIG_DECIMAL) && (esObject != EcorePackage.Literals.EBIG_DECIMAL) && (esObject != EcorePackage.Literals.EBOOLEAN) && (esObject != EcorePackage.Literals.EBOOLEAN_OBJECT) && (esObject != EcorePackage.Literals.ESTRING)) {
+										importedNamespaces.add(importedNamespace);
+									}
+								}
+								break;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		return importedNamespaces;
+	} */
+
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {
 		for (Element pivotObject : pivotObjects) {
 			@SuppressWarnings("unchecked")
@@ -336,26 +455,36 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
-	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		if (pivotAnyType.getOwnedBindings().size() > 0) {
+	public EObject visitAnyType(@NonNull AnyType asAnyType) {
+		@NonNull EClass eClass = visitClass(asAnyType);
+	/*	if (asAnyType.getOwnedBindings().size() > 0) {
 			return null;
 		}
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		copyClassifier(eClass, pivotAnyType);
-		Class<?> instanceClass = null;
-		String name = pivotAnyType.getName();
-		if (TypeId.OCL_ANY_NAME.equals(name)) {
-			instanceClass = Object.class;
+		copyClassifier(eClass, asAnyType); */
+		String name = asAnyType.getName();
+		if (asAnyType.eIsSet(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME)) {
+			eClass.setInstanceClassName(asAnyType.getInstanceClassName());
 		}
-		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(true); //pivotAnyType.isIsAbstract());
-		eClass.setInterface(true); //pivotAnyType.isIsInterface());
+		else {
+			eClass.eUnset(EcorePackage.Literals.ECLASSIFIER__INSTANCE_CLASS_NAME);
+		}
+		//	Class<?> instanceClass = null;
+		//	if (TypeId.OCL_ANY_NAME.equals(name)) {
+		//		instanceClass = Object.class;
+		//	}
+		//	eClass.setInstanceClass(instanceClass);
+		eClass.setAbstract(asAnyType.isIsAbstract());
+		eClass.setInterface(asAnyType.isIsInterface());
 		return eClass;
 	}
 
 	@Override
 	public EClass visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		if ("OclAny".equals(pivotClass.getName())) {
+			getClass();		// XXX
+		}
 		if (pivotClass.getOwnedBindings().size() > 0) {
 			return null;
 		}
@@ -457,8 +586,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
-		if ((pivotDataType.getOwnedOperations().size() > 0) && context.isKeepOperations()) {
-			return (EObject) super.visitDataType(pivotDataType);
+		if (!context.isEcoreDataType(pivotDataType)) {
+			EClass asDataType = visitClass(pivotDataType);
+			AnnotationUtil.setDetail(asDataType, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_DATA_TYPE);
+			return asDataType;
 		}
 		if (pivotDataType.getOwnedBindings().size() > 0) {
 			return null;
@@ -506,8 +637,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public Object visitIterableType(@NonNull IterableType asIterableType) {
 		EClass eClass = visitClass(asIterableType);
 		if (eClass != null) {
-			eClass.setAbstract(true);
-			eClass.setInterface(true);
+		//	eClass.setAbstract(true);
+		//	eClass.setInterface(true);
 		}
 		return eClass;
 	}
@@ -567,20 +698,18 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		List<Import> imports = pivotModel.getOwnedImports();
 		if (imports.size() > 0) {
-			if (imports.size() > 0) {
+			if (imports.size() > 1) {
 				imports = new ArrayList<Import>(imports);
-				Collections.sort(imports, new Comparator<Import>()
-				{
-					@Override
-					public int compare(Import o1, Import o2) {
-						String n1 = o1.getName();
-						String n2 = o2.getName();
-						if (n1 == null) n1 = "";
-						if (n2 == null) n2 = "";
-						return n1.compareTo(n2);
-					}
-				}
-						);
+				Collections.sort(imports, new Comparator<Import>() {
+						@Override
+						public int compare(Import o1, Import o2) {
+							String n1 = o1.getName();
+							String n2 = o2.getName();
+							if (n1 == null) n1 = "";
+							if (n2 == null) n2 = "";
+							return n1.compareTo(n2);
+						}
+					});
 			}
 			URI ecoreURI = context.getEcoreURI();
 			int noNames = 0;
@@ -593,9 +722,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					}
 				}
 			}
+		//	Set<@NonNull Namespace> resolvedImportedNamespaces = null;
+		//	if (context.getOptions().get(AS2Ecore.OPTION_OPTIMIZE_IMPORTS) == Boolean.TRUE) {
+		//		resolvedImportedNamespaces = resolveImportedNamespaces(pivotModel);
+		//	}
 			for (Import anImport : imports) {
 				Namespace importedNamespace = anImport.getImportedNamespace();
-				if (importedNamespace != null) {
+				if ((importedNamespace != null) /*&& ((resolvedImportedNamespaces == null) || resolvedImportedNamespaces.contains(importedNamespace))*/) {
 					EObject eTarget = importedNamespace.getESObject();
 					String value;
 					if (eTarget != null) {
@@ -621,9 +754,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						key = value;
 						value = null;
 					}
-					String oldValue = AnnotationUtil.setDetail(firstElement, PivotConstants.IMPORT_ANNOTATION_SOURCE, key, value);
+					String oldValue = AnnotationUtil.setDetail(firstElement, AnnotationUtil.IMPORT_ANNOTATION_SOURCE, key, value);
 					if (oldValue != null) {
-						System.out.println("Conflicting " + PivotConstants.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
+						System.out.println("Conflicting " + AnnotationUtil.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
 					}
 				}
 			}
@@ -672,8 +805,24 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (implementationClass != null) {
 			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IMPLEMENTATION, implementationClass);
 		}
+		org.eclipse.ocl.pivot.Class owningClass = pivotOperation.getOwningClass();
+		if ((owningClass instanceof PrimitiveType) && ((PrimitiveType)owningClass).getCoercions().contains(pivotOperation)) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_COERCION, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsInvalidating()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_INVALIDATING, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsStatic()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_STATIC, Boolean.TRUE.toString());
+		}
 		if (pivotOperation.isIsTransient()) {
-			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, "true");
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsTypeof()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TYPE_OF, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsValidating()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_VALIDATING, Boolean.TRUE.toString());
 		}
 		Precedence precedence = pivotOperation.getPrecedence();
 		if (precedence != null) {
@@ -686,6 +835,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public @NonNull EPackage visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		@SuppressWarnings("null")
 		@NonNull EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		context.setEPackage(ePackage);
 		copyNamedElement(ePackage, pivotPackage);
 		context.defer(pivotPackage);		// Defer delegate annotation analysis
 		if (pivotPackage.eIsSet(PivotPackage.Literals.PACKAGE__NS_PREFIX)) {
@@ -758,7 +908,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			eReference.setResolveProxies(pivotProperty.isIsResolveProxies());
 			eStructuralFeature = eReference;
 		}
-		else if (type instanceof DataType) {
+		else if ((type instanceof DataType) && context.isEcoreDataType((DataType)type)) {
 			EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 			eAttribute.setID(pivotProperty.isIsID());
 			eStructuralFeature = eAttribute;
@@ -839,6 +989,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			eAnnotation.setSource(PivotConstants.REDEFINES_ANNOTATION_SOURCE);
 			eStructuralFeature.getEAnnotations().add(eAnnotation);
 		} */
+		String implementationClass = pivotProperty.getImplementationClass();
+		if (implementationClass != null) {
+			AnnotationUtil.setDetail(eStructuralFeature, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_IMPLEMENTATION, implementationClass);
+		}
+		if (pivotProperty.isIsStatic()) {
+			AnnotationUtil.setDetail(eStructuralFeature, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_IS_STATIC, "true");
+		}
 		return eStructuralFeature;
 	}
 

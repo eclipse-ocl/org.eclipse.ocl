@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
@@ -183,7 +184,7 @@ public class PivotHelper
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = metamodelManager.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
+		Type commonType = standardLibrary.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
@@ -331,16 +332,16 @@ public class PivotHelper
 					OCLExpression asArgument = asArguments[i];
 					Type asArgumentType = asArgument.getType();
 					if (asParameterType instanceof SelfType) {
-						if (asArgumentType.conformsTo(standardLibrary, asType) && asType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asArgumentType, asType) && standardLibrary.conformsTo(asType, asArgumentType)) {
 							exactMatches++;
 						}
 					}
 					else {
-						if (!asArgumentType.conformsTo(standardLibrary, asParameterType)) {
+						if (!standardLibrary.conformsTo(asArgumentType, asParameterType)) {
 							gotOne = false;
 							break;
 						}
-						if (asParameterType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asParameterType, asArgumentType)) {
 							exactMatches++;
 						}
 					}
@@ -543,7 +544,7 @@ public class PivotHelper
 	}
 
 	/**
-	 * Return the type to be used as the contextVariable type within the asType declration.
+	 * Return the type to be used as the contextVariable type within the asType declaration.
 	 */
 	public @NonNull Type getContextType(@NonNull Type asType) {
 		if (!(asType instanceof TemplateableElement)) {
@@ -551,7 +552,7 @@ public class PivotHelper
 		}
 		TemplateableElement generic = ((TemplateableElement)asType).getGeneric();
 		assert generic == null;
-		return standardLibrary.resolveSelfSpecialization(asType);
+		return standardLibrary.resolveContextSpecialization(asType);
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
@@ -767,6 +768,7 @@ public class PivotHelper
 		else {
 			assert !asOperation.isIsTypeof();			// typeof return declaration must now be realized by an operation override
 		}
+		assert !TemplateSpecialisation.needsCompletion(returnType);
 		setType(asCallExp, returnType, returnIsRequired, (Type)returnValue);
 	}
 
@@ -789,12 +791,13 @@ public class PivotHelper
 		}
 	}
 
-	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
+	public void setType(@NonNull TypedElement asTypedElement, Type asType, boolean isRequired) {
+		assert !TemplateSpecialisation.needsCompletion(asType);
+		assert !TemplateSpecialisation.needsSpecialisation(asType);
 		Type primaryType;
-		if (type != null) {
-		// too soon:	type = TemplateParameterSubstitutionVisitor.specializeType(type, asTypedElement, (EnvironmentFactoryInternal)environmentFactory, null, null);
-			type = standardLibrary.resolveSelfSpecialization(type);
-			primaryType = metamodelManager.getPrimaryType(type);
+		if (asType != null) {
+			asType = standardLibrary.resolveIncompleteSpecialization(asType);
+			primaryType = metamodelManager.getPrimaryType(asType);
 		}
 		else {
 			primaryType = null;

@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
@@ -42,7 +42,7 @@ public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValida
 
 	public static final @NonNull OCL_Import_AnnotationValidator INSTANCE = new OCL_Import_AnnotationValidator();
 	public static final @NonNull String ANNOTATION_NAME = "OCL_Import";
-	public static final @NonNull String ANNOTATION_SOURCE = PivotConstants.IMPORT_ANNOTATION_SOURCE;
+	public static final @NonNull String ANNOTATION_SOURCE = AnnotationUtil.IMPORT_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
 	public OCL_Import_AnnotationValidator() {

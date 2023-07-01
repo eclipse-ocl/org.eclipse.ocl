@@ -12,13 +12,11 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
@@ -41,8 +39,8 @@ public class OclAnyOclTypesOperation extends AbstractUnaryOperation
 	/**
 	 * @since 1.18
 	 */
-	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return environmentFactory.getStandardLibrary().getSetType();
-	}
+//	@Override
+//	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+//		return environmentFactory.getStandardLibrary().getSetType();
+//	}
 }

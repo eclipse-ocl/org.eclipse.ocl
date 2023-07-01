@@ -13,8 +13,11 @@ package org.eclipse.ocl.pivot.library;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -43,9 +46,21 @@ public abstract class AbstractAllInstancesOperation extends AbstractUnaryOperati
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		OCLExpression asSource = PivotUtil.getOwnedSource(callExp);
-		Type asTypeValue = asSource.getTypeValue();
-		if (asTypeValue != null) {
-			return environmentFactory.getStandardLibrary().getSetType(asTypeValue, true, null, null);
+		Type asElementType = asSource.getTypeValue();
+		if (asElementType != null) {
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+			if (asElementType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asElementType;
+				if (asClass.getGeneric() == null) {
+					TemplateSignature asSignature = asClass.getOwnedSignature();
+					if (asSignature != null) {
+						WildcardType wildcardType = standardLibrary.getWildcardType(asSignature.getOwnedParameters().get(0));		// asTypeValue lowerbound
+						wildcardType.getConstrainingClasses().add(asClass);
+						asElementType = wildcardType;
+					}
+				}
+			}
+			return standardLibrary.getSetType(asElementType, true, null, null);
 		}
 		else {
 			return returnType;			// Shouldn't happen

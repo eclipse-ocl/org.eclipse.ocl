@@ -28,7 +28,16 @@ public class CompleteFlatModel extends AbstractFlatModel
 	}
 
 	public @NonNull CompleteFlatClass createFlatClass(@NonNull CompleteClass completeClass) {
-		return new CompleteFlatClass(this, completeClass);
+		org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+		if (asClass.getOwnedSignature() != null) {
+			return new GenericCompleteFlatClass(this, completeClass);
+		}
+		else if (asClass.getOwnedBindings().size() > 0) {
+			return new SpecializedCompleteFlatClass(this, completeClass);
+		}
+		else {
+			return new BasicCompleteFlatClass(this, completeClass);
+		}
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.lookup.*;
 import org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment;
 import org.eclipse.ocl.pivot.internal.lookup.LookupFactory;
 import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;

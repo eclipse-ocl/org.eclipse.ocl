@@ -17,16 +17,28 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Evaluates to the type of the collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation"/>
+        <details key="isStatic" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" lowerBound="1" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Evaluates to the lower bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation"/>
+        <details key="isStatic" value="true"/>
+      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="upper" lowerBound="1" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Evaluates to the upper bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation"/>
+        <details key="isStatic" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -39,11 +51,19 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation"/>
+        <details key="isStatic" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//Map/K"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation"/>
+        <details key="isStatic" value="true"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/V"/>
     </eStructuralFeatures>
@@ -62,11 +82,17 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The object for which self is a composed content or null if there is no such object.&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty"/>
+      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oclContents" ordered="false"
         upperBound="-1" eType="#//OclElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The composed contents of self."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="implementation" value="org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -139,34 +165,44 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="_Entry_COCO" instanceClassName="java.util.Map$Entry"
+  <eClassifiers xsi:type="ecore:EClass" name="_Entry_1" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key">
-      <eGenericType eTypeParameter="#//_Entry_COCO/K"/>
+      <eGenericType eTypeParameter="#//_Entry_1/K"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value">
-      <eGenericType eTypeParameter="#//_Entry_COCO/V"/>
+      <eGenericType eTypeParameter="#//_Entry_1/V"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Entry_CRCR" instanceClassName="java.util.Map$Entry"
+  <eClassifiers xsi:type="ecore:EClass" name="_Entry_2" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1">
-      <eGenericType eTypeParameter="#//_Entry_CRCR/K"/>
+      <eGenericType eTypeParameter="#//_Entry_2/K"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1">
-      <eGenericType eTypeParameter="#//_Entry_CRCR/V"/>
+      <eGenericType eTypeParameter="#//_Entry_2/V"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CC" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_1" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_2" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="_Tuple_1" abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eTypeParameters name="T2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="first" lowerBound="1">
+      <eGenericType eTypeParameter="#//_Tuple_1/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="second" lowerBound="1">
+      <eGenericType eTypeParameter="#//_Tuple_1/T2"/>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

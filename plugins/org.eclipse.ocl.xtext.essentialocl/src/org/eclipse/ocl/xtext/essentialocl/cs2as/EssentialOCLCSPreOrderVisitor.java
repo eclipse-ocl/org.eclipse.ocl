@@ -165,7 +165,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if (type == null) {
 				type = standardLibrary.getLibraryType(name);
 			}
-			type = standardLibrary.resolveSelfSpecialization(type);
+			type = standardLibrary.resolveContextSpecialization(type);
 			context.installPivotTypeWithMultiplicity(type, csElement);
 			return null;
 		}

@@ -111,6 +111,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -122,7 +123,6 @@ import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -652,6 +652,7 @@ public class PivotUtil
 	}
 
 	public static @NonNull Parameter createParameter(@NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+		assert asType != null;
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
 		asParameter.setType(asType);
@@ -671,7 +672,8 @@ public class PivotUtil
 	 * @since 1.16
 	 */
 	public static @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EDataType eDataType) {
-		boolean isBoolean = eDataType.getInstanceClass() == Boolean.class;
+		Class<?> instanceClass = eDataType.getInstanceClass();
+		boolean isBoolean = (instanceClass == Boolean.class) || (instanceClass == boolean.class);
 		PrimitiveType pivotType = isBoolean ? PivotFactory.eINSTANCE.createBooleanType() : PivotFactory.eINSTANCE.createPrimitiveType();
 		pivotType.setName(eDataType.getName());
 		((PivotObjectImpl)pivotType).setESObject(eDataType);
@@ -1109,7 +1111,7 @@ public class PivotUtil
 			return (org.eclipse.ocl.pivot.Class)type;
 		}
 		else if (type instanceof TemplateParameter) {
-			return getLowerBound((TemplateParameter)type, standardLibrary.getOclAnyType());
+			return standardLibrary.getLowerBound((TemplateParameter)type);
 		}
 		return standardLibrary.getOclVoidType();			// Never happens
 	}
@@ -1123,6 +1125,14 @@ public class PivotUtil
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypedElement typedElement) {
 		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
+	}
+
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull TemplateParameter asTemplateParameter) {
+		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
+	}
+
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull WildcardType asWildcard) {
+		return ClassUtil.nullFree(asWildcard.getConstrainingClasses());
 	}
 
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
@@ -1332,14 +1342,6 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
 		return ClassUtil.nonNullState(mapType.getKeyType());
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter templateParameter, org.eclipse.ocl.pivot.@NonNull Class oclAnyType) {
-		org.eclipse.ocl.pivot.Class lowerBound = basicGetLowerBound(templateParameter);
-		return lowerBound != null ? lowerBound : oclAnyType;
 	}
 
 	/**
@@ -1781,7 +1783,11 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated
 	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
+		return getParameterTypes(lambdaType);
+	}
+	public static @NonNull List<@NonNull Type> getParameterTypes(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nullFree(lambdaType.getParameterType());
 	}
 
@@ -1956,6 +1962,10 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getResultType());
+	}
+
+	public static @NonNull TemplateParameter getTemplateParameter(@NonNull WildcardType asWildcard) {
+		return ClassUtil.nonNullState(asWildcard.getTemplateParameter());
 	}
 
 	/**
@@ -2189,7 +2199,7 @@ public class PivotUtil
 	@Deprecated /* @deprecated not used - try CSResource.setParserContext */
 	public static boolean setParserContext(@NonNull CSResource csResource, @NonNull EObject eObject, Object... unusedParameters) throws ParserException {
 		EnvironmentFactoryAdapter adapter = OCLInternal.adapt(csResource);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) adapter.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = adapter.getEnvironmentFactory();
 		Element pivotElement = environmentFactory.getTechnology().getParseableElement(environmentFactory, eObject);
 		if (pivotElement == null) {
 			return false;

@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
@@ -37,6 +36,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -897,16 +897,5 @@ implements DataType {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (type instanceof DataType) {
-			org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)type).getBehavioralClass();
-			if (behavioralClass != null) {
-				type = behavioralClass;		// See Bug 574431 for discussion of this dodgy downcast
-			}
-		}
-		return super.conformsTo(standardLibrary, type);
 	}
 } //DataTypeImpl

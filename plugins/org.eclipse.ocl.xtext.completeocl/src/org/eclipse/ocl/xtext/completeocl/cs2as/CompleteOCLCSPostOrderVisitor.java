@@ -65,13 +65,13 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 					Type asExpressionType = asExpression.getType();
 					Type asContextType = PivotUtil.getPivot(Type.class, csTypedRef);
 					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
-					if ((asContextType != null) && !asExpressionType.conformsTo(standardLibrary, asContextType)) {
+					if ((asContextType != null) && !standardLibrary.conformsTo(asExpressionType, asContextType)) {
 						PrimitiveType integerType = standardLibrary.getIntegerType();
 						Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
 						if (asCoercion != null) {
 							PrimitiveType unlimitedNaturalType = standardLibrary.getUnlimitedNaturalType();
-							if (asExpressionType.conformsTo(standardLibrary, integerType)) {
-								if (asContextType.conformsTo(standardLibrary, unlimitedNaturalType)) {
+							if (standardLibrary.conformsTo(asExpressionType, integerType)) {
+								if (standardLibrary.conformsTo(asContextType, unlimitedNaturalType)) {
 									asExpression = new PivotHelper(context.getEnvironmentFactory()).createCoercionCallExp(asExpression, asCoercion);
 								}
 							}

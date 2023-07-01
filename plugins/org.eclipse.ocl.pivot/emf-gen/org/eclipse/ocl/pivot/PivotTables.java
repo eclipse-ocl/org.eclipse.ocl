@@ -317,6 +317,14 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid__0, PivotTables.PARTid_);
 
+
+	// CTOR http://www.eclipse.org/ocl/2015/Library
+	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
+
+	// CTOR $$
+	// CTOR ocl
+	// CTOR pivot
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -653,6 +661,253 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR Boolean
+	// CTOR EcoreObject
+	// CTOR JavaClass
+	// CTOR LibraryFeature
+	// CTOR Object
+	// CTOR Throwable
+	// CTOR AssociativityKind
+	// CTOR CollectionKind
+	// CTOR PseudostateKind
+	// CTOR TransitionKind
+	// CTOR Integer
+	// CTOR Real
+	// CTOR String
+	// CTOR UnlimitedNatural
+	// CTOR OclAny
+	// CTOR OclElement
+	// CTOR OclEnumeration
+	// CTOR Annotation
+	// CTOR AnyType
+	// CTOR AssociationClass
+	// CTOR AssociationClassCallExp
+	// CTOR BagType
+	// CTOR Behavior
+	// CTOR BooleanLiteralExp
+	// CTOR BooleanType
+	// CTOR CallExp
+	// CTOR CallOperationAction
+	// CTOR Class
+	// CTOR CollectionItem
+	// CTOR CollectionLiteralExp
+	// CTOR CollectionLiteralPart
+	// CTOR CollectionRange
+	// CTOR CollectionType
+	// CTOR Comment
+	// CTOR CompleteClass
+	// CTOR CompleteEnvironment
+	// CTOR CompleteModel
+	// CTOR CompletePackage
+	// CTOR CompleteStandardLibrary
+	// CTOR ConnectionPointReference
+	// CTOR Constraint
+	// CTOR DataType
+	// CTOR Detail
+	// CTOR DynamicBehavior
+	// CTOR DynamicElement
+	// CTOR DynamicProperty
+	// CTOR DynamicType
+	// CTOR DynamicValueSpecification
+	// CTOR Element
+	// CTOR ElementExtension
+	// CTOR ElementLiteralExp
+	// CTOR EnumLiteralExp
+	// CTOR Enumeration
+	// CTOR EnumerationLiteral
+	// CTOR ExpressionInOCL
+	// CTOR Feature
+	// CTOR FeatureCallExp
+	// CTOR FinalState
+	// CTOR IfExp
+	// CTOR Import
+	// CTOR InstanceSpecification
+	// CTOR IntegerLiteralExp
+	// CTOR InvalidLiteralExp
+	// CTOR InvalidType
+	// CTOR IterableType
+	// CTOR IterateExp
+	// CTOR Iteration
+	// CTOR IteratorExp
+	// CTOR IteratorVariable
+	// CTOR JavaType
+	// CTOR LambdaType
+	// CTOR LanguageExpression
+	// CTOR LetExp
+	// CTOR LetVariable
+	// CTOR Library
+	// CTOR LiteralExp
+	// CTOR LoopExp
+	// CTOR MapLiteralExp
+	// CTOR MapLiteralPart
+	// CTOR MapType
+	// CTOR MessageExp
+	// CTOR MessageType
+	// CTOR Model
+	// CTOR MorePivotable
+	// CTOR Nameable
+	// CTOR NamedElement
+	// CTOR Namespace
+	// CTOR NavigationCallExp
+	// CTOR NullLiteralExp
+	// CTOR NumericLiteralExp
+	// CTOR OCLExpression
+	// CTOR Operation
+	// CTOR OperationCallExp
+	// CTOR OppositePropertyCallExp
+	// CTOR OrderedSetType
+	// CTOR OrphanCompletePackage
+	// CTOR Orphanage
+	// CTOR Package
+	// CTOR Parameter
+	// CTOR ParameterVariable
+	// CTOR Pivotable
+	// CTOR Precedence
+	// CTOR PrimitiveCompletePackage
+	// CTOR PrimitiveLiteralExp
+	// CTOR PrimitiveType
+	// CTOR Profile
+	// CTOR ProfileApplication
+	// CTOR Property
+	// CTOR PropertyCallExp
+	// CTOR Pseudostate
+	// CTOR RealLiteralExp
+	// CTOR ReferringElement
+	// CTOR Region
+	// CTOR ResultVariable
+	// CTOR SelfType
+	// CTOR SendSignalAction
+	// CTOR SequenceType
+	// CTOR SetType
+	// CTOR ShadowExp
+	// CTOR ShadowPart
+	// CTOR Signal
+	// CTOR Slot
+	// CTOR StandardLibrary
+	// CTOR State
+	// CTOR StateExp
+	// CTOR StateMachine
+	// CTOR Stereotype
+	// CTOR StereotypeExtender
+	// CTOR StringLiteralExp
+	// CTOR TemplateBinding
+	// CTOR TemplateParameter
+	// CTOR TemplateParameterSubstitution
+	// CTOR TemplateSignature
+	// CTOR TemplateableElement
+	// CTOR Transition
+	// CTOR Trigger
+	// CTOR TupleLiteralExp
+	// CTOR TupleLiteralPart
+	// CTOR TuplePart
+	// CTOR TupleType
+	// CTOR Type
+	// CTOR TypeExp
+	// CTOR TypedElement
+	// CTOR UnlimitedNaturalLiteralExp
+	// CTOR UnspecifiedValueExp
+	// CTOR ValueSpecification
+	// CTOR Variable
+	// CTOR VariableDeclaration
+	// CTOR VariableExp
+	// CTOR Vertex
+	// CTOR Visitable
+	// CTOR VoidType
+	// CTOR WildcardType
+	// CTOR Bag(Annotation)
+	// CTOR Bag(AssociationClassCallExp)
+	// CTOR Bag(CallOperationAction)
+	// CTOR Bag(Class)
+	// CTOR Bag(CollectionType)
+	// CTOR Bag(CompleteClass)
+	// CTOR Bag(CompleteModel)
+	// CTOR Bag(CompletePackage)
+	// CTOR Bag(ConnectionPointReference)
+	// CTOR Bag(Constraint)
+	// CTOR Bag(DataType)
+	// CTOR Bag(DynamicElement)
+	// CTOR Bag(DynamicProperty)
+	// CTOR Bag(ElementExtension)
+	// CTOR Bag(EnumLiteralExp)
+	// CTOR Bag(Import)
+	// CTOR Bag(InstanceSpecification)
+	// CTOR Bag(LambdaType)
+	// CTOR Bag(LoopExp)
+	// CTOR Bag(MapType)
+	// CTOR Bag(MessageType)
+	// CTOR Bag(NavigationCallExp)
+	// CTOR Bag(OCLExpression)
+	// CTOR Bag(OperationCallExp)
+	// CTOR Bag(Operation)
+	// CTOR Bag(OppositePropertyCallExp)
+	// CTOR Bag(Package)
+	// CTOR Bag(PrimitiveType)
+	// CTOR Bag(PropertyCallExp)
+	// CTOR Bag(Property)
+	// CTOR Bag(Region)
+	// CTOR Bag(SendSignalAction)
+	// CTOR Bag(ShadowPart)
+	// CTOR Bag(Slot)
+	// CTOR Bag(StateExp)
+	// CTOR Bag(StateMachine)
+	// CTOR Bag(State)
+	// CTOR Bag(TemplateBinding)
+	// CTOR Bag(TemplateParameterSubstitution)
+	// CTOR Bag(TemplateParameter)
+	// CTOR Bag(TemplateableElement)
+	// CTOR Bag(TypeExp)
+	// CTOR Bag(TypedElement)
+	// CTOR Bag(VariableDeclaration)
+	// CTOR Bag(VariableExp)
+	// CTOR Bag(Variable)
+	// CTOR Bag(WildcardType)
+	// CTOR OrderedSet(CollectionLiteralPart)
+	// CTOR OrderedSet(Detail)
+	// CTOR OrderedSet(Element)
+	// CTOR OrderedSet(EnumerationLiteral)
+	// CTOR OrderedSet(Import)
+	// CTOR OrderedSet(IteratorVariable[*|?])
+	// CTOR OrderedSet(MapLiteralPart)
+	// CTOR OrderedSet(OCLExpression)
+	// CTOR OrderedSet(Operation)
+	// CTOR OrderedSet(Parameter)
+	// CTOR OrderedSet(Precedence)
+	// CTOR OrderedSet(Property)
+	// CTOR OrderedSet(ShadowPart)
+	// CTOR OrderedSet(TemplateParameter[+|1])
+	// CTOR OrderedSet(TupleLiteralPart)
+	// CTOR OrderedSet(ValueSpecification)
+	// CTOR OrderedSet(Variable)
+	// CTOR Sequence(Type)
+	// CTOR Set(Behavior)
+	// CTOR Set(Class)
+	// CTOR Set(Comment)
+	// CTOR Set(CompleteClass)
+	// CTOR Set(CompletePackage)
+	// CTOR Set(ConnectionPointReference)
+	// CTOR Set(Constraint)
+	// CTOR Set(DynamicProperty)
+	// CTOR Set(ElementExtension)
+	// CTOR Set(Element)
+	// CTOR Set(InstanceSpecification)
+	// CTOR Set(Model)
+	// CTOR Set(Operation)
+	// CTOR Set(Package)
+	// CTOR Set(ProfileApplication)
+	// CTOR Set(Property)
+	// CTOR Set(Pseudostate)
+	// CTOR Set(Region)
+	// CTOR Set(Region[+|1])
+	// CTOR Set(Slot)
+	// CTOR Set(StateMachine)
+	// CTOR Set(State)
+	// CTOR Set(StereotypeExtender)
+	// CTOR Set(TemplateBinding)
+	// CTOR Set(TemplateParameterSubstitution[+|1])
+	// CTOR Set(Transition)
+	// CTOR Set(Trigger)
+	// CTOR Set(Type)
+	// CTOR Set(Vertex)
 
 	/**
 	 *	The fragment descriptors for the local elements of each type and its supertypes.
@@ -1913,7 +2168,769 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR pivot::Annotation::ownedContents
+	// CTOR pivot::Annotation::ownedDetails
+	// CTOR pivot::Annotation::references
+	// CTOR pivot::AssociationClass::AssociationClassCallExp
+	// CTOR pivot::AssociationClass::unownedAttributes
+	// CTOR pivot::AssociationClassCallExp::referredAssociationClass
+	// CTOR pivot::Behavior::Class
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::owningTransition
+	// CTOR pivot::BooleanLiteralExp::booleanSymbol
+	// CTOR pivot::CallExp::isImplicit
+	// CTOR pivot::CallExp::isSafe
+	// CTOR pivot::CallExp::ownedSource
+	// CTOR pivot::CallOperationAction::MessageExp
+	// CTOR pivot::CallOperationAction::operation
+	// CTOR pivot::Class::Class
+	// CTOR pivot::Class::CompleteClass
+	// CTOR pivot::Class::DataType
+	// CTOR pivot::Class::InstanceSpecification
+	// CTOR pivot::Class::MapType
+	// CTOR pivot::Class::TemplateParameter
+	// CTOR pivot::Class::WildcardType
+	// CTOR pivot::Class::extenders
+	// CTOR pivot::Class::instanceClassName
+	// CTOR pivot::Class::isAbstract
+	// CTOR pivot::Class::isActive
+	// CTOR pivot::Class::isInterface
+	// CTOR pivot::Class::ownedBehaviors
+	// CTOR pivot::Class::ownedInvariants
+	// CTOR pivot::Class::ownedOperations
+	// CTOR pivot::Class::ownedProperties
+	// CTOR pivot::Class::owningPackage
+	// CTOR pivot::Class::superClasses
+	// CTOR pivot::CollectionItem::ownedItem
+	// CTOR pivot::CollectionLiteralExp::kind
+	// CTOR pivot::CollectionLiteralExp::ownedParts
+	// CTOR pivot::CollectionLiteralPart::CollectionLiteralExp
+	// CTOR pivot::CollectionRange::ownedFirst
+	// CTOR pivot::CollectionRange::ownedLast
+	// CTOR pivot::CollectionType::elementType
+	// CTOR pivot::CollectionType::isNullFree
+	// CTOR pivot::CollectionType::lower
+	// CTOR pivot::CollectionType::upper
+	// CTOR pivot::Comment::annotatedElements
+	// CTOR pivot::Comment::body
+	// CTOR pivot::Comment::owningElement
+	// CTOR pivot::CompleteClass::owningCompletePackage
+	// CTOR pivot::CompleteClass::partialClasses
+	// CTOR pivot::CompleteEnvironment::ownedCompleteModel
+	// CTOR pivot::CompleteEnvironment::ownedStandardLibrary
+	// CTOR pivot::CompleteModel::orphanCompletePackage
+	// CTOR pivot::CompleteModel::ownedCompletePackages
+	// CTOR pivot::CompleteModel::owningCompleteEnvironment
+	// CTOR pivot::CompleteModel::partialModels
+	// CTOR pivot::CompleteModel::primitiveCompletePackage
+	// CTOR pivot::CompletePackage::ownedCompleteClasses
+	// CTOR pivot::CompletePackage::ownedCompletePackages
+	// CTOR pivot::CompletePackage::owningCompleteModel
+	// CTOR pivot::CompletePackage::owningCompletePackage
+	// CTOR pivot::CompletePackage::partialPackages
+	// CTOR pivot::CompleteStandardLibrary::owningCompleteEnvironment
+	// CTOR pivot::ConnectionPointReference::entries
+	// CTOR pivot::ConnectionPointReference::exits
+	// CTOR pivot::ConnectionPointReference::owningState
+	// CTOR pivot::Constraint::Class
+	// CTOR pivot::Constraint::Constraint
+	// CTOR pivot::Constraint::Namespace
+	// CTOR pivot::Constraint::constrainedElements
+	// CTOR pivot::Constraint::context
+	// CTOR pivot::Constraint::isCallable
+	// CTOR pivot::Constraint::ownedSpecification
+	// CTOR pivot::Constraint::owningPostContext
+	// CTOR pivot::Constraint::owningPreContext
+	// CTOR pivot::Constraint::owningState
+	// CTOR pivot::Constraint::owningTransition
+	// CTOR pivot::Constraint::redefinedConstraints
+	// CTOR pivot::DataType::behavioralClass
+	// CTOR pivot::DataType::isSerializable
+	// CTOR pivot::DataType::value
+	// CTOR pivot::Detail::Annotation
+	// CTOR pivot::Detail::values
+	// CTOR pivot::DynamicElement::metaType
+	// CTOR pivot::DynamicProperty::DynamicType
+	// CTOR pivot::DynamicProperty::default
+	// CTOR pivot::DynamicProperty::referredProperty
+	// CTOR pivot::DynamicType::ownedDynamicProperties
+	// CTOR pivot::Element::Annotation
+	// CTOR pivot::Element::Annotation
+	// CTOR pivot::Element::Constraint
+	// CTOR pivot::Element::Element
+	// CTOR pivot::Element::annotatingComments
+	// CTOR pivot::Element::ownedAnnotations
+	// CTOR pivot::Element::ownedComments
+	// CTOR pivot::Element::ownedExtensions
+	// CTOR pivot::ElementExtension::base
+	// CTOR pivot::ElementExtension::isApplied
+	// CTOR pivot::ElementExtension::isRequired
+	// CTOR pivot::ElementExtension::stereotype
+	// CTOR pivot::ElementLiteralExp::referredElement
+	// CTOR pivot::EnumLiteralExp::referredLiteral
+	// CTOR pivot::Enumeration::ownedLiterals
+	// CTOR pivot::EnumerationLiteral::EnumLiteralExp
+	// CTOR pivot::EnumerationLiteral::literal
+	// CTOR pivot::EnumerationLiteral::owningEnumeration
+	// CTOR pivot::EnumerationLiteral::value
+	// CTOR pivot::ExpressionInOCL::ownedBody
+	// CTOR pivot::ExpressionInOCL::ownedContext
+	// CTOR pivot::ExpressionInOCL::ownedParameters
+	// CTOR pivot::ExpressionInOCL::ownedResult
+	// CTOR pivot::Feature::implementation
+	// CTOR pivot::Feature::implementationClass
+	// CTOR pivot::Feature::isStatic
+	// CTOR pivot::FeatureCallExp::isPre
+	// CTOR pivot::IfExp::isElseIf
+	// CTOR pivot::IfExp::ownedCondition
+	// CTOR pivot::IfExp::ownedElse
+	// CTOR pivot::IfExp::ownedThen
+	// CTOR pivot::Import::Model
+	// CTOR pivot::Import::importedNamespace
+	// CTOR pivot::Import::xmiidVersion
+	// CTOR pivot::InstanceSpecification::classes
+	// CTOR pivot::InstanceSpecification::ownedSlots
+	// CTOR pivot::InstanceSpecification::ownedSpecification
+	// CTOR pivot::InstanceSpecification::owningPackage
+	// CTOR pivot::IntegerLiteralExp::integerSymbol
+	// CTOR pivot::IterateExp::ownedResult
+	// CTOR pivot::Iteration::LoopExp
+	// CTOR pivot::Iteration::ownedAccumulators
+	// CTOR pivot::Iteration::ownedIterators
+	// CTOR pivot::IteratorVariable::LoopExp
+	// CTOR pivot::JavaType::javaClass
+	// CTOR pivot::LambdaType::contextType
+	// CTOR pivot::LambdaType::parameterType
+	// CTOR pivot::LambdaType::resultType
+	// CTOR pivot::LanguageExpression::InstanceSpecification
+	// CTOR pivot::LanguageExpression::Operation
+	// CTOR pivot::LanguageExpression::Property
+	// CTOR pivot::LanguageExpression::body
+	// CTOR pivot::LanguageExpression::language
+	// CTOR pivot::LanguageExpression::owningConstraint
+	// CTOR pivot::LetExp::ownedIn
+	// CTOR pivot::LetExp::ownedVariable
+	// CTOR pivot::Library::ownedPrecedences
+	// CTOR pivot::LoopExp::ownedBody
+	// CTOR pivot::LoopExp::ownedCoIterators
+	// CTOR pivot::LoopExp::ownedIterators
+	// CTOR pivot::LoopExp::referredIteration
+	// CTOR pivot::MapLiteralExp::ownedParts
+	// CTOR pivot::MapLiteralPart::MapLiteralExp
+	// CTOR pivot::MapLiteralPart::ownedKey
+	// CTOR pivot::MapLiteralPart::ownedValue
+	// CTOR pivot::MapType::entryClass
+	// CTOR pivot::MapType::keyType
+	// CTOR pivot::MapType::keysAreNullFree
+	// CTOR pivot::MapType::valueType
+	// CTOR pivot::MapType::valuesAreNullFree
+	// CTOR pivot::MessageExp::ownedArguments
+	// CTOR pivot::MessageExp::ownedCalledOperation
+	// CTOR pivot::MessageExp::ownedSentSignal
+	// CTOR pivot::MessageExp::ownedTarget
+	// CTOR pivot::MessageType::referredOperation
+	// CTOR pivot::MessageType::referredSignal
+	// CTOR pivot::Model::CompleteModel
+	// CTOR pivot::Model::externalURI
+	// CTOR pivot::Model::ownedImports
+	// CTOR pivot::Model::ownedPackages
+	// CTOR pivot::Model::xmiidVersion
+	// CTOR pivot::NamedElement::name
+	// CTOR pivot::Namespace::Constraint
+	// CTOR pivot::Namespace::Import
+	// CTOR pivot::Namespace::ownedConstraints
+	// CTOR pivot::NavigationCallExp::navigationSource
+	// CTOR pivot::NavigationCallExp::qualifiers
+	// CTOR pivot::OCLExpression::CallExp
+	// CTOR pivot::OCLExpression::CollectionItem
+	// CTOR pivot::OCLExpression::CollectionRange
+	// CTOR pivot::OCLExpression::CollectionRange
+	// CTOR pivot::OCLExpression::ExpressionInOCL
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::LetExp
+	// CTOR pivot::OCLExpression::LoopExp
+	// CTOR pivot::OCLExpression::MapLiteralPart
+	// CTOR pivot::OCLExpression::MapLiteralPart
+	// CTOR pivot::OCLExpression::MessageExp
+	// CTOR pivot::OCLExpression::MessageExp
+	// CTOR pivot::OCLExpression::NavigationCallExp
+	// CTOR pivot::OCLExpression::OperationCallExp
+	// CTOR pivot::OCLExpression::ShadowPart
+	// CTOR pivot::OCLExpression::TupleLiteralPart
+	// CTOR pivot::OCLExpression::Variable
+	// CTOR pivot::OCLExpression::typeValue
+	// CTOR pivot::Operation::CallOperationAction
+	// CTOR pivot::Operation::MessageType
+	// CTOR pivot::Operation::Operation
+	// CTOR pivot::Operation::OperationCallExp
+	// CTOR pivot::Operation::PrimitiveType
+	// CTOR pivot::Operation::bodyExpression
+	// CTOR pivot::Operation::isInvalidating
+	// CTOR pivot::Operation::isTransient
+	// CTOR pivot::Operation::isTypeof
+	// CTOR pivot::Operation::isValidating
+	// CTOR pivot::Operation::ownedParameters
+	// CTOR pivot::Operation::ownedPostconditions
+	// CTOR pivot::Operation::ownedPreconditions
+	// CTOR pivot::Operation::owningClass
+	// CTOR pivot::Operation::precedence
+	// CTOR pivot::Operation::raisedExceptions
+	// CTOR pivot::Operation::redefinedOperations
+	// CTOR pivot::OperationCallExp::isVirtual
+	// CTOR pivot::OperationCallExp::ownedArguments
+	// CTOR pivot::OperationCallExp::referredOperation
+	// CTOR pivot::OppositePropertyCallExp::referredProperty
+	// CTOR pivot::OrphanCompletePackage::CompleteModel
+	// CTOR pivot::Package::CompletePackage
+	// CTOR pivot::Package::Model
+	// CTOR pivot::Package::Package
+	// CTOR pivot::Package::URI
+	// CTOR pivot::Package::importedPackages
+	// CTOR pivot::Package::nsPrefix
+	// CTOR pivot::Package::ownedClasses
+	// CTOR pivot::Package::ownedInstances
+	// CTOR pivot::Package::ownedPackages
+	// CTOR pivot::Package::ownedProfileApplications
+	// CTOR pivot::Package::owningPackage
+	// CTOR pivot::Parameter::Iteration
+	// CTOR pivot::Parameter::Iteration
+	// CTOR pivot::Parameter::Variable
+	// CTOR pivot::Parameter::isTypeof
+	// CTOR pivot::Parameter::owningOperation
+	// CTOR pivot::Precedence::Library
+	// CTOR pivot::Precedence::Operation
+	// CTOR pivot::Precedence::associativity
+	// CTOR pivot::Precedence::order
+	// CTOR pivot::PrimitiveCompletePackage::CompleteModel
+	// CTOR pivot::PrimitiveType::coercions
+	// CTOR pivot::Profile::profileApplications
+	// CTOR pivot::ProfileApplication::appliedProfile
+	// CTOR pivot::ProfileApplication::isStrict
+	// CTOR pivot::ProfileApplication::owningPackage
+	// CTOR pivot::Property::DynamicProperty
+	// CTOR pivot::Property::NavigationCallExp
+	// CTOR pivot::Property::OppositePropertyCallExp
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::PropertyCallExp
+	// CTOR pivot::Property::ShadowPart
+	// CTOR pivot::Property::Slot
+	// CTOR pivot::Property::associationClass
+	// CTOR pivot::Property::defaultValue
+	// CTOR pivot::Property::defaultValueString
+	// CTOR pivot::Property::isComposite
+	// CTOR pivot::Property::isDerived
+	// CTOR pivot::Property::isID
+	// CTOR pivot::Property::isImplicit
+	// CTOR pivot::Property::isReadOnly
+	// CTOR pivot::Property::isResolveProxies
+	// CTOR pivot::Property::isTransient
+	// CTOR pivot::Property::isUnsettable
+	// CTOR pivot::Property::isVolatile
+	// CTOR pivot::Property::keys
+	// CTOR pivot::Property::opposite
+	// CTOR pivot::Property::ownedExpression
+	// CTOR pivot::Property::owningClass
+	// CTOR pivot::Property::redefinedProperties
+	// CTOR pivot::Property::referredProperty
+	// CTOR pivot::Property::subsettedProperty
+	// CTOR pivot::PropertyCallExp::referredProperty
+	// CTOR pivot::Pseudostate::ConnectionPointReference
+	// CTOR pivot::Pseudostate::ConnectionPointReference
+	// CTOR pivot::Pseudostate::kind
+	// CTOR pivot::Pseudostate::owningState
+	// CTOR pivot::Pseudostate::owningStateMachine
+	// CTOR pivot::RealLiteralExp::realSymbol
+	// CTOR pivot::Region::Region
+	// CTOR pivot::Region::extendedRegion
+	// CTOR pivot::Region::ownedSubvertexes
+	// CTOR pivot::Region::ownedTransitions
+	// CTOR pivot::Region::owningState
+	// CTOR pivot::Region::owningStateMachine
+	// CTOR pivot::SendSignalAction::MessageExp
+	// CTOR pivot::SendSignalAction::signal
+	// CTOR pivot::ShadowExp::ownedParts
+	// CTOR pivot::ShadowExp::value
+	// CTOR pivot::ShadowPart::ShadowExp
+	// CTOR pivot::ShadowPart::ownedInit
+	// CTOR pivot::ShadowPart::referredProperty
+	// CTOR pivot::Signal::MessageType
+	// CTOR pivot::Signal::SendSignalAction
+	// CTOR pivot::Slot::definingProperty
+	// CTOR pivot::Slot::ownedValues
+	// CTOR pivot::Slot::owningInstance
+	// CTOR pivot::State::State
+	// CTOR pivot::State::StateExp
+	// CTOR pivot::State::isComposite
+	// CTOR pivot::State::isOrthogonal
+	// CTOR pivot::State::isSimple
+	// CTOR pivot::State::isSubmachineState
+	// CTOR pivot::State::ownedConnectionPoints
+	// CTOR pivot::State::ownedConnections
+	// CTOR pivot::State::ownedDeferrableTriggers
+	// CTOR pivot::State::ownedDoActivity
+	// CTOR pivot::State::ownedEntry
+	// CTOR pivot::State::ownedExit
+	// CTOR pivot::State::ownedRegions
+	// CTOR pivot::State::ownedStateInvariant
+	// CTOR pivot::State::redefinedState
+	// CTOR pivot::State::submachines
+	// CTOR pivot::StateExp::referredState
+	// CTOR pivot::StateMachine::StateMachine
+	// CTOR pivot::StateMachine::extendedStateMachines
+	// CTOR pivot::StateMachine::ownedConnectionPoints
+	// CTOR pivot::StateMachine::ownedRegions
+	// CTOR pivot::StateMachine::submachineStates
+	// CTOR pivot::Stereotype::ElementExtension
+	// CTOR pivot::Stereotype::ownedExtenders
+	// CTOR pivot::StereotypeExtender::class
+	// CTOR pivot::StereotypeExtender::isRequired
+	// CTOR pivot::StereotypeExtender::owningStereotype
+	// CTOR pivot::StringLiteralExp::stringSymbol
+	// CTOR pivot::TemplateBinding::ownedSubstitutions
+	// CTOR pivot::TemplateBinding::owningElement
+	// CTOR pivot::TemplateBinding::templateSignature
+	// CTOR pivot::TemplateParameter::TemplateParameterSubstitution
+	// CTOR pivot::TemplateParameter::WildcardType
+	// CTOR pivot::TemplateParameter::constrainingClasses
+	// CTOR pivot::TemplateParameter::owningSignature
+	// CTOR pivot::TemplateParameterSubstitution::actual
+	// CTOR pivot::TemplateParameterSubstitution::formal
+	// CTOR pivot::TemplateParameterSubstitution::ownedWildcard
+	// CTOR pivot::TemplateParameterSubstitution::owningBinding
+	// CTOR pivot::TemplateSignature::TemplateBinding
+	// CTOR pivot::TemplateSignature::ownedParameters
+	// CTOR pivot::TemplateSignature::owningElement
+	// CTOR pivot::TemplateableElement::TemplateableElement
+	// CTOR pivot::TemplateableElement::generic
+	// CTOR pivot::TemplateableElement::ownedBindings
+	// CTOR pivot::TemplateableElement::ownedSignature
+	// CTOR pivot::Transition::kind
+	// CTOR pivot::Transition::ownedEffect
+	// CTOR pivot::Transition::ownedGuard
+	// CTOR pivot::Transition::ownedTriggers
+	// CTOR pivot::Transition::owningRegion
+	// CTOR pivot::Transition::source
+	// CTOR pivot::Transition::target
+	// CTOR pivot::Trigger::owningState
+	// CTOR pivot::Trigger::owningTransition
+	// CTOR pivot::TupleLiteralExp::ownedParts
+	// CTOR pivot::TupleLiteralPart::TupleLiteralExp
+	// CTOR pivot::TupleLiteralPart::ownedInit
+	// CTOR pivot::Type::CollectionType
+	// CTOR pivot::Type::DynamicElement
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::MapType
+	// CTOR pivot::Type::MapType
+	// CTOR pivot::Type::OCLExpression
+	// CTOR pivot::Type::Operation
+	// CTOR pivot::Type::TemplateParameterSubstitution
+	// CTOR pivot::Type::TypeExp
+	// CTOR pivot::Type::TypedElement
+	// CTOR pivot::Type::VariableDeclaration
+	// CTOR pivot::TypeExp::referredType
+	// CTOR pivot::TypedElement::isMany
+	// CTOR pivot::TypedElement::isRequired
+	// CTOR pivot::TypedElement::type
+	// CTOR pivot::UnlimitedNaturalLiteralExp::unlimitedNaturalSymbol
+	// CTOR pivot::ValueSpecification::Slot
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::IterateExp
+	// CTOR pivot::Variable::LetExp
+	// CTOR pivot::Variable::LoopExp
+	// CTOR pivot::Variable::isImplicit
+	// CTOR pivot::Variable::ownedInit
+	// CTOR pivot::Variable::representedParameter
+	// CTOR pivot::VariableDeclaration::VariableExp
+	// CTOR pivot::VariableDeclaration::typeValue
+	// CTOR pivot::VariableExp::isImplicit
+	// CTOR pivot::VariableExp::referredVariable
+	// CTOR pivot::Vertex::incomingTransitions
+	// CTOR pivot::Vertex::outgoingTransitions
+	// CTOR pivot::Vertex::owningRegion
+	// CTOR pivot::WildcardType::TemplateParameterSubstitution
+	// CTOR pivot::WildcardType::constrainingClasses
+	// CTOR pivot::WildcardType::templateParameter
+	// CTOR pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
+	// CTOR pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
+	// CTOR pivot::Element::allOwnedElements() : Set(Element)
+	// CTOR pivot::Element::getValue(Type[1],String[1]) : Element[?]
+	// CTOR pivot::OCLExpression::isNonNull() : Boolean[1]
+	// CTOR pivot::OCLExpression::isNull() : Boolean[1]
+	// CTOR pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
+	// CTOR pivot::Property::isAttribute(Property[1]) : Boolean[1]
+	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
+	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
+	// CTOR pivot::ReferringElement::getReferredElement() : Element[1]
+	// CTOR pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// CTOR pivot::Type::flattenedType() : Type[?]
+	// CTOR pivot::Type::isClass() : Class[?]
+	// CTOR pivot::Type::isTemplateParameter() : TemplateParameter[?]
+	// CTOR pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// CTOR pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]
+	// CTOR pivot::ValueSpecification::booleanValue() : Boolean[1]
+	// CTOR pivot::ValueSpecification::integerValue() : Integer[?]
+	// CTOR pivot::ValueSpecification::isComputable() : Boolean[1]
+	// CTOR pivot::ValueSpecification::isNull() : Boolean[1]
+	// CTOR pivot::ValueSpecification::stringValue() : String[?]
+	// CTOR pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
+	// OPERATIONS Boolean
+	// OPERATIONS EcoreObject
+	// OPERATIONS JavaClass
+	// OPERATIONS LibraryFeature
+	// OPERATIONS Object
+	// OPERATIONS Throwable
+	// OPERATIONS AssociativityKind
+	// OPERATIONS CollectionKind
+	// OPERATIONS PseudostateKind
+	// OPERATIONS TransitionKind
+	// OPERATIONS Integer
+	// OPERATIONS Real
+	// OPERATIONS String
+	// OPERATIONS UnlimitedNatural
+	// OPERATIONS Annotation
+	// OPERATIONS AnyType
+	// OPERATIONS AssociationClass
+	// OPERATIONS AssociationClassCallExp
+	// OPERATIONS BagType
+	// OPERATIONS Behavior
+	// OPERATIONS BooleanLiteralExp
+	// OPERATIONS BooleanType
+	// OPERATIONS CallExp
+	// OPERATIONS CallOperationAction
+	// OPERATIONS Class
+	// OPERATIONS CollectionItem
+	// OPERATIONS CollectionLiteralExp
+	// OPERATIONS CollectionLiteralPart
+	// OPERATIONS CollectionRange
+	// OPERATIONS CollectionType
+	// OPERATIONS Comment
+	// OPERATIONS CompleteClass
+	// OPERATIONS CompleteEnvironment
+	// OPERATIONS CompleteStandardLibrary
+	// OPERATIONS ConnectionPointReference
+	// OPERATIONS Constraint
+	// OPERATIONS DataType
+	// OPERATIONS Detail
+	// OPERATIONS DynamicBehavior
+	// OPERATIONS DynamicElement
+	// OPERATIONS DynamicProperty
+	// OPERATIONS DynamicType
+	// OPERATIONS DynamicValueSpecification
+	// OPERATIONS ElementExtension
+	// OPERATIONS ElementLiteralExp
+	// OPERATIONS EnumLiteralExp
+	// OPERATIONS Enumeration
+	// OPERATIONS EnumerationLiteral
+	// OPERATIONS ExpressionInOCL
+	// OPERATIONS Feature
+	// OPERATIONS FeatureCallExp
+	// OPERATIONS FinalState
+	// OPERATIONS IfExp
+	// OPERATIONS Import
+	// OPERATIONS InstanceSpecification
+	// OPERATIONS IntegerLiteralExp
+	// OPERATIONS InvalidLiteralExp
+	// OPERATIONS InvalidType
+	// OPERATIONS IterableType
+	// OPERATIONS IterateExp
+	// OPERATIONS Iteration
+	// OPERATIONS IteratorExp
+	// OPERATIONS IteratorVariable
+	// OPERATIONS JavaType
+	// OPERATIONS LambdaType
+	// OPERATIONS LanguageExpression
+	// OPERATIONS LetExp
+	// OPERATIONS LetVariable
+	// OPERATIONS Library
+	// OPERATIONS LiteralExp
+	// OPERATIONS LoopExp
+	// OPERATIONS MapLiteralExp
+	// OPERATIONS MapLiteralPart
+	// OPERATIONS MapType
+	// OPERATIONS MessageExp
+	// OPERATIONS MessageType
+	// OPERATIONS Model
+	// OPERATIONS MorePivotable
+	// OPERATIONS Nameable
+	// OPERATIONS NamedElement
+	// OPERATIONS Namespace
+	// OPERATIONS NavigationCallExp
+	// OPERATIONS NullLiteralExp
+	// OPERATIONS NumericLiteralExp
+	// OPERATIONS Operation
+	// OPERATIONS OppositePropertyCallExp
+	// OPERATIONS OrderedSetType
+	// OPERATIONS OrphanCompletePackage
+	// OPERATIONS Orphanage
+	// OPERATIONS Package
+	// OPERATIONS Parameter
+	// OPERATIONS ParameterVariable
+	// OPERATIONS Pivotable
+	// OPERATIONS Precedence
+	// OPERATIONS PrimitiveCompletePackage
+	// OPERATIONS PrimitiveLiteralExp
+	// OPERATIONS PrimitiveType
+	// OPERATIONS Profile
+	// OPERATIONS ProfileApplication
+	// OPERATIONS Pseudostate
+	// OPERATIONS RealLiteralExp
+	// OPERATIONS Region
+	// OPERATIONS ResultVariable
+	// OPERATIONS SendSignalAction
+	// OPERATIONS SequenceType
+	// OPERATIONS SetType
+	// OPERATIONS ShadowExp
+	// OPERATIONS ShadowPart
+	// OPERATIONS Signal
+	// OPERATIONS Slot
+	// OPERATIONS StandardLibrary
+	// OPERATIONS State
+	// OPERATIONS StateExp
+	// OPERATIONS StateMachine
+	// OPERATIONS Stereotype
+	// OPERATIONS StereotypeExtender
+	// OPERATIONS StringLiteralExp
+	// OPERATIONS TemplateBinding
+	// OPERATIONS TemplateParameter
+	// OPERATIONS TemplateParameterSubstitution
+	// OPERATIONS TemplateSignature
+	// OPERATIONS TemplateableElement
+	// OPERATIONS Transition
+	// OPERATIONS Trigger
+	// OPERATIONS TupleLiteralExp
+	// OPERATIONS TupleLiteralPart
+	// OPERATIONS TuplePart
+	// OPERATIONS TupleType
+	// OPERATIONS TypeExp
+	// OPERATIONS UnlimitedNaturalLiteralExp
+	// OPERATIONS UnspecifiedValueExp
+	// OPERATIONS Variable
+	// OPERATIONS VariableDeclaration
+	// OPERATIONS VariableExp
+	// OPERATIONS Vertex
+	// OPERATIONS Visitable
+	// OPERATIONS VoidType
+	// OPERATIONS WildcardType
+	// PROPERTIES Boolean
+	// PROPERTIES EcoreObject
+	// PROPERTIES JavaClass
+	// PROPERTIES LibraryFeature
+	// PROPERTIES Object
+	// PROPERTIES Throwable
+	// PROPERTIES AssociativityKind
+	// PROPERTIES CollectionKind
+	// PROPERTIES PseudostateKind
+	// PROPERTIES TransitionKind
+	// PROPERTIES Integer
+	// PROPERTIES Real
+	// PROPERTIES String
+	// PROPERTIES UnlimitedNatural
+	// PROPERTIES AnyType
+	// PROPERTIES BagType
+	// PROPERTIES BooleanType
+	// PROPERTIES DynamicBehavior
+	// PROPERTIES DynamicValueSpecification
+	// PROPERTIES FinalState
+	// PROPERTIES InvalidLiteralExp
+	// PROPERTIES InvalidType
+	// PROPERTIES IterableType
+	// PROPERTIES IteratorExp
+	// PROPERTIES LetVariable
+	// PROPERTIES LiteralExp
+	// PROPERTIES MorePivotable
+	// PROPERTIES Nameable
+	// PROPERTIES NullLiteralExp
+	// PROPERTIES NumericLiteralExp
+	// PROPERTIES OrderedSetType
+	// PROPERTIES Orphanage
+	// PROPERTIES ParameterVariable
+	// PROPERTIES Pivotable
+	// PROPERTIES PrimitiveLiteralExp
+	// PROPERTIES ReferringElement
+	// PROPERTIES ResultVariable
+	// PROPERTIES SelfType
+	// PROPERTIES SequenceType
+	// PROPERTIES SetType
+	// PROPERTIES StandardLibrary
+	// PROPERTIES TuplePart
+	// PROPERTIES TupleType
+	// PROPERTIES UnspecifiedValueExp
+	// PROPERTIES Visitable
+	// PROPERTIES VoidType
+	// SUPER_CLASSES Boolean
+	// SUPER_CLASSES EcoreObject
+	// SUPER_CLASSES JavaClass
+	// SUPER_CLASSES LibraryFeature
+	// SUPER_CLASSES Object
+	// SUPER_CLASSES Throwable
+	// SUPER_CLASSES AssociativityKind
+	// SUPER_CLASSES CollectionKind
+	// SUPER_CLASSES PseudostateKind
+	// SUPER_CLASSES TransitionKind
+	// SUPER_CLASSES Integer
+	// SUPER_CLASSES Real
+	// SUPER_CLASSES String
+	// SUPER_CLASSES UnlimitedNatural
+	// SUPER_CLASSES Annotation
+	// SUPER_CLASSES AnyType
+	// SUPER_CLASSES AssociationClass
+	// SUPER_CLASSES AssociationClassCallExp
+	// SUPER_CLASSES BagType
+	// SUPER_CLASSES Behavior
+	// SUPER_CLASSES BooleanLiteralExp
+	// SUPER_CLASSES BooleanType
+	// SUPER_CLASSES CallExp
+	// SUPER_CLASSES CallOperationAction
+	// SUPER_CLASSES Class
+	// SUPER_CLASSES CollectionItem
+	// SUPER_CLASSES CollectionLiteralExp
+	// SUPER_CLASSES CollectionLiteralPart
+	// SUPER_CLASSES CollectionRange
+	// SUPER_CLASSES CollectionType
+	// SUPER_CLASSES Comment
+	// SUPER_CLASSES CompleteClass
+	// SUPER_CLASSES CompleteEnvironment
+	// SUPER_CLASSES CompleteModel
+	// SUPER_CLASSES CompletePackage
+	// SUPER_CLASSES CompleteStandardLibrary
+	// SUPER_CLASSES ConnectionPointReference
+	// SUPER_CLASSES Constraint
+	// SUPER_CLASSES DataType
+	// SUPER_CLASSES Detail
+	// SUPER_CLASSES DynamicBehavior
+	// SUPER_CLASSES DynamicElement
+	// SUPER_CLASSES DynamicProperty
+	// SUPER_CLASSES DynamicType
+	// SUPER_CLASSES DynamicValueSpecification
+	// SUPER_CLASSES Element
+	// SUPER_CLASSES ElementExtension
+	// SUPER_CLASSES ElementLiteralExp
+	// SUPER_CLASSES EnumLiteralExp
+	// SUPER_CLASSES Enumeration
+	// SUPER_CLASSES EnumerationLiteral
+	// SUPER_CLASSES ExpressionInOCL
+	// SUPER_CLASSES Feature
+	// SUPER_CLASSES FeatureCallExp
+	// SUPER_CLASSES FinalState
+	// SUPER_CLASSES IfExp
+	// SUPER_CLASSES Import
+	// SUPER_CLASSES InstanceSpecification
+	// SUPER_CLASSES IntegerLiteralExp
+	// SUPER_CLASSES InvalidLiteralExp
+	// SUPER_CLASSES InvalidType
+	// SUPER_CLASSES IterableType
+	// SUPER_CLASSES IterateExp
+	// SUPER_CLASSES Iteration
+	// SUPER_CLASSES IteratorExp
+	// SUPER_CLASSES IteratorVariable
+	// SUPER_CLASSES JavaType
+	// SUPER_CLASSES LambdaType
+	// SUPER_CLASSES LanguageExpression
+	// SUPER_CLASSES LetExp
+	// SUPER_CLASSES LetVariable
+	// SUPER_CLASSES Library
+	// SUPER_CLASSES LiteralExp
+	// SUPER_CLASSES LoopExp
+	// SUPER_CLASSES MapLiteralExp
+	// SUPER_CLASSES MapLiteralPart
+	// SUPER_CLASSES MapType
+	// SUPER_CLASSES MessageExp
+	// SUPER_CLASSES MessageType
+	// SUPER_CLASSES Model
+	// SUPER_CLASSES MorePivotable
+	// SUPER_CLASSES Nameable
+	// SUPER_CLASSES NamedElement
+	// SUPER_CLASSES Namespace
+	// SUPER_CLASSES NavigationCallExp
+	// SUPER_CLASSES NullLiteralExp
+	// SUPER_CLASSES NumericLiteralExp
+	// SUPER_CLASSES OCLExpression
+	// SUPER_CLASSES Operation
+	// SUPER_CLASSES OperationCallExp
+	// SUPER_CLASSES OppositePropertyCallExp
+	// SUPER_CLASSES OrderedSetType
+	// SUPER_CLASSES OrphanCompletePackage
+	// SUPER_CLASSES Orphanage
+	// SUPER_CLASSES Package
+	// SUPER_CLASSES Parameter
+	// SUPER_CLASSES ParameterVariable
+	// SUPER_CLASSES Pivotable
+	// SUPER_CLASSES Precedence
+	// SUPER_CLASSES PrimitiveCompletePackage
+	// SUPER_CLASSES PrimitiveLiteralExp
+	// SUPER_CLASSES PrimitiveType
+	// SUPER_CLASSES Profile
+	// SUPER_CLASSES ProfileApplication
+	// SUPER_CLASSES Property
+	// SUPER_CLASSES PropertyCallExp
+	// SUPER_CLASSES Pseudostate
+	// SUPER_CLASSES RealLiteralExp
+	// SUPER_CLASSES ReferringElement
+	// SUPER_CLASSES Region
+	// SUPER_CLASSES ResultVariable
+	// SUPER_CLASSES SelfType
+	// SUPER_CLASSES SendSignalAction
+	// SUPER_CLASSES SequenceType
+	// SUPER_CLASSES SetType
+	// SUPER_CLASSES ShadowExp
+	// SUPER_CLASSES ShadowPart
+	// SUPER_CLASSES Signal
+	// SUPER_CLASSES Slot
+	// SUPER_CLASSES StandardLibrary
+	// SUPER_CLASSES State
+	// SUPER_CLASSES StateExp
+	// SUPER_CLASSES StateMachine
+	// SUPER_CLASSES Stereotype
+	// SUPER_CLASSES StereotypeExtender
+	// SUPER_CLASSES StringLiteralExp
+	// SUPER_CLASSES TemplateBinding
+	// SUPER_CLASSES TemplateParameter
+	// SUPER_CLASSES TemplateParameterSubstitution
+	// SUPER_CLASSES TemplateSignature
+	// SUPER_CLASSES TemplateableElement
+	// SUPER_CLASSES Transition
+	// SUPER_CLASSES Trigger
+	// SUPER_CLASSES TupleLiteralExp
+	// SUPER_CLASSES TupleLiteralPart
+	// SUPER_CLASSES TuplePart
+	// SUPER_CLASSES TupleType
+	// SUPER_CLASSES Type
+	// SUPER_CLASSES TypeExp
+	// SUPER_CLASSES TypedElement
+	// SUPER_CLASSES UnlimitedNaturalLiteralExp
+	// SUPER_CLASSES UnspecifiedValueExp
+	// SUPER_CLASSES ValueSpecification
+	// SUPER_CLASSES Variable
+	// SUPER_CLASSES VariableDeclaration
+	// SUPER_CLASSES VariableExp
+	// SUPER_CLASSES Vertex
+	// SUPER_CLASSES Visitable
+	// SUPER_CLASSES VoidType
+	// SUPER_CLASSES WildcardType
 
+	// OPERATIONS CompleteModel
+	// OPERATIONS CompletePackage
+	// OPERATIONS Element
+	// OPERATIONS OCLExpression
+	// OPERATIONS OperationCallExp
+	// OPERATIONS Property
+	// OPERATIONS PropertyCallExp
+	// OPERATIONS ReferringElement
+	// OPERATIONS SelfType
+	// OPERATIONS Type
+	// OPERATIONS TypedElement
+	// OPERATIONS ValueSpecification
 	/**
 	 *	The parameter type lists shared by operations.
 	 *
@@ -1942,6 +2959,2122 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// PROPERTIES Annotation
+	// PROPERTIES AssociationClass
+	// PROPERTIES AssociationClassCallExp
+	// PROPERTIES Behavior
+	// PROPERTIES BooleanLiteralExp
+	// PROPERTIES CallExp
+	// PROPERTIES CallOperationAction
+	// PROPERTIES Class
+	// PROPERTIES CollectionItem
+	// PROPERTIES CollectionLiteralExp
+	// PROPERTIES CollectionLiteralPart
+	// PROPERTIES CollectionRange
+	// PROPERTIES CollectionType
+	// PROPERTIES Comment
+	// PROPERTIES CompleteClass
+	// PROPERTIES CompleteEnvironment
+	// PROPERTIES CompleteModel
+	// PROPERTIES CompletePackage
+	// PROPERTIES CompleteStandardLibrary
+	// PROPERTIES ConnectionPointReference
+	// PROPERTIES Constraint
+	// PROPERTIES DataType
+	// PROPERTIES Detail
+	// PROPERTIES DynamicElement
+	// PROPERTIES DynamicProperty
+	// PROPERTIES DynamicType
+	// PROPERTIES Element
+	// PROPERTIES ElementExtension
+	// PROPERTIES ElementLiteralExp
+	// PROPERTIES EnumLiteralExp
+	// PROPERTIES Enumeration
+	// PROPERTIES EnumerationLiteral
+	// PROPERTIES ExpressionInOCL
+	// PROPERTIES Feature
+	// PROPERTIES FeatureCallExp
+	// PROPERTIES IfExp
+	// PROPERTIES Import
+	// PROPERTIES InstanceSpecification
+	// PROPERTIES IntegerLiteralExp
+	// PROPERTIES IterateExp
+	// PROPERTIES Iteration
+	// PROPERTIES IteratorVariable
+	// PROPERTIES JavaType
+	// PROPERTIES LambdaType
+	// PROPERTIES LanguageExpression
+	// PROPERTIES LetExp
+	// PROPERTIES Library
+	// PROPERTIES LoopExp
+	// PROPERTIES MapLiteralExp
+	// PROPERTIES MapLiteralPart
+	// PROPERTIES MapType
+	// PROPERTIES MessageExp
+	// PROPERTIES MessageType
+	// PROPERTIES Model
+	// PROPERTIES NamedElement
+	// PROPERTIES Namespace
+	// PROPERTIES NavigationCallExp
+	// PROPERTIES OCLExpression
+	// PROPERTIES Operation
+	// PROPERTIES OperationCallExp
+	// PROPERTIES OppositePropertyCallExp
+	// PROPERTIES OrphanCompletePackage
+	// PROPERTIES Package
+	// PROPERTIES Parameter
+	// PROPERTIES Precedence
+	// PROPERTIES PrimitiveCompletePackage
+	// PROPERTIES PrimitiveType
+	// PROPERTIES Profile
+	// PROPERTIES ProfileApplication
+	// PROPERTIES Property
+	// PROPERTIES PropertyCallExp
+	// PROPERTIES Pseudostate
+	// PROPERTIES RealLiteralExp
+	// PROPERTIES Region
+	// PROPERTIES SendSignalAction
+	// PROPERTIES ShadowExp
+	// PROPERTIES ShadowPart
+	// PROPERTIES Signal
+	// PROPERTIES Slot
+	// PROPERTIES State
+	// PROPERTIES StateExp
+	// PROPERTIES StateMachine
+	// PROPERTIES Stereotype
+	// PROPERTIES StereotypeExtender
+	// PROPERTIES StringLiteralExp
+	// PROPERTIES TemplateBinding
+	// PROPERTIES TemplateParameter
+	// PROPERTIES TemplateParameterSubstitution
+	// PROPERTIES TemplateSignature
+	// PROPERTIES TemplateableElement
+	// PROPERTIES Transition
+	// PROPERTIES Trigger
+	// PROPERTIES TupleLiteralExp
+	// PROPERTIES TupleLiteralPart
+	// PROPERTIES Type
+	// PROPERTIES TypeExp
+	// PROPERTIES TypedElement
+	// PROPERTIES UnlimitedNaturalLiteralExp
+	// PROPERTIES ValueSpecification
+	// PROPERTIES Variable
+	// PROPERTIES VariableDeclaration
+	// PROPERTIES VariableExp
+	// PROPERTIES Vertex
+	// PROPERTIES WildcardType
+	// TYPE pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
+	// TYPE pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
+	// TYPE pivot::Element::allOwnedElements() : Set(Element)
+	// TYPE pivot::Element::getValue(Type[1],String[1]) : Element[?]
+	// TYPE pivot::OCLExpression::isNonNull() : Boolean[1]
+	// TYPE pivot::OCLExpression::isNull() : Boolean[1]
+	// TYPE pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
+	// TYPE pivot::Property::isAttribute(Property[1]) : Boolean[1]
+	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
+	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
+	// TYPE pivot::ReferringElement::getReferredElement() : Element[1]
+	// TYPE pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// TYPE pivot::Type::flattenedType() : Type[?]
+	// TYPE pivot::Type::isClass() : Class[?]
+	// TYPE pivot::Type::isTemplateParameter() : TemplateParameter[?]
+	// TYPE pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// TYPE pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]
+	// TYPE pivot::ValueSpecification::booleanValue() : Boolean[1]
+	// TYPE pivot::ValueSpecification::integerValue() : Integer[?]
+	// TYPE pivot::ValueSpecification::isComputable() : Boolean[1]
+	// TYPE pivot::ValueSpecification::isNull() : Boolean[1]
+	// TYPE pivot::ValueSpecification::stringValue() : String[?]
+	// TYPE pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
+
+	/**
+	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
+	 */
+	public static class TypeFragments {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		private static final @NonNull FlatFragment @NonNull [] _Annotation =
+		{
+			Fragments._Annotation__OclAny /* 0 */,
+			Fragments._Annotation__OclElement /* 1 */,
+			Fragments._Annotation__Element /* 2 */,
+			Fragments._Annotation__NamedElement /* 3 */,
+			Fragments._Annotation__Annotation /* 4 */
+		};
+		private static final int @NonNull [] __Annotation = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _AnyType =
+		{
+			Fragments._AnyType__OclAny /* 0 */,
+			Fragments._AnyType__OclElement /* 1 */,
+			Fragments._AnyType__Element /* 2 */,
+			Fragments._AnyType__OclType /* 2 */,
+			Fragments._AnyType__NamedElement /* 3 */,
+			Fragments._AnyType__TemplateableElement /* 3 */,
+			Fragments._AnyType__Namespace /* 4 */,
+			Fragments._AnyType__Type /* 4 */,
+			Fragments._AnyType__Class /* 5 */,
+			Fragments._AnyType__AnyType /* 6 */
+		};
+		private static final int @NonNull [] __AnyType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _AssociationClass =
+		{
+			Fragments._AssociationClass__OclAny /* 0 */,
+			Fragments._AssociationClass__OclElement /* 1 */,
+			Fragments._AssociationClass__Element /* 2 */,
+			Fragments._AssociationClass__OclType /* 2 */,
+			Fragments._AssociationClass__NamedElement /* 3 */,
+			Fragments._AssociationClass__TemplateableElement /* 3 */,
+			Fragments._AssociationClass__Namespace /* 4 */,
+			Fragments._AssociationClass__Type /* 4 */,
+			Fragments._AssociationClass__Class /* 5 */,
+			Fragments._AssociationClass__AssociationClass /* 6 */
+		};
+		private static final int @NonNull [] __AssociationClass = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _AssociationClassCallExp =
+		{
+			Fragments._AssociationClassCallExp__OclAny /* 0 */,
+			Fragments._AssociationClassCallExp__OclElement /* 1 */,
+			Fragments._AssociationClassCallExp__Element /* 2 */,
+			Fragments._AssociationClassCallExp__TuplePart /* 2 */,
+			Fragments._AssociationClassCallExp__NamedElement /* 3 */,
+			Fragments._AssociationClassCallExp__TypedElement /* 4 */,
+			Fragments._AssociationClassCallExp__OCLExpression /* 5 */,
+			Fragments._AssociationClassCallExp__CallExp /* 6 */,
+			Fragments._AssociationClassCallExp__FeatureCallExp /* 7 */,
+			Fragments._AssociationClassCallExp__NavigationCallExp /* 8 */,
+			Fragments._AssociationClassCallExp__AssociationClassCallExp /* 9 */
+		};
+		private static final int @NonNull [] __AssociationClassCallExp = { 1,1,2,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _AssociativityKind =
+		{
+			Fragments._AssociativityKind__OclAny /* 0 */,
+			Fragments._AssociativityKind__OclElement /* 1 */,
+			Fragments._AssociativityKind__OclType /* 2 */,
+			Fragments._AssociativityKind__OclEnumeration /* 3 */,
+			Fragments._AssociativityKind__AssociativityKind /* 4 */
+		};
+		private static final int @NonNull [] __AssociativityKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _BagType =
+		{
+			Fragments._BagType__OclAny /* 0 */,
+			Fragments._BagType__OclElement /* 1 */,
+			Fragments._BagType__Element /* 2 */,
+			Fragments._BagType__OclType /* 2 */,
+			Fragments._BagType__NamedElement /* 3 */,
+			Fragments._BagType__TemplateableElement /* 3 */,
+			Fragments._BagType__Namespace /* 4 */,
+			Fragments._BagType__Type /* 4 */,
+			Fragments._BagType__Class /* 5 */,
+			Fragments._BagType__DataType /* 6 */,
+			Fragments._BagType__IterableType /* 7 */,
+			Fragments._BagType__CollectionType /* 8 */,
+			Fragments._BagType__BagType /* 9 */
+		};
+		private static final int @NonNull [] __BagType = { 1,1,2,2,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Behavior =
+		{
+			Fragments._Behavior__OclAny /* 0 */,
+			Fragments._Behavior__OclElement /* 1 */,
+			Fragments._Behavior__Element /* 2 */,
+			Fragments._Behavior__OclType /* 2 */,
+			Fragments._Behavior__NamedElement /* 3 */,
+			Fragments._Behavior__TemplateableElement /* 3 */,
+			Fragments._Behavior__Namespace /* 4 */,
+			Fragments._Behavior__Type /* 4 */,
+			Fragments._Behavior__Class /* 5 */,
+			Fragments._Behavior__Behavior /* 6 */
+		};
+		private static final int @NonNull [] __Behavior = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _BooleanLiteralExp =
+		{
+			Fragments._BooleanLiteralExp__OclAny /* 0 */,
+			Fragments._BooleanLiteralExp__OclElement /* 1 */,
+			Fragments._BooleanLiteralExp__Element /* 2 */,
+			Fragments._BooleanLiteralExp__TuplePart /* 2 */,
+			Fragments._BooleanLiteralExp__NamedElement /* 3 */,
+			Fragments._BooleanLiteralExp__TypedElement /* 4 */,
+			Fragments._BooleanLiteralExp__OCLExpression /* 5 */,
+			Fragments._BooleanLiteralExp__LiteralExp /* 6 */,
+			Fragments._BooleanLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._BooleanLiteralExp__BooleanLiteralExp /* 8 */
+		};
+		private static final int @NonNull [] __BooleanLiteralExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _BooleanType =
+		{
+			Fragments._BooleanType__OclAny /* 0 */,
+			Fragments._BooleanType__OclElement /* 1 */,
+			Fragments._BooleanType__Element /* 2 */,
+			Fragments._BooleanType__OclType /* 2 */,
+			Fragments._BooleanType__NamedElement /* 3 */,
+			Fragments._BooleanType__TemplateableElement /* 3 */,
+			Fragments._BooleanType__Namespace /* 4 */,
+			Fragments._BooleanType__Type /* 4 */,
+			Fragments._BooleanType__Class /* 5 */,
+			Fragments._BooleanType__DataType /* 6 */,
+			Fragments._BooleanType__PrimitiveType /* 7 */,
+			Fragments._BooleanType__BooleanType /* 8 */
+		};
+		private static final int @NonNull [] __BooleanType = { 1,1,2,2,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CallExp =
+		{
+			Fragments._CallExp__OclAny /* 0 */,
+			Fragments._CallExp__OclElement /* 1 */,
+			Fragments._CallExp__Element /* 2 */,
+			Fragments._CallExp__TuplePart /* 2 */,
+			Fragments._CallExp__NamedElement /* 3 */,
+			Fragments._CallExp__TypedElement /* 4 */,
+			Fragments._CallExp__OCLExpression /* 5 */,
+			Fragments._CallExp__CallExp /* 6 */
+		};
+		private static final int @NonNull [] __CallExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CallOperationAction =
+		{
+			Fragments._CallOperationAction__OclAny /* 0 */,
+			Fragments._CallOperationAction__OclElement /* 1 */,
+			Fragments._CallOperationAction__Element /* 2 */,
+			Fragments._CallOperationAction__NamedElement /* 3 */,
+			Fragments._CallOperationAction__CallOperationAction /* 4 */
+		};
+		private static final int @NonNull [] __CallOperationAction = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Class =
+		{
+			Fragments._Class__OclAny /* 0 */,
+			Fragments._Class__OclElement /* 1 */,
+			Fragments._Class__Element /* 2 */,
+			Fragments._Class__OclType /* 2 */,
+			Fragments._Class__NamedElement /* 3 */,
+			Fragments._Class__TemplateableElement /* 3 */,
+			Fragments._Class__Namespace /* 4 */,
+			Fragments._Class__Type /* 4 */,
+			Fragments._Class__Class /* 5 */
+		};
+		private static final int @NonNull [] __Class = { 1,1,2,2,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionItem =
+		{
+			Fragments._CollectionItem__OclAny /* 0 */,
+			Fragments._CollectionItem__OclElement /* 1 */,
+			Fragments._CollectionItem__Element /* 2 */,
+			Fragments._CollectionItem__TuplePart /* 2 */,
+			Fragments._CollectionItem__NamedElement /* 3 */,
+			Fragments._CollectionItem__TypedElement /* 4 */,
+			Fragments._CollectionItem__CollectionLiteralPart /* 5 */,
+			Fragments._CollectionItem__CollectionItem /* 6 */
+		};
+		private static final int @NonNull [] __CollectionItem = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionKind =
+		{
+			Fragments._CollectionKind__OclAny /* 0 */,
+			Fragments._CollectionKind__OclElement /* 1 */,
+			Fragments._CollectionKind__OclType /* 2 */,
+			Fragments._CollectionKind__OclEnumeration /* 3 */,
+			Fragments._CollectionKind__CollectionKind /* 4 */
+		};
+		private static final int @NonNull [] __CollectionKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralExp =
+		{
+			Fragments._CollectionLiteralExp__OclAny /* 0 */,
+			Fragments._CollectionLiteralExp__OclElement /* 1 */,
+			Fragments._CollectionLiteralExp__Element /* 2 */,
+			Fragments._CollectionLiteralExp__TuplePart /* 2 */,
+			Fragments._CollectionLiteralExp__NamedElement /* 3 */,
+			Fragments._CollectionLiteralExp__TypedElement /* 4 */,
+			Fragments._CollectionLiteralExp__OCLExpression /* 5 */,
+			Fragments._CollectionLiteralExp__LiteralExp /* 6 */,
+			Fragments._CollectionLiteralExp__CollectionLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __CollectionLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralPart =
+		{
+			Fragments._CollectionLiteralPart__OclAny /* 0 */,
+			Fragments._CollectionLiteralPart__OclElement /* 1 */,
+			Fragments._CollectionLiteralPart__Element /* 2 */,
+			Fragments._CollectionLiteralPart__TuplePart /* 2 */,
+			Fragments._CollectionLiteralPart__NamedElement /* 3 */,
+			Fragments._CollectionLiteralPart__TypedElement /* 4 */,
+			Fragments._CollectionLiteralPart__CollectionLiteralPart /* 5 */
+		};
+		private static final int @NonNull [] __CollectionLiteralPart = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionRange =
+		{
+			Fragments._CollectionRange__OclAny /* 0 */,
+			Fragments._CollectionRange__OclElement /* 1 */,
+			Fragments._CollectionRange__Element /* 2 */,
+			Fragments._CollectionRange__TuplePart /* 2 */,
+			Fragments._CollectionRange__NamedElement /* 3 */,
+			Fragments._CollectionRange__TypedElement /* 4 */,
+			Fragments._CollectionRange__CollectionLiteralPart /* 5 */,
+			Fragments._CollectionRange__CollectionRange /* 6 */
+		};
+		private static final int @NonNull [] __CollectionRange = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CollectionType =
+		{
+			Fragments._CollectionType__OclAny /* 0 */,
+			Fragments._CollectionType__OclElement /* 1 */,
+			Fragments._CollectionType__Element /* 2 */,
+			Fragments._CollectionType__OclType /* 2 */,
+			Fragments._CollectionType__NamedElement /* 3 */,
+			Fragments._CollectionType__TemplateableElement /* 3 */,
+			Fragments._CollectionType__Namespace /* 4 */,
+			Fragments._CollectionType__Type /* 4 */,
+			Fragments._CollectionType__Class /* 5 */,
+			Fragments._CollectionType__DataType /* 6 */,
+			Fragments._CollectionType__IterableType /* 7 */,
+			Fragments._CollectionType__CollectionType /* 8 */
+		};
+		private static final int @NonNull [] __CollectionType = { 1,1,2,2,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Comment =
+		{
+			Fragments._Comment__OclAny /* 0 */,
+			Fragments._Comment__OclElement /* 1 */,
+			Fragments._Comment__Element /* 2 */,
+			Fragments._Comment__Comment /* 3 */
+		};
+		private static final int @NonNull [] __Comment = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompleteClass =
+		{
+			Fragments._CompleteClass__OclAny /* 0 */,
+			Fragments._CompleteClass__OclElement /* 1 */,
+			Fragments._CompleteClass__Element /* 2 */,
+			Fragments._CompleteClass__NamedElement /* 3 */,
+			Fragments._CompleteClass__CompleteClass /* 4 */
+		};
+		private static final int @NonNull [] __CompleteClass = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompleteEnvironment =
+		{
+			Fragments._CompleteEnvironment__OclAny /* 0 */,
+			Fragments._CompleteEnvironment__OclElement /* 1 */,
+			Fragments._CompleteEnvironment__Element /* 2 */,
+			Fragments._CompleteEnvironment__CompleteEnvironment /* 3 */
+		};
+		private static final int @NonNull [] __CompleteEnvironment = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompleteModel =
+		{
+			Fragments._CompleteModel__OclAny /* 0 */,
+			Fragments._CompleteModel__OclElement /* 1 */,
+			Fragments._CompleteModel__Element /* 2 */,
+			Fragments._CompleteModel__NamedElement /* 3 */,
+			Fragments._CompleteModel__CompleteModel /* 4 */
+		};
+		private static final int @NonNull [] __CompleteModel = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompletePackage =
+		{
+			Fragments._CompletePackage__OclAny /* 0 */,
+			Fragments._CompletePackage__OclElement /* 1 */,
+			Fragments._CompletePackage__Element /* 2 */,
+			Fragments._CompletePackage__NamedElement /* 3 */,
+			Fragments._CompletePackage__CompletePackage /* 4 */
+		};
+		private static final int @NonNull [] __CompletePackage = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompleteStandardLibrary =
+		{
+			Fragments._CompleteStandardLibrary__OclAny /* 0 */,
+			Fragments._CompleteStandardLibrary__OclElement /* 1 */,
+			Fragments._CompleteStandardLibrary__Element /* 2 */,
+			Fragments._CompleteStandardLibrary__StandardLibrary /* 3 */,
+			Fragments._CompleteStandardLibrary__CompleteStandardLibrary /* 4 */
+		};
+		private static final int @NonNull [] __CompleteStandardLibrary = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ConnectionPointReference =
+		{
+			Fragments._ConnectionPointReference__OclAny /* 0 */,
+			Fragments._ConnectionPointReference__OclElement /* 1 */,
+			Fragments._ConnectionPointReference__Element /* 2 */,
+			Fragments._ConnectionPointReference__NamedElement /* 3 */,
+			Fragments._ConnectionPointReference__Vertex /* 4 */,
+			Fragments._ConnectionPointReference__ConnectionPointReference /* 5 */
+		};
+		private static final int @NonNull [] __ConnectionPointReference = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Constraint =
+		{
+			Fragments._Constraint__OclAny /* 0 */,
+			Fragments._Constraint__OclElement /* 1 */,
+			Fragments._Constraint__Element /* 2 */,
+			Fragments._Constraint__NamedElement /* 3 */,
+			Fragments._Constraint__Constraint /* 4 */
+		};
+		private static final int @NonNull [] __Constraint = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DataType =
+		{
+			Fragments._DataType__OclAny /* 0 */,
+			Fragments._DataType__OclElement /* 1 */,
+			Fragments._DataType__Element /* 2 */,
+			Fragments._DataType__OclType /* 2 */,
+			Fragments._DataType__NamedElement /* 3 */,
+			Fragments._DataType__TemplateableElement /* 3 */,
+			Fragments._DataType__Namespace /* 4 */,
+			Fragments._DataType__Type /* 4 */,
+			Fragments._DataType__Class /* 5 */,
+			Fragments._DataType__DataType /* 6 */
+		};
+		private static final int @NonNull [] __DataType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Detail =
+		{
+			Fragments._Detail__OclAny /* 0 */,
+			Fragments._Detail__OclElement /* 1 */,
+			Fragments._Detail__Element /* 2 */,
+			Fragments._Detail__NamedElement /* 3 */,
+			Fragments._Detail__Detail /* 4 */
+		};
+		private static final int @NonNull [] __Detail = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DynamicBehavior =
+		{
+			Fragments._DynamicBehavior__OclAny /* 0 */,
+			Fragments._DynamicBehavior__OclElement /* 1 */,
+			Fragments._DynamicBehavior__Element /* 2 */,
+			Fragments._DynamicBehavior__OclType /* 2 */,
+			Fragments._DynamicBehavior__DynamicElement /* 3 */,
+			Fragments._DynamicBehavior__NamedElement /* 3 */,
+			Fragments._DynamicBehavior__TemplateableElement /* 3 */,
+			Fragments._DynamicBehavior__Namespace /* 4 */,
+			Fragments._DynamicBehavior__Type /* 4 */,
+			Fragments._DynamicBehavior__Class /* 5 */,
+			Fragments._DynamicBehavior__Behavior /* 6 */,
+			Fragments._DynamicBehavior__DynamicType /* 6 */,
+			Fragments._DynamicBehavior__DynamicBehavior /* 7 */
+		};
+		private static final int @NonNull [] __DynamicBehavior = { 1,1,2,3,2,1,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DynamicElement =
+		{
+			Fragments._DynamicElement__OclAny /* 0 */,
+			Fragments._DynamicElement__OclElement /* 1 */,
+			Fragments._DynamicElement__Element /* 2 */,
+			Fragments._DynamicElement__DynamicElement /* 3 */
+		};
+		private static final int @NonNull [] __DynamicElement = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DynamicProperty =
+		{
+			Fragments._DynamicProperty__OclAny /* 0 */,
+			Fragments._DynamicProperty__OclElement /* 1 */,
+			Fragments._DynamicProperty__Element /* 2 */,
+			Fragments._DynamicProperty__DynamicProperty /* 3 */
+		};
+		private static final int @NonNull [] __DynamicProperty = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DynamicType =
+		{
+			Fragments._DynamicType__OclAny /* 0 */,
+			Fragments._DynamicType__OclElement /* 1 */,
+			Fragments._DynamicType__Element /* 2 */,
+			Fragments._DynamicType__OclType /* 2 */,
+			Fragments._DynamicType__DynamicElement /* 3 */,
+			Fragments._DynamicType__NamedElement /* 3 */,
+			Fragments._DynamicType__TemplateableElement /* 3 */,
+			Fragments._DynamicType__Namespace /* 4 */,
+			Fragments._DynamicType__Type /* 4 */,
+			Fragments._DynamicType__Class /* 5 */,
+			Fragments._DynamicType__DynamicType /* 6 */
+		};
+		private static final int @NonNull [] __DynamicType = { 1,1,2,3,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _DynamicValueSpecification =
+		{
+			Fragments._DynamicValueSpecification__OclAny /* 0 */,
+			Fragments._DynamicValueSpecification__OclElement /* 1 */,
+			Fragments._DynamicValueSpecification__Element /* 2 */,
+			Fragments._DynamicValueSpecification__TuplePart /* 2 */,
+			Fragments._DynamicValueSpecification__NamedElement /* 3 */,
+			Fragments._DynamicValueSpecification__TypedElement /* 4 */,
+			Fragments._DynamicValueSpecification__ValueSpecification /* 5 */,
+			Fragments._DynamicValueSpecification__DynamicValueSpecification /* 6 */
+		};
+		private static final int @NonNull [] __DynamicValueSpecification = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _EcoreObject =
+		{
+			Fragments._EcoreObject__OclAny /* 0 */,
+			Fragments._EcoreObject__EcoreObject /* 1 */
+		};
+		private static final int @NonNull [] __EcoreObject = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Element =
+		{
+			Fragments._Element__OclAny /* 0 */,
+			Fragments._Element__OclElement /* 1 */,
+			Fragments._Element__Element /* 2 */
+		};
+		private static final int @NonNull [] __Element = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ElementExtension =
+		{
+			Fragments._ElementExtension__OclAny /* 0 */,
+			Fragments._ElementExtension__OclElement /* 1 */,
+			Fragments._ElementExtension__Element /* 2 */,
+			Fragments._ElementExtension__OclType /* 2 */,
+			Fragments._ElementExtension__NamedElement /* 3 */,
+			Fragments._ElementExtension__TemplateableElement /* 3 */,
+			Fragments._ElementExtension__Namespace /* 4 */,
+			Fragments._ElementExtension__Type /* 4 */,
+			Fragments._ElementExtension__Class /* 5 */,
+			Fragments._ElementExtension__ElementExtension /* 6 */
+		};
+		private static final int @NonNull [] __ElementExtension = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ElementLiteralExp =
+		{
+			Fragments._ElementLiteralExp__OclAny /* 0 */,
+			Fragments._ElementLiteralExp__OclElement /* 1 */,
+			Fragments._ElementLiteralExp__Element /* 2 */,
+			Fragments._ElementLiteralExp__TuplePart /* 2 */,
+			Fragments._ElementLiteralExp__NamedElement /* 3 */,
+			Fragments._ElementLiteralExp__TypedElement /* 4 */,
+			Fragments._ElementLiteralExp__OCLExpression /* 5 */,
+			Fragments._ElementLiteralExp__LiteralExp /* 6 */,
+			Fragments._ElementLiteralExp__ElementLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __ElementLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _EnumLiteralExp =
+		{
+			Fragments._EnumLiteralExp__OclAny /* 0 */,
+			Fragments._EnumLiteralExp__OclElement /* 1 */,
+			Fragments._EnumLiteralExp__Element /* 2 */,
+			Fragments._EnumLiteralExp__TuplePart /* 2 */,
+			Fragments._EnumLiteralExp__NamedElement /* 3 */,
+			Fragments._EnumLiteralExp__TypedElement /* 4 */,
+			Fragments._EnumLiteralExp__OCLExpression /* 5 */,
+			Fragments._EnumLiteralExp__LiteralExp /* 6 */,
+			Fragments._EnumLiteralExp__EnumLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __EnumLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Enumeration =
+		{
+			Fragments._Enumeration__OclAny /* 0 */,
+			Fragments._Enumeration__OclElement /* 1 */,
+			Fragments._Enumeration__Element /* 2 */,
+			Fragments._Enumeration__OclType /* 2 */,
+			Fragments._Enumeration__NamedElement /* 3 */,
+			Fragments._Enumeration__TemplateableElement /* 3 */,
+			Fragments._Enumeration__Namespace /* 4 */,
+			Fragments._Enumeration__Type /* 4 */,
+			Fragments._Enumeration__Class /* 5 */,
+			Fragments._Enumeration__DataType /* 6 */,
+			Fragments._Enumeration__Enumeration /* 7 */
+		};
+		private static final int @NonNull [] __Enumeration = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _EnumerationLiteral =
+		{
+			Fragments._EnumerationLiteral__OclAny /* 0 */,
+			Fragments._EnumerationLiteral__OclElement /* 1 */,
+			Fragments._EnumerationLiteral__Element /* 2 */,
+			Fragments._EnumerationLiteral__NamedElement /* 3 */,
+			Fragments._EnumerationLiteral__InstanceSpecification /* 4 */,
+			Fragments._EnumerationLiteral__EnumerationLiteral /* 5 */
+		};
+		private static final int @NonNull [] __EnumerationLiteral = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ExpressionInOCL =
+		{
+			Fragments._ExpressionInOCL__OclAny /* 0 */,
+			Fragments._ExpressionInOCL__OclElement /* 1 */,
+			Fragments._ExpressionInOCL__Element /* 2 */,
+			Fragments._ExpressionInOCL__TuplePart /* 2 */,
+			Fragments._ExpressionInOCL__NamedElement /* 3 */,
+			Fragments._ExpressionInOCL__TypedElement /* 4 */,
+			Fragments._ExpressionInOCL__ValueSpecification /* 5 */,
+			Fragments._ExpressionInOCL__LanguageExpression /* 6 */,
+			Fragments._ExpressionInOCL__ExpressionInOCL /* 7 */
+		};
+		private static final int @NonNull [] __ExpressionInOCL = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Feature =
+		{
+			Fragments._Feature__OclAny /* 0 */,
+			Fragments._Feature__OclElement /* 1 */,
+			Fragments._Feature__Element /* 2 */,
+			Fragments._Feature__TuplePart /* 2 */,
+			Fragments._Feature__NamedElement /* 3 */,
+			Fragments._Feature__TypedElement /* 4 */,
+			Fragments._Feature__Feature /* 5 */
+		};
+		private static final int @NonNull [] __Feature = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _FeatureCallExp =
+		{
+			Fragments._FeatureCallExp__OclAny /* 0 */,
+			Fragments._FeatureCallExp__OclElement /* 1 */,
+			Fragments._FeatureCallExp__Element /* 2 */,
+			Fragments._FeatureCallExp__TuplePart /* 2 */,
+			Fragments._FeatureCallExp__NamedElement /* 3 */,
+			Fragments._FeatureCallExp__TypedElement /* 4 */,
+			Fragments._FeatureCallExp__OCLExpression /* 5 */,
+			Fragments._FeatureCallExp__CallExp /* 6 */,
+			Fragments._FeatureCallExp__FeatureCallExp /* 7 */
+		};
+		private static final int @NonNull [] __FeatureCallExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _FinalState =
+		{
+			Fragments._FinalState__OclAny /* 0 */,
+			Fragments._FinalState__OclElement /* 1 */,
+			Fragments._FinalState__OclState /* 1 */,
+			Fragments._FinalState__Element /* 2 */,
+			Fragments._FinalState__NamedElement /* 3 */,
+			Fragments._FinalState__Namespace /* 4 */,
+			Fragments._FinalState__Vertex /* 4 */,
+			Fragments._FinalState__State /* 5 */,
+			Fragments._FinalState__FinalState /* 6 */
+		};
+		private static final int @NonNull [] __FinalState = { 1,2,1,1,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IfExp =
+		{
+			Fragments._IfExp__OclAny /* 0 */,
+			Fragments._IfExp__OclElement /* 1 */,
+			Fragments._IfExp__Element /* 2 */,
+			Fragments._IfExp__TuplePart /* 2 */,
+			Fragments._IfExp__NamedElement /* 3 */,
+			Fragments._IfExp__TypedElement /* 4 */,
+			Fragments._IfExp__OCLExpression /* 5 */,
+			Fragments._IfExp__IfExp /* 6 */
+		};
+		private static final int @NonNull [] __IfExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Import =
+		{
+			Fragments._Import__OclAny /* 0 */,
+			Fragments._Import__OclElement /* 1 */,
+			Fragments._Import__Element /* 2 */,
+			Fragments._Import__NamedElement /* 3 */,
+			Fragments._Import__Import /* 4 */
+		};
+		private static final int @NonNull [] __Import = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _InstanceSpecification =
+		{
+			Fragments._InstanceSpecification__OclAny /* 0 */,
+			Fragments._InstanceSpecification__OclElement /* 1 */,
+			Fragments._InstanceSpecification__Element /* 2 */,
+			Fragments._InstanceSpecification__NamedElement /* 3 */,
+			Fragments._InstanceSpecification__InstanceSpecification /* 4 */
+		};
+		private static final int @NonNull [] __InstanceSpecification = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IntegerLiteralExp =
+		{
+			Fragments._IntegerLiteralExp__OclAny /* 0 */,
+			Fragments._IntegerLiteralExp__OclElement /* 1 */,
+			Fragments._IntegerLiteralExp__Element /* 2 */,
+			Fragments._IntegerLiteralExp__TuplePart /* 2 */,
+			Fragments._IntegerLiteralExp__NamedElement /* 3 */,
+			Fragments._IntegerLiteralExp__TypedElement /* 4 */,
+			Fragments._IntegerLiteralExp__OCLExpression /* 5 */,
+			Fragments._IntegerLiteralExp__LiteralExp /* 6 */,
+			Fragments._IntegerLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._IntegerLiteralExp__NumericLiteralExp /* 8 */,
+			Fragments._IntegerLiteralExp__IntegerLiteralExp /* 9 */
+		};
+		private static final int @NonNull [] __IntegerLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _InvalidLiteralExp =
+		{
+			Fragments._InvalidLiteralExp__OclAny /* 0 */,
+			Fragments._InvalidLiteralExp__OclElement /* 1 */,
+			Fragments._InvalidLiteralExp__Element /* 2 */,
+			Fragments._InvalidLiteralExp__TuplePart /* 2 */,
+			Fragments._InvalidLiteralExp__NamedElement /* 3 */,
+			Fragments._InvalidLiteralExp__TypedElement /* 4 */,
+			Fragments._InvalidLiteralExp__OCLExpression /* 5 */,
+			Fragments._InvalidLiteralExp__LiteralExp /* 6 */,
+			Fragments._InvalidLiteralExp__InvalidLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __InvalidLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _InvalidType =
+		{
+			Fragments._InvalidType__OclAny /* 0 */,
+			Fragments._InvalidType__OclElement /* 1 */,
+			Fragments._InvalidType__Element /* 2 */,
+			Fragments._InvalidType__OclType /* 2 */,
+			Fragments._InvalidType__NamedElement /* 3 */,
+			Fragments._InvalidType__TemplateableElement /* 3 */,
+			Fragments._InvalidType__Namespace /* 4 */,
+			Fragments._InvalidType__Type /* 4 */,
+			Fragments._InvalidType__Class /* 5 */,
+			Fragments._InvalidType__InvalidType /* 6 */
+		};
+		private static final int @NonNull [] __InvalidType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IterableType =
+		{
+			Fragments._IterableType__OclAny /* 0 */,
+			Fragments._IterableType__OclElement /* 1 */,
+			Fragments._IterableType__Element /* 2 */,
+			Fragments._IterableType__OclType /* 2 */,
+			Fragments._IterableType__NamedElement /* 3 */,
+			Fragments._IterableType__TemplateableElement /* 3 */,
+			Fragments._IterableType__Namespace /* 4 */,
+			Fragments._IterableType__Type /* 4 */,
+			Fragments._IterableType__Class /* 5 */,
+			Fragments._IterableType__DataType /* 6 */,
+			Fragments._IterableType__IterableType /* 7 */
+		};
+		private static final int @NonNull [] __IterableType = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IterateExp =
+		{
+			Fragments._IterateExp__OclAny /* 0 */,
+			Fragments._IterateExp__OclElement /* 1 */,
+			Fragments._IterateExp__Element /* 2 */,
+			Fragments._IterateExp__ReferringElement /* 2 */,
+			Fragments._IterateExp__TuplePart /* 2 */,
+			Fragments._IterateExp__NamedElement /* 3 */,
+			Fragments._IterateExp__TypedElement /* 4 */,
+			Fragments._IterateExp__OCLExpression /* 5 */,
+			Fragments._IterateExp__CallExp /* 6 */,
+			Fragments._IterateExp__LoopExp /* 7 */,
+			Fragments._IterateExp__IterateExp /* 8 */
+		};
+		private static final int @NonNull [] __IterateExp = { 1,1,3,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Iteration =
+		{
+			Fragments._Iteration__OclAny /* 0 */,
+			Fragments._Iteration__OclElement /* 1 */,
+			Fragments._Iteration__Element /* 2 */,
+			Fragments._Iteration__TuplePart /* 2 */,
+			Fragments._Iteration__NamedElement /* 3 */,
+			Fragments._Iteration__TemplateableElement /* 3 */,
+			Fragments._Iteration__Namespace /* 4 */,
+			Fragments._Iteration__TypedElement /* 4 */,
+			Fragments._Iteration__Feature /* 5 */,
+			Fragments._Iteration__Operation /* 6 */,
+			Fragments._Iteration__Iteration /* 7 */
+		};
+		private static final int @NonNull [] __Iteration = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IteratorExp =
+		{
+			Fragments._IteratorExp__OclAny /* 0 */,
+			Fragments._IteratorExp__OclElement /* 1 */,
+			Fragments._IteratorExp__Element /* 2 */,
+			Fragments._IteratorExp__ReferringElement /* 2 */,
+			Fragments._IteratorExp__TuplePart /* 2 */,
+			Fragments._IteratorExp__NamedElement /* 3 */,
+			Fragments._IteratorExp__TypedElement /* 4 */,
+			Fragments._IteratorExp__OCLExpression /* 5 */,
+			Fragments._IteratorExp__CallExp /* 6 */,
+			Fragments._IteratorExp__LoopExp /* 7 */,
+			Fragments._IteratorExp__IteratorExp /* 8 */
+		};
+		private static final int @NonNull [] __IteratorExp = { 1,1,3,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _IteratorVariable =
+		{
+			Fragments._IteratorVariable__OclAny /* 0 */,
+			Fragments._IteratorVariable__OclElement /* 1 */,
+			Fragments._IteratorVariable__Element /* 2 */,
+			Fragments._IteratorVariable__TuplePart /* 2 */,
+			Fragments._IteratorVariable__NamedElement /* 3 */,
+			Fragments._IteratorVariable__TypedElement /* 4 */,
+			Fragments._IteratorVariable__VariableDeclaration /* 5 */,
+			Fragments._IteratorVariable__Variable /* 6 */,
+			Fragments._IteratorVariable__IteratorVariable /* 7 */
+		};
+		private static final int @NonNull [] __IteratorVariable = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _JavaClass =
+		{
+			Fragments._JavaClass__OclAny /* 0 */,
+			Fragments._JavaClass__JavaClass /* 1 */
+		};
+		private static final int @NonNull [] __JavaClass = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _JavaType =
+		{
+			Fragments._JavaType__OclAny /* 0 */,
+			Fragments._JavaType__OclElement /* 1 */,
+			Fragments._JavaType__Element /* 2 */,
+			Fragments._JavaType__OclType /* 2 */,
+			Fragments._JavaType__NamedElement /* 3 */,
+			Fragments._JavaType__TemplateableElement /* 3 */,
+			Fragments._JavaType__Namespace /* 4 */,
+			Fragments._JavaType__Type /* 4 */,
+			Fragments._JavaType__Class /* 5 */,
+			Fragments._JavaType__JavaType /* 6 */
+		};
+		private static final int @NonNull [] __JavaType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LambdaType =
+		{
+			Fragments._LambdaType__OclAny /* 0 */,
+			Fragments._LambdaType__OclElement /* 1 */,
+			Fragments._LambdaType__Element /* 2 */,
+			Fragments._LambdaType__OclType /* 2 */,
+			Fragments._LambdaType__NamedElement /* 3 */,
+			Fragments._LambdaType__TemplateableElement /* 3 */,
+			Fragments._LambdaType__Namespace /* 4 */,
+			Fragments._LambdaType__Type /* 4 */,
+			Fragments._LambdaType__Class /* 5 */,
+			Fragments._LambdaType__DataType /* 6 */,
+			Fragments._LambdaType__LambdaType /* 7 */
+		};
+		private static final int @NonNull [] __LambdaType = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LanguageExpression =
+		{
+			Fragments._LanguageExpression__OclAny /* 0 */,
+			Fragments._LanguageExpression__OclElement /* 1 */,
+			Fragments._LanguageExpression__Element /* 2 */,
+			Fragments._LanguageExpression__TuplePart /* 2 */,
+			Fragments._LanguageExpression__NamedElement /* 3 */,
+			Fragments._LanguageExpression__TypedElement /* 4 */,
+			Fragments._LanguageExpression__ValueSpecification /* 5 */,
+			Fragments._LanguageExpression__LanguageExpression /* 6 */
+		};
+		private static final int @NonNull [] __LanguageExpression = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LetExp =
+		{
+			Fragments._LetExp__OclAny /* 0 */,
+			Fragments._LetExp__OclElement /* 1 */,
+			Fragments._LetExp__Element /* 2 */,
+			Fragments._LetExp__TuplePart /* 2 */,
+			Fragments._LetExp__NamedElement /* 3 */,
+			Fragments._LetExp__TypedElement /* 4 */,
+			Fragments._LetExp__OCLExpression /* 5 */,
+			Fragments._LetExp__LetExp /* 6 */
+		};
+		private static final int @NonNull [] __LetExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LetVariable =
+		{
+			Fragments._LetVariable__OclAny /* 0 */,
+			Fragments._LetVariable__OclElement /* 1 */,
+			Fragments._LetVariable__Element /* 2 */,
+			Fragments._LetVariable__TuplePart /* 2 */,
+			Fragments._LetVariable__NamedElement /* 3 */,
+			Fragments._LetVariable__TypedElement /* 4 */,
+			Fragments._LetVariable__VariableDeclaration /* 5 */,
+			Fragments._LetVariable__Variable /* 6 */,
+			Fragments._LetVariable__LetVariable /* 7 */
+		};
+		private static final int @NonNull [] __LetVariable = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Library =
+		{
+			Fragments._Library__OclAny /* 0 */,
+			Fragments._Library__OclElement /* 1 */,
+			Fragments._Library__Element /* 2 */,
+			Fragments._Library__NamedElement /* 3 */,
+			Fragments._Library__Namespace /* 4 */,
+			Fragments._Library__Package /* 5 */,
+			Fragments._Library__Library /* 6 */
+		};
+		private static final int @NonNull [] __Library = { 1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LibraryFeature =
+		{
+			Fragments._LibraryFeature__OclAny /* 0 */,
+			Fragments._LibraryFeature__LibraryFeature /* 1 */
+		};
+		private static final int @NonNull [] __LibraryFeature = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LiteralExp =
+		{
+			Fragments._LiteralExp__OclAny /* 0 */,
+			Fragments._LiteralExp__OclElement /* 1 */,
+			Fragments._LiteralExp__Element /* 2 */,
+			Fragments._LiteralExp__TuplePart /* 2 */,
+			Fragments._LiteralExp__NamedElement /* 3 */,
+			Fragments._LiteralExp__TypedElement /* 4 */,
+			Fragments._LiteralExp__OCLExpression /* 5 */,
+			Fragments._LiteralExp__LiteralExp /* 6 */
+		};
+		private static final int @NonNull [] __LiteralExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _LoopExp =
+		{
+			Fragments._LoopExp__OclAny /* 0 */,
+			Fragments._LoopExp__OclElement /* 1 */,
+			Fragments._LoopExp__Element /* 2 */,
+			Fragments._LoopExp__TuplePart /* 2 */,
+			Fragments._LoopExp__NamedElement /* 3 */,
+			Fragments._LoopExp__TypedElement /* 4 */,
+			Fragments._LoopExp__OCLExpression /* 5 */,
+			Fragments._LoopExp__CallExp /* 6 */,
+			Fragments._LoopExp__LoopExp /* 7 */
+		};
+		private static final int @NonNull [] __LoopExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MapLiteralExp =
+		{
+			Fragments._MapLiteralExp__OclAny /* 0 */,
+			Fragments._MapLiteralExp__OclElement /* 1 */,
+			Fragments._MapLiteralExp__Element /* 2 */,
+			Fragments._MapLiteralExp__TuplePart /* 2 */,
+			Fragments._MapLiteralExp__NamedElement /* 3 */,
+			Fragments._MapLiteralExp__TypedElement /* 4 */,
+			Fragments._MapLiteralExp__OCLExpression /* 5 */,
+			Fragments._MapLiteralExp__LiteralExp /* 6 */,
+			Fragments._MapLiteralExp__MapLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __MapLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MapLiteralPart =
+		{
+			Fragments._MapLiteralPart__OclAny /* 0 */,
+			Fragments._MapLiteralPart__OclElement /* 1 */,
+			Fragments._MapLiteralPart__Element /* 2 */,
+			Fragments._MapLiteralPart__MapLiteralPart /* 3 */
+		};
+		private static final int @NonNull [] __MapLiteralPart = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MapType =
+		{
+			Fragments._MapType__OclAny /* 0 */,
+			Fragments._MapType__OclElement /* 1 */,
+			Fragments._MapType__Element /* 2 */,
+			Fragments._MapType__OclType /* 2 */,
+			Fragments._MapType__NamedElement /* 3 */,
+			Fragments._MapType__TemplateableElement /* 3 */,
+			Fragments._MapType__Namespace /* 4 */,
+			Fragments._MapType__Type /* 4 */,
+			Fragments._MapType__Class /* 5 */,
+			Fragments._MapType__DataType /* 6 */,
+			Fragments._MapType__IterableType /* 7 */,
+			Fragments._MapType__MapType /* 8 */
+		};
+		private static final int @NonNull [] __MapType = { 1,1,2,2,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MessageExp =
+		{
+			Fragments._MessageExp__OclAny /* 0 */,
+			Fragments._MessageExp__OclElement /* 1 */,
+			Fragments._MessageExp__Element /* 2 */,
+			Fragments._MessageExp__TuplePart /* 2 */,
+			Fragments._MessageExp__NamedElement /* 3 */,
+			Fragments._MessageExp__TypedElement /* 4 */,
+			Fragments._MessageExp__OCLExpression /* 5 */,
+			Fragments._MessageExp__MessageExp /* 6 */
+		};
+		private static final int @NonNull [] __MessageExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MessageType =
+		{
+			Fragments._MessageType__OclAny /* 0 */,
+			Fragments._MessageType__OclElement /* 1 */,
+			Fragments._MessageType__Element /* 2 */,
+			Fragments._MessageType__OclType /* 2 */,
+			Fragments._MessageType__NamedElement /* 3 */,
+			Fragments._MessageType__TemplateableElement /* 3 */,
+			Fragments._MessageType__Namespace /* 4 */,
+			Fragments._MessageType__Type /* 4 */,
+			Fragments._MessageType__Class /* 5 */,
+			Fragments._MessageType__MessageType /* 6 */
+		};
+		private static final int @NonNull [] __MessageType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Model =
+		{
+			Fragments._Model__OclAny /* 0 */,
+			Fragments._Model__OclElement /* 1 */,
+			Fragments._Model__Element /* 2 */,
+			Fragments._Model__NamedElement /* 3 */,
+			Fragments._Model__Namespace /* 4 */,
+			Fragments._Model__Model /* 5 */
+		};
+		private static final int @NonNull [] __Model = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _MorePivotable =
+		{
+			Fragments._MorePivotable__OclAny /* 0 */,
+			Fragments._MorePivotable__OclElement /* 1 */,
+			Fragments._MorePivotable__MorePivotable /* 2 */
+		};
+		private static final int @NonNull [] __MorePivotable = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Nameable =
+		{
+			Fragments._Nameable__OclAny /* 0 */,
+			Fragments._Nameable__OclElement /* 1 */,
+			Fragments._Nameable__Nameable /* 2 */
+		};
+		private static final int @NonNull [] __Nameable = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _NamedElement =
+		{
+			Fragments._NamedElement__OclAny /* 0 */,
+			Fragments._NamedElement__OclElement /* 1 */,
+			Fragments._NamedElement__Element /* 2 */,
+			Fragments._NamedElement__NamedElement /* 3 */
+		};
+		private static final int @NonNull [] __NamedElement = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Namespace =
+		{
+			Fragments._Namespace__OclAny /* 0 */,
+			Fragments._Namespace__OclElement /* 1 */,
+			Fragments._Namespace__Element /* 2 */,
+			Fragments._Namespace__NamedElement /* 3 */,
+			Fragments._Namespace__Namespace /* 4 */
+		};
+		private static final int @NonNull [] __Namespace = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _NavigationCallExp =
+		{
+			Fragments._NavigationCallExp__OclAny /* 0 */,
+			Fragments._NavigationCallExp__OclElement /* 1 */,
+			Fragments._NavigationCallExp__Element /* 2 */,
+			Fragments._NavigationCallExp__TuplePart /* 2 */,
+			Fragments._NavigationCallExp__NamedElement /* 3 */,
+			Fragments._NavigationCallExp__TypedElement /* 4 */,
+			Fragments._NavigationCallExp__OCLExpression /* 5 */,
+			Fragments._NavigationCallExp__CallExp /* 6 */,
+			Fragments._NavigationCallExp__FeatureCallExp /* 7 */,
+			Fragments._NavigationCallExp__NavigationCallExp /* 8 */
+		};
+		private static final int @NonNull [] __NavigationCallExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _NullLiteralExp =
+		{
+			Fragments._NullLiteralExp__OclAny /* 0 */,
+			Fragments._NullLiteralExp__OclElement /* 1 */,
+			Fragments._NullLiteralExp__Element /* 2 */,
+			Fragments._NullLiteralExp__TuplePart /* 2 */,
+			Fragments._NullLiteralExp__NamedElement /* 3 */,
+			Fragments._NullLiteralExp__TypedElement /* 4 */,
+			Fragments._NullLiteralExp__OCLExpression /* 5 */,
+			Fragments._NullLiteralExp__LiteralExp /* 6 */,
+			Fragments._NullLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._NullLiteralExp__NullLiteralExp /* 8 */
+		};
+		private static final int @NonNull [] __NullLiteralExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _NumericLiteralExp =
+		{
+			Fragments._NumericLiteralExp__OclAny /* 0 */,
+			Fragments._NumericLiteralExp__OclElement /* 1 */,
+			Fragments._NumericLiteralExp__Element /* 2 */,
+			Fragments._NumericLiteralExp__TuplePart /* 2 */,
+			Fragments._NumericLiteralExp__NamedElement /* 3 */,
+			Fragments._NumericLiteralExp__TypedElement /* 4 */,
+			Fragments._NumericLiteralExp__OCLExpression /* 5 */,
+			Fragments._NumericLiteralExp__LiteralExp /* 6 */,
+			Fragments._NumericLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._NumericLiteralExp__NumericLiteralExp /* 8 */
+		};
+		private static final int @NonNull [] __NumericLiteralExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OCLExpression =
+		{
+			Fragments._OCLExpression__OclAny /* 0 */,
+			Fragments._OCLExpression__OclElement /* 1 */,
+			Fragments._OCLExpression__Element /* 2 */,
+			Fragments._OCLExpression__TuplePart /* 2 */,
+			Fragments._OCLExpression__NamedElement /* 3 */,
+			Fragments._OCLExpression__TypedElement /* 4 */,
+			Fragments._OCLExpression__OCLExpression /* 5 */
+		};
+		private static final int @NonNull [] __OCLExpression = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Object =
+		{
+			Fragments._Object__OclAny /* 0 */,
+			Fragments._Object__Object /* 1 */
+		};
+		private static final int @NonNull [] __Object = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Operation =
+		{
+			Fragments._Operation__OclAny /* 0 */,
+			Fragments._Operation__OclElement /* 1 */,
+			Fragments._Operation__Element /* 2 */,
+			Fragments._Operation__TuplePart /* 2 */,
+			Fragments._Operation__NamedElement /* 3 */,
+			Fragments._Operation__TemplateableElement /* 3 */,
+			Fragments._Operation__Namespace /* 4 */,
+			Fragments._Operation__TypedElement /* 4 */,
+			Fragments._Operation__Feature /* 5 */,
+			Fragments._Operation__Operation /* 6 */
+		};
+		private static final int @NonNull [] __Operation = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OperationCallExp =
+		{
+			Fragments._OperationCallExp__OclAny /* 0 */,
+			Fragments._OperationCallExp__OclElement /* 1 */,
+			Fragments._OperationCallExp__Element /* 2 */,
+			Fragments._OperationCallExp__ReferringElement /* 2 */,
+			Fragments._OperationCallExp__TuplePart /* 2 */,
+			Fragments._OperationCallExp__NamedElement /* 3 */,
+			Fragments._OperationCallExp__TypedElement /* 4 */,
+			Fragments._OperationCallExp__OCLExpression /* 5 */,
+			Fragments._OperationCallExp__CallExp /* 6 */,
+			Fragments._OperationCallExp__FeatureCallExp /* 7 */,
+			Fragments._OperationCallExp__OperationCallExp /* 8 */
+		};
+		private static final int @NonNull [] __OperationCallExp = { 1,1,3,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OppositePropertyCallExp =
+		{
+			Fragments._OppositePropertyCallExp__OclAny /* 0 */,
+			Fragments._OppositePropertyCallExp__OclElement /* 1 */,
+			Fragments._OppositePropertyCallExp__Element /* 2 */,
+			Fragments._OppositePropertyCallExp__TuplePart /* 2 */,
+			Fragments._OppositePropertyCallExp__NamedElement /* 3 */,
+			Fragments._OppositePropertyCallExp__TypedElement /* 4 */,
+			Fragments._OppositePropertyCallExp__OCLExpression /* 5 */,
+			Fragments._OppositePropertyCallExp__CallExp /* 6 */,
+			Fragments._OppositePropertyCallExp__FeatureCallExp /* 7 */,
+			Fragments._OppositePropertyCallExp__NavigationCallExp /* 8 */,
+			Fragments._OppositePropertyCallExp__OppositePropertyCallExp /* 9 */
+		};
+		private static final int @NonNull [] __OppositePropertyCallExp = { 1,1,2,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OrderedSetType =
+		{
+			Fragments._OrderedSetType__OclAny /* 0 */,
+			Fragments._OrderedSetType__OclElement /* 1 */,
+			Fragments._OrderedSetType__Element /* 2 */,
+			Fragments._OrderedSetType__OclType /* 2 */,
+			Fragments._OrderedSetType__NamedElement /* 3 */,
+			Fragments._OrderedSetType__TemplateableElement /* 3 */,
+			Fragments._OrderedSetType__Namespace /* 4 */,
+			Fragments._OrderedSetType__Type /* 4 */,
+			Fragments._OrderedSetType__Class /* 5 */,
+			Fragments._OrderedSetType__DataType /* 6 */,
+			Fragments._OrderedSetType__IterableType /* 7 */,
+			Fragments._OrderedSetType__CollectionType /* 8 */,
+			Fragments._OrderedSetType__OrderedSetType /* 9 */
+		};
+		private static final int @NonNull [] __OrderedSetType = { 1,1,2,2,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _OrphanCompletePackage =
+		{
+			Fragments._OrphanCompletePackage__OclAny /* 0 */,
+			Fragments._OrphanCompletePackage__OclElement /* 1 */,
+			Fragments._OrphanCompletePackage__Element /* 2 */,
+			Fragments._OrphanCompletePackage__NamedElement /* 3 */,
+			Fragments._OrphanCompletePackage__CompletePackage /* 4 */,
+			Fragments._OrphanCompletePackage__OrphanCompletePackage /* 5 */
+		};
+		private static final int @NonNull [] __OrphanCompletePackage = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Orphanage =
+		{
+			Fragments._Orphanage__OclAny /* 0 */,
+			Fragments._Orphanage__OclElement /* 1 */,
+			Fragments._Orphanage__Element /* 2 */,
+			Fragments._Orphanage__NamedElement /* 3 */,
+			Fragments._Orphanage__Namespace /* 4 */,
+			Fragments._Orphanage__Package /* 5 */,
+			Fragments._Orphanage__Orphanage /* 6 */
+		};
+		private static final int @NonNull [] __Orphanage = { 1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Package =
+		{
+			Fragments._Package__OclAny /* 0 */,
+			Fragments._Package__OclElement /* 1 */,
+			Fragments._Package__Element /* 2 */,
+			Fragments._Package__NamedElement /* 3 */,
+			Fragments._Package__Namespace /* 4 */,
+			Fragments._Package__Package /* 5 */
+		};
+		private static final int @NonNull [] __Package = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Parameter =
+		{
+			Fragments._Parameter__OclAny /* 0 */,
+			Fragments._Parameter__OclElement /* 1 */,
+			Fragments._Parameter__Element /* 2 */,
+			Fragments._Parameter__TuplePart /* 2 */,
+			Fragments._Parameter__NamedElement /* 3 */,
+			Fragments._Parameter__TypedElement /* 4 */,
+			Fragments._Parameter__VariableDeclaration /* 5 */,
+			Fragments._Parameter__Parameter /* 6 */
+		};
+		private static final int @NonNull [] __Parameter = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ParameterVariable =
+		{
+			Fragments._ParameterVariable__OclAny /* 0 */,
+			Fragments._ParameterVariable__OclElement /* 1 */,
+			Fragments._ParameterVariable__Element /* 2 */,
+			Fragments._ParameterVariable__TuplePart /* 2 */,
+			Fragments._ParameterVariable__NamedElement /* 3 */,
+			Fragments._ParameterVariable__TypedElement /* 4 */,
+			Fragments._ParameterVariable__VariableDeclaration /* 5 */,
+			Fragments._ParameterVariable__Variable /* 6 */,
+			Fragments._ParameterVariable__ParameterVariable /* 7 */
+		};
+		private static final int @NonNull [] __ParameterVariable = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Pivotable =
+		{
+			Fragments._Pivotable__OclAny /* 0 */,
+			Fragments._Pivotable__OclElement /* 1 */,
+			Fragments._Pivotable__Pivotable /* 2 */
+		};
+		private static final int @NonNull [] __Pivotable = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Precedence =
+		{
+			Fragments._Precedence__OclAny /* 0 */,
+			Fragments._Precedence__OclElement /* 1 */,
+			Fragments._Precedence__Element /* 2 */,
+			Fragments._Precedence__NamedElement /* 3 */,
+			Fragments._Precedence__Precedence /* 4 */
+		};
+		private static final int @NonNull [] __Precedence = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _PrimitiveCompletePackage =
+		{
+			Fragments._PrimitiveCompletePackage__OclAny /* 0 */,
+			Fragments._PrimitiveCompletePackage__OclElement /* 1 */,
+			Fragments._PrimitiveCompletePackage__Element /* 2 */,
+			Fragments._PrimitiveCompletePackage__NamedElement /* 3 */,
+			Fragments._PrimitiveCompletePackage__CompletePackage /* 4 */,
+			Fragments._PrimitiveCompletePackage__PrimitiveCompletePackage /* 5 */
+		};
+		private static final int @NonNull [] __PrimitiveCompletePackage = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _PrimitiveLiteralExp =
+		{
+			Fragments._PrimitiveLiteralExp__OclAny /* 0 */,
+			Fragments._PrimitiveLiteralExp__OclElement /* 1 */,
+			Fragments._PrimitiveLiteralExp__Element /* 2 */,
+			Fragments._PrimitiveLiteralExp__TuplePart /* 2 */,
+			Fragments._PrimitiveLiteralExp__NamedElement /* 3 */,
+			Fragments._PrimitiveLiteralExp__TypedElement /* 4 */,
+			Fragments._PrimitiveLiteralExp__OCLExpression /* 5 */,
+			Fragments._PrimitiveLiteralExp__LiteralExp /* 6 */,
+			Fragments._PrimitiveLiteralExp__PrimitiveLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __PrimitiveLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _PrimitiveType =
+		{
+			Fragments._PrimitiveType__OclAny /* 0 */,
+			Fragments._PrimitiveType__OclElement /* 1 */,
+			Fragments._PrimitiveType__Element /* 2 */,
+			Fragments._PrimitiveType__OclType /* 2 */,
+			Fragments._PrimitiveType__NamedElement /* 3 */,
+			Fragments._PrimitiveType__TemplateableElement /* 3 */,
+			Fragments._PrimitiveType__Namespace /* 4 */,
+			Fragments._PrimitiveType__Type /* 4 */,
+			Fragments._PrimitiveType__Class /* 5 */,
+			Fragments._PrimitiveType__DataType /* 6 */,
+			Fragments._PrimitiveType__PrimitiveType /* 7 */
+		};
+		private static final int @NonNull [] __PrimitiveType = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Profile =
+		{
+			Fragments._Profile__OclAny /* 0 */,
+			Fragments._Profile__OclElement /* 1 */,
+			Fragments._Profile__Element /* 2 */,
+			Fragments._Profile__NamedElement /* 3 */,
+			Fragments._Profile__Namespace /* 4 */,
+			Fragments._Profile__Package /* 5 */,
+			Fragments._Profile__Profile /* 6 */
+		};
+		private static final int @NonNull [] __Profile = { 1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ProfileApplication =
+		{
+			Fragments._ProfileApplication__OclAny /* 0 */,
+			Fragments._ProfileApplication__OclElement /* 1 */,
+			Fragments._ProfileApplication__Element /* 2 */,
+			Fragments._ProfileApplication__ProfileApplication /* 3 */
+		};
+		private static final int @NonNull [] __ProfileApplication = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Property =
+		{
+			Fragments._Property__OclAny /* 0 */,
+			Fragments._Property__OclElement /* 1 */,
+			Fragments._Property__Element /* 2 */,
+			Fragments._Property__TuplePart /* 2 */,
+			Fragments._Property__NamedElement /* 3 */,
+			Fragments._Property__TypedElement /* 4 */,
+			Fragments._Property__Feature /* 5 */,
+			Fragments._Property__Property /* 6 */
+		};
+		private static final int @NonNull [] __Property = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _PropertyCallExp =
+		{
+			Fragments._PropertyCallExp__OclAny /* 0 */,
+			Fragments._PropertyCallExp__OclElement /* 1 */,
+			Fragments._PropertyCallExp__Element /* 2 */,
+			Fragments._PropertyCallExp__ReferringElement /* 2 */,
+			Fragments._PropertyCallExp__TuplePart /* 2 */,
+			Fragments._PropertyCallExp__NamedElement /* 3 */,
+			Fragments._PropertyCallExp__TypedElement /* 4 */,
+			Fragments._PropertyCallExp__OCLExpression /* 5 */,
+			Fragments._PropertyCallExp__CallExp /* 6 */,
+			Fragments._PropertyCallExp__FeatureCallExp /* 7 */,
+			Fragments._PropertyCallExp__NavigationCallExp /* 8 */,
+			Fragments._PropertyCallExp__PropertyCallExp /* 9 */
+		};
+		private static final int @NonNull [] __PropertyCallExp = { 1,1,3,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Pseudostate =
+		{
+			Fragments._Pseudostate__OclAny /* 0 */,
+			Fragments._Pseudostate__OclElement /* 1 */,
+			Fragments._Pseudostate__Element /* 2 */,
+			Fragments._Pseudostate__NamedElement /* 3 */,
+			Fragments._Pseudostate__Vertex /* 4 */,
+			Fragments._Pseudostate__Pseudostate /* 5 */
+		};
+		private static final int @NonNull [] __Pseudostate = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _PseudostateKind =
+		{
+			Fragments._PseudostateKind__OclAny /* 0 */,
+			Fragments._PseudostateKind__OclElement /* 1 */,
+			Fragments._PseudostateKind__OclType /* 2 */,
+			Fragments._PseudostateKind__OclEnumeration /* 3 */,
+			Fragments._PseudostateKind__PseudostateKind /* 4 */
+		};
+		private static final int @NonNull [] __PseudostateKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _RealLiteralExp =
+		{
+			Fragments._RealLiteralExp__OclAny /* 0 */,
+			Fragments._RealLiteralExp__OclElement /* 1 */,
+			Fragments._RealLiteralExp__Element /* 2 */,
+			Fragments._RealLiteralExp__TuplePart /* 2 */,
+			Fragments._RealLiteralExp__NamedElement /* 3 */,
+			Fragments._RealLiteralExp__TypedElement /* 4 */,
+			Fragments._RealLiteralExp__OCLExpression /* 5 */,
+			Fragments._RealLiteralExp__LiteralExp /* 6 */,
+			Fragments._RealLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._RealLiteralExp__NumericLiteralExp /* 8 */,
+			Fragments._RealLiteralExp__RealLiteralExp /* 9 */
+		};
+		private static final int @NonNull [] __RealLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ReferringElement =
+		{
+			Fragments._ReferringElement__OclAny /* 0 */,
+			Fragments._ReferringElement__OclElement /* 1 */,
+			Fragments._ReferringElement__ReferringElement /* 2 */
+		};
+		private static final int @NonNull [] __ReferringElement = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Region =
+		{
+			Fragments._Region__OclAny /* 0 */,
+			Fragments._Region__OclElement /* 1 */,
+			Fragments._Region__Element /* 2 */,
+			Fragments._Region__NamedElement /* 3 */,
+			Fragments._Region__Namespace /* 4 */,
+			Fragments._Region__Region /* 5 */
+		};
+		private static final int @NonNull [] __Region = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ResultVariable =
+		{
+			Fragments._ResultVariable__OclAny /* 0 */,
+			Fragments._ResultVariable__OclElement /* 1 */,
+			Fragments._ResultVariable__Element /* 2 */,
+			Fragments._ResultVariable__TuplePart /* 2 */,
+			Fragments._ResultVariable__NamedElement /* 3 */,
+			Fragments._ResultVariable__TypedElement /* 4 */,
+			Fragments._ResultVariable__VariableDeclaration /* 5 */,
+			Fragments._ResultVariable__Variable /* 6 */,
+			Fragments._ResultVariable__ResultVariable /* 7 */
+		};
+		private static final int @NonNull [] __ResultVariable = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _SelfType =
+		{
+			Fragments._SelfType__OclAny /* 0 */,
+			Fragments._SelfType__OclElement /* 1 */,
+			Fragments._SelfType__Element /* 2 */,
+			Fragments._SelfType__OclType /* 2 */,
+			Fragments._SelfType__NamedElement /* 3 */,
+			Fragments._SelfType__TemplateableElement /* 3 */,
+			Fragments._SelfType__Namespace /* 4 */,
+			Fragments._SelfType__Type /* 4 */,
+			Fragments._SelfType__Class /* 5 */,
+			Fragments._SelfType__SelfType /* 6 */
+		};
+		private static final int @NonNull [] __SelfType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _SendSignalAction =
+		{
+			Fragments._SendSignalAction__OclAny /* 0 */,
+			Fragments._SendSignalAction__OclElement /* 1 */,
+			Fragments._SendSignalAction__Element /* 2 */,
+			Fragments._SendSignalAction__NamedElement /* 3 */,
+			Fragments._SendSignalAction__SendSignalAction /* 4 */
+		};
+		private static final int @NonNull [] __SendSignalAction = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _SequenceType =
+		{
+			Fragments._SequenceType__OclAny /* 0 */,
+			Fragments._SequenceType__OclElement /* 1 */,
+			Fragments._SequenceType__Element /* 2 */,
+			Fragments._SequenceType__OclType /* 2 */,
+			Fragments._SequenceType__NamedElement /* 3 */,
+			Fragments._SequenceType__TemplateableElement /* 3 */,
+			Fragments._SequenceType__Namespace /* 4 */,
+			Fragments._SequenceType__Type /* 4 */,
+			Fragments._SequenceType__Class /* 5 */,
+			Fragments._SequenceType__DataType /* 6 */,
+			Fragments._SequenceType__IterableType /* 7 */,
+			Fragments._SequenceType__CollectionType /* 8 */,
+			Fragments._SequenceType__SequenceType /* 9 */
+		};
+		private static final int @NonNull [] __SequenceType = { 1,1,2,2,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _SetType =
+		{
+			Fragments._SetType__OclAny /* 0 */,
+			Fragments._SetType__OclElement /* 1 */,
+			Fragments._SetType__Element /* 2 */,
+			Fragments._SetType__OclType /* 2 */,
+			Fragments._SetType__NamedElement /* 3 */,
+			Fragments._SetType__TemplateableElement /* 3 */,
+			Fragments._SetType__Namespace /* 4 */,
+			Fragments._SetType__Type /* 4 */,
+			Fragments._SetType__Class /* 5 */,
+			Fragments._SetType__DataType /* 6 */,
+			Fragments._SetType__IterableType /* 7 */,
+			Fragments._SetType__CollectionType /* 8 */,
+			Fragments._SetType__SetType /* 9 */
+		};
+		private static final int @NonNull [] __SetType = { 1,1,2,2,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ShadowExp =
+		{
+			Fragments._ShadowExp__OclAny /* 0 */,
+			Fragments._ShadowExp__OclElement /* 1 */,
+			Fragments._ShadowExp__Element /* 2 */,
+			Fragments._ShadowExp__TuplePart /* 2 */,
+			Fragments._ShadowExp__NamedElement /* 3 */,
+			Fragments._ShadowExp__TypedElement /* 4 */,
+			Fragments._ShadowExp__OCLExpression /* 5 */,
+			Fragments._ShadowExp__ShadowExp /* 6 */
+		};
+		private static final int @NonNull [] __ShadowExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ShadowPart =
+		{
+			Fragments._ShadowPart__OclAny /* 0 */,
+			Fragments._ShadowPart__OclElement /* 1 */,
+			Fragments._ShadowPart__Element /* 2 */,
+			Fragments._ShadowPart__TuplePart /* 2 */,
+			Fragments._ShadowPart__NamedElement /* 3 */,
+			Fragments._ShadowPart__TypedElement /* 4 */,
+			Fragments._ShadowPart__ShadowPart /* 5 */
+		};
+		private static final int @NonNull [] __ShadowPart = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Signal =
+		{
+			Fragments._Signal__OclAny /* 0 */,
+			Fragments._Signal__OclElement /* 1 */,
+			Fragments._Signal__Element /* 2 */,
+			Fragments._Signal__OclType /* 2 */,
+			Fragments._Signal__NamedElement /* 3 */,
+			Fragments._Signal__TemplateableElement /* 3 */,
+			Fragments._Signal__Namespace /* 4 */,
+			Fragments._Signal__Type /* 4 */,
+			Fragments._Signal__Class /* 5 */,
+			Fragments._Signal__Signal /* 6 */
+		};
+		private static final int @NonNull [] __Signal = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Slot =
+		{
+			Fragments._Slot__OclAny /* 0 */,
+			Fragments._Slot__OclElement /* 1 */,
+			Fragments._Slot__Element /* 2 */,
+			Fragments._Slot__Slot /* 3 */
+		};
+		private static final int @NonNull [] __Slot = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _StandardLibrary =
+		{
+			Fragments._StandardLibrary__OclAny /* 0 */,
+			Fragments._StandardLibrary__OclElement /* 1 */,
+			Fragments._StandardLibrary__Element /* 2 */,
+			Fragments._StandardLibrary__StandardLibrary /* 3 */
+		};
+		private static final int @NonNull [] __StandardLibrary = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _State =
+		{
+			Fragments._State__OclAny /* 0 */,
+			Fragments._State__OclElement /* 1 */,
+			Fragments._State__OclState /* 1 */,
+			Fragments._State__Element /* 2 */,
+			Fragments._State__NamedElement /* 3 */,
+			Fragments._State__Namespace /* 4 */,
+			Fragments._State__Vertex /* 4 */,
+			Fragments._State__State /* 5 */
+		};
+		private static final int @NonNull [] __State = { 1,2,1,1,2,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _StateExp =
+		{
+			Fragments._StateExp__OclAny /* 0 */,
+			Fragments._StateExp__OclElement /* 1 */,
+			Fragments._StateExp__Element /* 2 */,
+			Fragments._StateExp__TuplePart /* 2 */,
+			Fragments._StateExp__NamedElement /* 3 */,
+			Fragments._StateExp__TypedElement /* 4 */,
+			Fragments._StateExp__OCLExpression /* 5 */,
+			Fragments._StateExp__StateExp /* 6 */
+		};
+		private static final int @NonNull [] __StateExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _StateMachine =
+		{
+			Fragments._StateMachine__OclAny /* 0 */,
+			Fragments._StateMachine__OclElement /* 1 */,
+			Fragments._StateMachine__Element /* 2 */,
+			Fragments._StateMachine__OclType /* 2 */,
+			Fragments._StateMachine__NamedElement /* 3 */,
+			Fragments._StateMachine__TemplateableElement /* 3 */,
+			Fragments._StateMachine__Namespace /* 4 */,
+			Fragments._StateMachine__Type /* 4 */,
+			Fragments._StateMachine__Class /* 5 */,
+			Fragments._StateMachine__Behavior /* 6 */,
+			Fragments._StateMachine__StateMachine /* 7 */
+		};
+		private static final int @NonNull [] __StateMachine = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Stereotype =
+		{
+			Fragments._Stereotype__OclAny /* 0 */,
+			Fragments._Stereotype__OclElement /* 1 */,
+			Fragments._Stereotype__Element /* 2 */,
+			Fragments._Stereotype__OclType /* 2 */,
+			Fragments._Stereotype__NamedElement /* 3 */,
+			Fragments._Stereotype__OclStereotype /* 3 */,
+			Fragments._Stereotype__TemplateableElement /* 3 */,
+			Fragments._Stereotype__Namespace /* 4 */,
+			Fragments._Stereotype__Type /* 4 */,
+			Fragments._Stereotype__Class /* 5 */,
+			Fragments._Stereotype__Stereotype /* 6 */
+		};
+		private static final int @NonNull [] __Stereotype = { 1,1,2,3,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _StereotypeExtender =
+		{
+			Fragments._StereotypeExtender__OclAny /* 0 */,
+			Fragments._StereotypeExtender__OclElement /* 1 */,
+			Fragments._StereotypeExtender__Element /* 2 */,
+			Fragments._StereotypeExtender__StereotypeExtender /* 3 */
+		};
+		private static final int @NonNull [] __StereotypeExtender = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _StringLiteralExp =
+		{
+			Fragments._StringLiteralExp__OclAny /* 0 */,
+			Fragments._StringLiteralExp__OclElement /* 1 */,
+			Fragments._StringLiteralExp__Element /* 2 */,
+			Fragments._StringLiteralExp__TuplePart /* 2 */,
+			Fragments._StringLiteralExp__NamedElement /* 3 */,
+			Fragments._StringLiteralExp__TypedElement /* 4 */,
+			Fragments._StringLiteralExp__OCLExpression /* 5 */,
+			Fragments._StringLiteralExp__LiteralExp /* 6 */,
+			Fragments._StringLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._StringLiteralExp__StringLiteralExp /* 8 */
+		};
+		private static final int @NonNull [] __StringLiteralExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TemplateBinding =
+		{
+			Fragments._TemplateBinding__OclAny /* 0 */,
+			Fragments._TemplateBinding__OclElement /* 1 */,
+			Fragments._TemplateBinding__Element /* 2 */,
+			Fragments._TemplateBinding__TemplateBinding /* 3 */
+		};
+		private static final int @NonNull [] __TemplateBinding = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TemplateParameter =
+		{
+			Fragments._TemplateParameter__OclAny /* 0 */,
+			Fragments._TemplateParameter__OclElement /* 1 */,
+			Fragments._TemplateParameter__Element /* 2 */,
+			Fragments._TemplateParameter__OclType /* 2 */,
+			Fragments._TemplateParameter__NamedElement /* 3 */,
+			Fragments._TemplateParameter__Type /* 4 */,
+			Fragments._TemplateParameter__TemplateParameter /* 5 */
+		};
+		private static final int @NonNull [] __TemplateParameter = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TemplateParameterSubstitution =
+		{
+			Fragments._TemplateParameterSubstitution__OclAny /* 0 */,
+			Fragments._TemplateParameterSubstitution__OclElement /* 1 */,
+			Fragments._TemplateParameterSubstitution__Element /* 2 */,
+			Fragments._TemplateParameterSubstitution__TemplateParameterSubstitution /* 3 */
+		};
+		private static final int @NonNull [] __TemplateParameterSubstitution = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TemplateSignature =
+		{
+			Fragments._TemplateSignature__OclAny /* 0 */,
+			Fragments._TemplateSignature__OclElement /* 1 */,
+			Fragments._TemplateSignature__Element /* 2 */,
+			Fragments._TemplateSignature__TemplateSignature /* 3 */
+		};
+		private static final int @NonNull [] __TemplateSignature = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TemplateableElement =
+		{
+			Fragments._TemplateableElement__OclAny /* 0 */,
+			Fragments._TemplateableElement__OclElement /* 1 */,
+			Fragments._TemplateableElement__Element /* 2 */,
+			Fragments._TemplateableElement__TemplateableElement /* 3 */
+		};
+		private static final int @NonNull [] __TemplateableElement = { 1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Throwable =
+		{
+			Fragments._Throwable__OclAny /* 0 */,
+			Fragments._Throwable__Throwable /* 1 */
+		};
+		private static final int @NonNull [] __Throwable = { 1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Transition =
+		{
+			Fragments._Transition__OclAny /* 0 */,
+			Fragments._Transition__OclElement /* 1 */,
+			Fragments._Transition__Element /* 2 */,
+			Fragments._Transition__NamedElement /* 3 */,
+			Fragments._Transition__Namespace /* 4 */,
+			Fragments._Transition__Transition /* 5 */
+		};
+		private static final int @NonNull [] __Transition = { 1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TransitionKind =
+		{
+			Fragments._TransitionKind__OclAny /* 0 */,
+			Fragments._TransitionKind__OclElement /* 1 */,
+			Fragments._TransitionKind__OclType /* 2 */,
+			Fragments._TransitionKind__OclEnumeration /* 3 */,
+			Fragments._TransitionKind__TransitionKind /* 4 */
+		};
+		private static final int @NonNull [] __TransitionKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Trigger =
+		{
+			Fragments._Trigger__OclAny /* 0 */,
+			Fragments._Trigger__OclElement /* 1 */,
+			Fragments._Trigger__Element /* 2 */,
+			Fragments._Trigger__NamedElement /* 3 */,
+			Fragments._Trigger__Trigger /* 4 */
+		};
+		private static final int @NonNull [] __Trigger = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralExp =
+		{
+			Fragments._TupleLiteralExp__OclAny /* 0 */,
+			Fragments._TupleLiteralExp__OclElement /* 1 */,
+			Fragments._TupleLiteralExp__Element /* 2 */,
+			Fragments._TupleLiteralExp__TuplePart /* 2 */,
+			Fragments._TupleLiteralExp__NamedElement /* 3 */,
+			Fragments._TupleLiteralExp__TypedElement /* 4 */,
+			Fragments._TupleLiteralExp__OCLExpression /* 5 */,
+			Fragments._TupleLiteralExp__LiteralExp /* 6 */,
+			Fragments._TupleLiteralExp__TupleLiteralExp /* 7 */
+		};
+		private static final int @NonNull [] __TupleLiteralExp = { 1,1,2,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralPart =
+		{
+			Fragments._TupleLiteralPart__OclAny /* 0 */,
+			Fragments._TupleLiteralPart__OclElement /* 1 */,
+			Fragments._TupleLiteralPart__Element /* 2 */,
+			Fragments._TupleLiteralPart__TuplePart /* 2 */,
+			Fragments._TupleLiteralPart__NamedElement /* 3 */,
+			Fragments._TupleLiteralPart__TypedElement /* 4 */,
+			Fragments._TupleLiteralPart__VariableDeclaration /* 5 */,
+			Fragments._TupleLiteralPart__TupleLiteralPart /* 6 */
+		};
+		private static final int @NonNull [] __TupleLiteralPart = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TuplePart =
+		{
+			Fragments._TuplePart__OclAny /* 0 */,
+			Fragments._TuplePart__OclElement /* 1 */,
+			Fragments._TuplePart__TuplePart /* 2 */
+		};
+		private static final int @NonNull [] __TuplePart = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TupleType =
+		{
+			Fragments._TupleType__OclAny /* 0 */,
+			Fragments._TupleType__OclElement /* 1 */,
+			Fragments._TupleType__Element /* 2 */,
+			Fragments._TupleType__OclType /* 2 */,
+			Fragments._TupleType__NamedElement /* 3 */,
+			Fragments._TupleType__TemplateableElement /* 3 */,
+			Fragments._TupleType__Namespace /* 4 */,
+			Fragments._TupleType__Type /* 4 */,
+			Fragments._TupleType__Class /* 5 */,
+			Fragments._TupleType__DataType /* 6 */,
+			Fragments._TupleType__TupleType /* 7 */
+		};
+		private static final int @NonNull [] __TupleType = { 1,1,2,2,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Type =
+		{
+			Fragments._Type__OclAny /* 0 */,
+			Fragments._Type__OclElement /* 1 */,
+			Fragments._Type__Element /* 2 */,
+			Fragments._Type__OclType /* 2 */,
+			Fragments._Type__NamedElement /* 3 */,
+			Fragments._Type__Type /* 4 */
+		};
+		private static final int @NonNull [] __Type = { 1,1,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TypeExp =
+		{
+			Fragments._TypeExp__OclAny /* 0 */,
+			Fragments._TypeExp__OclElement /* 1 */,
+			Fragments._TypeExp__Element /* 2 */,
+			Fragments._TypeExp__ReferringElement /* 2 */,
+			Fragments._TypeExp__TuplePart /* 2 */,
+			Fragments._TypeExp__NamedElement /* 3 */,
+			Fragments._TypeExp__TypedElement /* 4 */,
+			Fragments._TypeExp__OCLExpression /* 5 */,
+			Fragments._TypeExp__TypeExp /* 6 */
+		};
+		private static final int @NonNull [] __TypeExp = { 1,1,3,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _TypedElement =
+		{
+			Fragments._TypedElement__OclAny /* 0 */,
+			Fragments._TypedElement__OclElement /* 1 */,
+			Fragments._TypedElement__Element /* 2 */,
+			Fragments._TypedElement__TuplePart /* 2 */,
+			Fragments._TypedElement__NamedElement /* 3 */,
+			Fragments._TypedElement__TypedElement /* 4 */
+		};
+		private static final int @NonNull [] __TypedElement = { 1,1,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNaturalLiteralExp =
+		{
+			Fragments._UnlimitedNaturalLiteralExp__OclAny /* 0 */,
+			Fragments._UnlimitedNaturalLiteralExp__OclElement /* 1 */,
+			Fragments._UnlimitedNaturalLiteralExp__Element /* 2 */,
+			Fragments._UnlimitedNaturalLiteralExp__TuplePart /* 2 */,
+			Fragments._UnlimitedNaturalLiteralExp__NamedElement /* 3 */,
+			Fragments._UnlimitedNaturalLiteralExp__TypedElement /* 4 */,
+			Fragments._UnlimitedNaturalLiteralExp__OCLExpression /* 5 */,
+			Fragments._UnlimitedNaturalLiteralExp__LiteralExp /* 6 */,
+			Fragments._UnlimitedNaturalLiteralExp__PrimitiveLiteralExp /* 7 */,
+			Fragments._UnlimitedNaturalLiteralExp__NumericLiteralExp /* 8 */,
+			Fragments._UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp /* 9 */
+		};
+		private static final int @NonNull [] __UnlimitedNaturalLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _UnspecifiedValueExp =
+		{
+			Fragments._UnspecifiedValueExp__OclAny /* 0 */,
+			Fragments._UnspecifiedValueExp__OclElement /* 1 */,
+			Fragments._UnspecifiedValueExp__Element /* 2 */,
+			Fragments._UnspecifiedValueExp__TuplePart /* 2 */,
+			Fragments._UnspecifiedValueExp__NamedElement /* 3 */,
+			Fragments._UnspecifiedValueExp__TypedElement /* 4 */,
+			Fragments._UnspecifiedValueExp__OCLExpression /* 5 */,
+			Fragments._UnspecifiedValueExp__UnspecifiedValueExp /* 6 */
+		};
+		private static final int @NonNull [] __UnspecifiedValueExp = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _ValueSpecification =
+		{
+			Fragments._ValueSpecification__OclAny /* 0 */,
+			Fragments._ValueSpecification__OclElement /* 1 */,
+			Fragments._ValueSpecification__Element /* 2 */,
+			Fragments._ValueSpecification__TuplePart /* 2 */,
+			Fragments._ValueSpecification__NamedElement /* 3 */,
+			Fragments._ValueSpecification__TypedElement /* 4 */,
+			Fragments._ValueSpecification__ValueSpecification /* 5 */
+		};
+		private static final int @NonNull [] __ValueSpecification = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Variable =
+		{
+			Fragments._Variable__OclAny /* 0 */,
+			Fragments._Variable__OclElement /* 1 */,
+			Fragments._Variable__Element /* 2 */,
+			Fragments._Variable__TuplePart /* 2 */,
+			Fragments._Variable__NamedElement /* 3 */,
+			Fragments._Variable__TypedElement /* 4 */,
+			Fragments._Variable__VariableDeclaration /* 5 */,
+			Fragments._Variable__Variable /* 6 */
+		};
+		private static final int @NonNull [] __Variable = { 1,1,2,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _VariableDeclaration =
+		{
+			Fragments._VariableDeclaration__OclAny /* 0 */,
+			Fragments._VariableDeclaration__OclElement /* 1 */,
+			Fragments._VariableDeclaration__Element /* 2 */,
+			Fragments._VariableDeclaration__TuplePart /* 2 */,
+			Fragments._VariableDeclaration__NamedElement /* 3 */,
+			Fragments._VariableDeclaration__TypedElement /* 4 */,
+			Fragments._VariableDeclaration__VariableDeclaration /* 5 */
+		};
+		private static final int @NonNull [] __VariableDeclaration = { 1,1,2,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _VariableExp =
+		{
+			Fragments._VariableExp__OclAny /* 0 */,
+			Fragments._VariableExp__OclElement /* 1 */,
+			Fragments._VariableExp__Element /* 2 */,
+			Fragments._VariableExp__ReferringElement /* 2 */,
+			Fragments._VariableExp__TuplePart /* 2 */,
+			Fragments._VariableExp__NamedElement /* 3 */,
+			Fragments._VariableExp__TypedElement /* 4 */,
+			Fragments._VariableExp__OCLExpression /* 5 */,
+			Fragments._VariableExp__VariableExp /* 6 */
+		};
+		private static final int @NonNull [] __VariableExp = { 1,1,3,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Vertex =
+		{
+			Fragments._Vertex__OclAny /* 0 */,
+			Fragments._Vertex__OclElement /* 1 */,
+			Fragments._Vertex__Element /* 2 */,
+			Fragments._Vertex__NamedElement /* 3 */,
+			Fragments._Vertex__Vertex /* 4 */
+		};
+		private static final int @NonNull [] __Vertex = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Visitable =
+		{
+			Fragments._Visitable__OclAny /* 0 */,
+			Fragments._Visitable__OclElement /* 1 */,
+			Fragments._Visitable__Visitable /* 2 */
+		};
+		private static final int @NonNull [] __Visitable = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _VoidType =
+		{
+			Fragments._VoidType__OclAny /* 0 */,
+			Fragments._VoidType__OclElement /* 1 */,
+			Fragments._VoidType__Element /* 2 */,
+			Fragments._VoidType__OclType /* 2 */,
+			Fragments._VoidType__NamedElement /* 3 */,
+			Fragments._VoidType__TemplateableElement /* 3 */,
+			Fragments._VoidType__Namespace /* 4 */,
+			Fragments._VoidType__Type /* 4 */,
+			Fragments._VoidType__Class /* 5 */,
+			Fragments._VoidType__VoidType /* 6 */
+		};
+		private static final int @NonNull [] __VoidType = { 1,1,2,2,2,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _WildcardType =
+		{
+			Fragments._WildcardType__OclAny /* 0 */,
+			Fragments._WildcardType__OclElement /* 1 */,
+			Fragments._WildcardType__Element /* 2 */,
+			Fragments._WildcardType__OclType /* 2 */,
+			Fragments._WildcardType__NamedElement /* 3 */,
+			Fragments._WildcardType__TemplateableElement /* 3 */,
+			Fragments._WildcardType__Namespace /* 4 */,
+			Fragments._WildcardType__Type /* 4 */,
+			Fragments._WildcardType__Class /* 5 */,
+			Fragments._WildcardType__WildcardType /* 6 */
+		};
+		private static final int @NonNull [] __WildcardType = { 1,1,2,2,2,1,1 };
+
+		/**
+		 *	Install the fragment descriptors in the class descriptors.
+		 */
+		static {
+			Types._Annotation.initFragments(_Annotation, __Annotation);
+			Types._AnyType.initFragments(_AnyType, __AnyType);
+			Types._AssociationClass.initFragments(_AssociationClass, __AssociationClass);
+			Types._AssociationClassCallExp.initFragments(_AssociationClassCallExp, __AssociationClassCallExp);
+			Types._AssociativityKind.initFragments(_AssociativityKind, __AssociativityKind);
+			Types._BagType.initFragments(_BagType, __BagType);
+			Types._Behavior.initFragments(_Behavior, __Behavior);
+			Types._BooleanLiteralExp.initFragments(_BooleanLiteralExp, __BooleanLiteralExp);
+			Types._BooleanType.initFragments(_BooleanType, __BooleanType);
+			Types._CallExp.initFragments(_CallExp, __CallExp);
+			Types._CallOperationAction.initFragments(_CallOperationAction, __CallOperationAction);
+			Types._Class.initFragments(_Class, __Class);
+			Types._CollectionItem.initFragments(_CollectionItem, __CollectionItem);
+			Types._CollectionKind.initFragments(_CollectionKind, __CollectionKind);
+			Types._CollectionLiteralExp.initFragments(_CollectionLiteralExp, __CollectionLiteralExp);
+			Types._CollectionLiteralPart.initFragments(_CollectionLiteralPart, __CollectionLiteralPart);
+			Types._CollectionRange.initFragments(_CollectionRange, __CollectionRange);
+			Types._CollectionType.initFragments(_CollectionType, __CollectionType);
+			Types._Comment.initFragments(_Comment, __Comment);
+			Types._CompleteClass.initFragments(_CompleteClass, __CompleteClass);
+			Types._CompleteEnvironment.initFragments(_CompleteEnvironment, __CompleteEnvironment);
+			Types._CompleteModel.initFragments(_CompleteModel, __CompleteModel);
+			Types._CompletePackage.initFragments(_CompletePackage, __CompletePackage);
+			Types._CompleteStandardLibrary.initFragments(_CompleteStandardLibrary, __CompleteStandardLibrary);
+			Types._ConnectionPointReference.initFragments(_ConnectionPointReference, __ConnectionPointReference);
+			Types._Constraint.initFragments(_Constraint, __Constraint);
+			Types._DataType.initFragments(_DataType, __DataType);
+			Types._Detail.initFragments(_Detail, __Detail);
+			Types._DynamicBehavior.initFragments(_DynamicBehavior, __DynamicBehavior);
+			Types._DynamicElement.initFragments(_DynamicElement, __DynamicElement);
+			Types._DynamicProperty.initFragments(_DynamicProperty, __DynamicProperty);
+			Types._DynamicType.initFragments(_DynamicType, __DynamicType);
+			Types._DynamicValueSpecification.initFragments(_DynamicValueSpecification, __DynamicValueSpecification);
+			Types._EcoreObject.initFragments(_EcoreObject, __EcoreObject);
+			Types._Element.initFragments(_Element, __Element);
+			Types._ElementExtension.initFragments(_ElementExtension, __ElementExtension);
+			Types._ElementLiteralExp.initFragments(_ElementLiteralExp, __ElementLiteralExp);
+			Types._EnumLiteralExp.initFragments(_EnumLiteralExp, __EnumLiteralExp);
+			Types._Enumeration.initFragments(_Enumeration, __Enumeration);
+			Types._EnumerationLiteral.initFragments(_EnumerationLiteral, __EnumerationLiteral);
+			Types._ExpressionInOCL.initFragments(_ExpressionInOCL, __ExpressionInOCL);
+			Types._Feature.initFragments(_Feature, __Feature);
+			Types._FeatureCallExp.initFragments(_FeatureCallExp, __FeatureCallExp);
+			Types._FinalState.initFragments(_FinalState, __FinalState);
+			Types._IfExp.initFragments(_IfExp, __IfExp);
+			Types._Import.initFragments(_Import, __Import);
+			Types._InstanceSpecification.initFragments(_InstanceSpecification, __InstanceSpecification);
+			Types._IntegerLiteralExp.initFragments(_IntegerLiteralExp, __IntegerLiteralExp);
+			Types._InvalidLiteralExp.initFragments(_InvalidLiteralExp, __InvalidLiteralExp);
+			Types._InvalidType.initFragments(_InvalidType, __InvalidType);
+			Types._IterableType.initFragments(_IterableType, __IterableType);
+			Types._IterateExp.initFragments(_IterateExp, __IterateExp);
+			Types._Iteration.initFragments(_Iteration, __Iteration);
+			Types._IteratorExp.initFragments(_IteratorExp, __IteratorExp);
+			Types._IteratorVariable.initFragments(_IteratorVariable, __IteratorVariable);
+			Types._JavaClass.initFragments(_JavaClass, __JavaClass);
+			Types._JavaType.initFragments(_JavaType, __JavaType);
+			Types._LambdaType.initFragments(_LambdaType, __LambdaType);
+			Types._LanguageExpression.initFragments(_LanguageExpression, __LanguageExpression);
+			Types._LetExp.initFragments(_LetExp, __LetExp);
+			Types._LetVariable.initFragments(_LetVariable, __LetVariable);
+			Types._Library.initFragments(_Library, __Library);
+			Types._LibraryFeature.initFragments(_LibraryFeature, __LibraryFeature);
+			Types._LiteralExp.initFragments(_LiteralExp, __LiteralExp);
+			Types._LoopExp.initFragments(_LoopExp, __LoopExp);
+			Types._MapLiteralExp.initFragments(_MapLiteralExp, __MapLiteralExp);
+			Types._MapLiteralPart.initFragments(_MapLiteralPart, __MapLiteralPart);
+			Types._MapType.initFragments(_MapType, __MapType);
+			Types._MessageExp.initFragments(_MessageExp, __MessageExp);
+			Types._MessageType.initFragments(_MessageType, __MessageType);
+			Types._Model.initFragments(_Model, __Model);
+			Types._MorePivotable.initFragments(_MorePivotable, __MorePivotable);
+			Types._Nameable.initFragments(_Nameable, __Nameable);
+			Types._NamedElement.initFragments(_NamedElement, __NamedElement);
+			Types._Namespace.initFragments(_Namespace, __Namespace);
+			Types._NavigationCallExp.initFragments(_NavigationCallExp, __NavigationCallExp);
+			Types._NullLiteralExp.initFragments(_NullLiteralExp, __NullLiteralExp);
+			Types._NumericLiteralExp.initFragments(_NumericLiteralExp, __NumericLiteralExp);
+			Types._OCLExpression.initFragments(_OCLExpression, __OCLExpression);
+			Types._Object.initFragments(_Object, __Object);
+			Types._Operation.initFragments(_Operation, __Operation);
+			Types._OperationCallExp.initFragments(_OperationCallExp, __OperationCallExp);
+			Types._OppositePropertyCallExp.initFragments(_OppositePropertyCallExp, __OppositePropertyCallExp);
+			Types._OrderedSetType.initFragments(_OrderedSetType, __OrderedSetType);
+			Types._OrphanCompletePackage.initFragments(_OrphanCompletePackage, __OrphanCompletePackage);
+			Types._Orphanage.initFragments(_Orphanage, __Orphanage);
+			Types._Package.initFragments(_Package, __Package);
+			Types._Parameter.initFragments(_Parameter, __Parameter);
+			Types._ParameterVariable.initFragments(_ParameterVariable, __ParameterVariable);
+			Types._Pivotable.initFragments(_Pivotable, __Pivotable);
+			Types._Precedence.initFragments(_Precedence, __Precedence);
+			Types._PrimitiveCompletePackage.initFragments(_PrimitiveCompletePackage, __PrimitiveCompletePackage);
+			Types._PrimitiveLiteralExp.initFragments(_PrimitiveLiteralExp, __PrimitiveLiteralExp);
+			Types._PrimitiveType.initFragments(_PrimitiveType, __PrimitiveType);
+			Types._Profile.initFragments(_Profile, __Profile);
+			Types._ProfileApplication.initFragments(_ProfileApplication, __ProfileApplication);
+			Types._Property.initFragments(_Property, __Property);
+			Types._PropertyCallExp.initFragments(_PropertyCallExp, __PropertyCallExp);
+			Types._Pseudostate.initFragments(_Pseudostate, __Pseudostate);
+			Types._PseudostateKind.initFragments(_PseudostateKind, __PseudostateKind);
+			Types._RealLiteralExp.initFragments(_RealLiteralExp, __RealLiteralExp);
+			Types._ReferringElement.initFragments(_ReferringElement, __ReferringElement);
+			Types._Region.initFragments(_Region, __Region);
+			Types._ResultVariable.initFragments(_ResultVariable, __ResultVariable);
+			Types._SelfType.initFragments(_SelfType, __SelfType);
+			Types._SendSignalAction.initFragments(_SendSignalAction, __SendSignalAction);
+			Types._SequenceType.initFragments(_SequenceType, __SequenceType);
+			Types._SetType.initFragments(_SetType, __SetType);
+			Types._ShadowExp.initFragments(_ShadowExp, __ShadowExp);
+			Types._ShadowPart.initFragments(_ShadowPart, __ShadowPart);
+			Types._Signal.initFragments(_Signal, __Signal);
+			Types._Slot.initFragments(_Slot, __Slot);
+			Types._StandardLibrary.initFragments(_StandardLibrary, __StandardLibrary);
+			Types._State.initFragments(_State, __State);
+			Types._StateExp.initFragments(_StateExp, __StateExp);
+			Types._StateMachine.initFragments(_StateMachine, __StateMachine);
+			Types._Stereotype.initFragments(_Stereotype, __Stereotype);
+			Types._StereotypeExtender.initFragments(_StereotypeExtender, __StereotypeExtender);
+			Types._StringLiteralExp.initFragments(_StringLiteralExp, __StringLiteralExp);
+			Types._TemplateBinding.initFragments(_TemplateBinding, __TemplateBinding);
+			Types._TemplateParameter.initFragments(_TemplateParameter, __TemplateParameter);
+			Types._TemplateParameterSubstitution.initFragments(_TemplateParameterSubstitution, __TemplateParameterSubstitution);
+			Types._TemplateSignature.initFragments(_TemplateSignature, __TemplateSignature);
+			Types._TemplateableElement.initFragments(_TemplateableElement, __TemplateableElement);
+			Types._Throwable.initFragments(_Throwable, __Throwable);
+			Types._Transition.initFragments(_Transition, __Transition);
+			Types._TransitionKind.initFragments(_TransitionKind, __TransitionKind);
+			Types._Trigger.initFragments(_Trigger, __Trigger);
+			Types._TupleLiteralExp.initFragments(_TupleLiteralExp, __TupleLiteralExp);
+			Types._TupleLiteralPart.initFragments(_TupleLiteralPart, __TupleLiteralPart);
+			Types._TuplePart.initFragments(_TuplePart, __TuplePart);
+			Types._TupleType.initFragments(_TupleType, __TupleType);
+			Types._Type.initFragments(_Type, __Type);
+			Types._TypeExp.initFragments(_TypeExp, __TypeExp);
+			Types._TypedElement.initFragments(_TypedElement, __TypedElement);
+			Types._UnlimitedNaturalLiteralExp.initFragments(_UnlimitedNaturalLiteralExp, __UnlimitedNaturalLiteralExp);
+			Types._UnspecifiedValueExp.initFragments(_UnspecifiedValueExp, __UnspecifiedValueExp);
+			Types._ValueSpecification.initFragments(_ValueSpecification, __ValueSpecification);
+			Types._Variable.initFragments(_Variable, __Variable);
+			Types._VariableDeclaration.initFragments(_VariableDeclaration, __VariableDeclaration);
+			Types._VariableExp.initFragments(_VariableExp, __VariableExp);
+			Types._Vertex.initFragments(_Vertex, __Vertex);
+			Types._Visitable.initFragments(_Visitable, __Visitable);
+			Types._VoidType.initFragments(_VoidType, __VoidType);
+			Types._WildcardType.initFragments(_WildcardType, __WildcardType);
+
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of PivotTables::TypeFragments and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
 
 	/**
 	 *	The operation descriptors for each operation of each type.
@@ -1953,13 +5086,13 @@ public class PivotTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			TypeFragments.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._BooleanType,
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._BooleanType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Class,
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Class,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation("getOwnedCompletePackage", Parameters._String, Types._CompleteModel,
@@ -1968,49 +5101,49 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _CompletePackage__getOwnedCompleteClass = LIBRARY.createOperation("getOwnedCompleteClass", Parameters._String, Types._CompletePackage,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation("allOwnedElements", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Element,
+		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation("allOwnedElements", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Element,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation("getValue", Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Enumeration,
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._InvalidType,
+		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._InvalidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OCLExpression,
+		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OCLExpression,
+		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OperationCallExp,
+		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OperationCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _Property__isAttribute = LIBRARY.createOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation("getSpecializedReferredPropertyOwningType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._PropertyCallExp,
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation("getSpecializedReferredPropertyOwningType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation("getSpecializedReferredPropertyType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._PropertyCallExp,
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation("getSpecializedReferredPropertyType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation("getReferredElement", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ReferringElement,
+		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation("getReferredElement", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ReferringElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._SelfType,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Stereotype,
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Stereotype,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation("conformsTo", Parameters._Type, Types._Type,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation("flattenedType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation("flattenedType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation("isClass", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation("isClass", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation("isTemplateParameter", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation("isTemplateParameter", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			3, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Type__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._Type,
 			4, TemplateParameters.EMPTY_LIST, null);
@@ -2018,20 +5151,20 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation("CompatibleBody", Parameters._ValueSpecification, Types._TypedElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation("integerValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation("integerValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation("isComputable", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation("isComputable", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			3, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation("stringValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation("stringValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			4, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation("unlimitedValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation("unlimitedValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			5, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._VoidType,
+		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._VoidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {
@@ -2042,6 +5175,7 @@ public class PivotTables extends AbstractTables
 		 * Force initialization of the fields of PivotTables::Operations and all preceding sub-packages.
 		 */
 		public static void init() {}
+
 	}
 
 	/**
@@ -2564,2001 +5698,12 @@ public class PivotTables extends AbstractTables
 	}
 
 	/**
-	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
-	 */
-	public static class TypeFragments {
-		static {
-			Init.initStart();
-			Properties.init();
-		}
-
-		private static final @NonNull FlatFragment @NonNull [] _Annotation =
-			{
-				Fragments._Annotation__OclAny /* 0 */,
-				Fragments._Annotation__OclElement /* 1 */,
-				Fragments._Annotation__Element /* 2 */,
-				Fragments._Annotation__NamedElement /* 3 */,
-				Fragments._Annotation__Annotation /* 4 */
-			};
-		private static final int @NonNull [] __Annotation = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _AnyType =
-			{
-				Fragments._AnyType__OclAny /* 0 */,
-				Fragments._AnyType__OclElement /* 1 */,
-				Fragments._AnyType__Element /* 2 */,
-				Fragments._AnyType__OclType /* 2 */,
-				Fragments._AnyType__NamedElement /* 3 */,
-				Fragments._AnyType__TemplateableElement /* 3 */,
-				Fragments._AnyType__Namespace /* 4 */,
-				Fragments._AnyType__Type /* 4 */,
-				Fragments._AnyType__Class /* 5 */,
-				Fragments._AnyType__AnyType /* 6 */
-			};
-		private static final int @NonNull [] __AnyType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _AssociationClass =
-			{
-				Fragments._AssociationClass__OclAny /* 0 */,
-				Fragments._AssociationClass__OclElement /* 1 */,
-				Fragments._AssociationClass__Element /* 2 */,
-				Fragments._AssociationClass__OclType /* 2 */,
-				Fragments._AssociationClass__NamedElement /* 3 */,
-				Fragments._AssociationClass__TemplateableElement /* 3 */,
-				Fragments._AssociationClass__Namespace /* 4 */,
-				Fragments._AssociationClass__Type /* 4 */,
-				Fragments._AssociationClass__Class /* 5 */,
-				Fragments._AssociationClass__AssociationClass /* 6 */
-			};
-		private static final int @NonNull [] __AssociationClass = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _AssociationClassCallExp =
-			{
-				Fragments._AssociationClassCallExp__OclAny /* 0 */,
-				Fragments._AssociationClassCallExp__OclElement /* 1 */,
-				Fragments._AssociationClassCallExp__Element /* 2 */,
-				Fragments._AssociationClassCallExp__TuplePart /* 2 */,
-				Fragments._AssociationClassCallExp__NamedElement /* 3 */,
-				Fragments._AssociationClassCallExp__TypedElement /* 4 */,
-				Fragments._AssociationClassCallExp__OCLExpression /* 5 */,
-				Fragments._AssociationClassCallExp__CallExp /* 6 */,
-				Fragments._AssociationClassCallExp__FeatureCallExp /* 7 */,
-				Fragments._AssociationClassCallExp__NavigationCallExp /* 8 */,
-				Fragments._AssociationClassCallExp__AssociationClassCallExp /* 9 */
-			};
-		private static final int @NonNull [] __AssociationClassCallExp = { 1,1,2,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _AssociativityKind =
-			{
-				Fragments._AssociativityKind__OclAny /* 0 */,
-				Fragments._AssociativityKind__OclElement /* 1 */,
-				Fragments._AssociativityKind__OclType /* 2 */,
-				Fragments._AssociativityKind__OclEnumeration /* 3 */,
-				Fragments._AssociativityKind__AssociativityKind /* 4 */
-			};
-		private static final int @NonNull [] __AssociativityKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _BagType =
-			{
-				Fragments._BagType__OclAny /* 0 */,
-				Fragments._BagType__OclElement /* 1 */,
-				Fragments._BagType__Element /* 2 */,
-				Fragments._BagType__OclType /* 2 */,
-				Fragments._BagType__NamedElement /* 3 */,
-				Fragments._BagType__TemplateableElement /* 3 */,
-				Fragments._BagType__Namespace /* 4 */,
-				Fragments._BagType__Type /* 4 */,
-				Fragments._BagType__Class /* 5 */,
-				Fragments._BagType__DataType /* 6 */,
-				Fragments._BagType__IterableType /* 7 */,
-				Fragments._BagType__CollectionType /* 8 */,
-				Fragments._BagType__BagType /* 9 */
-			};
-		private static final int @NonNull [] __BagType = { 1,1,2,2,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Behavior =
-			{
-				Fragments._Behavior__OclAny /* 0 */,
-				Fragments._Behavior__OclElement /* 1 */,
-				Fragments._Behavior__Element /* 2 */,
-				Fragments._Behavior__OclType /* 2 */,
-				Fragments._Behavior__NamedElement /* 3 */,
-				Fragments._Behavior__TemplateableElement /* 3 */,
-				Fragments._Behavior__Namespace /* 4 */,
-				Fragments._Behavior__Type /* 4 */,
-				Fragments._Behavior__Class /* 5 */,
-				Fragments._Behavior__Behavior /* 6 */
-			};
-		private static final int @NonNull [] __Behavior = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _BooleanLiteralExp =
-			{
-				Fragments._BooleanLiteralExp__OclAny /* 0 */,
-				Fragments._BooleanLiteralExp__OclElement /* 1 */,
-				Fragments._BooleanLiteralExp__Element /* 2 */,
-				Fragments._BooleanLiteralExp__TuplePart /* 2 */,
-				Fragments._BooleanLiteralExp__NamedElement /* 3 */,
-				Fragments._BooleanLiteralExp__TypedElement /* 4 */,
-				Fragments._BooleanLiteralExp__OCLExpression /* 5 */,
-				Fragments._BooleanLiteralExp__LiteralExp /* 6 */,
-				Fragments._BooleanLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._BooleanLiteralExp__BooleanLiteralExp /* 8 */
-			};
-		private static final int @NonNull [] __BooleanLiteralExp = { 1,1,2,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _BooleanType =
-			{
-				Fragments._BooleanType__OclAny /* 0 */,
-				Fragments._BooleanType__OclElement /* 1 */,
-				Fragments._BooleanType__Element /* 2 */,
-				Fragments._BooleanType__OclType /* 2 */,
-				Fragments._BooleanType__NamedElement /* 3 */,
-				Fragments._BooleanType__TemplateableElement /* 3 */,
-				Fragments._BooleanType__Namespace /* 4 */,
-				Fragments._BooleanType__Type /* 4 */,
-				Fragments._BooleanType__Class /* 5 */,
-				Fragments._BooleanType__DataType /* 6 */,
-				Fragments._BooleanType__PrimitiveType /* 7 */,
-				Fragments._BooleanType__BooleanType /* 8 */
-			};
-		private static final int @NonNull [] __BooleanType = { 1,1,2,2,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CallExp =
-			{
-				Fragments._CallExp__OclAny /* 0 */,
-				Fragments._CallExp__OclElement /* 1 */,
-				Fragments._CallExp__Element /* 2 */,
-				Fragments._CallExp__TuplePart /* 2 */,
-				Fragments._CallExp__NamedElement /* 3 */,
-				Fragments._CallExp__TypedElement /* 4 */,
-				Fragments._CallExp__OCLExpression /* 5 */,
-				Fragments._CallExp__CallExp /* 6 */
-			};
-		private static final int @NonNull [] __CallExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CallOperationAction =
-			{
-				Fragments._CallOperationAction__OclAny /* 0 */,
-				Fragments._CallOperationAction__OclElement /* 1 */,
-				Fragments._CallOperationAction__Element /* 2 */,
-				Fragments._CallOperationAction__NamedElement /* 3 */,
-				Fragments._CallOperationAction__CallOperationAction /* 4 */
-			};
-		private static final int @NonNull [] __CallOperationAction = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Class =
-			{
-				Fragments._Class__OclAny /* 0 */,
-				Fragments._Class__OclElement /* 1 */,
-				Fragments._Class__Element /* 2 */,
-				Fragments._Class__OclType /* 2 */,
-				Fragments._Class__NamedElement /* 3 */,
-				Fragments._Class__TemplateableElement /* 3 */,
-				Fragments._Class__Namespace /* 4 */,
-				Fragments._Class__Type /* 4 */,
-				Fragments._Class__Class /* 5 */
-			};
-		private static final int @NonNull [] __Class = { 1,1,2,2,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionItem =
-			{
-				Fragments._CollectionItem__OclAny /* 0 */,
-				Fragments._CollectionItem__OclElement /* 1 */,
-				Fragments._CollectionItem__Element /* 2 */,
-				Fragments._CollectionItem__TuplePart /* 2 */,
-				Fragments._CollectionItem__NamedElement /* 3 */,
-				Fragments._CollectionItem__TypedElement /* 4 */,
-				Fragments._CollectionItem__CollectionLiteralPart /* 5 */,
-				Fragments._CollectionItem__CollectionItem /* 6 */
-			};
-		private static final int @NonNull [] __CollectionItem = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionKind =
-			{
-				Fragments._CollectionKind__OclAny /* 0 */,
-				Fragments._CollectionKind__OclElement /* 1 */,
-				Fragments._CollectionKind__OclType /* 2 */,
-				Fragments._CollectionKind__OclEnumeration /* 3 */,
-				Fragments._CollectionKind__CollectionKind /* 4 */
-			};
-		private static final int @NonNull [] __CollectionKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralExp =
-			{
-				Fragments._CollectionLiteralExp__OclAny /* 0 */,
-				Fragments._CollectionLiteralExp__OclElement /* 1 */,
-				Fragments._CollectionLiteralExp__Element /* 2 */,
-				Fragments._CollectionLiteralExp__TuplePart /* 2 */,
-				Fragments._CollectionLiteralExp__NamedElement /* 3 */,
-				Fragments._CollectionLiteralExp__TypedElement /* 4 */,
-				Fragments._CollectionLiteralExp__OCLExpression /* 5 */,
-				Fragments._CollectionLiteralExp__LiteralExp /* 6 */,
-				Fragments._CollectionLiteralExp__CollectionLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __CollectionLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralPart =
-			{
-				Fragments._CollectionLiteralPart__OclAny /* 0 */,
-				Fragments._CollectionLiteralPart__OclElement /* 1 */,
-				Fragments._CollectionLiteralPart__Element /* 2 */,
-				Fragments._CollectionLiteralPart__TuplePart /* 2 */,
-				Fragments._CollectionLiteralPart__NamedElement /* 3 */,
-				Fragments._CollectionLiteralPart__TypedElement /* 4 */,
-				Fragments._CollectionLiteralPart__CollectionLiteralPart /* 5 */
-			};
-		private static final int @NonNull [] __CollectionLiteralPart = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionRange =
-			{
-				Fragments._CollectionRange__OclAny /* 0 */,
-				Fragments._CollectionRange__OclElement /* 1 */,
-				Fragments._CollectionRange__Element /* 2 */,
-				Fragments._CollectionRange__TuplePart /* 2 */,
-				Fragments._CollectionRange__NamedElement /* 3 */,
-				Fragments._CollectionRange__TypedElement /* 4 */,
-				Fragments._CollectionRange__CollectionLiteralPart /* 5 */,
-				Fragments._CollectionRange__CollectionRange /* 6 */
-			};
-		private static final int @NonNull [] __CollectionRange = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CollectionType =
-			{
-				Fragments._CollectionType__OclAny /* 0 */,
-				Fragments._CollectionType__OclElement /* 1 */,
-				Fragments._CollectionType__Element /* 2 */,
-				Fragments._CollectionType__OclType /* 2 */,
-				Fragments._CollectionType__NamedElement /* 3 */,
-				Fragments._CollectionType__TemplateableElement /* 3 */,
-				Fragments._CollectionType__Namespace /* 4 */,
-				Fragments._CollectionType__Type /* 4 */,
-				Fragments._CollectionType__Class /* 5 */,
-				Fragments._CollectionType__DataType /* 6 */,
-				Fragments._CollectionType__IterableType /* 7 */,
-				Fragments._CollectionType__CollectionType /* 8 */
-			};
-		private static final int @NonNull [] __CollectionType = { 1,1,2,2,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Comment =
-			{
-				Fragments._Comment__OclAny /* 0 */,
-				Fragments._Comment__OclElement /* 1 */,
-				Fragments._Comment__Element /* 2 */,
-				Fragments._Comment__Comment /* 3 */
-			};
-		private static final int @NonNull [] __Comment = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompleteClass =
-			{
-				Fragments._CompleteClass__OclAny /* 0 */,
-				Fragments._CompleteClass__OclElement /* 1 */,
-				Fragments._CompleteClass__Element /* 2 */,
-				Fragments._CompleteClass__NamedElement /* 3 */,
-				Fragments._CompleteClass__CompleteClass /* 4 */
-			};
-		private static final int @NonNull [] __CompleteClass = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompleteEnvironment =
-			{
-				Fragments._CompleteEnvironment__OclAny /* 0 */,
-				Fragments._CompleteEnvironment__OclElement /* 1 */,
-				Fragments._CompleteEnvironment__Element /* 2 */,
-				Fragments._CompleteEnvironment__CompleteEnvironment /* 3 */
-			};
-		private static final int @NonNull [] __CompleteEnvironment = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompleteModel =
-			{
-				Fragments._CompleteModel__OclAny /* 0 */,
-				Fragments._CompleteModel__OclElement /* 1 */,
-				Fragments._CompleteModel__Element /* 2 */,
-				Fragments._CompleteModel__NamedElement /* 3 */,
-				Fragments._CompleteModel__CompleteModel /* 4 */
-			};
-		private static final int @NonNull [] __CompleteModel = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompletePackage =
-			{
-				Fragments._CompletePackage__OclAny /* 0 */,
-				Fragments._CompletePackage__OclElement /* 1 */,
-				Fragments._CompletePackage__Element /* 2 */,
-				Fragments._CompletePackage__NamedElement /* 3 */,
-				Fragments._CompletePackage__CompletePackage /* 4 */
-			};
-		private static final int @NonNull [] __CompletePackage = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompleteStandardLibrary =
-			{
-				Fragments._CompleteStandardLibrary__OclAny /* 0 */,
-				Fragments._CompleteStandardLibrary__OclElement /* 1 */,
-				Fragments._CompleteStandardLibrary__Element /* 2 */,
-				Fragments._CompleteStandardLibrary__StandardLibrary /* 3 */,
-				Fragments._CompleteStandardLibrary__CompleteStandardLibrary /* 4 */
-			};
-		private static final int @NonNull [] __CompleteStandardLibrary = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ConnectionPointReference =
-			{
-				Fragments._ConnectionPointReference__OclAny /* 0 */,
-				Fragments._ConnectionPointReference__OclElement /* 1 */,
-				Fragments._ConnectionPointReference__Element /* 2 */,
-				Fragments._ConnectionPointReference__NamedElement /* 3 */,
-				Fragments._ConnectionPointReference__Vertex /* 4 */,
-				Fragments._ConnectionPointReference__ConnectionPointReference /* 5 */
-			};
-		private static final int @NonNull [] __ConnectionPointReference = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Constraint =
-			{
-				Fragments._Constraint__OclAny /* 0 */,
-				Fragments._Constraint__OclElement /* 1 */,
-				Fragments._Constraint__Element /* 2 */,
-				Fragments._Constraint__NamedElement /* 3 */,
-				Fragments._Constraint__Constraint /* 4 */
-			};
-		private static final int @NonNull [] __Constraint = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DataType =
-			{
-				Fragments._DataType__OclAny /* 0 */,
-				Fragments._DataType__OclElement /* 1 */,
-				Fragments._DataType__Element /* 2 */,
-				Fragments._DataType__OclType /* 2 */,
-				Fragments._DataType__NamedElement /* 3 */,
-				Fragments._DataType__TemplateableElement /* 3 */,
-				Fragments._DataType__Namespace /* 4 */,
-				Fragments._DataType__Type /* 4 */,
-				Fragments._DataType__Class /* 5 */,
-				Fragments._DataType__DataType /* 6 */
-			};
-		private static final int @NonNull [] __DataType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Detail =
-			{
-				Fragments._Detail__OclAny /* 0 */,
-				Fragments._Detail__OclElement /* 1 */,
-				Fragments._Detail__Element /* 2 */,
-				Fragments._Detail__NamedElement /* 3 */,
-				Fragments._Detail__Detail /* 4 */
-			};
-		private static final int @NonNull [] __Detail = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DynamicBehavior =
-			{
-				Fragments._DynamicBehavior__OclAny /* 0 */,
-				Fragments._DynamicBehavior__OclElement /* 1 */,
-				Fragments._DynamicBehavior__Element /* 2 */,
-				Fragments._DynamicBehavior__OclType /* 2 */,
-				Fragments._DynamicBehavior__DynamicElement /* 3 */,
-				Fragments._DynamicBehavior__NamedElement /* 3 */,
-				Fragments._DynamicBehavior__TemplateableElement /* 3 */,
-				Fragments._DynamicBehavior__Namespace /* 4 */,
-				Fragments._DynamicBehavior__Type /* 4 */,
-				Fragments._DynamicBehavior__Class /* 5 */,
-				Fragments._DynamicBehavior__Behavior /* 6 */,
-				Fragments._DynamicBehavior__DynamicType /* 6 */,
-				Fragments._DynamicBehavior__DynamicBehavior /* 7 */
-			};
-		private static final int @NonNull [] __DynamicBehavior = { 1,1,2,3,2,1,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DynamicElement =
-			{
-				Fragments._DynamicElement__OclAny /* 0 */,
-				Fragments._DynamicElement__OclElement /* 1 */,
-				Fragments._DynamicElement__Element /* 2 */,
-				Fragments._DynamicElement__DynamicElement /* 3 */
-			};
-		private static final int @NonNull [] __DynamicElement = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DynamicProperty =
-			{
-				Fragments._DynamicProperty__OclAny /* 0 */,
-				Fragments._DynamicProperty__OclElement /* 1 */,
-				Fragments._DynamicProperty__Element /* 2 */,
-				Fragments._DynamicProperty__DynamicProperty /* 3 */
-			};
-		private static final int @NonNull [] __DynamicProperty = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DynamicType =
-			{
-				Fragments._DynamicType__OclAny /* 0 */,
-				Fragments._DynamicType__OclElement /* 1 */,
-				Fragments._DynamicType__Element /* 2 */,
-				Fragments._DynamicType__OclType /* 2 */,
-				Fragments._DynamicType__DynamicElement /* 3 */,
-				Fragments._DynamicType__NamedElement /* 3 */,
-				Fragments._DynamicType__TemplateableElement /* 3 */,
-				Fragments._DynamicType__Namespace /* 4 */,
-				Fragments._DynamicType__Type /* 4 */,
-				Fragments._DynamicType__Class /* 5 */,
-				Fragments._DynamicType__DynamicType /* 6 */
-			};
-		private static final int @NonNull [] __DynamicType = { 1,1,2,3,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _DynamicValueSpecification =
-			{
-				Fragments._DynamicValueSpecification__OclAny /* 0 */,
-				Fragments._DynamicValueSpecification__OclElement /* 1 */,
-				Fragments._DynamicValueSpecification__Element /* 2 */,
-				Fragments._DynamicValueSpecification__TuplePart /* 2 */,
-				Fragments._DynamicValueSpecification__NamedElement /* 3 */,
-				Fragments._DynamicValueSpecification__TypedElement /* 4 */,
-				Fragments._DynamicValueSpecification__ValueSpecification /* 5 */,
-				Fragments._DynamicValueSpecification__DynamicValueSpecification /* 6 */
-			};
-		private static final int @NonNull [] __DynamicValueSpecification = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _EcoreObject =
-			{
-				Fragments._EcoreObject__OclAny /* 0 */,
-				Fragments._EcoreObject__EcoreObject /* 1 */
-			};
-		private static final int @NonNull [] __EcoreObject = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Element =
-			{
-				Fragments._Element__OclAny /* 0 */,
-				Fragments._Element__OclElement /* 1 */,
-				Fragments._Element__Element /* 2 */
-			};
-		private static final int @NonNull [] __Element = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ElementExtension =
-			{
-				Fragments._ElementExtension__OclAny /* 0 */,
-				Fragments._ElementExtension__OclElement /* 1 */,
-				Fragments._ElementExtension__Element /* 2 */,
-				Fragments._ElementExtension__OclType /* 2 */,
-				Fragments._ElementExtension__NamedElement /* 3 */,
-				Fragments._ElementExtension__TemplateableElement /* 3 */,
-				Fragments._ElementExtension__Namespace /* 4 */,
-				Fragments._ElementExtension__Type /* 4 */,
-				Fragments._ElementExtension__Class /* 5 */,
-				Fragments._ElementExtension__ElementExtension /* 6 */
-			};
-		private static final int @NonNull [] __ElementExtension = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ElementLiteralExp =
-			{
-				Fragments._ElementLiteralExp__OclAny /* 0 */,
-				Fragments._ElementLiteralExp__OclElement /* 1 */,
-				Fragments._ElementLiteralExp__Element /* 2 */,
-				Fragments._ElementLiteralExp__TuplePart /* 2 */,
-				Fragments._ElementLiteralExp__NamedElement /* 3 */,
-				Fragments._ElementLiteralExp__TypedElement /* 4 */,
-				Fragments._ElementLiteralExp__OCLExpression /* 5 */,
-				Fragments._ElementLiteralExp__LiteralExp /* 6 */,
-				Fragments._ElementLiteralExp__ElementLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __ElementLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _EnumLiteralExp =
-			{
-				Fragments._EnumLiteralExp__OclAny /* 0 */,
-				Fragments._EnumLiteralExp__OclElement /* 1 */,
-				Fragments._EnumLiteralExp__Element /* 2 */,
-				Fragments._EnumLiteralExp__TuplePart /* 2 */,
-				Fragments._EnumLiteralExp__NamedElement /* 3 */,
-				Fragments._EnumLiteralExp__TypedElement /* 4 */,
-				Fragments._EnumLiteralExp__OCLExpression /* 5 */,
-				Fragments._EnumLiteralExp__LiteralExp /* 6 */,
-				Fragments._EnumLiteralExp__EnumLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __EnumLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Enumeration =
-			{
-				Fragments._Enumeration__OclAny /* 0 */,
-				Fragments._Enumeration__OclElement /* 1 */,
-				Fragments._Enumeration__Element /* 2 */,
-				Fragments._Enumeration__OclType /* 2 */,
-				Fragments._Enumeration__NamedElement /* 3 */,
-				Fragments._Enumeration__TemplateableElement /* 3 */,
-				Fragments._Enumeration__Namespace /* 4 */,
-				Fragments._Enumeration__Type /* 4 */,
-				Fragments._Enumeration__Class /* 5 */,
-				Fragments._Enumeration__DataType /* 6 */,
-				Fragments._Enumeration__Enumeration /* 7 */
-			};
-		private static final int @NonNull [] __Enumeration = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _EnumerationLiteral =
-			{
-				Fragments._EnumerationLiteral__OclAny /* 0 */,
-				Fragments._EnumerationLiteral__OclElement /* 1 */,
-				Fragments._EnumerationLiteral__Element /* 2 */,
-				Fragments._EnumerationLiteral__NamedElement /* 3 */,
-				Fragments._EnumerationLiteral__InstanceSpecification /* 4 */,
-				Fragments._EnumerationLiteral__EnumerationLiteral /* 5 */
-			};
-		private static final int @NonNull [] __EnumerationLiteral = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ExpressionInOCL =
-			{
-				Fragments._ExpressionInOCL__OclAny /* 0 */,
-				Fragments._ExpressionInOCL__OclElement /* 1 */,
-				Fragments._ExpressionInOCL__Element /* 2 */,
-				Fragments._ExpressionInOCL__TuplePart /* 2 */,
-				Fragments._ExpressionInOCL__NamedElement /* 3 */,
-				Fragments._ExpressionInOCL__TypedElement /* 4 */,
-				Fragments._ExpressionInOCL__ValueSpecification /* 5 */,
-				Fragments._ExpressionInOCL__LanguageExpression /* 6 */,
-				Fragments._ExpressionInOCL__ExpressionInOCL /* 7 */
-			};
-		private static final int @NonNull [] __ExpressionInOCL = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Feature =
-			{
-				Fragments._Feature__OclAny /* 0 */,
-				Fragments._Feature__OclElement /* 1 */,
-				Fragments._Feature__Element /* 2 */,
-				Fragments._Feature__TuplePart /* 2 */,
-				Fragments._Feature__NamedElement /* 3 */,
-				Fragments._Feature__TypedElement /* 4 */,
-				Fragments._Feature__Feature /* 5 */
-			};
-		private static final int @NonNull [] __Feature = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _FeatureCallExp =
-			{
-				Fragments._FeatureCallExp__OclAny /* 0 */,
-				Fragments._FeatureCallExp__OclElement /* 1 */,
-				Fragments._FeatureCallExp__Element /* 2 */,
-				Fragments._FeatureCallExp__TuplePart /* 2 */,
-				Fragments._FeatureCallExp__NamedElement /* 3 */,
-				Fragments._FeatureCallExp__TypedElement /* 4 */,
-				Fragments._FeatureCallExp__OCLExpression /* 5 */,
-				Fragments._FeatureCallExp__CallExp /* 6 */,
-				Fragments._FeatureCallExp__FeatureCallExp /* 7 */
-			};
-		private static final int @NonNull [] __FeatureCallExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _FinalState =
-			{
-				Fragments._FinalState__OclAny /* 0 */,
-				Fragments._FinalState__OclElement /* 1 */,
-				Fragments._FinalState__OclState /* 1 */,
-				Fragments._FinalState__Element /* 2 */,
-				Fragments._FinalState__NamedElement /* 3 */,
-				Fragments._FinalState__Namespace /* 4 */,
-				Fragments._FinalState__Vertex /* 4 */,
-				Fragments._FinalState__State /* 5 */,
-				Fragments._FinalState__FinalState /* 6 */
-			};
-		private static final int @NonNull [] __FinalState = { 1,2,1,1,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IfExp =
-			{
-				Fragments._IfExp__OclAny /* 0 */,
-				Fragments._IfExp__OclElement /* 1 */,
-				Fragments._IfExp__Element /* 2 */,
-				Fragments._IfExp__TuplePart /* 2 */,
-				Fragments._IfExp__NamedElement /* 3 */,
-				Fragments._IfExp__TypedElement /* 4 */,
-				Fragments._IfExp__OCLExpression /* 5 */,
-				Fragments._IfExp__IfExp /* 6 */
-			};
-		private static final int @NonNull [] __IfExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Import =
-			{
-				Fragments._Import__OclAny /* 0 */,
-				Fragments._Import__OclElement /* 1 */,
-				Fragments._Import__Element /* 2 */,
-				Fragments._Import__NamedElement /* 3 */,
-				Fragments._Import__Import /* 4 */
-			};
-		private static final int @NonNull [] __Import = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _InstanceSpecification =
-			{
-				Fragments._InstanceSpecification__OclAny /* 0 */,
-				Fragments._InstanceSpecification__OclElement /* 1 */,
-				Fragments._InstanceSpecification__Element /* 2 */,
-				Fragments._InstanceSpecification__NamedElement /* 3 */,
-				Fragments._InstanceSpecification__InstanceSpecification /* 4 */
-			};
-		private static final int @NonNull [] __InstanceSpecification = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IntegerLiteralExp =
-			{
-				Fragments._IntegerLiteralExp__OclAny /* 0 */,
-				Fragments._IntegerLiteralExp__OclElement /* 1 */,
-				Fragments._IntegerLiteralExp__Element /* 2 */,
-				Fragments._IntegerLiteralExp__TuplePart /* 2 */,
-				Fragments._IntegerLiteralExp__NamedElement /* 3 */,
-				Fragments._IntegerLiteralExp__TypedElement /* 4 */,
-				Fragments._IntegerLiteralExp__OCLExpression /* 5 */,
-				Fragments._IntegerLiteralExp__LiteralExp /* 6 */,
-				Fragments._IntegerLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._IntegerLiteralExp__NumericLiteralExp /* 8 */,
-				Fragments._IntegerLiteralExp__IntegerLiteralExp /* 9 */
-			};
-		private static final int @NonNull [] __IntegerLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _InvalidLiteralExp =
-			{
-				Fragments._InvalidLiteralExp__OclAny /* 0 */,
-				Fragments._InvalidLiteralExp__OclElement /* 1 */,
-				Fragments._InvalidLiteralExp__Element /* 2 */,
-				Fragments._InvalidLiteralExp__TuplePart /* 2 */,
-				Fragments._InvalidLiteralExp__NamedElement /* 3 */,
-				Fragments._InvalidLiteralExp__TypedElement /* 4 */,
-				Fragments._InvalidLiteralExp__OCLExpression /* 5 */,
-				Fragments._InvalidLiteralExp__LiteralExp /* 6 */,
-				Fragments._InvalidLiteralExp__InvalidLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __InvalidLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _InvalidType =
-			{
-				Fragments._InvalidType__OclAny /* 0 */,
-				Fragments._InvalidType__OclElement /* 1 */,
-				Fragments._InvalidType__Element /* 2 */,
-				Fragments._InvalidType__OclType /* 2 */,
-				Fragments._InvalidType__NamedElement /* 3 */,
-				Fragments._InvalidType__TemplateableElement /* 3 */,
-				Fragments._InvalidType__Namespace /* 4 */,
-				Fragments._InvalidType__Type /* 4 */,
-				Fragments._InvalidType__Class /* 5 */,
-				Fragments._InvalidType__InvalidType /* 6 */
-			};
-		private static final int @NonNull [] __InvalidType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IterableType =
-			{
-				Fragments._IterableType__OclAny /* 0 */,
-				Fragments._IterableType__OclElement /* 1 */,
-				Fragments._IterableType__Element /* 2 */,
-				Fragments._IterableType__OclType /* 2 */,
-				Fragments._IterableType__NamedElement /* 3 */,
-				Fragments._IterableType__TemplateableElement /* 3 */,
-				Fragments._IterableType__Namespace /* 4 */,
-				Fragments._IterableType__Type /* 4 */,
-				Fragments._IterableType__Class /* 5 */,
-				Fragments._IterableType__DataType /* 6 */,
-				Fragments._IterableType__IterableType /* 7 */
-			};
-		private static final int @NonNull [] __IterableType = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IterateExp =
-			{
-				Fragments._IterateExp__OclAny /* 0 */,
-				Fragments._IterateExp__OclElement /* 1 */,
-				Fragments._IterateExp__Element /* 2 */,
-				Fragments._IterateExp__ReferringElement /* 2 */,
-				Fragments._IterateExp__TuplePart /* 2 */,
-				Fragments._IterateExp__NamedElement /* 3 */,
-				Fragments._IterateExp__TypedElement /* 4 */,
-				Fragments._IterateExp__OCLExpression /* 5 */,
-				Fragments._IterateExp__CallExp /* 6 */,
-				Fragments._IterateExp__LoopExp /* 7 */,
-				Fragments._IterateExp__IterateExp /* 8 */
-			};
-		private static final int @NonNull [] __IterateExp = { 1,1,3,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Iteration =
-			{
-				Fragments._Iteration__OclAny /* 0 */,
-				Fragments._Iteration__OclElement /* 1 */,
-				Fragments._Iteration__Element /* 2 */,
-				Fragments._Iteration__TuplePart /* 2 */,
-				Fragments._Iteration__NamedElement /* 3 */,
-				Fragments._Iteration__TemplateableElement /* 3 */,
-				Fragments._Iteration__Namespace /* 4 */,
-				Fragments._Iteration__TypedElement /* 4 */,
-				Fragments._Iteration__Feature /* 5 */,
-				Fragments._Iteration__Operation /* 6 */,
-				Fragments._Iteration__Iteration /* 7 */
-			};
-		private static final int @NonNull [] __Iteration = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IteratorExp =
-			{
-				Fragments._IteratorExp__OclAny /* 0 */,
-				Fragments._IteratorExp__OclElement /* 1 */,
-				Fragments._IteratorExp__Element /* 2 */,
-				Fragments._IteratorExp__ReferringElement /* 2 */,
-				Fragments._IteratorExp__TuplePart /* 2 */,
-				Fragments._IteratorExp__NamedElement /* 3 */,
-				Fragments._IteratorExp__TypedElement /* 4 */,
-				Fragments._IteratorExp__OCLExpression /* 5 */,
-				Fragments._IteratorExp__CallExp /* 6 */,
-				Fragments._IteratorExp__LoopExp /* 7 */,
-				Fragments._IteratorExp__IteratorExp /* 8 */
-			};
-		private static final int @NonNull [] __IteratorExp = { 1,1,3,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _IteratorVariable =
-			{
-				Fragments._IteratorVariable__OclAny /* 0 */,
-				Fragments._IteratorVariable__OclElement /* 1 */,
-				Fragments._IteratorVariable__Element /* 2 */,
-				Fragments._IteratorVariable__TuplePart /* 2 */,
-				Fragments._IteratorVariable__NamedElement /* 3 */,
-				Fragments._IteratorVariable__TypedElement /* 4 */,
-				Fragments._IteratorVariable__VariableDeclaration /* 5 */,
-				Fragments._IteratorVariable__Variable /* 6 */,
-				Fragments._IteratorVariable__IteratorVariable /* 7 */
-			};
-		private static final int @NonNull [] __IteratorVariable = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _JavaClass =
-			{
-				Fragments._JavaClass__OclAny /* 0 */,
-				Fragments._JavaClass__JavaClass /* 1 */
-			};
-		private static final int @NonNull [] __JavaClass = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _JavaType =
-			{
-				Fragments._JavaType__OclAny /* 0 */,
-				Fragments._JavaType__OclElement /* 1 */,
-				Fragments._JavaType__Element /* 2 */,
-				Fragments._JavaType__OclType /* 2 */,
-				Fragments._JavaType__NamedElement /* 3 */,
-				Fragments._JavaType__TemplateableElement /* 3 */,
-				Fragments._JavaType__Namespace /* 4 */,
-				Fragments._JavaType__Type /* 4 */,
-				Fragments._JavaType__Class /* 5 */,
-				Fragments._JavaType__JavaType /* 6 */
-			};
-		private static final int @NonNull [] __JavaType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LambdaType =
-			{
-				Fragments._LambdaType__OclAny /* 0 */,
-				Fragments._LambdaType__OclElement /* 1 */,
-				Fragments._LambdaType__Element /* 2 */,
-				Fragments._LambdaType__OclType /* 2 */,
-				Fragments._LambdaType__NamedElement /* 3 */,
-				Fragments._LambdaType__TemplateableElement /* 3 */,
-				Fragments._LambdaType__Namespace /* 4 */,
-				Fragments._LambdaType__Type /* 4 */,
-				Fragments._LambdaType__Class /* 5 */,
-				Fragments._LambdaType__DataType /* 6 */,
-				Fragments._LambdaType__LambdaType /* 7 */
-			};
-		private static final int @NonNull [] __LambdaType = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LanguageExpression =
-			{
-				Fragments._LanguageExpression__OclAny /* 0 */,
-				Fragments._LanguageExpression__OclElement /* 1 */,
-				Fragments._LanguageExpression__Element /* 2 */,
-				Fragments._LanguageExpression__TuplePart /* 2 */,
-				Fragments._LanguageExpression__NamedElement /* 3 */,
-				Fragments._LanguageExpression__TypedElement /* 4 */,
-				Fragments._LanguageExpression__ValueSpecification /* 5 */,
-				Fragments._LanguageExpression__LanguageExpression /* 6 */
-			};
-		private static final int @NonNull [] __LanguageExpression = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LetExp =
-			{
-				Fragments._LetExp__OclAny /* 0 */,
-				Fragments._LetExp__OclElement /* 1 */,
-				Fragments._LetExp__Element /* 2 */,
-				Fragments._LetExp__TuplePart /* 2 */,
-				Fragments._LetExp__NamedElement /* 3 */,
-				Fragments._LetExp__TypedElement /* 4 */,
-				Fragments._LetExp__OCLExpression /* 5 */,
-				Fragments._LetExp__LetExp /* 6 */
-			};
-		private static final int @NonNull [] __LetExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LetVariable =
-			{
-				Fragments._LetVariable__OclAny /* 0 */,
-				Fragments._LetVariable__OclElement /* 1 */,
-				Fragments._LetVariable__Element /* 2 */,
-				Fragments._LetVariable__TuplePart /* 2 */,
-				Fragments._LetVariable__NamedElement /* 3 */,
-				Fragments._LetVariable__TypedElement /* 4 */,
-				Fragments._LetVariable__VariableDeclaration /* 5 */,
-				Fragments._LetVariable__Variable /* 6 */,
-				Fragments._LetVariable__LetVariable /* 7 */
-			};
-		private static final int @NonNull [] __LetVariable = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Library =
-			{
-				Fragments._Library__OclAny /* 0 */,
-				Fragments._Library__OclElement /* 1 */,
-				Fragments._Library__Element /* 2 */,
-				Fragments._Library__NamedElement /* 3 */,
-				Fragments._Library__Namespace /* 4 */,
-				Fragments._Library__Package /* 5 */,
-				Fragments._Library__Library /* 6 */
-			};
-		private static final int @NonNull [] __Library = { 1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LibraryFeature =
-			{
-				Fragments._LibraryFeature__OclAny /* 0 */,
-				Fragments._LibraryFeature__LibraryFeature /* 1 */
-			};
-		private static final int @NonNull [] __LibraryFeature = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LiteralExp =
-			{
-				Fragments._LiteralExp__OclAny /* 0 */,
-				Fragments._LiteralExp__OclElement /* 1 */,
-				Fragments._LiteralExp__Element /* 2 */,
-				Fragments._LiteralExp__TuplePart /* 2 */,
-				Fragments._LiteralExp__NamedElement /* 3 */,
-				Fragments._LiteralExp__TypedElement /* 4 */,
-				Fragments._LiteralExp__OCLExpression /* 5 */,
-				Fragments._LiteralExp__LiteralExp /* 6 */
-			};
-		private static final int @NonNull [] __LiteralExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _LoopExp =
-			{
-				Fragments._LoopExp__OclAny /* 0 */,
-				Fragments._LoopExp__OclElement /* 1 */,
-				Fragments._LoopExp__Element /* 2 */,
-				Fragments._LoopExp__TuplePart /* 2 */,
-				Fragments._LoopExp__NamedElement /* 3 */,
-				Fragments._LoopExp__TypedElement /* 4 */,
-				Fragments._LoopExp__OCLExpression /* 5 */,
-				Fragments._LoopExp__CallExp /* 6 */,
-				Fragments._LoopExp__LoopExp /* 7 */
-			};
-		private static final int @NonNull [] __LoopExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MapLiteralExp =
-			{
-				Fragments._MapLiteralExp__OclAny /* 0 */,
-				Fragments._MapLiteralExp__OclElement /* 1 */,
-				Fragments._MapLiteralExp__Element /* 2 */,
-				Fragments._MapLiteralExp__TuplePart /* 2 */,
-				Fragments._MapLiteralExp__NamedElement /* 3 */,
-				Fragments._MapLiteralExp__TypedElement /* 4 */,
-				Fragments._MapLiteralExp__OCLExpression /* 5 */,
-				Fragments._MapLiteralExp__LiteralExp /* 6 */,
-				Fragments._MapLiteralExp__MapLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __MapLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MapLiteralPart =
-			{
-				Fragments._MapLiteralPart__OclAny /* 0 */,
-				Fragments._MapLiteralPart__OclElement /* 1 */,
-				Fragments._MapLiteralPart__Element /* 2 */,
-				Fragments._MapLiteralPart__MapLiteralPart /* 3 */
-			};
-		private static final int @NonNull [] __MapLiteralPart = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MapType =
-			{
-				Fragments._MapType__OclAny /* 0 */,
-				Fragments._MapType__OclElement /* 1 */,
-				Fragments._MapType__Element /* 2 */,
-				Fragments._MapType__OclType /* 2 */,
-				Fragments._MapType__NamedElement /* 3 */,
-				Fragments._MapType__TemplateableElement /* 3 */,
-				Fragments._MapType__Namespace /* 4 */,
-				Fragments._MapType__Type /* 4 */,
-				Fragments._MapType__Class /* 5 */,
-				Fragments._MapType__DataType /* 6 */,
-				Fragments._MapType__IterableType /* 7 */,
-				Fragments._MapType__MapType /* 8 */
-			};
-		private static final int @NonNull [] __MapType = { 1,1,2,2,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MessageExp =
-			{
-				Fragments._MessageExp__OclAny /* 0 */,
-				Fragments._MessageExp__OclElement /* 1 */,
-				Fragments._MessageExp__Element /* 2 */,
-				Fragments._MessageExp__TuplePart /* 2 */,
-				Fragments._MessageExp__NamedElement /* 3 */,
-				Fragments._MessageExp__TypedElement /* 4 */,
-				Fragments._MessageExp__OCLExpression /* 5 */,
-				Fragments._MessageExp__MessageExp /* 6 */
-			};
-		private static final int @NonNull [] __MessageExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MessageType =
-			{
-				Fragments._MessageType__OclAny /* 0 */,
-				Fragments._MessageType__OclElement /* 1 */,
-				Fragments._MessageType__Element /* 2 */,
-				Fragments._MessageType__OclType /* 2 */,
-				Fragments._MessageType__NamedElement /* 3 */,
-				Fragments._MessageType__TemplateableElement /* 3 */,
-				Fragments._MessageType__Namespace /* 4 */,
-				Fragments._MessageType__Type /* 4 */,
-				Fragments._MessageType__Class /* 5 */,
-				Fragments._MessageType__MessageType /* 6 */
-			};
-		private static final int @NonNull [] __MessageType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Model =
-			{
-				Fragments._Model__OclAny /* 0 */,
-				Fragments._Model__OclElement /* 1 */,
-				Fragments._Model__Element /* 2 */,
-				Fragments._Model__NamedElement /* 3 */,
-				Fragments._Model__Namespace /* 4 */,
-				Fragments._Model__Model /* 5 */
-			};
-		private static final int @NonNull [] __Model = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _MorePivotable =
-			{
-				Fragments._MorePivotable__OclAny /* 0 */,
-				Fragments._MorePivotable__OclElement /* 1 */,
-				Fragments._MorePivotable__MorePivotable /* 2 */
-			};
-		private static final int @NonNull [] __MorePivotable = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Nameable =
-			{
-				Fragments._Nameable__OclAny /* 0 */,
-				Fragments._Nameable__OclElement /* 1 */,
-				Fragments._Nameable__Nameable /* 2 */
-			};
-		private static final int @NonNull [] __Nameable = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _NamedElement =
-			{
-				Fragments._NamedElement__OclAny /* 0 */,
-				Fragments._NamedElement__OclElement /* 1 */,
-				Fragments._NamedElement__Element /* 2 */,
-				Fragments._NamedElement__NamedElement /* 3 */
-			};
-		private static final int @NonNull [] __NamedElement = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Namespace =
-			{
-				Fragments._Namespace__OclAny /* 0 */,
-				Fragments._Namespace__OclElement /* 1 */,
-				Fragments._Namespace__Element /* 2 */,
-				Fragments._Namespace__NamedElement /* 3 */,
-				Fragments._Namespace__Namespace /* 4 */
-			};
-		private static final int @NonNull [] __Namespace = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _NavigationCallExp =
-			{
-				Fragments._NavigationCallExp__OclAny /* 0 */,
-				Fragments._NavigationCallExp__OclElement /* 1 */,
-				Fragments._NavigationCallExp__Element /* 2 */,
-				Fragments._NavigationCallExp__TuplePart /* 2 */,
-				Fragments._NavigationCallExp__NamedElement /* 3 */,
-				Fragments._NavigationCallExp__TypedElement /* 4 */,
-				Fragments._NavigationCallExp__OCLExpression /* 5 */,
-				Fragments._NavigationCallExp__CallExp /* 6 */,
-				Fragments._NavigationCallExp__FeatureCallExp /* 7 */,
-				Fragments._NavigationCallExp__NavigationCallExp /* 8 */
-			};
-		private static final int @NonNull [] __NavigationCallExp = { 1,1,2,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _NullLiteralExp =
-			{
-				Fragments._NullLiteralExp__OclAny /* 0 */,
-				Fragments._NullLiteralExp__OclElement /* 1 */,
-				Fragments._NullLiteralExp__Element /* 2 */,
-				Fragments._NullLiteralExp__TuplePart /* 2 */,
-				Fragments._NullLiteralExp__NamedElement /* 3 */,
-				Fragments._NullLiteralExp__TypedElement /* 4 */,
-				Fragments._NullLiteralExp__OCLExpression /* 5 */,
-				Fragments._NullLiteralExp__LiteralExp /* 6 */,
-				Fragments._NullLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._NullLiteralExp__NullLiteralExp /* 8 */
-			};
-		private static final int @NonNull [] __NullLiteralExp = { 1,1,2,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _NumericLiteralExp =
-			{
-				Fragments._NumericLiteralExp__OclAny /* 0 */,
-				Fragments._NumericLiteralExp__OclElement /* 1 */,
-				Fragments._NumericLiteralExp__Element /* 2 */,
-				Fragments._NumericLiteralExp__TuplePart /* 2 */,
-				Fragments._NumericLiteralExp__NamedElement /* 3 */,
-				Fragments._NumericLiteralExp__TypedElement /* 4 */,
-				Fragments._NumericLiteralExp__OCLExpression /* 5 */,
-				Fragments._NumericLiteralExp__LiteralExp /* 6 */,
-				Fragments._NumericLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._NumericLiteralExp__NumericLiteralExp /* 8 */
-			};
-		private static final int @NonNull [] __NumericLiteralExp = { 1,1,2,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OCLExpression =
-			{
-				Fragments._OCLExpression__OclAny /* 0 */,
-				Fragments._OCLExpression__OclElement /* 1 */,
-				Fragments._OCLExpression__Element /* 2 */,
-				Fragments._OCLExpression__TuplePart /* 2 */,
-				Fragments._OCLExpression__NamedElement /* 3 */,
-				Fragments._OCLExpression__TypedElement /* 4 */,
-				Fragments._OCLExpression__OCLExpression /* 5 */
-			};
-		private static final int @NonNull [] __OCLExpression = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Object =
-			{
-				Fragments._Object__OclAny /* 0 */,
-				Fragments._Object__Object /* 1 */
-			};
-		private static final int @NonNull [] __Object = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Operation =
-			{
-				Fragments._Operation__OclAny /* 0 */,
-				Fragments._Operation__OclElement /* 1 */,
-				Fragments._Operation__Element /* 2 */,
-				Fragments._Operation__TuplePart /* 2 */,
-				Fragments._Operation__NamedElement /* 3 */,
-				Fragments._Operation__TemplateableElement /* 3 */,
-				Fragments._Operation__Namespace /* 4 */,
-				Fragments._Operation__TypedElement /* 4 */,
-				Fragments._Operation__Feature /* 5 */,
-				Fragments._Operation__Operation /* 6 */
-			};
-		private static final int @NonNull [] __Operation = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OperationCallExp =
-			{
-				Fragments._OperationCallExp__OclAny /* 0 */,
-				Fragments._OperationCallExp__OclElement /* 1 */,
-				Fragments._OperationCallExp__Element /* 2 */,
-				Fragments._OperationCallExp__ReferringElement /* 2 */,
-				Fragments._OperationCallExp__TuplePart /* 2 */,
-				Fragments._OperationCallExp__NamedElement /* 3 */,
-				Fragments._OperationCallExp__TypedElement /* 4 */,
-				Fragments._OperationCallExp__OCLExpression /* 5 */,
-				Fragments._OperationCallExp__CallExp /* 6 */,
-				Fragments._OperationCallExp__FeatureCallExp /* 7 */,
-				Fragments._OperationCallExp__OperationCallExp /* 8 */
-			};
-		private static final int @NonNull [] __OperationCallExp = { 1,1,3,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OppositePropertyCallExp =
-			{
-				Fragments._OppositePropertyCallExp__OclAny /* 0 */,
-				Fragments._OppositePropertyCallExp__OclElement /* 1 */,
-				Fragments._OppositePropertyCallExp__Element /* 2 */,
-				Fragments._OppositePropertyCallExp__TuplePart /* 2 */,
-				Fragments._OppositePropertyCallExp__NamedElement /* 3 */,
-				Fragments._OppositePropertyCallExp__TypedElement /* 4 */,
-				Fragments._OppositePropertyCallExp__OCLExpression /* 5 */,
-				Fragments._OppositePropertyCallExp__CallExp /* 6 */,
-				Fragments._OppositePropertyCallExp__FeatureCallExp /* 7 */,
-				Fragments._OppositePropertyCallExp__NavigationCallExp /* 8 */,
-				Fragments._OppositePropertyCallExp__OppositePropertyCallExp /* 9 */
-			};
-		private static final int @NonNull [] __OppositePropertyCallExp = { 1,1,2,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OrderedSetType =
-			{
-				Fragments._OrderedSetType__OclAny /* 0 */,
-				Fragments._OrderedSetType__OclElement /* 1 */,
-				Fragments._OrderedSetType__Element /* 2 */,
-				Fragments._OrderedSetType__OclType /* 2 */,
-				Fragments._OrderedSetType__NamedElement /* 3 */,
-				Fragments._OrderedSetType__TemplateableElement /* 3 */,
-				Fragments._OrderedSetType__Namespace /* 4 */,
-				Fragments._OrderedSetType__Type /* 4 */,
-				Fragments._OrderedSetType__Class /* 5 */,
-				Fragments._OrderedSetType__DataType /* 6 */,
-				Fragments._OrderedSetType__IterableType /* 7 */,
-				Fragments._OrderedSetType__CollectionType /* 8 */,
-				Fragments._OrderedSetType__OrderedSetType /* 9 */
-			};
-		private static final int @NonNull [] __OrderedSetType = { 1,1,2,2,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _OrphanCompletePackage =
-			{
-				Fragments._OrphanCompletePackage__OclAny /* 0 */,
-				Fragments._OrphanCompletePackage__OclElement /* 1 */,
-				Fragments._OrphanCompletePackage__Element /* 2 */,
-				Fragments._OrphanCompletePackage__NamedElement /* 3 */,
-				Fragments._OrphanCompletePackage__CompletePackage /* 4 */,
-				Fragments._OrphanCompletePackage__OrphanCompletePackage /* 5 */
-			};
-		private static final int @NonNull [] __OrphanCompletePackage = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Orphanage =
-			{
-				Fragments._Orphanage__OclAny /* 0 */,
-				Fragments._Orphanage__OclElement /* 1 */,
-				Fragments._Orphanage__Element /* 2 */,
-				Fragments._Orphanage__NamedElement /* 3 */,
-				Fragments._Orphanage__Namespace /* 4 */,
-				Fragments._Orphanage__Package /* 5 */,
-				Fragments._Orphanage__Orphanage /* 6 */
-			};
-		private static final int @NonNull [] __Orphanage = { 1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Package =
-			{
-				Fragments._Package__OclAny /* 0 */,
-				Fragments._Package__OclElement /* 1 */,
-				Fragments._Package__Element /* 2 */,
-				Fragments._Package__NamedElement /* 3 */,
-				Fragments._Package__Namespace /* 4 */,
-				Fragments._Package__Package /* 5 */
-			};
-		private static final int @NonNull [] __Package = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Parameter =
-			{
-				Fragments._Parameter__OclAny /* 0 */,
-				Fragments._Parameter__OclElement /* 1 */,
-				Fragments._Parameter__Element /* 2 */,
-				Fragments._Parameter__TuplePart /* 2 */,
-				Fragments._Parameter__NamedElement /* 3 */,
-				Fragments._Parameter__TypedElement /* 4 */,
-				Fragments._Parameter__VariableDeclaration /* 5 */,
-				Fragments._Parameter__Parameter /* 6 */
-			};
-		private static final int @NonNull [] __Parameter = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ParameterVariable =
-			{
-				Fragments._ParameterVariable__OclAny /* 0 */,
-				Fragments._ParameterVariable__OclElement /* 1 */,
-				Fragments._ParameterVariable__Element /* 2 */,
-				Fragments._ParameterVariable__TuplePart /* 2 */,
-				Fragments._ParameterVariable__NamedElement /* 3 */,
-				Fragments._ParameterVariable__TypedElement /* 4 */,
-				Fragments._ParameterVariable__VariableDeclaration /* 5 */,
-				Fragments._ParameterVariable__Variable /* 6 */,
-				Fragments._ParameterVariable__ParameterVariable /* 7 */
-			};
-		private static final int @NonNull [] __ParameterVariable = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Pivotable =
-			{
-				Fragments._Pivotable__OclAny /* 0 */,
-				Fragments._Pivotable__OclElement /* 1 */,
-				Fragments._Pivotable__Pivotable /* 2 */
-			};
-		private static final int @NonNull [] __Pivotable = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Precedence =
-			{
-				Fragments._Precedence__OclAny /* 0 */,
-				Fragments._Precedence__OclElement /* 1 */,
-				Fragments._Precedence__Element /* 2 */,
-				Fragments._Precedence__NamedElement /* 3 */,
-				Fragments._Precedence__Precedence /* 4 */
-			};
-		private static final int @NonNull [] __Precedence = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _PrimitiveCompletePackage =
-			{
-				Fragments._PrimitiveCompletePackage__OclAny /* 0 */,
-				Fragments._PrimitiveCompletePackage__OclElement /* 1 */,
-				Fragments._PrimitiveCompletePackage__Element /* 2 */,
-				Fragments._PrimitiveCompletePackage__NamedElement /* 3 */,
-				Fragments._PrimitiveCompletePackage__CompletePackage /* 4 */,
-				Fragments._PrimitiveCompletePackage__PrimitiveCompletePackage /* 5 */
-			};
-		private static final int @NonNull [] __PrimitiveCompletePackage = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _PrimitiveLiteralExp =
-			{
-				Fragments._PrimitiveLiteralExp__OclAny /* 0 */,
-				Fragments._PrimitiveLiteralExp__OclElement /* 1 */,
-				Fragments._PrimitiveLiteralExp__Element /* 2 */,
-				Fragments._PrimitiveLiteralExp__TuplePart /* 2 */,
-				Fragments._PrimitiveLiteralExp__NamedElement /* 3 */,
-				Fragments._PrimitiveLiteralExp__TypedElement /* 4 */,
-				Fragments._PrimitiveLiteralExp__OCLExpression /* 5 */,
-				Fragments._PrimitiveLiteralExp__LiteralExp /* 6 */,
-				Fragments._PrimitiveLiteralExp__PrimitiveLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __PrimitiveLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _PrimitiveType =
-			{
-				Fragments._PrimitiveType__OclAny /* 0 */,
-				Fragments._PrimitiveType__OclElement /* 1 */,
-				Fragments._PrimitiveType__Element /* 2 */,
-				Fragments._PrimitiveType__OclType /* 2 */,
-				Fragments._PrimitiveType__NamedElement /* 3 */,
-				Fragments._PrimitiveType__TemplateableElement /* 3 */,
-				Fragments._PrimitiveType__Namespace /* 4 */,
-				Fragments._PrimitiveType__Type /* 4 */,
-				Fragments._PrimitiveType__Class /* 5 */,
-				Fragments._PrimitiveType__DataType /* 6 */,
-				Fragments._PrimitiveType__PrimitiveType /* 7 */
-			};
-		private static final int @NonNull [] __PrimitiveType = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Profile =
-			{
-				Fragments._Profile__OclAny /* 0 */,
-				Fragments._Profile__OclElement /* 1 */,
-				Fragments._Profile__Element /* 2 */,
-				Fragments._Profile__NamedElement /* 3 */,
-				Fragments._Profile__Namespace /* 4 */,
-				Fragments._Profile__Package /* 5 */,
-				Fragments._Profile__Profile /* 6 */
-			};
-		private static final int @NonNull [] __Profile = { 1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ProfileApplication =
-			{
-				Fragments._ProfileApplication__OclAny /* 0 */,
-				Fragments._ProfileApplication__OclElement /* 1 */,
-				Fragments._ProfileApplication__Element /* 2 */,
-				Fragments._ProfileApplication__ProfileApplication /* 3 */
-			};
-		private static final int @NonNull [] __ProfileApplication = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Property =
-			{
-				Fragments._Property__OclAny /* 0 */,
-				Fragments._Property__OclElement /* 1 */,
-				Fragments._Property__Element /* 2 */,
-				Fragments._Property__TuplePart /* 2 */,
-				Fragments._Property__NamedElement /* 3 */,
-				Fragments._Property__TypedElement /* 4 */,
-				Fragments._Property__Feature /* 5 */,
-				Fragments._Property__Property /* 6 */
-			};
-		private static final int @NonNull [] __Property = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _PropertyCallExp =
-			{
-				Fragments._PropertyCallExp__OclAny /* 0 */,
-				Fragments._PropertyCallExp__OclElement /* 1 */,
-				Fragments._PropertyCallExp__Element /* 2 */,
-				Fragments._PropertyCallExp__ReferringElement /* 2 */,
-				Fragments._PropertyCallExp__TuplePart /* 2 */,
-				Fragments._PropertyCallExp__NamedElement /* 3 */,
-				Fragments._PropertyCallExp__TypedElement /* 4 */,
-				Fragments._PropertyCallExp__OCLExpression /* 5 */,
-				Fragments._PropertyCallExp__CallExp /* 6 */,
-				Fragments._PropertyCallExp__FeatureCallExp /* 7 */,
-				Fragments._PropertyCallExp__NavigationCallExp /* 8 */,
-				Fragments._PropertyCallExp__PropertyCallExp /* 9 */
-			};
-		private static final int @NonNull [] __PropertyCallExp = { 1,1,3,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Pseudostate =
-			{
-				Fragments._Pseudostate__OclAny /* 0 */,
-				Fragments._Pseudostate__OclElement /* 1 */,
-				Fragments._Pseudostate__Element /* 2 */,
-				Fragments._Pseudostate__NamedElement /* 3 */,
-				Fragments._Pseudostate__Vertex /* 4 */,
-				Fragments._Pseudostate__Pseudostate /* 5 */
-			};
-		private static final int @NonNull [] __Pseudostate = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _PseudostateKind =
-			{
-				Fragments._PseudostateKind__OclAny /* 0 */,
-				Fragments._PseudostateKind__OclElement /* 1 */,
-				Fragments._PseudostateKind__OclType /* 2 */,
-				Fragments._PseudostateKind__OclEnumeration /* 3 */,
-				Fragments._PseudostateKind__PseudostateKind /* 4 */
-			};
-		private static final int @NonNull [] __PseudostateKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _RealLiteralExp =
-			{
-				Fragments._RealLiteralExp__OclAny /* 0 */,
-				Fragments._RealLiteralExp__OclElement /* 1 */,
-				Fragments._RealLiteralExp__Element /* 2 */,
-				Fragments._RealLiteralExp__TuplePart /* 2 */,
-				Fragments._RealLiteralExp__NamedElement /* 3 */,
-				Fragments._RealLiteralExp__TypedElement /* 4 */,
-				Fragments._RealLiteralExp__OCLExpression /* 5 */,
-				Fragments._RealLiteralExp__LiteralExp /* 6 */,
-				Fragments._RealLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._RealLiteralExp__NumericLiteralExp /* 8 */,
-				Fragments._RealLiteralExp__RealLiteralExp /* 9 */
-			};
-		private static final int @NonNull [] __RealLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ReferringElement =
-			{
-				Fragments._ReferringElement__OclAny /* 0 */,
-				Fragments._ReferringElement__OclElement /* 1 */,
-				Fragments._ReferringElement__ReferringElement /* 2 */
-			};
-		private static final int @NonNull [] __ReferringElement = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Region =
-			{
-				Fragments._Region__OclAny /* 0 */,
-				Fragments._Region__OclElement /* 1 */,
-				Fragments._Region__Element /* 2 */,
-				Fragments._Region__NamedElement /* 3 */,
-				Fragments._Region__Namespace /* 4 */,
-				Fragments._Region__Region /* 5 */
-			};
-		private static final int @NonNull [] __Region = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ResultVariable =
-			{
-				Fragments._ResultVariable__OclAny /* 0 */,
-				Fragments._ResultVariable__OclElement /* 1 */,
-				Fragments._ResultVariable__Element /* 2 */,
-				Fragments._ResultVariable__TuplePart /* 2 */,
-				Fragments._ResultVariable__NamedElement /* 3 */,
-				Fragments._ResultVariable__TypedElement /* 4 */,
-				Fragments._ResultVariable__VariableDeclaration /* 5 */,
-				Fragments._ResultVariable__Variable /* 6 */,
-				Fragments._ResultVariable__ResultVariable /* 7 */
-			};
-		private static final int @NonNull [] __ResultVariable = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _SelfType =
-			{
-				Fragments._SelfType__OclAny /* 0 */,
-				Fragments._SelfType__OclElement /* 1 */,
-				Fragments._SelfType__Element /* 2 */,
-				Fragments._SelfType__OclType /* 2 */,
-				Fragments._SelfType__NamedElement /* 3 */,
-				Fragments._SelfType__TemplateableElement /* 3 */,
-				Fragments._SelfType__Namespace /* 4 */,
-				Fragments._SelfType__Type /* 4 */,
-				Fragments._SelfType__Class /* 5 */,
-				Fragments._SelfType__SelfType /* 6 */
-			};
-		private static final int @NonNull [] __SelfType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _SendSignalAction =
-			{
-				Fragments._SendSignalAction__OclAny /* 0 */,
-				Fragments._SendSignalAction__OclElement /* 1 */,
-				Fragments._SendSignalAction__Element /* 2 */,
-				Fragments._SendSignalAction__NamedElement /* 3 */,
-				Fragments._SendSignalAction__SendSignalAction /* 4 */
-			};
-		private static final int @NonNull [] __SendSignalAction = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _SequenceType =
-			{
-				Fragments._SequenceType__OclAny /* 0 */,
-				Fragments._SequenceType__OclElement /* 1 */,
-				Fragments._SequenceType__Element /* 2 */,
-				Fragments._SequenceType__OclType /* 2 */,
-				Fragments._SequenceType__NamedElement /* 3 */,
-				Fragments._SequenceType__TemplateableElement /* 3 */,
-				Fragments._SequenceType__Namespace /* 4 */,
-				Fragments._SequenceType__Type /* 4 */,
-				Fragments._SequenceType__Class /* 5 */,
-				Fragments._SequenceType__DataType /* 6 */,
-				Fragments._SequenceType__IterableType /* 7 */,
-				Fragments._SequenceType__CollectionType /* 8 */,
-				Fragments._SequenceType__SequenceType /* 9 */
-			};
-		private static final int @NonNull [] __SequenceType = { 1,1,2,2,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _SetType =
-			{
-				Fragments._SetType__OclAny /* 0 */,
-				Fragments._SetType__OclElement /* 1 */,
-				Fragments._SetType__Element /* 2 */,
-				Fragments._SetType__OclType /* 2 */,
-				Fragments._SetType__NamedElement /* 3 */,
-				Fragments._SetType__TemplateableElement /* 3 */,
-				Fragments._SetType__Namespace /* 4 */,
-				Fragments._SetType__Type /* 4 */,
-				Fragments._SetType__Class /* 5 */,
-				Fragments._SetType__DataType /* 6 */,
-				Fragments._SetType__IterableType /* 7 */,
-				Fragments._SetType__CollectionType /* 8 */,
-				Fragments._SetType__SetType /* 9 */
-			};
-		private static final int @NonNull [] __SetType = { 1,1,2,2,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ShadowExp =
-			{
-				Fragments._ShadowExp__OclAny /* 0 */,
-				Fragments._ShadowExp__OclElement /* 1 */,
-				Fragments._ShadowExp__Element /* 2 */,
-				Fragments._ShadowExp__TuplePart /* 2 */,
-				Fragments._ShadowExp__NamedElement /* 3 */,
-				Fragments._ShadowExp__TypedElement /* 4 */,
-				Fragments._ShadowExp__OCLExpression /* 5 */,
-				Fragments._ShadowExp__ShadowExp /* 6 */
-			};
-		private static final int @NonNull [] __ShadowExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ShadowPart =
-			{
-				Fragments._ShadowPart__OclAny /* 0 */,
-				Fragments._ShadowPart__OclElement /* 1 */,
-				Fragments._ShadowPart__Element /* 2 */,
-				Fragments._ShadowPart__TuplePart /* 2 */,
-				Fragments._ShadowPart__NamedElement /* 3 */,
-				Fragments._ShadowPart__TypedElement /* 4 */,
-				Fragments._ShadowPart__ShadowPart /* 5 */
-			};
-		private static final int @NonNull [] __ShadowPart = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Signal =
-			{
-				Fragments._Signal__OclAny /* 0 */,
-				Fragments._Signal__OclElement /* 1 */,
-				Fragments._Signal__Element /* 2 */,
-				Fragments._Signal__OclType /* 2 */,
-				Fragments._Signal__NamedElement /* 3 */,
-				Fragments._Signal__TemplateableElement /* 3 */,
-				Fragments._Signal__Namespace /* 4 */,
-				Fragments._Signal__Type /* 4 */,
-				Fragments._Signal__Class /* 5 */,
-				Fragments._Signal__Signal /* 6 */
-			};
-		private static final int @NonNull [] __Signal = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Slot =
-			{
-				Fragments._Slot__OclAny /* 0 */,
-				Fragments._Slot__OclElement /* 1 */,
-				Fragments._Slot__Element /* 2 */,
-				Fragments._Slot__Slot /* 3 */
-			};
-		private static final int @NonNull [] __Slot = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _StandardLibrary =
-			{
-				Fragments._StandardLibrary__OclAny /* 0 */,
-				Fragments._StandardLibrary__OclElement /* 1 */,
-				Fragments._StandardLibrary__Element /* 2 */,
-				Fragments._StandardLibrary__StandardLibrary /* 3 */
-			};
-		private static final int @NonNull [] __StandardLibrary = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _State =
-			{
-				Fragments._State__OclAny /* 0 */,
-				Fragments._State__OclElement /* 1 */,
-				Fragments._State__OclState /* 1 */,
-				Fragments._State__Element /* 2 */,
-				Fragments._State__NamedElement /* 3 */,
-				Fragments._State__Namespace /* 4 */,
-				Fragments._State__Vertex /* 4 */,
-				Fragments._State__State /* 5 */
-			};
-		private static final int @NonNull [] __State = { 1,2,1,1,2,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _StateExp =
-			{
-				Fragments._StateExp__OclAny /* 0 */,
-				Fragments._StateExp__OclElement /* 1 */,
-				Fragments._StateExp__Element /* 2 */,
-				Fragments._StateExp__TuplePart /* 2 */,
-				Fragments._StateExp__NamedElement /* 3 */,
-				Fragments._StateExp__TypedElement /* 4 */,
-				Fragments._StateExp__OCLExpression /* 5 */,
-				Fragments._StateExp__StateExp /* 6 */
-			};
-		private static final int @NonNull [] __StateExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _StateMachine =
-			{
-				Fragments._StateMachine__OclAny /* 0 */,
-				Fragments._StateMachine__OclElement /* 1 */,
-				Fragments._StateMachine__Element /* 2 */,
-				Fragments._StateMachine__OclType /* 2 */,
-				Fragments._StateMachine__NamedElement /* 3 */,
-				Fragments._StateMachine__TemplateableElement /* 3 */,
-				Fragments._StateMachine__Namespace /* 4 */,
-				Fragments._StateMachine__Type /* 4 */,
-				Fragments._StateMachine__Class /* 5 */,
-				Fragments._StateMachine__Behavior /* 6 */,
-				Fragments._StateMachine__StateMachine /* 7 */
-			};
-		private static final int @NonNull [] __StateMachine = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Stereotype =
-			{
-				Fragments._Stereotype__OclAny /* 0 */,
-				Fragments._Stereotype__OclElement /* 1 */,
-				Fragments._Stereotype__Element /* 2 */,
-				Fragments._Stereotype__OclType /* 2 */,
-				Fragments._Stereotype__NamedElement /* 3 */,
-				Fragments._Stereotype__OclStereotype /* 3 */,
-				Fragments._Stereotype__TemplateableElement /* 3 */,
-				Fragments._Stereotype__Namespace /* 4 */,
-				Fragments._Stereotype__Type /* 4 */,
-				Fragments._Stereotype__Class /* 5 */,
-				Fragments._Stereotype__Stereotype /* 6 */
-			};
-		private static final int @NonNull [] __Stereotype = { 1,1,2,3,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _StereotypeExtender =
-			{
-				Fragments._StereotypeExtender__OclAny /* 0 */,
-				Fragments._StereotypeExtender__OclElement /* 1 */,
-				Fragments._StereotypeExtender__Element /* 2 */,
-				Fragments._StereotypeExtender__StereotypeExtender /* 3 */
-			};
-		private static final int @NonNull [] __StereotypeExtender = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _StringLiteralExp =
-			{
-				Fragments._StringLiteralExp__OclAny /* 0 */,
-				Fragments._StringLiteralExp__OclElement /* 1 */,
-				Fragments._StringLiteralExp__Element /* 2 */,
-				Fragments._StringLiteralExp__TuplePart /* 2 */,
-				Fragments._StringLiteralExp__NamedElement /* 3 */,
-				Fragments._StringLiteralExp__TypedElement /* 4 */,
-				Fragments._StringLiteralExp__OCLExpression /* 5 */,
-				Fragments._StringLiteralExp__LiteralExp /* 6 */,
-				Fragments._StringLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._StringLiteralExp__StringLiteralExp /* 8 */
-			};
-		private static final int @NonNull [] __StringLiteralExp = { 1,1,2,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateBinding =
-			{
-				Fragments._TemplateBinding__OclAny /* 0 */,
-				Fragments._TemplateBinding__OclElement /* 1 */,
-				Fragments._TemplateBinding__Element /* 2 */,
-				Fragments._TemplateBinding__TemplateBinding /* 3 */
-			};
-		private static final int @NonNull [] __TemplateBinding = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateParameter =
-			{
-				Fragments._TemplateParameter__OclAny /* 0 */,
-				Fragments._TemplateParameter__OclElement /* 1 */,
-				Fragments._TemplateParameter__Element /* 2 */,
-				Fragments._TemplateParameter__OclType /* 2 */,
-				Fragments._TemplateParameter__NamedElement /* 3 */,
-				Fragments._TemplateParameter__Type /* 4 */,
-				Fragments._TemplateParameter__TemplateParameter /* 5 */
-			};
-		private static final int @NonNull [] __TemplateParameter = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateParameterSubstitution =
-			{
-				Fragments._TemplateParameterSubstitution__OclAny /* 0 */,
-				Fragments._TemplateParameterSubstitution__OclElement /* 1 */,
-				Fragments._TemplateParameterSubstitution__Element /* 2 */,
-				Fragments._TemplateParameterSubstitution__TemplateParameterSubstitution /* 3 */
-			};
-		private static final int @NonNull [] __TemplateParameterSubstitution = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateSignature =
-			{
-				Fragments._TemplateSignature__OclAny /* 0 */,
-				Fragments._TemplateSignature__OclElement /* 1 */,
-				Fragments._TemplateSignature__Element /* 2 */,
-				Fragments._TemplateSignature__TemplateSignature /* 3 */
-			};
-		private static final int @NonNull [] __TemplateSignature = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateableElement =
-			{
-				Fragments._TemplateableElement__OclAny /* 0 */,
-				Fragments._TemplateableElement__OclElement /* 1 */,
-				Fragments._TemplateableElement__Element /* 2 */,
-				Fragments._TemplateableElement__TemplateableElement /* 3 */
-			};
-		private static final int @NonNull [] __TemplateableElement = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Throwable =
-			{
-				Fragments._Throwable__OclAny /* 0 */,
-				Fragments._Throwable__Throwable /* 1 */
-			};
-		private static final int @NonNull [] __Throwable = { 1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Transition =
-			{
-				Fragments._Transition__OclAny /* 0 */,
-				Fragments._Transition__OclElement /* 1 */,
-				Fragments._Transition__Element /* 2 */,
-				Fragments._Transition__NamedElement /* 3 */,
-				Fragments._Transition__Namespace /* 4 */,
-				Fragments._Transition__Transition /* 5 */
-			};
-		private static final int @NonNull [] __Transition = { 1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TransitionKind =
-			{
-				Fragments._TransitionKind__OclAny /* 0 */,
-				Fragments._TransitionKind__OclElement /* 1 */,
-				Fragments._TransitionKind__OclType /* 2 */,
-				Fragments._TransitionKind__OclEnumeration /* 3 */,
-				Fragments._TransitionKind__TransitionKind /* 4 */
-			};
-		private static final int @NonNull [] __TransitionKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Trigger =
-			{
-				Fragments._Trigger__OclAny /* 0 */,
-				Fragments._Trigger__OclElement /* 1 */,
-				Fragments._Trigger__Element /* 2 */,
-				Fragments._Trigger__NamedElement /* 3 */,
-				Fragments._Trigger__Trigger /* 4 */
-			};
-		private static final int @NonNull [] __Trigger = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralExp =
-			{
-				Fragments._TupleLiteralExp__OclAny /* 0 */,
-				Fragments._TupleLiteralExp__OclElement /* 1 */,
-				Fragments._TupleLiteralExp__Element /* 2 */,
-				Fragments._TupleLiteralExp__TuplePart /* 2 */,
-				Fragments._TupleLiteralExp__NamedElement /* 3 */,
-				Fragments._TupleLiteralExp__TypedElement /* 4 */,
-				Fragments._TupleLiteralExp__OCLExpression /* 5 */,
-				Fragments._TupleLiteralExp__LiteralExp /* 6 */,
-				Fragments._TupleLiteralExp__TupleLiteralExp /* 7 */
-			};
-		private static final int @NonNull [] __TupleLiteralExp = { 1,1,2,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralPart =
-			{
-				Fragments._TupleLiteralPart__OclAny /* 0 */,
-				Fragments._TupleLiteralPart__OclElement /* 1 */,
-				Fragments._TupleLiteralPart__Element /* 2 */,
-				Fragments._TupleLiteralPart__TuplePart /* 2 */,
-				Fragments._TupleLiteralPart__NamedElement /* 3 */,
-				Fragments._TupleLiteralPart__TypedElement /* 4 */,
-				Fragments._TupleLiteralPart__VariableDeclaration /* 5 */,
-				Fragments._TupleLiteralPart__TupleLiteralPart /* 6 */
-			};
-		private static final int @NonNull [] __TupleLiteralPart = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TuplePart =
-			{
-				Fragments._TuplePart__OclAny /* 0 */,
-				Fragments._TuplePart__OclElement /* 1 */,
-				Fragments._TuplePart__TuplePart /* 2 */
-			};
-		private static final int @NonNull [] __TuplePart = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TupleType =
-			{
-				Fragments._TupleType__OclAny /* 0 */,
-				Fragments._TupleType__OclElement /* 1 */,
-				Fragments._TupleType__Element /* 2 */,
-				Fragments._TupleType__OclType /* 2 */,
-				Fragments._TupleType__NamedElement /* 3 */,
-				Fragments._TupleType__TemplateableElement /* 3 */,
-				Fragments._TupleType__Namespace /* 4 */,
-				Fragments._TupleType__Type /* 4 */,
-				Fragments._TupleType__Class /* 5 */,
-				Fragments._TupleType__DataType /* 6 */,
-				Fragments._TupleType__TupleType /* 7 */
-			};
-		private static final int @NonNull [] __TupleType = { 1,1,2,2,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Type =
-			{
-				Fragments._Type__OclAny /* 0 */,
-				Fragments._Type__OclElement /* 1 */,
-				Fragments._Type__Element /* 2 */,
-				Fragments._Type__OclType /* 2 */,
-				Fragments._Type__NamedElement /* 3 */,
-				Fragments._Type__Type /* 4 */
-			};
-		private static final int @NonNull [] __Type = { 1,1,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TypeExp =
-			{
-				Fragments._TypeExp__OclAny /* 0 */,
-				Fragments._TypeExp__OclElement /* 1 */,
-				Fragments._TypeExp__Element /* 2 */,
-				Fragments._TypeExp__ReferringElement /* 2 */,
-				Fragments._TypeExp__TuplePart /* 2 */,
-				Fragments._TypeExp__NamedElement /* 3 */,
-				Fragments._TypeExp__TypedElement /* 4 */,
-				Fragments._TypeExp__OCLExpression /* 5 */,
-				Fragments._TypeExp__TypeExp /* 6 */
-			};
-		private static final int @NonNull [] __TypeExp = { 1,1,3,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TypedElement =
-			{
-				Fragments._TypedElement__OclAny /* 0 */,
-				Fragments._TypedElement__OclElement /* 1 */,
-				Fragments._TypedElement__Element /* 2 */,
-				Fragments._TypedElement__TuplePart /* 2 */,
-				Fragments._TypedElement__NamedElement /* 3 */,
-				Fragments._TypedElement__TypedElement /* 4 */
-			};
-		private static final int @NonNull [] __TypedElement = { 1,1,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNaturalLiteralExp =
-			{
-				Fragments._UnlimitedNaturalLiteralExp__OclAny /* 0 */,
-				Fragments._UnlimitedNaturalLiteralExp__OclElement /* 1 */,
-				Fragments._UnlimitedNaturalLiteralExp__Element /* 2 */,
-				Fragments._UnlimitedNaturalLiteralExp__TuplePart /* 2 */,
-				Fragments._UnlimitedNaturalLiteralExp__NamedElement /* 3 */,
-				Fragments._UnlimitedNaturalLiteralExp__TypedElement /* 4 */,
-				Fragments._UnlimitedNaturalLiteralExp__OCLExpression /* 5 */,
-				Fragments._UnlimitedNaturalLiteralExp__LiteralExp /* 6 */,
-				Fragments._UnlimitedNaturalLiteralExp__PrimitiveLiteralExp /* 7 */,
-				Fragments._UnlimitedNaturalLiteralExp__NumericLiteralExp /* 8 */,
-				Fragments._UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp /* 9 */
-			};
-		private static final int @NonNull [] __UnlimitedNaturalLiteralExp = { 1,1,2,1,1,1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _UnspecifiedValueExp =
-			{
-				Fragments._UnspecifiedValueExp__OclAny /* 0 */,
-				Fragments._UnspecifiedValueExp__OclElement /* 1 */,
-				Fragments._UnspecifiedValueExp__Element /* 2 */,
-				Fragments._UnspecifiedValueExp__TuplePart /* 2 */,
-				Fragments._UnspecifiedValueExp__NamedElement /* 3 */,
-				Fragments._UnspecifiedValueExp__TypedElement /* 4 */,
-				Fragments._UnspecifiedValueExp__OCLExpression /* 5 */,
-				Fragments._UnspecifiedValueExp__UnspecifiedValueExp /* 6 */
-			};
-		private static final int @NonNull [] __UnspecifiedValueExp = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _ValueSpecification =
-			{
-				Fragments._ValueSpecification__OclAny /* 0 */,
-				Fragments._ValueSpecification__OclElement /* 1 */,
-				Fragments._ValueSpecification__Element /* 2 */,
-				Fragments._ValueSpecification__TuplePart /* 2 */,
-				Fragments._ValueSpecification__NamedElement /* 3 */,
-				Fragments._ValueSpecification__TypedElement /* 4 */,
-				Fragments._ValueSpecification__ValueSpecification /* 5 */
-			};
-		private static final int @NonNull [] __ValueSpecification = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Variable =
-			{
-				Fragments._Variable__OclAny /* 0 */,
-				Fragments._Variable__OclElement /* 1 */,
-				Fragments._Variable__Element /* 2 */,
-				Fragments._Variable__TuplePart /* 2 */,
-				Fragments._Variable__NamedElement /* 3 */,
-				Fragments._Variable__TypedElement /* 4 */,
-				Fragments._Variable__VariableDeclaration /* 5 */,
-				Fragments._Variable__Variable /* 6 */
-			};
-		private static final int @NonNull [] __Variable = { 1,1,2,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _VariableDeclaration =
-			{
-				Fragments._VariableDeclaration__OclAny /* 0 */,
-				Fragments._VariableDeclaration__OclElement /* 1 */,
-				Fragments._VariableDeclaration__Element /* 2 */,
-				Fragments._VariableDeclaration__TuplePart /* 2 */,
-				Fragments._VariableDeclaration__NamedElement /* 3 */,
-				Fragments._VariableDeclaration__TypedElement /* 4 */,
-				Fragments._VariableDeclaration__VariableDeclaration /* 5 */
-			};
-		private static final int @NonNull [] __VariableDeclaration = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _VariableExp =
-			{
-				Fragments._VariableExp__OclAny /* 0 */,
-				Fragments._VariableExp__OclElement /* 1 */,
-				Fragments._VariableExp__Element /* 2 */,
-				Fragments._VariableExp__ReferringElement /* 2 */,
-				Fragments._VariableExp__TuplePart /* 2 */,
-				Fragments._VariableExp__NamedElement /* 3 */,
-				Fragments._VariableExp__TypedElement /* 4 */,
-				Fragments._VariableExp__OCLExpression /* 5 */,
-				Fragments._VariableExp__VariableExp /* 6 */
-			};
-		private static final int @NonNull [] __VariableExp = { 1,1,3,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Vertex =
-			{
-				Fragments._Vertex__OclAny /* 0 */,
-				Fragments._Vertex__OclElement /* 1 */,
-				Fragments._Vertex__Element /* 2 */,
-				Fragments._Vertex__NamedElement /* 3 */,
-				Fragments._Vertex__Vertex /* 4 */
-			};
-		private static final int @NonNull [] __Vertex = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Visitable =
-			{
-				Fragments._Visitable__OclAny /* 0 */,
-				Fragments._Visitable__OclElement /* 1 */,
-				Fragments._Visitable__Visitable /* 2 */
-			};
-		private static final int @NonNull [] __Visitable = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _VoidType =
-			{
-				Fragments._VoidType__OclAny /* 0 */,
-				Fragments._VoidType__OclElement /* 1 */,
-				Fragments._VoidType__Element /* 2 */,
-				Fragments._VoidType__OclType /* 2 */,
-				Fragments._VoidType__NamedElement /* 3 */,
-				Fragments._VoidType__TemplateableElement /* 3 */,
-				Fragments._VoidType__Namespace /* 4 */,
-				Fragments._VoidType__Type /* 4 */,
-				Fragments._VoidType__Class /* 5 */,
-				Fragments._VoidType__VoidType /* 6 */
-			};
-		private static final int @NonNull [] __VoidType = { 1,1,2,2,2,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _WildcardType =
-			{
-				Fragments._WildcardType__OclAny /* 0 */,
-				Fragments._WildcardType__OclElement /* 1 */,
-				Fragments._WildcardType__Element /* 2 */,
-				Fragments._WildcardType__OclType /* 2 */,
-				Fragments._WildcardType__NamedElement /* 3 */,
-				Fragments._WildcardType__TemplateableElement /* 3 */,
-				Fragments._WildcardType__Namespace /* 4 */,
-				Fragments._WildcardType__Type /* 4 */,
-				Fragments._WildcardType__Class /* 5 */,
-				Fragments._WildcardType__WildcardType /* 6 */
-			};
-		private static final int @NonNull [] __WildcardType = { 1,1,2,2,2,1,1 };
-
-		/**
-		 *	Install the fragment descriptors in the class descriptors.
-		 */
-		static {
-			Types._Annotation.initFragments(_Annotation, __Annotation);
-			Types._AnyType.initFragments(_AnyType, __AnyType);
-			Types._AssociationClass.initFragments(_AssociationClass, __AssociationClass);
-			Types._AssociationClassCallExp.initFragments(_AssociationClassCallExp, __AssociationClassCallExp);
-			Types._AssociativityKind.initFragments(_AssociativityKind, __AssociativityKind);
-			Types._BagType.initFragments(_BagType, __BagType);
-			Types._Behavior.initFragments(_Behavior, __Behavior);
-			Types._BooleanLiteralExp.initFragments(_BooleanLiteralExp, __BooleanLiteralExp);
-			Types._BooleanType.initFragments(_BooleanType, __BooleanType);
-			Types._CallExp.initFragments(_CallExp, __CallExp);
-			Types._CallOperationAction.initFragments(_CallOperationAction, __CallOperationAction);
-			Types._Class.initFragments(_Class, __Class);
-			Types._CollectionItem.initFragments(_CollectionItem, __CollectionItem);
-			Types._CollectionKind.initFragments(_CollectionKind, __CollectionKind);
-			Types._CollectionLiteralExp.initFragments(_CollectionLiteralExp, __CollectionLiteralExp);
-			Types._CollectionLiteralPart.initFragments(_CollectionLiteralPart, __CollectionLiteralPart);
-			Types._CollectionRange.initFragments(_CollectionRange, __CollectionRange);
-			Types._CollectionType.initFragments(_CollectionType, __CollectionType);
-			Types._Comment.initFragments(_Comment, __Comment);
-			Types._CompleteClass.initFragments(_CompleteClass, __CompleteClass);
-			Types._CompleteEnvironment.initFragments(_CompleteEnvironment, __CompleteEnvironment);
-			Types._CompleteModel.initFragments(_CompleteModel, __CompleteModel);
-			Types._CompletePackage.initFragments(_CompletePackage, __CompletePackage);
-			Types._CompleteStandardLibrary.initFragments(_CompleteStandardLibrary, __CompleteStandardLibrary);
-			Types._ConnectionPointReference.initFragments(_ConnectionPointReference, __ConnectionPointReference);
-			Types._Constraint.initFragments(_Constraint, __Constraint);
-			Types._DataType.initFragments(_DataType, __DataType);
-			Types._Detail.initFragments(_Detail, __Detail);
-			Types._DynamicBehavior.initFragments(_DynamicBehavior, __DynamicBehavior);
-			Types._DynamicElement.initFragments(_DynamicElement, __DynamicElement);
-			Types._DynamicProperty.initFragments(_DynamicProperty, __DynamicProperty);
-			Types._DynamicType.initFragments(_DynamicType, __DynamicType);
-			Types._DynamicValueSpecification.initFragments(_DynamicValueSpecification, __DynamicValueSpecification);
-			Types._EcoreObject.initFragments(_EcoreObject, __EcoreObject);
-			Types._Element.initFragments(_Element, __Element);
-			Types._ElementExtension.initFragments(_ElementExtension, __ElementExtension);
-			Types._ElementLiteralExp.initFragments(_ElementLiteralExp, __ElementLiteralExp);
-			Types._EnumLiteralExp.initFragments(_EnumLiteralExp, __EnumLiteralExp);
-			Types._Enumeration.initFragments(_Enumeration, __Enumeration);
-			Types._EnumerationLiteral.initFragments(_EnumerationLiteral, __EnumerationLiteral);
-			Types._ExpressionInOCL.initFragments(_ExpressionInOCL, __ExpressionInOCL);
-			Types._Feature.initFragments(_Feature, __Feature);
-			Types._FeatureCallExp.initFragments(_FeatureCallExp, __FeatureCallExp);
-			Types._FinalState.initFragments(_FinalState, __FinalState);
-			Types._IfExp.initFragments(_IfExp, __IfExp);
-			Types._Import.initFragments(_Import, __Import);
-			Types._InstanceSpecification.initFragments(_InstanceSpecification, __InstanceSpecification);
-			Types._IntegerLiteralExp.initFragments(_IntegerLiteralExp, __IntegerLiteralExp);
-			Types._InvalidLiteralExp.initFragments(_InvalidLiteralExp, __InvalidLiteralExp);
-			Types._InvalidType.initFragments(_InvalidType, __InvalidType);
-			Types._IterableType.initFragments(_IterableType, __IterableType);
-			Types._IterateExp.initFragments(_IterateExp, __IterateExp);
-			Types._Iteration.initFragments(_Iteration, __Iteration);
-			Types._IteratorExp.initFragments(_IteratorExp, __IteratorExp);
-			Types._IteratorVariable.initFragments(_IteratorVariable, __IteratorVariable);
-			Types._JavaClass.initFragments(_JavaClass, __JavaClass);
-			Types._JavaType.initFragments(_JavaType, __JavaType);
-			Types._LambdaType.initFragments(_LambdaType, __LambdaType);
-			Types._LanguageExpression.initFragments(_LanguageExpression, __LanguageExpression);
-			Types._LetExp.initFragments(_LetExp, __LetExp);
-			Types._LetVariable.initFragments(_LetVariable, __LetVariable);
-			Types._Library.initFragments(_Library, __Library);
-			Types._LibraryFeature.initFragments(_LibraryFeature, __LibraryFeature);
-			Types._LiteralExp.initFragments(_LiteralExp, __LiteralExp);
-			Types._LoopExp.initFragments(_LoopExp, __LoopExp);
-			Types._MapLiteralExp.initFragments(_MapLiteralExp, __MapLiteralExp);
-			Types._MapLiteralPart.initFragments(_MapLiteralPart, __MapLiteralPart);
-			Types._MapType.initFragments(_MapType, __MapType);
-			Types._MessageExp.initFragments(_MessageExp, __MessageExp);
-			Types._MessageType.initFragments(_MessageType, __MessageType);
-			Types._Model.initFragments(_Model, __Model);
-			Types._MorePivotable.initFragments(_MorePivotable, __MorePivotable);
-			Types._Nameable.initFragments(_Nameable, __Nameable);
-			Types._NamedElement.initFragments(_NamedElement, __NamedElement);
-			Types._Namespace.initFragments(_Namespace, __Namespace);
-			Types._NavigationCallExp.initFragments(_NavigationCallExp, __NavigationCallExp);
-			Types._NullLiteralExp.initFragments(_NullLiteralExp, __NullLiteralExp);
-			Types._NumericLiteralExp.initFragments(_NumericLiteralExp, __NumericLiteralExp);
-			Types._OCLExpression.initFragments(_OCLExpression, __OCLExpression);
-			Types._Object.initFragments(_Object, __Object);
-			Types._Operation.initFragments(_Operation, __Operation);
-			Types._OperationCallExp.initFragments(_OperationCallExp, __OperationCallExp);
-			Types._OppositePropertyCallExp.initFragments(_OppositePropertyCallExp, __OppositePropertyCallExp);
-			Types._OrderedSetType.initFragments(_OrderedSetType, __OrderedSetType);
-			Types._OrphanCompletePackage.initFragments(_OrphanCompletePackage, __OrphanCompletePackage);
-			Types._Orphanage.initFragments(_Orphanage, __Orphanage);
-			Types._Package.initFragments(_Package, __Package);
-			Types._Parameter.initFragments(_Parameter, __Parameter);
-			Types._ParameterVariable.initFragments(_ParameterVariable, __ParameterVariable);
-			Types._Pivotable.initFragments(_Pivotable, __Pivotable);
-			Types._Precedence.initFragments(_Precedence, __Precedence);
-			Types._PrimitiveCompletePackage.initFragments(_PrimitiveCompletePackage, __PrimitiveCompletePackage);
-			Types._PrimitiveLiteralExp.initFragments(_PrimitiveLiteralExp, __PrimitiveLiteralExp);
-			Types._PrimitiveType.initFragments(_PrimitiveType, __PrimitiveType);
-			Types._Profile.initFragments(_Profile, __Profile);
-			Types._ProfileApplication.initFragments(_ProfileApplication, __ProfileApplication);
-			Types._Property.initFragments(_Property, __Property);
-			Types._PropertyCallExp.initFragments(_PropertyCallExp, __PropertyCallExp);
-			Types._Pseudostate.initFragments(_Pseudostate, __Pseudostate);
-			Types._PseudostateKind.initFragments(_PseudostateKind, __PseudostateKind);
-			Types._RealLiteralExp.initFragments(_RealLiteralExp, __RealLiteralExp);
-			Types._ReferringElement.initFragments(_ReferringElement, __ReferringElement);
-			Types._Region.initFragments(_Region, __Region);
-			Types._ResultVariable.initFragments(_ResultVariable, __ResultVariable);
-			Types._SelfType.initFragments(_SelfType, __SelfType);
-			Types._SendSignalAction.initFragments(_SendSignalAction, __SendSignalAction);
-			Types._SequenceType.initFragments(_SequenceType, __SequenceType);
-			Types._SetType.initFragments(_SetType, __SetType);
-			Types._ShadowExp.initFragments(_ShadowExp, __ShadowExp);
-			Types._ShadowPart.initFragments(_ShadowPart, __ShadowPart);
-			Types._Signal.initFragments(_Signal, __Signal);
-			Types._Slot.initFragments(_Slot, __Slot);
-			Types._StandardLibrary.initFragments(_StandardLibrary, __StandardLibrary);
-			Types._State.initFragments(_State, __State);
-			Types._StateExp.initFragments(_StateExp, __StateExp);
-			Types._StateMachine.initFragments(_StateMachine, __StateMachine);
-			Types._Stereotype.initFragments(_Stereotype, __Stereotype);
-			Types._StereotypeExtender.initFragments(_StereotypeExtender, __StereotypeExtender);
-			Types._StringLiteralExp.initFragments(_StringLiteralExp, __StringLiteralExp);
-			Types._TemplateBinding.initFragments(_TemplateBinding, __TemplateBinding);
-			Types._TemplateParameter.initFragments(_TemplateParameter, __TemplateParameter);
-			Types._TemplateParameterSubstitution.initFragments(_TemplateParameterSubstitution, __TemplateParameterSubstitution);
-			Types._TemplateSignature.initFragments(_TemplateSignature, __TemplateSignature);
-			Types._TemplateableElement.initFragments(_TemplateableElement, __TemplateableElement);
-			Types._Throwable.initFragments(_Throwable, __Throwable);
-			Types._Transition.initFragments(_Transition, __Transition);
-			Types._TransitionKind.initFragments(_TransitionKind, __TransitionKind);
-			Types._Trigger.initFragments(_Trigger, __Trigger);
-			Types._TupleLiteralExp.initFragments(_TupleLiteralExp, __TupleLiteralExp);
-			Types._TupleLiteralPart.initFragments(_TupleLiteralPart, __TupleLiteralPart);
-			Types._TuplePart.initFragments(_TuplePart, __TuplePart);
-			Types._TupleType.initFragments(_TupleType, __TupleType);
-			Types._Type.initFragments(_Type, __Type);
-			Types._TypeExp.initFragments(_TypeExp, __TypeExp);
-			Types._TypedElement.initFragments(_TypedElement, __TypedElement);
-			Types._UnlimitedNaturalLiteralExp.initFragments(_UnlimitedNaturalLiteralExp, __UnlimitedNaturalLiteralExp);
-			Types._UnspecifiedValueExp.initFragments(_UnspecifiedValueExp, __UnspecifiedValueExp);
-			Types._ValueSpecification.initFragments(_ValueSpecification, __ValueSpecification);
-			Types._Variable.initFragments(_Variable, __Variable);
-			Types._VariableDeclaration.initFragments(_VariableDeclaration, __VariableDeclaration);
-			Types._VariableExp.initFragments(_VariableExp, __VariableExp);
-			Types._Vertex.initFragments(_Vertex, __Vertex);
-			Types._Visitable.initFragments(_Visitable, __Visitable);
-			Types._VoidType.initFragments(_VoidType, __VoidType);
-			Types._WildcardType.initFragments(_WildcardType, __WildcardType);
-
-			Init.initEnd();
-		}
-
-		/**
-		 * Force initialization of the fields of PivotTables::TypeFragments and all preceding sub-packages.
-		 */
-		public static void init() {}
-	}
-
-	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
 	 */
 	public static class FragmentOperations1 {
 		static {
 			Init.initStart();
-			TypeFragments.init();
+			Properties.init();
 		}
 
 		private static final @NonNull Operation @NonNull [] _Annotation__Annotation = {};
@@ -12210,6 +13355,7 @@ public class PivotTables extends AbstractTables
 		public static void init() {}
 	}
 
+
 	/**
 	 *	The lists of local properties for the local fragment of each type.
 	 */
@@ -14842,6 +15988,7 @@ public class PivotTables extends AbstractTables
 		public static void init() {}
 	}
 
+
 	/**
 	 *	The lists of enumeration literals for each enumeration.
 	 */
@@ -14911,6 +16058,9 @@ public class PivotTables extends AbstractTables
 			LIBRARY.initLiterals(Types._CollectionKind, _CollectionKind);
 			LIBRARY.initLiterals(Types._PseudostateKind, _PseudostateKind);
 			LIBRARY.initLiterals(Types._TransitionKind, _TransitionKind);
+			LIBRARY.createComment(_TransitionKind__internal, "Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State.");
+			LIBRARY.createComment(_TransitionKind__local, "Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration.");
+			LIBRARY.createComment(_TransitionKind__external, "Implies that the Transition, if triggered, will exit the composite (source) State.");
 
 			Init.initEnd();
 		}

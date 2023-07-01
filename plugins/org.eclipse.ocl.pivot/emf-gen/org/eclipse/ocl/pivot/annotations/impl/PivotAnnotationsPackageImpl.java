@@ -233,8 +233,18 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCollection_ETypedElement_NullFree() {
+	public EAttribute getCollection_ETypedElement_Kind() {
 		return (EAttribute)collection_ETypedElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCollection_ETypedElement_NullFree() {
+		return (EAttribute)collection_ETypedElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -358,6 +368,7 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 
 		collection_ETypedElementEClass = createEClass(4);
 		createEAttribute(collection_ETypedElementEClass, 0);
+		createEAttribute(collection_ETypedElementEClass, 1);
 
 		ecore_OCL_EClassifierEClass = createEClass(5);
 
@@ -414,6 +425,7 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		initEAttribute(getCollection_EPackage_NullFree(), ecorePackage.getEBoolean(), "nullFree", null, 0, 1, Collection_EPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(collection_ETypedElementEClass, Collection_ETypedElement.class, "Collection_ETypedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCollection_ETypedElement_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, Collection_ETypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCollection_ETypedElement_NullFree(), ecorePackage.getEBoolean(), "nullFree", null, 0, 1, Collection_ETypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ecore_OCL_EClassifierEClass, Ecore_OCL_EClassifier.class, "Ecore_OCL_EClassifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

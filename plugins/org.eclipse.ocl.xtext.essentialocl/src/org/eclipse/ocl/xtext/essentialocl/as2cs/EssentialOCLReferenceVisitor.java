@@ -64,7 +64,12 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 
 	@Override
 	public ElementCS visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		return visitType(object);
+		ElementCS csTypeRef = visitType(object);
+		org.eclipse.ocl.pivot.Package typePackage = object.getOwningPackage();
+		if (typePackage != null) {
+			context.importNamespace(typePackage, null);
+		}
+		return csTypeRef;
 	}
 
 	@Override
@@ -76,12 +81,6 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		if (elementType != null) {
 			TypedRefCS csElementType = (TypedRefCS) elementType.accept(this);
 			csRef.setOwnedType(csElementType);
-			if (elementType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)elementType).getOwningPackage();
-				if (typePackage != null) {
-					context.importNamespace(typePackage, null);
-				}
-			}
 		}
 		IntegerValue lowerValue = object.getLowerValue();
 		Number upper2 = object.getUpper();
@@ -123,18 +122,6 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 		}
 		csRef.setOwnedKeyType(csKeyType);
 		csRef.setOwnedValueType(csValueType);
-		if (keyType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)keyType).getOwningPackage();
-			if (typePackage != null) {
-				context.importNamespace(typePackage, null);
-			}
-		}
-		if (valueType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)valueType).getOwningPackage();
-			if (typePackage != null) {
-				context.importNamespace(typePackage, null);
-			}
-		}
 		return csRef;
 	}
 
@@ -173,12 +160,6 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 			csRef.setOwnedPathName(csPathName);
 		}
 		context.refreshPathName(csPathName, object, scope);
-		if (object instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)object).getOwningPackage();
-			if (typePackage != null) {
-				context.importNamespace(typePackage, null);
-			}
-		}
 		return csRef;
 	}
 

@@ -39,9 +39,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -287,10 +287,10 @@ public class CGUtil
 		assert asActualTypeId != null;
 		Type asReferenceType = idResolver.getType(asReferenceTypeId);
 		Type asActualType = idResolver.getType(asActualTypeId);
-		if (asActualType.conformsTo(standardLibrary, asReferenceType)) {
+		if (standardLibrary.conformsTo(asActualType, asReferenceType)) {
 			return Boolean.TRUE;				// Guaranteed conformance
 		}
-		else if (!asReferenceType.conformsTo(standardLibrary, asActualType)) {
+		else if (!standardLibrary.conformsTo(asReferenceType, asActualType)) {
 			return Boolean.FALSE;				// Guaranteed non-conformance
 		}
 		else {

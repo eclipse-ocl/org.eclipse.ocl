@@ -59,8 +59,6 @@ import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterableType;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -69,7 +67,6 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
@@ -79,7 +76,6 @@ import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
@@ -106,7 +102,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -129,7 +124,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
@@ -403,86 +397,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	/**
-	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
-	 * zero if both matches are of equal validity.
-	 */
-	public int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
-			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings) {
-		if ((reference instanceof Iteration) && (candidate instanceof Iteration)) {
-			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
-			if (iteratorCountDelta != 0) {
-				return iteratorCountDelta;
-			}
-			org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
-			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
-			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
-			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
-			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
-				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-					return 1;
-				}
-				else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-					return -1;
-				}
-			}
-		}
-		List<Parameter> candidateParameters = candidate.getOwnedParameters();
-		List<Parameter> referenceParameters = reference.getOwnedParameters();
-		int parameterCountDelta = candidateParameters.size() - referenceParameters.size();
-		if (parameterCountDelta != 0) {
-			return parameterCountDelta;
-		}
-		boolean referenceConformsToCandidate = true;
-		boolean candidateConformsToReference = true;
-		for (int i = 0; i < candidateParameters.size(); i++) {
-			Parameter referenceParameter = referenceParameters.get(i);
-			Parameter candidateParameter = candidateParameters.get(i);
-			if ((referenceParameter == null) || (candidateParameter == null)) {					// Doesn't happen (just a spurious NPE guard)
-				referenceConformsToCandidate = false;
-				candidateConformsToReference = false;
-			}
-			else {
-				Type referenceType = ClassUtil.nonNullState(PivotUtil.getType(referenceParameter));
-				Type candidateType = ClassUtil.nonNullState(PivotUtil.getType(candidateParameter));
-				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-				if (referenceType != candidateType) {
-					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-						referenceConformsToCandidate = false;
-					}
-					if (!conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-						candidateConformsToReference = false;
-					}
-				}
-			}
-		}
-		if (referenceConformsToCandidate != candidateConformsToReference) {
-			return referenceConformsToCandidate ? 1 : -1;
-		}
-		Type referenceType = ClassUtil.nonNullModel(reference.getOwningClass());
-		Type candidateType = ClassUtil.nonNullModel(candidate.getOwningClass());
-		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-		if (referenceType != candidateType) {
-			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-				return 1;
-			}
-			else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-				return -1;
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeModel.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {		// FIXME move to PivotHelper
 		BooleanLiteralExp asBoolean = PivotFactory.eINSTANCE.createBooleanLiteralExp();
 		asBoolean.setBooleanSymbol(booleanSymbol);
@@ -500,7 +414,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * @since 1.1
 	 */
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {		// FIXME move to PivotHelper
-		Type commonType = getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
+		Type commonType = standardLibrary.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
@@ -598,7 +512,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Deprecated
 	@Override
 	public @Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).createParserContext(element);
+		return environmentFactory.createParserContext(element);
 	}
 
 	protected @NonNull PrecedenceManager createPrecedenceManager() {
@@ -741,12 +655,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/*
-	 * @deprecated use EnvironmentFactoryInternalExtension.getASOf()
+	 * @deprecated use EnvironmentFactoryInternal.getASOf()
 	 */
 	@Deprecated
 	@Override
 	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(pivotClass, eObject);
+		return environmentFactory.getASOf(pivotClass, eObject);
 	}
 
 	@Override
@@ -863,7 +777,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
-		return completeClass.getSuperCompleteClasses();
+		return completeClass.getSelfAndAllSuperCompleteClasses();
 	}
 
 	@Deprecated
@@ -897,7 +811,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple bodies for " + operation);
 				}
 				try {
-					bodyExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
+					bodyExpression = environmentFactory.parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -910,40 +824,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		return bodyExpression;
 	} */
-
-	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			Type commonTupleType = standardLibrary.getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonTupleType == null) {
-				return standardLibrary.getOclAnyType();
-			}
-			return commonTupleType;
-		}
-		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
-			FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
-			FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getPivotClass());
-			CollectionType leftCollectionType = (CollectionType)leftType;
-			CollectionType rightCollectionType = (CollectionType)rightType;
-			Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
-			Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
-			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
-			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return standardLibrary.getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
-		}
-		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
-			return rightType;
-		}
-		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
-			return leftType;
-		}
-		FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
-		FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
-		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-		return getPrimaryClass(commonFlatClass.getPivotClass());
-	}
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
@@ -979,7 +859,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple derivations for " + property);
 				}
 				try {
-					defaultExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
+					defaultExpression = environmentFactory.parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -1203,7 +1083,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -1250,7 +1130,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -1331,7 +1211,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		String metaclassName = standardLibrary.getMetaclassName(asInstanceType);
 		return ClassUtil.nonNullState(getASClass(metaclassName));
 	}
 
@@ -1345,7 +1225,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (flatClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
-		CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());
+		CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getASClass());
 		Iterable<? extends Operation> operationOverloads = completeClass.getOperationOverloads(pivotOperation);
 		if (operationOverloads != null) {
 			return operationOverloads;
@@ -1414,7 +1294,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
 		if (flatClass != null) {					// Null for an EAnnotation element
-			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
+			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getASClass());		// XXX why use FlatClass at all ??
 			Operation operation = completeClass.getOperation(pivotOperation);
 			if (operation != null) {
 				return operation;
@@ -1694,13 +1574,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (thatClass == null) {
 			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
 			if (thatTemplateParameter != null) {
-				org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(thatTemplateParameter);
-				if (lowerBound != null) {
-					thatClass = lowerBound;
-				}
+				thatClass = standardLibrary.basicGetLowerBound(thatTemplateParameter);
 			}
 		}
-		if ((thatClass == null) || (thatClass instanceof DataType)) {
+		// XXX ?? do we really want OclAny/OclVoid/OclInvalid opposites ??
+		if ((thatClass == null) || /*(thatClass instanceof AnyType) ||*/ (thatClass instanceof DataType)) {
 			return;
 		}
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
@@ -1717,16 +1595,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		newOpposite.setIsImplicit(true);
 		newOpposite.setName(name);
 		if (thisProperty.isIsComposite()) {
-			Type thisType = standardLibrary.resolveSelfSpecialization(thisClass);
+			Type thisType = standardLibrary.resolveContextSpecialization(thisClass);
 			newOpposite.setType(thisType);
 			newOpposite.setIsRequired(false);
 		}
 		else {
 			CollectionType genericCollectionType = standardLibrary.getCollectionType(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE);
-			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass,
-				PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE));
+			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass, null, null, null));
 			newOpposite.setIsRequired(true);
 		}
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
@@ -1807,26 +1682,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return false;
 	}
 
+	@Deprecated
 	public boolean isTypeServeable(@NonNull Type type) {
-		//		if (pivotType .getUnspecializedElement() != null) {
-		//			return false;
-		//		}
-		if (type.isTemplateParameter() != null) {
-			return false;
-		}
-		//		if (pivotType instanceof UnspecifiedType) {
-		//			return false;
-		//		}
-		if (type instanceof LambdaType) {
-			return false;
-		}
-		//		if (pivotType instanceof TupleType) {
-		//			return false;
-		//		}
-		if (type.eContainer() instanceof TemplateParameterSubstitution) {
-			return false;
-		}
-		return true;
+		return standardLibrary.isTypeServeable(type);
 	}
 
 	/**
@@ -1949,7 +1807,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			//
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
-				return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, ePackage);
+				return environmentFactory.getASOf(Element.class, ePackage);
 			}
 			//
 			//	fragment-less URI may be an OCL Standard Library
@@ -1979,7 +1837,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				if (eResource instanceof XMLResource) {
 					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
 					if (eObject != null) {
-						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
+						Element asElement = environmentFactory.getASOf(Element.class, eObject);
 						if (asElement != null) {
 							return asElement;
 						}
@@ -2083,12 +1941,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
 	 * Throws a ParserException if conversion fails.
 	 *
-	 * @deprecated use EnvironmentFactoryInternalExtension.parseSpecification()
+	 * @deprecated use EnvironmentFactoryInternal.parseSpecification()
 	 */
 	@Deprecated
 	@Override
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 
 	public void removeExternalResource(@NonNull External2AS external2as) {

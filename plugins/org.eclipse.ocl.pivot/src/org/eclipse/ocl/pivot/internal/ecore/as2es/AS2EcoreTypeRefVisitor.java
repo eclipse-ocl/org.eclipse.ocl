@@ -14,13 +14,13 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -83,6 +83,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 	}
 
 	public EGenericType resolveEGenericType(org.eclipse.ocl.pivot.@NonNull Class type) {
+	//	context.addImportedNamespace(type);
 		EObject eType = safeVisit(type);
 		if (eType instanceof EGenericType) {
 			return (EGenericType) eType;
@@ -93,9 +94,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 			TemplateSignature templateSignature = type.getOwnedSignature();
 			if (templateSignature != null) {
 				for (@NonNull TemplateParameter templateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
-					EObject eTypeParameter = safeVisit(templateParameter);
-					if (eTypeParameter instanceof EGenericType) {
-						eGenericType.getETypeArguments().add((EGenericType) eTypeParameter);
+					EObject eTypeArgument = safeVisit(templateParameter);
+					if (eTypeArgument instanceof EGenericType) {
+						eGenericType.getETypeArguments().add((EGenericType) eTypeArgument);
 					}
 				}
 			}
@@ -103,27 +104,28 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 		}
 	}
 
-	public @NonNull EGenericType resolveEGenericType2(@NonNull Type asType) {
+	public @NonNull EGenericType resolveEGenericType2(@NonNull Type asType) {		// XXX Why '2'
 	//	EObject eType = safeVisit(asType);
+	//	context.addImportedNamespace(asType);
 		if (asType instanceof TemplateableElement) {			// XXX FIXME workaround Bug 582115
 			TemplateableElement asTemplateableElement = (TemplateableElement)asType;
 			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(asTemplateableElement);
 			if (templateParameters != null) {
-				asType = standardLibrary.resolveSelfSpecialization(asType);
+				asType = standardLibrary.resolveIncompleteSpecialization(asType);
 			}
 		}
 		EObject eType = asType.accept(this);
 		if (eType instanceof EGenericType) {
 			return (EGenericType) eType;
 		}
-		else if (eType instanceof ETypeParameter) {
-			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setETypeParameter((ETypeParameter) eType);
-			return eGenericType;
-		}
 		else {
 			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setEClassifier((EClassifier) eType);
+			if (eType instanceof ETypeParameter) {
+				eGenericType.setETypeParameter((ETypeParameter)eType);
+			}
+			else {
+				eGenericType.setEClassifier((EClassifier)eType);
+			}
 			return eGenericType;
 		}
 	}
@@ -165,6 +167,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
+	//	context.addImportedNamespace(pivotType);
 		if (pivotType.getOwnedBindings().size() == 0) {
 			EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
 			if (eClassifier != null) {
@@ -197,6 +200,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 
 	@Override
 	public EObject visitCollectionType(@NonNull CollectionType pivotType) {
+	//	context.addImportedNamespace(pivotType);
 		if (pivotType.getOwnedBindings().size() == 0) {
 			EClassifier eClassifier1 = context.getCreated(EClassifier.class, pivotType);
 			if (eClassifier1 != null) {
@@ -241,6 +245,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 
 	@Override
 	public EObject visitMapType(@NonNull MapType mapType) {
+	//	context.addImportedNamespace(mapType);
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EClassifier eClassifier = OCLstdlibPackage.Literals.MAP;
 		eGenericType.setEClassifier(eClassifier);
@@ -251,6 +256,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 
 	@Override
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotType) {
+	//	context.addImportedNamespace(pivotType);
 		EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
 		if (eClassifier != null) {
 			if (!isRequireDataType || (eClassifier instanceof EDataType)) {
@@ -286,22 +292,10 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
-			if (aType == standardLibrary.getStringType()) {
-				return EcorePackage.Literals.ESTRING;
-			}
-			else if (aType == standardLibrary.getBooleanType()) {
-				return isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT;
-			}
-			else if (aType == standardLibrary.getIntegerType()) {
-				return EcorePackage.Literals.EBIG_INTEGER;
-			}
-			else if (aType == standardLibrary.getRealType()) {
-				return EcorePackage.Literals.EBIG_DECIMAL;
-			}
-			else if (aType == standardLibrary.getUnlimitedNaturalType()) {
-				return EcorePackage.Literals.EBIG_INTEGER;
-			}
+//		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {	// XXX need annotation
+		EGenericType eGenericType = context.getEquivalentEcoreType(pivotType, isRequired);
+		if (eGenericType != null) {
+			return eGenericType;
 		}
 		throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
 	}
@@ -336,13 +330,16 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 	 */
 	@Override
 	public EObject visitTupleType(@NonNull TupleType pivotType) {
-		EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
-		if (eClassifier != null) {
-			return eClassifier;
+	//	context.addImportedNamespace(pivotType);
+		EClass tupleEClass = context.getTupleEClass(pivotType);
+		if (tupleEClass.getETypeParameters().isEmpty()) {
+			return tupleEClass;
 		}
-		else {
-			return OCLstdlibPackage.Literals.OCL_TUPLE;
-		}
+		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+		eGenericType.setEClassifier(tupleEClass);
+		List<@NonNull TemplateParameter> templateParameters = context.gatherTemplateParameters(pivotType);
+		safeVisitAll(eGenericType.getETypeArguments(), templateParameters);
+		return eGenericType;
 	}
 
 	@Override

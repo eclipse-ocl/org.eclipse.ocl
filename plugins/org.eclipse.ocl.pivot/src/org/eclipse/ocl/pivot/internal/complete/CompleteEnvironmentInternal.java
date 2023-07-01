@@ -15,12 +15,9 @@ import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	void dispose();
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);

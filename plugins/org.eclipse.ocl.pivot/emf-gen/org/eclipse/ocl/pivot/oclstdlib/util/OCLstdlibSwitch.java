@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.oclstdlib.*;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.oclstdlib._Lambda_CC;
 import org.eclipse.ocl.pivot.oclstdlib._Lambda_CD;
@@ -104,34 +105,34 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 3: {
-				Object oclAny = theEObject;
+				Object oclAny = (Object)theEObject;
 				T1 result = caseOclAny(oclAny);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 4: {
-				Object oclComparable = theEObject;
+				Object oclComparable = (Object)theEObject;
 				T1 result = caseOclComparable(oclComparable);
 				if (result == null) result = caseOclAny(oclComparable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 5: {
-				Object oclElement = theEObject;
+				Object oclElement = (Object)theEObject;
 				T1 result = caseOclElement(oclElement);
 				if (result == null) result = caseOclAny(oclElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 6: {
-				Object oclEnumeration = theEObject;
+				Object oclEnumeration = (Object)theEObject;
 				T1 result = caseOclEnumeration(oclEnumeration);
 				if (result == null) result = caseOclAny(oclEnumeration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 7: {
-				Object oclInvalid = theEObject;
+				Object oclInvalid = (Object)theEObject;
 				T1 result = caseOclInvalid(oclInvalid);
 				if (result == null) result = caseOclVoid(oclInvalid);
 				if (result == null) result = caseOclAny(oclInvalid);
@@ -139,35 +140,35 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 8: {
-				Object oclLambda = theEObject;
+				Object oclLambda = (Object)theEObject;
 				T1 result = caseOclLambda(oclLambda);
 				if (result == null) result = caseOclAny(oclLambda);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 9: {
-				Object oclMessage = theEObject;
+				Object oclMessage = (Object)theEObject;
 				T1 result = caseOclMessage(oclMessage);
 				if (result == null) result = caseOclAny(oclMessage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 10: {
-				Object oclSelf = theEObject;
+				Object oclSelf = (Object)theEObject;
 				T1 result = caseOclSelf(oclSelf);
 				if (result == null) result = caseOclAny(oclSelf);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 11: {
-				Object oclState = theEObject;
+				Object oclState = (Object)theEObject;
 				T1 result = caseOclState(oclState);
 				if (result == null) result = caseOclAny(oclState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 12: {
-				Object oclStereotype = theEObject;
+				Object oclStereotype = (Object)theEObject;
 				T1 result = caseOclStereotype(oclStereotype);
 				if (result == null) result = caseOclType(oclStereotype);
 				if (result == null) result = caseOclElement(oclStereotype);
@@ -176,21 +177,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 13: {
-				Object oclSummable = theEObject;
+				Object oclSummable = (Object)theEObject;
 				T1 result = caseOclSummable(oclSummable);
 				if (result == null) result = caseOclAny(oclSummable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 14: {
-				Object oclTuple = theEObject;
+				Object oclTuple = (Object)theEObject;
 				T1 result = caseOclTuple(oclTuple);
 				if (result == null) result = caseOclAny(oclTuple);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 15: {
-				Object oclType = theEObject;
+				Object oclType = (Object)theEObject;
 				T1 result = caseOclType(oclType);
 				if (result == null) result = caseOclElement(oclType);
 				if (result == null) result = caseOclAny(oclType);
@@ -198,7 +199,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 16: {
-				Object oclVoid = theEObject;
+				Object oclVoid = (Object)theEObject;
 				T1 result = caseOclVoid(oclVoid);
 				if (result == null) result = caseOclAny(oclVoid);
 				if (result == null) result = defaultCase(theEObject);
@@ -244,26 +245,32 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 22: {
-				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_COCO = (Map.Entry<?, ?>)theEObject;
-				T1 result = case_Entry_COCO(_Entry_COCO);
+				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_1 = (Map.Entry<?, ?>)theEObject;
+				T1 result = case_Entry_1(_Entry_1);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 23: {
-				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_CRCR = (Map.Entry<?, ?>)theEObject;
-				T1 result = case_Entry_CRCR(_Entry_CRCR);
+				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_2 = (Map.Entry<?, ?>)theEObject;
+				T1 result = case_Entry_2(_Entry_2);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 24: {
-				_Lambda_CC<?, ?> _Lambda_CC = (_Lambda_CC<?, ?>)theEObject;
-				T1 result = case_Lambda_CC(_Lambda_CC);
+				_Lambda_1<?, ?> _Lambda_1 = (_Lambda_1<?, ?>)theEObject;
+				T1 result = case_Lambda_1(_Lambda_1);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 25: {
-				_Lambda_CD<?, ?> _Lambda_CD = (_Lambda_CD<?, ?>)theEObject;
-				T1 result = case_Lambda_CD(_Lambda_CD);
+				_Lambda_2<?, ?> _Lambda_2 = (_Lambda_2<?, ?>)theEObject;
+				T1 result = case_Lambda_2(_Lambda_2);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 26: {
+				_Tuple_1<?, ?> _Tuple_1 = (_Tuple_1<?, ?>)theEObject;
+				T1 result = case_Tuple_1(_Tuple_1);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -602,62 +609,77 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Lambda CD</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Entry 1</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Lambda CD</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Entry 1</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <C, R> T1 case_Lambda_CD(_Lambda_CD<C, R> object) {
+	public <K, V> T1 case_Entry_1(Map.Entry<K, V> object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Entry CRCR</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Entry 2</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Entry CRCR</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Entry 2</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <K, V> T1 case_Entry_CRCR(Map.Entry<K, V> object) {
+	public <K, V> T1 case_Entry_2(Map.Entry<K, V> object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Lambda CC</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Lambda 1</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Lambda CC</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Lambda 1</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <C, R> T1 case_Lambda_CC(_Lambda_CC<C, R> object) {
+	public <C, R> T1 case_Lambda_1(_Lambda_1<C, R> object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Entry COCO</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Lambda 2</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Entry COCO</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Lambda 2</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <K, V> T1 case_Entry_COCO(Map.Entry<K, V> object) {
+	public <C, R> T1 case_Lambda_2(_Lambda_2<C, R> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tuple 1</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tuple 1</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T, T2> T1 case_Tuple_1(_Tuple_1<T, T2> object) {
 		return null;
 	}
 

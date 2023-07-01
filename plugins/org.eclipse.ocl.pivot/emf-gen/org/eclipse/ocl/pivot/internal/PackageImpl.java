@@ -754,9 +754,6 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
-	//	if (PivotConstants.ORPHANAGE_NAME.equals(newName)) {
-	//		assert this instanceof Orphanage;
-	//	}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {

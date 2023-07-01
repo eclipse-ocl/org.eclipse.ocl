@@ -16,9 +16,11 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -51,6 +53,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	@Override
 	public void addUnique(org.eclipse.ocl.pivot.Package partialPackage) {
 		assert partialPackage != null;
+		assert (partialPackage.getPackageId() != IdManager.METAMODEL) || PivotConstants.METAMODEL_NAME.equals(((CompletePackageImpl)owner).getURI()) : "inconsistent metamodel complete package";
 		didAdd(partialPackage);
 		super.addUnique(partialPackage);
 	}

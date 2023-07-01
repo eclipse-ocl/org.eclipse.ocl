@@ -36,15 +36,6 @@ public class PivotEnvironmentFactory extends AbstractEnvironmentFactory
 	private /*@NonNull*/ IScopeContext @Nullable [] scopeContexts = null;		// FIXME BUG 485092
 
 	/**
-	 * Initializes me with an optional <code>StandaloneProjectMap</code> of accessible resources and
-	 * an optional <code>ModelManager</code> for loaded instances.
-	 */
-	@Deprecated /* @deprecated supply null asResourceSet argument */
-	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		this(projectManager, externalResourceSet, null);
-	}
-
-	/**
 	 * @since 1.10
 	 */
 	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {

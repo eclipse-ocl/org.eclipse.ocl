@@ -33,10 +33,15 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot;
+import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Stage;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
+import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -141,6 +146,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
 	protected final @NonNull ImportManager importManager;
+	private final @NonNull SynthesisSchedule synthesisSchedule;	// XXX not actually necessary
 	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
 	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
 
@@ -149,6 +155,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
 		this.importManager = new ImportManager(getTablesPackageName());
+		SynthesisAnalysis synthesisAnalysis = new SynthesisAnalysis(environmentFactory);
+		this.synthesisSchedule = synthesisAnalysis.getSynthesisSchedule();
+		synthesisSchedule.setMaxSlotsPerStage(Integer.MAX_VALUE);
+		synthesisAnalysis.analyzeContents(ClassUtil.nonNullState(PivotUtil.getContainingModel(asPackage)));
+		synthesisAnalysis.analyzeDependencies();
 	}
 
 	public void analyzeExpressions() {
@@ -253,7 +264,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else {
 			s.appendClassReference(null, TypeUtil.class);
-			s.append(".EMPTY_PARAMETER_TYPESx2x");
+			s.append(".EMPTY_PARAMETER_TYPES");
 		}
 	}
 
@@ -304,10 +315,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> computeFragmentOperations() {
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = new LinkedHashMap<>();
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> computeFragmentOperations() {
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = new LinkedHashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
-			LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> classOperations = new LinkedHashMap<>();
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> classOperations = new LinkedHashMap<>();
 			fragmentOperations.put(pClass, classOperations);
 			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 			Collections.sort(sortedOperations, signatureComparator);
@@ -321,8 +332,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return fragmentOperations;
 	}
 
-	protected @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> computeFragmentProperties() {
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = new LinkedHashMap<>();
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> computeFragmentProperties() {
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = new LinkedHashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			Set<@NonNull Property> allProperties = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
@@ -381,6 +392,38 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
+	protected void declareComments(@NonNull Element element) {
+		for (Comment comment : element.getOwnedComments()) {
+			if (element instanceof EnumerationLiteral) {
+				s.append("			");
+			}
+			else {
+				s.append("		// ");
+			}
+			s.append("LIBRARY.createComment(");
+			element.accept(emitLiteralVisitor);
+			s.append(", ");
+			s.appendString(comment.getBody());
+			s.append(");\n");
+		}
+	}
+
+	protected void declareEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
+		Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
+		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asEnumeration.getESObject());
+		s.append("		public static final ");
+		s.appendClassReference(true, EnumerationLiteral.class);
+		s.append(" ");
+		asEnumerationLiteral.accept(emitLiteralVisitor);
+		s.append(" = LIBRARY.createEnumerationLiteral(");
+		s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
+		s.append(".getEEnumLiteral(");
+		s.appendString(PivotUtil.getName(asEnumerationLiteral));
+		s.append("), ");
+		asEnumeration.accept(emitScopedLiteralVisitor);
+		s.append(", " + asEnumeration.getOwnedLiterals().indexOf(asEnumerationLiteral) + ");\n");
+	}
+
 	protected void declareEnumerationLiterals() {
 		s.append("	/**\n");
 		s.append("	 *	The lists of enumeration literals for each enumeration.\n");
@@ -394,17 +437,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				List<EnumerationLiteral> asEnumerationLiterals = ((Enumeration)asClass).getOwnedLiterals();
 				for (int i = 0; i < asEnumerationLiterals.size(); i++) {
 					EnumerationLiteral asEnumerationLiteral = ClassUtil.nonNullModel(asEnumerationLiterals.get(i));
-					s.append("		public static final ");
-					s.appendClassReference(true, EnumerationLiteral.class);
-					s.append(" ");
-					asEnumerationLiteral.accept(emitLiteralVisitor);
-					s.append(" = LIBRARY.createEnumerationLiteral(");
-					s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
-					s.append(".getEEnumLiteral(");
-					s.appendString(PivotUtil.getName(asEnumerationLiteral));
-					s.append("), ");
-					asClass.accept(emitScopedLiteralVisitor);
-					s.append(", " + i + ");\n");
+					declareEnumerationLiteral(asEnumerationLiteral);
 				}
 				s.append("		private static final ");
 				s.appendClassReference(true, EnumerationLiteral.class);
@@ -438,6 +471,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(");\n");
 			}
 		}
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
+			if (asClass instanceof Enumeration) {
+				for (EnumerationLiteral asLiteral : ((Enumeration)asClass).getOwnedLiterals()) {
+					declareComments(asLiteral);
+				}
+			}
+		}
 		s.append("\n");
 		appendInitializationEnd(true);
 		s.append("	}\n");
@@ -468,20 +508,20 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
-	protected void declareFragmentOperations(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations) {
+	protected void declareFragmentOperations(@NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations) {
 		s.append("	/**\n");
 		s.append("	 *	The lists of local operations or local operation overrides for each fragment of each type.\n");
 		s.append("	 */\n");
 		int page = 1;
 		int pageMax = paginatedFragmentOperations.size();
-		for (@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations : paginatedFragmentOperations) {
+		for (@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations : paginatedFragmentOperations) {
 			String pagedName = getPagedName(AbstractGenModelHelper.FRAGMENT_OPERATIONS_PACKAGE_NAME, page, pageMax);
 			s.append("	public static class " + pagedName);
 			s.append(" {\n");
 			appendInitializationStart(pagedName);
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : fragmentOperations.keySet()) {
 				s.append("\n");
-				LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> classOperations = fragmentOperations.get(asClass);
+				Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> classOperations = fragmentOperations.get(asClass);
 				assert classOperations != null;
 				for (/*@NonNull*/ org.eclipse.ocl.pivot.Class asSuperClass : classOperations.keySet()) {
 					assert asSuperClass != null;
@@ -537,13 +577,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
-	protected void declareFragmentProperties(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
+	protected void declareFragmentProperties(@NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
 		s.append("	/**\n");
 		s.append("	 *	The lists of local properties for the local fragment of each type.\n");
 		s.append("	 */\n");
 		int page = 1;
 		int pageMax = paginatedFragmentProperties.size();
-		for (@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties : paginatedFragmentProperties) {
+		for (@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties : paginatedFragmentProperties) {
 			String pagedName = getPagedName(AbstractGenModelHelper.FRAGMENT_PROPERTIES_PACKAGE_NAME, page, pageMax);
 			s.append("	public static class " + pagedName);
 			s.append(" {\n");
@@ -676,6 +716,48 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+	protected void declareOperation(int i, @NonNull Operation op) {
+		TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
+	//	if (i >= 0) {
+			s.append("		public static final ");
+			s.appendClassReference(true, Operation.class);
+			s.append(" ");
+	//	}
+	//	else {
+	//		s.append("		" + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + ".");
+	//	}
+		op.accept(emitLiteralVisitor);
+		s.append(" = LIBRARY.createOperation(");
+		s.appendString(ClassUtil.nonNullModel(op.getName()));
+		s.append(", ");
+		appendParameterTypesName(op.getParameterTypes());
+		s.append(", ");
+		op.getOwningClass().accept(emitScopedLiteralVisitor);
+		s.append(",\n			" + i + ", ");
+		if (ownedTemplateSignature == null) {
+			s.appendClassReference(null, TemplateParameters.class);
+			s.append(".EMPTY_LIST");
+		}
+		else {
+			s.appendClassReference(null, TypeUtil.class);
+			s.append(".createTemplateParameters(");
+			boolean first = true;
+			for (TemplateParameter parameter : ownedTemplateSignature.getOwnedParameters()) {
+				if (parameter != null) {
+					if (!first) {
+						s.append(", ");
+					}
+					parameter.accept(emitScopedLiteralVisitor);
+					first = false;
+				}
+			}
+			s.append(")");
+		}
+		s.append(", ");
+		s.append(getImplementationName(op));
+		s.append(");\n");
+	}
+
 	protected void declareOperations() {
 		s.append("	/**\n");
 		s.append("	 *	The operation descriptors for each operation of each type.\n");
@@ -694,44 +776,16 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("\n");
 				}
 				Operation op = sortedOperations.get(i);
-				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
-				s.append("		public static final ");
-				s.appendClassReference(true, Operation.class);
-				s.append(" ");
-				op.accept(emitLiteralVisitor);
-				s.append(" = LIBRARY.createOperation(");
-				s.appendString(ClassUtil.nonNullModel(op.getName()));
-				s.append(", ");
-				appendParameterTypesName(op.getParameterTypes());
-				s.append(", ");
-				op.getOwningClass().accept(emitScopedLiteralVisitor);
-				s.append(",\n			" + i + ", ");
-				if (ownedTemplateSignature == null) {
-					s.appendClassReference(null, TemplateParameters.class);
-					s.append(".EMPTY_LIST");
-				}
-				else {
-					s.appendClassReference(null, TypeUtil.class);
-					s.append(".createTemplateParameters(");
-					boolean first = true;
-					for (TemplateParameter parameter : ownedTemplateSignature.getOwnedParameters()) {
-						if (parameter != null) {
-							if (!first) {
-								s.append(", ");
-							}
-							parameter.accept(emitScopedLiteralVisitor);
-							first = false;
-						}
-					}
-					s.append(")");
-				}
-				s.append(", ");
-				s.append(getImplementationName(op));
-				s.append(");\n");
+				declareOperation(i, op);
 			}
 		}
 		appendInitializationEnd(false);
-		s.append("	}\n");
+	//	s.append("\n\t\tprivate static void initMore() {");
+	//	for (@NonNull Stage stage : synthesisSchedule.getStages()) {
+	//		s.append("\n\t\t\tinit" + stage.getName() + "();");
+	//	}
+	//	s.append("\n\t\t}");
+		s.append("\n\t}\n");
 	}
 
 	protected void declareParameterLists() {
@@ -858,6 +912,73 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+	private void declareSchedule(@NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations,
+			@NonNull List<@NonNull Map<@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
+		for (@NonNull Stage stage : synthesisSchedule.getStages()) {
+			s.append("\n");
+			for (@NonNull Slot slot : stage.getSlots()) {
+				String role = slot.getRole();
+				Element element = slot.getElement();
+				if (role == Slot.ROLE_CTOR) {
+				//	if (element instanceof EnumerationLiteral) {
+				//		declareEnumerationLiteral((EnumerationLiteral)element);
+				//	}
+					//	else if (element instanceof Operation) {
+					//		declareOperation(-1, (Operation)element);
+					//	}
+				//	else {
+						s.append("\t// " + role + " " + element + "\n");
+				//	}
+				}
+				else if (role == Slot.ROLE_TYPE_PARAMETERS) {
+					declareTypeParameters();
+				}
+				else if (role == Slot.ROLE_ALL_TYPES) {
+					declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
+				}
+				else if (role == Slot.ROLE_ALL_FRAGMENTS) {
+					declareFragments();
+				}
+				else if (role == Slot.ROLE_PARAMETER_LISTS) {
+					declareParameterLists();
+				}
+				else if (role == Slot.ROLE_ALL_OPERATIONS) {
+					declareOperations();
+				}
+				else if (role == Slot.ROLE_ALL_PROPERTIES) {
+					declareProperties();
+				}
+				else if (role == Slot.ROLE_TYPE_FRAGMENTS) {
+					declareTypeFragments();
+				}
+				else if (role == Slot.ROLE_FRAGMENT_OPERATIONS) {
+					declareFragmentOperations(paginatedFragmentOperations);
+				}
+				else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
+					declareFragmentProperties(paginatedFragmentProperties);
+				}
+				else if (role == Slot.ROLE_ENUMERATION_LITERALS) {
+					declareEnumerationLiterals();
+				}
+				else if (role == Slot.ROLE_COMMENTS) {}
+				else {
+					s.append("\t// " + role + " " + element + "\n");
+				}
+			}
+		/*	s.append("\n");
+			s.append("\t@SuppressWarnings(\"unused\")\n");
+			s.append("\tprivate static Object unusedInit" + stage.getName() + " = new Object() {{\n");
+			for (@NonNull Slot slot : stage.getSlots()) {
+				String role = slot.getRole();
+				Element element = slot.getElement();
+				if (role == Slot.ROLE_COMMENTS) {
+					declareComments(element);
+				}
+			}
+			s.append("\t}};\n"); */
+		}
+	}
+
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EClass eClass = getEcoreExecutorClass(asClass);
 	//	assert typeClass == asClass.getClass();
@@ -934,7 +1055,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(");\n");
 	}
 
-	protected void declareTypes(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations, @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
+	protected void declareTypes(@NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations, @NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
 		s.append("	/**\n");
 		s.append("	 *	The type descriptors for each type.\n");
 		s.append("	 */\n");
@@ -1014,7 +1135,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(" " + atNonNull() + " [] ");
 			asClass.accept(emitLiteralVisitor);
 			s.append(" =\n");
-			s.append("			{");
+			s.append("		{");
 			boolean isFirst = true;
 			for (/*@NonNull*/ Type asSuperClass : superTypes) {
 				assert asSuperClass != null;
@@ -1022,7 +1143,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(",");
 				}
 				s.append("\n");
-				s.append("				" + AbstractGenModelHelper.FRAGMENTS_PACKAGE_NAME + ".");
+				s.append("			" + AbstractGenModelHelper.FRAGMENTS_PACKAGE_NAME + ".");
 				asClass.accept(emitLiteralVisitor);
 				s.append("__");
 				s.appendUnscopedTypeName(asSuperClass);
@@ -1030,7 +1151,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				isFirst = false;
 			}
 			s.append("\n");
-			s.append("			};\n");
+			s.append("		};\n");
 			s.append("		private static final int " + atNonNull() + " [] _");
 			asClass.accept(emitLiteralVisitor);
 			s.append(" = { ");
@@ -1171,10 +1292,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	public @NonNull String generateTablesClass(@Nullable String constants) {
 		String tablesClassName = getTablesClassName();
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = computeFragmentOperations();
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = computeFragmentProperties();
-		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = paginateFragmentOperations(fragmentOperations);
-		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties = paginateFragmentProperties(fragmentProperties);
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = computeFragmentOperations();
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = computeFragmentProperties();
+		List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = paginateFragmentOperations(fragmentOperations);
+		List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties = paginateFragmentProperties(fragmentProperties);
 		s.append("/**\n");
 		s.append(" * " + tablesClassName + " provides the dispatch tables for the " + asPackage.getName() + " for use by the OCL dispatcher.\n");
 		s.append(" *\n");
@@ -1232,26 +1353,28 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 
 		precedingPackageName = getTablesClassName();
-		s.append("\n");
-		declareTypeParameters();
-		s.append("\n");
-		declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
-		s.append("\n");
-		declareFragments();
-		s.append("\n");
-		declareParameterLists();
-		s.append("\n");
-		declareOperations();
-		s.append("\n");
-		declareProperties();
-		s.append("\n");
-		declareTypeFragments();
-		s.append("\n");
-		declareFragmentOperations(paginatedFragmentOperations);
+	//	s.append("\n");
+	//	declareTypeParameters();
+	//	s.append("\n");
+	//	declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
+	//	s.append("\n");
+	//	declareFragments();
+	//	s.append("\n");
+	//	declareParameterLists();
+	//	s.append("\n");
+	//	declareOperations();
+	//	s.append("\n");
+	//	declareProperties();
+	//	s.append("\n");
+	//	declareTypeFragments();
+	//	s.append("\n");
+	//	declareFragmentOperations(paginatedFragmentOperations);
 		//		s.append("\n");
-		declareFragmentProperties(paginatedFragmentProperties);
+	//	declareFragmentProperties(paginatedFragmentProperties);
 		//		s.append("\n");
-		declareEnumerationLiterals();
+	//	declareEnumerationLiterals();
+		s.append("\n");
+		declareSchedule(paginatedFragmentOperations, paginatedFragmentProperties);
 		s.append("\n");
 		declareInit();
 		s.append("\n");
@@ -1336,12 +1459,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return genPackage.getReflectionPackageName();
 	}
 
-	protected @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginateFragmentOperations(@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations) {
-		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = new ArrayList<>();
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> pageOfFragmentOperations = null;
+	protected @NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginateFragmentOperations(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations) {
+		List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = new ArrayList<>();
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> pageOfFragmentOperations = null;
 		int size = 0;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : fragmentOperations.keySet()) {
-			LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> line = fragmentOperations.get(pClass);
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> line = fragmentOperations.get(pClass);
 			assert line != null;
 			int lineSize = 0;
 			for (List<@NonNull Operation> operations : line.values()) {
@@ -1358,9 +1481,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return paginatedFragmentOperations;
 	}
 
-	protected @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginateFragmentProperties(@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties) {
-		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties = new ArrayList<>();
-		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> pageOfFragmentProperties = null;
+	protected @NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginateFragmentProperties(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties) {
+		List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties = new ArrayList<>();
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> pageOfFragmentProperties = null;
 		int size = 0;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : fragmentProperties.keySet()) {
 			List<@NonNull Property> line = fragmentProperties.get(pClass);

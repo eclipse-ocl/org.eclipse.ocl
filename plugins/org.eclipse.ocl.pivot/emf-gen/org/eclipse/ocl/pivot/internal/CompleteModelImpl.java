@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -59,7 +60,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -420,12 +420,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeEnvironment.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
-	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		completeEnvironment.didAddClass(partialClass, completeClass);
 	}
@@ -712,26 +706,29 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		for (org.eclipse.ocl.pivot.Class superClass : unspecializedClass.getSuperClasses()) {
 			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
 			if (superTemplateBindings.size() > 0) {
-				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<TemplateParameterSubstitution>();
+				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<>();
 				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
 					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
 						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
 						Type superActual = superParameterSubstitution.getActual();
-						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
-							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								if (specializedParameterSubstitution.getFormal() == superActual) {
-									Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
-									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+						if (superActual instanceof TemplateParameter) {
+							TemplateParameterId actualTemplateParameterId = ((TemplateParameter)superActual).getTemplateParameterId();
+							for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
+								for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
+									if (specializedParameterSubstitution.getFormal().getTemplateParameterId() == actualTemplateParameterId) {
+										Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
+										TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
+										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+										break;
+									}
+								}
+								if (superSpecializedTemplateParameterSubstitution != null) {
 									break;
 								}
 							}
 							if (superSpecializedTemplateParameterSubstitution != null) {
-								break;
+								superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
 							}
-						}
-						if (superSpecializedTemplateParameterSubstitution != null) {
-							superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
 						}
 					}
 				}
@@ -748,7 +745,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					}
 				}
 				else {
-					List<@NonNull Type> superTemplateArgumentList = new ArrayList<@NonNull Type>(superSpecializedTemplateParameterSubstitutions.size());
+					List<@NonNull Type> superTemplateArgumentList = new ArrayList<>(superSpecializedTemplateParameterSubstitutions.size());
 					for (TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution : superSpecializedTemplateParameterSubstitutions) {
 						Type actual = superSpecializedTemplateParameterSubstitution.getActual();
 						if (actual != null) {

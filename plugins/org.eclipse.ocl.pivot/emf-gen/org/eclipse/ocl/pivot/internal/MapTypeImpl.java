@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -38,7 +37,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -560,21 +558,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		return visitor.visitMapType(this);
 	}
 
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	protected Type keyType = null;
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	protected Type valueType = null;
-
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	public Type basicGetKeyType() {
-		return getKeyType();
-	}
-
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	public Type basicGetValueType() {
-		return getValueType();
-	}
-
 	@Override
 	public @NonNull TypeId computeId() {
 		if (getGeneric() == null) {
@@ -688,20 +671,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (type instanceof MapType) {
-			return TypeUtil.conformsToMapType(standardLibrary, this, (MapType)type);
-		}
-		if (getGeneric() != null) {
-			return ((Type)getGeneric()).conformsTo(standardLibrary, type);
-		}
-		return super.conformsTo(standardLibrary, type);
 	}
 
 	@Override

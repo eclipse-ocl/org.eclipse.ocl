@@ -162,7 +162,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Boolean visitCallExp(@NonNull CallExp object) {
-			if (!context.booleanType.conformsTo(standardLibrary, PivotUtil.getType(object))) {
+			if (!standardLibrary.conformsTo(context.booleanType, PivotUtil.getType(object))) {
 				return null;
 			}
 			OCLExpression asSource = PivotUtil.getOwnedSource(object);

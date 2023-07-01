@@ -278,6 +278,18 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 								eClass.getESuperTypes().add(name.equals(TypeId.OCL_STEREOTYPE_NAME) ? eOclType : name.equals(TypeId.OCL_TYPE_NAME) ? eOclElement : eOclAny);
 							}
 						}
+						else if (name.equals(TypeId.BAG_NAME)
+								|| name.equals(TypeId.COLLECTION_NAME)
+								|| name.equals(TypeId.MAP_NAME)
+								|| name.equals(TypeId.ORDERED_COLLECTION_NAME)
+								|| name.equals(TypeId.ORDERED_SET_NAME)
+								|| name.equals(TypeId.SEQUENCE_NAME)
+								|| name.equals(TypeId.SET_NAME)
+								|| name.equals(TypeId.UNIQUE_COLLECTION_NAME)) {
+							EClass eClass = (EClass)eClassifier;
+							eClass.setAbstract(true);
+							eClass.setInterface(true);
+						}
 					}
 				}
 				ePackage.getEAnnotations().clear();

@@ -60,8 +60,10 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.Normalizer;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -323,6 +325,11 @@ public class TestUtil
 				}
 			}
 		}
+		//
+		//	Remove dead orpganage content
+		//
+		Model asModel = PivotUtil.getModel(asResource);
+		OrphanageImpl.pruneStaleOrphans(asModel);
 	}
 
 	public static void saveAsXMI(Resource resource, URI xmiURI, Map<?, ?> options) throws IOException {

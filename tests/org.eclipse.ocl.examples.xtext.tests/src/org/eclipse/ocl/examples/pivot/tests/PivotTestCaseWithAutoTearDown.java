@@ -28,6 +28,7 @@ import java.lang.reflect.Modifier;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -99,10 +100,6 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	}
 
 	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent) throws IOException {
-		return createEcoreFile(ocl, fileName, fileContent, false);
-	}
-
-	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
 		TestFile oclInEcoreFile = createOCLinEcoreFile(inputName, fileContent);
 		URI inputURI = oclInEcoreFile.getFileURI();
@@ -116,11 +113,10 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(asResource.getContents().get(0)));
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
-		if (assignIds) {
-			for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				ecoreResource.setID(eObject,  EcoreUtil.generateUUID());
-			}
+		for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {
+			EObject eObject = tit.next();
+			String id = eObject instanceof EGenericType ? EcoreUtil.getURI(eObject).fragment() : EcoreUtil.generateUUID();
+			ecoreResource.setID(eObject, id);
 		}
 		ecoreResource.save(null);
 		return ecoreURI;

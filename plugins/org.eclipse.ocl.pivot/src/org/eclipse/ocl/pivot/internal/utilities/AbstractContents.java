@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -65,23 +66,29 @@ public abstract class AbstractContents extends PivotUtil
 	protected final @NonNull Orphanage orphanage;
 
 	protected AbstractContents() {
-		this.orphanage = PivotFactory.eINSTANCE.createOrphanage();
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);	// XXX should go obsolete
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		((OrphanageImpl)orphanage).init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
+		this.orphanage = OrphanageImpl.getSharedOrphanage(standardLibrary, environmentFactory.getMetamodelManager().getASResourceSet());
 	}
 
 	protected void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {
 		asClass.getSuperClasses().add(asSuperClass);
 	}
 
-	protected @NonNull Parameter createAccumulator(@NonNull Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+	protected void checkSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {
+		List<Class> asSuperClasses = asClass.getSuperClasses();
+		if (!asSuperClasses.contains(asSuperClass) && (asClass.getOwnedBindings().size() > 0)) {
+			asSuperClasses.add(asSuperClass);
+		}
+	}
+
+	protected @NonNull Parameter createAccumulator(/*@NonNull*/ Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
 		Parameter asParameter = createParameter(name, asType, isRequired);
 		asIteration.getOwnedAccumulators().add(asParameter);
 		return asParameter;
 	}
 
-	protected @NonNull ExpressionInOCL createBodyExpression(@NonNull Operation operation, /*@NonNull*/ Type selfType, @NonNull String exprString, /*@NonNull*/ Type resultType) {
+	protected @NonNull ExpressionInOCL createBodyExpression(/*@NonNull*/ Operation operation, /*@NonNull*/ Type selfType, @NonNull String exprString, /*@NonNull*/ Type resultType) {
 		ExpressionInOCL asExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 		asExpression.setType(resultType);
 		asExpression.setBody(exprString);
@@ -133,9 +140,8 @@ public abstract class AbstractContents extends PivotUtil
 		return asType;
 	}
 
-	protected @NonNull CollectionType createCollectionType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+	protected @NonNull CollectionType createCollectionType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
 		assert asPackage != orphanage;
-		assert templateParameter != null;
 		CollectionType asType; // = (CollectionType)eClass.getEPackage().getEFactoryInstance().create(eClass);		-- XXX uses non-functional OCLstdlibFactory
 		if (eClass == OCLstdlibPackage.Literals.BAG) {
 			asType = PivotFactory.eINSTANCE.createBagType();
@@ -153,11 +159,7 @@ public abstract class AbstractContents extends PivotUtil
 			asType = PivotFactory.eINSTANCE.createCollectionType();
 		}
 		asType.setName(eClass.getName());
-		initTemplateParameters(asType, templateParameter);
 		((PivotObjectImpl)asType).setESObject(eClass);
-		asType.setIsNullFree(isNullFree);
-		asType.setLowerValue(ValueUtil.integerValueOf(lower));
-		asType.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
 	}
@@ -176,17 +178,16 @@ public abstract class AbstractContents extends PivotUtil
 		return asImport;
 	}
 
-	protected @NonNull Iteration createIteration(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Iteration createIteration(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
 		asIteration.setName(name);
-		initTemplateParameters(asIteration, templateParameters);
 		asIteration.setImplementationClass(implementationClass);
 		asIteration.setImplementation(implementation);
 		asClass.getOwnedOperations().add(asIteration);
 		return asIteration;
 	}
 
-	protected @NonNull Parameter createIterator(@NonNull Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+	protected @NonNull Parameter createIterator(/*@NonNull*/ Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
 		Parameter asParameter = createParameter(name, asType, isRequired);
 		asIteration.getOwnedIterators().add(asParameter);
 		return asParameter;
@@ -204,16 +205,11 @@ public abstract class AbstractContents extends PivotUtil
 		return asLibrary;
 	}
 
-	protected @NonNull MapType createMapType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter keyParameter, boolean keysAreNullFree, /*@NonNull*/ TemplateParameter valueParameter, boolean valuesAreNullFree) {
+	protected @NonNull MapType createMapType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
 		assert asPackage != orphanage;
-		assert keyParameter != null;
-		assert valueParameter != null;
 		MapType asType = PivotFactory.eINSTANCE.createMapType();
 		asType.setName(eClass.getName());
-		initTemplateParameters(asType, keyParameter, valueParameter);
 		((PivotObjectImpl)asType).setESObject(eClass);
-		asType.setKeysAreNullFree(keysAreNullFree);
-		asType.setValuesAreNullFree(valuesAreNullFree);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
 	}
@@ -224,10 +220,9 @@ public abstract class AbstractContents extends PivotUtil
 		return asModel;
 	}
 
-	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
-		initTemplateParameters(asOperation, templateParameters);
 		asOperation.setImplementationClass(implementationClass);
 		asOperation.setImplementation(implementation);
 		asClass.getOwnedOperations().add(asOperation);
@@ -256,7 +251,7 @@ public abstract class AbstractContents extends PivotUtil
 		return asPackage;
 	}
 
-	protected @NonNull Parameter createParameter(@NonNull Operation asOperation, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+	protected @NonNull Parameter createParameter(/*@NonNull*/ Operation asOperation, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
 		Parameter asParameter = createParameter(name, asType, isRequired);
 		asOperation.getOwnedParameters().add(asParameter);
 		return asParameter;
@@ -273,6 +268,17 @@ public abstract class AbstractContents extends PivotUtil
 		Property asProperty = createProperty(name, type);
 		asClass.getOwnedProperties().add(asProperty);
 		return asProperty;
+	}
+
+	protected @NonNull TemplateParameter createTemplateParameter(/*@NonNull*/ TemplateableElement asTemplateableElement, @NonNull String name, org.eclipse.ocl.pivot.Class... lowerBounds) {
+		TemplateParameter pivotTemplateParameter = createTemplateParameter(name, lowerBounds);
+		TemplateSignature ownedSignature = asTemplateableElement.getOwnedSignature();
+		if (ownedSignature == null) {
+			ownedSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			asTemplateableElement.setOwnedSignature(ownedSignature);
+		}
+		ownedSignature.getOwnedParameters().add(pivotTemplateParameter);
+		return pivotTemplateParameter;
 	}
 
 	public @NonNull TuplePart createTuplePart(@NonNull String name, @NonNull Type type) {

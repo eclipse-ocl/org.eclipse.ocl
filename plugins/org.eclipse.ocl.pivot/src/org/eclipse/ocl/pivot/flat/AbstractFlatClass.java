@@ -20,15 +20,23 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.JavaType;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.Vertex;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
@@ -58,13 +66,24 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
-	public static int computeFlags(@NonNull Type asType) {
-		assert !(asType instanceof JavaType);
-//			return 0;			// XXX Avoid UOE from getTypeId().
-//		}
+	protected static @NonNull TemplateParameterId @Nullable [] computeTemplateParameterIds(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		TemplateSignature asTemplateSignature = asClass.getOwnedSignature();
+		if (asTemplateSignature == null) {
+			return null;
+		}
+		List<TemplateParameter> asTemplateParameters = asTemplateSignature.getOwnedParameters();
+		int size = asTemplateParameters.size();
+		@NonNull TemplateParameterId [] asTemplateParameterIds = new @NonNull TemplateParameterId[size];
+		for (int i = 0; i < size; i++) {
+			asTemplateParameterIds[i] = asTemplateParameters.get(i).getTemplateParameterId();
+		}
+		return asTemplateParameterIds;
+	}
+
+	private static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		int flags = 0;
-		if (asType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)asType;
+		if (asClass instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)asClass;
 			if (collectionType.isOrdered()) {
 				flags |= ORDERED;
 			}
@@ -72,17 +91,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				flags |= UNIQUE;
 			}
 		}
-		TypeId typeId = asType.getTypeId();
-		if (typeId == TypeId.OCL_ANY){
+		if (asClass instanceof AnyType) {
 			flags |= OCL_ANY;
-		}
-		else if (typeId == TypeId.OCL_VOID){
+		} else if (asClass instanceof VoidType){
 			flags |= OCL_VOID;
 		}
-		else if (typeId == TypeId.OCL_INVALID){
+		else if (asClass instanceof InvalidType){
 			flags |= OCL_INVALID;
 		}
-		if ((asType instanceof org.eclipse.ocl.pivot.Class) && ((org.eclipse.ocl.pivot.Class)asType).isIsAbstract()) {
+		if (asClass.isIsAbstract()) {
 			flags |= ABSTRACT;
 		}
 		return flags;
@@ -90,6 +107,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
+	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 	protected final int flags;
 
 	/**
@@ -137,15 +155,21 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	private @Nullable Set<@NonNull FlatClass> subFlatClasses = null;
 
-	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
+	/**
+	 * Lazily created map from state name to the known state.
+	 */
+	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;	// ??? demote to a UMLFlatClass
+
+	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		this.flatModel = flatModel;
 		this.name = name;
-		this.flags = flags;
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
+		this.asClass = asClass;
+		this.flags = computeFlags(asClass);
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + asClass + " " + Integer.toHexString(flags));
 	}
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 != null) {
 			String operationName = pivotOperation.getName();
 			if (operationName != null) {
@@ -207,8 +231,46 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @Nullable Operation basicGetOperation(@NonNull OperationId id) {
-		throw new UnsupportedOperationException();
+	public @Nullable Operation basicGetOperation(@NonNull OperationId operationId) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = operationId.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		return partialOperations.getOperation(operationId.getParametersId(), null);
+	}
+
+	@Override
+	public @Nullable Operation basicGetOperation(@NonNull Operation pivotOperation) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = pivotOperation.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		return partialOperations.getOperation(pivotOperation.getParametersId(), pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull Operation> basicGetOperationOverloads(@NonNull Operation pivotOperation) {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = pivotOperation.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		ParametersId parametersId = pivotOperation.getParametersId();
+		return partialOperations.getOperationOverloads(parametersId, pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
 	}
 
 	@Override
@@ -319,6 +381,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
+	@Override
+	public final org.eclipse.ocl.pivot.@NonNull Class getASClass() {
+		return asClass;
+	}
+
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
 	 */
@@ -373,7 +440,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			Iterable<@NonNull FlatFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
 			for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
 				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
-				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
+				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass, false);
 				if (superFragment != null) {
 					AbstractFlatClass derivedFlatClass2 = (AbstractFlatClass)superFragment.derivedFlatClass;
 					Operation overload = derivedFlatClass2.getFragmentOperation(superFragment, apparentOperation);
@@ -388,7 +455,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 							depth = -1;
 							break;
 						}
-						else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
+						else if (!bestFlatClass.isSubFlatClassOf(superFlatClass, false)) {	// Non-occluded child candidate
 							bestOverload = null;
 							depth = -1;
 							break;
@@ -409,7 +476,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that) {
+	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		if (this == that) {
 			return this;
 		}
@@ -426,7 +493,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		int thatDepth = abstractThat.getDepth();
-		if ((thatDepth ==  1) && abstractThat.isUndefined()) {
+		if ((thatDepth == 1) && abstractThat.isUndefined()) {
 			return this;
 		}
 		int thisDepth = getDepth();
@@ -444,6 +511,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						commonFlatClasses++;
 						commonFlatClass = thisBaseFlatClass;
 						break;
+					}
+					else if (ignoreTemplateArguments) {
+						FlatClass genericThisBaseFlatClass = thisBaseFlatClass.getGenericFlatClass();
+						FlatClass genericThatBaseFlatClass = thatBaseFlatClass.getGenericFlatClass();
+						if (genericThisBaseFlatClass == genericThatBaseFlatClass) {
+							commonFlatClasses++;
+							commonFlatClass = genericThisBaseFlatClass;
+							break;
+						}
 					}
 				}
 				if (commonFlatClasses > 1) { 				// More than one so must go less deep to find uniqueness
@@ -478,7 +554,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return flatModel;
 	}
 
-	private @Nullable FlatFragment getFragment(@NonNull AbstractFlatClass that) {
+	private @Nullable FlatFragment getFragment(@NonNull AbstractFlatClass that, boolean ignoreTemplateArguments) {
 		int staticDepth = that.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
@@ -487,6 +563,13 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				FlatClass baseFlatClass = fragment.getBaseFlatClass();
 				if (baseFlatClass == that) {
 					return fragment;
+				}
+				else if (ignoreTemplateArguments) {
+					FlatClass thisGenericBaseFlatClass = baseFlatClass.getGenericFlatClass();
+					FlatClass thatGenericBaseFlatClass = that.getGenericFlatClass();
+					if (thisGenericBaseFlatClass == thatGenericBaseFlatClass) {
+						return fragment;
+					}
 				}
 			}
 		}
@@ -502,6 +585,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * Return the possibly overloaded declaration of asOperation from flatFragment, or null.
 	 */
 	protected abstract @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation);
+
+	@Override
+	public @NonNull FlatClass getGenericFlatClass() {
+		return this;
+	}
 
 	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
 		int index = apparentOperation.getIndex();
@@ -562,32 +650,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
-	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
-		if (name2partialOperations2 == null) {
-			name2partialOperations2 = initOperations();
-		}
-		String operationName = operationId.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
-			return null;
-		}
-		return partialOperations.getOperation(operationId.getParametersId(), null);
-	}
-
-	public @Nullable Operation getOperation(@NonNull Operation pivotOperation) {
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
-		if (name2partialOperations2 == null) {
-			name2partialOperations2 = initOperations();
-		}
-		String operationName = pivotOperation.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
-			return null;
-		}
-		return partialOperations.getOperation(pivotOperation.getParametersId(), pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
-	}
-
 	public @NonNull Iterable<String> getOperationNames() {
 		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -596,21 +658,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name2partialOperations2.keySet();
 	}
 
-	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
-		if (name2partialOperations2 == null) {
-			name2partialOperations2 = initOperations();
-		}
-		String operationName = pivotOperation.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
-			return null;
-		}
-		ParametersId parametersId = pivotOperation.getParametersId();
-		return partialOperations.getOperationOverloads(parametersId, pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
-	}
-
-	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	@Override
+	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = initOperations();
@@ -622,6 +671,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return partialOperations.getOperationOverloads(featureFilter);
 	}
 
+	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -632,7 +682,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return concat;
 	}
 
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
+	@Override
+	public @NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter) {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = initOperations();
@@ -655,7 +706,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return subItOps;
 	}
 
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	@Override
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		if (name2propertyOrProperties == null) {
 			if (fragments == null) {
 				initFragments();
@@ -710,8 +762,37 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
+	public @NonNull Iterable<@NonNull State> getStates() {
+		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		if (name2states2 == null) {
+			name2states2 = initStates();
+		}
+		return name2states2.values();
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
+		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		if (name2states2 == null) {
+			name2states2 = initStates();
+		}
+		State state = name2states2.get(name);
+		if (state == null) {
+			return PivotMetamodelManager.EMPTY_STATE_LIST;
+		}
+		else {
+			return Collections.singletonList(state);
+		}
+	}
+
+	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
+	}
+
+	@Override
+	public @NonNull TemplateParameterId @Nullable [] getTemplateParameterIds() {
+		return null;
 	}
 
 	@Override
@@ -727,6 +808,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		this.mutable = Boolean.FALSE;
+		System.out.println("initFragments2 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+		for (@NonNull FlatFragment fragment : fragments) {
+			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+		}
 	}
 
 	/**
@@ -847,6 +932,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		installClassListeners();
+		System.out.println("initFragments1 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+		for (@NonNull FlatFragment fragment : fragments) {
+			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+		}
 	}
 
 	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
@@ -887,6 +976,22 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			for (@NonNull FlatFragment fragment : fragments) {
 				for (@NonNull Property property : fragment.getProperties()) {
 					addProperty(property);
+				}
+			}
+		}
+	}
+
+//	@Override
+	protected abstract @NonNull Map<@NonNull String, @NonNull State> initStates();
+
+	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
+		for (@NonNull Region region : regions) {
+			for (@NonNull Vertex vertex : ClassUtil.nullFree(region.getOwnedSubvertexes())) {
+				if (vertex instanceof State) {
+					State state = (State) vertex;
+					name2states.put(vertex.getName(), state);
+					@NonNull List<@NonNull Region> nestedRegions = ClassUtil.nullFree(state.getOwnedRegions());
+					initStatesForRegions(name2states, nestedRegions);
 				}
 			}
 		}
@@ -940,12 +1045,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public boolean isSubFlatClassOf(@NonNull FlatClass that) {
+	public boolean isSubFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return getFragment(abstractThat) != null;
+			return getFragment(abstractThat, ignoreTemplateArguments) != null;
 		}
 		else {
 			return theseFlags >= thoseFlags;
@@ -953,12 +1058,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public boolean isSuperFlatClassOf(@NonNull FlatClass that) {
+	public boolean isSuperFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return abstractThat.getFragment(this) != null;
+			return abstractThat.getFragment(this, ignoreTemplateArguments) != null;
 		}
 		else {
 			return theseFlags <= thoseFlags;
@@ -1053,7 +1158,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	@Override
 	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes) {
 		assert standardLibrary == getStandardLibrary();
-		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
+		for (Operation localOperation : getASClass().getOwnedOperations()) {
 			if (localOperation.getName().equals(operationName)) {
 				ParametersId firstParametersId = localOperation.getParametersId();
 				int iMax = firstParametersId.size();
@@ -1062,7 +1167,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					for (; i < iMax; i++) {
 						TypeId firstParameterId = firstParametersId.get(i);
 						assert firstParameterId != null;
-						@NonNull Type secondParameterType = argumentTypes[i].getPivotClass();
+						@NonNull Type secondParameterType = argumentTypes[i].getASClass();
 						if (firstParameterId != secondParameterType.getTypeId()) {
 							break;
 						}
@@ -1113,6 +1218,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		resetProperties();
 	}
 
+	@Override
 	public void resetOperations() {
 		if (name2partialOperations != null) {
 			name2partialOperations.clear();
@@ -1120,6 +1226,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
+	@Override
 	public void resetProperties() {
 		name2propertyOrProperties = null;
 	}
@@ -1138,5 +1245,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			asProperty = null;
 		}
 		return asProperty;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return asClass.toString(); //.qualifiedNameFor(asClass);
 	}
 }

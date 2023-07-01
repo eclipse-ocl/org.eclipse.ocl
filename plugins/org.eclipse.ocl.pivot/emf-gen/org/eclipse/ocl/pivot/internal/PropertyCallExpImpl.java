@@ -465,29 +465,20 @@ implements PropertyCallExp {
 	@Override
 	public /*@NonNull*/ Type getSpecializedReferredPropertyOwningType()
 	{
+		StandardLibrary standardLibrary = PivotUtil.getExecutor(this).getStandardLibrary();
 		Property referredProperty = getReferredProperty();
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
-		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtil.getExecutor(this);
-			StandardLibrary standardLibrary = executor.getStandardLibrary();
+		if (referencedType == null) {
+			return standardLibrary.getOclInvalidType();
+		}
+		else if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(standardLibrary);
 			Type resultType = getType();
-			//			if (resultType instanceof DomainMetaclass) {
-			//				resultType = ((DomainMetaclass)resultType).getInstanceType();
-			//			}
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
-			if (referencedType != null) {
-			//	Type specializedType = templateSpecialization.getSpecialisation(referencedType);
-				return standardLibrary.getSpecializedType(referencedType, templateSpecialization);
-			//	return executor.getStandardLibrary().getSpecialization(specializedType);
-			}
-		}
-		if (referencedType != null) {
-			return referencedType;
+			return standardLibrary.getSpecializedType(referencedType, templateSpecialization);
 		}
 		else {
-			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getStandardLibrary().getOclInvalidType();
+			return referencedType;
 		}
 	}
 
@@ -502,23 +493,20 @@ implements PropertyCallExp {
 	@Override
 	public /*@NonNull*/ Type getSpecializedReferredPropertyType()
 	{
+		StandardLibrary standardLibrary = PivotUtil.getExecutor(this).getStandardLibrary();
 		Property referredProperty = getReferredProperty();
-		Type referencedType = referredProperty.getType();
-		Type specializedType = referencedType;
-		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getStandardLibrary());
-			Type resultType = getType();
-			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
-		//	specializedType = templateSpecialization.getSpecialisation(referencedType);
-			specializedType = executor.getStandardLibrary().getSpecializedType(referencedType, templateSpecialization);
+		Type referredPropertyType = referredProperty.getType();
+		if (referredPropertyType == null) {
+			return standardLibrary.getOclInvalidType();
 		}
-		if (specializedType != null) { //instanceof org.eclipse.ocl.pivot.Class) {
-			return /*(org.eclipse.ocl.pivot.Class)*/specializedType;
+		else if (TemplateSpecialisation.needsSpecialisation(referredPropertyType)) {
+			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(standardLibrary);
+			Type resultType = getType();
+			templateSpecialization.installEquivalence(resultType, referredPropertyType);
+			return standardLibrary.getSpecializedType(referredPropertyType, templateSpecialization);
 		}
 		else {
-			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getStandardLibrary().getOclInvalidType();
+			return referredPropertyType;
 		}
 	}
 

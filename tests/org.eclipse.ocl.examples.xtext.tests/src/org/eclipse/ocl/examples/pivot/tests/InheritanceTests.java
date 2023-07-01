@@ -159,14 +159,14 @@ public class InheritanceTests extends PivotTestSuite
 			Iterator<@NonNull FlatFragment> depthNInheritances = ifFlatClass.getSuperFragments(ifFlatClass.getDepth()).iterator();
 			assert depthNInheritances.next().getBaseFlatClass() == ifFlatClass;
 			assert !depthNInheritances.hasNext();
-			assert oclAnyFlatClass.isSuperFlatClassOf(ifFlatClass);
-			assert !ifFlatClass.isSuperFlatClassOf(oclAnyFlatClass);
+			assert oclAnyFlatClass.isSuperFlatClassOf(ifFlatClass, false);
+			assert !ifFlatClass.isSuperFlatClassOf(oclAnyFlatClass, false);
 			FlatClass oclExpressionFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("OCLExpression")));
-			assert oclExpressionFlatClass.isSuperFlatClassOf(ifFlatClass);
-			assert !ifFlatClass.isSuperFlatClassOf(oclExpressionFlatClass);
+			assert oclExpressionFlatClass.isSuperFlatClassOf(ifFlatClass, false);
+			assert !ifFlatClass.isSuperFlatClassOf(oclExpressionFlatClass, false);
 			FlatClass loopExpFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("LoopExp")));
-			assert !ifFlatClass.isSuperFlatClassOf(loopExpFlatClass);
-			assert !loopExpFlatClass.isSuperFlatClassOf(ifFlatClass);
+			assert !ifFlatClass.isSuperFlatClassOf(loopExpFlatClass, false);
+			assert !loopExpFlatClass.isSuperFlatClassOf(ifFlatClass, false);
 		} finally {
 			ocl.dispose();
 		}

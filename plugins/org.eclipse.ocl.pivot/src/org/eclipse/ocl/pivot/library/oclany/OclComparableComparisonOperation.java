@@ -14,8 +14,8 @@ import java.util.Date;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -51,7 +51,7 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		IdResolver idResolver = executor.getIdResolver();
 		FlatClass leftFlatClass = idResolver.getDynamicTypeOf(left).getFlatClass(standardLibrary);
 		FlatClass rightFlatClass = idResolver.getDynamicTypeOf(right).getFlatClass(standardLibrary);
-		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass, false);
 		FlatClass comparableFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
 		FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
 		Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);

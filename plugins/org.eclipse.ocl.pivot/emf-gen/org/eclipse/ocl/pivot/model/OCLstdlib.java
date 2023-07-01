@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -39,7 +38,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -50,11 +48,11 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -74,7 +72,7 @@ public class OCLstdlib extends ASResourceImpl
 	/**
 	 *	The static package-of-types pivot model of the Standard Library.
 	 */
-	private static OCLstdlib INSTANCE = null;
+//	private static OCLstdlib INSTANCE = null;
 
 	/**
 	 *	The URI of this Standard Library.
@@ -93,9 +91,9 @@ public class OCLstdlib extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
-	public static @Nullable OCLstdlib basicGetDefault() {
-		return INSTANCE;
-	}
+//	public static @Nullable OCLstdlib basicGetDefault() {
+//		return INSTANCE;
+//	}
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource.
@@ -104,12 +102,14 @@ public class OCLstdlib extends ASResourceImpl
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
 	public static @NonNull OCLstdlib getDefault() {
-		OCLstdlib oclstdlib = INSTANCE;
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		ReadOnly oclstdlib = environmentFactory.basicGetInstance(ReadOnly.class);
 		if (oclstdlib == null) {
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			oclstdlib = INSTANCE = new ReadOnly(asURI);
+			oclstdlib = new ReadOnly(asURI);
 			Contents contents = new Contents(oclstdlib, "http://www.eclipse.org/ocl/2015/Library");
 			oclstdlib.setSaveable(false);
+			environmentFactory.setInstance(ReadOnly.class, oclstdlib);
 		}
 		return oclstdlib;
 	}
@@ -170,7 +170,7 @@ public class OCLstdlib extends ASResourceImpl
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 		OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
-		INSTANCE = null;
+	//	INSTANCE = null;
 	}
 
 	/**
@@ -224,12 +224,12 @@ public class OCLstdlib extends ASResourceImpl
 		 */
 		@Override
 		public void load(Map<?, ?> options) throws IOException {
-			if (this != INSTANCE) {
+		//	if (this != INSTANCE) {
 				super.load(options);
-			}
-			else {
-				setLoaded(true);
-			}
+		//	}
+		//	else {
+		//		setLoaded(true);
+		//	}
 		}
 
 		/**
@@ -277,18 +277,33 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
 			installPackages();
 			installPrecedences();
-			installTemplateParameters();
-			installClassTypes();
-			installPrimitiveTypes();
-			installGenericAggregateTypes();
-			installOperationDeclarations();
-			installIterationDeclarations();
-			installSpecializedAggregateTypes0();
-			installSpecializedAggregateTypes1();
-			installSpecializedAggregateTypes2();
-			installAggregateSuperTypes();
-			installOperationBodies();
-			installIterationBodies();
+			installSlots0();
+			installSlots1();
+			installSlots2();
+			installSlots3a();
+			installSlots3b();
+			installSlots3c();
+			installSlots3d();
+			installSlots3e();
+			installSlots4a();
+			installSlots4b();
+			installSlots4c();
+			installSlots4d();
+			installSlots4e();
+			installSlots4f();
+			installSlots5a();
+			installSlots5b();
+			installSlots6a();
+			installSlots6b();
+			installSlots6c();
+			installSlots7a();
+			installSlots7b();
+			installSlots8();
+			installSlots9a();
+			installSlots9b();
+			installSlots10();
+			installSlots11();
+			installSlots12();
 			installProperties();
 		}
 
@@ -298,7 +313,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
-			model.getOwnedPackages().add(orphanage);
+		//	model.getOwnedPackages().add(orphanage);
 		}
 
 		private Precedence prec_ADDITIVE;
@@ -328,6 +343,43 @@ public class OCLstdlib extends ASResourceImpl
 			ownedPrecedences.add(prec_IMPLIES = createPrecedence("IMPLIES", AssociativityKind.LEFT));
 		}
 
+		// declare ALL_FRAGMENTS Model
+		// declare ALL_OPERATIONS Model
+		// declare ALL_PROPERTIES Model
+		// declare ALL_TYPES Model
+		private PrimitiveType _Boolean;
+		// declare CTOR Model
+		// declare CTOR Library
+		// declare CTOR Package
+		private PrimitiveType _Integer;
+		private PrimitiveType _Real;
+		private PrimitiveType _String;
+		private PrimitiveType _UnlimitedNatural;
+		private Class _OclAny;
+		private Class _BooleanType;
+		private Class _Class;
+		private Class _CollectionType;
+		private Class _Enumeration;
+		private Class _EnumerationLiteral;
+		private Class _InvalidType;
+		private Class _MapType;
+		private Class _OclComparable;
+		private Class _OclElement;
+		private Class _OclEnumeration;
+		private Class _OclLambda;
+		private Class _OclMessage;
+		private Class _OclState;
+		private Class _OclStereotype;
+		private Class _OclSummable;
+		private Class _OclTuple;
+		private Class _OclType;
+		private Class _State;
+		private Class _Stereotype;
+		private Class _Type;
+		private Class _VoidType;
+		private Class _OclInvalid;
+		private Class _OclSelf;
+		private Class _OclVoid;
 		private TemplateParameter tp_UnlimitedNatural_oclAsType_TT;
 		private TemplateParameter tp_Bag_collectNested_V;
 		private TemplateParameter tp_Bag_collect_V;
@@ -386,259 +438,6 @@ public class OCLstdlib extends ASResourceImpl
 		private TemplateParameter tp_Set_selectByType_TT;
 		private TemplateParameter tp_Set_T;
 		private TemplateParameter tp_UniqueCollection_T;
-
-		private void installTemplateParameters() {
-			tp_UnlimitedNatural_oclAsType_TT = createTemplateParameter("TT");
-			tp_Bag_collectNested_V = createTemplateParameter("V");
-			tp_Bag_collect_V = createTemplateParameter("V");
-			tp_Bag_flatten_T2 = createTemplateParameter("T2");
-			tp_Bag_selectByKind_TT = createTemplateParameter("TT");
-			tp_Bag_selectByType_TT = createTemplateParameter("TT");
-			tp_Bag_T = createTemplateParameter("T");
-			tp_Collection_collectBy_V = createTemplateParameter("V");
-			tp_Collection_collectNested_V = createTemplateParameter("V");
-			tp_Collection_collect_V = createTemplateParameter("V");
-			tp_Collection_excludesAll_T2 = createTemplateParameter("T2");
-			tp_Collection_flatten_T2 = createTemplateParameter("T2");
-			tp_Collection_includesAll_T2 = createTemplateParameter("T2");
-			tp_Collection_iterate_Tacc = createTemplateParameter("Tacc");
-			tp_Collection_product_T2 = createTemplateParameter("T2");
-			tp_Collection_selectByKind_TT = createTemplateParameter("TT");
-			tp_Collection_selectByType_TT = createTemplateParameter("TT");
-			tp_Collection_T = createTemplateParameter("T");
-			tp_Map_collectBy_V2 = createTemplateParameter("V2");
-			tp_Map_collectNested_V2 = createTemplateParameter("V2");
-			tp_Map_collect_V2 = createTemplateParameter("V2");
-			tp_Map_excludesAll_K2 = createTemplateParameter("K2");
-			tp_Map_excludesMap_K2 = createTemplateParameter("K2");
-			tp_Map_excludesMap_V2 = createTemplateParameter("V2");
-			tp_Map_excludingMap_K2 = createTemplateParameter("K2");
-			tp_Map_excludingMap_V2 = createTemplateParameter("V2");
-			tp_Map_includesAll_K2 = createTemplateParameter("K2");
-			tp_Map_includesMap_K2 = createTemplateParameter("K2");
-			tp_Map_includesMap_V2 = createTemplateParameter("V2");
-			tp_Map_includingMap_K2 = createTemplateParameter("K2");
-			tp_Map_includingMap_V2 = createTemplateParameter("V2");
-			tp_Map_iterate_Tacc = createTemplateParameter("Tacc");
-			tp_Map_K = createTemplateParameter("K");
-			tp_Map_V = createTemplateParameter("V");
-			tp_OclAny_oclAsType_TT = createTemplateParameter("TT");
-			tp_OclElement_oclAsModelType_TT = createTemplateParameter("TT");
-			tp_OclInvalid_oclAsType_TT = createTemplateParameter("TT");
-			tp_OclVoid_oclAsType_TT = createTemplateParameter("TT");
-			tp_OrderedCollection_T = createTemplateParameter("T");
-			tp_OrderedSet_collectNested_V = createTemplateParameter("V");
-			tp_OrderedSet_collect_V = createTemplateParameter("V");
-			tp_OrderedSet_flatten_T2 = createTemplateParameter("T2");
-			tp_OrderedSet_selectByKind_TT = createTemplateParameter("TT");
-			tp_OrderedSet_selectByType_TT = createTemplateParameter("TT");
-			tp_OrderedSet_T = createTemplateParameter("T");
-			tp_Sequence_collectNested_V = createTemplateParameter("V");
-			tp_Sequence_collect_V = createTemplateParameter("V");
-			tp_Sequence_flatten_T2 = createTemplateParameter("T2");
-			tp_Sequence_selectByKind_TT = createTemplateParameter("TT");
-			tp_Sequence_selectByType_TT = createTemplateParameter("TT");
-			tp_Sequence_T = createTemplateParameter("T");
-			tp_Set_collectNested_V = createTemplateParameter("V");
-			tp_Set_collect_V = createTemplateParameter("V");
-			tp_Set_flatten_T2 = createTemplateParameter("T2");
-			tp_Set_selectByKind_TT = createTemplateParameter("TT");
-			tp_Set_selectByType_TT = createTemplateParameter("TT");
-			tp_Set_T = createTemplateParameter("T");
-			tp_UniqueCollection_T = createTemplateParameter("T");
-		}
-
-		private Class _BooleanType;
-		private Class _Class;
-		private Class _CollectionType;
-		private Class _Enumeration;
-		private Class _EnumerationLiteral;
-		private Class _InvalidType;
-		private Class _MapType;
-		private Class _OclAny;
-		private Class _OclComparable;
-		private Class _OclElement;
-		private Class _OclEnumeration;
-		private Class _OclInvalid;
-		private Class _OclLambda;
-		private Class _OclMessage;
-		private Class _OclSelf;
-		private Class _OclState;
-		private Class _OclStereotype;
-		private Class _OclSummable;
-		private Class _OclTuple;
-		private Class _OclType;
-		private Class _OclVoid;
-		private Class _State;
-		private Class _Stereotype;
-		private Class _Type;
-		private Class _VoidType;
-
-		private void installClassTypes() {
-			Class type;
-
-			type = _BooleanType = createClass(ocl, "BooleanType");
-			installComment(type, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
-			type = _Class = createClass(ocl, "Class");
-			type = _CollectionType = createClass(ocl, "CollectionType");
-			type = _Enumeration = createClass(ocl, "Enumeration");
-			installComment(type, "@Deprecated: Use OclEnumeration\nThe Enumeration type is the type of an OrderedSet of EnumerationLiteral.");
-			type = _EnumerationLiteral = createClass(ocl, "EnumerationLiteral");
-			installComment(type, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
-			type = _InvalidType = createClass(ocl, "InvalidType");
-			type = _MapType = createClass(ocl, "MapType");
-			type = _OclAny = createClass(ocl, OCLstdlibPackage.Literals.OCL_ANY);
-			type.setIsAbstract(true);
-			installComment(type, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
-			type = _OclComparable = createClass(ocl, OCLstdlibPackage.Literals.OCL_COMPARABLE);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
-			type = _OclElement = createClass(ocl, OCLstdlibPackage.Literals.OCL_ELEMENT);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
-			type = _OclEnumeration = createClass(ocl, OCLstdlibPackage.Literals.OCL_ENUMERATION);
-			type.setIsAbstract(true);
-			installComment(type, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
-			type = _OclInvalid = createClass(ocl, OCLstdlibPackage.Literals.OCL_INVALID);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
-			type = _OclLambda = createClass(ocl, OCLstdlibPackage.Literals.OCL_LAMBDA);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda\ntherefore apply to all lambda expressions.");
-			type = _OclMessage = createClass(ocl, OCLstdlibPackage.Literals.OCL_MESSAGE);
-			type.setIsAbstract(true);
-			installComment(type, "OclMessage\nThis sub clause contains the definition of the standard type OclMessage.\nAs defined in this sub clause, each ocl message type is actually a template type with one parameter.\n\u2018T\u2019 denotes the parameter.\nA concrete ocl message type is created by substituting an operation or signal for the T.\n\nThe predefined type OclMessage is an instance of MessageType.\nEvery OclMessage is fully determined by either the operation, or signal given as parameter.\nNote that there is conceptually an undefined (infinite) number of these types,\nas each is determined by a different operation or signal.\nThese types are unnamed. Every type has as attributes the name of the operation or signal,\nand either all formal parameters of the operation, or all attributes of the signal.\nOclMessage is itself an instance of the metatype MessageType.\n\nOclMessage has a number of predefined operations, as shown in the OCL Standard Library.");
-			type = _OclSelf = createClass(ocl, OCLstdlibPackage.Literals.OCL_SELF);
-			type.setIsAbstract(true);
-			installComment(type, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
-			type = _OclState = createClass(ocl, OCLstdlibPackage.Literals.OCL_STATE);
-			type.setIsAbstract(true);
-			type = _OclStereotype = createClass(ocl, OCLstdlibPackage.Literals.OCL_STEREOTYPE);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined\nfor OclStereotype are therefore applicable to all UML stereotypes.");
-			type = _OclSummable = createClass(ocl, OCLstdlibPackage.Literals.OCL_SUMMABLE);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived\nsum and zero implementations may be summed.");
-			type = _OclTuple = createClass(ocl, OCLstdlibPackage.Literals.OCL_TUPLE);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple\ntherefore apply to all tuples.");
-			type = _OclType = createClass(ocl, OCLstdlibPackage.Literals.OCL_TYPE);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclType is the implicit supertype of any UML type. Operations defined\nfor OclType are therefore applicable to all UML types.");
-			type = _OclVoid = createClass(ocl, OCLstdlibPackage.Literals.OCL_VOID);
-			type.setIsAbstract(true);
-			installComment(type, "The type OclVoid is a type that conforms to all other types except OclInvalid.\nIt has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.\nAny property call applied on oclText[null] results in oclText[invalid], except for the\noclIsUndefined(), oclIsInvalid(), =(OclAny) and <>(OclAny) operations.\nHowever, by virtue of the implicit conversion to a collection literal,\nan expression evaluating to oclText[null] can be used as source of collection operations (such as \u2018isEmpty\u2019).\nIf the source is the oclText[null] literal, it is implicitly converted to Bag{}.\n\nOclVoid is itself an instance of the metatype VoidType.");
-			type = _State = createClass(ocl, "State");
-			type = _Stereotype = createClass(ocl, "Stereotype");
-			type = _Type = createClass(ocl, "Type");
-			installComment(type, "The UML Type is the supertype of anything that may be used as a type.");
-			type = _VoidType = createClass(ocl, "VoidType");
-
-			addSuperClass(_BooleanType, _OclElement);
-			addSuperClass(_Class, _OclElement);
-			addSuperClass(_CollectionType, _OclElement);
-			addSuperClass(_Enumeration, _OclType);
-			addSuperClass(_EnumerationLiteral, _OclAny);
-			addSuperClass(_InvalidType, _OclElement);
-			addSuperClass(_MapType, _OclElement);
-			addSuperClass(_OclComparable, _OclAny);
-			addSuperClass(_OclElement, _OclAny);
-			addSuperClass(_OclEnumeration, _OclType);
-			addSuperClass(_OclInvalid, _OclVoid);
-			addSuperClass(_OclLambda, _OclAny);
-			addSuperClass(_OclMessage, _OclAny);
-			addSuperClass(_OclSelf, _OclAny);
-			addSuperClass(_OclState, _OclAny);
-			addSuperClass(_OclStereotype, _OclType);
-			addSuperClass(_OclSummable, _OclAny);
-			addSuperClass(_OclTuple, _OclAny);
-			addSuperClass(_OclType, _OclElement);
-			addSuperClass(_OclVoid, _OclAny);
-			addSuperClass(_State, _OclState);
-			addSuperClass(_Stereotype, _OclStereotype);
-			addSuperClass(_Type, _OclType);
-			addSuperClass(_VoidType, _OclElement);
-		}
-
-		private PrimitiveType _Boolean;
-		private PrimitiveType _Integer;
-		private PrimitiveType _Real;
-		private PrimitiveType _String;
-		private PrimitiveType _UnlimitedNatural;
-
-		private void installPrimitiveTypes() {
-			PrimitiveType type;
-
-			type = _Boolean = createPrimitiveType(ocl, OCLstdlibPackage.Literals.BOOLEAN);
-			installComment(type, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
-			type = _Integer = createPrimitiveType(ocl, OCLstdlibPackage.Literals.INTEGER);
-			installComment(type, "The standard type Integer represents the mathematical concept of integer.\nInteger is itself an instance of the metatype PrimitiveType (from UML).");
-			type = _Real = createPrimitiveType(ocl, OCLstdlibPackage.Literals.REAL);
-			installComment(type, "The standard type Real represents the mathematical concept of real.\nNote that Integer is a subclass of Real,\nso for each parameter of type Real, you can use an integer as the actual parameter.\nReal is itself an instance of the metatype PrimitiveType (from UML).");
-			type = _String = createPrimitiveType(ocl, OCLstdlibPackage.Literals.STRING);
-			installComment(type, "The standard type String represents strings, which can be both ASCII or Unicode.\nString is itself an instance of the metatype PrimitiveType (from UML).");
-			type = _UnlimitedNatural = createPrimitiveType(ocl, OCLstdlibPackage.Literals.UNLIMITED_NATURAL);
-			installComment(type, "The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.\nThis includes a special e[unlimited] value (*) that encodes the upper value of  a multiplicity specification.\nUnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.\n\nNote that UnlimitedNatural is not a subclass of Integer.");
-
-			addSuperClass(_Boolean, _OclAny);
-			addSuperClass(_Integer, _Real);
-			addSuperClass(_Real, _OclComparable);
-			addSuperClass(_Real, _OclSummable);
-			addSuperClass(_String, _OclComparable);
-			addSuperClass(_String, _OclSummable);
-			addSuperClass(_UnlimitedNatural, _OclComparable);
-		}
-
-		private LambdaType _Lambda_Bag_T_Boolean;
-		private LambdaType _Lambda_Bag_T_Bag_collectNested_V;
-		private LambdaType _Lambda_Bag_T_Bag_collect_V;
-		private LambdaType _Lambda_Bag_T_OclAny;
-		private LambdaType _Lambda_Bag_T_Set;
-		private LambdaType _Lambda_Collection_T_Boolean;
-		private LambdaType _Lambda_Collection_T_Collection_collectBy_V;
-		private LambdaType _Lambda_Collection_T_Collection_collectNested_V;
-		private LambdaType _Lambda_Collection_T_Collection_collect_V;
-		private LambdaType _Lambda_Collection_T_Collection_iterate_Tacc;
-		private LambdaType _Lambda_Collection_T_OclAny;
-		private LambdaType _Lambda_Map_K_Boolean;
-		private LambdaType _Lambda_Map_K_Map_collectBy_V2;
-		private LambdaType _Lambda_Map_K_Map_collectNested_V2;
-		private LambdaType _Lambda_Map_K_Map_collect_V2;
-		private LambdaType _Lambda_Map_K_Map_iterate_Tacc;
-		private LambdaType _Lambda_Map_K_OclAny;
-		private LambdaType _Lambda_OrderedSet_T_Boolean;
-		private LambdaType _Lambda_OrderedSet_T_OclAny;
-		private LambdaType _Lambda_OrderedSet_T_OrderedSet;
-		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collectNested_V;
-		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collect_V;
-		private LambdaType _Lambda_Sequence_T_Boolean;
-		private LambdaType _Lambda_Sequence_T_OclAny;
-		private LambdaType _Lambda_Sequence_T_OrderedSet;
-		private LambdaType _Lambda_Sequence_T_Sequence_collectNested_V;
-		private LambdaType _Lambda_Sequence_T_Sequence_collect_V;
-		private LambdaType _Lambda_Set_T_Boolean;
-		private LambdaType _Lambda_Set_T_OclAny;
-		private LambdaType _Lambda_Set_T_Set;
-		private LambdaType _Lambda_Set_T_Set_collectNested_V;
-		private LambdaType _Lambda_Set_T_Set_collect_V;
-		private LambdaType _Lambda_UniqueCollection_T_OclAny;
-		private TupleType _Tuple;
-		private CollectionType _Bag_Bag_collectNested_V_T;
-		private CollectionType _Bag_Bag_collect_V_T;
-		private CollectionType _Bag_Bag_flatten_T2_T;
-		private CollectionType _Bag_Bag_selectByKind_TT_T;
-		private CollectionType _Bag_Bag_selectByType_TT_T;
-		private CollectionType _Bag_Bag_T_T;
-		private CollectionType _Bag_CollectionType_T;
-		private CollectionType _Bag_Collection_T_T;
-		private CollectionType _Bag_MapType_T;
-		private CollectionType _Bag_Map_collect_V2_T;
-		private CollectionType _Bag_Map_V_T;
-		private CollectionType _Bag_OclElement_T;
-		private CollectionType _Bag_OclInvalid_T;
-		private CollectionType _Bag_Set_collectNested_V_T;
-		private CollectionType _Bag_Set_collect_V_T;
-		private CollectionType _Bag_Bag_T;
 		private CollectionType _Collection_Integer_T;
 		private CollectionType _Collection_String_T;
 		private CollectionType _Collection_Tuple_T;
@@ -689,16 +488,6 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Collection_Set_T_T;
 		private CollectionType _Collection_UniqueCollection_T_T;
 		private CollectionType _Collection_Collection_T;
-		private MapType _Map_Collection_T_F_Collection_collectBy_V_F;
-		private MapType _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T;
-		private MapType _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T;
-		private MapType _Map_Map_includesMap_K2_T_Map_includesMap_V2_T;
-		private MapType _Map_Map_includingMap_K2_T_Map_includingMap_V2_T;
-		private MapType _Map_Map_K_F_Map_collectBy_V2_F;
-		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
-		private MapType _Map_Map_K_T_Map_V_T;
-		private MapType _Map_Map_K_F_Map_V_F;
-		private MapType _Map_Map_K_Map_V;
 		private CollectionType _OrderedCollection_Integer_T;
 		private CollectionType _OrderedCollection_String_T;
 		private CollectionType _OrderedCollection_Bag_T_T;
@@ -718,12 +507,55 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedCollection_Set_T_T;
 		private CollectionType _OrderedCollection_UniqueCollection_T_T;
 		private CollectionType _OrderedCollection_OrderedCollection_T;
+		private CollectionType _UniqueCollection_Tuple_T;
+		private CollectionType _UniqueCollection_Bag_T_T;
+		private CollectionType _UniqueCollection_Collection_T_T;
+		private CollectionType _UniqueCollection_Map_K_T;
+		private CollectionType _UniqueCollection_OclAny_T;
+		private CollectionType _UniqueCollection_OclElement_T;
+		private CollectionType _UniqueCollection_OclSelf_T;
+		private CollectionType _UniqueCollection_OrderedSet_flatten_T2_T;
+		private CollectionType _UniqueCollection_OrderedSet_selectByKind_TT_T;
+		private CollectionType _UniqueCollection_OrderedSet_selectByType_TT_T;
+		private CollectionType _UniqueCollection_OrderedSet_T_T;
+		private CollectionType _UniqueCollection_Sequence_T_T;
+		private CollectionType _UniqueCollection_Set_flatten_T2_T;
+		private CollectionType _UniqueCollection_Set_selectByKind_TT_T;
+		private CollectionType _UniqueCollection_Set_selectByType_TT_T;
+		private CollectionType _UniqueCollection_Set_T_T;
+		private CollectionType _UniqueCollection_UniqueCollection_T_T;
+		private CollectionType _UniqueCollection_UniqueCollection_T;
+		private MapType _Map_Collection_T_F_Collection_collectBy_V_F;
+		private MapType _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T;
+		private MapType _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T;
+		private MapType _Map_Map_includesMap_K2_T_Map_includesMap_V2_T;
+		private MapType _Map_Map_includingMap_K2_T_Map_includingMap_V2_T;
+		private MapType _Map_Map_K_F_Map_collectBy_V2_F;
+		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
+		private MapType _Map_Map_K_T_Map_V_T;
+		private MapType _Map_Map_K_F_Map_V_F;
+		private MapType _Map_Map_K_Map_V;
+		private CollectionType _Bag_Bag_collectNested_V_T;
+		private CollectionType _Bag_Bag_collect_V_T;
+		private CollectionType _Bag_Bag_flatten_T2_T;
+		private CollectionType _Bag_Bag_selectByKind_TT_T;
+		private CollectionType _Bag_Bag_selectByType_TT_T;
+		private CollectionType _Bag_Bag_T_T;
+		private CollectionType _Bag_CollectionType_T;
+		private CollectionType _Bag_Collection_T_T;
+		private CollectionType _Bag_MapType_T;
+		private CollectionType _Bag_Map_collect_V2_T;
+		private CollectionType _Bag_Map_V_T;
+		private CollectionType _Bag_OclElement_T;
+		private CollectionType _Bag_OclInvalid_T;
+		private CollectionType _Bag_Set_collectNested_V_T;
+		private CollectionType _Bag_Set_collect_V_T;
+		private CollectionType _Bag_Bag_T;
 		private CollectionType _OrderedSet_Collection_T_T;
 		private CollectionType _OrderedSet_OrderedSet_flatten_T2_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByKind_TT_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByType_TT_T;
 		private CollectionType _OrderedSet_OrderedSet_T_T;
-		private CollectionType _OrderedSet_OrderedSet_T_F;
 		private CollectionType _OrderedSet_Sequence_T_T;
 		private CollectionType _OrderedSet_Set_T_T;
 		private CollectionType _OrderedSet_UniqueCollection_T_T;
@@ -754,426 +586,96 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Set_Set_T_T;
 		private CollectionType _Set_UniqueCollection_T_T;
 		private CollectionType _Set_Set_T;
-		private CollectionType _UniqueCollection_Tuple_T;
-		private CollectionType _UniqueCollection_Bag_T_T;
-		private CollectionType _UniqueCollection_Collection_T_T;
-		private CollectionType _UniqueCollection_Map_K_T;
-		private CollectionType _UniqueCollection_OclAny_T;
-		private CollectionType _UniqueCollection_OclElement_T;
-		private CollectionType _UniqueCollection_OclSelf_T;
-		private CollectionType _UniqueCollection_OrderedSet_flatten_T2_T;
-		private CollectionType _UniqueCollection_OrderedSet_selectByKind_TT_T;
-		private CollectionType _UniqueCollection_OrderedSet_selectByType_TT_T;
-		private CollectionType _UniqueCollection_OrderedSet_T_T;
-		private CollectionType _UniqueCollection_Sequence_T_T;
-		private CollectionType _UniqueCollection_Set_flatten_T2_T;
-		private CollectionType _UniqueCollection_Set_selectByKind_TT_T;
-		private CollectionType _UniqueCollection_Set_selectByType_TT_T;
-		private CollectionType _UniqueCollection_Set_T_T;
-		private CollectionType _UniqueCollection_UniqueCollection_T_T;
-		private CollectionType _UniqueCollection_UniqueCollection_T;
-
-		private void installGenericAggregateTypes() {
-			Class type;
-
-			type = _Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
-			type = _Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1);
-			type = _Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true);
-			type = _OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
-			type = _OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
-			type = _Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
-			type = _Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1);
-			type = _UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
-		}
-
-
-		private void installSpecializedAggregateTypes0() {
-			Class type;
-
-			type = _Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, tp_Bag_T, _Boolean);
-			type = _Lambda_Bag_T_Bag_collectNested_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collectNested_V);
-			type = _Lambda_Bag_T_Bag_collect_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collect_V);
-			type = _Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, tp_Bag_T, _OclAny);
-			type = _Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, tp_Collection_T, _Boolean);
-			type = _Lambda_Collection_T_Collection_collectBy_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectBy_V);
-			type = _Lambda_Collection_T_Collection_collectNested_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectNested_V);
-			type = _Lambda_Collection_T_Collection_collect_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collect_V);
-			type = _Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_iterate_Tacc);
-			type = _Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, tp_Collection_T, _OclAny);
-			type = _Lambda_Map_K_Boolean = getLambdaType(_OclLambda, tp_Map_K, _Boolean);
-			type = _Lambda_Map_K_Map_collectBy_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectBy_V2);
-			type = _Lambda_Map_K_Map_collectNested_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectNested_V2);
-			type = _Lambda_Map_K_Map_collect_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collect_V2);
-			type = _Lambda_Map_K_Map_iterate_Tacc = getLambdaType(_OclLambda, tp_Map_K, tp_Map_iterate_Tacc);
-			type = _Lambda_Map_K_OclAny = getLambdaType(_OclLambda, tp_Map_K, _OclAny);
-			type = _Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, tp_OrderedSet_T, _Boolean);
-			type = _Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, tp_OrderedSet_T, _OclAny);
-			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
-			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collect_V);
-			type = _Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, tp_Sequence_T, _Boolean);
-			type = _Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, tp_Sequence_T, _OclAny);
-			type = _Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collectNested_V);
-			type = _Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collect_V);
-			type = _Lambda_Set_T_Boolean = getLambdaType(_OclLambda, tp_Set_T, _Boolean);
-			type = _Lambda_Set_T_OclAny = getLambdaType(_OclLambda, tp_Set_T, _OclAny);
-			type = _Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collectNested_V);
-			type = _Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collect_V);
-			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, tp_UniqueCollection_T, _OclAny);
-			type = _Tuple = getTupleType(_OclTuple,
-				createProperty("first", tp_Collection_T),
-				createProperty("second", tp_Collection_product_T2));
-		}
-
-		private void installSpecializedAggregateTypes1() {
-			Class type;
-
-			type = _Bag_Bag_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collectNested_V, true, 0, -1);
-			type = _Bag_Bag_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collect_V, true, 0, -1);
-			type = _Bag_Bag_flatten_T2_T = getCollectionType(_Bag_Bag_T, tp_Bag_flatten_T2, true, 0, -1);
-			type = _Bag_Bag_selectByKind_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByKind_TT, true, 0, -1);
-			type = _Bag_Bag_selectByType_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByType_TT, true, 0, -1);
-			type = _Bag_Bag_T_T = getCollectionType(_Bag_Bag_T, tp_Bag_T, true, 0, -1);
-			type = _Bag_CollectionType_T = getCollectionType(_Bag_Bag_T, _CollectionType, true, 0, -1);
-			type = _Bag_Collection_T_T = getCollectionType(_Bag_Bag_T, tp_Collection_T, true, 0, -1);
-			type = _Bag_MapType_T = getCollectionType(_Bag_Bag_T, _MapType, true, 0, -1);
-			type = _Bag_Map_collect_V2_T = getCollectionType(_Bag_Bag_T, tp_Map_collect_V2, true, 0, -1);
-			type = _Bag_Map_V_T = getCollectionType(_Bag_Bag_T, tp_Map_V, true, 0, -1);
-			type = _Bag_OclElement_T = getCollectionType(_Bag_Bag_T, _OclElement, true, 0, -1);
-			type = _Bag_OclInvalid_T = getCollectionType(_Bag_Bag_T, _OclInvalid, true, 0, -1);
-			type = _Bag_Set_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collectNested_V, true, 0, -1);
-			type = _Bag_Set_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collect_V, true, 0, -1);
-			type = _Collection_Integer_T = getCollectionType(_Collection_Collection_T, _Integer, true, 0, -1);
-			type = _Collection_String_T = getCollectionType(_Collection_Collection_T, _String, true, 0, -1);
-			type = _Collection_Tuple_T = getCollectionType(_Collection_Collection_T, _Tuple, true, 0, -1);
-			type = _Collection_Bag_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collectNested_V, true, 0, -1);
-			type = _Collection_Bag_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collect_V, true, 0, -1);
-			type = _Collection_Bag_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Bag_flatten_T2, true, 0, -1);
-			type = _Collection_Bag_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByKind_TT, true, 0, -1);
-			type = _Collection_Bag_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByType_TT, true, 0, -1);
-			type = _Collection_Bag_T_T = getCollectionType(_Collection_Collection_T, tp_Bag_T, true, 0, -1);
-			type = _Collection_CollectionType_T = getCollectionType(_Collection_Collection_T, _CollectionType, true, 0, -1);
-			type = _Collection_Collection_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collectNested_V, true, 0, -1);
-			type = _Collection_Collection_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collect_V, true, 0, -1);
-			type = _Collection_Collection_excludesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_excludesAll_T2, true, 0, -1);
-			type = _Collection_Collection_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_flatten_T2, true, 0, -1);
-			type = _Collection_Collection_includesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_includesAll_T2, true, 0, -1);
-			type = _Collection_Collection_product_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_product_T2, true, 0, -1);
-			type = _Collection_Collection_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByKind_TT, true, 0, -1);
-			type = _Collection_Collection_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByType_TT, true, 0, -1);
-			type = _Collection_Collection_T_T = getCollectionType(_Collection_Collection_T, tp_Collection_T, true, 0, -1);
-			type = _Collection_MapType_T = getCollectionType(_Collection_Collection_T, _MapType, true, 0, -1);
-			type = _Collection_Map_collect_V2_T = getCollectionType(_Collection_Collection_T, tp_Map_collect_V2, true, 0, -1);
-			type = _Collection_Map_excludesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2, true, 0, -1);
-			type = _Collection_Map_includesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_includesAll_K2, true, 0, -1);
-			type = _Collection_Map_K_T = getCollectionType(_Collection_Collection_T, tp_Map_K, true, 0, -1);
-			type = _Collection_Map_V_T = getCollectionType(_Collection_Collection_T, tp_Map_V, true, 0, -1);
-			type = _Collection_OclAny_T = getCollectionType(_Collection_Collection_T, _OclAny, true, 0, -1);
-			type = _Collection_OclElement_T = getCollectionType(_Collection_Collection_T, _OclElement, true, 0, -1);
-			type = _Collection_OclInvalid_T = getCollectionType(_Collection_Collection_T, _OclInvalid, true, 0, -1);
-			type = _Collection_OclSelf_T = getCollectionType(_Collection_Collection_T, _OclSelf, true, 0, -1);
-			type = _Collection_OrderedCollection_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedCollection_T, true, 0, -1);
-			type = _Collection_OrderedSet_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			type = _Collection_OrderedSet_collect_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collect_V, true, 0, -1);
-			type = _Collection_OrderedSet_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			type = _Collection_OrderedSet_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			type = _Collection_OrderedSet_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			type = _Collection_OrderedSet_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_T, true, 0, -1);
-			type = _Collection_Sequence_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collectNested_V, true, 0, -1);
-			type = _Collection_Sequence_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collect_V, true, 0, -1);
-			type = _Collection_Sequence_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Sequence_flatten_T2, true, 0, -1);
-			type = _Collection_Sequence_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			type = _Collection_Sequence_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			type = _Collection_Sequence_T_T = getCollectionType(_Collection_Collection_T, tp_Sequence_T, true, 0, -1);
-			type = _Collection_Set_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collectNested_V, true, 0, -1);
-			type = _Collection_Set_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collect_V, true, 0, -1);
-			type = _Collection_Set_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Set_flatten_T2, true, 0, -1);
-			type = _Collection_Set_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByKind_TT, true, 0, -1);
-			type = _Collection_Set_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByType_TT, true, 0, -1);
-			type = _Collection_Set_T_T = getCollectionType(_Collection_Collection_T, tp_Set_T, true, 0, -1);
-			type = _Collection_UniqueCollection_T_T = getCollectionType(_Collection_Collection_T, tp_UniqueCollection_T, true, 0, -1);
-			type = _Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, tp_Collection_T, false, tp_Collection_collectBy_V, false);
-			type = _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, true, tp_Map_excludesMap_V2, true);
-			type = _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, true, tp_Map_excludingMap_V2, true);
-			type = _Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, true, tp_Map_includesMap_V2, true);
-			type = _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true);
-			type = _Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false);
-			type = _Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false);
-			type = _Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, tp_Map_K, true, tp_Map_V, true);
-			type = _Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false);
-			type = _OrderedCollection_Integer_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _Integer, true, 0, -1);
-			type = _OrderedCollection_String_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _String, true, 0, -1);
-			type = _OrderedCollection_Bag_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Bag_T, true, 0, -1);
-			type = _OrderedCollection_Collection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Collection_T, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collect_V, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			type = _OrderedCollection_OrderedSet_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_T, true, 0, -1);
-			type = _OrderedCollection_Sequence_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collectNested_V, true, 0, -1);
-			type = _OrderedCollection_Sequence_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collect_V, true, 0, -1);
-			type = _OrderedCollection_Sequence_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_flatten_T2, true, 0, -1);
-			type = _OrderedCollection_Sequence_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			type = _OrderedCollection_Sequence_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			type = _OrderedCollection_Sequence_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_T, true, 0, -1);
-			type = _OrderedCollection_Set_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Set_T, true, 0, -1);
-			type = _OrderedCollection_UniqueCollection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_UniqueCollection_T, true, 0, -1);
-			type = _OrderedSet_Collection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Collection_T, true, 0, -1);
-			type = _OrderedSet_OrderedSet_flatten_T2_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			type = _OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			type = _OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			type = _OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, true, 0, -1);
-			type = _OrderedSet_OrderedSet_T_F = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, false, 0, -1);
-			type = _OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Sequence_T, true, 0, -1);
-			type = _OrderedSet_Set_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Set_T, true, 0, -1);
-			type = _OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T, true, 0, -1);
-			type = _Sequence_Integer_T = getCollectionType(_Sequence_Sequence_T, _Integer, true, 0, -1);
-			type = _Sequence_String_T = getCollectionType(_Sequence_Sequence_T, _String, true, 0, -1);
-			type = _Sequence_Bag_T_T = getCollectionType(_Sequence_Sequence_T, tp_Bag_T, true, 0, -1);
-			type = _Sequence_Collection_T_T = getCollectionType(_Sequence_Sequence_T, tp_Collection_T, true, 0, -1);
-			type = _Sequence_OrderedSet_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			type = _Sequence_OrderedSet_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collect_V, true, 0, -1);
-			type = _Sequence_Sequence_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collectNested_V, true, 0, -1);
-			type = _Sequence_Sequence_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collect_V, true, 0, -1);
-			type = _Sequence_Sequence_flatten_T2_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_flatten_T2, true, 0, -1);
-			type = _Sequence_Sequence_selectByKind_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			type = _Sequence_Sequence_selectByType_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			type = _Sequence_Sequence_T_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_T, true, 0, -1);
-			type = _Set_Tuple_T = getCollectionType(_Set_Set_T, _Tuple, true, 0, -1);
-			type = _Set_Bag_T_T = getCollectionType(_Set_Set_T, tp_Bag_T, true, 0, -1);
-			type = _Set_Collection_T_T = getCollectionType(_Set_Set_T, tp_Collection_T, true, 0, -1);
-			type = _Set_Map_K_T = getCollectionType(_Set_Set_T, tp_Map_K, true, 0, -1);
-			type = _Set_OclElement_T = getCollectionType(_Set_Set_T, _OclElement, true, 0, -1);
-			type = _Set_OclSelf_T = getCollectionType(_Set_Set_T, _OclSelf, true, 0, -1);
-			type = _Set_OclSelf_F = getCollectionType(_Set_Set_T, _OclSelf, false, 0, -1);
-			type = _Set_Set_flatten_T2_T = getCollectionType(_Set_Set_T, tp_Set_flatten_T2, true, 0, -1);
-			type = _Set_Set_selectByKind_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByKind_TT, true, 0, -1);
-			type = _Set_Set_selectByType_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByType_TT, true, 0, -1);
-			type = _Set_Set_T_T = getCollectionType(_Set_Set_T, tp_Set_T, true, 0, -1);
-			type = _Set_UniqueCollection_T_T = getCollectionType(_Set_Set_T, tp_UniqueCollection_T, true, 0, -1);
-			type = _UniqueCollection_Tuple_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _Tuple, true, 0, -1);
-			type = _UniqueCollection_Bag_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Bag_T, true, 0, -1);
-			type = _UniqueCollection_Collection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Collection_T, true, 0, -1);
-			type = _UniqueCollection_Map_K_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Map_K, true, 0, -1);
-			type = _UniqueCollection_OclAny_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclAny, true, 0, -1);
-			type = _UniqueCollection_OclElement_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclElement, true, 0, -1);
-			type = _UniqueCollection_OclSelf_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclSelf, true, 0, -1);
-			type = _UniqueCollection_OrderedSet_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			type = _UniqueCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			type = _UniqueCollection_OrderedSet_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			type = _UniqueCollection_OrderedSet_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_T, true, 0, -1);
-			type = _UniqueCollection_Sequence_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Sequence_T, true, 0, -1);
-			type = _UniqueCollection_Set_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_flatten_T2, true, 0, -1);
-			type = _UniqueCollection_Set_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByKind_TT, true, 0, -1);
-			type = _UniqueCollection_Set_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByType_TT, true, 0, -1);
-			type = _UniqueCollection_Set_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T, true, 0, -1);
-			type = _UniqueCollection_UniqueCollection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T, true, 0, -1);
-		}
-
-		private void installSpecializedAggregateTypes2() {
-			Class type;
-
-			type = _Lambda_Bag_T_Set = getLambdaType(_OclLambda, tp_Bag_T, _Set_Bag_T_T);
-			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T_T);
-			type = _Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, tp_Sequence_T, _OrderedSet_Sequence_T_T);
-			type = _Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T_T);
-		}
-
-		private void installAggregateSuperTypes() {
-			addSuperClass(_Lambda_Bag_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_Bag_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_Bag_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collectBy_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_iterate_Tacc, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collectBy_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collectNested_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collect_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_iterate_Tacc, _OclLambda);
-			addSuperClass(_Lambda_Map_K_OclAny, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Sequence_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Sequence_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Set_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set_collect_V, _OclLambda);
-			addSuperClass(_Lambda_UniqueCollection_T_OclAny, _OclLambda);
-			addSuperClass(_Tuple, _OclTuple);
-			addSuperClass(_Bag_Bag_collectNested_V_T, _Collection_Bag_collectNested_V_T);
-			addSuperClass(_Bag_Bag_collect_V_T, _Collection_Bag_collect_V_T);
-			addSuperClass(_Bag_Bag_flatten_T2_T, _Collection_Bag_flatten_T2_T);
-			addSuperClass(_Bag_Bag_selectByKind_TT_T, _Collection_Bag_selectByKind_TT_T);
-			addSuperClass(_Bag_Bag_selectByType_TT_T, _Collection_Bag_selectByType_TT_T);
-			addSuperClass(_Bag_Bag_T_T, _Collection_Bag_T_T);
-			addSuperClass(_Bag_CollectionType_T, _Collection_CollectionType_T);
-			addSuperClass(_Bag_Collection_T_T, _Collection_Collection_T_T);
-			addSuperClass(_Bag_MapType_T, _Collection_MapType_T);
-			addSuperClass(_Bag_Map_collect_V2_T, _Collection_Map_collect_V2_T);
-			addSuperClass(_Bag_Map_V_T, _Collection_Map_V_T);
-			addSuperClass(_Bag_OclElement_T, _Collection_OclElement_T);
-			addSuperClass(_Bag_OclInvalid_T, _Collection_OclInvalid_T);
-			addSuperClass(_Bag_Set_collectNested_V_T, _Collection_Set_collectNested_V_T);
-			addSuperClass(_Bag_Set_collect_V_T, _Collection_Set_collect_V_T);
-			addSuperClass(_Bag_Bag_T, _Collection_Bag_T_T);
-			addSuperClass(_Collection_Integer_T, _OclAny);
-			addSuperClass(_Collection_String_T, _OclAny);
-			addSuperClass(_Collection_Tuple_T, _OclAny);
-			addSuperClass(_Collection_Bag_collectNested_V_T, _OclAny);
-			addSuperClass(_Collection_Bag_collect_V_T, _OclAny);
-			addSuperClass(_Collection_Bag_flatten_T2_T, _OclAny);
-			addSuperClass(_Collection_Bag_selectByKind_TT_T, _OclAny);
-			addSuperClass(_Collection_Bag_selectByType_TT_T, _OclAny);
-			addSuperClass(_Collection_Bag_T_T, _OclAny);
-			addSuperClass(_Collection_CollectionType_T, _OclAny);
-			addSuperClass(_Collection_Collection_collectNested_V_T, _OclAny);
-			addSuperClass(_Collection_Collection_collect_V_T, _OclAny);
-			addSuperClass(_Collection_Collection_excludesAll_T2_T, _OclAny);
-			addSuperClass(_Collection_Collection_flatten_T2_T, _OclAny);
-			addSuperClass(_Collection_Collection_includesAll_T2_T, _OclAny);
-			addSuperClass(_Collection_Collection_product_T2_T, _OclAny);
-			addSuperClass(_Collection_Collection_selectByKind_TT_T, _OclAny);
-			addSuperClass(_Collection_Collection_selectByType_TT_T, _OclAny);
-			addSuperClass(_Collection_Collection_T_T, _OclAny);
-			addSuperClass(_Collection_MapType_T, _OclAny);
-			addSuperClass(_Collection_Map_collect_V2_T, _OclAny);
-			addSuperClass(_Collection_Map_excludesAll_K2_T, _OclAny);
-			addSuperClass(_Collection_Map_includesAll_K2_T, _OclAny);
-			addSuperClass(_Collection_Map_K_T, _OclAny);
-			addSuperClass(_Collection_Map_V_T, _OclAny);
-			addSuperClass(_Collection_OclAny_T, _OclAny);
-			addSuperClass(_Collection_OclElement_T, _OclAny);
-			addSuperClass(_Collection_OclInvalid_T, _OclAny);
-			addSuperClass(_Collection_OclSelf_T, _OclAny);
-			addSuperClass(_Collection_OrderedCollection_T_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_collectNested_V_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_collect_V_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_flatten_T2_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_selectByKind_TT_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_selectByType_TT_T, _OclAny);
-			addSuperClass(_Collection_OrderedSet_T_T, _OclAny);
-			addSuperClass(_Collection_Sequence_collectNested_V_T, _OclAny);
-			addSuperClass(_Collection_Sequence_collect_V_T, _OclAny);
-			addSuperClass(_Collection_Sequence_flatten_T2_T, _OclAny);
-			addSuperClass(_Collection_Sequence_selectByKind_TT_T, _OclAny);
-			addSuperClass(_Collection_Sequence_selectByType_TT_T, _OclAny);
-			addSuperClass(_Collection_Sequence_T_T, _OclAny);
-			addSuperClass(_Collection_Set_collectNested_V_T, _OclAny);
-			addSuperClass(_Collection_Set_collect_V_T, _OclAny);
-			addSuperClass(_Collection_Set_flatten_T2_T, _OclAny);
-			addSuperClass(_Collection_Set_selectByKind_TT_T, _OclAny);
-			addSuperClass(_Collection_Set_selectByType_TT_T, _OclAny);
-			addSuperClass(_Collection_Set_T_T, _OclAny);
-			addSuperClass(_Collection_UniqueCollection_T_T, _OclAny);
-			addSuperClass(_Collection_Collection_T, _OclAny);
-			addSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
-			addSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
-			addSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
-			addSuperClass(_Map_Map_includesMap_K2_T_Map_includesMap_V2_T, _OclAny);
-			addSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
-			addSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
-			addSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
-			addSuperClass(_Map_Map_K_T_Map_V_T, _OclAny);
-			addSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
-			addSuperClass(_Map_Map_K_Map_V, _OclAny);
-			addSuperClass(_OrderedCollection_Integer_T, _Collection_Integer_T);
-			addSuperClass(_OrderedCollection_String_T, _Collection_String_T);
-			addSuperClass(_OrderedCollection_Bag_T_T, _Collection_Bag_T_T);
-			addSuperClass(_OrderedCollection_Collection_T_T, _Collection_Collection_T_T);
-			addSuperClass(_OrderedCollection_OrderedSet_collectNested_V_T, _Collection_OrderedSet_collectNested_V_T);
-			addSuperClass(_OrderedCollection_OrderedSet_collect_V_T, _Collection_OrderedSet_collect_V_T);
-			addSuperClass(_OrderedCollection_OrderedSet_flatten_T2_T, _Collection_OrderedSet_flatten_T2_T);
-			addSuperClass(_OrderedCollection_OrderedSet_selectByKind_TT_T, _Collection_OrderedSet_selectByKind_TT_T);
-			addSuperClass(_OrderedCollection_OrderedSet_selectByType_TT_T, _Collection_OrderedSet_selectByType_TT_T);
-			addSuperClass(_OrderedCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
-			addSuperClass(_OrderedCollection_Sequence_collectNested_V_T, _Collection_Sequence_collectNested_V_T);
-			addSuperClass(_OrderedCollection_Sequence_collect_V_T, _Collection_Sequence_collect_V_T);
-			addSuperClass(_OrderedCollection_Sequence_flatten_T2_T, _Collection_Sequence_flatten_T2_T);
-			addSuperClass(_OrderedCollection_Sequence_selectByKind_TT_T, _Collection_Sequence_selectByKind_TT_T);
-			addSuperClass(_OrderedCollection_Sequence_selectByType_TT_T, _Collection_Sequence_selectByType_TT_T);
-			addSuperClass(_OrderedCollection_Sequence_T_T, _Collection_Sequence_T_T);
-			addSuperClass(_OrderedCollection_Set_T_T, _Collection_Set_T_T);
-			addSuperClass(_OrderedCollection_UniqueCollection_T_T, _Collection_UniqueCollection_T_T);
-			addSuperClass(_OrderedCollection_OrderedCollection_T, _Collection_OrderedCollection_T_T);
-			addSuperClass(_OrderedSet_Collection_T_T, _OrderedCollection_Collection_T_T);
-			addSuperClass(_OrderedSet_Collection_T_T, _UniqueCollection_Collection_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_flatten_T2_T, _OrderedCollection_OrderedSet_flatten_T2_T);
-			addSuperClass(_OrderedSet_OrderedSet_flatten_T2_T, _UniqueCollection_OrderedSet_flatten_T2_T);
-			addSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T, _OrderedCollection_OrderedSet_selectByKind_TT_T);
-			addSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T, _UniqueCollection_OrderedSet_selectByKind_TT_T);
-			addSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _OrderedCollection_OrderedSet_selectByType_TT_T);
-			addSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _UniqueCollection_OrderedSet_selectByType_TT_T);
-			addSuperClass(_OrderedSet_OrderedSet_T_T, _OrderedCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T_T, _UniqueCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T_F, _OrderedCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T_F, _UniqueCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_Sequence_T_T, _OrderedCollection_Sequence_T_T);
-			addSuperClass(_OrderedSet_Sequence_T_T, _UniqueCollection_Sequence_T_T);
-			addSuperClass(_OrderedSet_Set_T_T, _OrderedCollection_Set_T_T);
-			addSuperClass(_OrderedSet_Set_T_T, _UniqueCollection_Set_T_T);
-			addSuperClass(_OrderedSet_UniqueCollection_T_T, _OrderedCollection_UniqueCollection_T_T);
-			addSuperClass(_OrderedSet_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T, _OrderedCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T, _UniqueCollection_OrderedSet_T_T);
-			addSuperClass(_Sequence_Integer_T, _OrderedCollection_Integer_T);
-			addSuperClass(_Sequence_String_T, _OrderedCollection_String_T);
-			addSuperClass(_Sequence_Bag_T_T, _OrderedCollection_Bag_T_T);
-			addSuperClass(_Sequence_Collection_T_T, _OrderedCollection_Collection_T_T);
-			addSuperClass(_Sequence_OrderedSet_collectNested_V_T, _OrderedCollection_OrderedSet_collectNested_V_T);
-			addSuperClass(_Sequence_OrderedSet_collect_V_T, _OrderedCollection_OrderedSet_collect_V_T);
-			addSuperClass(_Sequence_Sequence_collectNested_V_T, _OrderedCollection_Sequence_collectNested_V_T);
-			addSuperClass(_Sequence_Sequence_collect_V_T, _OrderedCollection_Sequence_collect_V_T);
-			addSuperClass(_Sequence_Sequence_flatten_T2_T, _OrderedCollection_Sequence_flatten_T2_T);
-			addSuperClass(_Sequence_Sequence_selectByKind_TT_T, _OrderedCollection_Sequence_selectByKind_TT_T);
-			addSuperClass(_Sequence_Sequence_selectByType_TT_T, _OrderedCollection_Sequence_selectByType_TT_T);
-			addSuperClass(_Sequence_Sequence_T_T, _OrderedCollection_Sequence_T_T);
-			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_T);
-			addSuperClass(_Set_Tuple_T, _UniqueCollection_Tuple_T);
-			addSuperClass(_Set_Bag_T_T, _UniqueCollection_Bag_T_T);
-			addSuperClass(_Set_Collection_T_T, _UniqueCollection_Collection_T_T);
-			addSuperClass(_Set_Map_K_T, _UniqueCollection_Map_K_T);
-			addSuperClass(_Set_OclElement_T, _UniqueCollection_OclElement_T);
-			addSuperClass(_Set_OclSelf_T, _UniqueCollection_OclSelf_T);
-			addSuperClass(_Set_OclSelf_F, _UniqueCollection_OclSelf_T);
-			addSuperClass(_Set_Set_flatten_T2_T, _UniqueCollection_Set_flatten_T2_T);
-			addSuperClass(_Set_Set_selectByKind_TT_T, _UniqueCollection_Set_selectByKind_TT_T);
-			addSuperClass(_Set_Set_selectByType_TT_T, _UniqueCollection_Set_selectByType_TT_T);
-			addSuperClass(_Set_Set_T_T, _UniqueCollection_Set_T_T);
-			addSuperClass(_Set_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
-			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_T);
-			addSuperClass(_UniqueCollection_Tuple_T, _Collection_Tuple_T);
-			addSuperClass(_UniqueCollection_Bag_T_T, _Collection_Bag_T_T);
-			addSuperClass(_UniqueCollection_Collection_T_T, _Collection_Collection_T_T);
-			addSuperClass(_UniqueCollection_Map_K_T, _Collection_Map_K_T);
-			addSuperClass(_UniqueCollection_OclAny_T, _Collection_OclAny_T);
-			addSuperClass(_UniqueCollection_OclElement_T, _Collection_OclElement_T);
-			addSuperClass(_UniqueCollection_OclSelf_T, _Collection_OclSelf_T);
-			addSuperClass(_UniqueCollection_OrderedSet_flatten_T2_T, _Collection_OrderedSet_flatten_T2_T);
-			addSuperClass(_UniqueCollection_OrderedSet_selectByKind_TT_T, _Collection_OrderedSet_selectByKind_TT_T);
-			addSuperClass(_UniqueCollection_OrderedSet_selectByType_TT_T, _Collection_OrderedSet_selectByType_TT_T);
-			addSuperClass(_UniqueCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
-			addSuperClass(_UniqueCollection_Sequence_T_T, _Collection_Sequence_T_T);
-			addSuperClass(_UniqueCollection_Set_flatten_T2_T, _Collection_Set_flatten_T2_T);
-			addSuperClass(_UniqueCollection_Set_selectByKind_TT_T, _Collection_Set_selectByKind_TT_T);
-			addSuperClass(_UniqueCollection_Set_selectByType_TT_T, _Collection_Set_selectByType_TT_T);
-			addSuperClass(_UniqueCollection_Set_T_T, _Collection_Set_T_T);
-			addSuperClass(_UniqueCollection_UniqueCollection_T_T, _Collection_UniqueCollection_T_T);
-			addSuperClass(_UniqueCollection_UniqueCollection_T, _Collection_UniqueCollection_T_T);
-		}
+		private TupleType _Tuple;
+		private LambdaType _Lambda_Bag_T_Boolean;
+		private LambdaType _Lambda_Bag_T_Bag_collectNested_V;
+		private LambdaType _Lambda_Bag_T_Bag_collect_V;
+		private LambdaType _Lambda_Bag_T_OclAny;
+		private LambdaType _Lambda_Bag_T_Set;
+		private LambdaType _Lambda_Collection_T_Boolean;
+		private LambdaType _Lambda_Collection_T_Collection_collectBy_V;
+		private LambdaType _Lambda_Collection_T_Collection_collectNested_V;
+		private LambdaType _Lambda_Collection_T_Collection_collect_V;
+		private LambdaType _Lambda_Collection_T_Collection_iterate_Tacc;
+		private LambdaType _Lambda_Collection_T_OclAny;
+		private LambdaType _Lambda_Map_K_Boolean;
+		private LambdaType _Lambda_Map_K_Map_collectBy_V2;
+		private LambdaType _Lambda_Map_K_Map_collectNested_V2;
+		private LambdaType _Lambda_Map_K_Map_collect_V2;
+		private LambdaType _Lambda_Map_K_Map_iterate_Tacc;
+		private LambdaType _Lambda_Map_K_OclAny;
+		private LambdaType _Lambda_OrderedSet_T_Boolean;
+		private LambdaType _Lambda_OrderedSet_T_OclAny;
+		private LambdaType _Lambda_OrderedSet_T_OrderedSet;
+		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collectNested_V;
+		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collect_V;
+		private LambdaType _Lambda_Sequence_T_Boolean;
+		private LambdaType _Lambda_Sequence_T_OclAny;
+		private LambdaType _Lambda_Sequence_T_OrderedSet;
+		private LambdaType _Lambda_Sequence_T_Sequence_collectNested_V;
+		private LambdaType _Lambda_Sequence_T_Sequence_collect_V;
+		private LambdaType _Lambda_Set_T_Boolean;
+		private LambdaType _Lambda_Set_T_OclAny;
+		private LambdaType _Lambda_Set_T_Set;
+		private LambdaType _Lambda_Set_T_Set_collectNested_V;
+		private LambdaType _Lambda_Set_T_Set_collect_V;
+		private LambdaType _Lambda_UniqueCollection_T_OclAny;
+		private Iteration it_Bag_closure;
+		private Iteration it_Bag_collectNested;
+		private Iteration it_Bag_collect;
+		private Iteration it_Bag_reject;
+		private Iteration it_Bag_select;
+		private Iteration it_Bag_sortedBy;
+		private Iteration it_Collection_any;
+		private Iteration it_Collection_collectBy;
+		private Iteration it_Collection_collectNested;
+		private Iteration it_Collection_collect;
+		private Iteration it_Collection_exists;
+		private Iteration it_Collection_exists_1;
+		private Iteration it_Collection_exists_2;
+		private Iteration it_Collection_forAll;
+		private Iteration it_Collection_forAll_1;
+		private Iteration it_Collection_forAll_2;
+		private Iteration it_Collection_isUnique;
+		private Iteration it_Collection_iterate;
+		private Iteration it_Collection_one;
+		private Iteration it_Collection_reject;
+		private Iteration it_Collection_select;
+		private Iteration it_Collection_sortedBy;
+		private Iteration it_Map_any;
+		private Iteration it_Map_collectBy;
+		private Iteration it_Map_collectNested;
+		private Iteration it_Map_collect;
+		private Iteration it_Map_exists;
+		private Iteration it_Map_exists_1;
+		private Iteration it_Map_exists_2;
+		private Iteration it_Map_forAll;
+		private Iteration it_Map_forAll_1;
+		private Iteration it_Map_forAll_2;
+		private Iteration it_Map_isUnique;
+		private Iteration it_Map_iterate;
+		private Iteration it_Map_one;
+		private Iteration it_Map_reject;
+		private Iteration it_Map_select;
+		private Iteration it_OrderedSet_closure;
+		private Iteration it_OrderedSet_collectNested;
+		private Iteration it_OrderedSet_collect;
+		private Iteration it_OrderedSet_reject;
+		private Iteration it_OrderedSet_select;
+		private Iteration it_OrderedSet_sortedBy;
+		private Iteration it_Sequence_closure;
+		private Iteration it_Sequence_collectNested;
+		private Iteration it_Sequence_collect;
+		private Iteration it_Sequence_reject;
+		private Iteration it_Sequence_select;
+		private Iteration it_Sequence_sortedBy;
+		private Iteration it_Set_closure;
+		private Iteration it_Set_collectNested;
+		private Iteration it_Set_collect;
+		private Iteration it_Set_reject;
+		private Iteration it_Set_select;
+		private Iteration it_Set_sortedBy;
+		private Iteration it_UniqueCollection_sortedBy;
 		private Operation op_Boolean__lt__gt_;
 		private Operation op_Boolean__eq_;
 		private Operation op_Boolean_allInstances;
@@ -1448,8 +950,620 @@ public class OCLstdlib extends ASResourceImpl
 		private Operation op_UniqueCollection_symmetricDifference;
 		private Operation op_UniqueCollection_union;
 		private Operation op_VoidType_allInstances;
+		// declare ENUMERATION_LITERALS Model
+		// declare FRAGMENT_OPERATIONS Model
+		// declare FRAGMENT_PROPERTIES Model
+		// declare OPERATIONS BooleanType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS AnyType
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS InvalidType
+		// declare OPERATIONS SelfType
+		// declare OPERATIONS VoidType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS MapType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare OPERATIONS LambdaType
+		// declare PARAMETER_LISTS Model
+		// declare PROPERTIES BooleanType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES AnyType
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES InvalidType
+		// declare PROPERTIES SelfType
+		// declare PROPERTIES VoidType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES MapType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare PROPERTIES LambdaType
+		// declare TYPE_FRAGMENTS Model
+		// declare TYPE_PARAMETERS Model
 
-		private void installOperationDeclarations() {
+		private void installSlots0() {
+			// define CTOR Model
+		}
+
+		private void installSlots1() {
+			// define CTOR Library
+			// define CTOR Package
+			// define TYPE_PARAMETERS Model
+		}
+
+		private void installSlots2() {
+			// define ALL_TYPES Model
+			_Boolean = createPrimitiveType(ocl, OCLstdlibPackage.Literals.BOOLEAN);
+			_Integer = createPrimitiveType(ocl, OCLstdlibPackage.Literals.INTEGER);
+			_Real = createPrimitiveType(ocl, OCLstdlibPackage.Literals.REAL);
+			_String = createPrimitiveType(ocl, OCLstdlibPackage.Literals.STRING);
+			_UnlimitedNatural = createPrimitiveType(ocl, OCLstdlibPackage.Literals.UNLIMITED_NATURAL);
+			_OclAny = createClass(ocl, OCLstdlibPackage.Literals.OCL_ANY);
+			_OclAny.setIsAbstract(true);
+			_BooleanType = createClass(ocl, "BooleanType");
+			_Class = createClass(ocl, "Class");
+			_CollectionType = createClass(ocl, "CollectionType");
+			_Enumeration = createClass(ocl, "Enumeration");
+			_EnumerationLiteral = createClass(ocl, "EnumerationLiteral");
+			_InvalidType = createClass(ocl, "InvalidType");
+			_MapType = createClass(ocl, "MapType");
+			_OclComparable = createClass(ocl, OCLstdlibPackage.Literals.OCL_COMPARABLE);
+			_OclComparable.setIsAbstract(true);
+			_OclElement = createClass(ocl, OCLstdlibPackage.Literals.OCL_ELEMENT);
+			_OclElement.setIsAbstract(true);
+			_OclEnumeration = createClass(ocl, OCLstdlibPackage.Literals.OCL_ENUMERATION);
+			_OclEnumeration.setIsAbstract(true);
+			_OclLambda = createClass(ocl, OCLstdlibPackage.Literals.OCL_LAMBDA);
+			_OclLambda.setIsAbstract(true);
+			_OclMessage = createClass(ocl, OCLstdlibPackage.Literals.OCL_MESSAGE);
+			_OclMessage.setIsAbstract(true);
+			_OclState = createClass(ocl, OCLstdlibPackage.Literals.OCL_STATE);
+			_OclState.setIsAbstract(true);
+			_OclStereotype = createClass(ocl, OCLstdlibPackage.Literals.OCL_STEREOTYPE);
+			_OclStereotype.setIsAbstract(true);
+			_OclSummable = createClass(ocl, OCLstdlibPackage.Literals.OCL_SUMMABLE);
+			_OclSummable.setIsAbstract(true);
+			_OclTuple = createClass(ocl, OCLstdlibPackage.Literals.OCL_TUPLE);
+			_OclTuple.setIsAbstract(true);
+			_OclType = createClass(ocl, OCLstdlibPackage.Literals.OCL_TYPE);
+			_OclType.setIsAbstract(true);
+			_State = createClass(ocl, "State");
+			_Stereotype = createClass(ocl, "Stereotype");
+			_Type = createClass(ocl, "Type");
+			_VoidType = createClass(ocl, "VoidType");
+			_OclInvalid = createClass(ocl, OCLstdlibPackage.Literals.OCL_INVALID);
+			_OclInvalid.setIsAbstract(true);
+			_OclSelf = createClass(ocl, OCLstdlibPackage.Literals.OCL_SELF);
+			_OclSelf.setIsAbstract(true);
+			_OclVoid = createClass(ocl, OCLstdlibPackage.Literals.OCL_VOID);
+			_OclVoid.setIsAbstract(true);
+			//_Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1);
+			_Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION);
+			//_OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
+			_OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION);
+			//_UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
+			_UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION);
+			//_Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true);
+			_Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP);
+			//_Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
+			_Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG);
+			//_OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
+			_OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET);
+			//_Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
+			_Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE);
+			//_Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1);
+			_Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET);
+		}
+
+		private void installSlots3a() {
+			// define ALL_FRAGMENTS Model
+			installComment(_Boolean, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
+			installComment(_Integer, "The standard type Integer represents the mathematical concept of integer.\nInteger is itself an instance of the metatype PrimitiveType (from UML).");
+			installComment(_Real, "The standard type Real represents the mathematical concept of real.\nNote that Integer is a subclass of Real,\nso for each parameter of type Real, you can use an integer as the actual parameter.\nReal is itself an instance of the metatype PrimitiveType (from UML).");
+			installComment(_String, "The standard type String represents strings, which can be both ASCII or Unicode.\nString is itself an instance of the metatype PrimitiveType (from UML).");
+			installComment(_UnlimitedNatural, "The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.\nThis includes a special e[unlimited] value (*) that encodes the upper value of  a multiplicity specification.\nUnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.\n\nNote that UnlimitedNatural is not a subclass of Integer.");
+			installComment(_OclAny, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
+			installComment(_BooleanType, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
+			installComment(_Enumeration, "@Deprecated: Use OclEnumeration\nThe Enumeration type is the type of an OrderedSet of EnumerationLiteral.");
+			installComment(_EnumerationLiteral, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
+			installComment(_OclComparable, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
+			installComment(_OclElement, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
+			installComment(_OclEnumeration, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
+			installComment(_OclLambda, "The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda\ntherefore apply to all lambda expressions.");
+			installComment(_OclMessage, "OclMessage\nThis sub clause contains the definition of the standard type OclMessage.\nAs defined in this sub clause, each ocl message type is actually a template type with one parameter.\n\u2018T\u2019 denotes the parameter.\nA concrete ocl message type is created by substituting an operation or signal for the T.\n\nThe predefined type OclMessage is an instance of MessageType.\nEvery OclMessage is fully determined by either the operation, or signal given as parameter.\nNote that there is conceptually an undefined (infinite) number of these types,\nas each is determined by a different operation or signal.\nThese types are unnamed. Every type has as attributes the name of the operation or signal,\nand either all formal parameters of the operation, or all attributes of the signal.\nOclMessage is itself an instance of the metatype MessageType.\n\nOclMessage has a number of predefined operations, as shown in the OCL Standard Library.");
+			installComment(_OclStereotype, "The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined\nfor OclStereotype are therefore applicable to all UML stereotypes.");
+			installComment(_OclSummable, "The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived\nsum and zero implementations may be summed.");
+			installComment(_OclTuple, "The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple\ntherefore apply to all tuples.");
+			installComment(_OclType, "The type OclType is the implicit supertype of any UML type. Operations defined\nfor OclType are therefore applicable to all UML types.");
+			installComment(_Type, "The UML Type is the supertype of anything that may be used as a type.");
+			installComment(_OclInvalid, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
+			installComment(_OclSelf, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
+			installComment(_OclVoid, "The type OclVoid is a type that conforms to all other types except OclInvalid.\nIt has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.\nAny property call applied on oclText[null] results in oclText[invalid], except for the\noclIsUndefined(), oclIsInvalid(), =(OclAny) and <>(OclAny) operations.\nHowever, by virtue of the implicit conversion to a collection literal,\nan expression evaluating to oclText[null] can be used as source of collection operations (such as \u2018isEmpty\u2019).\nIf the source is the oclText[null] literal, it is implicitly converted to Bag{}.\n\nOclVoid is itself an instance of the metatype VoidType.");
+			installComment(_Collection_Collection_T, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
+			installComment(_OrderedCollection_OrderedCollection_T, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
+			installComment(_UniqueCollection_UniqueCollection_T, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
+			installComment(_Map_Map_K_Map_V, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
+			installComment(_Bag_Bag_T, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
+			installComment(_OrderedSet_OrderedSet_T, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
+			installComment(_Sequence_Sequence_T, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			tp_Bag_T = createTemplateParameter(_Bag_Bag_T, "T");
+			tp_Collection_T = createTemplateParameter(_Collection_Collection_T, "T");
+			tp_Map_K = createTemplateParameter(_Map_Map_K_Map_V, "K");
+			tp_Map_V = createTemplateParameter(_Map_Map_K_Map_V, "V");
+			tp_OrderedCollection_T = createTemplateParameter(_OrderedCollection_OrderedCollection_T, "T");
+			tp_OrderedSet_T = createTemplateParameter(_OrderedSet_OrderedSet_T, "T");
+			tp_Sequence_T = createTemplateParameter(_Sequence_Sequence_T, "T");
+			tp_Set_T = createTemplateParameter(_Set_Set_T, "T");
+			tp_UniqueCollection_T = createTemplateParameter(_UniqueCollection_UniqueCollection_T, "T");
+			it_Bag_closure = createIteration(_Bag_Bag_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Bag_collectNested = createIteration(_Bag_Bag_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Bag_collect = createIteration(_Bag_Bag_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Bag_reject = createIteration(_Bag_Bag_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Bag_select = createIteration(_Bag_Bag_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Bag_sortedBy = createIteration(_Bag_Bag_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Collection_any = createIteration(_Collection_Collection_T, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+			it_Collection_collectBy = createIteration(_Collection_Collection_T, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			it_Collection_collectNested = createIteration(_Collection_Collection_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Collection_collect = createIteration(_Collection_Collection_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Collection_exists = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_exists_1 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_exists_2 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_forAll = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_forAll_1 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_forAll_2 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_isUnique = createIteration(_Collection_Collection_T, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			it_Collection_iterate = createIteration(_Collection_Collection_T, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+			it_Collection_one = createIteration(_Collection_Collection_T, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			it_Collection_reject = createIteration(_Collection_Collection_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Collection_select = createIteration(_Collection_Collection_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Collection_sortedBy = createIteration(_Collection_Collection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Map_any = createIteration(_Map_Map_K_Map_V, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+			it_Map_collectBy = createIteration(_Map_Map_K_Map_V, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			it_Map_collectNested = createIteration(_Map_Map_K_Map_V, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Map_collect = createIteration(_Map_Map_K_Map_V, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Map_exists = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_exists_1 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_exists_2 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_forAll = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_forAll_1 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_forAll_2 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_isUnique = createIteration(_Map_Map_K_Map_V, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			it_Map_iterate = createIteration(_Map_Map_K_Map_V, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+			it_Map_one = createIteration(_Map_Map_K_Map_V, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			it_Map_reject = createIteration(_Map_Map_K_Map_V, "reject", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
+			it_Map_select = createIteration(_Map_Map_K_Map_V, "select", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
+			it_OrderedSet_closure = createIteration(_OrderedSet_OrderedSet_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_OrderedSet_collectNested = createIteration(_OrderedSet_OrderedSet_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_OrderedSet_collect = createIteration(_OrderedSet_OrderedSet_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_OrderedSet_reject = createIteration(_OrderedSet_OrderedSet_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_OrderedSet_select = createIteration(_OrderedSet_OrderedSet_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_OrderedSet_sortedBy = createIteration(_OrderedSet_OrderedSet_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Sequence_closure = createIteration(_Sequence_Sequence_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Sequence_collectNested = createIteration(_Sequence_Sequence_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Sequence_collect = createIteration(_Sequence_Sequence_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Sequence_reject = createIteration(_Sequence_Sequence_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Sequence_select = createIteration(_Sequence_Sequence_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Sequence_sortedBy = createIteration(_Sequence_Sequence_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+		}
+
+		private void installSlots3b() {
+			it_Set_closure = createIteration(_Set_Set_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Set_collectNested = createIteration(_Set_Set_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Set_collect = createIteration(_Set_Set_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Set_reject = createIteration(_Set_Set_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Set_select = createIteration(_Set_Set_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Set_sortedBy = createIteration(_Set_Set_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_UniqueCollection_sortedBy = createIteration(_UniqueCollection_UniqueCollection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 			op_Boolean__lt__gt_ = createOperation(_Boolean, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Boolean__eq_ = createOperation(_Boolean, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Boolean_allInstances = createOperation(_Boolean, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -1526,33 +1640,36 @@ public class OCLstdlib extends ASResourceImpl
 			op_String_trim = createOperation(_String, "trim", "org.eclipse.ocl.pivot.library.string.StringTrimOperation", org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
 			op_UnlimitedNatural_max = createOperation(_UnlimitedNatural, "max", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMaxOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMaxOperation.INSTANCE);
 			op_UnlimitedNatural_min = createOperation(_UnlimitedNatural, "min", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
-			op_UnlimitedNatural_oclAsType = createOperation(_UnlimitedNatural, "oclAsType", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE, tp_UnlimitedNatural_oclAsType_TT);
+			op_UnlimitedNatural_oclAsType = createOperation(_UnlimitedNatural, "oclAsType", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
 			op_UnlimitedNatural_toInteger = createOperation(_UnlimitedNatural, "toInteger", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 			op_Bag__lt__gt_ = createOperation(_Bag_Bag_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Bag__eq_ = createOperation(_Bag_Bag_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Bag_excluding = createOperation(_Bag_Bag_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 			op_Bag_excludingAll = createOperation(_Bag_Bag_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Bag_flatten = createOperation(_Bag_Bag_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Bag_flatten_T2);
+			op_Bag_flatten = createOperation(_Bag_Bag_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_Bag_including = createOperation(_Bag_Bag_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_Bag_includingAll = createOperation(_Bag_Bag_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Bag_selectByKind = createOperation(_Bag_Bag_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Bag_selectByKind_TT);
-			op_Bag_selectByType = createOperation(_Bag_Bag_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Bag_selectByType_TT);
+			op_Bag_selectByKind = createOperation(_Bag_Bag_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Bag_selectByType = createOperation(_Bag_Bag_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_BooleanType_allInstances = createOperation(_BooleanType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Class_allInstances = createOperation(_Class, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Collection__lt__gt_ = createOperation(_Collection_Collection_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Collection__eq_ = createOperation(_Collection_Collection_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Collection_asBag = createOperation(_Collection_Collection_T, "asBag", "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
 			op_Collection_asOrderedSet = createOperation(_Collection_Collection_T, "asOrderedSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
+		}
+
+		private void installSlots3c() {
 			op_Collection_asSequence = createOperation(_Collection_Collection_T, "asSequence", "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 			op_Collection_asSet = createOperation(_Collection_Collection_T, "asSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 			op_Collection_count = createOperation(_Collection_Collection_T, "count", "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 			op_Collection_excludes = createOperation(_Collection_Collection_T, "excludes", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
-			op_Collection_excludesAll = createOperation(_Collection_Collection_T, "excludesAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE, tp_Collection_excludesAll_T2);
+			op_Collection_excludesAll = createOperation(_Collection_Collection_T, "excludesAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
 			op_Collection_excluding = createOperation(_Collection_Collection_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 			op_Collection_excludingAll = createOperation(_Collection_Collection_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Collection_flatten = createOperation(_Collection_Collection_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Collection_flatten_T2);
+			op_Collection_flatten = createOperation(_Collection_Collection_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_Collection_includes = createOperation(_Collection_Collection_T, "includes", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
-			op_Collection_includesAll = createOperation(_Collection_Collection_T, "includesAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE, tp_Collection_includesAll_T2);
+			op_Collection_includesAll = createOperation(_Collection_Collection_T, "includesAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
 			op_Collection_including = createOperation(_Collection_Collection_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_Collection_includingAll = createOperation(_Collection_Collection_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 			op_Collection_intersection = createOperation(_Collection_Collection_T, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
@@ -1561,9 +1678,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_Collection_max = createOperation(_Collection_Collection_T, "max", "org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation", org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
 			op_Collection_min = createOperation(_Collection_Collection_T, "min", "org.eclipse.ocl.pivot.library.collection.CollectionMinOperation", org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
 			op_Collection_notEmpty = createOperation(_Collection_Collection_T, "notEmpty", "org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
-			op_Collection_product = createOperation(_Collection_Collection_T, "product", "org.eclipse.ocl.pivot.library.collection.CollectionProductOperation", org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE, tp_Collection_product_T2);
-			op_Collection_selectByKind = createOperation(_Collection_Collection_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Collection_selectByKind_TT);
-			op_Collection_selectByType = createOperation(_Collection_Collection_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Collection_selectByType_TT);
+			op_Collection_product = createOperation(_Collection_Collection_T, "product", "org.eclipse.ocl.pivot.library.collection.CollectionProductOperation", org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
+			op_Collection_selectByKind = createOperation(_Collection_Collection_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Collection_selectByType = createOperation(_Collection_Collection_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_Collection_size = createOperation(_Collection_Collection_T, "size", "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 			op_Collection_sum = createOperation(_Collection_Collection_T, "sum", "org.eclipse.ocl.pivot.library.collection.CollectionSumOperation", org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 			op_Collection_union = createOperation(_Collection_Collection_T, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
@@ -1574,20 +1691,20 @@ public class OCLstdlib extends ASResourceImpl
 			op_Map_at = createOperation(_Map_Map_K_Map_V, "at", "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
 			op_Map_excludes = createOperation(_Map_Map_K_Map_V, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesOperation", org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
 			op_Map_excludes_1 = createOperation(_Map_Map_K_Map_V, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
-			op_Map_excludesAll = createOperation(_Map_Map_K_Map_V, "excludesAll", "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE, tp_Map_excludesAll_K2);
-			op_Map_excludesMap = createOperation(_Map_Map_K_Map_V, "excludesMap", "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
+			op_Map_excludesAll = createOperation(_Map_Map_K_Map_V, "excludesAll", "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
+			op_Map_excludesMap = createOperation(_Map_Map_K_Map_V, "excludesMap", "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
 			op_Map_excludesValue = createOperation(_Map_Map_K_Map_V, "excludesValue", "org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation", org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
 			op_Map_excluding = createOperation(_Map_Map_K_Map_V, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
 			op_Map_excluding_1 = createOperation(_Map_Map_K_Map_V, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
 			op_Map_excludingAll = createOperation(_Map_Map_K_Map_V, "excludingAll", "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
-			op_Map_excludingMap = createOperation(_Map_Map_K_Map_V, "excludingMap", "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
+			op_Map_excludingMap = createOperation(_Map_Map_K_Map_V, "excludingMap", "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
 			op_Map_includes = createOperation(_Map_Map_K_Map_V, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesOperation", org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
 			op_Map_includes_1 = createOperation(_Map_Map_K_Map_V, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
-			op_Map_includesAll = createOperation(_Map_Map_K_Map_V, "includesAll", "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE, tp_Map_includesAll_K2);
-			op_Map_includesMap = createOperation(_Map_Map_K_Map_V, "includesMap", "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
+			op_Map_includesAll = createOperation(_Map_Map_K_Map_V, "includesAll", "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
+			op_Map_includesMap = createOperation(_Map_Map_K_Map_V, "includesMap", "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
 			op_Map_includesValue = createOperation(_Map_Map_K_Map_V, "includesValue", "org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation", org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
 			op_Map_including = createOperation(_Map_Map_K_Map_V, "including", "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
-			op_Map_includingMap = createOperation(_Map_Map_K_Map_V, "includingMap", "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
+			op_Map_includingMap = createOperation(_Map_Map_K_Map_V, "includingMap", "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
 			op_Map_isEmpty = createOperation(_Map_Map_K_Map_V, "isEmpty", "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation", org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 			op_Map_keys = createOperation(_Map_Map_K_Map_V, "keys", "org.eclipse.ocl.pivot.library.map.MapKeysOperation", org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
 			op_Map_notEmpty = createOperation(_Map_Map_K_Map_V, "notEmpty", "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
@@ -1596,7 +1713,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclAny__lt__gt_ = createOperation(_OclAny, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_OclAny__eq_ = createOperation(_OclAny, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_OclAny_oclAsSet = createOperation(_OclAny, "oclAsSet", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-			op_OclAny_oclAsType = createOperation(_OclAny, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclAny_oclAsType_TT);
+			op_OclAny_oclAsType = createOperation(_OclAny, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 			op_OclAny_oclIsInState = createOperation(_OclAny, "oclIsInState", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
 			op_OclAny_oclIsInvalid = createOperation(_OclAny, "oclIsInvalid", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 			op_OclAny_oclIsKindOf = createOperation(_OclAny, "oclIsKindOf", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
@@ -1614,7 +1731,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclComparable__gt__eq_ = createOperation(_OclComparable, ">=", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
 			op_OclComparable_compareTo = createOperation(_OclComparable, "compareTo", "org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
 			op_OclElement_allInstances = createOperation(_OclElement, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-			op_OclElement_oclAsModelType = createOperation(_OclElement, "oclAsModelType", "org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE, tp_OclElement_oclAsModelType_TT);
+			op_OclElement_oclAsModelType = createOperation(_OclElement, "oclAsModelType", "org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
 			op_OclElement_oclBase = createOperation(_OclElement, "oclBase", "org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 			op_OclElement_oclBase_1 = createOperation(_OclElement, "oclBase", "org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 			op_OclElement_oclContainer = createOperation(_OclElement, "oclContainer", "org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
@@ -1632,7 +1749,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclInvalid_and = createOperation(_OclInvalid, "and", "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 			op_OclInvalid_implies = createOperation(_OclInvalid, "implies", "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
 			op_OclInvalid_oclAsSet = createOperation(_OclInvalid, "oclAsSet", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-			op_OclInvalid_oclAsType = createOperation(_OclInvalid, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclInvalid_oclAsType_TT);
+			op_OclInvalid_oclAsType = createOperation(_OclInvalid, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 			op_OclInvalid_oclBadOperation = createOperation(_OclInvalid, "oclBadOperation", null, null);
 			op_OclInvalid_oclIsInvalid = createOperation(_OclInvalid, "oclIsInvalid", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 			op_OclInvalid_oclIsKindOf = createOperation(_OclInvalid, "oclIsKindOf", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
@@ -1643,6 +1760,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclInvalid_toString = createOperation(_OclInvalid, "toString", "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 			op_OclMessage_hasReturned = createOperation(_OclMessage, "hasReturned", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclMessage_isOperationCall = createOperation(_OclMessage, "isOperationCall", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		}
+
+		private void installSlots3d() {
 			op_OclMessage_isSignalSent = createOperation(_OclMessage, "isSignalSent", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclMessage_result = createOperation(_OclMessage, "result", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclStereotype_allInstances = createOperation(_OclStereotype, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -1660,7 +1780,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_implies = createOperation(_OclVoid, "implies", "org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
 			op_OclVoid_not = createOperation(_OclVoid, "not", "org.eclipse.ocl.pivot.library.logical.BooleanNotOperation", org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 			op_OclVoid_oclAsSet = createOperation(_OclVoid, "oclAsSet", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-			op_OclVoid_oclAsType = createOperation(_OclVoid, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclVoid_oclAsType_TT);
+			op_OclVoid_oclAsType = createOperation(_OclVoid, "oclAsType", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 			op_OclVoid_oclIsInvalid = createOperation(_OclVoid, "oclIsInvalid", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 			op_OclVoid_oclIsKindOf = createOperation(_OclVoid, "oclIsKindOf", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 			op_OclVoid_oclIsTypeOf = createOperation(_OclVoid, "oclIsTypeOf", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
@@ -1681,15 +1801,15 @@ public class OCLstdlib extends ASResourceImpl
 			op_OrderedSet_appendAll = createOperation(_OrderedSet_OrderedSet_T, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 			op_OrderedSet_excluding = createOperation(_OrderedSet_OrderedSet_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 			op_OrderedSet_excludingAll = createOperation(_OrderedSet_OrderedSet_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_OrderedSet_flatten = createOperation(_OrderedSet_OrderedSet_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_OrderedSet_flatten_T2);
+			op_OrderedSet_flatten = createOperation(_OrderedSet_OrderedSet_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_OrderedSet_including = createOperation(_OrderedSet_OrderedSet_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_OrderedSet_includingAll = createOperation(_OrderedSet_OrderedSet_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 			op_OrderedSet_insertAt = createOperation(_OrderedSet_OrderedSet_T, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 			op_OrderedSet_prepend = createOperation(_OrderedSet_OrderedSet_T, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 			op_OrderedSet_prependAll = createOperation(_OrderedSet_OrderedSet_T, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 			op_OrderedSet_reverse = createOperation(_OrderedSet_OrderedSet_T, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-			op_OrderedSet_selectByKind = createOperation(_OrderedSet_OrderedSet_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_OrderedSet_selectByKind_TT);
-			op_OrderedSet_selectByType = createOperation(_OrderedSet_OrderedSet_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_OrderedSet_selectByType_TT);
+			op_OrderedSet_selectByKind = createOperation(_OrderedSet_OrderedSet_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_OrderedSet_selectByType = createOperation(_OrderedSet_OrderedSet_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_OrderedSet_subOrderedSet = createOperation(_OrderedSet_OrderedSet_T, "subOrderedSet", "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
 			op_Sequence__lt__gt_ = createOperation(_Sequence_Sequence_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Sequence__eq_ = createOperation(_Sequence_Sequence_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1697,26 +1817,26 @@ public class OCLstdlib extends ASResourceImpl
 			op_Sequence_appendAll = createOperation(_Sequence_Sequence_T, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 			op_Sequence_excluding = createOperation(_Sequence_Sequence_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 			op_Sequence_excludingAll = createOperation(_Sequence_Sequence_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Sequence_flatten = createOperation(_Sequence_Sequence_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Sequence_flatten_T2);
+			op_Sequence_flatten = createOperation(_Sequence_Sequence_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_Sequence_including = createOperation(_Sequence_Sequence_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_Sequence_includingAll = createOperation(_Sequence_Sequence_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 			op_Sequence_insertAt = createOperation(_Sequence_Sequence_T, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 			op_Sequence_prepend = createOperation(_Sequence_Sequence_T, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 			op_Sequence_prependAll = createOperation(_Sequence_Sequence_T, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 			op_Sequence_reverse = createOperation(_Sequence_Sequence_T, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-			op_Sequence_selectByKind = createOperation(_Sequence_Sequence_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Sequence_selectByKind_TT);
-			op_Sequence_selectByType = createOperation(_Sequence_Sequence_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Sequence_selectByType_TT);
+			op_Sequence_selectByKind = createOperation(_Sequence_Sequence_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Sequence_selectByType = createOperation(_Sequence_Sequence_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_Sequence_subSequence = createOperation(_Sequence_Sequence_T, "subSequence", "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
 			op_Set__neg_ = createOperation(_Set_Set_T, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 			op_Set__lt__gt_ = createOperation(_Set_Set_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Set__eq_ = createOperation(_Set_Set_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Set_excluding = createOperation(_Set_Set_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 			op_Set_excludingAll = createOperation(_Set_Set_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Set_flatten = createOperation(_Set_Set_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Set_flatten_T2);
+			op_Set_flatten = createOperation(_Set_Set_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_Set_including = createOperation(_Set_Set_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_Set_includingAll = createOperation(_Set_Set_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Set_selectByKind = createOperation(_Set_Set_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Set_selectByKind_TT);
-			op_Set_selectByType = createOperation(_Set_Set_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Set_selectByType_TT);
+			op_Set_selectByKind = createOperation(_Set_Set_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Set_selectByType = createOperation(_Set_Set_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_Stereotype_allInstances = createOperation(_Stereotype, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Type_conformsTo = createOperation(_Type, "conformsTo", "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 			op_UniqueCollection__neg_ = createOperation(_UniqueCollection_UniqueCollection_T, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
@@ -1724,1961 +1844,2105 @@ public class OCLstdlib extends ASResourceImpl
 			op_UniqueCollection_symmetricDifference = createOperation(_UniqueCollection_UniqueCollection_T, "symmetricDifference", "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
 			op_UniqueCollection_union = createOperation(_UniqueCollection_UniqueCollection_T, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 			op_VoidType_allInstances = createOperation(_VoidType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS SelfType
+			// define PROPERTIES BooleanType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
 		}
 
-		private void installOperationBodies() {
-			Operation operation;
-			Parameter parameter;
-
-			operation = op_Boolean__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.");
-
-			operation = op_Boolean__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
-
-			operation = op_Boolean_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Returns oclText[Set{false, true}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_Boolean_and;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_AND);
-			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = false then false\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = false then false\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = false then false\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else true\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, false);
-			installComment(operation, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[true].");
-
-			operation = op_Boolean_and2;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_AND);
-			createBodyExpression(operation, _Boolean, "if self = false then false\n\t\t\t  elseif b = false then false\n\t\t\t  else true\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, true);
-			installComment(operation, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[true].");
-
-			operation = op_Boolean_implies;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_IMPLIES);
-			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = true then true\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = false then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then b\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, false);
-			installComment(operation, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
-
-			operation = op_Boolean_implies2;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_IMPLIES);
-			createBodyExpression(operation, _Boolean, "if self = false then true\n\t\t\t  elseif b = true then true\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, true);
-			installComment(operation, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[false].");
-
-			operation = op_Boolean_not;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_UNARY);
-			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then self\n\t\t\t  elseif self = null then null\n\t\t\t  else self = false\n\t\t\t  endif", _Boolean);
-			installComment(operation, "oclText[true] if oclText[self] is oclText[false].\noclText[false] if oclText[self] is oclText[true].\noclText[null] if oclText[self] is oclText[null].\nOtherwise oclText[invalid].");
-
-			operation = op_Boolean_not2;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_UNARY);
-			createBodyExpression(operation, _Boolean, "if self then false else true endif", _Boolean);
-			installComment(operation, "oclText[true] if oclText[self] is oclText[false].\nOtherwise oclText[false].");
-
-			operation = op_Boolean_or;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_OR);
-			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = true then true\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = true then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, false);
-			installComment(operation, "oclText[true] if either oclText[self] or oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
-
-			operation = op_Boolean_or2;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_OR);
-			createBodyExpression(operation, _Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, true);
-			installComment(operation, "oclText[true] if either oclText[self] or oclText[b] is oclText[true].\nOtherwise oclText[false].");
-
-			operation = op_Boolean_toString;
-			operation.setType(_String);
-			installComment(operation, "Converts oclText[self] to a string value.");
-
-			operation = op_Boolean_xor;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			operation.setPrecedence(prec_XOR);
-			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then self\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else self <> b\n\t\t\t  endif", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, false);
-			installComment(operation, "oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].\noclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null].");
-
-			operation = op_Boolean_xor2;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_XOR);
-			createBodyExpression(operation, _Boolean, "self <> b", _Boolean);
-			parameter = createParameter(operation, "b", _Boolean, true);
-			installComment(operation, "oclText[true] if oclText[self] <> oclText[b]\nOtherwise oclText[false].");
-
-			operation = op_Integer__mul_;
-			operation.setType(_Integer);
-			operation.setPrecedence(prec_MULTIPLICATIVE);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The value of the multiplication of oclText[self] and i.");
-
-			operation = op_Integer__add_;
-			operation.setType(_Integer);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The value of the addition of oclText[self] and i.");
-
-			operation = op_Integer__neg_;
-			operation.setType(_Integer);
-			operation.setPrecedence(prec_UNARY);
-			installComment(operation, "The negative value of oclText[self].");
-
-			operation = op_Integer__neg__1;
-			operation.setType(_Integer);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The value of the subtraction of i from oclText[self].");
-
-			operation = op_Integer__div_;
-			operation.setType(_Real);
-			operation.setIsInvalidating(true);
-			operation.setPrecedence(prec_MULTIPLICATIVE);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The value of oclText[self] divided by i.\nEvaluates to oclText[invalid] if r is equal to zero.");
-
-			operation = op_Integer_abs;
-			operation.setType(_Integer);
-			installComment(operation, "The absolute value of oclText[self].");
-
-			operation = op_Integer_div;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "i", _Integer, true);
-			installComment(operation, "The number of times that i fits completely within oclText[self].");
-
-			operation = op_Integer_max;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The maximum of oclText[self] an i.");
-
-			operation = op_Integer_min;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The minimum of oclText[self] an i.");
-
-			operation = op_Integer_mod;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "i", _Integer, true);
-			installComment(operation, "The result is oclText[self] modulo i.");
-
-			operation = op_Integer_toString;
-			operation.setType(_String);
-			installComment(operation, "Converts oclText[self] to a string value.");
-
-			operation = op_Integer_toUnlimitedNatural;
-			operation.setType(_UnlimitedNatural);
-			_Integer.getCoercions().add(operation);
-			installComment(operation, "Converts a non-negative oclText[self] to an UnlimitedNatural value. A negative oclText[self] is converted to oclText[invalid].\nAn automatic coersion may be synthesized if the coercion enables an operation reference to be resolved\nin an expression where no operation was available without coercion.");
-
-			operation = op_Real__mul_;
-			operation.setType(_Real);
-			operation.setPrecedence(prec_MULTIPLICATIVE);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The value of the multiplication of oclText[self] and r.");
-
-			operation = op_Real__add_;
-			operation.setType(_Real);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The value of the addition of oclText[self] and r.");
-
-			operation = op_Real__neg_;
-			operation.setType(_Real);
-			operation.setPrecedence(prec_UNARY);
-			installComment(operation, "The negative value of oclText[self].");
-
-			operation = op_Real__neg__1;
-			operation.setType(_Real);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The value of the subtraction of r from oclText[self].");
-
-			operation = op_Real__div_;
-			operation.setType(_Real);
-			operation.setIsInvalidating(true);
-			operation.setPrecedence(prec_MULTIPLICATIVE);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.");
-
-			operation = op_Real__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.");
-
-			operation = op_Real__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
-
-			operation = op_Real_abs;
-			operation.setType(_Real);
-			installComment(operation, "The absolute value of oclText[self].");
-
-			operation = op_Real_floor;
-			operation.setType(_Integer);
-			installComment(operation, "The largest integer that is less than or equal to oclText[self].");
-
-			operation = op_Real_max;
-			operation.setType(_Real);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The maximum of oclText[self] and r.");
-
-			operation = op_Real_min;
-			operation.setType(_Real);
-			parameter = createParameter(operation, "r", _OclSelf, true);
-			installComment(operation, "The minimum of oclText[self] and r.");
-
-			operation = op_Real_round;
-			operation.setType(_Integer);
-			installComment(operation, "The integer that is closest to oclText[self]. When there are two such integers, the largest one.");
-
-			operation = op_Real_toString;
-			operation.setType(_String);
-			installComment(operation, "Converts oclText[self] to a string value.");
-
-			operation = op_String__add_;
-			operation.setType(_String);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "s", _String, false);
-			installComment(operation, "The concatenation of oclText[self] and s.");
-
-			operation = op_String__lt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "s", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.");
-
-			operation = op_String__lt__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "s", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
-
-			operation = op_String__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-
-			operation = op_String__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-
-			operation = op_String__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "s", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is greater than s, using the locale defined by looking up oclLocale in the current environment.");
-
-			operation = op_String__gt__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "s", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
-
-			operation = op_String_at;
-			operation.setType(_String);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "i", _Integer, true);
-			installComment(operation, "Queries the character at position i in oclText[self].");
-
-			operation = op_String_characters;
-			operation.setType(_Sequence_String_T);
-			installComment(operation, "Obtains the characters of oclText[self] as a sequence.");
-
-			operation = op_String_compareTo;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "The comparison of oclText[self] with oclText[that]. -ve if less than, 0 if equal, +ve if greater than.");
-
-			operation = op_String_concat;
-			operation.setType(_String);
-			parameter = createParameter(operation, "s", _String, false);
-			installComment(operation, "The concatenation of oclText[self] and s.");
-
-			operation = op_String_endsWith;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "s", _String, true);
-			installComment(operation, "Returns true if oclText[self] ends with the string s.\nEvery string ends with the empty string.");
-
-			operation = op_String_equalsIgnoreCase;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "s", _String, true);
-			installComment(operation, "Queries whether s and oclText[self] are equivalent under case-insensitive collation.");
-
-			operation = op_String_indexOf;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "s", _String, true);
-			installComment(operation, "Queries the first index in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].\nThe empty string is a substring of every string at index 1 (and also at all other indexes).");
-
-			operation = op_String_lastIndexOf;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "s", _String, true);
-			installComment(operation, "Queries the last in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].\nThe empty string is a substring of every string at index oclText[self]-size()+1 (and also at all other indexes).");
-
-			operation = op_String_matches;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "regex", _String, true);
-			installComment(operation, "Use a regular expression match and return true if self matches regex, false otherwise.");
-
-			operation = op_String_replaceAll;
-			operation.setType(_String);
-			parameter = createParameter(operation, "regex", _String, true);
-			parameter = createParameter(operation, "replacement", _String, true);
-			installComment(operation, "Return a string derived from self by replacing all matches of regex by replacement.");
-
-			operation = op_String_replaceFirst;
-			operation.setType(_String);
-			parameter = createParameter(operation, "regex", _String, true);
-			parameter = createParameter(operation, "replacement", _String, true);
-			installComment(operation, "Return a string derived from self by replacing the first match of regex by replacement.");
-
-			operation = op_String_size;
-			operation.setType(_Integer);
-			installComment(operation, "The number of characters in oclText[self].");
-
-			operation = op_String_startsWith;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "s", _String, true);
-			installComment(operation, "Returns true if oclText[self] starts with the string s.\nEvery string starts with the empty string.");
-
-			operation = op_String_substituteAll;
-			operation.setType(_String);
-			parameter = createParameter(operation, "oldSubstring", _String, true);
-			parameter = createParameter(operation, "newSubstring", _String, true);
-			installComment(operation, "Return a string derived from self by replacing all occurrences of oldSubstring by newSubstring.");
-
-			operation = op_String_substituteFirst;
-			operation.setType(_String);
-			parameter = createParameter(operation, "oldSubstring", _String, true);
-			parameter = createParameter(operation, "newSubstring", _String, true);
-			installComment(operation, "Return a string derived from self by replacing the first occurrence of oldSubstring by newSubstring.\nReturns invalid if there is no first occurrence.");
-
-			operation = op_String_substring;
-			operation.setType(_String);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "lower", _Integer, true);
-			parameter = createParameter(operation, "upper", _Integer, true);
-			installComment(operation, "The sub-string of oclText[self] starting at character number lower, up to and including character number upper. Character numbers run from 1 to self.size().");
-
-			operation = op_String_toBoolean;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			installComment(operation, "Converts oclText[self] to a boolean value. Returns null for non-Boolean text.");
-
-			operation = op_String_toInteger;
-			operation.setType(_Integer);
-			operation.setIsRequired(false);
-			installComment(operation, "Converts oclText[self] to an Integer value. Returns null for non-Integer text.");
-
-			operation = op_String_toLower;
-			operation.setType(_String);
-			installComment(operation, "This is a deprecated variant of toLowerCase() preserving compatibility with traditional Eclipse OCL behaviour.");
-
-			operation = op_String_toLowerCase;
-			operation.setType(_String);
-			installComment(operation, "Converts oclText[self] to lower case, using the locale defined by looking up oclLocale in the current environment.\nOtherwise, returns the same string as oclText[self].");
-
-			operation = op_String_toReal;
-			operation.setType(_Real);
-			operation.setIsRequired(false);
-			installComment(operation, "Converts oclText[self] to a Real[1] value. Returns null for non-Real text.");
-
-			operation = op_String_toString;
-			operation.setType(_String);
-			installComment(operation, "Returns oclText[self].");
-
-			operation = op_String_toUpper;
-			operation.setType(_String);
-			installComment(operation, "This is a deprecated variant of toUpperCase() preserving compatibility with traditional Eclipse OCL behaviour.");
-
-			operation = op_String_toUpperCase;
-			operation.setType(_String);
-			installComment(operation, "Converts oclText[self] to upper case, using the locale defined by looking up oclLocale in the current environment.\nOtherwise, returns the same string as oclText[self].");
-
-			operation = op_String_tokenize;
-			operation.setType(_Sequence_String_T);
-			installComment(operation, "Partition oclText[self] into a sequence substrings separated by any of space, line-feed, carriage-return, form-feed and horizontal-tab delimiters.\nThe delimiters are omitted from the return.");
-
-			operation = op_String_tokenize_1;
-			operation.setType(_Sequence_String_T);
-			parameter = createParameter(operation, "delimiters", _String, true);
-			installComment(operation, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. The delimiters are omitted from the return.");
-
-			operation = op_String_tokenize_2;
-			operation.setType(_Sequence_String_T);
-			parameter = createParameter(operation, "delimiters", _String, true);
-			parameter = createParameter(operation, "returnDelimiters", _Boolean, true);
-			installComment(operation, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. If returnDelimeters is\ntrue the returned sequence includes the delimiters, otherwise the delimiters are omitted.");
-
-			operation = op_String_trim;
-			operation.setType(_String);
-			installComment(operation, "Return oclText[self] with leading and trailing whitespace removed.");
-
-			operation = op_UnlimitedNatural_max;
-			operation.setType(_UnlimitedNatural);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The maximum of oclText[self] an i.");
-
-			operation = op_UnlimitedNatural_min;
-			operation.setType(_UnlimitedNatural);
-			parameter = createParameter(operation, "i", _OclSelf, true);
-			installComment(operation, "The minimum of oclText[self] an i.");
-
-			operation = op_UnlimitedNatural_oclAsType;
-			operation.setType(tp_UnlimitedNatural_oclAsType_TT);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "type", tp_UnlimitedNatural_oclAsType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "Evaluates to oclText[self], where oclText[self] is of the type identified by T.\nThe type T may be any classifier defined in the UML model;\nif the actual type of oclText[self] at evaluation time does not conform to T,\nthen the oclAsType operation evaluates to oclText[invalid].\n\nThe standard behavior is redefined for UnlimitedNatural. Numeric values may be converted to\nReal or Integer, but the e[unlimited] value may not.\nConversion of e[unlimited] to Real or Integer returns oclText[invalid].");
-
-			operation = op_UnlimitedNatural_toInteger;
-			operation.setType(_Integer);
-			operation.setIsRequired(false);
-			installComment(operation, "Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].");
-
-			operation = op_Bag__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
-
-			operation = op_Bag__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if oclText[self] and bag contain the same elements, the same number of times.");
-
-			operation = op_Bag_excluding;
-			operation.setType(_Bag_Bag_T_T);
-			parameter = createParameter(operation, "object", tp_Bag_T, false);
-			installComment(operation, "The bag containing all elements of oclText[self] apart from all occurrences of object.");
-
-			operation = op_Bag_excludingAll;
-			operation.setType(_Bag_Bag_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Bag_T_T, true);
-			installComment(operation, "The bag containing all elements of oclText[self] apart from all occurrences of all objects.");
-
-			operation = op_Bag_flatten;
-			operation.setType(_Bag_Bag_flatten_T2_T);
-			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].\nIf the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].");
-
-			operation = op_Bag_including;
-			operation.setType(_Bag_Bag_T_T);
-			parameter = createParameter(operation, "object", tp_Bag_T, false);
-			installComment(operation, "The bag containing all elements of oclText[self] plus object.");
-
-			operation = op_Bag_includingAll;
-			operation.setType(_Bag_Bag_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Bag_T_T, true);
-			installComment(operation, "The bag containing all elements of oclText[self] and objects.");
-
-			operation = op_Bag_selectByKind;
-			operation.setType(_Bag_Bag_selectByKind_TT_T);
-			parameter = createParameter(operation, "type", tp_Bag_selectByKind_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The bag containing all elements of oclText[self] whose type conforms to oclText[type].");
-
-			operation = op_Bag_selectByType;
-			operation.setType(_Bag_Bag_selectByType_TT_T);
-			parameter = createParameter(operation, "type", tp_Bag_selectByType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The bag containing all elements of oclText[self] whose type is oclText[type].");
-
-			operation = op_BooleanType_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Returns oclText[Set{false, true}].");
-
-			operation = op_Class_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Return a set of all instances of the type and derived types of self.");
-
-			operation = op_Collection__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if c is not equal to oclText[self].");
-
-			operation = op_Collection__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,\nin the case of an ordered collection type.");
-
-			operation = op_Collection_asBag;
-			operation.setType(_Bag_Collection_T_T);
-			installComment(operation, "The Bag that contains all the elements from oclText[self].");
-
-			operation = op_Collection_asOrderedSet;
-			operation.setType(_OrderedSet_Collection_T_T);
-			installComment(operation, "An OrderedSet that contains all the elements from oclText[self], with duplicates removed,\nin an order dependent on the particular concrete collection type.");
-
-			operation = op_Collection_asSequence;
-			operation.setType(_Sequence_Collection_T_T);
-			installComment(operation, "A Sequence that contains all the elements from oclText[self], in an order dependent on the particular concrete collection type.");
-
-			operation = op_Collection_asSet;
-			operation.setType(_Set_Collection_T_T);
-			installComment(operation, "The Set containing all the elements from oclText[self], with duplicates removed.");
-
-			operation = op_Collection_count;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "object", tp_Collection_T, false);
-			installComment(operation, "The number of times that object occurs in the collection oclText[self].");
-
-			operation = op_Collection_excludes;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "object", tp_Collection_T, false);
-			installComment(operation, "True if object is not an element of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Collection_excludesAll;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "c2", _Collection_Collection_excludesAll_T2_T, true);
-			installComment(operation, "Does oclText[self] contain none of the elements of c2 ?");
-
-			operation = op_Collection_excluding;
-			operation.setType(_Collection_Collection_T_T);
-			parameter = createParameter(operation, "object", tp_Collection_T, false);
-			installComment(operation, "The collection containing all elements of oclText[self] apart from object.");
-
-			operation = op_Collection_excludingAll;
-			operation.setType(_Collection_Collection_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Collection_T_T, true);
-			installComment(operation, "The collection containing all elements of oclText[self] apart from all occurrences of all objects.");
-
-			operation = op_Collection_flatten;
-			operation.setType(_Collection_Collection_flatten_T2_T);
-			installComment(operation, "If the element type is not a collection type, this results in the same collection as oclText[self].\nIf the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].");
-
-			operation = op_Collection_includes;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "object", tp_Collection_T, false);
-			installComment(operation, "True if object is an element of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Collection_includesAll;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "c2", _Collection_Collection_includesAll_T2_T, true);
-			installComment(operation, "Does oclText[self] contain all the elements of c2 ?");
-
-			operation = op_Collection_including;
-			operation.setType(_Collection_Collection_T_T);
-			parameter = createParameter(operation, "object", tp_Collection_T, false);
-			installComment(operation, "The collection containing all elements of oclText[self] plus object.");
-
-			operation = op_Collection_includingAll;
-			operation.setType(_Collection_Collection_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Collection_T_T, true);
-			installComment(operation, "The collection containing all elements of oclText[self] and objects.");
-
-			operation = op_Collection_intersection;
-			operation.setType(_Bag_Collection_T_T);
-			parameter = createParameter(operation, "c", _Collection_Collection_T_T, true);
-			installComment(operation, "The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.");
-
-			operation = op_Collection_intersection_1;
-			operation.setType(_Set_Collection_T_T);
-			parameter = createParameter(operation, "u", _UniqueCollection_Collection_T_T, true);
-			installComment(operation, "The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.");
-
-			operation = op_Collection_isEmpty;
-			operation.setType(_Boolean);
-			installComment(operation, "Is oclText[self] the empty collection?\n\nNote: oclText[null->isEmpty()] returns oclText[true] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
-
-			operation = op_Collection_max;
-			operation.setType(tp_Collection_T);
-			installComment(operation, "The element with the maximum value of all elements in oclText[self].\nElements must be of a type supporting the max operation.\nThe max operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
-
-			operation = op_Collection_min;
-			operation.setType(tp_Collection_T);
-			installComment(operation, "The element with the minimum value of all elements in oclText[self].\nElements must be of a type supporting the min operation.\nThe min operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
-
-			operation = op_Collection_notEmpty;
-			operation.setType(_Boolean);
-			installComment(operation, "Is oclText[self] not the empty collection?\n\noclText[null->notEmpty()] returns oclText[false] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
-
-			operation = op_Collection_product;
-			operation.setType(_Set_Tuple_T);
-			parameter = createParameter(operation, "c2", _Collection_Collection_product_T2_T, true);
-			installComment(operation, "The cartesian product operation of oclText[self] and c2.");
-
-			operation = op_Collection_selectByKind;
-			operation.setType(_Collection_Collection_selectByKind_TT_T);
-			parameter = createParameter(operation, "type", tp_Collection_selectByKind_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The collection containing all elements of oclText[self] whose type conforms to oclText[type].");
-
-			operation = op_Collection_selectByType;
-			operation.setType(_Collection_Collection_selectByType_TT_T);
-			parameter = createParameter(operation, "type", tp_Collection_selectByType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The collection containing all elements of oclText[self] whose type is oclText[type].");
-
-			operation = op_Collection_size;
-			operation.setType(_Integer);
-			installComment(operation, "The number of elements in the collection oclText[self].");
-
-			operation = op_Collection_sum;
-			operation.setType(tp_Collection_T);
-			installComment(operation, "The addition of all elements in oclText[self].\nElements must be of an oclText[OclSummable] type to provide the zero() and sum() operations.\nThe e[sum] operation must be both associative: a.sum(b).sum(c) = a.sum(b.sum(c)), and commutative: a.sum(b) = b.sum(a).\nInteger and Real fulfill this condition.\n\nIf the e[sum] operation is not both associative and commutative, the e[sum] expression is not well-formed,\nwhich may result in unpredictable results during evaluation.\nIf an implementation is able to detect a lack of associativity or commutativity,\nthe implementation may bypass the evaluation and return an oclText[invalid] result.");
-
-			operation = op_Collection_union;
-			operation.setType(_Bag_Collection_T_T);
-			parameter = createParameter(operation, "c", _Collection_Collection_T_T, true);
-			installComment(operation, "The bag consisting of all elements in oclText[self] and all elements in c.");
-
-			operation = op_Enumeration_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Return a set of all enumeration values of oclText[self].");
-
-			operation = op_InvalidType_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Returns oclText[invalid].");
-
-			operation = op_Map__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
-
-			operation = op_Map__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
-
-			operation = op_Map_at;
-			operation.setType(tp_Map_V);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			installComment(operation, "The value of the map at oclText[key].");
-
-			operation = op_Map_excludes;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			installComment(operation, "True if oclText[key] is not one of the keys of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_excludes_1;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_excludesAll;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "coll", _Collection_Map_excludesAll_K2_T, true);
-			installComment(operation, "True if none of the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_excludesMap;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "map", _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, true);
-			installComment(operation, "True if none of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_excludesValue;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "True if oclText[value] is not one of the values of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_excluding;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].");
-
-			operation = op_Map_excluding_1;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].");
-
-			operation = op_Map_excludingAll;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "keys", _Collection_Map_K_T, true);
-			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is included in oclText[keys].");
-
-			operation = op_Map_excludingMap;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "map", _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, true);
-			installComment(operation, "The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].");
-
-			operation = op_Map_includes;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			installComment(operation, "True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_includes_1;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "True if oclText[key] and oclText[value] are a key-value pair of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_includesAll;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "coll", _Collection_Map_includesAll_K2_T, true);
-			installComment(operation, "True if all the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_includesMap;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "map", _Map_Map_includesMap_K2_T_Map_includesMap_V2_T, true);
-			installComment(operation, "True if all of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_includesValue;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "True if oclText[value] is one of the values of oclText[self], oclText[false] otherwise.");
-
-			operation = op_Map_including;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "key", tp_Map_K, false);
-			parameter = createParameter(operation, "value", tp_Map_V, false);
-			installComment(operation, "The map containing all of the key-value pairs of oclText[self] and an additional key-value pair for oclText[key] and oclText[value].\nIf oclText[key] is already a key of oclText[self], the old value pair is replaced by oclText[value].");
-
-			operation = op_Map_includingMap;
-			operation.setType(_Map_Map_K_T_Map_V_T);
-			parameter = createParameter(operation, "map", _Map_Map_includingMap_K2_T_Map_includingMap_V2_T, true);
-			installComment(operation, "The map containing all of the key-value pairs of oclText[self] and oclText[map].\nThe values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.");
-
-			operation = op_Map_isEmpty;
-			operation.setType(_Boolean);
-			installComment(operation, "True if oclText[self] is the empty map, oclText[false] otherwise.");
-
-			operation = op_Map_keys;
-			operation.setType(_Set_Map_K_T);
-			installComment(operation, "A Set comprising all the keys of the key-value pairs in oclText[self].");
-
-			operation = op_Map_notEmpty;
-			operation.setType(_Boolean);
-			installComment(operation, "True if oclText[self] not the empty map, oclText[false] otherwise.");
-
-			operation = op_Map_size;
-			operation.setType(_Integer);
-			installComment(operation, "The number of key-value pairs in oclText[self].");
-
-			operation = op_Map_values;
-			operation.setType(_Bag_Map_V_T);
-			installComment(operation, "The Bag comprising all the values of the key-value pairs in oclText[self].");
-
-			operation = op_OclAny__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if oclText[self] is a different object from object2. Infix operator.");
-
-			operation = op_OclAny__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if oclText[self] is the same object as object2. Infix operator.");
-
-			operation = op_OclAny_oclAsSet;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,");
-
-			operation = op_OclAny_oclAsType;
-			operation.setType(tp_OclAny_oclAsType_TT);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "type", tp_OclAny_oclAsType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].\nThe type oclText[TT] may be any classifier defined by OCL or a user metamodel;\nif the actual type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if\nthe classification is ambiguous.\n\nIn the case of feature redefinition, casting an object to a supertype of its actual type\ndoes not access the supertype\u2019s definition of the feature;\naccording to the semantics of redefinition, the redefined feature simply does not exist for the object.\nHowever, when casting to a supertype, any features additionally defined by the subtype are suppressed.\n\nFIXME Bug 578060 return should be optional to support OclVoid returning null.");
-
-			operation = op_OclAny_oclIsInState;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "statespec", _OclState, false);
-			installComment(operation, "Evaluates to oclText[true] if the oclText[self] is in the state identified by statespec.");
-
-			operation = op_OclAny_oclIsInvalid;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-			installComment(operation, "Evaluates to oclText[true] if the oclText[self] is equal to OclInvalid.");
-
-			operation = op_OclAny_oclIsKindOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-			installComment(operation, "Evaluates to oclText[true] if the type of oclText[self] conforms to oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].");
-
-			operation = op_OclAny_oclIsNew;
-			operation.setType(_Boolean);
-			installComment(operation, "Can only be used in a postcondition.\nEvaluates to oclText[true] if the oclText[self] is created during performing the operation (for instance, it didn\u2019t exist at precondition time).");
-
-			operation = op_OclAny_oclIsTypeOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-			installComment(operation, "Evaluates to oclText[true] if oclText[self] is of the type oclText[type] but not a subtype of oclText[type].");
-
-			operation = op_OclAny_oclIsUndefined;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-			installComment(operation, "Evaluates to oclText[true] if the oclText[self] is equal to oclText[invalid] or equal to oclText[null].");
-
-			operation = op_OclAny_oclLog;
-			operation.setType(_OclSelf);
-			installComment(operation, "Evaluates to the self, with the side effect of generating a log message comprising self.");
-
-			operation = op_OclAny_oclLog_1;
-			operation.setType(_OclSelf);
-			parameter = createParameter(operation, "message", _String, true);
-			installComment(operation, "Evaluates to the self, with the side effect of generating a log message comprising message followed by self.");
-
-			operation = op_OclAny_oclType;
-			operation.setType(_OclSelf);
-			operation.setIsTypeof(true);
-			installComment(operation, "Evaluates to the most derived type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified type, the return is the most derived type of the current classification which is established when the instance is\npassed to OCL, or re-established by an oclText[oclAsType()] call.");
-
-			operation = op_OclAny_oclTypes;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]\nis normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.");
-
-			operation = op_OclAny_toString;
-			operation.setType(_String);
-			installComment(operation, "Returns a string representation of oclText[self].");
-
-			operation = op_OclComparable__lt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is less than oclText[that].");
-
-			operation = op_OclComparable__lt__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is less than or equal to oclText[that].");
-
-			operation = op_OclComparable__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is greater than oclText[that].");
-
-			operation = op_OclComparable__gt__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_RELATIONAL);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "True if oclText[self] is greater than or equal to oclText[that].");
-
-			operation = op_OclComparable_compareTo;
-			operation.setType(_Integer);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
-
-			operation = op_OclElement_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Return a set of all instances of the type and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_OclElement_oclAsModelType;
-			operation.setType(tp_OclElement_oclAsModelType_TT);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "type", tp_OclElement_oclAsModelType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].\n\nMost model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].\n\nModel elements such as UML\'s InstnaceSpecification that do support distinct model and metamodel types return oclText[self]\nwith the cast type oclText[TT] that may be used for further navigation.\nIf the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if\nthe classification is ambiguous.");
-
-			operation = op_OclElement_oclBase;
-			operation.setType(_OclType);
-			operation.setIsRequired(false);
-			installComment(operation, "Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing.");
-
-			operation = op_OclElement_oclBase_1;
-			operation.setType(_OclType);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "base", _OclType, true);
-			installComment(operation, "Returns the application class conforming to base extended by this extension element. Returns null if no such class.");
-
-			operation = op_OclElement_oclContainer;
-			operation.setType(_OclElement);
-			operation.setIsRequired(false);
-			installComment(operation, "Returns the object for which self is a composed content or null if there is no such object.");
-
-			operation = op_OclElement_oclContents;
-			operation.setType(_Set_OclElement_T);
-			installComment(operation, "Returns the composed contents of self.");
-
-			operation = op_OclElement_oclExtension;
-			operation.setType(_OclElement);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "stereotype", _OclStereotype, true);
-			installComment(operation, "Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one.");
-
-			operation = op_OclElement_oclExtensions;
-			operation.setType(_Set_OclElement_T);
-			installComment(operation, "Returns the application instances of all Stereotypes applied to this element.");
-
-			operation = op_OclElement_oclExtensions_1;
-			operation.setType(_Set_OclElement_T);
-			parameter = createParameter(operation, "stereotype", _OclStereotype, true);
-			installComment(operation, "Returns the application instances of the Stereotypes that conform to stereotype applied to this element.");
-
-			operation = op_OclElement_oclIsModelKindOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-			installComment(operation, "Evaluates to oclText[true] if the type of oclText[self] conforms to the model type oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].\n\nThe return is normally oclText[false] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
-
-			operation = op_OclElement_oclModelType;
-			operation.setType(_OclSelf);
-			operation.setIsTypeof(true);
-			installComment(operation, "Evaluates to the most derived model type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified model type, the return is the most derived type of the current classification which is established\nby an oclText[oclAsModelType()] call.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
-
-			operation = op_OclElement_oclModelTypes;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]\nis normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
-
-			operation = op_OclEnumeration_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Return a set of all enumeration values of oclText[self].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_OclInvalid__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[invalid].");
-
-			operation = op_OclInvalid__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Returns oclText[invalid].");
-
-			operation = op_OclInvalid_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Returns oclText[invalid].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_OclInvalid_and;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_AND);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclInvalid_implies;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_IMPLIES);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclInvalid_oclAsSet;
-			operation.setType(_Set_OclSelf_T);
-
-			operation = op_OclInvalid_oclAsType;
-			operation.setType(tp_OclInvalid_oclAsType_TT);
-			parameter = createParameter(operation, "type", tp_OclInvalid_oclAsType_TT, true);
-			parameter.setIsTypeof(true);
-
-			operation = op_OclInvalid_oclBadOperation;
-			operation.setType(_OclAny);
-			operation.setIsRequired(false);
-			installComment(operation, "An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.");
-
-			operation = op_OclInvalid_oclIsInvalid;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-
-			operation = op_OclInvalid_oclIsKindOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-
-			operation = op_OclInvalid_oclIsTypeOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-
-			operation = op_OclInvalid_oclIsUndefined;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-
-			operation = op_OclInvalid_oclType;
-			operation.setType(_OclSelf);
-			operation.setIsTypeof(true);
-
-			operation = op_OclInvalid_or;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_OR);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclInvalid_toString;
-			operation.setType(_String);
-			installComment(operation, "Returns \'invalid\'.");
-
-			operation = op_OclMessage_hasReturned;
-			operation.setType(_Boolean);
-			installComment(operation, "True if type of template parameter is an operation call, and the called operation has returned a value.\nThis implies the fact that the message has been sent. False in all other cases.");
-
-			operation = op_OclMessage_isOperationCall;
-			operation.setType(_Boolean);
-			installComment(operation, "Returns oclText[true] if the OclMessage represents the sending of a UML Operation call.");
-
-			operation = op_OclMessage_isSignalSent;
-			operation.setType(_Boolean);
-			installComment(operation, "Returns oclText[true] if the OclMessage represents the sending of a UML Signal.");
-
-			operation = op_OclMessage_result;
-			operation.setType(_OclAny);
-			operation.setIsRequired(false);
-			installComment(operation, "Returns the result of the called operation, if type of template parameter is an operation call,\nand the called operation has returned a value. Otherwise the oclText[invalid] value is returned.");
-
-			operation = op_OclStereotype_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Return a set of all instances of the stereotype and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_OclSummable_sum;
-			operation.setType(_OclSelf);
-			parameter = createParameter(operation, "that", _OclSelf, true);
-			installComment(operation, "Return the sum of self and that.\n\nThe sum operation should be associative.");
-
-			operation = op_OclSummable_zero;
-			operation.setType(_OclSelf);
-			installComment(operation, "Return the \'zero\' value of self to initialize a summation.\n\nzero().sum(self) = self.");
-
-			operation = op_OclTuple__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-
-			operation = op_OclTuple__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-
-			operation = op_OclType_conformsTo;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type2", _OclType, false);
-			installComment(operation, "Returns true if type2 conforms to self.");
-
-			operation = op_OclVoid__add_;
-			operation.setType(_String);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "s", _String, false);
-			installComment(operation, "The concatenation of oclText[null] and s.");
-
-			operation = op_OclVoid__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-
-			operation = op_OclVoid__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]\nif object is oclText[invalid], oclText[false] otherwise.");
-
-			operation = op_OclVoid_allInstances;
-			operation.setType(_Set_OclSelf_F);
-			parameter = createParameter(operation, "dummy", _Integer, true);
-			installComment(operation, "Returns oclText[Set{null}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
-
-			operation = op_OclVoid_and;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_AND);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclVoid_concat;
-			operation.setType(_String);
-			parameter = createParameter(operation, "s", _String, false);
-			installComment(operation, "The concatenation of oclText[null] and s.");
-
-			operation = op_OclVoid_implies;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_IMPLIES);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclVoid_not;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_UNARY);
-
-			operation = op_OclVoid_oclAsSet;
-			operation.setType(_Set_OclSelf_T);
-
-			operation = op_OclVoid_oclAsType;
-			operation.setType(tp_OclVoid_oclAsType_TT);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "type", tp_OclVoid_oclAsType_TT, true);
-			parameter.setIsTypeof(true);
-
-			operation = op_OclVoid_oclIsInvalid;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-
-			operation = op_OclVoid_oclIsKindOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-
-			operation = op_OclVoid_oclIsTypeOf;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type", _OclType, true);
-
-			operation = op_OclVoid_oclIsUndefined;
-			operation.setType(_Boolean);
-			operation.setIsValidating(true);
-
-			operation = op_OclVoid_oclType;
-			operation.setType(_OclSelf);
-			operation.setIsTypeof(true);
-
-			operation = op_OclVoid_oclTypes;
-			operation.setType(_Set_OclSelf_T);
-
-			operation = op_OclVoid_or;
-			operation.setType(_Boolean);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			operation.setIsValidating(true);
-			operation.setPrecedence(prec_OR);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OclVoid_toString;
-			operation.setType(_String);
-			installComment(operation, "Returns oclText[null].");
-
-			operation = op_OclVoid_xor;
-			operation.setType(_Boolean);
-			operation.setIsRequired(false);
-			operation.setPrecedence(prec_XOR);
-			parameter = createParameter(operation, "b", _Boolean, false);
-
-			operation = op_OrderedCollection_at;
-			operation.setType(tp_OrderedCollection_T);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "index", _Integer, true);
-			installComment(operation, "The i-th element of ordered collection.");
-
-			operation = op_OrderedCollection_first;
-			operation.setType(tp_OrderedCollection_T);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			installComment(operation, "The first element in oclText[self].");
-
-			operation = op_OrderedCollection_indexOf;
-			operation.setType(_Integer);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "obj", tp_OrderedCollection_T, false);
-			installComment(operation, "The index of object obj in the ordered collection. Returns null for an out of bound index.");
-
-			operation = op_OrderedCollection_last;
-			operation.setType(tp_OrderedCollection_T);
-			operation.setIsInvalidating(true);
-			operation.setIsRequired(false);
-			installComment(operation, "The last element in oclText[self].");
-
-			operation = op_OrderedSet__neg_;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
-			installComment(operation, "The elements of oclText[self], which are not in s.");
-
-			operation = op_OrderedSet__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
-
-			operation = op_OrderedSet__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
-
-			operation = op_OrderedSet_append;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
-			installComment(operation, "The set of elements, consisting of all elements of oclText[self], followed by object.");
-
-			operation = op_OrderedSet_appendAll;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "objects", _OrderedCollection_OrderedSet_T_T, true);
-			installComment(operation, "The set of elements, consisting of all elements of oclText[self], followed by objects.");
-
-			operation = op_OrderedSet_excluding;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
-			installComment(operation, "The ordered set  containing all elements of oclText[self] apart from object.\n\nThe order of the remaining elements is not changed.");
-
-			operation = op_OrderedSet_excludingAll;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "objects", _Collection_OrderedSet_T_T, true);
-			installComment(operation, "The ordered set containing all elements of oclText[self] apart from all occurrences of all objects.");
-
-			operation = op_OrderedSet_flatten;
-			operation.setType(_OrderedSet_OrderedSet_flatten_T2_T);
-
-			operation = op_OrderedSet_including;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
-			installComment(operation, "The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.");
-
-			operation = op_OrderedSet_includingAll;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "objects", _Collection_OrderedSet_T_T, true);
-			installComment(operation, "The ordered set containing all elements of oclText[self] plus objects added as the last elements.");
-
-			operation = op_OrderedSet_insertAt;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "index", _Integer, true);
-			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
-			installComment(operation, "The ordered set consisting of oclText[self] with object present at position index.");
-
-			operation = op_OrderedSet_prepend;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
-			installComment(operation, "The sequence consisting of object, followed by all elements in oclText[self].");
-
-			operation = op_OrderedSet_prependAll;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createParameter(operation, "objects", _OrderedCollection_OrderedSet_T_T, true);
-			installComment(operation, "The sequence consisting of objects, followed by all elements in oclText[self].");
-
-			operation = op_OrderedSet_reverse;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			installComment(operation, "The ordered set of elements with same elements but with the opposite order.");
-
-			operation = op_OrderedSet_selectByKind;
-			operation.setType(_OrderedSet_OrderedSet_selectByKind_TT_T);
-			parameter = createParameter(operation, "type", tp_OrderedSet_selectByKind_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The ordered set containing all elements of oclText[self] whose type conforms to oclText[type].");
-
-			operation = op_OrderedSet_selectByType;
-			operation.setType(_OrderedSet_OrderedSet_selectByType_TT_T);
-			parameter = createParameter(operation, "type", tp_OrderedSet_selectByType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The ordered set containing all elements of oclText[self] whose type is oclText[type].");
-
-			operation = op_OrderedSet_subOrderedSet;
-			operation.setType(_OrderedSet_OrderedSet_T_T);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "lower", _Integer, true);
-			parameter = createParameter(operation, "upper", _Integer, true);
-			installComment(operation, "The sub-set of oclText[self] starting at number lower, up to and including element number upper.");
-
-			operation = op_Sequence__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
-
-			operation = op_Sequence__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "True if oclText[self] contains the same elements as s in the same order.");
-
-			operation = op_Sequence_append;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "object", tp_Sequence_T, false);
-			installComment(operation, "The sequence of elements, consisting of all elements of oclText[self], followed by object.");
-
-			operation = op_Sequence_appendAll;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "objects", _OrderedCollection_Sequence_T_T, true);
-			installComment(operation, "The sequence of elements, consisting of all elements of oclText[self], followed by objects.");
-
-			operation = op_Sequence_excluding;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "object", tp_Sequence_T, false);
-			installComment(operation, "The sequence containing all elements of oclText[self] apart from all occurrences of object.\n\nThe order of the remaining elements is not changed.");
-
-			operation = op_Sequence_excludingAll;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Sequence_T_T, true);
-			installComment(operation, "The sequence containing all elements of oclText[self] apart from all occurrences of all objects.");
-
-			operation = op_Sequence_flatten;
-			operation.setType(_Sequence_Sequence_flatten_T2_T);
-			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].\nIf the element type is a collection type, the result is the sequence containing all the elements\nof all the recursively flattened elements of oclText[self]. The order of the elements is partial.");
-
-			operation = op_Sequence_including;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "object", tp_Sequence_T, false);
-			installComment(operation, "The sequence containing all elements of oclText[self] plus object added as the last element.");
-
-			operation = op_Sequence_includingAll;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Sequence_T_T, true);
-			installComment(operation, "The sequence containing all elements of oclText[self] plus objects added as the last elements.");
-
-			operation = op_Sequence_insertAt;
-			operation.setType(_Sequence_Sequence_T_T);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "index", _Integer, true);
-			parameter = createParameter(operation, "object", tp_Sequence_T, false);
-			installComment(operation, "The sequence consisting of oclText[self] with object inserted at position index.");
-
-			operation = op_Sequence_prepend;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "object", tp_Sequence_T, false);
-			installComment(operation, "The sequence consisting of object, followed by all elements in oclText[self].");
-
-			operation = op_Sequence_prependAll;
-			operation.setType(_Sequence_Sequence_T_T);
-			parameter = createParameter(operation, "objects", _OrderedCollection_Sequence_T_T, true);
-			installComment(operation, "The sequence consisting of objects, followed by all elements in oclText[self].");
-
-			operation = op_Sequence_reverse;
-			operation.setType(_Sequence_Sequence_T_T);
-			installComment(operation, "The sequence containing the same elements but with the opposite order.");
-
-			operation = op_Sequence_selectByKind;
-			operation.setType(_Sequence_Sequence_selectByKind_TT_T);
-			parameter = createParameter(operation, "type", tp_Sequence_selectByKind_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The sequence containing all elements of oclText[self] whose type conforms to oclText[type].");
-
-			operation = op_Sequence_selectByType;
-			operation.setType(_Sequence_Sequence_selectByType_TT_T);
-			parameter = createParameter(operation, "type", tp_Sequence_selectByType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The sequence containing all elements of oclText[self] whose type is oclText[type].");
-
-			operation = op_Sequence_subSequence;
-			operation.setType(_Sequence_Sequence_T_T);
-			operation.setIsInvalidating(true);
-			parameter = createParameter(operation, "lower", _Integer, true);
-			parameter = createParameter(operation, "upper", _Integer, true);
-			installComment(operation, "The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
-
-			operation = op_Set__neg_;
-			operation.setType(_Set_Set_T_T);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
-			installComment(operation, "The elements of oclText[self], which are not in s.");
-
-			operation = op_Set__lt__gt_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
-
-			operation = op_Set__eq_;
-			operation.setType(_Boolean);
-			operation.setPrecedence(prec_EQUALITY);
-			parameter = createParameter(operation, "object2", _OclSelf, false);
-			installComment(operation, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
-
-			operation = op_Set_excluding;
-			operation.setType(_Set_Set_T_T);
-			parameter = createParameter(operation, "object", tp_Set_T, false);
-			installComment(operation, "The set containing all elements of oclText[self] without object.");
-
-			operation = op_Set_excludingAll;
-			operation.setType(_Set_Set_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Set_T_T, true);
-			installComment(operation, "The set containing all elements of oclText[self] apart from all occurrences of all objects.");
-
-			operation = op_Set_flatten;
-			operation.setType(_Set_Set_flatten_T2_T);
-			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].\nIf the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].");
-
-			operation = op_Set_including;
-			operation.setType(_Set_Set_T_T);
-			parameter = createParameter(operation, "object", tp_Set_T, false);
-			installComment(operation, "The set containing all elements of oclText[self] plus object.");
-
-			operation = op_Set_includingAll;
-			operation.setType(_Set_Set_T_T);
-			parameter = createParameter(operation, "objects", _Collection_Set_T_T, true);
-			installComment(operation, "The set containing all elements of oclText[self] and objects.");
-
-			operation = op_Set_selectByKind;
-			operation.setType(_Set_Set_selectByKind_TT_T);
-			parameter = createParameter(operation, "type", tp_Set_selectByKind_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The set containing all elements of oclText[self] whose type conforms to oclText[type].");
-
-			operation = op_Set_selectByType;
-			operation.setType(_Set_Set_selectByType_TT_T);
-			parameter = createParameter(operation, "type", tp_Set_selectByType_TT, true);
-			parameter.setIsTypeof(true);
-			installComment(operation, "The set containing all elements of oclText[self] whose type is oclText[type].");
-
-			operation = op_Stereotype_allInstances;
-			operation.setType(_Set_OclSelf_T);
-			installComment(operation, "Return a set of all instances of the stereotype and derived types of self.");
-
-			operation = op_Type_conformsTo;
-			operation.setType(_Boolean);
-			parameter = createParameter(operation, "type2", _Type, false);
-			installComment(operation, "Returns true if type2 conforms to self.");
-
-			operation = op_UniqueCollection__neg_;
-			operation.setType(_UniqueCollection_UniqueCollection_T_T);
-			operation.setPrecedence(prec_ADDITIVE);
-			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
-			installComment(operation, "The elements of oclText[self], which are not in s.");
-
-			operation = op_UniqueCollection_intersection;
-			operation.setType(_Set_UniqueCollection_T_T);
-			parameter = createParameter(operation, "c", _Collection_UniqueCollection_T_T, true);
-			installComment(operation, "The intersection of oclText[self] and c (i.e., the set of all elements that are in both oclText[self] and c).");
-
-			operation = op_UniqueCollection_symmetricDifference;
-			operation.setType(_Set_UniqueCollection_T_T);
-			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
-			installComment(operation, "The set containing all the elements that are in oclText[self] or s, but not in both.");
-
-			operation = op_UniqueCollection_union;
-			operation.setType(_Set_UniqueCollection_T_T);
-			parameter = createParameter(operation, "s", _UniqueCollection_UniqueCollection_T_T, true);
-			installComment(operation, "The set consisting of all elements in oclText[self] and all elements in s.");
-
-			operation = op_VoidType_allInstances;
-			operation.setType(_Set_OclSelf_F);
-			installComment(operation, "Returns oclText[Set{null}].");
+		private void installSlots3e() {
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES SelfType
+			// define PROPERTIES VoidType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES BagType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SetType
+			addSuperClass(_Boolean, _OclAny);
+			addSuperClass(_Integer, _Real);
+			addSuperClass(_Real, _OclComparable);
+			addSuperClass(_Real, _OclSummable);
+			addSuperClass(_String, _OclComparable);
+			addSuperClass(_String, _OclSummable);
+			addSuperClass(_UnlimitedNatural, _OclComparable);
+			addSuperClass(_BooleanType, _OclElement);
+			addSuperClass(_Class, _OclElement);
+			addSuperClass(_CollectionType, _OclElement);
+			addSuperClass(_Enumeration, _OclType);
+			addSuperClass(_EnumerationLiteral, _OclAny);
+			addSuperClass(_InvalidType, _OclElement);
+			addSuperClass(_MapType, _OclElement);
+			addSuperClass(_OclComparable, _OclAny);
+			addSuperClass(_OclElement, _OclAny);
+			addSuperClass(_OclEnumeration, _OclType);
+			addSuperClass(_OclLambda, _OclAny);
+			addSuperClass(_OclMessage, _OclAny);
+			addSuperClass(_OclState, _OclAny);
+			addSuperClass(_OclStereotype, _OclType);
+			addSuperClass(_OclSummable, _OclAny);
+			addSuperClass(_OclTuple, _OclAny);
+			addSuperClass(_OclType, _OclElement);
+			addSuperClass(_State, _OclState);
+			addSuperClass(_Stereotype, _OclStereotype);
+			addSuperClass(_Type, _OclType);
+			addSuperClass(_VoidType, _OclElement);
+			addSuperClass(_OclInvalid, _OclVoid);
+			addSuperClass(_OclSelf, _OclAny);
+			addSuperClass(_OclVoid, _OclAny);
+			addSuperClass(_Collection_Collection_T, _OclAny);
+			addSuperClass(_Map_Map_K_Map_V, _OclAny);
 		}
 
-		private Iteration it_Bag_closure;
-		private Iteration it_Bag_collectNested;
-		private Iteration it_Bag_collect;
-		private Iteration it_Bag_reject;
-		private Iteration it_Bag_select;
-		private Iteration it_Bag_sortedBy;
-		private Iteration it_Collection_any;
-		private Iteration it_Collection_collectBy;
-		private Iteration it_Collection_collectNested;
-		private Iteration it_Collection_collect;
-		private Iteration it_Collection_exists;
-		private Iteration it_Collection_exists_1;
-		private Iteration it_Collection_exists_2;
-		private Iteration it_Collection_forAll;
-		private Iteration it_Collection_forAll_1;
-		private Iteration it_Collection_forAll_2;
-		private Iteration it_Collection_isUnique;
-		private Iteration it_Collection_iterate;
-		private Iteration it_Collection_one;
-		private Iteration it_Collection_reject;
-		private Iteration it_Collection_select;
-		private Iteration it_Collection_sortedBy;
-		private Iteration it_Map_any;
-		private Iteration it_Map_collectBy;
-		private Iteration it_Map_collectNested;
-		private Iteration it_Map_collect;
-		private Iteration it_Map_exists;
-		private Iteration it_Map_exists_1;
-		private Iteration it_Map_exists_2;
-		private Iteration it_Map_forAll;
-		private Iteration it_Map_forAll_1;
-		private Iteration it_Map_forAll_2;
-		private Iteration it_Map_isUnique;
-		private Iteration it_Map_iterate;
-		private Iteration it_Map_one;
-		private Iteration it_Map_reject;
-		private Iteration it_Map_select;
-		private Iteration it_OrderedSet_closure;
-		private Iteration it_OrderedSet_collectNested;
-		private Iteration it_OrderedSet_collect;
-		private Iteration it_OrderedSet_reject;
-		private Iteration it_OrderedSet_select;
-		private Iteration it_OrderedSet_sortedBy;
-		private Iteration it_Sequence_closure;
-		private Iteration it_Sequence_collectNested;
-		private Iteration it_Sequence_collect;
-		private Iteration it_Sequence_reject;
-		private Iteration it_Sequence_select;
-		private Iteration it_Sequence_sortedBy;
-		private Iteration it_Set_closure;
-		private Iteration it_Set_collectNested;
-		private Iteration it_Set_collect;
-		private Iteration it_Set_reject;
-		private Iteration it_Set_select;
-		private Iteration it_Set_sortedBy;
-		private Iteration it_UniqueCollection_sortedBy;
-
-		private void installIterationDeclarations() {
-			it_Bag_closure = createIteration(_Bag_Bag_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Bag_collectNested = createIteration(_Bag_Bag_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Bag_collectNested_V);
-			it_Bag_collect = createIteration(_Bag_Bag_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Bag_collect_V);
-			it_Bag_reject = createIteration(_Bag_Bag_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Bag_select = createIteration(_Bag_Bag_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Bag_sortedBy = createIteration(_Bag_Bag_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Collection_any = createIteration(_Collection_Collection_T, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-			it_Collection_collectBy = createIteration(_Collection_Collection_T, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Collection_collectBy_V);
-			it_Collection_collectNested = createIteration(_Collection_Collection_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Collection_collectNested_V);
-			it_Collection_collect = createIteration(_Collection_Collection_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Collection_collect_V);
-			it_Collection_exists = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_exists_1 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_exists_2 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_forAll = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_forAll_1 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_forAll_2 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_isUnique = createIteration(_Collection_Collection_T, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-			it_Collection_iterate = createIteration(_Collection_Collection_T, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE, tp_Collection_iterate_Tacc);
-			it_Collection_one = createIteration(_Collection_Collection_T, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-			it_Collection_reject = createIteration(_Collection_Collection_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Collection_select = createIteration(_Collection_Collection_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Collection_sortedBy = createIteration(_Collection_Collection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Map_any = createIteration(_Map_Map_K_Map_V, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-			it_Map_collectBy = createIteration(_Map_Map_K_Map_V, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_V2);
-			it_Map_collectNested = createIteration(_Map_Map_K_Map_V, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Map_collectNested_V2);
-			it_Map_collect = createIteration(_Map_Map_K_Map_V, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_V2);
-			it_Map_exists = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_exists_1 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_exists_2 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_forAll = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_forAll_1 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_forAll_2 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_isUnique = createIteration(_Map_Map_K_Map_V, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-			it_Map_iterate = createIteration(_Map_Map_K_Map_V, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE, tp_Map_iterate_Tacc);
-			it_Map_one = createIteration(_Map_Map_K_Map_V, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-			it_Map_reject = createIteration(_Map_Map_K_Map_V, "reject", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
-			it_Map_select = createIteration(_Map_Map_K_Map_V, "select", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-			it_OrderedSet_closure = createIteration(_OrderedSet_OrderedSet_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_OrderedSet_collectNested = createIteration(_OrderedSet_OrderedSet_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_OrderedSet_collectNested_V);
-			it_OrderedSet_collect = createIteration(_OrderedSet_OrderedSet_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_OrderedSet_collect_V);
-			it_OrderedSet_reject = createIteration(_OrderedSet_OrderedSet_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_OrderedSet_select = createIteration(_OrderedSet_OrderedSet_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_OrderedSet_sortedBy = createIteration(_OrderedSet_OrderedSet_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Sequence_closure = createIteration(_Sequence_Sequence_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Sequence_collectNested = createIteration(_Sequence_Sequence_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Sequence_collectNested_V);
-			it_Sequence_collect = createIteration(_Sequence_Sequence_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Sequence_collect_V);
-			it_Sequence_reject = createIteration(_Sequence_Sequence_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Sequence_select = createIteration(_Sequence_Sequence_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Sequence_sortedBy = createIteration(_Sequence_Sequence_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Set_closure = createIteration(_Set_Set_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Set_collectNested = createIteration(_Set_Set_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Set_collectNested_V);
-			it_Set_collect = createIteration(_Set_Set_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Set_collect_V);
-			it_Set_reject = createIteration(_Set_Set_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Set_select = createIteration(_Set_Set_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Set_sortedBy = createIteration(_Set_Set_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_UniqueCollection_sortedBy = createIteration(_UniqueCollection_UniqueCollection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+		private void installSlots4a() {
+			installComment(it_Bag_closure, "The closure of applying body transitively to every distinct element of the source collection.");
+			installComment(it_Bag_collectNested, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
+			installComment(it_Bag_reject, "The sub-bag of the source bag for which body is oclText[false].\n\noclCode[self->reject(iterator | body) = self->select(iterator | not body)].");
+			installComment(it_Bag_select, "The sub-bag of the source bag for which body is oclText[true].\n\noclCode[self->select(iterator | body) =\nself->iterate(iterator; result : Bag(T) = Bag{} |\nif body then result->including(iterator)\nelse result\nendif)]");
+			installComment(it_Bag_sortedBy, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
+			installComment(it_Collection_any, "Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,\notherwise if there are one or more elements for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the result is oclText[null].\n\nlet source : Collection(T) = ..., body : Lambda T() : Boolean = ... in\nsource->any(iterator | body) = source->select(iterator | body)->asSequence()->first()");
+			installComment(it_Collection_collectBy, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
+			installComment(it_Collection_collectNested, "The Collection of elements which results from applying body to every member of the source collection.");
+			installComment(it_Collection_collect, "The Collection of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
+			installComment(it_Collection_exists, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.");
+			installComment(it_Collection_exists_1, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.");
+			installComment(it_Collection_exists_2, "Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.");
+			installComment(it_Collection_forAll, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].");
+			installComment(it_Collection_forAll_1, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].");
+			installComment(it_Collection_forAll_2, "Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].");
+			installComment(it_Collection_isUnique, "Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].");
+			installComment(it_Collection_isUnique, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
+			installComment(it_Collection_iterate, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.");
+			installComment(it_Collection_one, "Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].");
+			installComment(it_Collection_reject, "The sub-collection of the source collection for which body is oclText[false].");
+			installComment(it_Collection_select, "The sub-collection of the source collection for which body is oclText[true].");
+			installComment(it_Collection_sortedBy, "Results in the Collection containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
+			installComment(it_Map_any, "Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,\notherwise if there are one or more kets for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].\n\nlet source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in\nsource->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()");
+			installComment(it_Map_collectBy, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
+			installComment(it_Map_collectNested, "The Map of key and values which results from applying body to every value of the source map.");
+			installComment(it_Map_collect, "The Map of key and values that results from applying body to every value of the source map.\nThe result is flattened.");
+			installComment(it_Map_exists, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.");
+			installComment(it_Map_exists_1, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.");
+			installComment(it_Map_exists_2, "Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.");
+			installComment(it_Map_forAll, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].");
+			installComment(it_Map_forAll_1, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].");
+			installComment(it_Map_forAll_2, "Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].");
+			installComment(it_Map_isUnique, "Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].");
+			installComment(it_Map_iterate, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.");
+			installComment(it_Map_one, "Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].");
+			installComment(it_Map_reject, "The subset of the source set for which body is oclText[false].");
+			installComment(it_Map_select, "The subset of set for which expr is oclText[true].");
+			installComment(it_OrderedSet_closure, "The closure of applying body transitively to every distinct element of the source collection.");
+			installComment(it_OrderedSet_collectNested, "The sequence of elements that results from applying body to every member of the source ordered collection.");
+			installComment(it_OrderedSet_collect, "The Sequence of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
+			installComment(it_OrderedSet_reject, "The ordered set of the source ordered set for which body is oclText[false].");
+			installComment(it_OrderedSet_select, "The ordered set of the source ordered set for which body is oclText[true]");
+			installComment(it_OrderedSet_sortedBy, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
+			installComment(it_Sequence_closure, "The closure of applying body transitively to every distinct element of the source collection.");
+			installComment(it_Sequence_collectNested, "The sequence of elements that results from applying body to every member of the source ordered collection.");
+			installComment(it_Sequence_collect, "The Bag of elements that results from applying body to every member of the source sequence.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
+			installComment(it_Sequence_reject, "The subsequence of the source sequence for which body is oclText[false].");
+			installComment(it_Sequence_select, "The subsequence of the source sequence for which body is oclText[true].");
+			installComment(it_Sequence_sortedBy, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
+			installComment(it_Set_closure, "The closure of applying body transitively to every distinct element of the source collection.");
+			installComment(it_Set_collectNested, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
+			installComment(it_Set_collect, "The Bag of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
+			installComment(it_Set_reject, "The subset of the source set for which body is oclText[false].");
+			installComment(it_Set_select, "The subset of set for which expr is oclText[true].");
+			installComment(it_Set_sortedBy, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
+			installComment(it_UniqueCollection_sortedBy, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
+			installComment(op_Boolean__lt__gt_, "Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Boolean__eq_, "Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Boolean_allInstances, "Returns oclText[Set{false, true}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_Boolean_and, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[true].");
+			installComment(op_Boolean_and2, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[true].");
+			installComment(op_Boolean_implies, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
+			installComment(op_Boolean_implies2, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[false].");
+			installComment(op_Boolean_not, "oclText[true] if oclText[self] is oclText[false].\noclText[false] if oclText[self] is oclText[true].\noclText[null] if oclText[self] is oclText[null].\nOtherwise oclText[invalid].");
+			installComment(op_Boolean_not2, "oclText[true] if oclText[self] is oclText[false].\nOtherwise oclText[false].");
+			installComment(op_Boolean_or, "oclText[true] if either oclText[self] or oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
+			installComment(op_Boolean_or2, "oclText[true] if either oclText[self] or oclText[b] is oclText[true].\nOtherwise oclText[false].");
+			installComment(op_Boolean_toString, "Converts oclText[self] to a string value.");
+			installComment(op_Boolean_xor, "oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].\noclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null].");
+			installComment(op_Boolean_xor2, "oclText[true] if oclText[self] <> oclText[b]\nOtherwise oclText[false].");
+			installComment(op_Integer__mul_, "The value of the multiplication of oclText[self] and i.");
+			installComment(op_Integer__add_, "The value of the addition of oclText[self] and i.");
+			installComment(op_Integer__neg_, "The negative value of oclText[self].");
+			installComment(op_Integer__neg__1, "The value of the subtraction of i from oclText[self].");
+			installComment(op_Integer__div_, "The value of oclText[self] divided by i.\nEvaluates to oclText[invalid] if r is equal to zero.");
+			installComment(op_Integer_abs, "The absolute value of oclText[self].");
+			installComment(op_Integer_div, "The number of times that i fits completely within oclText[self].");
+			installComment(op_Integer_max, "The maximum of oclText[self] an i.");
+			installComment(op_Integer_min, "The minimum of oclText[self] an i.");
+			installComment(op_Integer_mod, "The result is oclText[self] modulo i.");
+			installComment(op_Integer_toString, "Converts oclText[self] to a string value.");
+			installComment(op_Integer_toUnlimitedNatural, "Converts a non-negative oclText[self] to an UnlimitedNatural value. A negative oclText[self] is converted to oclText[invalid].\nAn automatic coersion may be synthesized if the coercion enables an operation reference to be resolved\nin an expression where no operation was available without coercion.");
+			installComment(op_Real__mul_, "The value of the multiplication of oclText[self] and r.");
+			installComment(op_Real__add_, "The value of the addition of oclText[self] and r.");
+			installComment(op_Real__neg_, "The negative value of oclText[self].");
+			installComment(op_Real__neg__1, "The value of the subtraction of r from oclText[self].");
+			installComment(op_Real__div_, "The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.");
+			installComment(op_Real__lt__gt_, "Returns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Real__eq_, "Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Real_abs, "The absolute value of oclText[self].");
+			installComment(op_Real_floor, "The largest integer that is less than or equal to oclText[self].");
+			installComment(op_Real_max, "The maximum of oclText[self] and r.");
+			installComment(op_Real_min, "The minimum of oclText[self] and r.");
+			installComment(op_Real_round, "The integer that is closest to oclText[self]. When there are two such integers, the largest one.");
 		}
 
-		private void installIterationBodies() {
-			Iteration iteration;
-			Parameter parameter;
+		private void installSlots4b() {
+			installComment(op_Real_toString, "Converts oclText[self] to a string value.");
+			installComment(op_String__add_, "The concatenation of oclText[self] and s.");
+			installComment(op_String__lt_, "True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String__lt__eq_, "True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String__gt_, "True if oclText[self] is greater than s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String__gt__eq_, "True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String_at, "Queries the character at position i in oclText[self].");
+			installComment(op_String_characters, "Obtains the characters of oclText[self] as a sequence.");
+			installComment(op_String_compareTo, "The comparison of oclText[self] with oclText[that]. -ve if less than, 0 if equal, +ve if greater than.");
+			installComment(op_String_concat, "The concatenation of oclText[self] and s.");
+			installComment(op_String_endsWith, "Returns true if oclText[self] ends with the string s.\nEvery string ends with the empty string.");
+			installComment(op_String_equalsIgnoreCase, "Queries whether s and oclText[self] are equivalent under case-insensitive collation.");
+			installComment(op_String_indexOf, "Queries the first index in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].\nThe empty string is a substring of every string at index 1 (and also at all other indexes).");
+			installComment(op_String_lastIndexOf, "Queries the last in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].\nThe empty string is a substring of every string at index oclText[self]-size()+1 (and also at all other indexes).");
+			installComment(op_String_matches, "Use a regular expression match and return true if self matches regex, false otherwise.");
+			installComment(op_String_replaceAll, "Return a string derived from self by replacing all matches of regex by replacement.");
+			installComment(op_String_replaceFirst, "Return a string derived from self by replacing the first match of regex by replacement.");
+			installComment(op_String_size, "The number of characters in oclText[self].");
+			installComment(op_String_startsWith, "Returns true if oclText[self] starts with the string s.\nEvery string starts with the empty string.");
+			installComment(op_String_substituteAll, "Return a string derived from self by replacing all occurrences of oldSubstring by newSubstring.");
+			installComment(op_String_substituteFirst, "Return a string derived from self by replacing the first occurrence of oldSubstring by newSubstring.\nReturns invalid if there is no first occurrence.");
+			installComment(op_String_substring, "The sub-string of oclText[self] starting at character number lower, up to and including character number upper. Character numbers run from 1 to self.size().");
+			installComment(op_String_toBoolean, "Converts oclText[self] to a boolean value. Returns null for non-Boolean text.");
+			installComment(op_String_toInteger, "Converts oclText[self] to an Integer value. Returns null for non-Integer text.");
+			installComment(op_String_toLower, "This is a deprecated variant of toLowerCase() preserving compatibility with traditional Eclipse OCL behaviour.");
+			installComment(op_String_toLowerCase, "Converts oclText[self] to lower case, using the locale defined by looking up oclLocale in the current environment.\nOtherwise, returns the same string as oclText[self].");
+			installComment(op_String_toReal, "Converts oclText[self] to a Real[1] value. Returns null for non-Real text.");
+			installComment(op_String_toString, "Returns oclText[self].");
+			installComment(op_String_toUpper, "This is a deprecated variant of toUpperCase() preserving compatibility with traditional Eclipse OCL behaviour.");
+			installComment(op_String_toUpperCase, "Converts oclText[self] to upper case, using the locale defined by looking up oclLocale in the current environment.\nOtherwise, returns the same string as oclText[self].");
+			installComment(op_String_tokenize, "Partition oclText[self] into a sequence substrings separated by any of space, line-feed, carriage-return, form-feed and horizontal-tab delimiters.\nThe delimiters are omitted from the return.");
+			installComment(op_String_tokenize_1, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. The delimiters are omitted from the return.");
+			installComment(op_String_tokenize_2, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. If returnDelimeters is\ntrue the returned sequence includes the delimiters, otherwise the delimiters are omitted.");
+			installComment(op_String_trim, "Return oclText[self] with leading and trailing whitespace removed.");
+			installComment(op_UnlimitedNatural_max, "The maximum of oclText[self] an i.");
+			installComment(op_UnlimitedNatural_min, "The minimum of oclText[self] an i.");
+			installComment(op_UnlimitedNatural_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by T.\nThe type T may be any classifier defined in the UML model;\nif the actual type of oclText[self] at evaluation time does not conform to T,\nthen the oclAsType operation evaluates to oclText[invalid].\n\nThe standard behavior is redefined for UnlimitedNatural. Numeric values may be converted to\nReal or Integer, but the e[unlimited] value may not.\nConversion of e[unlimited] to Real or Integer returns oclText[invalid].");
+			installComment(op_UnlimitedNatural_toInteger, "Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].");
+			installComment(op_Bag__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Bag__eq_, "True if oclText[self] and bag contain the same elements, the same number of times.");
+			installComment(op_Bag_excluding, "The bag containing all elements of oclText[self] apart from all occurrences of object.");
+			installComment(op_Bag_excludingAll, "The bag containing all elements of oclText[self] apart from all occurrences of all objects.");
+			installComment(op_Bag_flatten, "Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].\nIf the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].");
+			installComment(op_Bag_including, "The bag containing all elements of oclText[self] plus object.");
+			installComment(op_Bag_includingAll, "The bag containing all elements of oclText[self] and objects.");
+			installComment(op_Bag_selectByKind, "The bag containing all elements of oclText[self] whose type conforms to oclText[type].");
+			installComment(op_Bag_selectByType, "The bag containing all elements of oclText[self] whose type is oclText[type].");
+			installComment(op_BooleanType_allInstances, "Returns oclText[Set{false, true}].");
+			installComment(op_Class_allInstances, "Return a set of all instances of the type and derived types of self.");
+			installComment(op_Collection__lt__gt_, "True if c is not equal to oclText[self].");
+			installComment(op_Collection__eq_, "True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,\nin the case of an ordered collection type.");
+			installComment(op_Collection_asBag, "The Bag that contains all the elements from oclText[self].");
+			installComment(op_Collection_asOrderedSet, "An OrderedSet that contains all the elements from oclText[self], with duplicates removed,\nin an order dependent on the particular concrete collection type.");
+			installComment(op_Collection_asSequence, "A Sequence that contains all the elements from oclText[self], in an order dependent on the particular concrete collection type.");
+			installComment(op_Collection_asSet, "The Set containing all the elements from oclText[self], with duplicates removed.");
+			installComment(op_Collection_count, "The number of times that object occurs in the collection oclText[self].");
+			installComment(op_Collection_excludes, "True if object is not an element of oclText[self], oclText[false] otherwise.");
+			installComment(op_Collection_excludesAll, "Does oclText[self] contain none of the elements of c2 ?");
+			installComment(op_Collection_excluding, "The collection containing all elements of oclText[self] apart from object.");
+			installComment(op_Collection_excludingAll, "The collection containing all elements of oclText[self] apart from all occurrences of all objects.");
+			installComment(op_Collection_flatten, "If the element type is not a collection type, this results in the same collection as oclText[self].\nIf the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].");
+			installComment(op_Collection_includes, "True if object is an element of oclText[self], oclText[false] otherwise.");
+			installComment(op_Collection_includesAll, "Does oclText[self] contain all the elements of c2 ?");
+			installComment(op_Collection_including, "The collection containing all elements of oclText[self] plus object.");
+			installComment(op_Collection_includingAll, "The collection containing all elements of oclText[self] and objects.");
+			installComment(op_Collection_intersection, "The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.");
+			installComment(op_Collection_intersection_1, "The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.");
+			installComment(op_Collection_isEmpty, "Is oclText[self] the empty collection?\n\nNote: oclText[null->isEmpty()] returns oclText[true] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
+			installComment(op_Collection_max, "The element with the maximum value of all elements in oclText[self].\nElements must be of a type supporting the max operation.\nThe max operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
+			installComment(op_Collection_min, "The element with the minimum value of all elements in oclText[self].\nElements must be of a type supporting the min operation.\nThe min operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
+			installComment(op_Collection_notEmpty, "Is oclText[self] not the empty collection?\n\noclText[null->notEmpty()] returns oclText[false] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
+			installComment(op_Collection_product, "The cartesian product operation of oclText[self] and c2.");
+			installComment(op_Collection_selectByKind, "The collection containing all elements of oclText[self] whose type conforms to oclText[type].");
+			installComment(op_Collection_selectByType, "The collection containing all elements of oclText[self] whose type is oclText[type].");
+			installComment(op_Collection_size, "The number of elements in the collection oclText[self].");
+			installComment(op_Collection_sum, "The addition of all elements in oclText[self].\nElements must be of an oclText[OclSummable] type to provide the zero() and sum() operations.\nThe e[sum] operation must be both associative: a.sum(b).sum(c) = a.sum(b.sum(c)), and commutative: a.sum(b) = b.sum(a).\nInteger and Real fulfill this condition.\n\nIf the e[sum] operation is not both associative and commutative, the e[sum] expression is not well-formed,\nwhich may result in unpredictable results during evaluation.\nIf an implementation is able to detect a lack of associativity or commutativity,\nthe implementation may bypass the evaluation and return an oclText[invalid] result.");
+			installComment(op_Collection_union, "The bag consisting of all elements in oclText[self] and all elements in c.");
+			installComment(op_Enumeration_allInstances, "Return a set of all enumeration values of oclText[self].");
+			installComment(op_InvalidType_allInstances, "Returns oclText[invalid].");
+			installComment(op_Map__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Map__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
+			installComment(op_Map_at, "The value of the map at oclText[key].");
+			installComment(op_Map_excludes, "True if oclText[key] is not one of the keys of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_excludes_1, "True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_excludesAll, "True if none of the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_excludesMap, "True if none of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_excludesValue, "True if oclText[value] is not one of the values of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_excluding, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].");
+			installComment(op_Map_excluding_1, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].");
+			installComment(op_Map_excludingAll, "The map containing all key-value pairs of oclText[self] except any whose key is included in oclText[keys].");
+			installComment(op_Map_excludingMap, "The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].");
+			installComment(op_Map_includes, "True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_includes_1, "True if oclText[key] and oclText[value] are a key-value pair of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_includesAll, "True if all the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_includesMap, "True if all of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_includesValue, "True if oclText[value] is one of the values of oclText[self], oclText[false] otherwise.");
+			installComment(op_Map_including, "The map containing all of the key-value pairs of oclText[self] and an additional key-value pair for oclText[key] and oclText[value].\nIf oclText[key] is already a key of oclText[self], the old value pair is replaced by oclText[value].");
+			installComment(op_Map_includingMap, "The map containing all of the key-value pairs of oclText[self] and oclText[map].\nThe values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.");
+			installComment(op_Map_isEmpty, "True if oclText[self] is the empty map, oclText[false] otherwise.");
+			installComment(op_Map_keys, "A Set comprising all the keys of the key-value pairs in oclText[self].");
+		}
 
-			iteration = it_Bag_closure;
-			iteration.setType(_Set_Bag_T_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, true);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Set, false);
-			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
+		private void installSlots4c() {
+			installComment(op_Map_notEmpty, "True if oclText[self] not the empty map, oclText[false] otherwise.");
+			installComment(op_Map_size, "The number of key-value pairs in oclText[self].");
+			installComment(op_Map_values, "The Bag comprising all the values of the key-value pairs in oclText[self].");
+			installComment(op_OclAny__lt__gt_, "True if oclText[self] is a different object from object2. Infix operator.");
+			installComment(op_OclAny__eq_, "True if oclText[self] is the same object as object2. Infix operator.");
+			installComment(op_OclAny_oclAsSet, "Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,");
+			installComment(op_OclAny_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].\nThe type oclText[TT] may be any classifier defined by OCL or a user metamodel;\nif the actual type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if\nthe classification is ambiguous.\n\nIn the case of feature redefinition, casting an object to a supertype of its actual type\ndoes not access the supertype\u2019s definition of the feature;\naccording to the semantics of redefinition, the redefined feature simply does not exist for the object.\nHowever, when casting to a supertype, any features additionally defined by the subtype are suppressed.\n\nFIXME Bug 578060 return should be optional to support OclVoid returning null.");
+			installComment(op_OclAny_oclIsInState, "Evaluates to oclText[true] if the oclText[self] is in the state identified by statespec.");
+			installComment(op_OclAny_oclIsInvalid, "Evaluates to oclText[true] if the oclText[self] is equal to OclInvalid.");
+			installComment(op_OclAny_oclIsKindOf, "Evaluates to oclText[true] if the type of oclText[self] conforms to oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].");
+			installComment(op_OclAny_oclIsNew, "Can only be used in a postcondition.\nEvaluates to oclText[true] if the oclText[self] is created during performing the operation (for instance, it didn\u2019t exist at precondition time).");
+			installComment(op_OclAny_oclIsTypeOf, "Evaluates to oclText[true] if oclText[self] is of the type oclText[type] but not a subtype of oclText[type].");
+			installComment(op_OclAny_oclIsUndefined, "Evaluates to oclText[true] if the oclText[self] is equal to oclText[invalid] or equal to oclText[null].");
+			installComment(op_OclAny_oclLog, "Evaluates to the self, with the side effect of generating a log message comprising self.");
+			installComment(op_OclAny_oclLog_1, "Evaluates to the self, with the side effect of generating a log message comprising message followed by self.");
+			installComment(op_OclAny_oclType, "Evaluates to the most derived type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified type, the return is the most derived type of the current classification which is established when the instance is\npassed to OCL, or re-established by an oclText[oclAsType()] call.");
+			installComment(op_OclAny_oclTypes, "Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]\nis normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.");
+			installComment(op_OclAny_toString, "Returns a string representation of oclText[self].");
+			installComment(op_OclComparable__lt_, "True if oclText[self] is less than oclText[that].");
+			installComment(op_OclComparable__lt__eq_, "True if oclText[self] is less than or equal to oclText[that].");
+			installComment(op_OclComparable__gt_, "True if oclText[self] is greater than oclText[that].");
+			installComment(op_OclComparable__gt__eq_, "True if oclText[self] is greater than or equal to oclText[that].");
+			installComment(op_OclComparable_compareTo, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
+			installComment(op_OclElement_allInstances, "Return a set of all instances of the type and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_OclElement_oclAsModelType, "Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].\n\nMost model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].\n\nModel elements such as UML\'s InstnaceSpecification that do support distinct model and metamodel types return oclText[self]\nwith the cast type oclText[TT] that may be used for further navigation.\nIf the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if\nthe classification is ambiguous.");
+			installComment(op_OclElement_oclBase, "Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing.");
+			installComment(op_OclElement_oclBase_1, "Returns the application class conforming to base extended by this extension element. Returns null if no such class.");
+			installComment(op_OclElement_oclContainer, "Returns the object for which self is a composed content or null if there is no such object.");
+			installComment(op_OclElement_oclContents, "Returns the composed contents of self.");
+			installComment(op_OclElement_oclExtension, "Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one.");
+			installComment(op_OclElement_oclExtensions, "Returns the application instances of all Stereotypes applied to this element.");
+			installComment(op_OclElement_oclExtensions_1, "Returns the application instances of the Stereotypes that conform to stereotype applied to this element.");
+			installComment(op_OclElement_oclIsModelKindOf, "Evaluates to oclText[true] if the type of oclText[self] conforms to the model type oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].\n\nThe return is normally oclText[false] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
+			installComment(op_OclElement_oclModelType, "Evaluates to the most derived model type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified model type, the return is the most derived type of the current classification which is established\nby an oclText[oclAsModelType()] call.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
+			installComment(op_OclElement_oclModelTypes, "Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]\nis normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
+			installComment(op_OclEnumeration_allInstances, "Return a set of all enumeration values of oclText[self].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_OclInvalid__lt__gt_, "Returns oclText[invalid].");
+			installComment(op_OclInvalid__eq_, "Returns oclText[invalid].");
+			installComment(op_OclInvalid_allInstances, "Returns oclText[invalid].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_OclInvalid_oclBadOperation, "An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.");
+			installComment(op_OclInvalid_toString, "Returns \'invalid\'.");
+			installComment(op_OclMessage_hasReturned, "True if type of template parameter is an operation call, and the called operation has returned a value.\nThis implies the fact that the message has been sent. False in all other cases.");
+			installComment(op_OclMessage_isOperationCall, "Returns oclText[true] if the OclMessage represents the sending of a UML Operation call.");
+			installComment(op_OclMessage_isSignalSent, "Returns oclText[true] if the OclMessage represents the sending of a UML Signal.");
+			installComment(op_OclMessage_result, "Returns the result of the called operation, if type of template parameter is an operation call,\nand the called operation has returned a value. Otherwise the oclText[invalid] value is returned.");
+			installComment(op_OclStereotype_allInstances, "Return a set of all instances of the stereotype and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_OclSummable_sum, "Return the sum of self and that.\n\nThe sum operation should be associative.");
+			installComment(op_OclSummable_zero, "Return the \'zero\' value of self to initialize a summation.\n\nzero().sum(self) = self.");
+			installComment(op_OclType_conformsTo, "Returns true if type2 conforms to self.");
+			installComment(op_OclVoid__add_, "The concatenation of oclText[null] and s.");
+			installComment(op_OclVoid__eq_, "Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]\nif object is oclText[invalid], oclText[false] otherwise.");
+			installComment(op_OclVoid_allInstances, "Returns oclText[Set{null}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
+			installComment(op_OclVoid_concat, "The concatenation of oclText[null] and s.");
+			installComment(op_OclVoid_toString, "Returns oclText[null].");
+			installComment(op_OrderedCollection_at, "The i-th element of ordered collection.");
+			installComment(op_OrderedCollection_first, "The first element in oclText[self].");
+			installComment(op_OrderedCollection_indexOf, "The index of object obj in the ordered collection. Returns null for an out of bound index.");
+			installComment(op_OrderedCollection_last, "The last element in oclText[self].");
+			installComment(op_OrderedSet__neg_, "The elements of oclText[self], which are not in s.");
+			installComment(op_OrderedSet__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_OrderedSet__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
+			installComment(op_OrderedSet_append, "The set of elements, consisting of all elements of oclText[self], followed by object.");
+			installComment(op_OrderedSet_appendAll, "The set of elements, consisting of all elements of oclText[self], followed by objects.");
+			installComment(op_OrderedSet_excluding, "The ordered set  containing all elements of oclText[self] apart from object.\n\nThe order of the remaining elements is not changed.");
+			installComment(op_OrderedSet_excludingAll, "The ordered set containing all elements of oclText[self] apart from all occurrences of all objects.");
+			installComment(op_OrderedSet_including, "The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.");
+			installComment(op_OrderedSet_includingAll, "The ordered set containing all elements of oclText[self] plus objects added as the last elements.");
+			installComment(op_OrderedSet_insertAt, "The ordered set consisting of oclText[self] with object present at position index.");
+			installComment(op_OrderedSet_prepend, "The sequence consisting of object, followed by all elements in oclText[self].");
+			installComment(op_OrderedSet_prependAll, "The sequence consisting of objects, followed by all elements in oclText[self].");
+			installComment(op_OrderedSet_reverse, "The ordered set of elements with same elements but with the opposite order.");
+			installComment(op_OrderedSet_selectByKind, "The ordered set containing all elements of oclText[self] whose type conforms to oclText[type].");
+			installComment(op_OrderedSet_selectByType, "The ordered set containing all elements of oclText[self] whose type is oclText[type].");
+			installComment(op_OrderedSet_subOrderedSet, "The sub-set of oclText[self] starting at number lower, up to and including element number upper.");
+			installComment(op_Sequence__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Sequence__eq_, "True if oclText[self] contains the same elements as s in the same order.");
+			installComment(op_Sequence_append, "The sequence of elements, consisting of all elements of oclText[self], followed by object.");
+			installComment(op_Sequence_appendAll, "The sequence of elements, consisting of all elements of oclText[self], followed by objects.");
+			installComment(op_Sequence_excluding, "The sequence containing all elements of oclText[self] apart from all occurrences of object.\n\nThe order of the remaining elements is not changed.");
+			installComment(op_Sequence_excludingAll, "The sequence containing all elements of oclText[self] apart from all occurrences of all objects.");
+			installComment(op_Sequence_flatten, "Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].\nIf the element type is a collection type, the result is the sequence containing all the elements\nof all the recursively flattened elements of oclText[self]. The order of the elements is partial.");
+			installComment(op_Sequence_including, "The sequence containing all elements of oclText[self] plus object added as the last element.");
+			installComment(op_Sequence_includingAll, "The sequence containing all elements of oclText[self] plus objects added as the last elements.");
+			installComment(op_Sequence_insertAt, "The sequence consisting of oclText[self] with object inserted at position index.");
+			installComment(op_Sequence_prepend, "The sequence consisting of object, followed by all elements in oclText[self].");
+			installComment(op_Sequence_prependAll, "The sequence consisting of objects, followed by all elements in oclText[self].");
+			installComment(op_Sequence_reverse, "The sequence containing the same elements but with the opposite order.");
+			installComment(op_Sequence_selectByKind, "The sequence containing all elements of oclText[self] whose type conforms to oclText[type].");
+			installComment(op_Sequence_selectByType, "The sequence containing all elements of oclText[self] whose type is oclText[type].");
+			installComment(op_Sequence_subSequence, "The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
+			installComment(op_Set__neg_, "The elements of oclText[self], which are not in s.");
+			installComment(op_Set__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Set__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
+			installComment(op_Set_excluding, "The set containing all elements of oclText[self] without object.");
+			installComment(op_Set_excludingAll, "The set containing all elements of oclText[self] apart from all occurrences of all objects.");
+			installComment(op_Set_flatten, "Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].\nIf the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].");
+			installComment(op_Set_including, "The set containing all elements of oclText[self] plus object.");
+			installComment(op_Set_includingAll, "The set containing all elements of oclText[self] and objects.");
+			installComment(op_Set_selectByKind, "The set containing all elements of oclText[self] whose type conforms to oclText[type].");
+			installComment(op_Set_selectByType, "The set containing all elements of oclText[self] whose type is oclText[type].");
+		}
 
-			iteration = it_Bag_collectNested;
-			iteration.setType(_Bag_Bag_collectNested_V_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Bag_collectNested_V, false);
-			installComment(iteration, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
+		private void installSlots4d() {
+			installComment(op_Stereotype_allInstances, "Return a set of all instances of the stereotype and derived types of self.");
+			installComment(op_Type_conformsTo, "Returns true if type2 conforms to self.");
+			installComment(op_UniqueCollection__neg_, "The elements of oclText[self], which are not in s.");
+			installComment(op_UniqueCollection_intersection, "The intersection of oclText[self] and c (i.e., the set of all elements that are in both oclText[self] and c).");
+			installComment(op_UniqueCollection_symmetricDifference, "The set containing all the elements that are in oclText[self] or s, but not in both.");
+			installComment(op_UniqueCollection_union, "The set consisting of all elements in oclText[self] and all elements in s.");
+			installComment(op_VoidType_allInstances, "Returns oclText[Set{null}].");
+			tp_UnlimitedNatural_oclAsType_TT = createTemplateParameter(op_UnlimitedNatural_oclAsType, "TT");
+			tp_Bag_collectNested_V = createTemplateParameter(it_Bag_collectNested, "V");
+			tp_Bag_collect_V = createTemplateParameter(it_Bag_collect, "V");
+			tp_Bag_flatten_T2 = createTemplateParameter(op_Bag_flatten, "T2");
+			tp_Bag_selectByKind_TT = createTemplateParameter(op_Bag_selectByKind, "TT");
+			tp_Bag_selectByType_TT = createTemplateParameter(op_Bag_selectByType, "TT");
+			tp_Collection_collectBy_V = createTemplateParameter(it_Collection_collectBy, "V");
+			tp_Collection_collectNested_V = createTemplateParameter(it_Collection_collectNested, "V");
+			tp_Collection_collect_V = createTemplateParameter(it_Collection_collect, "V");
+			tp_Collection_excludesAll_T2 = createTemplateParameter(op_Collection_excludesAll, "T2");
+			tp_Collection_flatten_T2 = createTemplateParameter(op_Collection_flatten, "T2");
+			tp_Collection_includesAll_T2 = createTemplateParameter(op_Collection_includesAll, "T2");
+			tp_Collection_iterate_Tacc = createTemplateParameter(it_Collection_iterate, "Tacc");
+			tp_Collection_product_T2 = createTemplateParameter(op_Collection_product, "T2");
+			tp_Collection_selectByKind_TT = createTemplateParameter(op_Collection_selectByKind, "TT");
+			tp_Collection_selectByType_TT = createTemplateParameter(op_Collection_selectByType, "TT");
+			tp_Map_collectBy_V2 = createTemplateParameter(it_Map_collectBy, "V2");
+			tp_Map_collectNested_V2 = createTemplateParameter(it_Map_collectNested, "V2");
+			tp_Map_collect_V2 = createTemplateParameter(it_Map_collect, "V2");
+			tp_Map_excludesAll_K2 = createTemplateParameter(op_Map_excludesAll, "K2");
+			tp_Map_excludesMap_K2 = createTemplateParameter(op_Map_excludesMap, "K2");
+			tp_Map_excludesMap_V2 = createTemplateParameter(op_Map_excludesMap, "V2");
+			tp_Map_excludingMap_K2 = createTemplateParameter(op_Map_excludingMap, "K2");
+			tp_Map_excludingMap_V2 = createTemplateParameter(op_Map_excludingMap, "V2");
+			tp_Map_includesAll_K2 = createTemplateParameter(op_Map_includesAll, "K2");
+			tp_Map_includesMap_K2 = createTemplateParameter(op_Map_includesMap, "K2");
+			tp_Map_includesMap_V2 = createTemplateParameter(op_Map_includesMap, "V2");
+			tp_Map_includingMap_K2 = createTemplateParameter(op_Map_includingMap, "K2");
+			tp_Map_includingMap_V2 = createTemplateParameter(op_Map_includingMap, "V2");
+			tp_Map_iterate_Tacc = createTemplateParameter(it_Map_iterate, "Tacc");
+			tp_OclAny_oclAsType_TT = createTemplateParameter(op_OclAny_oclAsType, "TT");
+			tp_OclElement_oclAsModelType_TT = createTemplateParameter(op_OclElement_oclAsModelType, "TT");
+			tp_OclInvalid_oclAsType_TT = createTemplateParameter(op_OclInvalid_oclAsType, "TT");
+			tp_OclVoid_oclAsType_TT = createTemplateParameter(op_OclVoid_oclAsType, "TT");
+			tp_OrderedSet_collectNested_V = createTemplateParameter(it_OrderedSet_collectNested, "V");
+			tp_OrderedSet_collect_V = createTemplateParameter(it_OrderedSet_collect, "V");
+			tp_OrderedSet_flatten_T2 = createTemplateParameter(op_OrderedSet_flatten, "T2");
+			tp_OrderedSet_selectByKind_TT = createTemplateParameter(op_OrderedSet_selectByKind, "TT");
+			tp_OrderedSet_selectByType_TT = createTemplateParameter(op_OrderedSet_selectByType, "TT");
+			tp_Sequence_collectNested_V = createTemplateParameter(it_Sequence_collectNested, "V");
+			tp_Sequence_collect_V = createTemplateParameter(it_Sequence_collect, "V");
+			tp_Sequence_flatten_T2 = createTemplateParameter(op_Sequence_flatten, "T2");
+			tp_Sequence_selectByKind_TT = createTemplateParameter(op_Sequence_selectByKind, "TT");
+			tp_Sequence_selectByType_TT = createTemplateParameter(op_Sequence_selectByType, "TT");
+			tp_Set_collectNested_V = createTemplateParameter(it_Set_collectNested, "V");
+			tp_Set_collect_V = createTemplateParameter(it_Set_collect, "V");
+			tp_Set_flatten_T2 = createTemplateParameter(op_Set_flatten, "T2");
+			tp_Set_selectByKind_TT = createTemplateParameter(op_Set_selectByKind, "TT");
+			tp_Set_selectByType_TT = createTemplateParameter(op_Set_selectByType, "TT");
+			_Collection_Integer_T = getCollectionType(_Collection_Collection_T, _Integer, true, 0, -1);
+			_Collection_String_T = getCollectionType(_Collection_Collection_T, _String, true, 0, -1);
+			_Collection_Bag_T_T = getCollectionType(_Collection_Collection_T, tp_Bag_T, true, 0, -1);
+			_Collection_CollectionType_T = getCollectionType(_Collection_Collection_T, _CollectionType, true, 0, -1);
+			_Collection_Collection_T_T = getCollectionType(_Collection_Collection_T, tp_Collection_T, true, 0, -1);
+			_Collection_MapType_T = getCollectionType(_Collection_Collection_T, _MapType, true, 0, -1);
+			_Collection_Map_K_T = getCollectionType(_Collection_Collection_T, tp_Map_K, true, 0, -1);
+			_Collection_Map_V_T = getCollectionType(_Collection_Collection_T, tp_Map_V, true, 0, -1);
+			_Collection_OclAny_T = getCollectionType(_Collection_Collection_T, _OclAny, true, 0, -1);
+			_Collection_OclElement_T = getCollectionType(_Collection_Collection_T, _OclElement, true, 0, -1);
+			_Collection_OclInvalid_T = getCollectionType(_Collection_Collection_T, _OclInvalid, true, 0, -1);
+			_Collection_OclSelf_T = getCollectionType(_Collection_Collection_T, _OclSelf, true, 0, -1);
+			_Collection_OrderedCollection_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedCollection_T, true, 0, -1);
+			_Collection_OrderedSet_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_T, true, 0, -1);
+			_Collection_Sequence_T_T = getCollectionType(_Collection_Collection_T, tp_Sequence_T, true, 0, -1);
+			_Collection_Set_T_T = getCollectionType(_Collection_Collection_T, tp_Set_T, true, 0, -1);
+			_Collection_UniqueCollection_T_T = getCollectionType(_Collection_Collection_T, tp_UniqueCollection_T, true, 0, -1);
+			_Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, tp_Map_K, true, tp_Map_V, true);
+			_Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false);
+			_Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, tp_Bag_T, _Boolean);
+			_Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, tp_Bag_T, _OclAny);
+			_Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, tp_Collection_T, _Boolean);
+			_Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, tp_Collection_T, _OclAny);
+			_Lambda_Map_K_Boolean = getLambdaType(_OclLambda, tp_Map_K, _Boolean);
+			_Lambda_Map_K_OclAny = getLambdaType(_OclLambda, tp_Map_K, _OclAny);
+			_Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, tp_OrderedSet_T, _Boolean);
+			_Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, tp_OrderedSet_T, _OclAny);
+			_Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, tp_Sequence_T, _Boolean);
+			_Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, tp_Sequence_T, _OclAny);
+			_Lambda_Set_T_Boolean = getLambdaType(_OclLambda, tp_Set_T, _Boolean);
+			_Lambda_Set_T_OclAny = getLambdaType(_OclLambda, tp_Set_T, _OclAny);
+			_Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, tp_UniqueCollection_T, _OclAny);
+			// define OPERATIONS BooleanType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS AnyType
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+		}
 
-			iteration = it_Bag_collect;
-			iteration.setType(_Bag_Bag_collect_V_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
+		private void installSlots4e() {
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS InvalidType
+			// define OPERATIONS VoidType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS MapType
+			// define OPERATIONS BagType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SetType
+			// define PARAMETER_LISTS Model
+			// define PROPERTIES AnyType
+			// define PROPERTIES Class
+			// define PROPERTIES CollectionType
+			// define PROPERTIES MapType
+			op_Boolean__lt__gt_.setType(_Boolean);
+			op_Boolean__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Boolean__lt__gt_, "object2", _OclSelf, false);
+			op_Boolean__eq_.setType(_Boolean);
+			op_Boolean__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Boolean__eq_, "object2", _OclSelf, false);
+			op_Boolean_and.setType(_Boolean);
+			op_Boolean_and.setIsInvalidating(true);
+			op_Boolean_and.setIsRequired(false);
+			op_Boolean_and.setIsValidating(true);
+			op_Boolean_and.setPrecedence(prec_AND);
+			createBodyExpression(op_Boolean_and, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = false then false\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = false then false\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = false then false\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else true\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_and, "b", _Boolean, false);
+			op_Boolean_and2.setType(_Boolean);
+			op_Boolean_and2.setIsValidating(true);
+			op_Boolean_and2.setPrecedence(prec_AND);
+			createBodyExpression(op_Boolean_and2, _Boolean, "if self = false then false\n\t\t\t  elseif b = false then false\n\t\t\t  else true\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_and2, "b", _Boolean, true);
+			op_Boolean_implies.setType(_Boolean);
+			op_Boolean_implies.setIsInvalidating(true);
+			op_Boolean_implies.setIsRequired(false);
+			op_Boolean_implies.setIsValidating(true);
+			op_Boolean_implies.setPrecedence(prec_IMPLIES);
+			createBodyExpression(op_Boolean_implies, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = true then true\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = false then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then b\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_implies, "b", _Boolean, false);
+			op_Boolean_implies2.setType(_Boolean);
+			op_Boolean_implies2.setIsValidating(true);
+			op_Boolean_implies2.setPrecedence(prec_IMPLIES);
+			createBodyExpression(op_Boolean_implies2, _Boolean, "if self = false then true\n\t\t\t  elseif b = true then true\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_implies2, "b", _Boolean, true);
+			op_Boolean_not.setType(_Boolean);
+			op_Boolean_not.setIsInvalidating(true);
+			op_Boolean_not.setIsRequired(false);
+			op_Boolean_not.setIsValidating(true);
+			op_Boolean_not.setPrecedence(prec_UNARY);
+			createBodyExpression(op_Boolean_not, _Boolean, "if self.oclIsInvalid() then self\n\t\t\t  elseif self = null then null\n\t\t\t  else self = false\n\t\t\t  endif", _Boolean);
+			op_Boolean_not2.setType(_Boolean);
+			op_Boolean_not2.setPrecedence(prec_UNARY);
+			createBodyExpression(op_Boolean_not2, _Boolean, "if self then false else true endif", _Boolean);
+			op_Boolean_or.setType(_Boolean);
+			op_Boolean_or.setIsInvalidating(true);
+			op_Boolean_or.setIsRequired(false);
+			op_Boolean_or.setIsValidating(true);
+			op_Boolean_or.setPrecedence(prec_OR);
+			createBodyExpression(op_Boolean_or, _Boolean, "if self.oclIsInvalid() then\n\t\t\t\tif b.oclIsInvalid() then self\n\t\t\t\telseif b = true then true\n\t\t\t\telse self\n\t\t\t\tendif\n\t\t\t  elseif self = true then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_or, "b", _Boolean, false);
+			op_Boolean_or2.setType(_Boolean);
+			op_Boolean_or2.setIsValidating(true);
+			op_Boolean_or2.setPrecedence(prec_OR);
+			createBodyExpression(op_Boolean_or2, _Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t\t  else false\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_or2, "b", _Boolean, true);
+			op_Boolean_toString.setType(_String);
+			op_Boolean_xor.setType(_Boolean);
+			op_Boolean_xor.setIsRequired(false);
+			op_Boolean_xor.setPrecedence(prec_XOR);
+			createBodyExpression(op_Boolean_xor, _Boolean, "if self.oclIsInvalid() then self\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t\t  else self <> b\n\t\t\t  endif", _Boolean);
+			createParameter(op_Boolean_xor, "b", _Boolean, false);
+			op_Boolean_xor2.setType(_Boolean);
+			op_Boolean_xor2.setPrecedence(prec_XOR);
+			createBodyExpression(op_Boolean_xor2, _Boolean, "self <> b", _Boolean);
+			createParameter(op_Boolean_xor2, "b", _Boolean, true);
+			op_Integer__mul_.setType(_Integer);
+			op_Integer__mul_.setPrecedence(prec_MULTIPLICATIVE);
+			createParameter(op_Integer__mul_, "i", _OclSelf, true);
+			op_Integer__add_.setType(_Integer);
+			op_Integer__add_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Integer__add_, "i", _OclSelf, true);
+			op_Integer__neg_.setType(_Integer);
+			op_Integer__neg_.setPrecedence(prec_UNARY);
+			op_Integer__neg__1.setType(_Integer);
+			op_Integer__neg__1.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Integer__neg__1, "i", _OclSelf, true);
+			op_Integer__div_.setType(_Real);
+			op_Integer__div_.setIsInvalidating(true);
+			op_Integer__div_.setPrecedence(prec_MULTIPLICATIVE);
+			createParameter(op_Integer__div_, "i", _OclSelf, true);
+			op_Integer_abs.setType(_Integer);
+			op_Integer_div.setType(_Integer);
+			createParameter(op_Integer_div, "i", _Integer, true);
+			op_Integer_max.setType(_Integer);
+			createParameter(op_Integer_max, "i", _OclSelf, true);
+			op_Integer_min.setType(_Integer);
+			createParameter(op_Integer_min, "i", _OclSelf, true);
+			op_Integer_mod.setType(_Integer);
+			createParameter(op_Integer_mod, "i", _Integer, true);
+			op_Integer_toString.setType(_String);
+			op_Integer_toUnlimitedNatural.setType(_UnlimitedNatural);
+			_Integer.getCoercions().add(op_Integer_toUnlimitedNatural);
+			op_Real__mul_.setType(_Real);
+			op_Real__mul_.setPrecedence(prec_MULTIPLICATIVE);
+			createParameter(op_Real__mul_, "r", _OclSelf, true);
+			op_Real__add_.setType(_Real);
+			op_Real__add_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Real__add_, "r", _OclSelf, true);
+			op_Real__neg_.setType(_Real);
+			op_Real__neg_.setPrecedence(prec_UNARY);
+			op_Real__neg__1.setType(_Real);
+			op_Real__neg__1.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Real__neg__1, "r", _OclSelf, true);
+			op_Real__div_.setType(_Real);
+			op_Real__div_.setIsInvalidating(true);
+			op_Real__div_.setPrecedence(prec_MULTIPLICATIVE);
+			createParameter(op_Real__div_, "r", _OclSelf, true);
+			op_Real__lt__gt_.setType(_Boolean);
+			op_Real__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Real__lt__gt_, "object2", _OclSelf, false);
+			op_Real__eq_.setType(_Boolean);
+			op_Real__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Real__eq_, "object2", _OclSelf, false);
+			op_Real_abs.setType(_Real);
+			op_Real_floor.setType(_Integer);
+			op_Real_max.setType(_Real);
+			createParameter(op_Real_max, "r", _OclSelf, true);
+			op_Real_min.setType(_Real);
+			createParameter(op_Real_min, "r", _OclSelf, true);
+			op_Real_round.setType(_Integer);
+			op_Real_toString.setType(_String);
+			op_String__add_.setType(_String);
+			op_String__add_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_String__add_, "s", _String, false);
+			op_String__lt_.setType(_Boolean);
+			op_String__lt_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_String__lt_, "s", _OclSelf, true);
+			op_String__lt__eq_.setType(_Boolean);
+			op_String__lt__eq_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_String__lt__eq_, "s", _OclSelf, true);
+			op_String__lt__gt_.setType(_Boolean);
+			op_String__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_String__lt__gt_, "object2", _OclSelf, false);
+			op_String__eq_.setType(_Boolean);
+			op_String__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_String__eq_, "object2", _OclSelf, false);
+			op_String__gt_.setType(_Boolean);
+			op_String__gt_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_String__gt_, "s", _OclSelf, true);
+			op_String__gt__eq_.setType(_Boolean);
+			op_String__gt__eq_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_String__gt__eq_, "s", _OclSelf, true);
+			op_String_at.setType(_String);
+			op_String_at.setIsInvalidating(true);
+			createParameter(op_String_at, "i", _Integer, true);
+			op_String_compareTo.setType(_Integer);
+			createParameter(op_String_compareTo, "that", _OclSelf, true);
+			op_String_concat.setType(_String);
+			createParameter(op_String_concat, "s", _String, false);
+			op_String_endsWith.setType(_Boolean);
+			createParameter(op_String_endsWith, "s", _String, true);
+			op_String_equalsIgnoreCase.setType(_Boolean);
+			createParameter(op_String_equalsIgnoreCase, "s", _String, true);
+			op_String_indexOf.setType(_Integer);
+			createParameter(op_String_indexOf, "s", _String, true);
+			op_String_lastIndexOf.setType(_Integer);
+			createParameter(op_String_lastIndexOf, "s", _String, true);
+			op_String_matches.setType(_Boolean);
+			createParameter(op_String_matches, "regex", _String, true);
+			op_String_replaceAll.setType(_String);
+			createParameter(op_String_replaceAll, "regex", _String, true);
+			createParameter(op_String_replaceAll, "replacement", _String, true);
+			op_String_replaceFirst.setType(_String);
+			createParameter(op_String_replaceFirst, "regex", _String, true);
+			createParameter(op_String_replaceFirst, "replacement", _String, true);
+			op_String_size.setType(_Integer);
+			op_String_startsWith.setType(_Boolean);
+			createParameter(op_String_startsWith, "s", _String, true);
+			op_String_substituteAll.setType(_String);
+			createParameter(op_String_substituteAll, "oldSubstring", _String, true);
+			createParameter(op_String_substituteAll, "newSubstring", _String, true);
+			op_String_substituteFirst.setType(_String);
+			createParameter(op_String_substituteFirst, "oldSubstring", _String, true);
+			createParameter(op_String_substituteFirst, "newSubstring", _String, true);
+			op_String_substring.setType(_String);
+			op_String_substring.setIsInvalidating(true);
+			createParameter(op_String_substring, "lower", _Integer, true);
+			createParameter(op_String_substring, "upper", _Integer, true);
+			op_String_toBoolean.setType(_Boolean);
+			op_String_toBoolean.setIsRequired(false);
+			op_String_toInteger.setType(_Integer);
+			op_String_toInteger.setIsRequired(false);
+			op_String_toLower.setType(_String);
+			op_String_toLowerCase.setType(_String);
+			op_String_toReal.setType(_Real);
+			op_String_toReal.setIsRequired(false);
+			op_String_toString.setType(_String);
+			op_String_toUpper.setType(_String);
+			op_String_toUpperCase.setType(_String);
+			op_String_trim.setType(_String);
+			op_UnlimitedNatural_max.setType(_UnlimitedNatural);
+			createParameter(op_UnlimitedNatural_max, "i", _OclSelf, true);
+			op_UnlimitedNatural_min.setType(_UnlimitedNatural);
+			createParameter(op_UnlimitedNatural_min, "i", _OclSelf, true);
+			op_UnlimitedNatural_toInteger.setType(_Integer);
+			op_UnlimitedNatural_toInteger.setIsRequired(false);
+			op_Bag__lt__gt_.setType(_Boolean);
+			op_Bag__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Bag__lt__gt_, "object2", _OclSelf, false);
+			op_Bag__eq_.setType(_Boolean);
+			op_Bag__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Bag__eq_, "object2", _OclSelf, false);
+			op_Collection__lt__gt_.setType(_Boolean);
+			op_Collection__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Collection__lt__gt_, "object2", _OclSelf, false);
+			op_Collection__eq_.setType(_Boolean);
+			op_Collection__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Collection__eq_, "object2", _OclSelf, false);
+		}
 
-			iteration = it_Bag_reject;
-			iteration.setType(_Bag_Bag_T_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Boolean, true);
-			installComment(iteration, "The sub-bag of the source bag for which body is oclText[false].\n\noclCode[self->reject(iterator | body) = self->select(iterator | not body)].");
+		private void installSlots4f() {
+			op_Collection_count.setType(_Integer);
+			createParameter(op_Collection_count, "object", tp_Collection_T, false);
+			op_Collection_excludes.setType(_Boolean);
+			createParameter(op_Collection_excludes, "object", tp_Collection_T, false);
+			op_Collection_includes.setType(_Boolean);
+			createParameter(op_Collection_includes, "object", tp_Collection_T, false);
+			op_Collection_isEmpty.setType(_Boolean);
+			op_Collection_max.setType(tp_Collection_T);
+			op_Collection_min.setType(tp_Collection_T);
+			op_Collection_notEmpty.setType(_Boolean);
+			op_Collection_size.setType(_Integer);
+			op_Collection_sum.setType(tp_Collection_T);
+			op_Map__lt__gt_.setType(_Boolean);
+			op_Map__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Map__lt__gt_, "object2", _OclSelf, false);
+			op_Map__eq_.setType(_Boolean);
+			op_Map__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Map__eq_, "object2", _OclSelf, false);
+			op_Map_at.setType(tp_Map_V);
+			op_Map_at.setIsInvalidating(true);
+			op_Map_at.setIsRequired(false);
+			createParameter(op_Map_at, "key", tp_Map_K, false);
+			op_Map_excludes.setType(_Boolean);
+			createParameter(op_Map_excludes, "key", tp_Map_K, false);
+			op_Map_excludes_1.setType(_Boolean);
+			createParameter(op_Map_excludes_1, "key", tp_Map_K, false);
+			createParameter(op_Map_excludes_1, "value", tp_Map_V, false);
+			op_Map_excludesValue.setType(_Boolean);
+			createParameter(op_Map_excludesValue, "value", tp_Map_V, false);
+			op_Map_includes.setType(_Boolean);
+			createParameter(op_Map_includes, "key", tp_Map_K, false);
+			op_Map_includes_1.setType(_Boolean);
+			createParameter(op_Map_includes_1, "key", tp_Map_K, false);
+			createParameter(op_Map_includes_1, "value", tp_Map_V, false);
+			op_Map_includesValue.setType(_Boolean);
+			createParameter(op_Map_includesValue, "value", tp_Map_V, false);
+			op_Map_isEmpty.setType(_Boolean);
+			op_Map_notEmpty.setType(_Boolean);
+			op_Map_size.setType(_Integer);
+			op_OclAny__lt__gt_.setType(_Boolean);
+			op_OclAny__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclAny__lt__gt_, "object2", _OclSelf, false);
+			op_OclAny__eq_.setType(_Boolean);
+			op_OclAny__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclAny__eq_, "object2", _OclSelf, false);
+			op_OclAny_oclIsInState.setType(_Boolean);
+			createParameter(op_OclAny_oclIsInState, "statespec", _OclState, false);
+			op_OclAny_oclIsInvalid.setType(_Boolean);
+			op_OclAny_oclIsInvalid.setIsValidating(true);
+			op_OclAny_oclIsKindOf.setType(_Boolean);
+			createParameter(op_OclAny_oclIsKindOf, "type", _OclType, true);
+			op_OclAny_oclIsNew.setType(_Boolean);
+			op_OclAny_oclIsTypeOf.setType(_Boolean);
+			createParameter(op_OclAny_oclIsTypeOf, "type", _OclType, true);
+			op_OclAny_oclIsUndefined.setType(_Boolean);
+			op_OclAny_oclIsUndefined.setIsValidating(true);
+			op_OclAny_oclLog.setType(_OclSelf);
+			op_OclAny_oclLog_1.setType(_OclSelf);
+			createParameter(op_OclAny_oclLog_1, "message", _String, true);
+			op_OclAny_oclType.setType(_OclSelf);
+			op_OclAny_oclType.setIsTypeof(true);
+			op_OclAny_toString.setType(_String);
+			op_OclComparable__lt_.setType(_Boolean);
+			op_OclComparable__lt_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_OclComparable__lt_, "that", _OclSelf, true);
+			op_OclComparable__lt__eq_.setType(_Boolean);
+			op_OclComparable__lt__eq_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_OclComparable__lt__eq_, "that", _OclSelf, true);
+			op_OclComparable__gt_.setType(_Boolean);
+			op_OclComparable__gt_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_OclComparable__gt_, "that", _OclSelf, true);
+			op_OclComparable__gt__eq_.setType(_Boolean);
+			op_OclComparable__gt__eq_.setPrecedence(prec_RELATIONAL);
+			createParameter(op_OclComparable__gt__eq_, "that", _OclSelf, true);
+			op_OclComparable_compareTo.setType(_Integer);
+			createParameter(op_OclComparable_compareTo, "that", _OclSelf, true);
+			op_OclElement_oclBase.setType(_OclType);
+			op_OclElement_oclBase.setIsRequired(false);
+			op_OclElement_oclBase_1.setType(_OclType);
+			op_OclElement_oclBase_1.setIsRequired(false);
+			createParameter(op_OclElement_oclBase_1, "base", _OclType, true);
+			op_OclElement_oclContainer.setType(_OclElement);
+			op_OclElement_oclContainer.setIsRequired(false);
+			op_OclElement_oclExtension.setType(_OclElement);
+			op_OclElement_oclExtension.setIsInvalidating(true);
+			op_OclElement_oclExtension.setIsRequired(false);
+			createParameter(op_OclElement_oclExtension, "stereotype", _OclStereotype, true);
+			op_OclElement_oclIsModelKindOf.setType(_Boolean);
+			createParameter(op_OclElement_oclIsModelKindOf, "type", _OclType, true);
+			op_OclElement_oclModelType.setType(_OclSelf);
+			op_OclElement_oclModelType.setIsTypeof(true);
+			op_OclInvalid__lt__gt_.setType(_Boolean);
+			op_OclInvalid__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclInvalid__lt__gt_, "object2", _OclSelf, false);
+			op_OclInvalid__eq_.setType(_Boolean);
+			op_OclInvalid__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclInvalid__eq_, "object2", _OclSelf, false);
+			op_OclInvalid_and.setType(_Boolean);
+			op_OclInvalid_and.setIsRequired(false);
+			op_OclInvalid_and.setIsValidating(true);
+			op_OclInvalid_and.setPrecedence(prec_AND);
+			createParameter(op_OclInvalid_and, "b", _Boolean, false);
+			op_OclInvalid_implies.setType(_Boolean);
+			op_OclInvalid_implies.setIsRequired(false);
+			op_OclInvalid_implies.setIsValidating(true);
+			op_OclInvalid_implies.setPrecedence(prec_IMPLIES);
+			createParameter(op_OclInvalid_implies, "b", _Boolean, false);
+			op_OclInvalid_oclBadOperation.setType(_OclAny);
+			op_OclInvalid_oclBadOperation.setIsRequired(false);
+			op_OclInvalid_oclIsInvalid.setType(_Boolean);
+			op_OclInvalid_oclIsInvalid.setIsValidating(true);
+			op_OclInvalid_oclIsKindOf.setType(_Boolean);
+			createParameter(op_OclInvalid_oclIsKindOf, "type", _OclType, true);
+			op_OclInvalid_oclIsTypeOf.setType(_Boolean);
+			createParameter(op_OclInvalid_oclIsTypeOf, "type", _OclType, true);
+			op_OclInvalid_oclIsUndefined.setType(_Boolean);
+			op_OclInvalid_oclIsUndefined.setIsValidating(true);
+			op_OclInvalid_oclType.setType(_OclSelf);
+			op_OclInvalid_oclType.setIsTypeof(true);
+			op_OclInvalid_or.setType(_Boolean);
+			op_OclInvalid_or.setIsRequired(false);
+			op_OclInvalid_or.setIsValidating(true);
+			op_OclInvalid_or.setPrecedence(prec_OR);
+			createParameter(op_OclInvalid_or, "b", _Boolean, false);
+			op_OclInvalid_toString.setType(_String);
+			op_OclMessage_hasReturned.setType(_Boolean);
+			op_OclMessage_isOperationCall.setType(_Boolean);
+			op_OclMessage_isSignalSent.setType(_Boolean);
+			op_OclMessage_result.setType(_OclAny);
+			op_OclMessage_result.setIsRequired(false);
+			op_OclSummable_sum.setType(_OclSelf);
+			createParameter(op_OclSummable_sum, "that", _OclSelf, true);
+			op_OclSummable_zero.setType(_OclSelf);
+			op_OclTuple__lt__gt_.setType(_Boolean);
+			op_OclTuple__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclTuple__lt__gt_, "object2", _OclSelf, false);
+			op_OclTuple__eq_.setType(_Boolean);
+			op_OclTuple__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclTuple__eq_, "object2", _OclSelf, false);
+			op_OclType_conformsTo.setType(_Boolean);
+			createParameter(op_OclType_conformsTo, "type2", _OclType, false);
+			op_OclVoid__add_.setType(_String);
+			op_OclVoid__add_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_OclVoid__add_, "s", _String, false);
+			op_OclVoid__lt__gt_.setType(_Boolean);
+			op_OclVoid__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclVoid__lt__gt_, "object2", _OclSelf, false);
+			op_OclVoid__eq_.setType(_Boolean);
+			op_OclVoid__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OclVoid__eq_, "object2", _OclSelf, false);
+			op_OclVoid_and.setType(_Boolean);
+			op_OclVoid_and.setIsInvalidating(true);
+			op_OclVoid_and.setIsRequired(false);
+			op_OclVoid_and.setIsValidating(true);
+			op_OclVoid_and.setPrecedence(prec_AND);
+			createParameter(op_OclVoid_and, "b", _Boolean, false);
+			op_OclVoid_concat.setType(_String);
+			createParameter(op_OclVoid_concat, "s", _String, false);
+			op_OclVoid_implies.setType(_Boolean);
+			op_OclVoid_implies.setIsInvalidating(true);
+			op_OclVoid_implies.setIsRequired(false);
+			op_OclVoid_implies.setIsValidating(true);
+			op_OclVoid_implies.setPrecedence(prec_IMPLIES);
+			createParameter(op_OclVoid_implies, "b", _Boolean, false);
+			op_OclVoid_not.setType(_Boolean);
+			op_OclVoid_not.setIsInvalidating(true);
+			op_OclVoid_not.setIsRequired(false);
+			op_OclVoid_not.setIsValidating(true);
+			op_OclVoid_not.setPrecedence(prec_UNARY);
+			op_OclVoid_oclIsInvalid.setType(_Boolean);
+			op_OclVoid_oclIsInvalid.setIsValidating(true);
+			op_OclVoid_oclIsKindOf.setType(_Boolean);
+			createParameter(op_OclVoid_oclIsKindOf, "type", _OclType, true);
+			op_OclVoid_oclIsTypeOf.setType(_Boolean);
+			createParameter(op_OclVoid_oclIsTypeOf, "type", _OclType, true);
+			op_OclVoid_oclIsUndefined.setType(_Boolean);
+			op_OclVoid_oclIsUndefined.setIsValidating(true);
+			op_OclVoid_oclType.setType(_OclSelf);
+			op_OclVoid_oclType.setIsTypeof(true);
+			op_OclVoid_or.setType(_Boolean);
+			op_OclVoid_or.setIsInvalidating(true);
+			op_OclVoid_or.setIsRequired(false);
+			op_OclVoid_or.setIsValidating(true);
+			op_OclVoid_or.setPrecedence(prec_OR);
+			createParameter(op_OclVoid_or, "b", _Boolean, false);
+			op_OclVoid_toString.setType(_String);
+			op_OclVoid_xor.setType(_Boolean);
+			op_OclVoid_xor.setIsRequired(false);
+			op_OclVoid_xor.setPrecedence(prec_XOR);
+			createParameter(op_OclVoid_xor, "b", _Boolean, false);
+			op_OrderedCollection_at.setType(tp_OrderedCollection_T);
+			op_OrderedCollection_at.setIsInvalidating(true);
+			op_OrderedCollection_at.setIsRequired(false);
+			createParameter(op_OrderedCollection_at, "index", _Integer, true);
+			op_OrderedCollection_first.setType(tp_OrderedCollection_T);
+			op_OrderedCollection_first.setIsInvalidating(true);
+			op_OrderedCollection_first.setIsRequired(false);
+			op_OrderedCollection_indexOf.setType(_Integer);
+			op_OrderedCollection_indexOf.setIsRequired(false);
+			createParameter(op_OrderedCollection_indexOf, "obj", tp_OrderedCollection_T, false);
+			op_OrderedCollection_last.setType(tp_OrderedCollection_T);
+			op_OrderedCollection_last.setIsInvalidating(true);
+			op_OrderedCollection_last.setIsRequired(false);
+			op_OrderedSet__lt__gt_.setType(_Boolean);
+			op_OrderedSet__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OrderedSet__lt__gt_, "object2", _OclSelf, false);
+			op_OrderedSet__eq_.setType(_Boolean);
+			op_OrderedSet__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_OrderedSet__eq_, "object2", _OclSelf, false);
+			op_Sequence__lt__gt_.setType(_Boolean);
+			op_Sequence__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Sequence__lt__gt_, "object2", _OclSelf, false);
+			op_Sequence__eq_.setType(_Boolean);
+			op_Sequence__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Sequence__eq_, "object2", _OclSelf, false);
+			op_Set__lt__gt_.setType(_Boolean);
+			op_Set__lt__gt_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Set__lt__gt_, "object2", _OclSelf, false);
+			op_Set__eq_.setType(_Boolean);
+			op_Set__eq_.setPrecedence(prec_EQUALITY);
+			createParameter(op_Set__eq_, "object2", _OclSelf, false);
+			op_Type_conformsTo.setType(_Boolean);
+			createParameter(op_Type_conformsTo, "type2", _Type, false);
+		}
 
-			iteration = it_Bag_select;
-			iteration.setType(_Bag_Bag_T_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Boolean, true);
-			installComment(iteration, "The sub-bag of the source bag for which body is oclText[true].\n\noclCode[self->select(iterator | body) =\nself->iterate(iterator; result : Bag(T) = Bag{} |\nif body then result->including(iterator)\nelse result\nendif)]");
+		private void installSlots5a() {
+			_Collection_Bag_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collectNested_V, true, 0, -1);
+			_Collection_Bag_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collect_V, true, 0, -1);
+			_Collection_Bag_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Bag_flatten_T2, true, 0, -1);
+			_Collection_Bag_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByKind_TT, true, 0, -1);
+			_Collection_Bag_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByType_TT, true, 0, -1);
+			_Collection_Collection_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collectNested_V, true, 0, -1);
+			_Collection_Collection_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collect_V, true, 0, -1);
+			_Collection_Collection_excludesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_excludesAll_T2, true, 0, -1);
+			_Collection_Collection_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_flatten_T2, true, 0, -1);
+			_Collection_Collection_includesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_includesAll_T2, true, 0, -1);
+			_Collection_Collection_product_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_product_T2, true, 0, -1);
+			_Collection_Collection_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByKind_TT, true, 0, -1);
+			_Collection_Collection_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByType_TT, true, 0, -1);
+			_Collection_Map_collect_V2_T = getCollectionType(_Collection_Collection_T, tp_Map_collect_V2, true, 0, -1);
+			_Collection_Map_excludesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2, true, 0, -1);
+			_Collection_Map_includesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_includesAll_K2, true, 0, -1);
+			_Collection_OrderedSet_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
+			_Collection_OrderedSet_collect_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collect_V, true, 0, -1);
+			_Collection_OrderedSet_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
+			_Collection_OrderedSet_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
+			_Collection_OrderedSet_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
+			_Collection_Sequence_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collectNested_V, true, 0, -1);
+			_Collection_Sequence_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collect_V, true, 0, -1);
+			_Collection_Sequence_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Sequence_flatten_T2, true, 0, -1);
+			_Collection_Sequence_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
+			_Collection_Sequence_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByType_TT, true, 0, -1);
+			_Collection_Set_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collectNested_V, true, 0, -1);
+			_Collection_Set_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collect_V, true, 0, -1);
+			_Collection_Set_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Set_flatten_T2, true, 0, -1);
+			_Collection_Set_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByKind_TT, true, 0, -1);
+			_Collection_Set_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByType_TT, true, 0, -1);
+			_Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, tp_Collection_T, false, tp_Collection_collectBy_V, false);
+			_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, true, tp_Map_excludesMap_V2, true);
+			_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, true, tp_Map_excludingMap_V2, true);
+			_Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, true, tp_Map_includesMap_V2, true);
+			_Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true);
+			_Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false);
+			_Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false);
+			_Tuple = getTupleType(_OclTuple,
+				createProperty("first", tp_Collection_T),
+				createProperty("second", tp_Collection_product_T2));
+			_Lambda_Bag_T_Bag_collectNested_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collectNested_V);
+			_Lambda_Bag_T_Bag_collect_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collect_V);
+			_Lambda_Collection_T_Collection_collectBy_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectBy_V);
+			_Lambda_Collection_T_Collection_collectNested_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectNested_V);
+			_Lambda_Collection_T_Collection_collect_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collect_V);
+			_Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_iterate_Tacc);
+			_Lambda_Map_K_Map_collectBy_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectBy_V2);
+			_Lambda_Map_K_Map_collectNested_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectNested_V2);
+			_Lambda_Map_K_Map_collect_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collect_V2);
+			_Lambda_Map_K_Map_iterate_Tacc = getLambdaType(_OclLambda, tp_Map_K, tp_Map_iterate_Tacc);
+			_Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
+			_Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collect_V);
+			_Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collectNested_V);
+			_Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collect_V);
+			_Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collectNested_V);
+			_Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collect_V);
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+		}
 
-			iteration = it_Bag_sortedBy;
-			iteration.setType(_Sequence_Bag_T_T);
-			parameter = createIterator(iteration, "i", tp_Bag_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_OclAny, false);
-			installComment(iteration, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
+		private void installSlots5b() {
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			checkSuperClass(_Collection_Integer_T, _OclAny);
+			checkSuperClass(_Collection_String_T, _OclAny);
+			checkSuperClass(_Collection_Bag_T_T, _OclAny);
+			checkSuperClass(_Collection_CollectionType_T, _OclAny);
+			checkSuperClass(_Collection_Collection_T_T, _OclAny);
+			checkSuperClass(_Collection_MapType_T, _OclAny);
+			checkSuperClass(_Collection_Map_K_T, _OclAny);
+			checkSuperClass(_Collection_Map_V_T, _OclAny);
+			checkSuperClass(_Collection_OclAny_T, _OclAny);
+			checkSuperClass(_Collection_OclElement_T, _OclAny);
+			checkSuperClass(_Collection_OclInvalid_T, _OclAny);
+			checkSuperClass(_Collection_OclSelf_T, _OclAny);
+			checkSuperClass(_Collection_OrderedCollection_T_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_T_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_T_T, _OclAny);
+			checkSuperClass(_Collection_Set_T_T, _OclAny);
+			checkSuperClass(_Collection_UniqueCollection_T_T, _OclAny);
+			addSuperClass(_OrderedCollection_OrderedCollection_T, _Collection_OrderedCollection_T_T);
+			addSuperClass(_UniqueCollection_UniqueCollection_T, _Collection_UniqueCollection_T_T);
+			checkSuperClass(_Map_Map_K_T_Map_V_T, _OclAny);
+			checkSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
+			addSuperClass(_Bag_Bag_T, _Collection_Bag_T_T);
+			addSuperClass(_Lambda_Bag_T_Boolean, _OclLambda);
+			addSuperClass(_Lambda_Bag_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_Boolean, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Map_K_Boolean, _OclLambda);
+			addSuperClass(_Lambda_Map_K_OclAny, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_Boolean, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_Boolean, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Set_T_Boolean, _OclLambda);
+			addSuperClass(_Lambda_Set_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_UniqueCollection_T_OclAny, _OclLambda);
+			it_Collection_any.setType(tp_Collection_T);
+			it_Collection_any.setIsRequired(false);
+			createIterator(it_Collection_any, "i", tp_Collection_T, true);
+			createParameter(it_Collection_any, "body", _Lambda_Collection_T_Boolean, true);
+			it_Collection_exists.setType(_Boolean);
+			it_Collection_exists.setIsInvalidating(true);
+			it_Collection_exists.setIsRequired(false);
+			it_Collection_exists.setIsValidating(true);
+			createIterator(it_Collection_exists, "i", tp_Collection_T, false);
+			createIterator(it_Collection_exists, "j", tp_Collection_T, false);
+			createIterator(it_Collection_exists, "k", tp_Collection_T, false);
+			createParameter(it_Collection_exists, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_exists_1.setType(_Boolean);
+			it_Collection_exists_1.setIsInvalidating(true);
+			it_Collection_exists_1.setIsRequired(false);
+			it_Collection_exists_1.setIsValidating(true);
+			createIterator(it_Collection_exists_1, "i", tp_Collection_T, false);
+			createIterator(it_Collection_exists_1, "j", tp_Collection_T, false);
+			createParameter(it_Collection_exists_1, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_exists_2.setType(_Boolean);
+			it_Collection_exists_2.setIsInvalidating(true);
+			it_Collection_exists_2.setIsRequired(false);
+			it_Collection_exists_2.setIsValidating(true);
+			createIterator(it_Collection_exists_2, "i", tp_Collection_T, false);
+			createParameter(it_Collection_exists_2, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll.setType(_Boolean);
+			it_Collection_forAll.setIsInvalidating(true);
+			it_Collection_forAll.setIsRequired(false);
+			it_Collection_forAll.setIsValidating(true);
+			createIterator(it_Collection_forAll, "i", tp_Collection_T, false);
+			createIterator(it_Collection_forAll, "j", tp_Collection_T, false);
+			createIterator(it_Collection_forAll, "k", tp_Collection_T, false);
+			createParameter(it_Collection_forAll, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll_1.setType(_Boolean);
+			it_Collection_forAll_1.setIsInvalidating(true);
+			it_Collection_forAll_1.setIsRequired(false);
+			it_Collection_forAll_1.setIsValidating(true);
+			createIterator(it_Collection_forAll_1, "i", tp_Collection_T, false);
+			createIterator(it_Collection_forAll_1, "j", tp_Collection_T, false);
+			createParameter(it_Collection_forAll_1, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll_2.setType(_Boolean);
+			it_Collection_forAll_2.setIsInvalidating(true);
+			it_Collection_forAll_2.setIsRequired(false);
+			it_Collection_forAll_2.setIsValidating(true);
+			createIterator(it_Collection_forAll_2, "i", tp_Collection_T, false);
+			createParameter(it_Collection_forAll_2, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_isUnique.setType(_Boolean);
+			createIterator(it_Collection_isUnique, "i", tp_Collection_T, false);
+			createParameter(it_Collection_isUnique, "lambda", _Lambda_Collection_T_OclAny, false);
+			it_Collection_one.setType(_Boolean);
+			createIterator(it_Collection_one, "i", tp_Collection_T, false);
+			createParameter(it_Collection_one, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Collection_reject.setType(_Collection_Collection_T_T);
+			createIterator(it_Collection_reject, "i", tp_Collection_T, false);
+			createParameter(it_Collection_reject, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Collection_select.setType(_Collection_Collection_T_T);
+			createIterator(it_Collection_select, "i", tp_Collection_T, false);
+			createParameter(it_Collection_select, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Map_any.setType(tp_Map_K);
+			it_Map_any.setIsRequired(false);
+			createIterator(it_Map_any, "k", tp_Map_K, true);
+			createParameter(it_Map_any, "body", _Lambda_Map_K_Boolean, true);
+			it_Map_exists.setType(_Boolean);
+			it_Map_exists.setIsInvalidating(true);
+			it_Map_exists.setIsRequired(false);
+			it_Map_exists.setIsValidating(true);
+			createIterator(it_Map_exists, "k1", tp_Map_K, false);
+			createIterator(it_Map_exists, "k2", tp_Map_K, false);
+			createIterator(it_Map_exists, "k3", tp_Map_K, false);
+			createParameter(it_Map_exists, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_exists_1.setType(_Boolean);
+			it_Map_exists_1.setIsInvalidating(true);
+			it_Map_exists_1.setIsRequired(false);
+			it_Map_exists_1.setIsValidating(true);
+			createIterator(it_Map_exists_1, "k1", tp_Map_K, false);
+			createIterator(it_Map_exists_1, "k2", tp_Map_K, false);
+			createParameter(it_Map_exists_1, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_exists_2.setType(_Boolean);
+			it_Map_exists_2.setIsInvalidating(true);
+			it_Map_exists_2.setIsRequired(false);
+			it_Map_exists_2.setIsValidating(true);
+			createIterator(it_Map_exists_2, "k", tp_Map_K, false);
+			createParameter(it_Map_exists_2, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll.setType(_Boolean);
+			it_Map_forAll.setIsInvalidating(true);
+			it_Map_forAll.setIsRequired(false);
+			it_Map_forAll.setIsValidating(true);
+			createIterator(it_Map_forAll, "k1", tp_Map_K, false);
+			createIterator(it_Map_forAll, "k2", tp_Map_K, false);
+			createIterator(it_Map_forAll, "k3", tp_Map_K, false);
+			createParameter(it_Map_forAll, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll_1.setType(_Boolean);
+			it_Map_forAll_1.setIsInvalidating(true);
+			it_Map_forAll_1.setIsRequired(false);
+			it_Map_forAll_1.setIsValidating(true);
+			createIterator(it_Map_forAll_1, "k1", tp_Map_K, false);
+			createIterator(it_Map_forAll_1, "k2", tp_Map_K, false);
+			createParameter(it_Map_forAll_1, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll_2.setType(_Boolean);
+			it_Map_forAll_2.setIsInvalidating(true);
+			it_Map_forAll_2.setIsRequired(false);
+			it_Map_forAll_2.setIsValidating(true);
+			createIterator(it_Map_forAll_2, "k", tp_Map_K, false);
+			createParameter(it_Map_forAll_2, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_isUnique.setType(_Boolean);
+			createIterator(it_Map_isUnique, "i", tp_Map_K, false);
+			createParameter(it_Map_isUnique, "lambda", _Lambda_Map_K_OclAny, false);
+			it_Map_one.setType(_Boolean);
+			createIterator(it_Map_one, "i", tp_Map_K, false);
+			createParameter(it_Map_one, "lambda", _Lambda_Map_K_Boolean, true);
+			it_Map_reject.setType(_Map_Map_K_F_Map_V_F);
+			createIterator(it_Map_reject, "i", tp_Map_K, false);
+			createParameter(it_Map_reject, "lambda", _Lambda_Map_K_Boolean, true);
+			it_Map_select.setType(_Map_Map_K_F_Map_V_F);
+			createIterator(it_Map_select, "i", tp_Map_K, false);
+			createParameter(it_Map_select, "lambda", _Lambda_Map_K_Boolean, true);
+			op_UnlimitedNatural_oclAsType.setType(tp_UnlimitedNatural_oclAsType_TT);
+			op_UnlimitedNatural_oclAsType.setIsInvalidating(true);
+			createParameter(op_UnlimitedNatural_oclAsType, "type", tp_UnlimitedNatural_oclAsType_TT, true).setIsTypeof(true);
+			op_Collection_excluding.setType(_Collection_Collection_T_T);
+			createParameter(op_Collection_excluding, "object", tp_Collection_T, false);
+			op_Collection_excludingAll.setType(_Collection_Collection_T_T);
+			createParameter(op_Collection_excludingAll, "objects", _Collection_Collection_T_T, true);
+			op_Collection_including.setType(_Collection_Collection_T_T);
+			createParameter(op_Collection_including, "object", tp_Collection_T, false);
+			op_Collection_includingAll.setType(_Collection_Collection_T_T);
+			createParameter(op_Collection_includingAll, "objects", _Collection_Collection_T_T, true);
+			op_Map_excluding.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excluding, "key", tp_Map_K, false);
+			op_Map_excluding_1.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excluding_1, "key", tp_Map_K, false);
+			createParameter(op_Map_excluding_1, "value", tp_Map_V, false);
+			op_Map_excludingAll.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excludingAll, "keys", _Collection_Map_K_T, true);
+			op_Map_including.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_including, "key", tp_Map_K, false);
+			createParameter(op_Map_including, "value", tp_Map_V, false);
+			op_OclAny_oclAsType.setType(tp_OclAny_oclAsType_TT);
+			op_OclAny_oclAsType.setIsInvalidating(true);
+			createParameter(op_OclAny_oclAsType, "type", tp_OclAny_oclAsType_TT, true).setIsTypeof(true);
+			op_OclElement_oclAsModelType.setType(tp_OclElement_oclAsModelType_TT);
+			op_OclElement_oclAsModelType.setIsInvalidating(true);
+			createParameter(op_OclElement_oclAsModelType, "type", tp_OclElement_oclAsModelType_TT, true).setIsTypeof(true);
+			op_OclInvalid_oclAsType.setType(tp_OclInvalid_oclAsType_TT);
+			createParameter(op_OclInvalid_oclAsType, "type", tp_OclInvalid_oclAsType_TT, true).setIsTypeof(true);
+			op_OclVoid_oclAsType.setType(tp_OclVoid_oclAsType_TT);
+			op_OclVoid_oclAsType.setIsInvalidating(true);
+			op_OclVoid_oclAsType.setIsRequired(false);
+			createParameter(op_OclVoid_oclAsType, "type", tp_OclVoid_oclAsType_TT, true).setIsTypeof(true);
+			// define TYPE_FRAGMENTS Model
+		}
 
-			iteration = it_Collection_any;
-			iteration.setType(tp_Collection_T);
-			iteration.setIsRequired(false);
-			parameter = createIterator(iteration, "i", tp_Collection_T, true);
-			parameter = createParameter(iteration, "body", _Lambda_Collection_T_Boolean, true);
-			installComment(iteration, "Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,\notherwise if there are one or more elements for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the result is oclText[null].\n\nlet source : Collection(T) = ..., body : Lambda T() : Boolean = ... in\nsource->any(iterator | body) = source->select(iterator | body)->asSequence()->first()");
+		private void installSlots6a() {
+			// define ALL_OPERATIONS Model
+			// define CTOR Property
+			// define CTOR Property
+			_Collection_Tuple_T = getCollectionType(_Collection_Collection_T, _Tuple, true, 0, -1);
+			_OrderedCollection_Integer_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _Integer, true, 0, -1);
+			_OrderedCollection_String_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _String, true, 0, -1);
+			_OrderedCollection_Bag_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Bag_T, true, 0, -1);
+			_OrderedCollection_Collection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Collection_T, true, 0, -1);
+			_OrderedCollection_OrderedSet_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collect_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
+			_OrderedCollection_OrderedSet_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_T, true, 0, -1);
+			_OrderedCollection_Sequence_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collectNested_V, true, 0, -1);
+			_OrderedCollection_Sequence_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collect_V, true, 0, -1);
+			_OrderedCollection_Sequence_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_flatten_T2, true, 0, -1);
+			_OrderedCollection_Sequence_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_Sequence_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByType_TT, true, 0, -1);
+			_OrderedCollection_Sequence_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_T, true, 0, -1);
+			_OrderedCollection_Set_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Set_T, true, 0, -1);
+			_OrderedCollection_UniqueCollection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_UniqueCollection_T, true, 0, -1);
+			_UniqueCollection_Tuple_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _Tuple, true, 0, -1);
+			_UniqueCollection_Bag_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Bag_T, true, 0, -1);
+			_UniqueCollection_Collection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Collection_T, true, 0, -1);
+			_UniqueCollection_Map_K_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Map_K, true, 0, -1);
+			_UniqueCollection_OclAny_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclAny, true, 0, -1);
+			_UniqueCollection_OclElement_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclElement, true, 0, -1);
+			_UniqueCollection_OclSelf_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclSelf, true, 0, -1);
+			_UniqueCollection_OrderedSet_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_T, true, 0, -1);
+			_UniqueCollection_Sequence_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Sequence_T, true, 0, -1);
+			_UniqueCollection_Set_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_flatten_T2, true, 0, -1);
+			_UniqueCollection_Set_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_Set_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByType_TT, true, 0, -1);
+			_UniqueCollection_Set_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T, true, 0, -1);
+			_UniqueCollection_UniqueCollection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T, true, 0, -1);
+			_Bag_Bag_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collectNested_V, true, 0, -1);
+			_Bag_Bag_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collect_V, true, 0, -1);
+			_Bag_Bag_flatten_T2_T = getCollectionType(_Bag_Bag_T, tp_Bag_flatten_T2, true, 0, -1);
+			_Bag_Bag_selectByKind_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByKind_TT, true, 0, -1);
+			_Bag_Bag_selectByType_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByType_TT, true, 0, -1);
+			_Bag_Bag_T_T = getCollectionType(_Bag_Bag_T, tp_Bag_T, true, 0, -1);
+			_Bag_CollectionType_T = getCollectionType(_Bag_Bag_T, _CollectionType, true, 0, -1);
+			_Bag_Collection_T_T = getCollectionType(_Bag_Bag_T, tp_Collection_T, true, 0, -1);
+			_Bag_MapType_T = getCollectionType(_Bag_Bag_T, _MapType, true, 0, -1);
+			_Bag_Map_collect_V2_T = getCollectionType(_Bag_Bag_T, tp_Map_collect_V2, true, 0, -1);
+			_Bag_Map_V_T = getCollectionType(_Bag_Bag_T, tp_Map_V, true, 0, -1);
+			_Bag_OclElement_T = getCollectionType(_Bag_Bag_T, _OclElement, true, 0, -1);
+			_Bag_OclInvalid_T = getCollectionType(_Bag_Bag_T, _OclInvalid, true, 0, -1);
+			_Bag_Set_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collectNested_V, true, 0, -1);
+			_Bag_Set_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collect_V, true, 0, -1);
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS MapType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+		}
 
-			iteration = it_Collection_collectBy;
-			iteration.setType(_Map_Collection_T_F_Collection_collectBy_V_F);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Collection_collectBy_V, false);
-			installComment(iteration, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
+		private void installSlots6b() {
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES MapType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			checkSuperClass(_Collection_Bag_collectNested_V_T, _OclAny);
+			checkSuperClass(_Collection_Bag_collect_V_T, _OclAny);
+			checkSuperClass(_Collection_Bag_flatten_T2_T, _OclAny);
+			checkSuperClass(_Collection_Bag_selectByKind_TT_T, _OclAny);
+			checkSuperClass(_Collection_Bag_selectByType_TT_T, _OclAny);
+			checkSuperClass(_Collection_Collection_collectNested_V_T, _OclAny);
+			checkSuperClass(_Collection_Collection_collect_V_T, _OclAny);
+			checkSuperClass(_Collection_Collection_excludesAll_T2_T, _OclAny);
+			checkSuperClass(_Collection_Collection_flatten_T2_T, _OclAny);
+			checkSuperClass(_Collection_Collection_includesAll_T2_T, _OclAny);
+			checkSuperClass(_Collection_Collection_product_T2_T, _OclAny);
+			checkSuperClass(_Collection_Collection_selectByKind_TT_T, _OclAny);
+			checkSuperClass(_Collection_Collection_selectByType_TT_T, _OclAny);
+			checkSuperClass(_Collection_Map_collect_V2_T, _OclAny);
+			checkSuperClass(_Collection_Map_excludesAll_K2_T, _OclAny);
+			checkSuperClass(_Collection_Map_includesAll_K2_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_collectNested_V_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_collect_V_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_flatten_T2_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_selectByKind_TT_T, _OclAny);
+			checkSuperClass(_Collection_OrderedSet_selectByType_TT_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_collectNested_V_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_collect_V_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_flatten_T2_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_selectByKind_TT_T, _OclAny);
+			checkSuperClass(_Collection_Sequence_selectByType_TT_T, _OclAny);
+			checkSuperClass(_Collection_Set_collectNested_V_T, _OclAny);
+			checkSuperClass(_Collection_Set_collect_V_T, _OclAny);
+			checkSuperClass(_Collection_Set_flatten_T2_T, _OclAny);
+			checkSuperClass(_Collection_Set_selectByKind_TT_T, _OclAny);
+			checkSuperClass(_Collection_Set_selectByType_TT_T, _OclAny);
+			checkSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
+			checkSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
+			checkSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
+			checkSuperClass(_Map_Map_includesMap_K2_T_Map_includesMap_V2_T, _OclAny);
+			checkSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
+			checkSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
+			checkSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
+		}
 
-			iteration = it_Collection_collectNested;
-			iteration.setType(_Collection_Collection_collectNested_V_T);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Collection_collectNested_V, false);
-			installComment(iteration, "The Collection of elements which results from applying body to every member of the source collection.");
+		private void installSlots6c() {
+			addSuperClass(_Tuple, _OclTuple);
+			addSuperClass(_Lambda_Bag_T_Bag_collectNested_V, _OclLambda);
+			addSuperClass(_Lambda_Bag_T_Bag_collect_V, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_Collection_collectBy_V, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_Collection_collectNested_V, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_Collection_collect_V, _OclLambda);
+			addSuperClass(_Lambda_Collection_T_Collection_iterate_Tacc, _OclLambda);
+			addSuperClass(_Lambda_Map_K_Map_collectBy_V2, _OclLambda);
+			addSuperClass(_Lambda_Map_K_Map_collectNested_V2, _OclLambda);
+			addSuperClass(_Lambda_Map_K_Map_collect_V2, _OclLambda);
+			addSuperClass(_Lambda_Map_K_Map_iterate_Tacc, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collectNested_V, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collect_V, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_Sequence_collectNested_V, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_Sequence_collect_V, _OclLambda);
+			addSuperClass(_Lambda_Set_T_Set_collectNested_V, _OclLambda);
+			addSuperClass(_Lambda_Set_T_Set_collect_V, _OclLambda);
+			it_Collection_collectBy.setType(_Map_Collection_T_F_Collection_collectBy_V_F);
+			createIterator(it_Collection_collectBy, "i", tp_Collection_T, false);
+			createParameter(it_Collection_collectBy, "lambda", _Lambda_Collection_T_Collection_collectBy_V, false);
+			it_Collection_collectNested.setType(_Collection_Collection_collectNested_V_T);
+			createIterator(it_Collection_collectNested, "i", tp_Collection_T, false);
+			createParameter(it_Collection_collectNested, "lambda", _Lambda_Collection_T_Collection_collectNested_V, false);
+			it_Collection_collect.setType(_Collection_Collection_collect_V_T);
+			createIterator(it_Collection_collect, "i", tp_Collection_T, false);
+			createParameter(it_Collection_collect, "lambda", _Lambda_Collection_T_Collection_collect_V, false);
+			it_Collection_iterate.setType(tp_Collection_iterate_Tacc);
+			it_Collection_iterate.setIsRequired(false);
+			createIterator(it_Collection_iterate, "i", tp_Collection_T, false);
+			createAccumulator(it_Collection_iterate, "acc", tp_Collection_iterate_Tacc, false);
+			createParameter(it_Collection_iterate, "lambda", _Lambda_Collection_T_Collection_iterate_Tacc, false);
+			it_Map_collectBy.setType(_Map_Map_K_F_Map_collectBy_V2_F);
+			createIterator(it_Map_collectBy, "k", tp_Map_K, false);
+			createParameter(it_Map_collectBy, "lambda", _Lambda_Map_K_Map_collectBy_V2, false);
+			it_Map_collectNested.setType(_Map_Map_K_F_Map_collectNested_V2_F);
+			createIterator(it_Map_collectNested, "k", tp_Map_K, false);
+			createParameter(it_Map_collectNested, "lambda", _Lambda_Map_K_Map_collectNested_V2, false);
+			it_Map_iterate.setType(tp_Map_iterate_Tacc);
+			it_Map_iterate.setIsRequired(false);
+			createIterator(it_Map_iterate, "i", tp_Map_K, false);
+			createAccumulator(it_Map_iterate, "acc", tp_Map_iterate_Tacc, false);
+			createParameter(it_Map_iterate, "lambda", _Lambda_Map_K_Map_iterate_Tacc, false);
+			op_Collection_excludesAll.setType(_Boolean);
+			createParameter(op_Collection_excludesAll, "c2", _Collection_Collection_excludesAll_T2_T, true);
+			op_Collection_flatten.setType(_Collection_Collection_flatten_T2_T);
+			op_Collection_includesAll.setType(_Boolean);
+			createParameter(op_Collection_includesAll, "c2", _Collection_Collection_includesAll_T2_T, true);
+			op_Collection_selectByKind.setType(_Collection_Collection_selectByKind_TT_T);
+			createParameter(op_Collection_selectByKind, "type", tp_Collection_selectByKind_TT, true).setIsTypeof(true);
+			op_Collection_selectByType.setType(_Collection_Collection_selectByType_TT_T);
+			createParameter(op_Collection_selectByType, "type", tp_Collection_selectByType_TT, true).setIsTypeof(true);
+			op_Map_excludesAll.setType(_Boolean);
+			createParameter(op_Map_excludesAll, "coll", _Collection_Map_excludesAll_K2_T, true);
+			op_Map_excludesMap.setType(_Boolean);
+			createParameter(op_Map_excludesMap, "map", _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, true);
+			op_Map_excludingMap.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excludingMap, "map", _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, true);
+			op_Map_includesAll.setType(_Boolean);
+			createParameter(op_Map_includesAll, "coll", _Collection_Map_includesAll_K2_T, true);
+			op_Map_includesMap.setType(_Boolean);
+			createParameter(op_Map_includesMap, "map", _Map_Map_includesMap_K2_T_Map_includesMap_V2_T, true);
+			op_Map_includingMap.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_includingMap, "map", _Map_Map_includingMap_K2_T_Map_includingMap_V2_T, true);
+		}
 
-			iteration = it_Collection_collect;
-			iteration.setType(_Collection_Collection_collect_V_T);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Collection_collect_V, false);
-			installComment(iteration, "The Collection of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
+		private void installSlots7a() {
+			// define ALL_PROPERTIES Model
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+		}
 
-			iteration = it_Collection_exists;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createIterator(iteration, "j", tp_Collection_T, false);
-			parameter = createIterator(iteration, "k", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.");
+		private void installSlots7b() {
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			checkSuperClass(_Collection_Tuple_T, _OclAny);
+			checkSuperClass(_OrderedCollection_Integer_T, _Collection_Integer_T);
+			checkSuperClass(_OrderedCollection_String_T, _Collection_String_T);
+			checkSuperClass(_OrderedCollection_Bag_T_T, _Collection_Bag_T_T);
+			checkSuperClass(_OrderedCollection_Collection_T_T, _Collection_Collection_T_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_collectNested_V_T, _Collection_OrderedSet_collectNested_V_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_collect_V_T, _Collection_OrderedSet_collect_V_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_flatten_T2_T, _Collection_OrderedSet_flatten_T2_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_selectByKind_TT_T, _Collection_OrderedSet_selectByKind_TT_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_selectByType_TT_T, _Collection_OrderedSet_selectByType_TT_T);
+			checkSuperClass(_OrderedCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
+			checkSuperClass(_OrderedCollection_Sequence_collectNested_V_T, _Collection_Sequence_collectNested_V_T);
+			checkSuperClass(_OrderedCollection_Sequence_collect_V_T, _Collection_Sequence_collect_V_T);
+			checkSuperClass(_OrderedCollection_Sequence_flatten_T2_T, _Collection_Sequence_flatten_T2_T);
+			checkSuperClass(_OrderedCollection_Sequence_selectByKind_TT_T, _Collection_Sequence_selectByKind_TT_T);
+			checkSuperClass(_OrderedCollection_Sequence_selectByType_TT_T, _Collection_Sequence_selectByType_TT_T);
+			checkSuperClass(_OrderedCollection_Sequence_T_T, _Collection_Sequence_T_T);
+			checkSuperClass(_OrderedCollection_Set_T_T, _Collection_Set_T_T);
+			checkSuperClass(_OrderedCollection_UniqueCollection_T_T, _Collection_UniqueCollection_T_T);
+			checkSuperClass(_UniqueCollection_Tuple_T, _Collection_Tuple_T);
+			checkSuperClass(_UniqueCollection_Bag_T_T, _Collection_Bag_T_T);
+			checkSuperClass(_UniqueCollection_Collection_T_T, _Collection_Collection_T_T);
+			checkSuperClass(_UniqueCollection_Map_K_T, _Collection_Map_K_T);
+			checkSuperClass(_UniqueCollection_OclAny_T, _Collection_OclAny_T);
+			checkSuperClass(_UniqueCollection_OclElement_T, _Collection_OclElement_T);
+			checkSuperClass(_UniqueCollection_OclSelf_T, _Collection_OclSelf_T);
+			checkSuperClass(_UniqueCollection_OrderedSet_flatten_T2_T, _Collection_OrderedSet_flatten_T2_T);
+			checkSuperClass(_UniqueCollection_OrderedSet_selectByKind_TT_T, _Collection_OrderedSet_selectByKind_TT_T);
+			checkSuperClass(_UniqueCollection_OrderedSet_selectByType_TT_T, _Collection_OrderedSet_selectByType_TT_T);
+			checkSuperClass(_UniqueCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
+			checkSuperClass(_UniqueCollection_Sequence_T_T, _Collection_Sequence_T_T);
+			checkSuperClass(_UniqueCollection_Set_flatten_T2_T, _Collection_Set_flatten_T2_T);
+			checkSuperClass(_UniqueCollection_Set_selectByKind_TT_T, _Collection_Set_selectByKind_TT_T);
+			checkSuperClass(_UniqueCollection_Set_selectByType_TT_T, _Collection_Set_selectByType_TT_T);
+			checkSuperClass(_UniqueCollection_Set_T_T, _Collection_Set_T_T);
+			checkSuperClass(_UniqueCollection_UniqueCollection_T_T, _Collection_UniqueCollection_T_T);
+			checkSuperClass(_Bag_Bag_collectNested_V_T, _Collection_Bag_collectNested_V_T);
+			checkSuperClass(_Bag_Bag_collect_V_T, _Collection_Bag_collect_V_T);
+			checkSuperClass(_Bag_Bag_flatten_T2_T, _Collection_Bag_flatten_T2_T);
+			checkSuperClass(_Bag_Bag_selectByKind_TT_T, _Collection_Bag_selectByKind_TT_T);
+			checkSuperClass(_Bag_Bag_selectByType_TT_T, _Collection_Bag_selectByType_TT_T);
+			checkSuperClass(_Bag_Bag_T_T, _Collection_Bag_T_T);
+			checkSuperClass(_Bag_CollectionType_T, _Collection_CollectionType_T);
+			checkSuperClass(_Bag_Collection_T_T, _Collection_Collection_T_T);
+			checkSuperClass(_Bag_MapType_T, _Collection_MapType_T);
+			checkSuperClass(_Bag_Map_collect_V2_T, _Collection_Map_collect_V2_T);
+			checkSuperClass(_Bag_Map_V_T, _Collection_Map_V_T);
+			checkSuperClass(_Bag_OclElement_T, _Collection_OclElement_T);
+			checkSuperClass(_Bag_OclInvalid_T, _Collection_OclInvalid_T);
+			checkSuperClass(_Bag_Set_collectNested_V_T, _Collection_Set_collectNested_V_T);
+			checkSuperClass(_Bag_Set_collect_V_T, _Collection_Set_collect_V_T);
+			addSuperClass(_OrderedSet_OrderedSet_T, _OrderedCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet_OrderedSet_T, _UniqueCollection_OrderedSet_T_T);
+			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_T);
+			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_T);
+			it_Bag_collectNested.setType(_Bag_Bag_collectNested_V_T);
+			createIterator(it_Bag_collectNested, "i", tp_Bag_T, false);
+			createParameter(it_Bag_collectNested, "lambda", _Lambda_Bag_T_Bag_collectNested_V, false);
+			it_Bag_collect.setType(_Bag_Bag_collect_V_T);
+			createIterator(it_Bag_collect, "i", tp_Bag_T, false);
+			createParameter(it_Bag_collect, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
+			it_Bag_reject.setType(_Bag_Bag_T_T);
+			createIterator(it_Bag_reject, "i", tp_Bag_T, false);
+			createParameter(it_Bag_reject, "lambda", _Lambda_Bag_T_Boolean, true);
+			it_Bag_select.setType(_Bag_Bag_T_T);
+			createIterator(it_Bag_select, "i", tp_Bag_T, false);
+			createParameter(it_Bag_select, "lambda", _Lambda_Bag_T_Boolean, true);
+			it_Map_collect.setType(_Bag_Map_collect_V2_T);
+			createIterator(it_Map_collect, "k", tp_Map_K, false);
+			createParameter(it_Map_collect, "lambda", _Lambda_Map_K_Map_collect_V2, false);
+			it_Set_collectNested.setType(_Bag_Set_collectNested_V_T);
+			createIterator(it_Set_collectNested, "i", tp_Set_T, false);
+			createParameter(it_Set_collectNested, "lambda", _Lambda_Set_T_Set_collectNested_V, false);
+			it_Set_collect.setType(_Bag_Set_collect_V_T);
+			createIterator(it_Set_collect, "i", tp_Set_T, false);
+			createParameter(it_Set_collect, "lambda", _Lambda_Set_T_Set_collect_V, false);
+			op_Bag_excluding.setType(_Bag_Bag_T_T);
+			createParameter(op_Bag_excluding, "object", tp_Bag_T, false);
+			op_Bag_excludingAll.setType(_Bag_Bag_T_T);
+			createParameter(op_Bag_excludingAll, "objects", _Collection_Bag_T_T, true);
+			op_Bag_flatten.setType(_Bag_Bag_flatten_T2_T);
+			op_Bag_including.setType(_Bag_Bag_T_T);
+			createParameter(op_Bag_including, "object", tp_Bag_T, false);
+			op_Bag_includingAll.setType(_Bag_Bag_T_T);
+			createParameter(op_Bag_includingAll, "objects", _Collection_Bag_T_T, true);
+			op_Bag_selectByKind.setType(_Bag_Bag_selectByKind_TT_T);
+			createParameter(op_Bag_selectByKind, "type", tp_Bag_selectByKind_TT, true).setIsTypeof(true);
+			op_Bag_selectByType.setType(_Bag_Bag_selectByType_TT_T);
+			createParameter(op_Bag_selectByType, "type", tp_Bag_selectByType_TT, true).setIsTypeof(true);
+			op_Collection_asBag.setType(_Bag_Collection_T_T);
+			op_Collection_intersection.setType(_Bag_Collection_T_T);
+			createParameter(op_Collection_intersection, "c", _Collection_Collection_T_T, true);
+			op_Collection_union.setType(_Bag_Collection_T_T);
+			createParameter(op_Collection_union, "c", _Collection_Collection_T_T, true);
+			op_Map_values.setType(_Bag_Map_V_T);
+			op_UniqueCollection__neg_.setType(_UniqueCollection_UniqueCollection_T_T);
+			op_UniqueCollection__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_UniqueCollection__neg_, "s", _UniqueCollection_OclAny_T, true);
+		}
 
-			iteration = it_Collection_exists_1;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createIterator(iteration, "j", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.");
+		private void installSlots8() {
+			_OrderedSet_Collection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Collection_T, true, 0, -1);
+			_OrderedSet_OrderedSet_flatten_T2_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
+			_OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, true, 0, -1);
+			_OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Sequence_T, true, 0, -1);
+			_OrderedSet_Set_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Set_T, true, 0, -1);
+			_OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T, true, 0, -1);
+			_Sequence_Integer_T = getCollectionType(_Sequence_Sequence_T, _Integer, true, 0, -1);
+			_Sequence_String_T = getCollectionType(_Sequence_Sequence_T, _String, true, 0, -1);
+			_Sequence_Bag_T_T = getCollectionType(_Sequence_Sequence_T, tp_Bag_T, true, 0, -1);
+			_Sequence_Collection_T_T = getCollectionType(_Sequence_Sequence_T, tp_Collection_T, true, 0, -1);
+			_Sequence_OrderedSet_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collectNested_V, true, 0, -1);
+			_Sequence_OrderedSet_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collect_V, true, 0, -1);
+			_Sequence_Sequence_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collectNested_V, true, 0, -1);
+			_Sequence_Sequence_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collect_V, true, 0, -1);
+			_Sequence_Sequence_flatten_T2_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_flatten_T2, true, 0, -1);
+			_Sequence_Sequence_selectByKind_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByKind_TT, true, 0, -1);
+			_Sequence_Sequence_selectByType_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByType_TT, true, 0, -1);
+			_Sequence_Sequence_T_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_T, true, 0, -1);
+			_Set_Tuple_T = getCollectionType(_Set_Set_T, _Tuple, true, 0, -1);
+			_Set_Bag_T_T = getCollectionType(_Set_Set_T, tp_Bag_T, true, 0, -1);
+			_Set_Collection_T_T = getCollectionType(_Set_Set_T, tp_Collection_T, true, 0, -1);
+			_Set_Map_K_T = getCollectionType(_Set_Set_T, tp_Map_K, true, 0, -1);
+			_Set_OclElement_T = getCollectionType(_Set_Set_T, _OclElement, true, 0, -1);
+			_Set_OclSelf_T = getCollectionType(_Set_Set_T, _OclSelf, true, 0, -1);
+			_Set_OclSelf_F = getCollectionType(_Set_Set_T, _OclSelf, false, 0, -1);
+			_Set_Set_flatten_T2_T = getCollectionType(_Set_Set_T, tp_Set_flatten_T2, true, 0, -1);
+			_Set_Set_selectByKind_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByKind_TT, true, 0, -1);
+			_Set_Set_selectByType_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByType_TT, true, 0, -1);
+			_Set_Set_T_T = getCollectionType(_Set_Set_T, tp_Set_T, true, 0, -1);
+			_Set_UniqueCollection_T_T = getCollectionType(_Set_Set_T, tp_UniqueCollection_T, true, 0, -1);
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES InvalidType
+		}
 
-			iteration = it_Collection_exists_2;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.");
+		private void installSlots9a() {
+			// define CTOR Property
+			_Lambda_Bag_T_Set = getLambdaType(_OclLambda, tp_Bag_T, _Set_Bag_T_T);
+			_Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T_T);
+			_Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, tp_Sequence_T, _OrderedSet_Sequence_T_T);
+			_Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T_T);
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			checkSuperClass(_OrderedSet_Collection_T_T, _OrderedCollection_Collection_T_T);
+			checkSuperClass(_OrderedSet_Collection_T_T, _UniqueCollection_Collection_T_T);
+			checkSuperClass(_OrderedSet_OrderedSet_flatten_T2_T, _OrderedCollection_OrderedSet_flatten_T2_T);
+			checkSuperClass(_OrderedSet_OrderedSet_flatten_T2_T, _UniqueCollection_OrderedSet_flatten_T2_T);
+			checkSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T, _OrderedCollection_OrderedSet_selectByKind_TT_T);
+			checkSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T, _UniqueCollection_OrderedSet_selectByKind_TT_T);
+			checkSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _OrderedCollection_OrderedSet_selectByType_TT_T);
+			checkSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _UniqueCollection_OrderedSet_selectByType_TT_T);
+			checkSuperClass(_OrderedSet_OrderedSet_T_T, _OrderedCollection_OrderedSet_T_T);
+			checkSuperClass(_OrderedSet_OrderedSet_T_T, _UniqueCollection_OrderedSet_T_T);
+			checkSuperClass(_OrderedSet_Sequence_T_T, _OrderedCollection_Sequence_T_T);
+			checkSuperClass(_OrderedSet_Sequence_T_T, _UniqueCollection_Sequence_T_T);
+			checkSuperClass(_OrderedSet_Set_T_T, _OrderedCollection_Set_T_T);
+			checkSuperClass(_OrderedSet_Set_T_T, _UniqueCollection_Set_T_T);
+			checkSuperClass(_OrderedSet_UniqueCollection_T_T, _OrderedCollection_UniqueCollection_T_T);
+			checkSuperClass(_OrderedSet_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
+			checkSuperClass(_Sequence_Integer_T, _OrderedCollection_Integer_T);
+			checkSuperClass(_Sequence_String_T, _OrderedCollection_String_T);
+			checkSuperClass(_Sequence_Bag_T_T, _OrderedCollection_Bag_T_T);
+			checkSuperClass(_Sequence_Collection_T_T, _OrderedCollection_Collection_T_T);
+			checkSuperClass(_Sequence_OrderedSet_collectNested_V_T, _OrderedCollection_OrderedSet_collectNested_V_T);
+			checkSuperClass(_Sequence_OrderedSet_collect_V_T, _OrderedCollection_OrderedSet_collect_V_T);
+			checkSuperClass(_Sequence_Sequence_collectNested_V_T, _OrderedCollection_Sequence_collectNested_V_T);
+			checkSuperClass(_Sequence_Sequence_collect_V_T, _OrderedCollection_Sequence_collect_V_T);
+			checkSuperClass(_Sequence_Sequence_flatten_T2_T, _OrderedCollection_Sequence_flatten_T2_T);
+			checkSuperClass(_Sequence_Sequence_selectByKind_TT_T, _OrderedCollection_Sequence_selectByKind_TT_T);
+			checkSuperClass(_Sequence_Sequence_selectByType_TT_T, _OrderedCollection_Sequence_selectByType_TT_T);
+			checkSuperClass(_Sequence_Sequence_T_T, _OrderedCollection_Sequence_T_T);
+			checkSuperClass(_Set_Tuple_T, _UniqueCollection_Tuple_T);
+			checkSuperClass(_Set_Bag_T_T, _UniqueCollection_Bag_T_T);
+			checkSuperClass(_Set_Collection_T_T, _UniqueCollection_Collection_T_T);
+			checkSuperClass(_Set_Map_K_T, _UniqueCollection_Map_K_T);
+			checkSuperClass(_Set_OclElement_T, _UniqueCollection_OclElement_T);
+			checkSuperClass(_Set_OclSelf_T, _UniqueCollection_OclSelf_T);
+			checkSuperClass(_Set_OclSelf_F, _UniqueCollection_OclSelf_T);
+			checkSuperClass(_Set_Set_flatten_T2_T, _UniqueCollection_Set_flatten_T2_T);
+			checkSuperClass(_Set_Set_selectByKind_TT_T, _UniqueCollection_Set_selectByKind_TT_T);
+			checkSuperClass(_Set_Set_selectByType_TT_T, _UniqueCollection_Set_selectByType_TT_T);
+			checkSuperClass(_Set_Set_T_T, _UniqueCollection_Set_T_T);
+		}
 
-			iteration = it_Collection_forAll;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createIterator(iteration, "j", tp_Collection_T, false);
-			parameter = createIterator(iteration, "k", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].");
+		private void installSlots9b() {
+			checkSuperClass(_Set_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
+			it_Bag_sortedBy.setType(_Sequence_Bag_T_T);
+			createIterator(it_Bag_sortedBy, "i", tp_Bag_T, false);
+			createParameter(it_Bag_sortedBy, "lambda", _Lambda_Bag_T_OclAny, false);
+			it_Collection_sortedBy.setType(_Sequence_Collection_T_T);
+			createIterator(it_Collection_sortedBy, "i", tp_Collection_T, false);
+			createParameter(it_Collection_sortedBy, "lambda", _Lambda_Collection_T_OclAny, false);
+			it_OrderedSet_collectNested.setType(_Sequence_OrderedSet_collectNested_V_T);
+			createIterator(it_OrderedSet_collectNested, "i", tp_OrderedSet_T, false);
+			createParameter(it_OrderedSet_collectNested, "lambda", _Lambda_OrderedSet_T_OrderedSet_collectNested_V, false);
+			it_OrderedSet_collect.setType(_Sequence_OrderedSet_collect_V_T);
+			createIterator(it_OrderedSet_collect, "i", tp_OrderedSet_T, false);
+			createParameter(it_OrderedSet_collect, "lambda", _Lambda_OrderedSet_T_OrderedSet_collect_V, false);
+			it_OrderedSet_reject.setType(_OrderedSet_OrderedSet_T_T);
+			createIterator(it_OrderedSet_reject, "i", tp_OrderedSet_T, false);
+			createParameter(it_OrderedSet_reject, "lambda", _Lambda_OrderedSet_T_Boolean, true);
+			it_OrderedSet_select.setType(_OrderedSet_OrderedSet_T_T);
+			createIterator(it_OrderedSet_select, "i", tp_OrderedSet_T, false);
+			createParameter(it_OrderedSet_select, "lambda", _Lambda_OrderedSet_T_Boolean, true);
+			it_OrderedSet_sortedBy.setType(_OrderedSet_OrderedSet_T_T);
+			createIterator(it_OrderedSet_sortedBy, "i", tp_OrderedSet_T, false);
+			createParameter(it_OrderedSet_sortedBy, "lambda", _Lambda_OrderedSet_T_OclAny, false);
+			it_Sequence_collectNested.setType(_Sequence_Sequence_collectNested_V_T);
+			createIterator(it_Sequence_collectNested, "i", tp_Sequence_T, false);
+			createParameter(it_Sequence_collectNested, "lambda", _Lambda_Sequence_T_Sequence_collectNested_V, false);
+			it_Sequence_collect.setType(_Sequence_Sequence_collect_V_T);
+			createIterator(it_Sequence_collect, "i", tp_Sequence_T, false);
+			createParameter(it_Sequence_collect, "lambda", _Lambda_Sequence_T_Sequence_collect_V, false);
+			it_Sequence_reject.setType(_Sequence_Sequence_T_T);
+			createIterator(it_Sequence_reject, "i", tp_Sequence_T, false);
+			createParameter(it_Sequence_reject, "lambda", _Lambda_Sequence_T_Boolean, true);
+			it_Sequence_select.setType(_Sequence_Sequence_T_T);
+			createIterator(it_Sequence_select, "i", tp_Sequence_T, false);
+			createParameter(it_Sequence_select, "lambda", _Lambda_Sequence_T_Boolean, true);
+			it_Sequence_sortedBy.setType(_Sequence_Sequence_T_T);
+			createIterator(it_Sequence_sortedBy, "i", tp_Sequence_T, false);
+			createParameter(it_Sequence_sortedBy, "lambda", _Lambda_Sequence_T_OclAny, false);
+			it_Set_reject.setType(_Set_Set_T_T);
+			createIterator(it_Set_reject, "i", tp_Set_T, false);
+			createParameter(it_Set_reject, "lambda", _Lambda_Set_T_Boolean, true);
+			it_Set_select.setType(_Set_Set_T_T);
+			createIterator(it_Set_select, "i", tp_Set_T, false);
+			createParameter(it_Set_select, "lambda", _Lambda_Set_T_Boolean, true);
+			it_Set_sortedBy.setType(_OrderedSet_Set_T_T);
+			createIterator(it_Set_sortedBy, "i", tp_Set_T, false);
+			createParameter(it_Set_sortedBy, "lambda", _Lambda_Set_T_OclAny, false);
+			it_UniqueCollection_sortedBy.setType(_OrderedSet_UniqueCollection_T_T);
+			createIterator(it_UniqueCollection_sortedBy, "i", tp_UniqueCollection_T, false);
+			createParameter(it_UniqueCollection_sortedBy, "lambda", _Lambda_UniqueCollection_T_OclAny, false);
+			op_Boolean_allInstances.setType(_Set_OclSelf_T);
+			createParameter(op_Boolean_allInstances, "dummy", _Integer, true);
+			op_String_characters.setType(_Sequence_String_T);
+			op_String_tokenize.setType(_Sequence_String_T);
+			op_String_tokenize_1.setType(_Sequence_String_T);
+			createParameter(op_String_tokenize_1, "delimiters", _String, true);
+			op_String_tokenize_2.setType(_Sequence_String_T);
+			createParameter(op_String_tokenize_2, "delimiters", _String, true);
+			createParameter(op_String_tokenize_2, "returnDelimiters", _Boolean, true);
+			op_BooleanType_allInstances.setType(_Set_OclSelf_T);
+			op_Class_allInstances.setType(_Set_OclSelf_T);
+			op_Collection_asOrderedSet.setType(_OrderedSet_Collection_T_T);
+			op_Collection_asSequence.setType(_Sequence_Collection_T_T);
+			op_Collection_asSet.setType(_Set_Collection_T_T);
+			op_Collection_intersection_1.setType(_Set_Collection_T_T);
+			createParameter(op_Collection_intersection_1, "u", _UniqueCollection_Collection_T_T, true);
+			op_Collection_product.setType(_Set_Tuple_T);
+			createParameter(op_Collection_product, "c2", _Collection_Collection_product_T2_T, true);
+			op_Enumeration_allInstances.setType(_Set_OclSelf_T);
+			op_InvalidType_allInstances.setType(_Set_OclSelf_T);
+			op_Map_keys.setType(_Set_Map_K_T);
+			op_OclAny_oclAsSet.setType(_Set_OclSelf_T);
+			op_OclAny_oclTypes.setType(_Set_OclSelf_T);
+			op_OclElement_allInstances.setType(_Set_OclSelf_T);
+			createParameter(op_OclElement_allInstances, "dummy", _Integer, true);
+			op_OclElement_oclContents.setType(_Set_OclElement_T);
+			op_OclElement_oclExtensions.setType(_Set_OclElement_T);
+			op_OclElement_oclExtensions_1.setType(_Set_OclElement_T);
+			createParameter(op_OclElement_oclExtensions_1, "stereotype", _OclStereotype, true);
+			op_OclElement_oclModelTypes.setType(_Set_OclSelf_T);
+			op_OclEnumeration_allInstances.setType(_Set_OclSelf_T);
+			createParameter(op_OclEnumeration_allInstances, "dummy", _Integer, true);
+			op_OclInvalid_allInstances.setType(_Set_OclSelf_T);
+			createParameter(op_OclInvalid_allInstances, "dummy", _Integer, true);
+			op_OclInvalid_oclAsSet.setType(_Set_OclSelf_T);
+			op_OclStereotype_allInstances.setType(_Set_OclSelf_T);
+			createParameter(op_OclStereotype_allInstances, "dummy", _Integer, true);
+			op_OclVoid_allInstances.setType(_Set_OclSelf_F);
+			createParameter(op_OclVoid_allInstances, "dummy", _Integer, true);
+			op_OclVoid_oclAsSet.setType(_Set_OclSelf_T);
+			op_OclVoid_oclTypes.setType(_Set_OclSelf_T);
+			op_OrderedSet__neg_.setType(_OrderedSet_OrderedSet_T_T);
+			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_OrderedSet__neg_, "s", _UniqueCollection_OclAny_T, true);
+			op_OrderedSet_append.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_append, "object", tp_OrderedSet_T, false);
+			op_OrderedSet_appendAll.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_appendAll, "objects", _OrderedCollection_OrderedSet_T_T, true);
+			op_OrderedSet_excluding.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_excluding, "object", tp_OrderedSet_T, false);
+			op_OrderedSet_excludingAll.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_excludingAll, "objects", _Collection_OrderedSet_T_T, true);
+			op_OrderedSet_flatten.setType(_OrderedSet_OrderedSet_flatten_T2_T);
+			op_OrderedSet_including.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_including, "object", tp_OrderedSet_T, false);
+			op_OrderedSet_includingAll.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_includingAll, "objects", _Collection_OrderedSet_T_T, true);
+			op_OrderedSet_insertAt.setType(_OrderedSet_OrderedSet_T_T);
+			op_OrderedSet_insertAt.setIsInvalidating(true);
+			createParameter(op_OrderedSet_insertAt, "index", _Integer, true);
+			createParameter(op_OrderedSet_insertAt, "object", tp_OrderedSet_T, false);
+			op_OrderedSet_prepend.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_prepend, "object", tp_OrderedSet_T, false);
+			op_OrderedSet_prependAll.setType(_OrderedSet_OrderedSet_T_T);
+			createParameter(op_OrderedSet_prependAll, "objects", _OrderedCollection_OrderedSet_T_T, true);
+			op_OrderedSet_reverse.setType(_OrderedSet_OrderedSet_T_T);
+			op_OrderedSet_selectByKind.setType(_OrderedSet_OrderedSet_selectByKind_TT_T);
+			createParameter(op_OrderedSet_selectByKind, "type", tp_OrderedSet_selectByKind_TT, true).setIsTypeof(true);
+			op_OrderedSet_selectByType.setType(_OrderedSet_OrderedSet_selectByType_TT_T);
+			createParameter(op_OrderedSet_selectByType, "type", tp_OrderedSet_selectByType_TT, true).setIsTypeof(true);
+			op_OrderedSet_subOrderedSet.setType(_OrderedSet_OrderedSet_T_T);
+			op_OrderedSet_subOrderedSet.setIsInvalidating(true);
+			createParameter(op_OrderedSet_subOrderedSet, "lower", _Integer, true);
+			createParameter(op_OrderedSet_subOrderedSet, "upper", _Integer, true);
+			op_Sequence_append.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_append, "object", tp_Sequence_T, false);
+			op_Sequence_appendAll.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_appendAll, "objects", _OrderedCollection_Sequence_T_T, true);
+			op_Sequence_excluding.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_excluding, "object", tp_Sequence_T, false);
+			op_Sequence_excludingAll.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_excludingAll, "objects", _Collection_Sequence_T_T, true);
+			op_Sequence_flatten.setType(_Sequence_Sequence_flatten_T2_T);
+			op_Sequence_including.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_including, "object", tp_Sequence_T, false);
+			op_Sequence_includingAll.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_includingAll, "objects", _Collection_Sequence_T_T, true);
+			op_Sequence_insertAt.setType(_Sequence_Sequence_T_T);
+			op_Sequence_insertAt.setIsInvalidating(true);
+			createParameter(op_Sequence_insertAt, "index", _Integer, true);
+			createParameter(op_Sequence_insertAt, "object", tp_Sequence_T, false);
+			op_Sequence_prepend.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_prepend, "object", tp_Sequence_T, false);
+			op_Sequence_prependAll.setType(_Sequence_Sequence_T_T);
+			createParameter(op_Sequence_prependAll, "objects", _OrderedCollection_Sequence_T_T, true);
+			op_Sequence_reverse.setType(_Sequence_Sequence_T_T);
+			op_Sequence_selectByKind.setType(_Sequence_Sequence_selectByKind_TT_T);
+			createParameter(op_Sequence_selectByKind, "type", tp_Sequence_selectByKind_TT, true).setIsTypeof(true);
+			op_Sequence_selectByType.setType(_Sequence_Sequence_selectByType_TT_T);
+			createParameter(op_Sequence_selectByType, "type", tp_Sequence_selectByType_TT, true).setIsTypeof(true);
+			op_Sequence_subSequence.setType(_Sequence_Sequence_T_T);
+			op_Sequence_subSequence.setIsInvalidating(true);
+			createParameter(op_Sequence_subSequence, "lower", _Integer, true);
+			createParameter(op_Sequence_subSequence, "upper", _Integer, true);
+			op_Set__neg_.setType(_Set_Set_T_T);
+			op_Set__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Set__neg_, "s", _UniqueCollection_OclAny_T, true);
+			op_Set_excluding.setType(_Set_Set_T_T);
+			createParameter(op_Set_excluding, "object", tp_Set_T, false);
+			op_Set_excludingAll.setType(_Set_Set_T_T);
+			createParameter(op_Set_excludingAll, "objects", _Collection_Set_T_T, true);
+			op_Set_flatten.setType(_Set_Set_flatten_T2_T);
+			op_Set_including.setType(_Set_Set_T_T);
+			createParameter(op_Set_including, "object", tp_Set_T, false);
+			op_Set_includingAll.setType(_Set_Set_T_T);
+			createParameter(op_Set_includingAll, "objects", _Collection_Set_T_T, true);
+			op_Set_selectByKind.setType(_Set_Set_selectByKind_TT_T);
+			createParameter(op_Set_selectByKind, "type", tp_Set_selectByKind_TT, true).setIsTypeof(true);
+			op_Set_selectByType.setType(_Set_Set_selectByType_TT_T);
+			createParameter(op_Set_selectByType, "type", tp_Set_selectByType_TT, true).setIsTypeof(true);
+			op_Stereotype_allInstances.setType(_Set_OclSelf_T);
+			op_UniqueCollection_intersection.setType(_Set_UniqueCollection_T_T);
+			createParameter(op_UniqueCollection_intersection, "c", _Collection_UniqueCollection_T_T, true);
+			op_UniqueCollection_symmetricDifference.setType(_Set_UniqueCollection_T_T);
+			createParameter(op_UniqueCollection_symmetricDifference, "s", _UniqueCollection_OclAny_T, true);
+			op_UniqueCollection_union.setType(_Set_UniqueCollection_T_T);
+			createParameter(op_UniqueCollection_union, "s", _UniqueCollection_UniqueCollection_T_T, true);
+			op_VoidType_allInstances.setType(_Set_OclSelf_F);
+		}
 
-			iteration = it_Collection_forAll_1;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createIterator(iteration, "j", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].");
+		private void installSlots10() {
+			// define FRAGMENT_OPERATIONS Model
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define OPERATIONS LambdaType
+			// define PROPERTIES Class
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			// define PROPERTIES LambdaType
+			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
+			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
+			it_Bag_closure.setType(_Set_Bag_T_T);
+			createIterator(it_Bag_closure, "i", tp_Bag_T, true);
+			createParameter(it_Bag_closure, "lambda", _Lambda_Bag_T_Set, false);
+			it_OrderedSet_closure.setType(_OrderedSet_OrderedSet_T_T);
+			createIterator(it_OrderedSet_closure, "i", tp_OrderedSet_T, true);
+			createParameter(it_OrderedSet_closure, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
+			it_Sequence_closure.setType(_OrderedSet_Sequence_T_T);
+			createIterator(it_Sequence_closure, "i", tp_Sequence_T, true);
+			createParameter(it_Sequence_closure, "lambda", _Lambda_Sequence_T_OrderedSet, false);
+			it_Set_closure.setType(_Set_Set_T_T);
+			createIterator(it_Set_closure, "i", tp_Set_T, true);
+			createParameter(it_Set_closure, "lambda", _Lambda_Set_T_Set, false);
+		}
 
-			iteration = it_Collection_forAll_2;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].");
+		private void installSlots11() {
+			// define FRAGMENT_PROPERTIES Model
+		}
 
-			iteration = it_Collection_isUnique;
-			iteration.setType(_Boolean);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_OclAny, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].");
-			installComment(iteration, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
-
-			iteration = it_Collection_iterate;
-			iteration.setType(tp_Collection_iterate_Tacc);
-			iteration.setIsRequired(false);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createAccumulator(iteration, "acc", tp_Collection_iterate_Tacc, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Collection_iterate_Tacc, false);
-			installComment(iteration, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.");
-
-			iteration = it_Collection_one;
-			iteration.setType(_Boolean);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, true);
-			installComment(iteration, "Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].");
-
-			iteration = it_Collection_reject;
-			iteration.setType(_Collection_Collection_T_T);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, true);
-			installComment(iteration, "The sub-collection of the source collection for which body is oclText[false].");
-
-			iteration = it_Collection_select;
-			iteration.setType(_Collection_Collection_T_T);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, true);
-			installComment(iteration, "The sub-collection of the source collection for which body is oclText[true].");
-
-			iteration = it_Collection_sortedBy;
-			iteration.setType(_Sequence_Collection_T_T);
-			parameter = createIterator(iteration, "i", tp_Collection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_OclAny, false);
-			installComment(iteration, "Results in the Collection containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
-
-			iteration = it_Map_any;
-			iteration.setType(tp_Map_K);
-			iteration.setIsRequired(false);
-			parameter = createIterator(iteration, "k", tp_Map_K, true);
-			parameter = createParameter(iteration, "body", _Lambda_Map_K_Boolean, true);
-			installComment(iteration, "Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,\notherwise if there are one or more kets for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].\n\nlet source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in\nsource->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()");
-
-			iteration = it_Map_collectBy;
-			iteration.setType(_Map_Map_K_F_Map_collectBy_V2_F);
-			parameter = createIterator(iteration, "k", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Map_collectBy_V2, false);
-			installComment(iteration, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
-
-			iteration = it_Map_collectNested;
-			iteration.setType(_Map_Map_K_F_Map_collectNested_V2_F);
-			parameter = createIterator(iteration, "k", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Map_collectNested_V2, false);
-			installComment(iteration, "The Map of key and values which results from applying body to every value of the source map.");
-
-			iteration = it_Map_collect;
-			iteration.setType(_Bag_Map_collect_V2_T);
-			parameter = createIterator(iteration, "k", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Map_collect_V2, false);
-			installComment(iteration, "The Map of key and values that results from applying body to every value of the source map.\nThe result is flattened.");
-
-			iteration = it_Map_exists;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k1", tp_Map_K, false);
-			parameter = createIterator(iteration, "k2", tp_Map_K, false);
-			parameter = createIterator(iteration, "k3", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.");
-
-			iteration = it_Map_exists_1;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k1", tp_Map_K, false);
-			parameter = createIterator(iteration, "k2", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.");
-
-			iteration = it_Map_exists_2;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.");
-
-			iteration = it_Map_forAll;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k1", tp_Map_K, false);
-			parameter = createIterator(iteration, "k2", tp_Map_K, false);
-			parameter = createIterator(iteration, "k3", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].");
-
-			iteration = it_Map_forAll_1;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k1", tp_Map_K, false);
-			parameter = createIterator(iteration, "k2", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].");
-
-			iteration = it_Map_forAll_2;
-			iteration.setType(_Boolean);
-			iteration.setIsInvalidating(true);
-			iteration.setIsRequired(false);
-			iteration.setIsValidating(true);
-			parameter = createIterator(iteration, "k", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, false);
-			installComment(iteration, "Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].");
-
-			iteration = it_Map_isUnique;
-			iteration.setType(_Boolean);
-			parameter = createIterator(iteration, "i", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_OclAny, false);
-			installComment(iteration, "Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].");
-
-			iteration = it_Map_iterate;
-			iteration.setType(tp_Map_iterate_Tacc);
-			iteration.setIsRequired(false);
-			parameter = createIterator(iteration, "i", tp_Map_K, false);
-			parameter = createAccumulator(iteration, "acc", tp_Map_iterate_Tacc, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Map_iterate_Tacc, false);
-			installComment(iteration, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.");
-
-			iteration = it_Map_one;
-			iteration.setType(_Boolean);
-			parameter = createIterator(iteration, "i", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, true);
-			installComment(iteration, "Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].");
-
-			iteration = it_Map_reject;
-			iteration.setType(_Map_Map_K_F_Map_V_F);
-			parameter = createIterator(iteration, "i", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, true);
-			installComment(iteration, "The subset of the source set for which body is oclText[false].");
-
-			iteration = it_Map_select;
-			iteration.setType(_Map_Map_K_F_Map_V_F);
-			parameter = createIterator(iteration, "i", tp_Map_K, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Map_K_Boolean, true);
-			installComment(iteration, "The subset of set for which expr is oclText[true].");
-
-			iteration = it_OrderedSet_closure;
-			iteration.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, true);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
-			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
-
-			iteration = it_OrderedSet_collectNested;
-			iteration.setType(_Sequence_OrderedSet_collectNested_V_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OrderedSet_collectNested_V, false);
-			installComment(iteration, "The sequence of elements that results from applying body to every member of the source ordered collection.");
-
-			iteration = it_OrderedSet_collect;
-			iteration.setType(_Sequence_OrderedSet_collect_V_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OrderedSet_collect_V, false);
-			installComment(iteration, "The Sequence of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
-
-			iteration = it_OrderedSet_reject;
-			iteration.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_Boolean, true);
-			installComment(iteration, "The ordered set of the source ordered set for which body is oclText[false].");
-
-			iteration = it_OrderedSet_select;
-			iteration.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_Boolean, true);
-			installComment(iteration, "The ordered set of the source ordered set for which body is oclText[true]");
-
-			iteration = it_OrderedSet_sortedBy;
-			iteration.setType(_OrderedSet_OrderedSet_T_T);
-			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OclAny, false);
-			installComment(iteration, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
-
-			iteration = it_Sequence_closure;
-			iteration.setType(_OrderedSet_Sequence_T_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, true);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_OrderedSet, false);
-			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
-
-			iteration = it_Sequence_collectNested;
-			iteration.setType(_Sequence_Sequence_collectNested_V_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Sequence_collectNested_V, false);
-			installComment(iteration, "The sequence of elements that results from applying body to every member of the source ordered collection.");
-
-			iteration = it_Sequence_collect;
-			iteration.setType(_Sequence_Sequence_collect_V_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Sequence_collect_V, false);
-			installComment(iteration, "The Bag of elements that results from applying body to every member of the source sequence.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
-
-			iteration = it_Sequence_reject;
-			iteration.setType(_Sequence_Sequence_T_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Boolean, true);
-			installComment(iteration, "The subsequence of the source sequence for which body is oclText[false].");
-
-			iteration = it_Sequence_select;
-			iteration.setType(_Sequence_Sequence_T_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Boolean, true);
-			installComment(iteration, "The subsequence of the source sequence for which body is oclText[true].");
-
-			iteration = it_Sequence_sortedBy;
-			iteration.setType(_Sequence_Sequence_T_T);
-			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_OclAny, false);
-			installComment(iteration, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
-
-			iteration = it_Set_closure;
-			iteration.setType(_Set_Set_T_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, true);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Set, false);
-			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
-
-			iteration = it_Set_collectNested;
-			iteration.setType(_Bag_Set_collectNested_V_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Set_collectNested_V, false);
-			installComment(iteration, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
-
-			iteration = it_Set_collect;
-			iteration.setType(_Bag_Set_collect_V_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Set_collect_V, false);
-			installComment(iteration, "The Bag of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
-
-			iteration = it_Set_reject;
-			iteration.setType(_Set_Set_T_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Boolean, true);
-			installComment(iteration, "The subset of the source set for which body is oclText[false].");
-
-			iteration = it_Set_select;
-			iteration.setType(_Set_Set_T_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Boolean, true);
-			installComment(iteration, "The subset of set for which expr is oclText[true].");
-
-			iteration = it_Set_sortedBy;
-			iteration.setType(_OrderedSet_Set_T_T);
-			parameter = createIterator(iteration, "i", tp_Set_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_OclAny, false);
-			installComment(iteration, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
-
-			iteration = it_UniqueCollection_sortedBy;
-			iteration.setType(_OrderedSet_UniqueCollection_T_T);
-			parameter = createIterator(iteration, "i", tp_UniqueCollection_T, false);
-			parameter = createParameter(iteration, "lambda", _Lambda_UniqueCollection_T_OclAny, false);
-			installComment(iteration, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
+		private void installSlots12() {
+			// define ENUMERATION_LITERALS Model
 		}
 
 		private void installProperties() {

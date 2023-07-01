@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
@@ -48,16 +47,13 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -100,21 +96,12 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
-		Resource resource = eObject.eResource();
-		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType);
-		}
-		else if (resource instanceof ASResource) {				// This used to be thefirst choice; now it should never happen
-			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType);
-		}
-		else {													// This too should never happen
-			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType);
-		}
+		return environmentFactory.createTemplateParameterSubstitutionVisitor(selfType);
 	}
 
 	/**
-	 * Return the specialized form of type analyzing expr to determine the formal to actual parameter mappings under the
-	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
+	 * Return the specialized form of type analyzing callExp to determine the formal to actual parameter mappings under the
+	 * supervision of an environmentFactory and using selfType as the value of OclSelf.
 	 */
 	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
 		// assert type == callExp.getType();		// No type is a clue for assignment to callEXp.getType();
@@ -265,8 +252,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		int index = elementId.getIndex();
 		Type oldType = context.get(index);
 		if (oldType != null) {
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			Type commonType = oldType.getCommonType(idResolver, actualType);
+			Type commonType = environmentFactory.getStandardLibrary().getCommonType(oldType, actualType);
 			Type bestType = environmentFactory.getMetamodelManager().getPrimaryType(commonType);
 			if (bestType != oldType) {
 				context.put(index, bestType);
@@ -341,7 +327,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 						else {
 							TemplateParameter formalParameter = ownedTemplateParameterSubstitution.getFormal();
 							if (formalParameter != null) {
-								actualType = PivotUtil.basicGetLowerBound(formalParameter);
+								actualType = standardLibrary.getLowerBound(formalParameter);
 							}
 						}
 						if (actualType == null) {

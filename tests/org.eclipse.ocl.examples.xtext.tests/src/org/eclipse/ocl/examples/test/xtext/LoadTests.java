@@ -97,7 +97,7 @@ public class LoadTests extends XtextTestCase
 	protected static final @NonNull String @NonNull [] NO_MESSAGES = new @NonNull String[] {};
 
 	/*	public void checkMonikers(Resource resource) {
-		Map<String, NamedElementCS> sigMap = new HashMap<String, NamedElementCS>();
+		Map<String, NamedElementCS> sigMap = new HashMap<>();
 		for (Iterator<EObject> it = resource.getAllContents(); it.hasNext(); ) {
 			EObject eObject = it.next();
 			@SuppressWarnings("unused")
@@ -117,7 +117,7 @@ public class LoadTests extends XtextTestCase
 				System.out.println(moniker + "                              -> " + nameableElementCS.eClass().getName()); // + " : " + value.toString());
 			}
 		}
-		List<String> keys = new ArrayList<String>(sigMap.keySet());
+		List<String> keys = new ArrayList<>(sigMap.keySet());
 		Collections.sort(keys);
 		for (String key : keys) {
 			ModelElementCS value = sigMap.get(key);
@@ -400,7 +400,7 @@ public class LoadTests extends XtextTestCase
 			UML2AS adapter = UML2AS.getAdapter(umlResource, environmentFactory);
 			UML2AS.Outer rootAdapter = adapter.getRoot();
 			Model pivotModel = rootAdapter.getASModel();
-			List<Resource> allResources = new ArrayList<Resource>();
+			List<Resource> allResources = new ArrayList<>();
 			allResources.add(pivotModel.eResource());
 			List<Resource> importedResources = rootAdapter.getImportedResources();
 			if (importedResources != null) {
@@ -558,6 +558,7 @@ public class LoadTests extends XtextTestCase
 		CS2AS cs2as = xtextResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
+		//	asResource.setSaveable(true);
 			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
 			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
@@ -752,7 +753,7 @@ public class LoadTests extends XtextTestCase
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Expression.oclinecore"));
 		String ecoreName = "Expression" + ".saved.ecore";
 		URI ecoreURI = getTestFileURI(ecoreName);
-		Map<String,Object> options = new HashMap<String,Object>();
+		Map<String,Object> options = new HashMap<>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
 		ecoreResource.save(XMIUtil.createSaveOptions());
@@ -890,7 +891,7 @@ public class LoadTests extends XtextTestCase
 		//		checkMonikers(asResource);
 		String ecoreName = "oclstdlib" + ".saved.ecore";
 		URI ecoreURI = getTestFileURI(ecoreName);
-		Map<String,Object> options = new HashMap<String,Object>();
+		Map<String,Object> options = new HashMap<>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
@@ -911,7 +912,13 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_Wildcard_oclinecore() throws IOException, InterruptedException {
 		OCL ocl = createOCLWithProjectMap();
-		doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Wildcard.oclinecore"));
+		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Wildcard.oclinecore"));
+		String ecoreName = "Wildcard" + ".ecore";
+		URI ecoreURI = getTestFileURI(ecoreName);
+		Map<String,Object> options = new HashMap<>();
+		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
+		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
+		ecoreResource.save(XMIUtil.createSaveOptions());
 		ocl.dispose();
 	}
 
@@ -1393,7 +1400,7 @@ public class LoadTests extends XtextTestCase
 		assertEquals("ClassB", pivotType2.getName());
 		assertEquals("DataType", pivotType2.eClass().getName());
 		//
-		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
+		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<>();
 		//		for (org.eclipse.ocl.pivot.Package aPackage : metamodelManager2.getAllPackages()) {
 		for (CompletePackage completePackage : ocl2.getStandardLibrary().getAllCompletePackages()) {
 			org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
@@ -1480,7 +1487,7 @@ public class LoadTests extends XtextTestCase
 		assertEquals(pivotPropertyYYY0, pivotPropertyYYY1.getOpposite());
 
 		//
-		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
+		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<>();
 		//		for (org.eclipse.ocl.pivot.Package aPackage : metamodelManager2.getAllPackages()) {
 		for (CompletePackage completePackage : ocl2.getStandardLibrary().getAllCompletePackages()) {
 			org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
@@ -1518,11 +1525,11 @@ public class LoadTests extends XtextTestCase
 		URI esasURI = getTestFileURI(ecoreFileName + ".oclas");
 		asResource.setSaveable(true);
 		asResource.setURI(esasURI);
-		Map<String, Object> options = new HashMap<String, Object>();
+		Map<String, Object> options = new HashMap<>();
 		//		options.put(ASResource.OPTION_INTERNAL_UUIDS, Boolean.TRUE);
 		asResource.save(options);
-		Map<EObject, String> eObject2id = new HashMap<EObject, String>();
-		Map<String, EObject> id2eObject = new HashMap<String, EObject>();
+		Map<EObject, String> eObject2id = new HashMap<>();
+		Map<String, EObject> id2eObject = new HashMap<>();
 		int oldIdCount = 0;
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();

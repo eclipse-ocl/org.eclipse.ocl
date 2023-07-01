@@ -144,6 +144,10 @@ public class CompleteURIs
 			return null;
 		}
 		String completeURI = getCompleteURI(packageURI);
+		if ((completeURI == packageURI) && (IdManager.METAMODEL == pivotPackage.getPackageId())) {
+			addPackageURI2completeURI(packageURI, PivotConstants.METAMODEL_NAME);
+			completeURI = PivotConstants.METAMODEL_NAME;
+		}
 		return completeURI != null ? completeURI2completePackage.get(completeURI) : null;
 	}
 

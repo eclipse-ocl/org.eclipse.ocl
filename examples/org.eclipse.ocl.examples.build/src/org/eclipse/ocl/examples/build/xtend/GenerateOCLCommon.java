@@ -15,10 +15,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -26,21 +24,15 @@ import org.eclipse.emf.mwe.utils.Mapping;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -50,7 +42,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -63,653 +54,28 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
-import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
-import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.xtext.util.Strings;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 @SuppressWarnings("all")
 public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowComponent
 {
-	protected static class ContentAnalysis extends AbstractExtendingVisitor<@Nullable Object, @NonNull GenerateOCLCommon>
-	{
-		public static final @NonNull Comparator<@NonNull Property> classPropertyComparator = new Comparator<@NonNull Property>()
-		{
-			@Override
-			public int compare(@NonNull Property p1, @NonNull Property p2) {
-				String c1 = String.valueOf(p1.getOwningClass().getName());
-				String c2 = String.valueOf(p2.getOwningClass().getName());
-				int diff = c1.compareTo(c2);
-				if (diff != 0) {
-					return diff;
-				}
-				boolean b1 = p1.isIsImplicit();
-				boolean b2 = p2.isIsImplicit();
-				if (b1 != b2) {
-					return b1 ? 1 : -1;
-				}
-				String n1 = String.valueOf(p1.getName());
-				String n2 = String.valueOf(p2.getName());
-				diff = n1.compareTo(n2);
-				if (diff != 0) {
-					return diff;
-				}
-				Property o1 = p1.getOpposite();
-				Property o2 = p2.getOpposite();
-				if (o1 == null) {
-					if (o2 == null) {
-						return 0;
-					}
-					else {
-						return 1;
-					}
-				}
-				else {
-					if (o2 == null) {
-						return -1;
-					}
-					else {
-						n1 = String.valueOf(o1.getName());
-						n2 = String.valueOf(o2.getName());
-						return n1.compareTo(n2);
-					}
-				}
-			}
-		};
-
-		protected final @NonNull Comparator<@NonNull CollectionType> collectionTypeComparator = new Comparator<@NonNull CollectionType>()
-		{
-			@Override
-			public int compare(@NonNull CollectionType o1, @NonNull CollectionType o2) {
-				TypeId m1 = o1.getTypeId();
-				TypeId m2 = o2.getTypeId();
-				int i = m1.toString().compareTo(m2.toString());
-				if (i != 0) {
-					return i;
-				}
-				String n1 = o1.getElementType().getName();
-				String n2 = o2.getElementType().getName();
-				i = n1.compareTo(n2);
-				if (i != 0) {
-					return i;
-				}
-				IntegerValue l1 = o1.getLowerValue();
-				IntegerValue l2 = o2.getLowerValue();
-				i = l1.compareTo(l2);
-				if (i != 0) {
-					return i;
-				}
-				UnlimitedNaturalValue u1 = o1.getUpperValue();
-				UnlimitedNaturalValue u2 = o2.getUpperValue();
-				return u1.compareTo(u2);
-			}
-		};
-
-		protected final @NonNull Comparator<@NonNull Element> monikerComparator = new Comparator<@NonNull Element>()
-		{
-			@Override
-			public int compare(@NonNull Element o1, @NonNull Element o2) {
-				String m1 = getMoniker(o1);
-				String m2 = getMoniker(o2);
-				return m1.compareTo(m2);
-			}
-		};
-
-		protected final @NonNull Comparator<org.eclipse.ocl.pivot.@NonNull Package> packageComparator = new Comparator<org.eclipse.ocl.pivot.@NonNull Package>()
-		{
-			@Override
-			public int compare(org.eclipse.ocl.pivot.@NonNull Package o1, org.eclipse.ocl.pivot.@NonNull Package o2) {
-				String m1 = o1.getName();
-				String m2 = o2.getName();
-				if (PivotConstants.ORPHANAGE_NAME.equals(m1)) {
-					if (PivotConstants.ORPHANAGE_NAME.equals(m2)) {
-						return 0;
-					}
-					else {
-						return 1;
-					}
-				}
-				else{
-					if (PivotConstants.ORPHANAGE_NAME.equals(m2)) {
-						return -1;
-					}
-					else {
-						return m1.compareTo(m2);
-					}
-				}
-			}
-		};
-
-		protected final @NonNull Model thisModel;
-
-		private final @NonNull Map<@NonNull Element, @NonNull String> element2moniker = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> package2sortedClasses = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Enumeration>> package2sortedEnumerations = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> package2sortedIterations = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Operation>> package2sortedOperations = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> package2sortedPrimitiveTypes = new HashMap<>();
-		private final @NonNull List<@NonNull Library> sortedLibraries = new ArrayList<>();
-		private final @NonNull List<@NonNull Library> sortedLibrariesWithPrecedence = new ArrayList<>();
-		private final @NonNull List<@NonNull Operation> sortedOperationsWithPrecedence = new ArrayList<>();
-		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> sortedPackages = new ArrayList<>();
-		private final @NonNull List<@NonNull Property> sortedProperties = new ArrayList<>();
-		private final @NonNull List<@NonNull TemplateParameter> sortedTemplateParameters = new ArrayList<>();
-		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> internalClasses = new HashSet<>();
-		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> externalClasses = new HashSet<>();
-		private final @NonNull Set<@NonNull NamedElement> allReferences = new HashSet<>();
-
-		private final @NonNull Map<@NonNull DataType, @NonNull List<@NonNull DataType>> using2useds = new HashMap<>();
-		private final @NonNull List<@NonNull DataType> aggregateTypes = new ArrayList<>();
-		private final @NonNull List<@NonNull List<@NonNull DataType>> aggregateTypesPerPass = new ArrayList<>();
-
-		protected ContentAnalysis(@NonNull GenerateOCLCommon context, @NonNull Model thisModel) {
-			super(context);
-			this.thisModel = thisModel;
-		}
-
-		private void addDependency(@NonNull DataType usingElement, @NonNull Type usedType) {
-			assert (usingElement instanceof IterableType) || (usingElement instanceof LambdaType) || (usingElement instanceof TupleType);
-			if (!(usedType instanceof IterableType)
-			 && !(usedType instanceof LambdaType)
-			 && !(usedType instanceof TupleType)) {		// Ignore fixed preamable declarations
-				if (!using2useds.containsKey(usingElement)) {
-					List<@NonNull DataType> old = using2useds.put(usingElement, new ArrayList<>());
-					assert old == null;
-				}
-				return;
-			}
-			Model model1 = PivotUtil.getContainingModel(usingElement);
-			Model model2 = PivotUtil.getContainingModel(usedType);
-			assert model1 == thisModel;
-		//	assert model2 == thisModel;		-- not true for Pivot
-			PivotMetamodelManager metamodelManager = context.environmentFactory.getMetamodelManager();
-			DataType primaryUsingElement = usingElement;//metamodelManager.getPrimaryElement(usingElement);
-			DataType primaryUsedType = (DataType) usedType;//metamodelManager.getPrimaryElement(usedType);
-			@Nullable DataType primaryUsedElement = primaryUsedType;
-			List<@NonNull DataType> usedElements = using2useds.get(primaryUsingElement);
-			if (usedElements == null) {
-				usedElements = new ArrayList<>();
-				List<@NonNull DataType> old = using2useds.put(primaryUsingElement, usedElements);
-				assert old == null;
-			}
-			if ((primaryUsedElement != null) && !usedElements.contains(primaryUsedElement)) {
-			//	System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
-				usedElements.add(primaryUsedElement);
-				assert primaryUsedElement != primaryUsingElement;
-				if (!using2useds.containsKey(primaryUsedElement)) {
-					List<@NonNull DataType> old = using2useds.put(primaryUsedElement, new ArrayList<>());
-					assert old == null;
-				}
-			}
-		}
-
-		private boolean addReference(@NonNull NamedElement asElement) {
-			return allReferences.add(asElement);
-		}
-
-		protected void analyze(@NonNull Model thisModel) {
-			for (NamedElement asElement : context.external2name.keySet()) {
-				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
-					CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
-					for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
-						externalClasses.add(asPartialClass);
-					}
-				}
-			}
-			for (@NonNull EObject eObject : new TreeIterable(thisModel, true)) {
-				((Element)eObject).accept(this);
-			}
-
-			Collections.sort(sortedLibraries, monikerComparator);
-			Collections.sort(sortedLibrariesWithPrecedence, monikerComparator);
-			Collections.sort(sortedOperationsWithPrecedence, monikerComparator);
-			Collections.sort(sortedPackages, packageComparator);
-			Collections.sort(sortedProperties, classPropertyComparator);
-			Collections.sort(sortedTemplateParameters, monikerComparator);
-
-			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(thisModel)) {
-				List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = package2sortedClasses.get(asPackage);
-				if (sortedClasses != null) {
-					Collections.sort(sortedClasses, NameUtil.NAMEABLE_COMPARATOR);
-				}
-				List<@NonNull Enumeration> sortedEnumerations = package2sortedEnumerations.get(asPackage);
-				if (sortedEnumerations != null) {
-					Collections.sort(sortedEnumerations, NameUtil.NAMEABLE_COMPARATOR);
-				}
-				List<@NonNull Iteration> sortedIterations = package2sortedIterations.get(asPackage);
-				if (sortedIterations != null) {
-					Collections.sort(sortedIterations, monikerComparator);
-				}
-				List<@NonNull Operation> sortedOperations = package2sortedOperations.get(asPackage);
-				if (sortedOperations != null) {
-					Collections.sort(sortedOperations, monikerComparator);
-				}
-				List<@NonNull PrimitiveType> sortedPrimitiveTypes = package2sortedPrimitiveTypes.get(asPackage);
-				if (sortedPrimitiveTypes != null) {
-					Collections.sort(sortedPrimitiveTypes, NameUtil.NAMEABLE_COMPARATOR);
-				}
-			}
-			if (allReferences.size() > 0) {
-				CompleteStandardLibrary standardLibrary = context.environmentFactory.getStandardLibrary();
-				addReference(standardLibrary.getOclAnyType());
-				addReference(standardLibrary.getOclElementType());
-			}
-			for (@NonNull NamedElement asNamedElement : allReferences) {
-				if (!internalClasses.contains(asNamedElement)) {
-					context.addExternalReference(asNamedElement, thisModel);
-				}
-			}
-			analyzeDependencies(thisModel);
-			int pass = 0;
-			Collections.sort(aggregateTypes, monikerComparator);
-			for (@NonNull List<@NonNull DataType> aggregateTypes : aggregateTypesPerPass) {
-				Collections.sort(aggregateTypes, monikerComparator);
-			//	for (@NonNull DataType aggregateType : aggregateTypes) {
-			//		System.out.println(pass + ": " + NameUtil.debugSimpleName(aggregateType) + " : " + aggregateType);
-			//	}
-				pass++;
-			}
-		}
-
-		private @NonNull String analyzeDependencies(/*@NonNull*/ Model root) {
-			Set<@NonNull DataType> keysDone = new HashSet<>();
-			Set<@NonNull NamedElement> externals = new HashSet<>(context.name2external.values());
-			for (@NonNull NamedElement external : externals) {
-				if ((external instanceof DataType) && !(external instanceof PrimitiveType)) {
-					keysDone.add((DataType)external);
-				}
-			}
-			Set<@NonNull DataType> keysToGo1 = using2useds.keySet();
-			Set<@NonNull DataType> keysToGo = new HashSet(keysToGo1);
-			keysToGo.removeAll(keysDone);
-			aggregateTypes.addAll(keysToGo);
-		//	for (@NonNull NamedElement key : keysToGo) {
-		//		NamedElement primaryKey = context.environmentFactory.getMetamodelManager().getPrimaryElement(key);
-		//		assert primaryKey == key;
-			//	System.out.println("togo: " + NameUtil.debugSimpleName(key) + " : " + key);
-			//	if ("Map(includesMap.K2,includesMap.V2)".equals(key.toString())) {
-			//		getClass();			// XXX
-			//	}
-			//	List<@NonNull NamedElement> useds = using2useds.get(key);
-			//	assert useds != null;
-			//	for (@NonNull NamedElement used : useds) {
-			//		System.out.println("\t" + NameUtil.debugSimpleName(used) + " : " + used);
-			//	}
-		//	}
-			int pass = 0;
-			int more;
-			do {
-			//	System.out.println("togo = " + keysToGo.size());
-				List<@NonNull DataType> readyKeys = new ArrayList<>();
-				for (@NonNull DataType key : keysToGo) {
-					List<@NonNull DataType> useds = using2useds.get(key);
-					if (keysDone.containsAll(useds)) {
-						readyKeys.add(key);
-			//			System.out.println(pass + "\t" + NameUtil.debugSimpleName(key) + " : " + key);
-					}
-				}
-				more = readyKeys.size();
-				if (more > 0) {
-					keysToGo.removeAll(readyKeys);
-					keysDone.addAll(readyKeys);
-					aggregateTypesPerPass.add(readyKeys);
-				}
-				pass++;
-			} while (more > 0);
-			for (@NonNull DataType key : keysToGo) {
-				System.out.println("stuck: " + NameUtil.debugSimpleName(key) + " : " + key);
-				Set<@NonNull NamedElement> useds = new HashSet<>(using2useds.get(key));
-				useds.removeAll(keysDone);
-				for (@NonNull NamedElement used : useds) {
-					System.out.println("\t" + NameUtil.debugSimpleName(used) + " : " + used);
-				}
-			}
-			return "/*zzy*/";
-		}
-
-		protected void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asClass)) {
-				addReference(superClass);
-			//	addDependency(asClass, superClass);
-			}
-		}
-
-		protected void doTemplateableElement(@NonNull TemplateableElement asTemplateableElement) {
-			TemplateSignature asTemplateSignature = asTemplateableElement.getOwnedSignature();
-			if (asTemplateSignature != null) {
-				sortedTemplateParameters.addAll(asTemplateSignature.getOwnedParameters());
-			}
-			TemplateableElement unspecializedElement = asTemplateableElement.getGeneric();
-			if (unspecializedElement instanceof NamedElement) {
-				addReference((NamedElement)unspecializedElement);
-				addDependency((DataType)asTemplateableElement, (Type)unspecializedElement);
-			}
-		}
-
-		protected @NonNull String getMoniker(@NonNull Element elem) {
-			String moniker = element2moniker.get(elem);
-			if (moniker == null) {
-				moniker = AS2Moniker.toString(elem);
-				element2moniker.put(elem, moniker);
-			}
-			return moniker;
-		}
-
-		/**
-		 * Return true if referencingElement transitively references some template paramtrer other than those in templateParameters.
-		 */
-		protected boolean hasExternalBinding(@NonNull TemplateableElement referencingElement, @NonNull Iterable<@NonNull TemplateParameter> templateParameters) {
-			for (TemplateBinding asTemplateBinding : referencingElement.getOwnedBindings()) {
-				for (TemplateParameterSubstitution asTemplateParameterSubstitution : asTemplateBinding.getOwnedSubstitutions()) {
-					Type actual = asTemplateParameterSubstitution.getActual();
-					if (actual instanceof TemplateParameter) {
-						TemplateParameter asTemplateParameter = (TemplateParameter)actual;
-						if (!Iterables.contains(templateParameters, asTemplateParameter)) {
-							return true;
-						}
-					}
-					else if (actual instanceof TemplateableElement) {
-						if (hasExternalBinding((TemplateableElement)actual, templateParameters)) {
-							return true;
-						}
-					}
-				}
-			}
-			return false;
-		}
-
-		@Override
-		public @Nullable Object visiting(@NonNull Visitable visitable) {
-			System.out.println("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitAnnotation(@NonNull Annotation asAnnotation) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-			List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = package2sortedClasses.get(asPackage);
-			if (sortedClasses == null) {
-				sortedClasses = new ArrayList<>();
-				package2sortedClasses.put(asPackage, sortedClasses);
-			}
-			sortedClasses.add(asClass);
-			if (asClass.isTemplateParameter() != null) {			// FIXME can never happen
-			}
-			else if (!externalClasses.contains(asClass)){
-				CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
-				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
-					internalClasses.add(asPartialClass);
-				}
-			}
-			doSuperClasses(asClass);
-			doTemplateableElement(asClass);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitCollectionType(@NonNull CollectionType asCollectionType) {
- 		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
-			doSuperClasses(asCollectionType);
-			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asCollectionType)) {
-			//	addDependency(asCollectionType, superClass);
-			}
-			doTemplateableElement(asCollectionType);
-			CollectionType genericCollection = (CollectionType)asCollectionType.getGeneric();
-			if (genericCollection != null) {
-				addDependency(asCollectionType, genericCollection);
-				Type elementType = asCollectionType.getElementType();
-				if (elementType instanceof TemplateParameter) {
-					TemplateableElement owningElement = ((TemplateParameter) elementType).getOwningSignature().getOwningElement();
-					if (owningElement instanceof Type) {
-						addDependency(asCollectionType, (Type)owningElement);
-					}
-					else {
-						getClass();		// XXX operation/iteration
-					}
-				}
-				else {
-					addDependency(asCollectionType, elementType);
-				}
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitComment(@NonNull Comment asComment) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitConstraint(@NonNull Constraint asConstraint) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitDetail(@NonNull Detail asDetail) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitEnumeration(@NonNull Enumeration asEnumeration) {
-			org.eclipse.ocl.pivot.Package asPackage = asEnumeration.getOwningPackage();
-			List<@NonNull Enumeration> sortedEnumerations = package2sortedEnumerations.get(asPackage);
-			if (sortedEnumerations == null) {
-				sortedEnumerations = new ArrayList<>();
-				package2sortedEnumerations.put(asPackage, sortedEnumerations);
-			}
-			sortedEnumerations.add(asEnumeration);
-			doSuperClasses(asEnumeration);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitImport(@NonNull Import asImport) {
-			addReference(asImport.getImportedNamespace());
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitIteration(@NonNull Iteration asIteration) {
-			org.eclipse.ocl.pivot.Class asClass = asIteration.getOwningClass();
-			org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-			List<@NonNull Iteration> sortedIterations = package2sortedIterations.get(asPackage);
-			if (sortedIterations == null) {
-				sortedIterations = new ArrayList<>();
-				package2sortedIterations.put(asPackage, sortedIterations);
-			}
-			sortedIterations.add(asIteration);
-			doTemplateableElement(asIteration);
-			return super.visitIteration(asIteration);
-		}
-
-		@Override
-		public @Nullable Object visitLambdaType(@NonNull LambdaType asLambdaType) {
-		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asLambdaType) + " : " + asLambdaType);
-			addDependency(asLambdaType, asLambdaType.getContextType());
-			addDependency(asLambdaType, asLambdaType.getResultType());
-			for (@NonNull Type asParameterType : asLambdaType.getParameterTypes()) {
-				addDependency(asLambdaType, asParameterType);
-			}
-			doSuperClasses(asLambdaType);
-			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asLambdaType)) {
-				addDependency(asLambdaType, superClass);
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitLibrary(@NonNull Library asLibrary) {
-			sortedLibraries.add(asLibrary);
-			if (asLibrary.getOwnedPrecedences().size() > 0) {
-				sortedLibrariesWithPrecedence.add(asLibrary);
-			}
-			return super.visitLibrary(asLibrary);
-		}
-
-		@Override
-		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
-		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asMapType) + " : " + asMapType);
-			doTemplateableElement(asMapType);
-			doSuperClasses(asMapType);
-			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asMapType)) {
-				addDependency(asMapType, superClass);
-			}
-			if (asMapType.getGeneric() != null) {
-				addDependency(asMapType, asMapType.getKeyType());
-				addDependency(asMapType, asMapType.getValueType());
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitModel(@NonNull Model asModel) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
-			if (!(asOperation instanceof Iteration)) {
-				org.eclipse.ocl.pivot.Class asClass = asOperation.getOwningClass();
-				org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-				List<@NonNull Operation> sortedOperations = package2sortedOperations.get(asPackage);
-				if (sortedOperations == null) {
-					sortedOperations = new ArrayList<>();
-					package2sortedOperations.put(asPackage, sortedOperations);
-				}
-				sortedOperations.add(asOperation);
-				if (/*!context.isEcoreConstraint(asOperation) &&*/ (asOperation.getPrecedence() != null)) {
-					sortedOperationsWithPrecedence.add(asOperation);
-				}
-				doTemplateableElement(asOperation);
-			}
-			return super.visitOperation(asOperation);
-		}
-
-		@Override
-		public @Nullable Object visitOrphanage(@NonNull Orphanage asOrphanage) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			if (!OrphanageImpl.isOrphanage(asPackage)) {
-				sortedPackages.add(asPackage);
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitPrecedence(@NonNull Precedence asPrecedence) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitPrimitiveType(final @NonNull PrimitiveType asPrimitiveType) {
-			org.eclipse.ocl.pivot.Package asPackage = asPrimitiveType.getOwningPackage();
-			List<@NonNull PrimitiveType> sortedPrimitiveTypes = package2sortedPrimitiveTypes.get(asPackage);
-			if (sortedPrimitiveTypes == null) {
-				sortedPrimitiveTypes = new ArrayList<>();
-				package2sortedPrimitiveTypes.put(asPackage, sortedPrimitiveTypes);
-			}
-			sortedPrimitiveTypes.add(asPrimitiveType);
-			doSuperClasses(asPrimitiveType);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitProperty(@NonNull Property asProperty) {
-			org.eclipse.ocl.pivot.Class asClass = asProperty.getOwningClass();
-			if (!(asClass instanceof TupleType)) {
-
-				sortedProperties.add(asProperty);
-				Property asOpposite = asProperty.getOpposite();
-				if (asOpposite != null) {
-					if (PivotUtil.getContainingModel(asOpposite) == PivotUtil.getContainingModel(asProperty)) {
-						addReference(asOpposite);
-					}
-					addReference(asOpposite.getType());
-				}
-			}
-		//	addDependency(asProperty, asProperty.getOwningClass());
-		//	addDependency(asProperty, asProperty.getType());
-			return super.visitProperty(asProperty);
-		}
-
-		@Override
-		public @Nullable Object visitTemplateBinding(@NonNull TemplateBinding asTemplateBinding) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution asTemplateParameterSubstitution) {
-			addReference(asTemplateParameterSubstitution.getActual());
-			addReference(asTemplateParameterSubstitution.getFormal());
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateSignature(@NonNull TemplateSignature asTemplateSignature) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
-		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asTupleType) + " : " + asTupleType);
-			doSuperClasses(asTupleType);
-			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asTupleType)) {
-				addDependency(asTupleType, superClass);
-			}
-			for (@NonNull Property asPart : asTupleType.getOwnedProperties()) {
-				addDependency(asTupleType, asPart.getType());
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTypedElement(@NonNull TypedElement asTypedElement) {
-			addReference(asTypedElement.getType());
-			return null;
-		}
-	}
-
-	private final @NonNull Map<@NonNull NamedElement, @NonNull String> external2name = new HashMap<>();
+	final @NonNull Map<@NonNull NamedElement, @NonNull String> external2name = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull NamedElement> name2external = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
 	protected EnvironmentFactoryInternal environmentFactory;
@@ -718,6 +84,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected Model thisModel;
 	private List<@NonNull Element> orphans;
 	protected ContentAnalysis contentAnalysis;
+	protected /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames;
 
 	protected final @NonNull Comparator<@NonNull Comment> commentComparator = new Comparator<@NonNull Comment>()
 	{
@@ -1038,14 +405,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 	}
 
-	protected @NonNull List<@NonNull DataType> getSortedAggregateTypes(@NonNull Model root) {
-		return contentAnalysis.aggregateTypes;
-	}
-
-	protected @NonNull List<@NonNull List<@NonNull DataType>> getSortedAggregateTypesPerPass(@NonNull Model root) {
-		return contentAnalysis.aggregateTypesPerPass;
-	}
-
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> getSortedClassTypes(@NonNull Model root) {
 		return contentAnalysis.package2sortedClasses;
 	}
@@ -1137,7 +496,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.sortedOperationsWithPrecedence;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSortedOwningTypes(@NonNull List<@NonNull ? extends Operation> operations) {
+/*	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSortedOwningTypes(@NonNull List<@NonNull ? extends Operation> operations) {
 		Set<org.eclipse.ocl.pivot.@NonNull Class> allElements = new HashSet<>();
 		for (@NonNull Operation operation : operations) {
 			if (operation.getOwningClass() != null) {
@@ -1147,7 +506,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		List<org.eclipse.ocl.pivot.@NonNull Class> sortedElements = new ArrayList<>(allElements);
 		Collections.sort(sortedElements, contentAnalysis.monikerComparator);
 		return sortedElements;
-	}
+	} */
 
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedPackages(@NonNull Model root, @NonNull Collection<? extends org.eclipse.ocl.pivot.Package> packages) {
 		List<org.eclipse.ocl.pivot.@NonNull Package> sortedElements = new ArrayList<>(packages);
@@ -1171,9 +530,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	}
 
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
+/*	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
 		return contentAnalysis.package2sortedPrimitiveTypes;
-	}
+	} */
 
 	protected @NonNull List<@NonNull Property> getSortedProperties(@NonNull Model root) {
 		return contentAnalysis.sortedProperties;
@@ -1185,9 +544,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	}
 
-	protected @NonNull List<@NonNull TemplateParameter> getSortedTemplateParameters(@NonNull Model root) {
+/*	protected @NonNull List<@NonNull TemplateParameter> getSortedTemplateParameters(@NonNull Model root) {
 		return contentAnalysis.sortedTemplateParameters;
-	}
+	} */
 
 	protected @NonNull List<@NonNull Property> getSortedTupleParts(@NonNull TupleType tupleType) {
 		List<@NonNull Property> sortedElements = Lists.newArrayList(PivotUtil.getOwnedProperties(tupleType));

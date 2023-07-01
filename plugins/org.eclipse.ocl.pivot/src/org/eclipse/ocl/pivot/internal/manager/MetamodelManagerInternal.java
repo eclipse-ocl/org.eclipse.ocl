@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface MetamodelManagerInternal extends MetamodelManager
 {
@@ -65,9 +64,6 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace);
 
 	void addLockedElement(@NonNull Object lockedElement);
-
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 
 	@Deprecated /* @deprecated use EnvironmentFactory.createParserContext() */
 	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) throws ParserException;
