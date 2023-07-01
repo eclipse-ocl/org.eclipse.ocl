@@ -577,8 +577,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public Object visitIterableType(@NonNull IterableType asIterableType) {
 		EClass eClass = visitClass(asIterableType);
 		if (eClass != null) {
-			eClass.setAbstract(true);
-			eClass.setInterface(true);
+		//	eClass.setAbstract(true);
+		//	eClass.setInterface(true);
 		}
 		return eClass;
 	}

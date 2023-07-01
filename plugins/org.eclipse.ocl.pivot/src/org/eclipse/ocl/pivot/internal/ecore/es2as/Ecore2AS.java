@@ -631,11 +631,13 @@ public class Ecore2AS extends AbstractExternal2AS
 				if (hasOclAny || hasBoolean) {
 					for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 						Element asClass = newCreateMap.get(eClassifier);
-						assert asClass != null;
-						if (asClasses == null) {
-							asClasses = new ArrayList<>();
+					//	assert asClass != null;
+						if (asClass != null) {		// Entry/Lambda classes are null
+							if (asClasses == null) {
+								asClasses = new ArrayList<>();
+							}
+							asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
 						}
-						asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
 					}
 				}
 			}
