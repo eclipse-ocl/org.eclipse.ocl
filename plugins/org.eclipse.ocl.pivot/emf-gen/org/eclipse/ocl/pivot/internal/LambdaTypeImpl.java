@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -585,17 +583,6 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		ParametersId parametersId = IdManager.getParametersId(typeIds);
 		String name = NameUtil.getSafeName(this);
 		return IdManager.getLambdaTypeId(name, parametersId);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof LambdaType)) {
-			return false;
-		}
-		return TypeUtil.conformsToLambdaType(standardLibrary, this, (LambdaType)type);
 	}
 
 	private ParametersId parametersId = null;

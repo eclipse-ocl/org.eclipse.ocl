@@ -361,7 +361,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return eDynamicIsSet(featureID);
 	}
 
-	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+	private /*@LazyNonNull*/ /*Complete*/FlatClass flatClass = null;
 
 	/**
 	 * The cached value of the '{@link #getPartialClasses() <em>Partial Classes</em>}' reference list.
@@ -417,7 +417,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass, false);
 	}
 
 	@Override
@@ -427,7 +427,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass, false);
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(@NonNull TemplateParameters templateArguments) {
@@ -544,8 +544,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull CompleteFlatClass getFlatClass() {
-		CompleteFlatClass flatClass2 = flatClass;
+	public final @NonNull FlatClass getFlatClass() {
+		FlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
 			CompleteFlatModel completeFlatModel = getCompleteModel().getFlatModel();
 			flatClass = flatClass2 = completeFlatModel.createFlatClass(this);
@@ -574,26 +574,26 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return getFlatClass().getOperation(operationId);
+		return getFlatClass().basicGetOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return getFlatClass().getOperation(operationId);
+		return getFlatClass().basicGetOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		return getFlatClass().getOperationOverloads(pivotOperation);
+		return getFlatClass().basicGetOperationOverloads(pivotOperation);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
+	public @NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter) {
 		return getFlatClass().getOperations(featureFilter);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	public @NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		return getFlatClass().getOperationOverloads(featureFilter, name);
 	}
 
@@ -658,7 +658,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
-				return input.getBaseFlatClass().getPivotClass();
+				return input.getBaseFlatClass().getASClass();
 			}
 		});
 	}
@@ -681,12 +681,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter) {
 		return getFlatClass().getProperties(featureFilter, null);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		return getFlatClass().getProperties(featureFilter, name);
 	}
 
@@ -698,6 +698,22 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @Nullable Property getProperty(@NonNull String propertyName) {
 		return getFlatClass().basicGetProperty(propertyName);
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull CompleteClass> getSelfAndAllSuperCompleteClasses() {
+		FlatClass flatClass = getFlatClass();
+		@NonNull Function<@NonNull FlatFragment, @NonNull CompleteClass> function = new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
+		{
+			@Override
+			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
+				return input.getBaseFlatClass().getCompleteClass();
+			}
+		};
+		@NonNull Iterable<@NonNull FlatFragment> allSuperFragments = flatClass.getAllSuperFragments();
+		Iterable<@NonNull CompleteClass> selfAndAllSuperCompleteClasses = Iterables.transform(allSuperFragments, function);
+		assert selfAndAllSuperCompleteClasses != null;
+		return selfAndAllSuperCompleteClasses;
 	}
 
 	@Override
@@ -755,18 +771,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
 		return getFlatClass().getStates(name);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
-		{
-			@Override
-			public @NonNull CompleteClass apply(FlatFragment input) {
-				return input.getBaseFlatClass().getCompleteClass();
-			}
-		});
 	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {

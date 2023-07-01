@@ -184,7 +184,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier) {
-		return getFlatClass(eClassifier).getPivotClass();
+		return getFlatClass(eClassifier).getASClass();
 	}
 
 	@Override

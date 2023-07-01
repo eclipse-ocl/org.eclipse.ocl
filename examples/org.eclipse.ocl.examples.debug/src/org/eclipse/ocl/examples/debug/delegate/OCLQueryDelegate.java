@@ -103,7 +103,7 @@ public class OCLQueryDelegate implements QueryDelegate
 			Object targetValue = idResolver.boxedValueOf(target);
 			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));
 			Type targetType = idResolver.getStaticTypeOfValue(requiredType, targetValue);
-			if ((requiredType == null) || !targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
+			if ((requiredType == null) || !environmentFactory.getStandardLibrary().conformsTo(targetType, requiredType)) {
 				String message = StringUtil.bind(PivotMessagesInternal.WrongContextClassifier_ERROR_, targetType, requiredType);
 				throw new OCLDelegateException(new SemanticException(message));
 			}
@@ -126,7 +126,7 @@ public class OCLQueryDelegate implements QueryDelegate
 				Object value = idResolver.boxedValueOf(object);
 				requiredType = PivotUtil.getType(parameterVariable);
 				targetType = idResolver.getStaticTypeOfValue(requiredType, value);
-				if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
+				if (!environmentFactory.getStandardLibrary().conformsTo(targetType, requiredType)) {
 					String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
 					throw new OCLDelegateException(new SemanticException(message));
 				}

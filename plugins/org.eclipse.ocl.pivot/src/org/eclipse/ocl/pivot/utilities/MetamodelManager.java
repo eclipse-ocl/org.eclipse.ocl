@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 
 public interface MetamodelManager
 {
@@ -61,9 +61,9 @@ public interface MetamodelManager
 	 *
 	 * @throws ParserException if text parsing fails
 	 *
-	 * @deprecated use EnvironmentFactoryInternalExtension.parseSpecification()
+	 * @deprecated use EnvironmentFactoryInternal.parseSpecification()
 	 */
-	@Deprecated /* @deprecated use EnvironmentFactoryInternalExtension.parseSpecification() */
+	@Deprecated /* @deprecated use EnvironmentFactoryInternal.parseSpecification() */
 	@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 
 }

@@ -1828,14 +1828,14 @@
               <ownedArguments xsi:type="pivot:OperationCallExp" name="+" referredOperation="#iA+ir" type="#tYtCd">
                 <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#tYtCd"/>
                 <ownedSource xsi:type="pivot:OperationCallExp" name="size" referredOperation="#eYPCX" type="#tYtCd">
-                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#Vf73G" type="#4dc2s"/>
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#Vf73G" type="#9cc2s"/>
                 </ownedSource>
               </ownedArguments>
               <ownedSource xsi:type="pivot:OperationCallExp" name="size" referredOperation="#eYPCX" type="#tYtCd">
                 <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#Ncs07" type="#9cc2s"/>
               </ownedSource>
             </ownedBody>
-            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Vf73G" name="self" type="#4dc2s"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Vf73G" name="self" type="#9cc2s"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#VAP6J" type="#53+C2"/>
             <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="Ncs07" name="result" type="#9cc2s"/>
           </ownedSpecification>
@@ -1849,7 +1849,7 @@
                 <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#xD+HB" type="#9cc2s"/>
               </ownedSource>
             </ownedBody>
-            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#4dc2s"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#9cc2s"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="xCT1a" isRequired="false" name="object" representedParameter="#VAP6J"
                 type="#53+C2"/>
             <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="xD+HB" name="result" type="#9cc2s"/>
@@ -1869,7 +1869,7 @@
                 </ownedArguments>
                 <ownedSource xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#ArMlL" type="#53+C2">
                   <ownedArguments xsi:type="pivot:VariableExp" name="index" referredVariable="#ZZk,E" type="#tYtCd"/>
-                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#4dc2s"/>
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#9cc2s"/>
                 </ownedSource>
               </ownedBody>
               <ownedIterators xsi:type="pivot:IteratorVariable" xmi:id="ZZk,E" name="index" representedParameter="#HfeAP" type="#tYtCd"/>
@@ -1877,12 +1877,12 @@
                 <ownedParts xsi:type="pivot:CollectionRange" xmi:id="SoCF4" type="#tYtCd">
                   <ownedFirst xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#tYtCd"/>
                   <ownedLast xsi:type="pivot:OperationCallExp" name="size" referredOperation="#eYPCX" type="#tYtCd">
-                    <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#4dc2s"/>
+                    <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#9cc2s"/>
                   </ownedLast>
                 </ownedParts>
               </ownedSource>
             </ownedBody>
-            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="iYk,b" name="self" type="#4dc2s"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="iYk,b" name="self" type="#9cc2s"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#VAP6J" type="#53+C2"/>
             <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="aVV8Q" name="result" type="#9cc2s"/>
           </ownedSpecification>
@@ -3081,11 +3081,6 @@
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Qz2BP" generic="#fIXUp" isNullFree="true" name="OrderedSet" superClasses="#GbZNw #qFUyp">
       <ownedBindings>
         <ownedSubstitutions actual="#EXGsH" formal="#53+C2"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="4dc2s" generic="#fIXUp" name="OrderedSet" superClasses="#zE,BO #Xv5mH">
-      <ownedBindings>
-        <ownedSubstitutions actual="#53+C2" formal="#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="dhqjr" generic="#rk5ZZ" isNullFree="true" name="Sequence" superClasses="#Htqpc">

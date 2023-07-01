@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
@@ -26,33 +27,84 @@ public class AnnotationUtil
 	/**
 	 * EClassifier annotation qualifying a Classifier.
 	 */
-	public static final @NonNull String CLASSIFIER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Classifier";
+	public static final @NonNull String CLASSIFIER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Classifier";
 	/**
-	 * 	 The classifier role may be "Entry" or "Lambda" or blank.
+	 * 	 The classifier role may be "Entry" or "Lambda" or "Tuple" or blank.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE = "role";
+	/**
+	 * 	 A DataType class is a DataType mapped to an EClass, rather than EDataType, to support features
+	 */
+	public static final @NonNull String CLASSIFIER_ROLE_DATA_TYPE = "DataType";
 	/**
 	 * 	 An EntryXXXX<K,V> class types a Map Entry with Class/DataType and Required/Optional types.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE_ENTRY = "Entry";
 	/**
-	 * 	 A LambdaXXXX<C, P..., R> types a Lambda wth Context, Paramter(s) and Result.
+	 * 	 A LambdaXXXX<C, P..., R> types a Lambda with Context, Paramter(s) and Result.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE_LAMBDA = "Lambda";
+	/**
+	 * 	 A TupleXXXX<P...> types a Tuple with parts.
+	 */
+	public static final @NonNull String CLASSIFIER_ROLE_TUPLE = "Tuple";
+
+	/**
+	 * ETypedElement annotation qualification.
+	 */
+	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
+//	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE2 = "http://www.eclipse.org/OCL-Collection";
+	/**
+	 * ETypedElement annotation identifying that a collection is null-free.
+	 */
+	public static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
+	/**
+	 * ETypedElement annotation identifying the name of the abstract Pivot collection class when other than
+	 * the concrete Bag/OrderedSet/Sequence/Set deduced from ordered/unique attributes.
+	 */
+	public static final @NonNull String COLLECTION_KIND = "kind";
+
+	/**
+	 * EPackage annotation identifying models that must be imported to enable the OCL embedded as
+	 * feature bodies gto be successfully parsed. MOdels that are directly referenced from the
+	 * structural Ecore may be omitted.
+	 * Each detail is an alias-name, import uri pair.
+	 */
+	public static final @NonNull String IMPORT_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Import";
 
 	/**
 	 * EOperation annotation qualifying that an operation is transient (not-cached).
 	 * @since 1.3
 	 */
-	public static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Operation";
+	public static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Operation";
+	/**
+	 * 	 The operation is a coercion: true - coercion, blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_COERCION = "isCoercion";
 	/**
 	 * 	 The operation is a constraint validator: true - transient (not-cached), blank/false - regular.
 	 */
 	public static final @NonNull String OPERATION_IS_CONSTRAINT = "isConstraint";		// XXX replace originalName
 	/**
+	 * 	 The operation is: true - invalidating (may source an invalid), blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_INVALIDATING = "isInvalidating";
+	/**
+	 * EOperation annotation identifying that an OPeration is static.
+	 */
+	public static final @NonNull String OPERATION_IS_STATIC = "isStatic";
+	/**
 	 * 	 The operation is: true - transient (not-cached), blank/false - regular.
 	 */
 	public static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
+	/**
+	 * 	 The EOPeration return is: true - a type, blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_TYPE_OF = "isTypeOf";
+	/**
+	 * 	 The operation is: true - validating (may absorb an invalid), blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_VALIDATING = "isValidating";
 	/**
 	 * 	 The operation is: fully qualified implementation class name.
 	 */
@@ -73,7 +125,7 @@ public class AnnotationUtil
 	/**
 	 * EPackage annotation qualification.
 	 */
-	public static final @NonNull String PACKAGE_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Package";
+	public static final @NonNull String PACKAGE_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Package";
 	/**
 	 * 	 The package role may be "Orphanage" or "Synthetics" or blank.
 	 */
@@ -90,7 +142,7 @@ public class AnnotationUtil
 	/**
 	 * EParameter annotation qualification.
 	 */
-	public static final @NonNull String PARAMETER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Parameter";
+	public static final @NonNull String PARAMETER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Parameter";
 	/**
 	 * 	 The EParameter is: true - a type, blank/false - regular.
 	 */
@@ -99,7 +151,7 @@ public class AnnotationUtil
 	/**
 	 * EPackage annotation declaring one of precedence-ordered list of named precedences.
 	 */
-	public static final @NonNull String PRECEDENCE_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Precedence";
+	public static final @NonNull String PRECEDENCE_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Precedence";
 	/**
 	 * 	 The name of the precedence.
 	 */
@@ -109,6 +161,33 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String PRECEDENCE_ASSOCIATIVITY = "associativity";
 //	public static final @NonNull String PRECEDENCE_ORDER = "order";
+
+	/**
+	 * EReference annotation qualification.
+	 */
+	public static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Property";
+//	public static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Property";
+	/**
+	 * 	 The property is: fully qualified implementation class name.
+	 */
+	public static final @NonNull String PROPERTY_IMPLEMENTATION = "implementation";
+	/**
+	 * EStructuralFeature annotation identifying that a Property is static.
+	 */
+	public static final @NonNull String PROPERTY_IS_STATIC = "isStatic";
+	/**
+	 * EReference annotation identifying that a Property is cyclic.
+	 */
+	public static final @NonNull String PROPERTY_SELF = "self";
+
+	/**
+	 * ETypedElement annotation qualification.
+	 */
+	public static final @NonNull String TYPED_ELEMENT_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-TypedElement";
+	/**
+	 * EReETypedElementference annotation identifying the OCL type such as String that was replaced by an Ecore type such as EString.
+	 */
+	public static final @NonNull String TYPED_ELEMENT_ORIGINAL_TYPE = "originalType";
 
 	public static final class EAnnotationComparator implements Comparator<EAnnotation>
 	{
@@ -152,6 +231,11 @@ public class AnnotationUtil
 				&& details.containsKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
 	} */
 
+	public static boolean hasSyntheticRole(@NonNull EClassifier eClassifier) {
+		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+		return (role != null) && !CLASSIFIER_ROLE_DATA_TYPE.equals(role);
+	}
+
 	public static boolean isDocumentationKey(@Nullable String source, @Nullable String key) {
 		return PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(source)
 				&& PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(key);
@@ -168,6 +252,15 @@ public class AnnotationUtil
 	public static boolean isOriginalNameKey(@Nullable String source, @Nullable String key) {
 		return DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI.equals(source)
 				&& DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME.equals(key);
+	}
+
+	public static @Nullable String removeDetail(@NonNull EModelElement eModelElement, @NonNull String source, @NonNull String key) {
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(source);
+		if (eAnnotation == null) {
+			return null;
+		}
+		EMap<String, String> details = eAnnotation.getDetails();
+		return details.removeKey(key);
 	}
 
 	public static @Nullable String setDetail(@NonNull EModelElement eModelElement, @NonNull String source, @NonNull String key, @Nullable String value) {

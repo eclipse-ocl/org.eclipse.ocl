@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl#isNullFree <em>Null Free</em>}</li>
  * </ul>
  *
@@ -38,7 +39,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COLLECTION_ETYPED_ELEMENT_FEATURE_COUNT = 1;
+	public static final int COLLECTION_ETYPED_ELEMENT_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Collection ETyped Element</em>' class.
@@ -48,6 +49,26 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	 * @ordered
 	 */
 	public static final int COLLECTION_ETYPED_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
+	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String KIND_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected String kind = KIND_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isNullFree() <em>Null Free</em>}' attribute.
@@ -94,6 +115,29 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
+	public String getKind() {
+		return kind;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setKind(String newKind) {
+		String oldKind = kind;
+		kind = newKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldKind, kind));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean isNullFree() {
 		return nullFree;
 	}
@@ -108,7 +152,7 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 		boolean oldNullFree = nullFree;
 		nullFree = newNullFree;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldNullFree, nullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldNullFree, nullFree));
 	}
 
 	/**
@@ -120,6 +164,8 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case 0:
+				return getKind();
+			case 1:
 				return isNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -134,6 +180,9 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case 0:
+				setKind((String)newValue);
+				return;
+			case 1:
 				setNullFree((Boolean)newValue);
 				return;
 		}
@@ -149,6 +198,9 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case 0:
+				setKind(KIND_EDEFAULT);
+				return;
+			case 1:
 				setNullFree(NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -164,6 +216,8 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case 0:
+				return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
+			case 1:
 				return nullFree != NULL_FREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -179,7 +233,9 @@ public class Collection_ETypedElementImpl extends MinimalEObjectImpl.Container i
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (nullFree: ");
+		result.append(" (kind: ");
+		result.append(kind);
+		result.append(", nullFree: ");
 		result.append(nullFree);
 		result.append(')');
 		return result.toString();

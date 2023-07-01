@@ -41,209 +41,193 @@ import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.InvalidType
 import org.eclipse.ocl.pivot.SelfType
 import org.eclipse.ocl.pivot.VoidType
+import org.eclipse.ocl.pivot.PivotPackage
+import org.eclipse.ocl.pivot.Iteration
+import org.eclipse.ocl.pivot.Element
+import org.eclipse.ocl.pivot.Type
+import org.eclipse.ocl.pivot.Enumeration
+import java.util.List
+import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
-	protected def String declareAggregateType(/*@NonNull*/ DataType element) {
-		switch element {
-			CollectionType: return declareCollectionType(element)
-			LambdaType: return declareLambdaType(element)
-			MapType: return declareMapType(element)
-			TupleType: return declareTupleType(element)
-			default: return "/* xyzzy " + element.eClass().name + "*/"
-		}		
-	}
-
-	protected def String declareCollectionType(/*@NonNull*/ CollectionType type) {
+	protected def String declareClass_name(org.eclipse.ocl.pivot./*@NonNull*/ Class type) {
 		'''
-		private CollectionType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
-		'''
-	}
-
-	protected def String declareLambdaType(/*@NonNull*/ LambdaType type) {
-		'''
-		private LambdaType «type.getPrefixedSymbolName("_" + type.partialName())»;
-		'''
-	}
-
-	protected def String declareMapType(/*@NonNull*/ MapType type) {
-		'''
-		private MapType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
-		'''
-	}
-
-	protected def String declareTupleType(/*@NonNull*/ TupleType type) {
-		'''
-		private TupleType «type.getPrefixedSymbolName("_" + type.partialName())»;
-		'''
-	}
-
-	protected def String defineAggregateTypes(/*@NonNull*/ Model root) {
-		var sortedAggregateTypes = root.getSortedAggregateTypes();
-		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
-		'''
-
-		«FOR aggregateType : sortedAggregateTypes»
-			«declareAggregateType(aggregateType)»
-		«ENDFOR»
-
-		private void installGenericAggregateTypes() {
-			Class type;
-			
-			«FOR aggregateType : sortedAggregateTypes»
-			«IF aggregateType.ownedSignature !== null»
-			«defineAggregateType(aggregateType)»
-			«ENDIF»
-			«ENDFOR»
-		}
-
-		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
-
-		private void installSpecializedAggregateTypes«pass»() {
-			Class type;
-			
-			«FOR aggregateType : aggregateTypes»
-			«IF aggregateType.ownedSignature === null»
-			«defineAggregateType(aggregateType)»
-			«FOR comment : getSortedComments(aggregateType)»
-			installComment(type, "«comment.javaString()»");
-			«ENDFOR»
-			«ENDIF»
-			«ENDFOR»
-		}
-		«ENDFOR»
-
-		private void installAggregateSuperTypes() {
-			«FOR aggregateType : sortedAggregateTypes»
-			«aggregateType.emitSuperClasses(aggregateType.getSymbolName())»
-			«ENDFOR»
-		}
-		'''
-	}
-
-	protected def String defineAggregateType(/*@NonNull*/ DataType element) {
-		switch element {
-			CollectionType: return defineCollectionType(element)
-			LambdaType: return defineLambdaType(element)
-			MapType: return defineMapType(element)
-			TupleType: return defineTupleType(element)
-			default: return "/* xyzzy " + element.eClass().name + "*/"
-		}		
-	}
-
-	protected def String defineAll(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		'''
-		«root.defineExternals()»
-		«root.definePackages()»
-		«root.definePrecedences()»
-		«root.defineTemplateParameters()»
-		«root.defineClassTypes(excludedEClassifierNames)»
-		«root.definePrimitiveTypes()»
-		«root.defineEnumerations()»
-		«root.defineAggregateTypes()»
-		«root.defineOperations()»
-		«root.defineIterations()»
-		«root.defineProperties()»
-		'''
-	}
-
-	protected def String defineClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-		«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
 		«IF !excludedEClassifierNames.contains(type.name)»
 		private Class «type.getPrefixedSymbolName("_"+type.partialName())»;
 		«ELSE»
 		private Class «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())»;
 		«ENDIF»
-		«ENDFOR»
-		«ENDFOR»
-
-		private void installClassTypes() {
-			Class type;
-			«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»«var templateSignature = type.getOwnedSignature()»
-			«IF excludedEClassifierNames.contains(type.name)»
-			type = «type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», "«type.name»");
-			«ELSE»
-			type = «type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
-			«ENDIF»
-			«IF type.isAbstract»
-			type.setIsAbstract(true);
-			«ENDIF»
-			«IF templateSignature !== null»«IF templateSignature.getOwnedParameters().size() > 0»
-				createTemplateSignature(type, «FOR templateParameter : templateSignature.getOwnedParameters() SEPARATOR(", ")»«templateParameter.getSymbolName()»«ENDFOR»);
-			«ENDIF»
-			«ENDIF»
-			«FOR comment : getSortedComments(type)»
-				installComment(type, "«comment.javaString()»");
-			«ENDFOR»
-			«ENDFOR»
-			«ENDFOR»
-			«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-			«IF !(type instanceof AnyType)»
-				«type.emitSuperClasses(type.getSymbolName())»
-			«ENDIF»
-			«ENDFOR»
-			«ENDFOR»
-		}
 		'''
 	}
 
-	protected def String defineCollectionType(/*@NonNull*/ CollectionType type) {
+	protected def String declareCollectionType_name(/*@NonNull*/ CollectionType type) {
 		'''
-		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		private CollectionType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
+		'''
+	}
+
+	protected def String declareEnumeration_name(/*@NonNull*/ Enumeration enumeration) {
+		'''
+		private Enumeration «enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»;
+		'''
+	}
+
+	protected def String declareIteration_name(/*@NonNull*/ Iteration iteration) {
+		'''
+		private Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())»;
+		'''
+	}
+
+	protected def String declareIteration_type(/*@NonNull*/ Iteration iteration) {
+		'''
+		'''
+	}
+
+	protected def String declareLambdaType_name(/*@NonNull*/ LambdaType type) {
+		'''
+		private LambdaType «type.getPrefixedSymbolName("_" + type.partialName())»;
+		'''
+	}
+
+	protected def String declareMapType_name(/*@NonNull*/ MapType type) {
+		'''
+		private MapType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
+		'''
+	}
+
+	protected def String declareOperation_name(/*@NonNull*/ Operation operation) {
+		'''
+		private Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())»;
+		'''
+	}
+
+	protected def String declareOperation_type(/*@NonNull*/ Operation operation) {
+		'''
+		'''
+	}
+
+	protected def String declarePrimitiveType_name(/*@NonNull*/ PrimitiveType primitiveType) {
+		'''
+		private PrimitiveType «primitiveType.getPrefixedSymbolNameWithoutNormalization("_" + primitiveType.partialName())»;
+		'''
+	}
+
+	protected def String declareSlot(/*@NonNull*/ Slot slot) {
+		var element = slot.getElement();
+		var role = slot.getRole();
+		if (role == Slot.ROLE_CTOR) {
+			switch element {
+				CollectionType: return declareCollectionType_name(element)
+				Enumeration: return declareEnumeration_name(element)
+				EnumerationLiteral: return ""
+				Iteration: return declareIteration_name(element)
+				LambdaType: return declareLambdaType_name(element)
+				MapType: return declareMapType_name(element)
+				PrimitiveType: return declarePrimitiveType_name(element)
+				TemplateParameter: return declareTemplateParameter_name(element)
+				TupleType: return declareTupleType_name(element)
+				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
+				Operation: return declareOperation_name(element)
+				Parameter: return ""
+				Property: return ""
+			}
+		}			
+		else if (role == Slot.ROLE_TYPE) {
+			switch element {
+				Iteration: return declareIteration_type(element)
+				Operation: return declareOperation_type(element)
+				Parameter: return ""
+				Property: return ""
+			}
+		}
+		else if (role == Slot.ROLE_SUPER_CLASSES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_COMMENTS) {
+			return ""
+		}
+		return "// declare " + role + " " + element.eClass().getName()
+	}
+
+	protected def String declareTemplateParameter_name(/*@NonNull*/ TemplateParameter templateParameter) {
+		'''
+		private TemplateParameter «templateParameter.getPrefixedSymbolName("tp_" + templateParameter.partialName())»;
+		'''
+	}
+
+	protected def String declareTupleType_name(/*@NonNull*/ TupleType type) {
+		'''
+		private TupleType «type.getPrefixedSymbolName("_" + type.partialName())»;
+		'''
+	}
+
+	protected def String defineAll(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
+		this.excludedEClassifierNames = excludedEClassifierNames;
+		'''
+		«root.defineExternals()»
+		«root.definePackages()»
+		«root.definePrecedences()»
+		«root.defineSlots()»
+		«root.defineProperties()»
+		'''
+	}
+	
+	protected def String defineClass_name(org.eclipse.ocl.pivot./*@NonNull*/ Class type) {
+		'''
+		«IF excludedEClassifierNames.contains(type.name)»
+		«type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», "«type.name»");
 		«ELSE»
-		type = «type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
+		«ENDIF»
+		«IF type.isAbstract»
+		«type.getSymbolName()».setIsAbstract(true);
 		«ENDIF»
 		'''
 	}
 
-	protected def String defineEnumerations(/*@NonNull*/ Model root) {
-		var pkge2enumerations = root.getSortedEnumerations();
-		if (pkge2enumerations.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2enumerations.keySet());
+	protected def String defineClass_superClasses(List<Slot> superClassSlots, org.eclipse.ocl.pivot.Class asClass) {
 		'''
-		
-		«FOR pkge : sortedPackages»
-			«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
-				«var enumerationName = enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»
-				private Enumeration «enumerationName»;
-			«ENDFOR»
+		«IF asClass.getOwnedBindings().size() > 0»
+		«FOR slot : superClassSlots»
+		checkSuperClass(«asClass.getSymbolName()», «slot.getElement().getSymbolName()»);
 		«ENDFOR»
+		«ELSE»
+		«FOR slot : superClassSlots»
+		addSuperClass(«asClass.getSymbolName()», «slot.getElement().getSymbolName()»);
+		«ENDFOR»
+		«ENDIF»
+		'''
+	}
 
-		private void installEnumerations() {
-			List<Class> ownedClasses;
-			Enumeration type;
-			List<EnumerationLiteral> enumerationLiterals;
-			EnumerationLiteral enumerationLiteral;
-			«FOR pkge : sortedPackages»
-				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-				«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
+	protected def String defineCollectionType_name(/*@NonNull*/ CollectionType type) {
+		'''
+		«IF type.getOwnedSignature() !== null»
+		//«type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
+		«ELSE»
+		«type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«ENDIF»
+		'''
+	}
 
-					ownedClasses.add(type = «enumeration.getSymbolName()» = «emitCreateEnumeration(enumeration)»);
-					enumerationLiterals = type.getOwnedLiterals();
-					«FOR enumerationLiteral : enumeration.ownedLiterals»
-					enumerationLiterals.add(enumerationLiteral = «emitCreateEnumerationLiteral(enumerationLiteral)»);
-					«FOR comment : getSortedComments(enumerationLiteral)»
-						installComment(enumerationLiteral, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDFOR»
-					«enumeration.emitSuperClasses(enumeration.getSymbolName())»
-					«FOR comment : getSortedComments(enumeration)»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-				«ENDFOR»
-			«ENDFOR»
-		}
+	protected def String defineElement_comments(/*@NonNull*/ Element element) {
+		'''
+		«FOR comment : getSortedComments(element)»
+		installComment(«element.getSymbolName()», "«comment.javaString()»");
+		«ENDFOR»
+		'''
+	}
+
+	protected def String defineEnumeration_name(/*@NonNull*/ Enumeration enumeration) {
+		'''
+		«enumeration.getOwningPackage().getSymbolName()».getOwnedClasses().add(type = «enumeration.getSymbolName()» = «emitCreateEnumeration(enumeration)»);
+		'''
+	}
+
+	protected def String defineEnumerationLiteral_name(/*@NonNull*/ EnumerationLiteral enumerationLiteral) {
+		'''
+		«enumerationLiteral.getOwningEnumeration().getSymbolName()».getOwnedLiterals().add(«emitCreateEnumerationLiteral(enumerationLiteral)»);
 		'''
 	}
 
@@ -276,166 +260,99 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineIterations(/*@NonNull*/ Model root) {
-		var pkge2iterations = root.getSortedIterations();
-		if (pkge2iterations.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2iterations.keySet());
+	protected def String defineIteration_name(/*@NonNull*/ Iteration iteration) {
 		'''
-
-			«FOR pkge : sortedPackages»
-				«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
-				private Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())»;
-				«ENDFOR»
-			«ENDFOR»
-
-			private void installIterationDeclarations() {
-				«FOR pkge : sortedPackages»
-					«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
-					«iteration.symbolName» = createIteration(«iteration.getOwningClass().getSymbolName()», "«iteration.name»", «IF iteration.implementationClass !== null»"«iteration.
-									implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-				«ENDFOR»
-				«ENDFOR»
-			}
-
-			private void installIterationBodies() {
-				Iteration iteration;
-				Parameter parameter;
-				«FOR pkge : sortedPackages»
-					«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
-
-					iteration = «iteration.symbolName»;
-					iteration.setType(«iteration.type.getSymbolName()»);
-					«IF iteration.isInvalidating»
-						iteration.setIsInvalidating(true);
-					«ENDIF»
-					«IF !iteration.isRequired»
-						iteration.setIsRequired(false);
-					«ENDIF»
-					«IF iteration.isStatic»
-						iteration.setIsStatic(true);
-					«ENDIF»
-					«IF iteration.isTypeof»
-						iteration.setIsTypeof(true);
-					«ENDIF»
-					«IF iteration.isValidating»
-						iteration.setIsValidating(true);
-					«ENDIF»
-					«IF iteration.ownedIterators.size() > 0»
-						«FOR parameter : iteration.ownedIterators»
-							parameter = createIterator(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
-							«IF parameter.isTypeof»
-								parameter.setIsTypeof(true);
-							«ENDIF»
-						«ENDFOR»
-					«ENDIF»
-					«IF iteration.ownedAccumulators.size() > 0»
-						«FOR parameter : iteration.ownedAccumulators»
-							parameter = createAccumulator(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
-							«IF parameter.isTypeof»
-								parameter.setIsTypeof(true);
-							«ENDIF»
-						«ENDFOR»
-					«ENDIF»
-					«IF iteration.ownedParameters.size() > 0»
-						«FOR parameter : iteration.ownedParameters»
-							parameter = createParameter(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
-							«IF parameter.isTypeof»
-								parameter.setIsTypeof(true);
-							«ENDIF»
-						«ENDFOR»
-					«ENDIF»
-					«FOR comment : getSortedComments(iteration)»
-						installComment(iteration, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDFOR»
-				«ENDFOR»
-			}
+		«iteration.symbolName» = createIteration(«iteration.getOwningClass().getSymbolName()», "«iteration.name»", «IF iteration.implementationClass !== null»"«iteration.
+			implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»);
 		'''
 	}
 
-	protected def String defineLambdaType(/*@NonNull*/ LambdaType type) {
+	protected def String defineIteration_type(/*@NonNull*/ Iteration iteration) {
 		'''
-		type = «type.getPrefixedSymbolName("_" + type.partialName())» = getLambdaType(_OclLambda, «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
+		«iteration.symbolName».setType(«iteration.type.getSymbolName()»);
+		«IF iteration.isInvalidating»
+			«iteration.symbolName».setIsInvalidating(true);
+		«ENDIF»
+		«IF !iteration.isRequired»
+			«iteration.symbolName».setIsRequired(false);
+		«ENDIF»
+		«IF iteration.isStatic»
+			«iteration.symbolName».setIsStatic(true);
+		«ENDIF»
+		«IF iteration.isTypeof»
+			«iteration.symbolName».setIsTypeof(true);
+		«ENDIF»
+		«IF iteration.isValidating»
+			«iteration.symbolName».setIsValidating(true);
+		«ENDIF»
+		«FOR parameter : iteration.ownedIterators»
+		createIterator(«iteration.symbolName», "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»)«IF parameter.isTypeof».setIsTypeof(true)«ENDIF»;
+		«ENDFOR»
+		«FOR parameter : iteration.ownedAccumulators»
+		createAccumulator(«iteration.symbolName», "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»)«IF parameter.isTypeof»parameter.setIsTypeof(true)«ENDIF»;
+		«ENDFOR»
+		«FOR parameter : iteration.ownedParameters»
+		createParameter(«iteration.symbolName», "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»)«IF parameter.isTypeof»parameter.setIsTypeof(true)«ENDIF»;
+		«ENDFOR»
 		'''
 	}
 
-	protected def String defineMapType(/*@NonNull*/ MapType type) {
+	protected def String defineLambdaType_name(/*@NonNull*/ LambdaType type) {
+		'''
+		«type.getPrefixedSymbolName("_" + type.partialName())» = getLambdaType(_OclLambda, «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
+		'''
+	}
+
+	protected def String defineMapType_name(/*@NonNull*/ MapType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		//«type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		«type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 		«ELSE»
-		type = «type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		«type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ENDIF»
 		'''
 	}
 
-	protected def String defineOperations(/*@NonNull*/ Model root) {
-		var pkge2operations = root.getSortedOperations();
-		if (pkge2operations.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2operations.keySet());
+	protected def String defineOperation_name(/*@NonNull*/ Operation operation) {
 		'''
-			«FOR pkge : sortedPackages»
-				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
-				private Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())»;
-				«ENDFOR»
-			«ENDFOR»
+		«operation.getSymbolName()» = createOperation(«operation.getOwningClass().getSymbolName()», «operation.
+			getNameLiteral()», «IF operation.implementationClass !== null»"«operation.
+			implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»);
+		'''
+	}
 
-			private void installOperationDeclarations() {
-				«FOR pkge : sortedPackages»
-					«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
-					«operation.getSymbolName()» = createOperation(«operation.getOwningClass().getSymbolName()», «operation.
-				getNameLiteral()», «IF operation.implementationClass !== null»"«operation.
-				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-				«ENDFOR»
-				«ENDFOR»
-			}
-
-			private void installOperationBodies() {
-				Operation operation;
-				Parameter parameter;
-				«FOR pkge : sortedPackages»
-					«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»«var newType = operation.getOwningClass()»
-
-					operation = «operation.getSymbolName()»;
-					operation.setType(«operation.type.getSymbolName()»);
-					«IF operation.isInvalidating»
-						operation.setIsInvalidating(true);
-					«ENDIF»
-					«IF !operation.isRequired»
-						operation.setIsRequired(false);
-					«ENDIF»
-					«IF operation.isStatic»
-						operation.setIsStatic(true);
-					«ENDIF»
-					«IF operation.isTypeof»
-						operation.setIsTypeof(true);
-					«ENDIF»
-					«IF operation.isValidating»
-						operation.setIsValidating(true);
-					«ENDIF»
-					«IF operation.precedence !== null»
-						operation.setPrecedence(«operation.precedence.getSymbolName()»);
-					«ENDIF»
-					«IF operation.bodyExpression !== null»
-						createBodyExpression(operation, «operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»);
-					«ENDIF»
-					«IF operation.ownedParameters.size() > 0»
-						«FOR parameter : operation.ownedParameters»
-							parameter = createParameter(operation, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
-							«IF parameter.isTypeof»
-								parameter.setIsTypeof(true);
-							«ENDIF»
-						«ENDFOR»
-					«ENDIF»
-					«IF (newType instanceof PrimitiveType) && ((newType as PrimitiveType).coercions.contains(operation))»
-						«newType.getSymbolName()».getCoercions().add(operation);
-					«ENDIF»
-					«FOR comment : getSortedComments(operation)»
-						installComment(operation, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDFOR»
-				«ENDFOR»
-			}
+	protected def String defineOperation_type(/*@NonNull*/ Operation operation) {
+		var org.eclipse.ocl.pivot.Class asClass = operation.getOwningClass();
+		'''
+		«operation.getSymbolName()».setType(«operation.type.getSymbolName()»);
+		«IF operation.isInvalidating»
+			«operation.getSymbolName()».setIsInvalidating(true);
+		«ENDIF»
+		«IF !operation.isRequired»
+			«operation.getSymbolName()».setIsRequired(false);
+		«ENDIF»
+		«IF operation.isStatic»
+			«operation.getSymbolName()».setIsStatic(true);
+		«ENDIF»
+		«IF operation.isTypeof»
+			«operation.getSymbolName()».setIsTypeof(true);
+		«ENDIF»
+		«IF operation.isValidating»
+			«operation.getSymbolName()».setIsValidating(true);
+		«ENDIF»
+		«IF operation.precedence !== null»
+			«operation.getSymbolName()».setPrecedence(«operation.precedence.getSymbolName()»);
+		«ENDIF»
+		«IF operation.bodyExpression !== null»
+			createBodyExpression(«operation.getSymbolName()», «operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»);
+		«ENDIF»
+		«FOR parameter : operation.ownedParameters»
+		createParameter(«operation.getSymbolName()», "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»)«IF parameter.isTypeof».setIsTypeof(true)«ENDIF»;
+		«ENDFOR»
+		«IF (asClass instanceof PrimitiveType) && ((asClass as PrimitiveType).coercions.contains(operation))»
+			«asClass.getSymbolName()».getCoercions().add(«operation.getSymbolName()»);
+		«ENDIF»
 		'''
 	}
 
@@ -499,38 +416,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String definePrimitiveTypes(/*@NonNull*/ Model root) {
-		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
-		if (pkge2primitiveTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
+	protected def String definePrimitiveType_name(/*@NonNull*/ PrimitiveType primitiveType) {
 		'''
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-				private PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())»;
-				«ENDFOR»
-			«ENDFOR»
-
-			private void installPrimitiveTypes() {
-				PrimitiveType type;
-				«FOR pkge : sortedPackages»
-
-					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-						type = «type.getSymbolName()» = createPrimitiveType(«pkge.getSymbolName()», «getEcoreLiteral(type)»);
-						«FOR comment : getSortedComments(type)»
-							installComment(type, "«comment.javaString()»");
-						«ENDFOR»
-					«ENDFOR»
-				«ENDFOR»
-				«FOR pkge : sortedPackages»
-
-					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-						«FOR superClass : type.getSuperclassesInPackage()»
-							addSuperClass(«type.getSymbolName()», «superClass.getSymbolName()»);
-						«ENDFOR»
-					«ENDFOR»
-				«ENDFOR»
-			}
+		«primitiveType.getSymbolName()» = createPrimitiveType(«primitiveType.getOwningPackage().getSymbolName()», «getEcoreLiteral(primitiveType)»);
 		'''
 	}
 
@@ -609,27 +497,77 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineTemplateParameters(/*@NonNull*/ Model root) {
-		var allTemplateParameters = root.getSortedTemplateParameters();
-		if (allTemplateParameters.isEmpty()) return "";
+	protected def String defineSlot(/*@NonNull*/ Slot slot) {
+		var element = slot.getElement();
+		var role = slot.getRole();
+		if (role == Slot.ROLE_CTOR) {
+			switch element {
+				CollectionType: return defineCollectionType_name(element)
+				Enumeration: return defineEnumeration_name(element)
+				EnumerationLiteral: return defineEnumerationLiteral_name(element)
+				Iteration: return defineIteration_name(element)
+				LambdaType: return defineLambdaType_name(element)
+				MapType: return defineMapType_name(element)
+				PrimitiveType: return definePrimitiveType_name(element)
+				TemplateParameter: return defineTemplateParameter_name(element)
+				TupleType: return defineTupleType_name(element)
+				org.eclipse.ocl.pivot.Class: return defineClass_name(element)
+				Operation: return defineOperation_name(element)
+			//	Parameter: return ""
+			//	Property: return ""
+			}
+		}			
+		else if (role == Slot.ROLE_TYPE) {
+			switch element {
+				Iteration: return defineIteration_type(element)
+				Operation: return defineOperation_type(element)
+				Parameter: return ""
+				Property: return ""
+			}
+		}
+		else if (role == Slot.ROLE_SUPER_CLASSES) {
+			switch element {
+				org.eclipse.ocl.pivot.Class: return defineClass_superClasses(slot.getPredecessors().subList(1, slot.getPredecessors().size()), element)
+			}
+		}
+		else if (role == Slot.ROLE_COMMENTS) {
+			switch element {
+				Parameter: return ""
+				Property: return ""
+				default: return defineElement_comments(element)
+			}		
+		}
+		return "// define " + role + " " + element.eClass().getName()
+	}
+
+	protected def String defineSlots(/*@NonNull*/ Model root) {
 		'''
 
-			«FOR templateParameter : allTemplateParameters»
-			private TemplateParameter «templateParameter.getPrefixedSymbolName(
-						"tp_" + templateParameter.partialName())»;
+		«FOR slot : contentAnalysis.getSynthesisSchedule.getSlots()»
+		«declareSlot(slot)»
+		«ENDFOR»
+		«FOR stage : contentAnalysis.getSynthesisSchedule.getStages()»
+		«IF stage.getSlots().size() > 0»
+			
+		private void installSlots«stage.getName()»() {
+			«FOR slot : stage.getSlots()»
+			«defineSlot(slot)»
 			«ENDFOR»
-
-			private void installTemplateParameters() {
-				«FOR templateParameter : allTemplateParameters»
-				«templateParameter.getSymbolName()» = createTemplateParameter("«templateParameter.getName()»");
-				«ENDFOR»
-			}
+		}
+		«ENDIF»
+		«ENDFOR»
 		'''
 	}
 
-	protected def String defineTupleType(/*@NonNull*/ TupleType type) {
+	protected def String defineTemplateParameter_name(/*@NonNull*/ TemplateParameter templateParameter) {
 		'''
-		type = «type.getSymbolName()» = getTupleType(_OclTuple,
+		«templateParameter.getSymbolName()» = createTemplateParameter(«templateParameter.getOwningSignature().getOwningElement().getSymbolName()», "«templateParameter.getName()»");
+		'''
+	}
+
+	protected def String defineTupleType_name(/*@NonNull*/ TupleType type) {
+		'''
+		«type.getSymbolName()» = getTupleType(_OclTuple,
 		«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
 		createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
 		«FOR property : type.getSortedProperties()»
@@ -684,84 +622,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String emitSuperClasses(org.eclipse.ocl.pivot.Class type, String typeName) {
-		var superClasses = type.getSuperclassesInPackage();
-		'''
-			«IF superClasses.size() > 0»
-				«FOR superClass : superClasses»
-					addSuperClass(«typeName», «superClass.getSymbolName()»);
-				«ENDFOR»
-			«ELSEIF (type instanceof MapType)»
-				addSuperClass(«typeName», _OclAny);
-			«ELSEIF (type instanceof AnyType)»
-			«ELSEIF TypeId.OCL_ELEMENT_NAME.equals(type.getName())»
-			«ELSEIF PivotConstants.ORPHANAGE_NAME.equals(type.getName())»
-			«ELSE»
-				addSuperClass(«typeName», _OclElement);
-			«ENDIF»
-		'''
-	}
-
 	protected def String installAll(/*@NonNull*/ Model root) {
 		'''
 		«thisModel.installPackages()»
 		«thisModel.installPrecedences()»
-		«thisModel.installTemplateParameters()»
-		«thisModel.installClassTypes()»
-		«thisModel.installPrimitiveTypes()»
-		«thisModel.installEnumerations()»
-		«thisModel.installGenericAggregateTypes()»
-		«thisModel.installOperationDeclarations()»
-		«thisModel.installIterationDeclarations()»
-		«thisModel.installSpecializedAggregateTypes()»
-		«thisModel.installOperationBodies()»
-		«thisModel.installIterationBodies()»
+		«thisModel.installSlots()»
 		«thisModel.installProperties()»
 		'''
-	}
-
-	protected def String installClassTypes(/*@NonNull*/ Model root) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		'''installClassTypes();'''
-	}
-
-	protected def String installEnumerations(/*@NonNull*/ Model root) {
-		var pkge2enumerations = root.getSortedEnumerations();
-		if (pkge2enumerations.isEmpty()) return "";
-		'''installEnumerations();'''
-	}
-
-	protected def String installGenericAggregateTypes(/*@NonNull*/ Model root) {
-		var sortedAggregateTypes = root.getSortedAggregateTypes();
-		if (sortedAggregateTypes.isEmpty()) return "";
-		'''
-		installGenericAggregateTypes();
-		'''
-	}
-
-	protected def String installIterationBodies(/*@NonNull*/ Model root) {
-		var pkge2iterations = root.getSortedIterations();
-		if (pkge2iterations.isEmpty()) return "";
-		'''installIterationBodies();'''
-	}
-
-	protected def String installIterationDeclarations(/*@NonNull*/ Model root) {
-		var pkge2iterations = root.getSortedIterations();
-		if (pkge2iterations.isEmpty()) return "";
-		'''installIterationDeclarations();'''
-	}
-
-	protected def String installOperationBodies(/*@NonNull*/ Model root) {
-		var pkge2operations = root.getSortedOperations();
-		if (pkge2operations.isEmpty()) return "";
-		'''installOperationBodies();'''
-	}
-
-	protected def String installOperationDeclarations(/*@NonNull*/ Model root) {
-		var pkge2operations = root.getSortedOperations();
-		if (pkge2operations.isEmpty()) return "";
-		'''installOperationDeclarations();'''
 	}
 
 	protected def String installPackages(/*@NonNull*/ Model root) {
@@ -777,33 +644,22 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installPrecedences();'''
 	}
 
-	protected def String installPrimitiveTypes(/*@NonNull*/ Model root) {
-		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
-		if (pkge2primitiveTypes.isEmpty()) return "";
-		'''installPrimitiveTypes();'''
-	}
-
 	protected def String installProperties(/*@NonNull*/ Model root) {
 		var pkge2properties = root.getSortedProperties();
 		if (pkge2properties.isEmpty()) return "";
 		'''installProperties();'''
 	}
 
-	protected def String installSpecializedAggregateTypes(/*@NonNull*/ Model root) {
-		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
-		if (sortedAggregateTypesPerPass.isEmpty()) return "";
+	protected def String installSlots(/*@NonNull*/ Model root) {
+		var stages = contentAnalysis.getSynthesisSchedule.getStages();
+		if (stages.isEmpty()) return "";
 		'''
-		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
-		installSpecializedAggregateTypes«pass»();
+		«FOR stage : stages»
+		«IF stage.getSlots().size() > 0»
+		installSlots«stage.getName()»();
+		«ENDIF»
 		«ENDFOR»
-		installAggregateSuperTypes();
 		'''
-	}
-
-	protected def String installTemplateParameters(/*@NonNull*/ Model root) {
-		var allTemplateParameters = root.getSortedTemplateParameters();
-		if (allTemplateParameters.size() <= 0) return "";
-		'''installTemplateParameters();'''
 	}
 
 	/**

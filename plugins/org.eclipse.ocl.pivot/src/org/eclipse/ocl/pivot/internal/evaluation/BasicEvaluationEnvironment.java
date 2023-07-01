@@ -64,7 +64,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	/** @deprecated use an executor */
 	@Deprecated
 	public BasicEvaluationEnvironment(@NonNull EnvironmentFactory environmentFactory, @NonNull NamedElement executableObject, @NonNull ModelManager modelManager) {
-		this(((EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)environmentFactory).createExecutor(modelManager), executableObject);
+		this(((EnvironmentFactoryInternal)environmentFactory).createExecutor(modelManager), executableObject);
 	}
 
 	/**

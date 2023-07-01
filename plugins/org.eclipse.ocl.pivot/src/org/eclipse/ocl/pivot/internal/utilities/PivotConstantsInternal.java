@@ -35,6 +35,10 @@ public interface PivotConstantsInternal
 	static final @NonNull String DOCUMENTATION_ANNOTATION_SOURCE = GenModelPackage.eNS_URI;
 	static final @NonNull String DOCUMENTATION_ANNOTATION_KEY = "documentation";
 
+	/* Separator between  multiple AS Comments folded into a single Ecore body */
+	static final String DOCUMENTATION_SEPARATOR = "\n\n\r\r\n\n";
+
+
 	/**
 	 * Ecore encoding of a UML redefines
 	 */
@@ -44,7 +48,7 @@ public interface PivotConstantsInternal
 	 * @since 1.14
 	 */
 	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
-	//	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
+	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
 
 	/**
 	 * The default values for a totally blind implicit opposite are determined by what it is safe to use for a fully deduced opposite.

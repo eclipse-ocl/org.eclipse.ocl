@@ -39,10 +39,12 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/CGLibrary Standard Library
@@ -62,7 +64,7 @@ public class CGLibrary extends ASResourceImpl
 	/**
 	 *	The static package-of-types pivot model of the Standard Library.
 	 */
-	private static CGLibrary INSTANCE = null;
+//	private static CGLibrary INSTANCE = null;
 
 	/**
 	 *	The URI of this Standard Library.
@@ -76,13 +78,15 @@ public class CGLibrary extends ASResourceImpl
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
 	public static @NonNull CGLibrary getDefault() {
-		CGLibrary oclstdlib = INSTANCE;
-		if (oclstdlib == null) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+		ReadOnly cgLibrary = environmentFactory.basicGetInstance(ReadOnly.class);
+		if (cgLibrary == null) {
 			Contents contents = new Contents("http://www.eclipse.org/ocl/2015/Library");
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+			cgLibrary = new ReadOnly(asURI, contents.getModel());
+			environmentFactory.setInstance(ReadOnly.class, cgLibrary);
 		}
-		return oclstdlib;
+		return cgLibrary;
 	}
 
 	/**
@@ -134,7 +138,6 @@ public class CGLibrary extends ASResourceImpl
 	 */
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
-		INSTANCE = null;
 	}
 
 	/**
@@ -191,12 +194,12 @@ public class CGLibrary extends ASResourceImpl
 		 */
 		@Override
 		public void load(Map<?, ?> options) throws IOException {
-			if (this != INSTANCE) {
+		//	if (this != INSTANCE) {
 				super.load(options);
-			}
-			else {
-				setLoaded(true);
-			}
+		//	}
+		//	else {
+		//		setLoaded(true);
+		//	}
 		}
 
 		/**

@@ -12,14 +12,21 @@ package org.eclipse.ocl.pivot.flat;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Region;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StateMachine;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -29,13 +36,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * This calls is not yet used by itself since current usage always provides a EClassifier
  * for the more refined EcoreFlatClass.
  */
-public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
-
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		super(flatModel, NameUtil.getName(asClass), 0);
-		this.asClass = asClass;
+		super(flatModel, NameUtil.getName(asClass), asClass);
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
 	}
 
@@ -63,6 +67,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 			FlatClass superFlatClass = flatModel2.getFlatClass(asSuperClass);
 			if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 				superFlatClasses.add(superFlatClass);
+			//	System.out.println("computeDirectSuperFlatClasses " + NameUtil.debugSimpleName(this) + " : " + this + " -> " + NameUtil.debugSimpleName(superFlatClass) + " : " + superFlatClass + " for " + asSuperClass);
 			}
 		}
 		if (superFlatClasses == null) {
@@ -105,13 +110,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return asClass;
-	}
-
-	@Override
 	protected void initOperationsInternal() {
-		for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class superType : asClass.getSelfAndAllSuperClasses()) {
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
 			//	initMemberOperationsFrom(unspecializedPartialType);
 			//	if (INIT_MEMBER_OPERATIONS.isActive()) {
@@ -163,6 +163,20 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	} */
 
 	@Override
+	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
+		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : asClass.getSelfAndAllSuperClasses()) {
+			for (@NonNull Behavior behavior : ClassUtil.nullFree(asSuperClass.getOwnedBehaviors())) {
+				if (behavior instanceof StateMachine) {
+					@NonNull List<@NonNull Region> regions = ClassUtil.nullFree(((StateMachine)behavior).getOwnedRegions());
+					initStatesForRegions(name2states, regions);
+				}
+			}
+		}
+		return name2states;
+	}
+
+	@Override
 	protected void installClassListeners() {
 		assert isMutable();
 		asClass.addClassListener(this);
@@ -174,8 +188,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		super.resetFragments();
 	}
 
-	@Override
-	public @NonNull String toString() {
-		return NameUtil.qualifiedNameFor(asClass);
-	}
+//	@Override
+//	public @NonNull String toString() {
+//		return NameUtil.qualifiedNameFor(asClass);
+//	}
 }

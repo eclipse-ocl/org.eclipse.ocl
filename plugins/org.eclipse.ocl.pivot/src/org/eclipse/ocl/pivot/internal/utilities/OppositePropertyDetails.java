@@ -49,9 +49,13 @@ public class OppositePropertyDetails
 	 * The key that identifies opposite role names in an annotation
 	 */
 	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = "Property.oppositeRoleName"; //$NON-NLS-1$
+	@Deprecated /* @deprecated use oppositeRoleName detail */
 	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
+	@Deprecated /* @deprecated use oppositeRoleName detail */
 	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
+	@Deprecated /* @deprecated use oppositeRoleName detail */
 	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
+	@Deprecated /* @deprecated use oppositeRoleName detail */
 	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
 
 	public static @Nullable OppositePropertyDetails createFromEReference(@NonNull EReference eReference) {

@@ -148,7 +148,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				LambdaType lambdaType = (LambdaType)element;
 				localId += LAMBDA_TYPE_CONTEXT_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getContextType(lambdaType), normalizeTemplateParameters);
 				int lambdaTypeParameterTypeMultiplier = LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER;
-				for (@NonNull Type parameterType :  PivotUtil.getParameterType(lambdaType)) {
+				for (@NonNull Type parameterType :  PivotUtil.getParameterTypes(lambdaType)) {
 					localId += lambdaTypeParameterTypeMultiplier * computeReferenceLUSSID(as2id, parameterType, normalizeTemplateParameters);
 					lambdaTypeParameterTypeMultiplier += SIBLING_INDEX_MULTIPLIER * LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER;
 				}

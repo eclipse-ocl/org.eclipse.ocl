@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.oclstdlib.*;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.oclstdlib._Lambda_CC;
 import org.eclipse.ocl.pivot.oclstdlib._Lambda_CD;
@@ -173,20 +174,24 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createUniqueCollectionAdapter();
 			}
 			@Override
-			public <K, V> Adapter case_Entry_COCO(Map.Entry<K, V> object) {
-				return create_Entry_COCOAdapter();
+			public <K, V> Adapter case_Entry_1(Map.Entry<K, V> object) {
+				return create_Entry_1Adapter();
 			}
 			@Override
-			public <K, V> Adapter case_Entry_CRCR(Map.Entry<K, V> object) {
-				return create_Entry_CRCRAdapter();
+			public <K, V> Adapter case_Entry_2(Map.Entry<K, V> object) {
+				return create_Entry_2Adapter();
 			}
 			@Override
-			public <C, R> Adapter case_Lambda_CC(_Lambda_CC<C, R> object) {
-				return create_Lambda_CCAdapter();
+			public <C, R> Adapter case_Lambda_1(_Lambda_1<C, R> object) {
+				return create_Lambda_1Adapter();
 			}
 			@Override
-			public <C, R> Adapter case_Lambda_CD(_Lambda_CD<C, R> object) {
-				return create_Lambda_CDAdapter();
+			public <C, R> Adapter case_Lambda_2(_Lambda_2<C, R> object) {
+				return create_Lambda_2Adapter();
+			}
+			@Override
+			public <T, T2> Adapter case_Tuple_1(_Tuple_1<T, T2> object) {
+				return create_Tuple_1Adapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -517,21 +522,7 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CD <em>Lambda CD</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CD
-	 * @generated
-	 */
-	public Adapter create_Lambda_CDAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Entry CRCR</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Entry 1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -540,26 +531,12 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter create_Entry_CRCRAdapter() {
+	public Adapter create_Entry_1Adapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CC <em>Lambda CC</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CC
-	 * @generated
-	 */
-	public Adapter create_Lambda_CCAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Entry COCO</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Entry 2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -568,7 +545,49 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter create_Entry_COCOAdapter() {
+	public Adapter create_Entry_2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_1 <em>Lambda 1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_1
+	 * @generated
+	 */
+	public Adapter create_Lambda_1Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_2 <em>Lambda 2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_2
+	 * @generated
+	 */
+	public Adapter create_Lambda_2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib._Tuple_1 <em>Tuple 1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib._Tuple_1
+	 * @generated
+	 */
+	public Adapter create_Tuple_1Adapter() {
 		return null;
 	}
 

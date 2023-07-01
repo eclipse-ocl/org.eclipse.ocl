@@ -91,7 +91,6 @@ import org.eclipse.ocl.xtext.basecs.TupleTypeCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
-import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.util.AbstractExtendingBaseCSVisitor;
 import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
@@ -315,8 +314,10 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	@Override
 	public Continuation<?> visitDataTypeCS(@NonNull DataTypeCS csElement) {
 		DataType pivotElement;
-		if (csElement.isIsPrimitive()) {
-			pivotElement = refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, csElement);
+		if (csElement.isIsPrimitive()) {		// XXX BooleanType
+			String instanceClassName = csElement.getInstanceClassName().trim();
+			boolean isBoolean = Boolean.class.getName().equals(instanceClassName) || boolean.class.getName().equals(instanceClassName);
+			pivotElement = refreshNamedElement(PrimitiveType.class, isBoolean ? PivotPackage.Literals.BOOLEAN_TYPE : PivotPackage.Literals.PRIMITIVE_TYPE, csElement);
 		}
 		else {
 			pivotElement = refreshNamedElement(DataType.class, PivotPackage.Literals.DATA_TYPE, csElement);
@@ -608,14 +609,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		if (pathName != null) {
 			CS2AS.setElementType(pathName, PivotPackage.Literals.TYPE, csElement, null);
 		}
-		return null;
-	}
-
-	@Override
-	public Continuation<?> visitWildcardTypeRefCS(@NonNull WildcardTypeRefCS csElement) {
-		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.CLASS;
-		org.eclipse.ocl.pivot.Class pivotElement = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, eClass, null);
-		context.installPivotReference(csElement, pivotElement, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 		return null;
 	}
 

@@ -11,11 +11,15 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -28,7 +32,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -36,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -88,6 +93,37 @@ public class SerializeTests extends XtextTestCase
 		@Override
 		public @NonNull String @NonNull [] asFirstValidationMessages() {
 			return SUPPRESS_VALIDATION;
+		}
+	};
+
+	public static final @NonNull SerializeTestHelper TRIM_ECORE_IMPORT_HELPER = new SerializeTestHelper()
+	{
+		@Override
+		public void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
+			List<@NonNull EAnnotation> eAnnotations = new ArrayList<>();
+			for (EObject eObject : new TreeIterable(actualResource)) {
+				if (eObject instanceof EAnnotation) {
+					EAnnotation eAnnotation = (EAnnotation)eObject;
+					if (AnnotationUtil.IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
+						if (EcorePackage.eNS_URI.equals(eAnnotation.getDetails().get(EcorePackage.eNS_PREFIX))) {
+							eAnnotations.add(eAnnotation);
+						}
+					}
+				}
+			}
+			for (EAnnotation eAnnotation : eAnnotations) {
+				EMap<String, String> details = eAnnotation.getDetails();
+				details.remove(EcorePackage.eNS_PREFIX);
+				if (details.isEmpty()) {
+					if (eAnnotation.getContents().isEmpty() && eAnnotation.getReferences().isEmpty()) {
+						EObject eContainer = eAnnotation.eContainer();
+						if (eContainer instanceof EModelElement) {
+							((EModelElement)eContainer).getEAnnotations().remove(eAnnotation);
+						}
+					}
+				}
+			}
+			SerializeTestHelper.super.assertSameModel(expectedResource, actualResource);
 		}
 	};
 
@@ -314,10 +350,11 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_Bug323741() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/Bug323741.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/Bug323741.ecore"), TRIM_ECORE_IMPORT_HELPER);
 	}
 
 	public void testSerialize_Bug354336() throws Exception {
+		EAnnotationConverter.addKnownEAnnotationSource(null);
 		doSerialize(getTestModelURI("models/ecore/Bug354336.ecore"), getTestModelURI("models/ecore/Bug354336.ecore"), DEFAULT_HELPER);		// FIXME Model check suppressed because of Bug 354621
 	}
 
@@ -365,7 +402,7 @@ public class SerializeTests extends XtextTestCase
 						"</ecore:EPackage>\n" +
 						"\n";
 		TestFile ecoreFile = createOCLinEcoreFile("Bug388282.ecore", testFile);		// FIXME rename as createTextFile
-		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
+		doSerialize(ecoreFile.getFileURI(), TRIM_ECORE_IMPORT_HELPER);
 	}
 
 	public void testSerialize_Bug397917() throws Exception {
@@ -389,7 +426,7 @@ public class SerializeTests extends XtextTestCase
 						" </eClassifiers>\n" +
 						"</ecore:EPackage>";
 		TestFile ecoreFile = createOCLinEcoreFile("Bug397917.ecore", testFile);		// FIXME rename as createTextFile
-		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
+		doSerialize(ecoreFile.getFileURI(), TRIM_ECORE_IMPORT_HELPER);
 	}
 
 	public void testSerialize_Bug404493() throws Exception {
@@ -594,7 +631,7 @@ public class SerializeTests extends XtextTestCase
 		//		DocumentAttribution.WORK.setState(true);
 		//		CS2ASConversion.CONTINUATION.setState(true);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doSerialize(getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), TRIM_ECORE_IMPORT_HELPER);
 	}
 
 	public void testSerialize_ConstraintMessages() throws Exception {
@@ -709,7 +746,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_OCLstdlib() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/OCLstdlib.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/OCLstdlib.ecore"), TRIM_ECORE_IMPORT_HELPER);
 	}
 
 	public void testSerialize_OCLCST() throws Exception {
@@ -760,7 +797,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_XMLNamespace() throws Exception {
-		Ecore2AS.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
+		EAnnotationConverter.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
 		doSerialize(getTestModelURI("models/ecore/XMLNamespace.ecore"), DEFAULT_HELPER);
 	}
 

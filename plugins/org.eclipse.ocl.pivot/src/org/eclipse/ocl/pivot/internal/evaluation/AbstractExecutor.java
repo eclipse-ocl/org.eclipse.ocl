@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NullValue;
 
@@ -66,7 +65,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	// this is the same as HashMap's default load factor
 	private static final float DEFAULT_REGEX_CACHE_LOAD_FACTOR = 0.75f;
 
-	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final EnvironmentFactoryInternal environmentFactory;
 	/**
 	 * @deprecated implement modelManager in derived class
 	 */
@@ -103,7 +102,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+	protected AbstractExecutor(EnvironmentFactoryInternal environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = null;
@@ -115,7 +114,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 * @deprecated implement modelManager in derived class
 	 */
 	@Deprecated
-	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+	protected AbstractExecutor(EnvironmentFactoryInternal environmentFactory, @NonNull ModelManager modelManager) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = modelManager;
@@ -423,7 +422,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			Type parameterType = asParameters.get(0).getType();
 			if ((parameterType instanceof SelfType) && (actualSourceType != null)) {
 				Type actualArgType = idResolver.getStaticTypeOfValue(parameterType, sourceAndArgumentValues[1]);
-				actualSourceType = actualSourceType.getCommonType(idResolver, actualArgType);
+				actualSourceType = environmentFactory.getStandardLibrary().getCommonType(actualSourceType, actualArgType);
 			}
 		}
 		//
@@ -437,7 +436,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			if (actualSourceClass == null)  {
 				TemplateParameter templateParameter = actualSourceType.isTemplateParameter();
 				if (templateParameter != null) {
-					actualSourceClass = PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+					actualSourceClass = standardLibrary.getLowerBound(templateParameter);
 				}
 			}
 		}

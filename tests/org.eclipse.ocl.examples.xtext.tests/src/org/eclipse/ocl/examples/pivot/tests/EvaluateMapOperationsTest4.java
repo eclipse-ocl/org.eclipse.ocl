@@ -713,7 +713,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void testMapReject() {
 		TestOCL ocl = createOCL();
-		/*		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		/*		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@SuppressWarnings("null") @NonNull Type packageType = environmentFactory.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageType.getTypeId());

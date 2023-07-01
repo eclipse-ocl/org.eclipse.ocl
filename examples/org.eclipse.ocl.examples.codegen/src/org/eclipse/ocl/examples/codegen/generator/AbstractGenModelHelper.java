@@ -65,6 +65,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String TYPE_PARAMETERS_PACKAGE_NAME = "TypeParameters";
 	public static final @NonNull String TYPES_PACKAGE_NAME = "Types";
 
+//	public static final @NonNull String ENUMERATION_LITERAL_PREFIX = "l_";
+//	public static final @NonNull String OPERATION_PREFIX = "o_";
+//	public static final @NonNull String OPERATIONS_PREFIX = "O";
+//	public static final @NonNull String PROPERTY_PREFIX = "p_";
+//	public static final @NonNull String PROPERTIES_PREFIX = "P";
+
 	public static @NonNull GenModelHelper create(@NonNull PivotMetamodelManager metamodelManager, @Nullable GenModel genModel) {
 		if (genModel instanceof org.eclipse.uml2.codegen.ecore.genmodel.GenModel) {
 			return new UMLGenModelHelper(metamodelManager);

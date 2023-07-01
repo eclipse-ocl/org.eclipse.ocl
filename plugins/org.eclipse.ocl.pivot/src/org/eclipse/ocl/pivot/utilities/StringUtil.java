@@ -276,7 +276,7 @@ public class StringUtil
 	}
 
 	/**
-	 * Return a composite string comprising each element od strings separated by separator.
+	 * Return a composite string comprising each element of strings separated by separator.
 	 * A null strings is returned as a null string. An empty strings as an empty string.
 	 *
 	 * @param strings strings to be spliced

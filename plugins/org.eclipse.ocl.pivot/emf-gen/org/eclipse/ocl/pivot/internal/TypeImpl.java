@@ -21,12 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl.OrphanResource;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -172,18 +169,13 @@ implements Type {
 
 	@Override
 	public @Nullable Orphanage basicGetSharedOrphanage() {
-		EObject eContainer = eContainer();
-		return (eContainer instanceof Orphanage) && (eContainer().eResource() instanceof OrphanResource) ? (Orphanage)eContainer : null;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
+		if (eContainer == null) {
+			return null;
 		}
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.isSubFlatClassOf(thatFlatClass);
+		if (eContainer.eIsProxy()) {
+			return null;			// Can happen when finalizing
+		}
+		return (eContainer instanceof Orphanage) && (eContainer.eResource() instanceof OrphanResource) ? (Orphanage)eContainer : null;
 	}
 
 	/**
@@ -225,35 +217,6 @@ implements Type {
 			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
-		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		Type thisType = this.getNormalizedType(standardLibrary);
-		Type thatType = type.getNormalizedType(standardLibrary);
-		return thisType == thatType;
-	}
-
-	@Override
-	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		return false;
 	}
 
 	//	@Override

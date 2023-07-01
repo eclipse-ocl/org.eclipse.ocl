@@ -79,7 +79,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 		}
 		else {
 			csElement = context.refreshElement(OCLinEcoreConstraintCS.class, OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS, object);
-			csElement.setName(null);
+			csElement.setName("");
 		}
 		csElement.setIsCallable(object.isIsCallable());
 		refreshConstraint(csElement, object);

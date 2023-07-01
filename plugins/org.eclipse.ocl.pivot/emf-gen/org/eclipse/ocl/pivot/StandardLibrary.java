@@ -39,10 +39,19 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
+	org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter asTemplateParameter);
+	org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull WildcardType asWildcard);
 	@Nullable AnyType basicGetOclAnyType();
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+	boolean conformsTo(@NonNull Type firstType, @NonNull Type secondType);
+	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+	boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
+	boolean conformsToLambdaType(@NonNull LambdaType firstLambdaType, @NonNull LambdaType secondLambdaType);
+	boolean conformsToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
+	boolean conformsToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);
 	void dispose();
 
 	/**
@@ -101,8 +110,33 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+	/**
+	 * Return the most derived class common to leftClass and rightClass.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getCommonClass(org.eclipse.ocl.pivot.@NonNull Class leftClass, org.eclipse.ocl.pivot.@NonNull Class rightClass);
+
+	/**
+	 * Return the most derived type common to leftType and rightType.
+	 */
+	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull Type rightType);
+
+	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	org.eclipse.ocl.pivot.@NonNull Class getCommonCollectionType(@NonNull CollectionType leftCollectionType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightCollectionType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	org.eclipse.ocl.pivot.@NonNull Class getCommonMapType(@NonNull MapType leftMapType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull MapType rightMapType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	/**
+	 * Return the specialization of asType suitable for use as the type of self in a feature. A generic class
+	 * is specialized by its own template paramerters.
+	 */
+//	@NonNull Type getContextSpecializedType(@NonNull Type asType);
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -120,12 +154,20 @@ public interface StandardLibrary extends Element
 	@NonNull FlatModel getFlatModel();
 
 	/**
+	 * Return the specialization of the under-specified generic asType suitable for type of Variable. Missing (all) parameters
+	 * are filled in with distinct WildCardTypes.
+	 */
+//	@NonNull Type getIncompleteSpecializedType(@NonNull Type asType);
+
+	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>Integer</tt>.
 	 *
 	 * @return the <tt>Integer</tt> type (an instance of PrimitiveType)
 	 */
 	@NonNull PrimitiveType getIntegerType();
+
+	org.eclipse.ocl.pivot.@NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass);
 
 	@NonNull LambdaType getLambdaType(@NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
@@ -135,6 +177,9 @@ public interface StandardLibrary extends Element
 	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+
+	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter asTemplateParameter);
+	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull WildcardType asWildcard);
 
 	org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
@@ -156,6 +201,7 @@ public interface StandardLibrary extends Element
 	 * Return the metaclass to which classType conforms.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
+	@NonNull String getMetaclassName(@NonNull Type asInstanceType);
 
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
@@ -308,6 +354,8 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
+	@NonNull Orphanage getOrphanage();
+
 	/**
 	 * Obtains the package containing the library types
 	 */
@@ -353,8 +401,6 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@NonNull Orphanage getOrphanage();
-
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 
 	/**
@@ -393,6 +439,20 @@ public interface StandardLibrary extends Element
 
 	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
 
-	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
+	/**
+	 * Return true if firstType is the same type as secondType within this standardLibrary.
+	 */
+	boolean isEqualTo(@NonNull Type firstType, @NonNull Type secondType);
+	boolean isEqualToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
+	boolean isEqualToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
+	boolean isEqualToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);
+	boolean isTypeServeable(@NonNull Type type);
+
+	@NonNull Type resolveContextSpecialization(@NonNull Type asType);
+
+	@NonNull Type resolveIncompleteSpecialization(@NonNull Type asType);
+
+	@NonNull Type resolveLowerBoundSpecialization(@NonNull Type asType);
+
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

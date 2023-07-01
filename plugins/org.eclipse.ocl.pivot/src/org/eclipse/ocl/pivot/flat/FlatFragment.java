@@ -47,6 +47,9 @@ public /*final*/ class FlatFragment
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		this.derivedFlatClass = derivedFlatClass;
 		this.baseFlatClass = baseFlatClass;
+		if ("Mapping".equals(baseFlatClass.getName())) {
+			getClass();		// XXX
+		}
 	}
 
 	public @NonNull Operation @Nullable [] basicGetOperations() {

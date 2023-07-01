@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.Class;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -9768,14 +9769,14 @@ implements PivotPackage  {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASMetamodel
 		createASMetamodelAnnotations();
-		// http://www.eclipse.org/OCL/Collection
-		createCollectionAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
 		createPivotAnnotations();
 		// http://www.eclipse.org/uml2/2.0.0/UML
 		createUMLAnnotations();
+		// http://www.eclipse.org/OCL/Collection
+		createCollectionAnnotations();
 		// http://www.eclipse.org/OCL/Property
 		createPropertyAnnotations();
 	}
@@ -9824,13 +9825,6 @@ implements PivotPackage  {
 	protected void createCollectionAnnotations()
 	{
 		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
-		addAnnotation
-		  (this,
-		   source,
-		   new String[]
-		   {
-			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
 		addAnnotation
 		  (getLoopExp_OwnedCoIterators(),
 		   source,

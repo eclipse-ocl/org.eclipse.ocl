@@ -12,13 +12,16 @@ package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
@@ -112,8 +115,11 @@ public interface FlatClass extends Nameable
 	 */
 	public static final int ABSTRACT = 1 << 5;
 
-	@Nullable Operation basicGetOperation(@NonNull OperationId id);
+	@Nullable Operation basicGetOperation(@NonNull Operation operationId);
+	@Nullable Operation basicGetOperation(@NonNull OperationId operationId);
+	@Nullable Iterable<@NonNull Operation> basicGetOperationOverloads(@NonNull Operation pivotOperation);
 	@Nullable Property basicGetProperty(@NonNull String name);
+	org.eclipse.ocl.pivot.@NonNull Class getASClass();
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
@@ -124,29 +130,37 @@ public interface FlatClass extends Nameable
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
-	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
+	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that, boolean ignoreTemplateArguments);
 	@Deprecated // XXX eliminate unsound inheritance
 	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();
+	@NonNull FlatClass getGenericFlatClass();
 	@Override
 	@NonNull String getName();
-	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
+	@NonNull Iterable<@NonNull Operation> getOperationOverloads(@Nullable FeatureFilter featureFilter, @Nullable String name);
+	@NonNull Iterable<@NonNull Operation> getOperations();
+	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter);
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	@NonNull FlatFragment getSelfFragment();
 	@NonNull Operation @NonNull [] getSelfOperations();
 	@NonNull Property @NonNull [] getSelfProperties();
 	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull Iterable<@NonNull State> getStates();
+	@NonNull Iterable<@NonNull State> getStates(@Nullable String name);
 	@NonNull FragmentIterable getSuperFragments(int depth);
+	@NonNull TemplateParameterId @Nullable [] getTemplateParameterIds();
 
 	/**
 	 * Initialize the super-fragment hierarchy from the compile-time analysis.
 	 */
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
+//	@NonNull Map<@NonNull String, @NonNull State> initStates();
 	boolean isAbstract();
 	boolean isInvalid();
 	boolean isOrdered();
-	boolean isSubFlatClassOf(@NonNull FlatClass that);
-	boolean isSuperFlatClassOf(@NonNull FlatClass that);
+	boolean isSubFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments);
+	boolean isSuperFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments);
 	boolean isUnique();
 	boolean isUndefined();
 	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
@@ -157,4 +171,6 @@ public interface FlatClass extends Nameable
 	 * Reset the sub-fragment hierarchy following a class mutation.
 	 */
 	void resetFragments();
+	void resetOperations();
+	void resetProperties();
 }

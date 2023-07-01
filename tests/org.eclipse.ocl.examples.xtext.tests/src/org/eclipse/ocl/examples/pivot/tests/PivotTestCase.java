@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -57,15 +56,13 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -211,7 +208,9 @@ public class PivotTestCase extends TestCase
 
 	public static @NonNull Resource as2ecore(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == environmentFactory;
-		Resource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) environmentFactory, asResource, ecoreURI, null);
+		Map<@NonNull String, @Nullable Object> ecoreOptions = new HashMap<>();
+	//	ecoreOptions.put(AS2Ecore.OPTION_OPTIMIZE_IMPORTS, Boolean.TRUE);
+		Resource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) environmentFactory, asResource, ecoreURI, ecoreOptions);
 		ecoreResource.save(null);
 		if (asValidationMessages != SUPPRESS_VALIDATION) {
 			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
@@ -867,7 +866,7 @@ public class PivotTestCase extends TestCase
 	@Override
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
-		Ecore2AS.knownEAnnotationSources = null;
+		EAnnotationConverter.knownEAnnotationSources = null;
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		ThreadLocalExecutor.reset();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
@@ -883,7 +882,7 @@ public class PivotTestCase extends TestCase
 		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
 		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
-		Ecore2AS.UNKNOWN_EANNOTATIONS.setState(true);
+		EAnnotationConverter.UNKNOWN_EANNOTATIONS.setState(true);
 	}
 
 	@Override
@@ -906,7 +905,7 @@ public class PivotTestCase extends TestCase
 		/**
 		 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
 		 * and which might be resolved using the wrong strategy in another test.
-		 */
+		 *
 		OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
 		if (oclstdlib != null) {
 			for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
@@ -919,7 +918,7 @@ public class PivotTestCase extends TestCase
 					}
 				}
 			}
-		}
+		} */
 		super.tearDown();
 	}
 

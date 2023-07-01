@@ -22,28 +22,21 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IterableType;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -51,11 +44,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -393,205 +382,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	} */
 
 	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		//
-		//	Resolve first template parameters to its substitution
-		//
-		TemplateParameter firstTemplateParameter = firstType.isTemplateParameter();
-		if (firstTemplateParameter != null) {
-			Type firstSubstitution = firstSubstitutions.get(firstTemplateParameter);
-			if (firstSubstitution != null) {
-				firstType = firstSubstitution;
-			}
-		}
-		//
-		//	Accrue solution to the econd template parameter
-		//
-		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
-		if (secondTemplateParameter != null) {
-			//			Type secondSubstitution = secondSubstitutions.get(secondTemplateParameter);
-			//			if (secondSubstitution != null) {
-			//				secondType = secondSubstitution;
-			//			}
-			/*secondType =*/ secondSubstitutions.put(secondTemplateParameter, firstType);
-			return true;
-		}
-		if (firstType == secondType) {
-			return true;
-		}
-		//
-		//	Normalize types to their behavioral class
-		//
-		CompleteClass firstCompleteClass = getCompleteClass(firstType);
-		CompleteClass secondCompleteClass = getCompleteClass(secondType);
-		if (firstCompleteClass == secondCompleteClass) {
-			return true;
-		}
-	//	firstType = firstCompleteClass.getPrimaryClass();
-		Type behavioralClass = secondCompleteClass.getBehavioralClass();
-		if (behavioralClass != secondType) {
-			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 for disussion of this dodgy downcast
-			secondType = behavioralClass;
-		}
-		//
-		//	Use specialized conformance for constructed types, inheritance tree intersection for simple types
-		//
-		if (firstType == secondType) {
-			return true;
-		}
-		else if ((firstType instanceof DataType) && (secondType instanceof DataType)) {
-			if ((firstType instanceof CollectionType) && (secondType instanceof CollectionType)) {
-				return conformsToCollectionType((CollectionType)firstType, firstSubstitutions, (CollectionType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof MapType) && (secondType instanceof MapType)) {
-				return conformsToMapType((MapType)firstType, firstSubstitutions, (MapType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof LambdaType) && (secondType instanceof LambdaType)) {
-				return conformsToLambdaType((LambdaType)firstType, firstSubstitutions, (LambdaType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof TupleType) && (secondType instanceof TupleType)) {
-				return conformsToTupleType((TupleType)firstType, firstSubstitutions, (TupleType)secondType, secondSubstitutions);
-			}
-		}
-		firstCompleteClass = getCompleteClass(firstType);
-		secondCompleteClass = getCompleteClass(secondType);
-		FlatClass firstFlatClass = firstCompleteClass.getFlatClass();
-		FlatClass secondFlatClass = secondCompleteClass.getFlatClass();
-		return firstFlatClass.isSubFlatClassOf(secondFlatClass);
-	}
-
-	/*	@Override
-	public boolean conformsToCollectionType(@NonNull DomainCollectionType firstCollectionType, @NonNull DomainCollectionType secondCollectionType) {
-		CollectionType firstCollectionType2 = (CollectionType)firstCollectionType;
-		CollectionType secondCollectionType2 = (CollectionType)secondCollectionType;
-		TemplateParameterSubstitutions firstSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, firstCollectionType2, secondCollectionType2);
-		TemplateParameterSubstitutions secondSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, secondCollectionType2, firstCollectionType2);
-		return conformsToCollectionType(firstCollectionType2, firstSubstitutions, secondCollectionType2, secondSubstitutions);
-	} */
-
-	protected boolean conformsToCollectionType(@NonNull CollectionType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull CollectionType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-		if (firstContainerType != secondContainerType) {
-			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
-			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-			FlatClass firstContainerFlatClass = firstContainerCompleteClass.getFlatClass();
-			FlatClass secondContainerFlatClass = secondContainerCompleteClass.getFlatClass();
-			if (!firstContainerFlatClass.isSubFlatClassOf(secondContainerFlatClass)) {
-				return false;
-			}
-		}
-		Type firstElementType = firstType.getElementType();
-		Type secondElementType = secondType.getElementType();
-		if ((firstElementType == null) || (secondElementType == null)) {
-			return false;
-		}
-		IntegerValue firstLower = firstType.getLowerValue();
-		IntegerValue secondLower = secondType.getLowerValue();
-		if (firstLower.compareTo(secondLower) < 0) {
-			return false;
-		}
-		UnlimitedNaturalValue firstUpper = firstType.getUpperValue();
-		UnlimitedNaturalValue secondUpper = secondType.getUpperValue();
-		if (firstUpper.compareTo(secondUpper) > 0) {
-			return false;
-		}
-		return conformsTo(firstElementType, firstSubstitutions, secondElementType, secondSubstitutions);
-	}
-
-	protected boolean conformsToLambdaType(@NonNull LambdaType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull LambdaType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
-		Type actualContextType = actualType.getContextType();
-		Type requiredContextType = requiredType.getContextType();
-		if ((actualContextType == null) || (requiredContextType == null)) {
-			return false;
-		}
-		if (!conformsTo(actualContextType, actualSubstitutions, requiredContextType, requiredSubstitutions)) {
-			return false;
-		}
-		Type actualResultType = actualType.getResultType();
-		Type requiredResultType = requiredType.getResultType();
-		if ((actualResultType == null) || (requiredResultType == null)) {
-			return false;
-		}
-		if (!conformsTo(requiredResultType, requiredSubstitutions, actualResultType, actualSubstitutions)) {	// contravariant
-			return false;
-		}
-		List<Type> actualParameterTypes = actualType.getParameterType();
-		List<Type> requiredParameterTypes = requiredType.getParameterType();
-		int iMax = actualParameterTypes.size();
-		if (iMax != requiredParameterTypes.size()) {
-			return false;
-		}
-		for (int i = 0; i < iMax; i++) {
-			Type actualParameterType = actualParameterTypes.get(i);
-			Type requiredParameterType = requiredParameterTypes.get(i);
-			if ((actualParameterType == null) || (requiredParameterType == null)) {
-				return false;
-			}
-			if (!conformsTo(actualParameterType, actualSubstitutions, requiredParameterType, requiredSubstitutions)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	protected boolean conformsToMapType(@NonNull MapType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull MapType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		//		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-		//		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-		//		if (firstContainerType != secondContainerType) {
-		//			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
-		//			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-		//			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-		//			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-		//			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
-		//				return false;
-		//			}
-		//		}
-		Type firstKeyType = firstType.getKeyType();
-		Type secondKeyType = secondType.getKeyType();
-		if ((firstKeyType == null) || (secondKeyType == null)) {
-			return false;
-		}
-		if (!conformsTo(firstKeyType, firstSubstitutions, secondKeyType, secondSubstitutions)) {
-			return false;
-		}
-		Type firstValueType = firstType.getValueType();
-		Type secondValueType = secondType.getValueType();
-		if ((firstValueType == null) || (secondValueType == null)) {
-			return false;
-		}
-		return conformsTo(firstValueType, firstSubstitutions, secondValueType, secondSubstitutions);
-	}
-
-	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull TupleType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
-		List<Property> actualProperties = actualType.getOwnedProperties();
-		List<Property> requiredProperties = requiredType.getOwnedProperties();
-		if (actualProperties.size() != requiredProperties.size()) {
-			return false;
-		}
-		for (Property actualProperty : actualProperties) {
-			Property requiredProperty = NameUtil.getNameable(requiredProperties, actualProperty.getName());
-			if (requiredProperty == null) {
-				return false;
-			}
-			Type actualPropertyType = actualProperty.getType();
-			Type requiredPropertyType = requiredProperty.getType();
-			if ((actualPropertyType == null) || (requiredPropertyType == null)) {
-				return false;
-			}
-			if (!conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		if ("Real".equals(partialClass.getName()) ) {
@@ -614,8 +404,11 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
+	//	if (pivotType instanceof WildcardType) {		// Class wrap fro OrphanCompleteClass ok
+	//		pivotType = ownedStandardLibrary.getLowerBound((WildcardType)pivotType);
+	//	}
 		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, ownedStandardLibrary.getOclAnyType());
+			pivotType = ownedStandardLibrary.getLowerBound((TemplateParameter) pivotType);
 		}
 		if (pivotType instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();

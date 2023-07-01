@@ -46,7 +46,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -130,7 +129,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public Object caseEAttribute(EAttribute eObject) {
 		@SuppressWarnings("null") @NonNull EAttribute eObject2 = eObject;
 		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
-		copyStructuralFeature(pivotElement, eObject2, null);
+		copyStructuralFeature(pivotElement, eObject2);
 		pivotElement.setIsID(eObject2.isID());
 		return pivotElement;
 	}
@@ -206,18 +205,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		pivotElement.setName(newName);
-		List<@NonNull EAnnotation> excludedAnnotations = null;
 		EAnnotation duplicatesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
-		if (duplicatesAnnotation != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(duplicatesAnnotation);
-		}
-		EAnnotation redefinesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(redefinesAnnotation);
-		}
-		copyClassifier(pivotElement, eClass, excludedAnnotations);
+	//	EAnnotation redefinesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+		copyClassifier(pivotElement, eClass);
 		pivotElement.setIsAbstract(eClass.isAbstract());
 		pivotElement.setIsInterface(eClass.isInterface());
 		doSwitchAll(eClass.getEGenericSuperTypes());
@@ -369,7 +359,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		EnumerationLiteral pivotElement = converter.refreshNamedElement(EnumerationLiteral.class,
 			PivotPackage.Literals.ENUMERATION_LITERAL, eEnumLiteral2);
 		copyNamedElement(pivotElement, eEnumLiteral2);
-		copyAnnotatedElement(pivotElement, eEnumLiteral2, null);
+		copyAnnotatedElement(pivotElement, eEnumLiteral2);
 		if (eEnumLiteral2.eIsSet(EcorePackage.Literals.EENUM_LITERAL__LITERAL)) {
 			pivotElement.setLiteral(eEnumLiteral2.getLiteral());
 		}
@@ -397,12 +387,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEGenericType(EGenericType eObject) {
-		EClassifier eClassifier = eObject.getEClassifier();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		if (role == null) {
-			doSwitchAll(eObject.getETypeArguments());
-			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
+	public Object caseEGenericType(EGenericType eGenericType) {
+		assert eGenericType != null;
+		doSwitchAll(eGenericType.getETypeArguments());
+		if (eGenericType.eContainingFeature() != EcorePackage.Literals.ECLASS__EGENERIC_SUPER_TYPES) {
+			converter.addGenericType(eGenericType);		// Wait till all unspecialized types converted
 		}
 		return true;
 	}
@@ -424,6 +413,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEPackage(EPackage ePackage) {
 		assert ePackage != null;;
+		converter.loadPackageOriginalTypeEAnnotations(ePackage);
 		org.eclipse.ocl.pivot.Package pivotElement;
 		if (converter.isLibrary(ePackage)) {
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
@@ -480,23 +470,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				adapter.getAliasMap().put(ePackage, moniker);
 			}
 		}
-		List<@NonNull EAnnotation> exclusions = new ArrayList<>();
-		EAnnotation eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
-		if (eAnnotation != null) {
-			exclusions.add(eAnnotation);
-		}
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			exclusions.add(ClassUtil.getMetamodelAnnotation(ePackage));
-		}
 		converter.addMapping(ePackage, pivotElement);
-		//		copyNamedElement(pivotElement, eObject2);
-		copyAnnotatedElement(pivotElement, ePackage, exclusions);
+		copyAnnotatedElement(pivotElement, ePackage);
 		doSwitchAll(pivotElement.getOwnedPackages(), ePackage.getESubpackages());
-		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
-		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-			if (role == null) {
+		for (EClassifier eClassifier : ClassUtil.nullFree(ePackage.getEClassifiers())) {
+			if (!AnnotationUtil.hasSyntheticRole(eClassifier)) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
 				newList.add(pivotObject);
@@ -510,7 +489,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public Object caseEParameter(EParameter eObject) {
 		@SuppressWarnings("null") @NonNull EParameter eObject2 = eObject;
 		Parameter pivotElement = converter.refreshNamedElement(Parameter.class, PivotPackage.Literals.PARAMETER, eObject2);
-		copyTypedElement(pivotElement, eObject2, null);
+		copyTypedElement(pivotElement, eObject2);
 		return pivotElement;
 	}
 
@@ -520,18 +499,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
 		List<@NonNull EAnnotation> excludedAnnotations = null;
 		EAnnotation oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0);
-		if (oppositeRole != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(oppositeRole);
-		}
 		oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
-		if (oppositeRole != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oppositeRole);
-		}
-		copyStructuralFeature(pivotElement, eObject2, excludedAnnotations);
+		copyStructuralFeature(pivotElement, eObject2);
 		pivotElement.setIsComposite(eObject2.isContainment());
 		pivotElement.setIsResolveProxies(eObject2.isResolveProxies());
 		if ((eObject2.getEOpposite() != null)
@@ -594,8 +563,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	protected @NonNull Iteration convertEOperation2Iteration(@NonNull EOperation eOperation) {
 		Iteration pivotElement = converter.refreshNamedElement(Iteration.class, PivotPackage.Literals.ITERATION, eOperation);
-		List<@NonNull EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
-		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
+		convertEOperationEAnnotations(pivotElement, eOperation);
+		copyTypedElement(pivotElement, eOperation);
 		String iteratorsString = AnnotationUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS);
 		String accumulatorsString = AnnotationUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ACCUMULATORS);
 		int iteratorsCount = Integer.parseInt(iteratorsString);
@@ -613,8 +582,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	protected @NonNull Operation convertEOperation2Operation(@NonNull EOperation eOperation) {
 		Operation pivotElement = converter.refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
-		List<@NonNull EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
-		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
+		convertEOperationEAnnotations(pivotElement, eOperation);
+		copyTypedElement(pivotElement, eOperation);
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateSignature(pivotElement,eTypeParameters);
@@ -623,15 +592,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		return pivotElement;
 	}
 
-	protected @Nullable List<@NonNull EAnnotation> convertEOperationEAnnotations(@NonNull Operation pivotElement, @NonNull EOperation eOperation) {
-		List<@NonNull EAnnotation> excludedAnnotations = null;
-		EAnnotation redefinesAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			//			if (excludedAnnotations == null) {
-			excludedAnnotations = new ArrayList<>();
-			//			}
-			excludedAnnotations.add(redefinesAnnotation);
-		}
+	protected void convertEOperationEAnnotations(@NonNull Operation pivotElement, @NonNull EOperation eOperation) {
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eOperation);
 		if (oclAnnotation == null) {
 			oclAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_2_0_NS_URI);
@@ -640,10 +601,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			oclAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
 		}
 		if (oclAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
 			for (Iterator<Map.Entry<String,String>> it = oclAnnotation.getDetails().listIterator(); it.hasNext(); ) {
 				Map.Entry<String,String> entry = it.next();
 				String bodyName = null;
@@ -690,36 +647,22 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					constraint.setOwnedSpecification(specification);
 					if (preName != null) {
 						pivotElement.getOwnedPreconditions().add(constraint);
-						constraint.setName(preName);
+						constraint.setName(preName.length() > 0 ? preName : null);
 					}
 					else {
 						pivotElement.getOwnedPostconditions().add(constraint);
-						constraint.setName(postName);
+						constraint.setName((postName != null) && (postName.length() > 0) ? postName : null);
 					}
 					copyAnnotationComment(constraint, oclAnnotation, key);
 				}
 			}
 		}
-		EAnnotation precedenceAnnotation = eOperation.getEAnnotation(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE);
-		if (precedenceAnnotation != null) {
-		//	if (excludedAnnotations == null) {
-		//		excludedAnnotations = new ArrayList<>();
-		//	}
-		//	excludedAnnotations.add(isTransientAnnotation);
-			EMap<String, String> eDetails = precedenceAnnotation.getDetails();
-			String name = eDetails.get(AnnotationUtil.PRECEDENCE_NAME);
-			String associativityString = eDetails.get(AnnotationUtil.PRECEDENCE_ASSOCIATIVITY);
-			AssociativityKind associativity = associativityString != null ? AssociativityKind.getByName(associativityString) : null;
-		//	String precedence = eDetails.get(AnnotationUtil.OPERATION_PRECEDENCE);
-		//	pivotElement.setPrecedence(precedence);
-		}
-		return excludedAnnotations;
 	}
 
-	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<@NonNull EAnnotation> excludedAnnotations) {
-		excludedAnnotations = refreshTypeConstraints(pivotElement, eClassifier, excludedAnnotations);
+	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier) {
+		refreshTypeConstraints(pivotElement, eClassifier);
 		copyNamedElement(pivotElement, eClassifier);
-		copyAnnotatedElement(pivotElement, eClassifier, excludedAnnotations);
+		copyAnnotatedElement(pivotElement, eClassifier);
 		if (eClassifier.eIsSet(EcorePackage.Literals.ECLASSIFIER__INSTANCE_CLASS_NAME)) {
 			String instanceClassName = eClassifier.getInstanceClassName();
 			pivotElement.setInstanceClassName(instanceClassName);
@@ -732,7 +675,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected void copyDataTypeOrEnum(@NonNull DataType pivotElement, @NonNull EDataType eDataType) {
-		copyClassifier(pivotElement, eDataType, null);
+		copyClassifier(pivotElement, eDataType);
 		pivotElement.setIsSerializable(eDataType.isSerializable());
 	}
 
@@ -749,14 +692,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	 * Documentation EAnnotations are converted to Comments rather than Annotations.
 	 * Import EAnnotations are excluded here and processed at the root.
 	 */
-	protected void copyAnnotatedElement(@NonNull NamedElement pivotElement,
-			@NonNull EModelElement eModelElement, @Nullable List<@NonNull EAnnotation> excludedAnnotations) {
-	//	List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
-		for (EAnnotation eAnnotation : eModelElement.getEAnnotations()) {
-			assert eAnnotation != null;
-			if (!isExcluded(eAnnotation, excludedAnnotations)) {
-				converter.queueEAnnotation(eAnnotation);
-			}
+	protected void copyAnnotatedElement(@NonNull NamedElement pivotElement, @NonNull EModelElement eModelElement) {
+		for (EAnnotation eAnnotation : ClassUtil.nullFree(eModelElement.getEAnnotations())) {
+			converter.queueEAnnotation(eAnnotation);
 		}
 	}
 
@@ -769,9 +707,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.getOwnedComments().clear();
 		String comment = AnnotationUtil.getEAnnotationValue(eModelElement, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
 		if (comment != null) {
-			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
-			pivotComment.setBody(comment);
-			pivotElement.getOwnedComments().add(pivotComment);
+			converter.createComments(pivotElement, comment);
 		}
 	}
 
@@ -781,27 +717,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setName(name);
 	}
 
-	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<@NonNull EAnnotation> excludedAnnotations) {
-		EAnnotation propertyAnnotation = eObject.getEAnnotation(PivotConstants.PROPERTY_ANNOTATION_SOURCE);
-		if (propertyAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(propertyAnnotation);
-		}
-		EAnnotation redefinesAnnotation = eObject.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(redefinesAnnotation);
-		}
+	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject) {
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eObject);
 		if (oclAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
 			Map.Entry<String,String> bestEntry = null;
 			for (Map.Entry<String,String> entry : oclAnnotation.getDetails().entrySet()) {
 				String key = entry.getKey();
@@ -831,7 +749,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 			pivotElement.setImplementation(null);			// Computed lazily with more context.
 		}
-		copyTypedElement(pivotElement, eObject, excludedAnnotations);
+		copyTypedElement(pivotElement, eObject);
 		pivotElement.setIsReadOnly(!eObject.isChangeable());
 		pivotElement.setIsDerived(eObject.isDerived());
 		pivotElement.setIsTransient(eObject.isTransient());
@@ -839,15 +757,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setIsVolatile(eObject.isVolatile());
 	}
 
-	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement, List<@NonNull EAnnotation> excludedAnnotations) {
+	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement) {
 		copyNamedElement(pivotElement, eTypedElement);
-		List<@NonNull EAnnotation> excludedAnnotations2 = excludedAnnotations;
-		EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-		if (eAnnotation != null) {
-			excludedAnnotations2 = excludedAnnotations != null ? new ArrayList<>(excludedAnnotations) : new ArrayList<>();
-			excludedAnnotations2.add(eAnnotation);
-		}
-		copyAnnotatedElement(pivotElement, eTypedElement, excludedAnnotations2);
+		EAnnotation eAnnotation = eTypedElement.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
+		copyAnnotatedElement(pivotElement, eTypedElement);
 		int lower = eTypedElement.getLowerBound();
 		if ((lower == 0) && converter.cannotBeOptional(eTypedElement)) {
 			Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
@@ -930,7 +843,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		return annotationSource;
 	}
 
-	protected List<@NonNull EAnnotation> refreshTypeConstraints(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<@NonNull EAnnotation> excludedAnnotations) {
+	protected void refreshTypeConstraints(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier) {
 		EMap<String, String> oclAnnotationDetails = null;
 		Map<String, Constraint> newConstraintMap = null;
 		Map<String, Constraint> oldInvariantMap = null;
@@ -947,10 +860,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 */
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if (oclAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
 			oclAnnotationDetails = oclAnnotation.getDetails();
 			for (Iterator<Map.Entry<String,String>> it = oclAnnotationDetails.listIterator(); it.hasNext(); ) {
 				Map.Entry<String,String> entry = it.next();
@@ -1010,10 +919,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 */
 		EAnnotation ecoreAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if (ecoreAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(ecoreAnnotation);
 			String invariantNameList = ecoreAnnotation.getDetails().get("constraints");
 			if (invariantNameList != null) {
 				String[] invariantNames = invariantNameList.split(" ");
@@ -1047,6 +952,5 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else {
 			oldInvariants.clear();
 		}
-		return excludedAnnotations;
 	}
 }

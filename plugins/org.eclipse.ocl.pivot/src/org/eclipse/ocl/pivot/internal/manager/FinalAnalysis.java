@@ -62,7 +62,7 @@ public class FinalAnalysis
 		this.metamodelManager = metamodelManager;
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {
-				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSuperCompleteClasses()) {
+				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSelfAndAllSuperCompleteClasses()) {
 					Set<@NonNull CompleteClass> subCompleteClasses = superCompleteClass2subCompleteClasses.get(superCompleteClass);
 					if (subCompleteClasses == null) {
 						subCompleteClasses = new HashSet<>();
@@ -134,7 +134,7 @@ public class FinalAnalysis
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
-			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass, false)) {
 				results.add(override);
 			}
 		}
@@ -176,7 +176,7 @@ public class FinalAnalysis
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
-			if (requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
+			if (requiredFlatClass.isSuperFlatClassOf(overrideFlatClass, false)) {
 				if (candidate != null) {
 					return null;
 				}

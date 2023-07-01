@@ -117,6 +117,7 @@ import org.eclipse.ocl.examples.codegen.java.operation.XorOperationHandler;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -145,7 +146,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperati
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
@@ -164,7 +164,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import com.google.common.collect.Iterables;
@@ -1001,9 +1000,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (type instanceof Enumeration) {
 			return false;
 		}
-		PivotMetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
-		Type oclTypeType = environmentFactory.getStandardLibrary().getOclTypeType();
-		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		Type oclTypeType = standardLibrary.getOclTypeType();
+		return standardLibrary.conformsTo(type, oclTypeType);
 	}
 
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {

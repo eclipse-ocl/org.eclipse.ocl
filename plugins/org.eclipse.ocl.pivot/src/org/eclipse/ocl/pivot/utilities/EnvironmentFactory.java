@@ -21,11 +21,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -51,55 +51,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
  */
 public interface EnvironmentFactory extends Adaptable, Customizable
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface EnvironmentFactoryExtension extends EnvironmentFactory
-	{
-		/**
-		 * Create an Executor for OCL evaluation. For derived languages, consumers are expected to create the appropriate
-		 * Executor directly.
-		 */
-		@NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager);
-
-		boolean isEvaluationTracingEnabled();
-	}
-
-	/**
-	 * @since 1.4
-	 */
-	public interface EnvironmentFactoryExtension2 extends EnvironmentFactoryExtension
-	{
-		/**
-		 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element,
-		 * which may be the type defining the 'self' context, or an ExpressionInOCL whose ancestor defines
-		 * the 'self' context.
-		 *
-		 * Returns null if parsing of OCL for an element is not supported.
-		 *
-		 * This method is primarily intended for internal use. The parseSpecification method
-		 * provides the additional functionality of maintaining the ExpressionInOCL parsed
-		 * expression cache.
-		 *
-		 * @since 1.4
-		 */
-		@Nullable ParserContext createParserContext(@NonNull Element element);
-
-		/**
-		 * Return the pivot model class for className with the Pivot Model.
-		 */
-		org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-
-		@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
-
-		/**
-		 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
-		 * Throws a ParserException if conversion fails.
-		 * @since 1.4
-		 */
-		@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
-	}
-
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
 	/**
@@ -109,10 +60,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return a new evaluation environment
 	 */
 	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull NamedElement executableObject, @NonNull ModelManager modelManager);
-
-	/** @deprecated no longer used */
-	@Deprecated
-	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject);
 
 	/**
 	 * Creates a new evaluation visitor, for the evaluation of an OCL expression on a context using an environment and a modelManager.
@@ -135,6 +82,12 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return a Helper that provides a variety of useful API facilities.
 	 *
 	@NonNull PivotHelper createHelper(); */	// FIXME Bug 509309 wait for major version
+
+	/**
+	 * Create an Executor for OCL evaluation. For derived languages, consumers are expected to create the appropriate
+	 * Executor directly.
+	 */
+	@NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager);
 
 	/**
 	 * Creates an extent map for invocation of <tt>OclType.allInstances()</tt>
@@ -168,6 +121,26 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return a new {@link OCL} instance attached to this {@link EnvironmentFactory}
 	 */
 	@NonNull OCL createOCL();
+
+	/**
+	 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element,
+	 * which may be the type defining the 'self' context, or an ExpressionInOCL whose ancestor defines
+	 * the 'self' context.
+	 *
+	 * Returns null if parsing of OCL for an element is not supported.
+	 *
+	 * This method is primarily intended for internal use. The parseSpecification method
+	 * provides the additional functionality of maintaining the ExpressionInOCL parsed
+	 * expression cache.
+	 */
+	@Nullable ParserContext createParserContext(@NonNull Element element);
+
+	/**
+	 * Return the pivot model class for className with the Pivot Model.
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
+
+	@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
 
 	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
@@ -221,6 +194,14 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 1.14
 	 */
 	default boolean isDisposed() { return false; }
+
+	boolean isEvaluationTracingEnabled();
+
+	/**
+	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
+	 * Throws a ParserException if conversion fails.
+	 */
+	@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 
 	/**
 	 * Give finalizers a chance to detach trivially so that a subsequent call to detach() can be the ultimate dispose().

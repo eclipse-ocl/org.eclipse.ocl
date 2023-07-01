@@ -71,25 +71,31 @@
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//UniqueCollection">
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/T"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_COCO">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/K"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/V"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/value"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_1">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_1/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_1/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_1/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_1/value"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_CRCR">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_CRCR/K"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_CRCR/V"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_CRCR/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_CRCR/value"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_2">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_2/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_2/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_2/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_2/value"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_CC">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CC/C"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CC/R"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_1">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_1/C"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_1/R"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_CD">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/C"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/R"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_2">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_2/C"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_2/R"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Tuple_1">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Tuple_1/T"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Tuple_1/T2"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Tuple_1/first"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Tuple_1/second"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

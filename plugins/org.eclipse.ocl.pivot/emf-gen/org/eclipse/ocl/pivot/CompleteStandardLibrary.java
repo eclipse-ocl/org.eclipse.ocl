@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 
 /**
@@ -60,6 +61,8 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	void setOwningCompleteEnvironment(CompleteEnvironment value);
 
+	int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
+			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings);
 	/**
 	 * @since 1.17
 	 */

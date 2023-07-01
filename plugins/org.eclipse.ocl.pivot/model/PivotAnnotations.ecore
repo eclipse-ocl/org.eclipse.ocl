@@ -38,6 +38,7 @@
         <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
       </eAnnotations>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Ecore_OCL_EClassifier">

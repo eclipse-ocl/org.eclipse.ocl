@@ -15,10 +15,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -766,7 +766,7 @@ public class EditTests extends XtextTestCase
 						"		invariant NameNotEmpty: name->notEmpty();\n" +
 						"	}\n" +
 						"}\n";
-		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument, true);
+		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument);
 		ocl0.dispose();
 		//
 		//	Load and instrument test document
@@ -778,10 +778,9 @@ public class EditTests extends XtextTestCase
 		ASResource asResource = ocl1.ecore2as(ecoreResource);
 		assertNoResourceErrors("Pivot load", asResource);
 		assertNoValidationErrors("Pivot load", asResource);
-		Set<EObject> loadPivotContent = new HashSet<EObject>();
+		List<EObject> loadPivotContent = new ArrayList<>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
-			//			System.out.println(ClassUtil.debugSimpleName(eObject));
 			loadPivotContent.add(eObject);
 		}
 		{
@@ -792,10 +791,9 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Xtext load", xtextResource1);
 			ListBasedDiagnosticConsumer diagnosticsConsumer1 = new ListBasedDiagnosticConsumer();
 			xtextResource1.update(diagnosticsConsumer1);
-			Set<EObject> parsePivotContent = new HashSet<EObject>();
+			List<EObject> parsePivotContent = new ArrayList<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-				//				System.out.println(ClassUtil.debugSimpleName(eObject));
 				parsePivotContent.add(eObject);
 			}
 			assertEquals(loadPivotContent.size(), parsePivotContent.size());
@@ -817,10 +815,9 @@ public class EditTests extends XtextTestCase
 		ecore2as.update(asResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 		assertNoResourceErrors("Pivot reload", ecoreResource);
 		assertNoValidationErrors("Pivot reload", ecoreResource);
-		Set<EObject> newPivotContent = new HashSet<EObject>();
+		List<EObject> newPivotContent = new ArrayList<>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
-			//			System.out.println(PivotUtil.debugSimpleName(eObject));
 			newPivotContent.add(eObject);
 		}
 		assertEquals(loadPivotContent.size(), newPivotContent.size());
@@ -833,10 +830,9 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Xtext load", xtextResource2);
 			ListBasedDiagnosticConsumer diagnosticsConsumer2 = new ListBasedDiagnosticConsumer();
 			xtextResource2.update(diagnosticsConsumer2);
-			Set<EObject> reparsePivotContent = new HashSet<EObject>();
+			List<EObject> reparsePivotContent = new ArrayList<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-				//				System.out.println(PivotUtil.debugSimpleName(eObject));
 				reparsePivotContent.add(eObject);
 			}
 			assertEquals(loadPivotContent.size(), reparsePivotContent.size());

@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -609,7 +608,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Object valueVal = value.accept(undecoratedVisitor);
 			mapEntries.put(keyVal, valueVal);
 		}
-		return idResolver.createMapOfAll((MapTypeId)type.getTypeId(), mapEntries);
+		return idResolver.createMapOfAll(type.getTypeId(), mapEntries);
 	}
 
 	@Override
@@ -697,7 +696,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
 					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgument);
-					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+					actualSourceType = standardLibrary.getCommonClass(actualSourceType, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
 					LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);

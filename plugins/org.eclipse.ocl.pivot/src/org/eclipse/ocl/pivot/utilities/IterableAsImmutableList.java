@@ -158,7 +158,7 @@ public class IterableAsImmutableList<T> implements List<T>
 	}
 
 	@Override
-	public List<T> subList(int fromIndex, int toIndex) {
+	public @NonNull List<T> subList(int fromIndex, int toIndex) {
 		throw new UnsupportedOperationException();
 	}
 

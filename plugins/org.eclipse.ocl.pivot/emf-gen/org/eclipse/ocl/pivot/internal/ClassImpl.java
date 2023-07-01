@@ -76,6 +76,9 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Class</b></em>'.
@@ -1157,17 +1160,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return computeId();
 	}
 
-/*	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
-		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
-	} */
-
 	public @NonNull FlatClass getFlatClass() {
 		assert flatClass != null;
 		return flatClass;
@@ -1180,17 +1172,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return ClassUtil.nonNullState(eClass().getName());
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		try {
-		//	return getInheritance(standardLibrary).getPivotClass();
-			return getFlatClass(standardLibrary).getPivotClass();
-		}
-		catch (Throwable e) {
-			return this;			// WIP FIXME should never happen
-		}
 	}
 
 	@Override
@@ -1291,6 +1272,11 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 					}
 				}
 			};
+			if (flatClass != null) {
+				for (FlatFragment flatFragment : flatClass.getAllSuperFragments()) {
+					superClasses2.add(flatFragment.getDerivedFlatClass().getASClass());
+				}
+			}
 		}
 		return superClasses2;
 	}
@@ -1354,6 +1340,22 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			}
 		}
 		return normalizedTypeId2;
+	}
+
+	@Override
+	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSelfAndAllSuperClasses() {
+		FlatClass flatClass = getFlatClass();
+		@NonNull Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class> function = new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		{
+			@Override
+			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
+				return input.getBaseFlatClass().getASClass();
+			}
+		};
+		@NonNull Iterable<@NonNull FlatFragment> allSuperFragments = flatClass.getAllSuperFragments();
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> selfAndAllSuperClasses = Iterables.transform(allSuperFragments, function);
+		assert selfAndAllSuperClasses != null;
+		return selfAndAllSuperClasses;
 	}
 
 	@Override

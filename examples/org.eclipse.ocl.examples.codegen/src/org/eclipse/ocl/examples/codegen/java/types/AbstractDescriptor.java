@@ -26,6 +26,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Type;
@@ -38,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * An AbstractDescriptor provides the most fundamental capabilities of any type description: the correspondence to a pivot ElementId.
@@ -410,8 +410,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		if (type instanceof Enumeration) {
 			return false;
 		}
-		Type oclTypeType = metamodelManager.getStandardLibrary().getOclTypeType();
-		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
+		Type oclTypeType = standardLibrary.getOclTypeType();
+		return standardLibrary.conformsTo(type, oclTypeType);
 	}
 
 	@Override

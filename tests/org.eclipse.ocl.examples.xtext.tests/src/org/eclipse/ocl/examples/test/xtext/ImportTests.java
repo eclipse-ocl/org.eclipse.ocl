@@ -153,7 +153,7 @@ public class ImportTests extends XtextTestCase
 						"inv Bogus: r.toString() and s.toString()\n" +
 						"endpackage\n";
 		Bag<String> bag = new BagImpl<String>();
-		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "toString"));
+		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "ecore::EString", "toString"));
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "ecore::EDouble", "toString"));
 		// There are no precedences so =(s) rather than =(s.toString())
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "and", "OclInvalid"));

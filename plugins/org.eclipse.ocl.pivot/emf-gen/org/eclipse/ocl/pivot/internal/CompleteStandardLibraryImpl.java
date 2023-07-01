@@ -33,17 +33,20 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -472,6 +475,81 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return oclInvalidType;
 	}
 
+	/**
+	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
+	 * zero if both matches are of equal validity.
+	 */
+	@Override
+	public int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
+			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings) {
+		if ((reference instanceof Iteration) && (candidate instanceof Iteration)) {
+			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
+			if (iteratorCountDelta != 0) {
+				return iteratorCountDelta;
+			}
+			org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
+			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
+			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
+			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
+			Type specializedReferenceType = referenceType != null ? getSpecializedType(referenceType, referenceBindings) : null;
+			Type specializedCandidateType = candidateType != null ? getSpecializedType(candidateType, candidateBindings) : null;
+			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
+				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+					return 1;
+				}
+				else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+					return -1;
+				}
+			}
+		}
+		List<Parameter> candidateParameters = candidate.getOwnedParameters();
+		List<Parameter> referenceParameters = reference.getOwnedParameters();
+		int parameterCountDelta = candidateParameters.size() - referenceParameters.size();
+		if (parameterCountDelta != 0) {
+			return parameterCountDelta;
+		}
+		boolean referenceConformsToCandidate = true;
+		boolean candidateConformsToReference = true;
+		for (int i = 0; i < candidateParameters.size(); i++) {
+			Parameter referenceParameter = referenceParameters.get(i);
+			Parameter candidateParameter = candidateParameters.get(i);
+			if ((referenceParameter == null) || (candidateParameter == null)) {					// Doesn't happen (just a spurious NPE guard)
+				referenceConformsToCandidate = false;
+				candidateConformsToReference = false;
+			}
+			else {
+				Type referenceType = ClassUtil.nonNullState(PivotUtil.getType(referenceParameter));
+				Type candidateType = ClassUtil.nonNullState(PivotUtil.getType(candidateParameter));
+				Type specializedReferenceType = getSpecializedType(referenceType, referenceBindings);
+				Type specializedCandidateType = getSpecializedType(candidateType, candidateBindings);
+				if (referenceType != candidateType) {
+					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+						referenceConformsToCandidate = false;
+					}
+					if (!conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+						candidateConformsToReference = false;
+					}
+				}
+			}
+		}
+		if (referenceConformsToCandidate != candidateConformsToReference) {
+			return referenceConformsToCandidate ? 1 : -1;
+		}
+		Type referenceType = ClassUtil.nonNullModel(reference.getOwningClass());
+		Type candidateType = ClassUtil.nonNullModel(candidate.getOwningClass());
+		Type specializedReferenceType = getSpecializedType(referenceType, referenceBindings);
+		Type specializedCandidateType = getSpecializedType(candidateType, candidateBindings);
+		if (referenceType != candidateType) {
+			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+				return 1;
+			}
+			else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+				return -1;
+			}
+		}
+		return 0;
+	}
+
 	@Override
 	public void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes) {
 		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
@@ -539,45 +617,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		List<Property> leftProperties = leftType.getOwnedProperties();
-		List<Property> rightProperties = rightType.getOwnedProperties();
-		int iSize = leftProperties.size();
-		if (iSize != rightProperties.size()) {
-			return null;
-		}
-		List<@NonNull TuplePartId> commonPartIds = new ArrayList<>(iSize);
-		for (int i = 0; i < iSize; i++) {
-			Property leftProperty = leftProperties.get(i);
-			if (leftProperty == null) {
-				return null;				// Never happens
-			}
-			String name = leftProperty.getName();
-			if (name == null) {
-				return null;				// Never happens
-			}
-			Property rightProperty = NameUtil.getNameable(rightProperties, name);
-			if (rightProperty == null) {
-				return null;				// Happens for inconsistent tuples
-			}
-			Type leftPropertyType = leftProperty.getType();
-			if (leftPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type rightPropertyType = rightProperty.getType();
-			if (rightPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type commonType = environmentFactory.getMetamodelManager().getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
-			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
-			commonPartIds.add(commonPartId);
-		}
-		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
-		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
-	}
-
-	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
 		return ClassUtil.nonNullState(completeModel);
 	}
@@ -608,6 +647,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);
 		}
 		return integerType2;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass) {
+		return environmentFactory.getIdResolver().getJavaType(javaClass);
 	}
 
 	@Override
@@ -878,6 +922,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asType) {
+		return environmentFactory.getMetamodelManager().getPrimaryClass(asType);
+	}
+
+	@Override
 	public @NonNull Type getPrimaryType(@NonNull Type asType) {
 		return environmentFactory.getMetamodelManager().getPrimaryType(asType);
 	}
@@ -990,7 +1039,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
+			specializedTupleType = getTupleType(tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -1012,6 +1061,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		//
 		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
 		return tupleType;
+	}
+
+	@Override
+	protected @NonNull TupleType getTupleType(@NonNull TupleTypeId commonTupleTypeId) {
+		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
 	}
 
 	@Override
@@ -1042,6 +1096,15 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public boolean isExplicitDefaultStandardLibraryURI() {
 		return explicitDefaultStandardLibraryURI;
+	}
+
+	@Override
+	protected boolean isSameCompleteClass(@NonNull Type firstType, @NonNull Type secondType) {
+		CompleteModelInternal completeModel = getCompleteModel();
+		CompleteClass firstCompleteClass2 = completeModel.getCompleteClass(firstType);
+		CompleteClass secondCompleteClass2 = completeModel.getCompleteClass(secondType);
+		boolean isSameCompleteClass = firstCompleteClass2 == secondCompleteClass2;
+		return isSameCompleteClass;
 	}
 
 	/**
@@ -1155,6 +1218,18 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		nameToLibraryTypeMap = null;
 	}
 
+	@Override
+	protected @NonNull Type resolveBehavioralType(@NonNull Type asType) {
+		CompleteModelInternal completeModel = getCompleteModel();
+		CompleteClass completeClass = completeModel.getCompleteClass(asType);
+		Type behavioralClass = completeClass.getBehavioralClass();
+		if (behavioralClass != asType) {
+			completeClass = completeModel.getCompleteClass(behavioralClass);		// See Bug 574431 for discussion of this dodgy downcast
+			asType = behavioralClass;
+		}
+		return asType;
+	}
+
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<T> requiredClassType, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class type = getRequiredLibraryType(name);
 		if (requiredClassType.isAssignableFrom(type.getClass())) {
@@ -1188,6 +1263,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
+		assert specializedClass.getSuperClasses().size() == unspecializedClass.getSuperClasses().size();
 	}
 
 	@Override
@@ -1196,5 +1272,4 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
 	}
-
 } //StandardLibraryImpl

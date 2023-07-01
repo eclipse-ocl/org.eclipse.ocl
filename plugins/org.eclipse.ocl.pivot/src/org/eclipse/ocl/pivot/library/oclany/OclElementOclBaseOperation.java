@@ -12,9 +12,9 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -40,7 +40,7 @@ public class OclElementOclBaseOperation extends AbstractPolyOperation
 		Element asBase = asElementExtension.getBase();
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type baseType = (Type)asBase; //executor.getIdResolver().getDynamicTypeOf(asBase);
-		boolean result = baseType.conformsTo(standardLibrary, asType);	// FIXME this can fail because ExecutableStandardLibrary.getMetaclass is bad
+		boolean result = standardLibrary.conformsTo(baseType, asType);	// FIXME this can fail because ExecutableStandardLibrary.getMetaclass is bad
 		if (!result) {
 			return null;
 		}

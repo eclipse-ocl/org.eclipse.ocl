@@ -14,9 +14,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
@@ -56,8 +59,8 @@ public class NameUtil
 	public static final class ToStringComparator implements Comparator<@NonNull Object>
 	{
 		/**
-		 * Provide a simple shared INSTABCE for comparison based on toString().
-		 * If toString() is mpre expensive that a Map.get() a toString() cache can be
+		 * Provide a simple shared INSTANCE for comparison based on toString().
+		 * If toString() is more expensive than a Map.get() a toString() cache can be
 		 * activated by constructing a new ToStringComparator instance.
 		 */
 		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator(null);
@@ -99,6 +102,30 @@ public class NameUtil
 		}
 	}
 
+	public static final class URIComparator implements Comparator<@NonNull EObject>
+	{
+		/*
+		 * toString can be expensive so avoid repeated evaluations.
+		 */
+		private final Map<@NonNull EObject, @NonNull URI> eObject2uri = new HashMap<>();
+
+		@Override
+		public int compare(@NonNull EObject o1, @NonNull EObject o2) {
+			String s1 = getURI(o1).toString();
+			String s2 = getURI(o2).toString();
+			return ClassUtil.safeCompareTo(s1, s2);
+		}
+
+		private @NonNull URI getURI(@NonNull EObject o) {
+			URI uri = eObject2uri.get(o);
+			if (uri == null) {
+				uri = EcoreUtil.getURI(o);
+				eObject2uri.put(o, uri);
+			}
+			return uri;
+		}
+	}
+
 	/**
 	 * @since 1.13
 	 */
@@ -110,6 +137,8 @@ public class NameUtil
 	 * @since 1.3
 	 */
 	public static final @NonNull ToStringComparator TO_STRING_COMPARATOR = ToStringComparator.INSTANCE;
+
+	public static final Comparator URI_COMPARATOR = null;
 
 	public static String debugFullName(Object object) {
 		if (object == null) {

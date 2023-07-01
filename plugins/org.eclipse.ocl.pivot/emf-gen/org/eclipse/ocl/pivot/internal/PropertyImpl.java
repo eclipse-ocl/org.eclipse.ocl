@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -43,7 +44,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -1774,6 +1774,7 @@ implements Property {
 			asOpposite.setOpposite(null);
 			setOpposite(null);
 		}
+		// XXX this happens when finalizing testMoniker_oclstdlib_oclstdlib - maybe not easier
 		setType(null);				// Easier to set them all than just the base_xxx ones
 	}
 } //PropertyImpl

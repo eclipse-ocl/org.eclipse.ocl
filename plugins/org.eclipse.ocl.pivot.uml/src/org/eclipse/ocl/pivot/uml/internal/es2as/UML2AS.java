@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -509,6 +508,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 			} */
 		}
 
+		protected void addCreatedMap(Map<@NonNull EObject, @NonNull Element> createdMap) {
+			if (createdMap != null) {
+				for (Map.Entry<@NonNull EObject, @NonNull Element> entry : createdMap.entrySet()) {
+					addCreated(entry.getKey(), entry.getValue());
+				}
+			}
+		}
+
 		@Override
 		public void addGenericType(@NonNull EGenericType eObject) {
 			//			throw new UnsupportedOperationException();				// FIXME
@@ -728,7 +735,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					return null;
 				}
 				try {
-					return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(requiredClass, eObject);
+					return environmentFactory.getASOf(requiredClass, eObject);
 				} catch (ParserException e) {
 					return null;		// Never happens since UML element will never be a parsed one such as an OCLExpression
 				}
@@ -783,12 +790,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 		protected void installAliases(@NonNull Resource asResource) {
 			AliasAdapter umlAdapter = AliasAdapter.findAdapter(umlResource);
 			if (umlAdapter != null) {
-				Map<EObject, String> umlAliasMap = umlAdapter.getAliasMap();
+				Map<@NonNull EObject, String> umlAliasMap = umlAdapter.getAliasMap();
 				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
-				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+				assert pivotAdapter != null;
+				Map<@NonNull EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 				for (EObject eObject : umlAliasMap.keySet()) {
 					String alias = umlAliasMap.get(eObject);
 					Element element = createMap.get(eObject);
+					assert element != null;
 					pivotAliasMap.put(element, alias);
 				}
 			}
@@ -812,7 +821,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 						else {
 							Map<@NonNull EObject, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
 							if (importedCreatedMap != null) {
-								createMap.putAll(importedCreatedMap);
+							//	createMap.putAll(importedCreatedMap);
+								addCreatedMap(importedCreatedMap);
 								//								for (@NonNull EObject key : importedCreatedMap.keySet()) {
 								//									Element value = importedCreatedMap.get(key);
 								//									assert value != null;
@@ -1332,6 +1342,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void loadPackageOriginalTypeEAnnotations(@NonNull EPackage ePackage) {
+	//	throw new UnsupportedOperationException();			// XXX FIXME
 	}
 
 	public abstract void queueUse(@NonNull EObject eObject);

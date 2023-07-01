@@ -22,6 +22,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_EPackage/nullFree"/>
     </genClasses>
     <genClasses ecoreClass="PivotAnnotations.ecore#//Collection_ETypedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_ETypedElement/kind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Collection_ETypedElement/nullFree"/>
     </genClasses>
     <genClasses ecoreClass="PivotAnnotations.ecore#//Ecore_OCL_EClassifier"/>

@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
-import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
@@ -101,7 +100,7 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
  * Partial implementation of the {@link EnvironmentFactoryInternal} interface, useful
  * for subclassing to define the Pivot binding for a metamodel.
  */
-public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension
+public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal
 {
 	/**
 	 * @since 1.4
@@ -143,6 +142,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * Configuration of validation preferences.
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
+
+	private final @NonNull Map<@NonNull Class<?>, @NonNull Object> instanceClass2instance = new HashMap<>();
 
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
@@ -313,6 +314,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
+	@Override
+	public <T> @Nullable T basicGetInstance( @NonNull Class<T> instanceClass) {
+		return (T)instanceClass2instance.get(instanceClass);
+	}
+
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
 	}
@@ -358,13 +364,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		assert interpretedExecutor != null;
 		assert interpretedExecutor.getModelManager() == modelManager;
 		return interpretedExecutor.initializeEvaluationEnvironment(executableObject);
-	}
-
-	/** @deprecated no longer used */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -488,18 +487,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull OCLInternal createOCL() {
 		return new OCLInternal(this);
-	}
-
-	@Deprecated /* @deprecated not used - use createParserContext(@NonNull Element) */
-	@Override
-	public @NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException {
-		if (context instanceof Element) {
-			ParserContext parserContext = createParserContext((Element)context);
-			if (parserContext != null) {
-				return parserContext;
-			}
-		}
-		return new ModelContext(this, null);
 	}
 
 	/**
@@ -1034,6 +1021,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void setEvaluationTracingEnabled(boolean b) {
 		traceEvaluation = b;
+	}
+
+	@Override
+	public <T> void setInstance(@NonNull Class<T> instanceClass, @NonNull T instance) {
+		instanceClass2instance.put(instanceClass, instance);
 	}
 
 	@Override

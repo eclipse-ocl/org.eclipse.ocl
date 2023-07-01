@@ -33,6 +33,8 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -62,6 +64,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
@@ -84,7 +87,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -276,6 +278,12 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return asClass;
 	}
 
+	public void createComment(@NonNull Element element, @NonNull String string) {
+		Comment asComment = PivotFactory.eINSTANCE.createComment();
+		asComment.setBody(string);
+		element.getOwnedComments().add(asComment);
+	}
+
 	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		assert eEnum != null;
 		EnumerationImpl asClass = (EnumerationImpl)PivotFactory.eINSTANCE.createEnumeration();
@@ -294,6 +302,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class cses, org.eclipse.ocl.pivot.@NonNull Class cses2) {
+	//	System.out.println("createFragment " + NameUtil.debugSimpleName(cses) + " : " + cses + " " + NameUtil.debugSimpleName(cses2) + " : " + cses2);
 		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
 	}
 
@@ -347,6 +356,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull Object @Nullable [] parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+	//	System.out.println("createOperation " + asClass + "." + name + "(" + parameterTypes + ")");
 		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
 	//	asOperation.setESObject(eOperation);
@@ -488,12 +498,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	public @Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
@@ -522,6 +526,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return (PrimitiveType)OCLstdlibTables.Types._Integer;
+	}
+
+	@Override
+	public @NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass) {
+		throw new UnsupportedOperationException();			// XXX do this
 	}
 
 	@Override
@@ -569,7 +578,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		String metaclassName = getMetaclassName(asInstanceType);
 		return ClassUtil.nonNullState(getPivotType(metaclassName));
 	}
 
@@ -787,6 +796,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
+	protected @NonNull TupleType getTupleType(@NonNull TupleTypeId commonTupleTypeId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
 		return (CollectionType)OCLstdlibTables.Types._UniqueCollection;
 	}
@@ -808,6 +822,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
 		asClass.setFlatClass(flatClass);
+	//	System.out.println("initClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 	}
 
 	public void initLiterals(@NonNull Enumeration asEnumeration, @NonNull EnumerationLiteral @NonNull [] asEnumerationLiterals) {
@@ -846,6 +861,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
+	protected boolean isSameCompleteClass(@NonNull Type firstType, @NonNull Type secondType) {
+		return firstType == secondType;
+	}
+
+	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		if (!PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
@@ -860,6 +880,17 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 			return false;
 		}
 		return (keyType == OCLstdlibTables.TypeParameters._0_K) && (valueType == OCLstdlibTables.TypeParameters._1_V);
+	}
+
+	@Override
+	protected @NonNull Type resolveBehavioralType(@NonNull Type asType) {
+		if (asType instanceof DataType) {
+			Type behavioralClass = ((DataType)asType).getBehavioralClass();
+			if (behavioralClass != null) {
+				asType = behavioralClass;
+			}
+		}
+		return asType;
 	}
 
 	public void resetSeverities() {

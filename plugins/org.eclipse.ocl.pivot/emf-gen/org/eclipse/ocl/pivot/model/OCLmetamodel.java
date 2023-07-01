@@ -28,18 +28,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -48,11 +45,9 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -65,7 +60,7 @@ public class OCLmetamodel extends ASResourceImpl
 	/**
 	 *	The static package-of-types pivot model of the Pivot Metamodel.
 	 */
-	private static OCLmetamodel INSTANCE = null;
+//	private static OCLmetamodel INSTANCE = null;
 
 	/**
 	 *	The URI of this Metamodel.
@@ -93,11 +88,13 @@ public class OCLmetamodel extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
-		OCLmetamodel metamodelResource = INSTANCE;
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+		ReadOnly metamodelResource = environmentFactory.basicGetInstance(ReadOnly.class);
 		if (metamodelResource == null) {
-			metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+			metamodelResource = new ReadOnly(PIVOT_AS_URI);
 			Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodelResource.setSaveable(false);
+			environmentFactory.setInstance(ReadOnly.class, metamodelResource);
 		}
 		return metamodelResource;
 	}
@@ -152,7 +149,7 @@ public class OCLmetamodel extends ASResourceImpl
 	 */
 	public static void uninstall() {
 		OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
-		INSTANCE = null;
+	//	INSTANCE = null;
 	}
 
 	protected OCLmetamodel(@NonNull URI uri) {
@@ -218,12 +215,12 @@ public class OCLmetamodel extends ASResourceImpl
 		 */
 		@Override
 		public void load(Map<?, ?> options) throws IOException {
-			if (this != INSTANCE) {
+		//	if (this != INSTANCE) {
 				super.load(options);
-			}
-			else {
-				setLoaded(true);
-			}
+		//	}
+		//	else {
+		//		setLoaded(true);
+		//	}
 		}
 
 		/**
@@ -291,7 +288,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
-			root.getOwnedPackages().add(orphanage);
+		//	root.getOwnedPackages().add(orphanage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
