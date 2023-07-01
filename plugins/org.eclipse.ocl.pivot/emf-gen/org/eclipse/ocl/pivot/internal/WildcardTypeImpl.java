@@ -12,10 +12,13 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
 
+import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
@@ -27,12 +30,13 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -43,8 +47,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getLowerBound <em>Lower Bound</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getUpperBound <em>Upper Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getConstrainingClasses <em>Constraining Classes</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getTemplateParameter <em>Template Parameter</em>}</li>
  * </ul>
  *
  * @generated
@@ -70,24 +74,24 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	public static final int WILDCARD_TYPE_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
 
 	/**
-	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}' reference.
+	 * The cached value of the '{@link #getConstrainingClasses() <em>Constraining Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLowerBound()
+	 * @see #getConstrainingClasses()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type lowerBound;
+	protected EList<org.eclipse.ocl.pivot.Class> constrainingClasses;
 
 	/**
-	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}' reference.
+	 * The cached value of the '{@link #getTemplateParameter() <em>Template Parameter</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUpperBound()
+	 * @see #getTemplateParameter()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type upperBound;
+	protected TemplateParameter templateParameter;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -116,19 +120,34 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @generated
 	 */
 	@Override
-	public Type getLowerBound()
+	public List<org.eclipse.ocl.pivot.Class> getConstrainingClasses()
 	{
-		if (lowerBound != null && lowerBound.eIsProxy())
+		if (constrainingClasses == null)
 		{
-			InternalEObject oldLowerBound = (InternalEObject)lowerBound;
-			lowerBound = (Type)eResolveProxy(oldLowerBound);
-			if (lowerBound != oldLowerBound)
+			constrainingClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, 20);
+		}
+		return constrainingClasses;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public TemplateParameter getTemplateParameter()
+	{
+		if (templateParameter != null && templateParameter.eIsProxy())
+		{
+			InternalEObject oldTemplateParameter = (InternalEObject)templateParameter;
+			templateParameter = (TemplateParameter)eResolveProxy(oldTemplateParameter);
+			if (templateParameter != oldTemplateParameter)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldLowerBound, lowerBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldTemplateParameter, templateParameter));
 			}
 		}
-		return lowerBound;
+		return templateParameter;
 	}
 
 	/**
@@ -136,9 +155,9 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Type basicGetLowerBound()
+	public TemplateParameter basicGetTemplateParameter()
 	{
-		return lowerBound;
+		return templateParameter;
 	}
 
 	/**
@@ -147,57 +166,12 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @generated
 	 */
 	@Override
-	public void setLowerBound(Type newLowerBound)
+	public void setTemplateParameter(TemplateParameter newTemplateParameter)
 	{
-		Type oldLowerBound = lowerBound;
-		lowerBound = newLowerBound;
+		TemplateParameter oldTemplateParameter = templateParameter;
+		templateParameter = newTemplateParameter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldLowerBound, lowerBound));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getUpperBound()
-	{
-		if (upperBound != null && upperBound.eIsProxy())
-		{
-			InternalEObject oldUpperBound = (InternalEObject)upperBound;
-			upperBound = (Type)eResolveProxy(oldUpperBound);
-			if (upperBound != oldUpperBound)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldUpperBound, upperBound));
-			}
-		}
-		return upperBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetUpperBound()
-	{
-		return upperBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUpperBound(Type newUpperBound)
-	{
-		Type oldUpperBound = upperBound;
-		upperBound = newUpperBound;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldTemplateParameter, templateParameter));
 	}
 
 	/**
@@ -252,11 +226,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 19:
 				return getSuperClasses();
 			case 20:
-				if (resolve) return getLowerBound();
-				return basicGetLowerBound();
+				return getConstrainingClasses();
 			case 21:
-				if (resolve) return getUpperBound();
-				return basicGetUpperBound();
+				if (resolve) return getTemplateParameter();
+				return basicGetTemplateParameter();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -345,10 +318,11 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case 20:
-				setLowerBound((Type)newValue);
+				getConstrainingClasses().clear();
+				getConstrainingClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case 21:
-				setUpperBound((Type)newValue);
+				setTemplateParameter((TemplateParameter)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -425,10 +399,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getSuperClasses().clear();
 				return;
 			case 20:
-				setLowerBound((Type)null);
+				getConstrainingClasses().clear();
 				return;
 			case 21:
-				setUpperBound((Type)null);
+				setTemplateParameter((TemplateParameter)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -485,9 +459,9 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
 			case 20:
-				return lowerBound != null;
+				return constrainingClasses != null && !constrainingClasses.isEmpty();
 			case 21:
-				return upperBound != null;
+				return templateParameter != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -497,9 +471,18 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		return visitor.visitWildcardType(this);
 	}
 
+//	private TemplateParameterId templateParameterId;
+//	private WildcardId wildcardId;
+
 	@Override
-	public @NonNull TypeId computeId() {
-		return IdManager.getWildcardId();
+	public @NonNull WildcardId computeId() {
+		assert templateParameter != null;
+		return IdManager.getWildcardId(templateParameter.getTemplateParameterId());
 	}
 
+//	public void setTemplateParameterId(@NonNull WildcardId wildcardId, @NonNull TemplateParameterId templateParameterId) {
+//		setTypeId(wildcardId);
+//		this.wildcardId = wildcardId;
+//		this.templateParameterId = templateParameterId;
+//	}
 } //WildcardTypeImpl

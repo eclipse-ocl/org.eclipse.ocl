@@ -2098,6 +2098,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Class__InstanceSpecification__classes = LIBRARY.createOppositeProperty("InstanceSpecification", Types._Class, 14, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES);
 		public static final @NonNull Property _Class__MapType__entryClass = LIBRARY.createOppositeProperty("MapType", Types._Class, 15, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS);
 		public static final @NonNull Property _Class__TemplateParameter__constrainingClasses = LIBRARY.createOppositeProperty("TemplateParameter", Types._Class, 16, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES);
+		public static final @NonNull Property _Class__WildcardType__constrainingClasses = LIBRARY.createOppositeProperty("WildcardType", Types._Class, 17, PivotPackage.Literals.WILDCARD_TYPE__CONSTRAINING_CLASSES);
 
 		public static final @NonNull Property _CollectionItem__ownedItem = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, Types._CollectionItem, 0);
 
@@ -2473,6 +2474,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, Types._TemplateParameter, 0);
 		public static final @NonNull Property _TemplateParameter__owningSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, Types._TemplateParameter, 1);
 		public static final @NonNull Property _TemplateParameter__TemplateParameterSubstitution__formal = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._TemplateParameter, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL);
+		public static final @NonNull Property _TemplateParameter__WildcardType__templateParameter = LIBRARY.createOppositeProperty("WildcardType", Types._TemplateParameter, 3, PivotPackage.Literals.WILDCARD_TYPE__TEMPLATE_PARAMETER);
 
 		public static final @NonNull Property _TemplateParameterSubstitution__actual = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, Types._TemplateParameterSubstitution, 0);
 		public static final @NonNull Property _TemplateParameterSubstitution__formal = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameterSubstitution, 1);
@@ -2517,8 +2519,6 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty("TypeExp", Types._Type, 10, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE);
 		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty("TypedElement", Types._Type, 11, PivotPackage.Literals.TYPED_ELEMENT__TYPE);
 		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty("VariableDeclaration", Types._Type, 12, PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE);
-		public static final @NonNull Property _Type__WildcardType__lowerBound = LIBRARY.createOppositeProperty("WildcardType", Types._Type, 13, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND);
-		public static final @NonNull Property _Type__WildcardType__upperBound = LIBRARY.createOppositeProperty("WildcardType", Types._Type, 14, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND);
 
 		public static final @NonNull Property _TypeExp__referredType = LIBRARY.createProperty(PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, Types._TypeExp, 0);
 
@@ -2550,8 +2550,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Vertex__outgoingTransitions = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, Types._Vertex, 1);
 		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__OWNING_REGION, Types._Vertex, 2);
 
-		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._WildcardType, 0);
-		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._WildcardType, 1);
+		public static final @NonNull Property _WildcardType__constrainingClasses = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__CONSTRAINING_CLASSES, Types._WildcardType, 0);
+		public static final @NonNull Property _WildcardType__templateParameter = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__TEMPLATE_PARAMETER, Types._WildcardType, 1);
 		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._WildcardType, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
 		static {
 			Init.initEnd();
@@ -14658,13 +14658,13 @@ public class PivotTables extends AbstractTables
 
 		private static final @NonNull Property @NonNull [] _WildcardType = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._WildcardType__constrainingClasses,
 			PivotTables.Properties._Class__extenders,
 			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
 			PivotTables.Properties._Class__isInterface,
-			PivotTables.Properties._WildcardType__lowerBound,
 			PivotTables.Properties._NamedElement__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
@@ -14680,7 +14680,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._WildcardType__upperBound
+			PivotTables.Properties._WildcardType__templateParameter
 		};
 
 		/**

@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -102,6 +103,11 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 		return this;
 	}
 
+	@Override
+	public @NonNull TemplateParameterId getTemplateParameterId() {
+		return this;
+	}
+
 	/**
 	 * @since 1.18
 	 */
@@ -124,6 +130,11 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 	@Override
 	public @NonNull UnlimitedNaturalValue getUpperValue() {
 		return ValueUtil.UNLIMITED_VALUE;
+	}
+
+	@Override
+	public @NonNull WildcardId getWildcardId() {
+		return this;
 	}
 
 	/**

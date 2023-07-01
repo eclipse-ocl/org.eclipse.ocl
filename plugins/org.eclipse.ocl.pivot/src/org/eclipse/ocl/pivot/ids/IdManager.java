@@ -53,7 +53,7 @@ import org.eclipse.ocl.pivot.internal.ids.RootPackageIdImpl.RootPackageIdSinglet
 import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
-import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl.WildcardIdSingletonScope;
 import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -133,9 +133,12 @@ public final class IdManager
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
 
-	private static @Nullable Map<@NonNull String, @NonNull String> metamodelURI2name = null;
+	/**
+	 * Map from the TemplateParamterId hashCode to the wildcardId with the same hash.
+	 */
+	private static final @NonNull WildcardIdSingletonScope wildcardIds = new WildcardIdSingletonScope();
 
-	private static @Nullable WildcardId wildcardId = null;
+	private static @Nullable Map<@NonNull String, @NonNull String> metamodelURI2name = null;
 
 	public static final @NonNull RootPackageId METAMODEL = getRootPackageId(PivotConstants.METAMODEL_NAME);
 
@@ -612,13 +615,13 @@ public final class IdManager
 	 */
 	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
 		TemplateParameterId templateParameterId = templateParameter.getTemplateParameterId();
-		if (templateParameterId != null) {
+	//	if (templateParameterId != null) {
 			return templateParameterId;
-		}
-		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateParameter);
-		assert templateParameters != null;
-		int index = templateParameters.indexOf(templateParameter);
-		return getTemplateParameterId(index);
+	//	}
+	//	List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateParameter);
+	//	assert templateParameters != null;
+	//	int index = templateParameters.indexOf(templateParameter);
+	//	return getTemplateParameterId(index);
 	}
 
 	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
@@ -702,21 +705,20 @@ public final class IdManager
 	/**
 	 * Return the typeId for aType.
 	 */
+	@Deprecated
 	public static @NonNull UnspecifiedIdImpl getUnspecifiedTypeId(@NonNull Type aType) {
 		UnspecifiedIdImpl newId = new UnspecifiedIdImpl(PRIVATE_INSTANCE, aType);
-		//		System.out.println("Create " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
+			System.out.println("getUnspecifiedTypeId " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
 		return newId;
 	}
 
 	/**
-	 * @since 1.18
+	 * Return the typeId for aType.
 	 */
-	public static @NonNull WildcardId getWildcardId() {
-		WildcardId wildcardId2 = wildcardId ;
-		if (wildcardId2 == null) {
-			wildcardId = wildcardId2 = new WildcardIdImpl(PRIVATE_INSTANCE);
-		}
-		return wildcardId2;
+	public static @NonNull WildcardId getWildcardId(@NonNull TemplateParameterId templateParameterId) {
+		WildcardId wildcardId = wildcardIds.getSingleton(PRIVATE_INSTANCE, templateParameterId);
+//		System.out.println("getWildcardTypeId " + NameUtil.debugSimpleName(templateParameterId) + " " + templateParameterId + " => " + NameUtil.debugSimpleName(wildcardId) + " " + wildcardId);
+		return wildcardId;
 	}
 
 	private IdManager() {}		// private to guarantee ElementId uniqueness

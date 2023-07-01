@@ -345,7 +345,10 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	@Override
 	public @Nullable Object visitWildcardId(@NonNull WildcardId id) {
 		js.appendClassReference(null, IdManager.class);
-		js.append(".getWildcardId()");
+		js.append(".getWildcardId(");
+	//	id.getTemplateParameterId().accept(this);
+		js.appendIdReference2(id.getTemplateParameterId());
+		js.append(")");
 		return null;
 	}
 

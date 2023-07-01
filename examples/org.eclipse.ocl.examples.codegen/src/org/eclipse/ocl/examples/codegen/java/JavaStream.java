@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("StringConcatOperation")) {
+				if (string.contains("WILD")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

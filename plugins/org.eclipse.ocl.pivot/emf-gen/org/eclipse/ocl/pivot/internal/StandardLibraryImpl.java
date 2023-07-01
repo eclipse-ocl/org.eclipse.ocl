@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -381,6 +382,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		}
 		return tupleType;
+	}
+
+	@Override
+	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter) {
+		return getOrphanage().getWildcardType(templateParameter);
 	}
 
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
