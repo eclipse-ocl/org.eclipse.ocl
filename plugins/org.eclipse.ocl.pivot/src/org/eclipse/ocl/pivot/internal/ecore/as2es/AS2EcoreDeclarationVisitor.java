@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -259,8 +260,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
-		String name = pivotNamedElement.getName();
-		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
+		String name = NameUtil.getName(pivotNamedElement);
+		String validName = getValidName(pivotNamedElement);
 		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
 			EObject eContainer = pivotNamedElement.eContainer();
 			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
@@ -277,6 +278,76 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (!validName.equals(name)) {
 			NameUtil.setOriginalName(eNamedElement, name);
 		}
+	}
+
+	public @NonNull String getValidName(@NonNull NamedElement pivotNamedElement) {
+		String name = NameUtil.getName(pivotNamedElement);
+		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
+		if (pivotNamedElement instanceof Operation) {	// Ecore signatures ignore Collection aspects so Collection overloads need new names
+			Operation asOperation1 = (Operation)pivotNamedElement;
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation1);
+			int ambiguities = 0;
+			int thisAmbiguity = -1;
+			for (@NonNull Operation asOperation2 : PivotUtil.getOwnedOperations(asClass)) {
+				if (asOperation1 == asOperation2) {
+					thisAmbiguity = ambiguities;
+				}
+				else if (name.equals(asOperation2.getName())) {
+					if (!isDistinctInEcore(asOperation1, asOperation2)) {
+						ambiguities++;
+					}
+				}
+			}
+			if (ambiguities > 0) {
+				validName = validName + "_" + thisAmbiguity;
+			}
+		}
+		return validName;
+	}
+
+	private boolean isDistinctInEcore(@NonNull Operation asOperation1, @NonNull Operation asOperation2) {
+		List<@NonNull Parameter> asParameters1 = PivotUtilInternal.getOwnedParametersList(asOperation1);
+		List<@NonNull Parameter> asParameters2 = PivotUtilInternal.getOwnedParametersList(asOperation2);
+		if (isDistinctInEcore(asParameters1, asParameters2)) {
+			return true;
+		}
+		boolean isIteration1 = asOperation1 instanceof Iteration;
+		boolean isIteration2 = asOperation2 instanceof Iteration;
+		if (isIteration1 && isIteration2) {
+			@NonNull Iteration asIteration1 = (Iteration)asOperation1;
+			@NonNull Iteration asIteration2 = (Iteration)asOperation2;
+			List<@NonNull Parameter> asIterators1 = PivotUtilInternal.getOwnedIteratorsList(asIteration1);
+			List<@NonNull Parameter> asIterators2 = PivotUtilInternal.getOwnedIteratorsList(asIteration2);
+			if (isDistinctInEcore(asIterators1, asIterators2)) {
+				return true;
+			}
+			List<@NonNull Parameter> asAccumulators1 = PivotUtilInternal.getOwnedAccumulatorsList(asIteration1);
+			List<@NonNull Parameter> asAccumulators2 = PivotUtilInternal.getOwnedAccumulatorsList(asIteration2);
+			if (isDistinctInEcore(asAccumulators1, asAccumulators2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isDistinctInEcore(@NonNull List<@NonNull Parameter> asParameters1, @NonNull List<@NonNull Parameter> asParameters2) {
+		int iSize = asParameters1.size();
+		if (iSize == asParameters2.size()) {
+			for (int i = 0; i < iSize; i++) {
+				@NonNull Parameter asParameter1 = asParameters1.get(i);
+				@NonNull Parameter asParameter2 = asParameters2.get(i);
+				@NonNull Type asType1 = PivotUtil.getType(asParameter1);
+				@NonNull Type asType2 = PivotUtil.getType(asParameter2);
+				@NonNull TypeId asTypeId1 = asType1.getTypeId();
+				@NonNull TypeId asTypeId2 = asType2.getTypeId();
+				if (asTypeId1 instanceof CollectionTypeId) asTypeId1 = ((CollectionTypeId)asTypeId1).getElementTypeId();
+				if (asTypeId2 instanceof CollectionTypeId) asTypeId2 = ((CollectionTypeId)asTypeId2).getElementTypeId();
+				if (asTypeId1 != asTypeId2) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {
