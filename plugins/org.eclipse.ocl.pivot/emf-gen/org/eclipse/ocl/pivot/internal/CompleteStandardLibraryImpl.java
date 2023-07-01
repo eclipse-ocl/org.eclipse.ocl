@@ -405,7 +405,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		protected final @NonNull Map<@NonNull Integer, @NonNull TemplateParameter> templateParameters = new HashMap<>();
 
 		public TemplateParameterReferencesVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, Collection<? extends Type> partValues) {
-			super(environmentFactory, null, null);
+			super(environmentFactory, null);
 			for (Type partValue : partValues) {
 				analyzeType(partValue, partValue);
 			}
