@@ -43,6 +43,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 	@Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId);
 	@Nullable Type basicGetType(@NonNull TypeId typeId, boolean retainStaleEntry);
+	@NonNull WildcardType createWildcardType(@NonNull Type asType);
 	void dispose();
 
 	/**

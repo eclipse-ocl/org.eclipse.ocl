@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -1168,13 +1169,18 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert eGenericType.getETypeArguments().isEmpty();
 		assert eGenericType.getEClassifier() == null;
 		EClassifier eClassifier = eGenericType.getERawType();
-		assert eClassifier == EcorePackage.Literals.EJAVA_OBJECT;
+		assert eClassifier == EcorePackage.Literals.EJAVA_OBJECT;			// No. User models may have<?> for a user type
+		Type pivotType = getCreated(Type.class, eClassifier);
 		/*			WildcardTypeRefCS csTypeRef = BaseCSFactory.eINSTANCE.createWildcardTypeRefCS();
 			setOriginalMapping(csTypeRef, eObject);
 //			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
 //			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
 			return csTypeRef; */
-		return metamodelManager.createWildcardType(null, null);		// FIXME bounds
+		WildcardType wildcardType = standardLibrary.createWildcardType(pivotType);// PivotFactory.eINSTANCE.createWildcardType();
+		//	wildcardType.setName("?");			// Name is not significant
+		//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
+		//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
+			return wildcardType;
 		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
 		String name = PivotConstants.WILDCARD_NAME;
 		EStructuralFeature eFeature = eGenericType.eContainmentFeature();

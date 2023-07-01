@@ -11,17 +11,22 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * @since 1.18
  */
 public class WildcardIdImpl extends UnscopedId implements WildcardId
 {
-	public WildcardIdImpl(@NonNull IdManager idManager) {
+//	protected final @NonNull WildcardType wildcard;
+	protected final @NonNull String name;
+
+	public WildcardIdImpl(@NonNull IdManager idManager, @NonNull WildcardType wildcard) {
+//		this.wildcard = wildcard;
+		this.name = wildcard.getName();
 	}
 
 	@Override
@@ -31,11 +36,11 @@ public class WildcardIdImpl extends UnscopedId implements WildcardId
 
 	@Override
 	public @NonNull String getDisplayName() {
-		return PivotConstants.WILDCARD_NAME;
+		return name;
 	}
 
 	@Override
 	public @NonNull String getName() {
-		return PivotConstants.WILDCARD_NAME;
+		return name;
 	}
 }

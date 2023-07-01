@@ -43,6 +43,7 @@ public interface StandardLibrary extends Element
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+	@NonNull WildcardType createWildcardType(@NonNull Type asType);
 	void dispose();
 
 	/**

@@ -499,7 +499,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		return IdManager.getWildcardId();
+		return IdManager.getWildcardId(this);
 	}
 
 } //WildcardTypeImpl

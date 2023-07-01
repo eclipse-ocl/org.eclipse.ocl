@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -326,20 +325,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return orphanage;
 	}
 
-	/**
-	 * @since 1.18
-	 */
-	public static @NonNull WildcardType getOrphanWildcardType(org.eclipse.ocl.pivot.@NonNull Package orphanPackage) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = PivotUtilInternal.getOwnedClassesList(orphanPackage);
-		org.eclipse.ocl.pivot.Class wildcardType = NameUtil.getNameable(orphanClasses, PivotConstants.WILDCARD_NAME);
-		if (wildcardType == null) {
-			wildcardType = PivotFactory.eINSTANCE.createWildcardType();
-			wildcardType.setName(PivotConstants.WILDCARD_NAME);
-			wildcardType.setOwningPackage(orphanPackage);
-		}
-		return (WildcardType)wildcardType;
-	}
-
 
 	/**
 	 * Return the Orphanage for an eObject, which is the Orphanage resource in the same ResourceSet as
@@ -455,6 +440,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
 
+	private int wildcardCount = 0;
+
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 		TypeId typeId = orphanClass.getTypeId();
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
@@ -465,6 +452,18 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == this;
 		assert getOwnedClasses().contains(orphanClass);
+	}
+
+	private void addOrphanWildcard(@NonNull WildcardType orphanWildcard) {
+	//	TypeId typeId = orphanClass.getTypeId();
+	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
+	//	Type old = typeId2type.get(typeId);
+	//	assert old == orphanClass;
+		assert !getOwnedClasses().contains(orphanWildcard);
+		orphanWildcard.setOwningPackage(this);
+		assert orphanWildcard.eContainer() == this;
+		assert getOwnedClasses().contains(orphanWildcard);
+		wildcardCount++;
 	}
 
 	@Override
@@ -573,6 +572,15 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			typeId2type.remove(typeId);
 		}
 		return null;
+	}
+
+	@Override
+	public @NonNull WildcardType createWildcardType(@NonNull Type asType) {
+		WildcardType wildcardType = PivotFactory.eINSTANCE.createWildcardType();
+		wildcardType.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
+		// XXX templateableId from asType
+		addOrphanWildcard(wildcardType);
+		return wildcardType;
 	}
 
 	@Override
