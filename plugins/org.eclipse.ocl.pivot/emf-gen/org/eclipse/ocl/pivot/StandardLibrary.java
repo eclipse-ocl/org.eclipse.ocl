@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -392,7 +391,7 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
-	@NonNull WildcardType getWildcardType(@NonNull TemplateParameterId templateParameterId);
+	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
 
 	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);

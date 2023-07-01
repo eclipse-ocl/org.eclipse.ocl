@@ -3606,6 +3606,17 @@ extends EPackage
 	EReference getWildcardType_LowerBound();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getTemplateParameter <em>Template Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Template Parameter</em>'.
+	 * @see org.eclipse.ocl.pivot.WildcardType#getTemplateParameter()
+	 * @see #getWildcardType()
+	 * @generated
+	 */
+	EReference getWildcardType_TemplateParameter();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8829,6 +8840,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference WILDCARD_TYPE__LOWER_BOUND = eINSTANCE.getWildcardType_LowerBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Template Parameter</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WILDCARD_TYPE__TEMPLATE_PARAMETER = eINSTANCE.getWildcardType_TemplateParameter();
 
 		/**
 		 * The meta object literal for the '<em><b>Upper Bound</b></em>' reference feature.

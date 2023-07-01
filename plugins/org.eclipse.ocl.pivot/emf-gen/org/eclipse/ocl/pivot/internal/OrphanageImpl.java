@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
@@ -862,8 +861,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameterId templateParameterId) {
-		WildcardId wildcardId = IdManager.getWildcardId(templateParameterId);
+	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter) {
+		WildcardId wildcardId = IdManager.getWildcardId(templateParameter.getTemplateParameterId());
 		WildcardType wildcardType = basicGetWildcardType(wildcardId);
 		if (wildcardType == null) {
 			synchronized (typeId2type) {
@@ -873,9 +872,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					wildcardType = null;
 				}
 				if (wildcardType == null) {
-					wildcardType = PivotFactory.eINSTANCE.createWildcardType();
-					wildcardType.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
-					((WildcardTypeImpl)wildcardType).setTypeId(wildcardId);
+					WildcardTypeImpl wildcardTypeImpl = (WildcardTypeImpl) PivotFactory.eINSTANCE.createWildcardType();
+					wildcardTypeImpl.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
+					wildcardTypeImpl.setTypeId(wildcardId);
+					wildcardTypeImpl.setTemplateParameter(templateParameter);
+					wildcardType = wildcardTypeImpl;
 					typeId2type.put(wildcardId, wildcardType);
 					addOrphanClass(wildcardType);
 				}

@@ -15,11 +15,16 @@ package org.eclipse.ocl.pivot;
  * A representation of the model object '<em><b>Wildcard Type</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getTemplateParameter <em>Template Parameter</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  *
@@ -48,6 +53,31 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 * @generated
 	 */
 	void setLowerBound(Type value);
+
+	/**
+	 * Returns the value of the '<em><b>Template Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Template Parameter</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Template Parameter</em>' reference.
+	 * @see #setTemplateParameter(TemplateParameter)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType_TemplateParameter()
+	 * @generated
+	 */
+	TemplateParameter getTemplateParameter();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.WildcardType#getTemplateParameter <em>Template Parameter</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Template Parameter</em>' reference.
+	 * @see #getTemplateParameter()
+	 * @generated
+	 */
+	void setTemplateParameter(TemplateParameter value);
 
 	/**
 	 * Returns the value of the '<em><b>Upper Bound</b></em>' reference.

@@ -1133,6 +1133,7 @@
         <ownedComments body="The TemplateSignature that owns this TemplateParameter."/>
       </ownedProperties>
       <ownedProperties xmi:id="tGjEK" isImplicit="true" name="TemplateParameterSubstitution" opposite="#wNw1p" type="#UsLAW"/>
+      <ownedProperties xmi:id="VPVqk" isImplicit="true" name="WildcardType" opposite="#4UBjV" type="#claUE"/>
     </ownedClasses>
     <ownedClasses xmi:id="dBke1" name="TemplateParameterSubstitution" superClasses="#t5rpa">
       <ownedComments body="A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding."/>
@@ -1350,7 +1351,9 @@
         superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
+      <ownedComments body="A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization."/>
       <ownedProperties xmi:id="mvH+v" isRequired="false" name="lowerBound" opposite="#WU9EG" type="#rrwsa"/>
+      <ownedProperties xmi:id="4UBjV" name="templateParameter" opposite="#VPVqk" type="#Afray"/>
       <ownedProperties xmi:id="lraqD" isRequired="false" name="upperBound" opposite="#P4B7P" type="#rrwsa"/>
       <ownedProperties xmi:id="OM4eT" isImplicit="true" isRequired="false" name="TemplateParameterSubstitution" opposite="#gMCx3" type="#dBke1"/>
     </ownedClasses>

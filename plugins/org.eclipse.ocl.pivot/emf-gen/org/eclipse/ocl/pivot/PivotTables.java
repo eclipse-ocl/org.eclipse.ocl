@@ -2473,6 +2473,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, Types._TemplateParameter, 0);
 		public static final @NonNull Property _TemplateParameter__owningSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, Types._TemplateParameter, 1);
 		public static final @NonNull Property _TemplateParameter__TemplateParameterSubstitution__formal = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._TemplateParameter, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL);
+		public static final @NonNull Property _TemplateParameter__WildcardType__templateParameter = LIBRARY.createOppositeProperty("WildcardType", Types._TemplateParameter, 3, PivotPackage.Literals.WILDCARD_TYPE__TEMPLATE_PARAMETER);
 
 		public static final @NonNull Property _TemplateParameterSubstitution__actual = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, Types._TemplateParameterSubstitution, 0);
 		public static final @NonNull Property _TemplateParameterSubstitution__formal = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameterSubstitution, 1);
@@ -2551,8 +2552,9 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__OWNING_REGION, Types._Vertex, 2);
 
 		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._WildcardType, 0);
-		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._WildcardType, 1);
-		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._WildcardType, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
+		public static final @NonNull Property _WildcardType__templateParameter = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__TEMPLATE_PARAMETER, Types._WildcardType, 1);
+		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._WildcardType, 2);
+		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._WildcardType, 3, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
 		static {
 			Init.initEnd();
 		}
@@ -14680,6 +14682,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
+			PivotTables.Properties._WildcardType__templateParameter,
 			PivotTables.Properties._WildcardType__upperBound
 		};
 

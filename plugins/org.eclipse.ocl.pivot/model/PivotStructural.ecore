@@ -1571,7 +1571,12 @@
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="VoidType" eSuperTypes="#//Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="WildcardType" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lowerBound" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="upperBound" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="templateParameter" lowerBound="1"
+        eType="#//TemplateParameter"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -652,6 +652,7 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsAbstract(true);
 			type = _VoidType = createClass(pivot, PivotPackage.Literals.VOID_TYPE);
 			type = _WildcardType = createClass(pivot, PivotPackage.Literals.WILDCARD_TYPE);
+			installComment(type, "A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization.");
 
 			addSuperClass(_Annotation, _NamedElement);
 			addSuperClass(_AnyType, _Class);
@@ -1991,6 +1992,7 @@ public class OCLmetamodel extends ASResourceImpl
 			Property pr_TemplateParameter_constrainingClasses;
 			Property pr_TemplateParameter_owningSignature;
 			Property pr_TemplateParameter_TemplateParameterSubstitution_formal;
+			Property pr_TemplateParameter_WildcardType_templateParameter;
 			Property pr_TemplateParameterSubstitution_actual;
 			Property pr_TemplateParameterSubstitution_formal;
 			Property pr_TemplateParameterSubstitution_ownedWildcard;
@@ -2046,6 +2048,7 @@ public class OCLmetamodel extends ASResourceImpl
 			Property pr_Vertex_outgoingTransitions;
 			Property pr_Vertex_owningRegion;
 			Property pr_WildcardType_lowerBound;
+			Property pr_WildcardType_templateParameter;
 			Property pr_WildcardType_upperBound;
 			Property pr_WildcardType_TemplateParameterSubstitution_ownedWildcard;
 			List<Property> ownedProperties;
@@ -3340,6 +3343,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_TemplateParameter_TemplateParameterSubstitution_formal = createProperty("TemplateParameterSubstitution", _Bag_TemplateParameterSubstitution_T));
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
+			ownedProperties.add(property = pr_TemplateParameter_WildcardType_templateParameter = createProperty("WildcardType", _Bag_WildcardType_T));
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
 
 			ownedProperties = _TemplateParameterSubstitution.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_actual = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, _Type));
@@ -3584,6 +3590,8 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_WildcardType_lowerBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, _Type));
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
+			ownedProperties.add(property = pr_WildcardType_templateParameter = createProperty(PivotPackage.Literals.WILDCARD_TYPE__TEMPLATE_PARAMETER, _TemplateParameter));
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_WildcardType_upperBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, _Type));
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
@@ -3738,6 +3746,7 @@ public class OCLmetamodel extends ASResourceImpl
 			setOpposites(pr_TemplateBinding_templateSignature, pr_TemplateSignature_TemplateBinding_templateSignature);
 			setOpposites(pr_TemplateParameter_owningSignature, pr_TemplateSignature_ownedParameters);
 			setOpposites(pr_TemplateParameter_TemplateParameterSubstitution_formal, pr_TemplateParameterSubstitution_formal);
+			setOpposites(pr_TemplateParameter_WildcardType_templateParameter, pr_WildcardType_templateParameter);
 			setOpposites(pr_TemplateParameterSubstitution_actual, pr_Type_TemplateParameterSubstitution_actual);
 			setOpposites(pr_TemplateParameterSubstitution_ownedWildcard, pr_WildcardType_TemplateParameterSubstitution_ownedWildcard);
 			setOpposites(pr_TemplateSignature_owningElement, pr_TemplateableElement_ownedSignature);

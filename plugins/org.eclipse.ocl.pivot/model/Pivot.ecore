@@ -3284,8 +3284,13 @@
       eSuperTypes="#T-pivot-Class"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-WildcardType" name="WildcardType"
       eSuperTypes="#T-pivot-Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-WildcardType-lowerBound"
         name="lowerBound" eType="#T-pivot-Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-WildcardType-templateParameter"
+        name="templateParameter" lowerBound="1" eType="#T-pivot-TemplateParameter"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-WildcardType-upperBound"
         name="upperBound" eType="#T-pivot-Type"/>
   </eClassifiers>

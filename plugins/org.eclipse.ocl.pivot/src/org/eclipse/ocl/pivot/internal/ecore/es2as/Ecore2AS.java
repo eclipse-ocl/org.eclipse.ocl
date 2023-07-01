@@ -1180,7 +1180,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		int index = eGenericArguments.indexOf(eGenericWildcard);
 		assert index >= 0;
 		TemplateParameter pivotTemplateParameter = pivotClass.getOwnedSignature().getOwnedParameters().get(index);
-		return standardLibrary.getWildcardType(pivotTemplateParameter.getTemplateParameterId());
+		return standardLibrary.getWildcardType(pivotTemplateParameter);
 	}
 
 	/**

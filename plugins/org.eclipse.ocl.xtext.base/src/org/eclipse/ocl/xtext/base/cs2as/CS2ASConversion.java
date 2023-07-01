@@ -1314,7 +1314,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
 			//	Orphanage orphanage = environmentFactory.getCompleteModel().getSharedOrphanage();
-				templateParameterSubstitution.setActual(standardLibrary.getWildcardType(templateParameter.getTemplateParameterId()));
+				templateParameterSubstitution.setActual(standardLibrary.getWildcardType(templateParameter));
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);
