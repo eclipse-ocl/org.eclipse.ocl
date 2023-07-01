@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -53,8 +54,8 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -1165,35 +1166,21 @@ public class Ecore2AS extends AbstractExternal2AS
 		return pivotType;
 	}
 
-	protected Type resolveWildcardType(@NonNull EGenericType eGenericType) {
-		assert eGenericType.getETypeArguments().isEmpty();
-		assert eGenericType.getEClassifier() == null;
-		EClassifier eClassifier = eGenericType.getERawType();
-		assert eClassifier == EcorePackage.Literals.EJAVA_OBJECT;			// No. User models may have<?> for a user type
-		Type pivotType = getCreated(Type.class, eClassifier);
-		/*			WildcardTypeRefCS csTypeRef = BaseCSFactory.eINSTANCE.createWildcardTypeRefCS();
-			setOriginalMapping(csTypeRef, eObject);
-//			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
-//			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
-			return csTypeRef; */
-		WildcardType wildcardType = standardLibrary.createWildcardType(pivotType);// PivotFactory.eINSTANCE.createWildcardType();
-		//	wildcardType.setName("?");			// Name is not significant
-		//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
-		//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
-			return wildcardType;
-		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
-		String name = PivotConstants.WILDCARD_NAME;
-		EStructuralFeature eFeature = eGenericType.eContainmentFeature();
-		if ((eFeature != null) && eFeature.isMany()) {
-			EObject eContainer = eGenericType.eContainer();
-			List<?> list = (List<?>)eContainer.eGet(eGenericType.eContainingFeature());
-			int index = list.indexOf(eGenericType);
-			if (index != 0) {
-				name += index;
-			}
-		}
-		pivotElement.setName(name);
-		return pivotElement; */
+	protected Type resolveWildcardType(@NonNull EGenericType eGenericWildcard) {
+		assert eGenericWildcard.getETypeArguments().isEmpty();
+		assert eGenericWildcard.getEClassifier() == null;
+		EObject eContainer = eGenericWildcard.eContainer();
+		assert eContainer instanceof EGenericType;
+		final EGenericType eGenericType = (EGenericType)eContainer;
+		EClassifier eClassifier = eGenericType.getEClassifier();
+		assert eClassifier != null;
+		org.eclipse.ocl.pivot.Class pivotClass = getCreated(org.eclipse.ocl.pivot.Class.class, eClassifier);
+		assert pivotClass != null;
+		EList<EGenericType> eGenericArguments = eGenericType.getETypeArguments();
+		int index = eGenericArguments.indexOf(eGenericWildcard);
+		assert index >= 0;
+		TemplateParameter pivotTemplateParameter = pivotClass.getOwnedSignature().getOwnedParameters().get(index);
+		return standardLibrary.getWildcardType(pivotTemplateParameter.getTemplateParameterId());
 	}
 
 	/**

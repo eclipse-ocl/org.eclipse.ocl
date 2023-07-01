@@ -32,4 +32,6 @@ public interface TemplateParameterId extends TypeId, Nameable
 	 * @since 1.18
 	 */
 	default @Nullable TemplateableId getTemplateableId() { return null; }
+
+	@NonNull WildcardId getWildcardId();
 }

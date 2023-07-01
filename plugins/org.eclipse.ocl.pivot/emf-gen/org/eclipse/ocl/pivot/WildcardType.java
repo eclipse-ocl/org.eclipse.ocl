@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Wildcard Type</b></em>'.
@@ -70,5 +69,10 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 * @generated
 	 */
 	void setUpperBound(Type value);
+
+//	@NonNull TemplateParameter getTemplateParameter();
+//	void setTemplateParameter(@NonNull TemplateParameter asTemplateParameter);
+
+//	void setTypeId(WildcardId wildcardId);
 
 } // WildcardType

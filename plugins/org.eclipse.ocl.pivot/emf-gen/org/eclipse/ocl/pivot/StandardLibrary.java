@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -43,7 +44,6 @@ public interface StandardLibrary extends Element
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
-	@NonNull WildcardType createWildcardType(@NonNull Type asType);
 	void dispose();
 
 	/**
@@ -117,6 +117,8 @@ public interface StandardLibrary extends Element
 	 * Return the FlatClass for a given type.
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	@NonNull FlatModel getFlatModel();
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -390,7 +392,7 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
-	@NonNull FlatModel getFlatModel();
+	@NonNull WildcardType getWildcardType(@NonNull TemplateParameterId templateParameterId);
 
 	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);

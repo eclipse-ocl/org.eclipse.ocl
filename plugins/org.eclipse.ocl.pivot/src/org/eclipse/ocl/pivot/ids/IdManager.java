@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.CollectionTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
@@ -54,7 +53,7 @@ import org.eclipse.ocl.pivot.internal.ids.RootPackageIdImpl.RootPackageIdSinglet
 import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
-import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl.WildcardIdSingletonScope;
 import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -133,6 +132,11 @@ public final class IdManager
 	 * Map from a Primitive type name to the corresponding PrimitiveTypeId.
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
+
+	/**
+	 * Map from the TemplateParamterId hashCode to the wildcardId with the same hash.
+	 */
+	private static final @NonNull WildcardIdSingletonScope wildcardIds = new WildcardIdSingletonScope();
 
 	private static @Nullable Map<@NonNull String, @NonNull String> metamodelURI2name = null;
 
@@ -711,10 +715,14 @@ public final class IdManager
 	/**
 	 * Return the typeId for aType.
 	 */
-	public static @NonNull WildcardIdImpl getWildcardId(@NonNull WildcardType aWildcardType) {
-		WildcardIdImpl newId = new WildcardIdImpl(PRIVATE_INSTANCE, aWildcardType);
-		System.out.println("getWildcardTypeId " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
-		return newId;
+	public static @NonNull WildcardId getWildcardId(@NonNull TemplateParameterId templateParameterId) {
+		WildcardId wildcardId = wildcardIds.getSingleton(PRIVATE_INSTANCE, templateParameterId);
+		System.out.println("getWildcardTypeId " + NameUtil.debugSimpleName(templateParameterId) + " " + templateParameterId + " => " + NameUtil.debugSimpleName(wildcardId) + " " + wildcardId);
+		return wildcardId;
+//		WildcardId wildcardId = templateParameterId.getWildcardId();
+	//	WildcardIdImpl newId = new WildcardIdImpl(PRIVATE_INSTANCE, asTemplateParameter);
+//		System.out.println("getWildcardTypeId " + wildcardId.getClass().getSimpleName() + " " + wildcardId + " => @" + Integer.toHexString(wildcardId.hashCode()));
+//		return wildcardId;
 	}
 
 	private IdManager() {}		// private to guarantee ElementId uniqueness

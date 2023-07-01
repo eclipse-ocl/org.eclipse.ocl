@@ -31,8 +31,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -497,9 +496,20 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		return visitor.visitWildcardType(this);
 	}
 
+//	private TemplateParameterId templateParameterId;
+//	private WildcardId wildcardId;
+
 	@Override
-	public @NonNull TypeId computeId() {
-		return IdManager.getWildcardId(this);
+	public @NonNull WildcardId computeId() {
+	//	assert templateParameterId != null;
+	//	final WildcardId wildcardId = IdManager.getWildcardId(templateParameterId);
+	//	assert wildcardId == this.wildcardId;
+		throw new UnsupportedOperationException();		// Set explicitly
 	}
 
+//	public void setTemplateParameterId(@NonNull WildcardId wildcardId, @NonNull TemplateParameterId templateParameterId) {
+//		setTypeId(wildcardId);
+//		this.wildcardId = wildcardId;
+//		this.templateParameterId = templateParameterId;
+//	}
 } //WildcardTypeImpl

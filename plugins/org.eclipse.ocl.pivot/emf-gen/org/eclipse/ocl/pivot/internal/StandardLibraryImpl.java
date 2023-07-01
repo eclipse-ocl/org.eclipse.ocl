@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -107,11 +108,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @Nullable Property basicGetOclInvalidProperty() {
 		return oclInvalidProperty;
-	}
-
-	@Override
-	public @NonNull WildcardType createWildcardType(@NonNull Type asType) {
-		return getOrphanage().createWildcardType(asType);
 	}
 
 	@Override
@@ -387,6 +383,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		}
 		return tupleType;
+	}
+
+	@Override
+	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameterId templateParameterId) {
+		return getOrphanage().getWildcardType(templateParameterId);
 	}
 
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,

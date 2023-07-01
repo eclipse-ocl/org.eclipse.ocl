@@ -46,8 +46,10 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -454,7 +456,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert getOwnedClasses().contains(orphanClass);
 	}
 
-	private void addOrphanWildcard(@NonNull WildcardType orphanWildcard) {
+/*	private void addOrphanWildcard(@NonNull WildcardType orphanWildcard) {
 	//	TypeId typeId = orphanClass.getTypeId();
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
 	//	Type old = typeId2type.get(typeId);
@@ -464,7 +466,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert orphanWildcard.eContainer() == this;
 		assert getOwnedClasses().contains(orphanWildcard);
 		wildcardCount++;
-	}
+	} */
 
 	@Override
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
@@ -575,12 +577,21 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull WildcardType createWildcardType(@NonNull Type asType) {
-		WildcardType wildcardType = PivotFactory.eINSTANCE.createWildcardType();
-		wildcardType.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
-		// XXX templateableId from asType
-		addOrphanWildcard(wildcardType);
-		return wildcardType;
+	public @Nullable WildcardType basicGetWildcardType(@NonNull WildcardId wildcardId) {
+		WildcardType wildcardType = (WildcardType)typeId2type.get(wildcardId);
+		if (wildcardType == null) {
+			return null;
+		}
+		if (wildcardType.isWellContained()) {
+			return wildcardType;
+		}
+		synchronized (typeId2type) {
+			if (wildcardType.isWellContained()) {
+				return wildcardType;
+			}
+			typeId2type.remove(wildcardId);
+		}
+		return null;
 	}
 
 	@Override
@@ -818,7 +829,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts) {
-		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
+		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
 			synchronized (typeId2type) {
@@ -848,6 +859,29 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 		assert tupleType.isWellContained();
 		return tupleType;
+	}
+
+	@Override
+	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameterId templateParameterId) {
+		WildcardId wildcardId = IdManager.getWildcardId(templateParameterId);
+		WildcardType wildcardType = basicGetWildcardType(wildcardId);
+		if (wildcardType == null) {
+			synchronized (typeId2type) {
+				wildcardType = (WildcardType)typeId2type.get(wildcardId);
+				if ((wildcardType != null) && !wildcardType.isWellContained()) {
+					removeOrphanClass(wildcardType);
+					wildcardType = null;
+				}
+				if (wildcardType == null) {
+					wildcardType = PivotFactory.eINSTANCE.createWildcardType();
+					wildcardType.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
+					((WildcardTypeImpl)wildcardType).setTypeId(wildcardId);
+					typeId2type.put(wildcardId, wildcardType);
+					addOrphanClass(wildcardType);
+				}
+			}
+		}
+		return wildcardType;
 	}
 
 	public void init(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
