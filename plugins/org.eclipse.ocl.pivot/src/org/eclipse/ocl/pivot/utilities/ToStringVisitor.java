@@ -420,6 +420,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append("::");
 		}
 		appendName(type);
+		if (type instanceof TemplateableElement) {
+			TemplateableElement templateableElement = (TemplateableElement)type;
+			appendTemplateBindings(templateableElement.getOwnedBindings(), null);
+			appendTemplateSignature(templateableElement.getOwnedSignature());
+		}
 	}
 
 	/**
