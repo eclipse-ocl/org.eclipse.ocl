@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -26,7 +24,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions.SimpleTemplateParameterSubstitutions;
 
 /**
  * A TemplateSpecialisation supports resolution of template parameter within an element referenced from an OCL expression.
@@ -39,7 +37,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * Library, and known type equivalences installed by invoking installEquivalence() for each. getSpecialisation may then be used
  * to resolve the type.
  */
-public class TemplateSpecialisation implements TemplateParameterSubstitutions
+public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 {
 	/**
 	 * Return true if a referencedType transitively references a TemplateParamter.
@@ -99,15 +97,9 @@ public class TemplateSpecialisation implements TemplateParameterSubstitutions
 	}
 
 	protected final @NonNull StandardLibrary standardLibrary;
-	protected /*@LazyNonNull*/ Map<TemplateParameter, Type> bindings = null;
 
 	public TemplateSpecialisation(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
-	}
-
-	@Override
-	public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
-		return bindings.get(templateParameter);
 	}
 
 	public void installEquivalence(@Nullable Type resolvedType, @Nullable Type referencedType) {
@@ -151,11 +143,9 @@ public class TemplateSpecialisation implements TemplateParameterSubstitutions
 		}
 		else if (referencedType instanceof TemplateParameter) {
 			TemplateParameter templateParameter = (TemplateParameter)referencedType;
-			if (bindings == null) {
-				bindings = new HashMap<>();
-			}
-			if (bindings.put(templateParameter, resolvedType) != null) {
-				bindings.put(templateParameter, null);
+			if (formal2actual.put(templateParameter, resolvedType) != null) {
+			//	formal2actual.put(templateParameter, null);
+				throw new UnsupportedOperationException();		// XXX
 			}
 		}
 		else if (referencedType instanceof TupleType) {
@@ -178,11 +168,6 @@ public class TemplateSpecialisation implements TemplateParameterSubstitutions
 				throw new UnsupportedOperationException();		// scan parameters/arguments
 			}
 		}
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return bindings.isEmpty();
 	}
 
 	@Override

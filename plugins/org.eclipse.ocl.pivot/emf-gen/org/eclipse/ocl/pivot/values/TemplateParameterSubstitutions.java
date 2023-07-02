@@ -10,6 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -32,6 +41,20 @@ public interface TemplateParameterSubstitutions
 	@Nullable Type get(@Nullable TemplateParameter templateParameter);
 
 	/**
+	 * Return the feature value associated with the templateParameter. Returns null if not known..
+	 */
+	default @Nullable Object getValue(@Nullable TemplateParameter templateParameter, /*@NonNull*/ EStructuralFeature feature) {
+		return null;
+	}
+
+	/**
+	 * Return the mapof per-feature values associated with the templateParameter. Returns null if not known..
+	 */
+	default @Nullable Map<@NonNull EStructuralFeature, Object> getValues(@Nullable TemplateParameter templateParameter) {
+		return null;
+	}
+
+	/**
 	 * Return true if there are no formal TemplateParameters with actual values.
 	 */
 	boolean isEmpty();
@@ -41,6 +64,15 @@ public interface TemplateParameterSubstitutions
 	 * and any pre-existing resolution.
 	 */
 	@Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
+
+	/**
+	 * Associate value with the feature for a templatePatameter.
+	 *
+	 * Throws UnsupportedOperationException if feature values not supported.
+	 */
+	default Object putValue(@NonNull TemplateParameter templateParameter, /*@NonNull*/ EStructuralFeature feature, Object value) {
+		throw new UnsupportedOperationException();
+	}
 
 	public static final @NonNull TemplateParameterSubstitutions EMPTY = new Empty();
 
@@ -86,4 +118,87 @@ public interface TemplateParameterSubstitutions
 			return null;
 		}
 	};
+
+	public static class SimpleTemplateParameterSubstitutions implements TemplateParameterSubstitutions
+	{
+		protected final @NonNull Map<@NonNull TemplateParameter, @NonNull Type> formal2actual = new HashMap<>();
+		protected /*@LazyNonNull*/ Map<@NonNull TemplateParameter, @NonNull Map<@NonNull EStructuralFeature, Object>> formal2feature2value = new HashMap<>();
+
+		@Override
+		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+			return formal2actual.get(templateParameter);
+		}
+
+		@Override
+		public @Nullable Object getValue(@Nullable TemplateParameter templateParameter, /*@NonNull*/ EStructuralFeature feature) {
+			assert feature != null;
+			Map<@NonNull EStructuralFeature, Object> feature2value = formal2feature2value.get(templateParameter);
+			if (feature2value == null) {
+				return null;
+			}
+			return feature2value.get(feature);
+		}
+
+		@Override
+		public @Nullable Map<@NonNull EStructuralFeature, Object> getValues(@Nullable TemplateParameter templateParameter) {
+			return formal2feature2value.get(templateParameter);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return formal2actual.isEmpty();
+		}
+
+		@Override
+		public @Nullable Type put(@NonNull TemplateParameter templateParameter, @NonNull Type actualType) {
+			return formal2actual.put(templateParameter, actualType);
+		}
+
+		@Override
+		public Object putValue(@NonNull TemplateParameter templateParameter, /*@NonNull*/ EStructuralFeature feature, Object value) {
+			assert feature != null;
+			Map<@NonNull EStructuralFeature, Object> feature2value = formal2feature2value.get(templateParameter);
+			if (feature2value == null) {
+				feature2value = new HashMap<>();
+				formal2feature2value.put(templateParameter, feature2value);
+			}
+			return feature2value.put(feature, value);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("{");
+			boolean isFirst = true;
+			Collection<@NonNull TemplateParameter> keys = formal2actual.keySet();
+			if (keys.size() > 1) {
+				List<@NonNull TemplateParameter> sortedKeys = new ArrayList<>(keys);
+				Collections.sort(sortedKeys, new Comparator<@NonNull TemplateParameter>()
+				{
+					@Override
+					public int compare(@NonNull TemplateParameter o1, @NonNull TemplateParameter o2) {
+						int i1 = o1.getTemplateParameterId().getIndex();
+						int i2 = o2.getTemplateParameterId().getIndex();
+						int diff = i1 - i2;
+						if (diff != 0) {
+							return diff;
+						}
+						String n1 = o1.getName();
+						String n2 = o2.getName();
+						return n1.compareTo(n2);
+					}
+				});
+				keys = sortedKeys;
+			}
+			for (TemplateParameter index : keys) {
+				if (!isFirst) {
+					s.append("\n");
+				}
+				s.append(index + " => " + formal2actual.get(index));
+				isFirst = false;
+			}
+			s.append("}");
+			return s.toString();
+		}
+	}
 }

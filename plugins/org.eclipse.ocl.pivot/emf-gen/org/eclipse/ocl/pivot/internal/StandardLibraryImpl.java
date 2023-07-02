@@ -305,8 +305,14 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					assert false;
 					templateArgument = templateParameter;
 				}
-			//	if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+				assert templateArgument != null;
+				Object nullFreeObject = substitutions.getValue(templateParameter, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE);
+				Object lowerObject = substitutions.getValue(templateParameter, PivotPackage.Literals.COLLECTION_TYPE__LOWER);
+				Object upperObject = substitutions.getValue(templateParameter, PivotPackage.Literals.COLLECTION_TYPE__UPPER);
+				Boolean isNullFree = nullFreeObject instanceof Boolean ? (Boolean)nullFreeObject : null;
+				IntegerValue lowerValue = lowerObject instanceof IntegerValue ? (IntegerValue)lowerObject : null;
+				UnlimitedNaturalValue upperValue = upperObject instanceof UnlimitedNaturalValue ? (UnlimitedNaturalValue)upperObject : null;
+				return getCollectionType(unspecializedType, templateArgument, isNullFree, lowerValue, upperValue);
 			//	}
 			}
 			return collectionType;
@@ -328,9 +334,13 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					assert false;
 					valueTemplateArgument = valueTemplateParameter;
 				}
-			//	if (templateArgument != null) {
-					return getMapType(keyTemplateArgument, mapType.isKeysAreNullFree(), valueTemplateArgument, mapType.isValuesAreNullFree());
-			//	}
+				assert keyTemplateArgument != null;
+				assert valueTemplateArgument != null;
+				Object nullFreeKeysObject = substitutions.getValue(keyTemplateParameter, PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE);
+				Object nullFreeValuesObject = substitutions.getValue(valueTemplateParameter, PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE);
+				Boolean isKeysAreNullFree = nullFreeKeysObject instanceof Boolean ? (Boolean)nullFreeKeysObject : null;
+				Boolean isValuesAreNullFree = nullFreeValuesObject instanceof Boolean ? (Boolean)nullFreeValuesObject : null;
+				return getMapType(keyTemplateArgument, isKeysAreNullFree, valueTemplateArgument, isValuesAreNullFree);
 			}
 			return mapType;
 		}
@@ -360,7 +370,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					Type templateArgument = substitutions.get(templateParameter);
 					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
 				}
-				return getLibraryType(unspecializedType, templateArguments);
+				return getLibraryType(unspecializedType, templateArguments);	// XXX nullFree
 			}
 		}
 		return type;

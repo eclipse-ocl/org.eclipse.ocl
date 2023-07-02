@@ -54,12 +54,15 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -69,6 +72,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions.SimpleTemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -157,7 +162,24 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		}
 		EClassifier eClassifier = eGenericType.getEClassifier();
 		if (eClassifier != null) {
-			return doInPackageSwitch(eClassifier);
+			Type asType = (Type)doInPackageSwitch(eClassifier);
+			List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
+			final int iSize = eTypeArguments.size();
+			if (iSize > 0) {
+				TemplateableElement asTemplateableElement = (TemplateableElement)asType;
+				TemplateSignature asSignature = asTemplateableElement.getOwnedSignature();
+				assert asSignature != null;
+				List<@NonNull TemplateParameter> asFormalParameters = PivotUtilInternal.getOwnedParametersList(asSignature);
+				TemplateParameterSubstitutions bindings = new SimpleTemplateParameterSubstitutions();
+				for (int i = 0; i < iSize; i++) {
+					EGenericType eTypeArgument = eTypeArguments.get(i);
+					Type asActualType = (Type)doInPackageSwitch(eTypeArgument);
+					TemplateParameter asFormalParameter = asFormalParameters.get(i);
+					bindings.put(asFormalParameter, asActualType);
+				}
+				asType = standardLibrary.getSpecializedType(asType, bindings);
+			}
+			return asType;  //xxx typeArguments
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -460,6 +482,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					}
 					else {
 						resultType = argumentType;
+						if ((resultType instanceof TemplateableElement) && (((TemplateableElement)resultType).getOwnedSignature() != null)) {		// XXX debugging
+							argumentType = (Type)doInPackageSwitch(eTypeArgument);				// XXX debugging
+						}
 					}
 				}
 				assert contextType != null;

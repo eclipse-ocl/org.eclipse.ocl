@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
@@ -717,6 +718,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				lambdaType.setName(name);
 				lambdaType.setContextType(contextType);
 				lambdaType.setResultType(resultType);
+				assert !(resultType instanceof TemplateableElement) || (((TemplateableElement)resultType).getOwnedSignature() == null);		// XXX debugging
 				lambdaType.getParameterType().addAll(parameterTypes);
 				lambdaType.getSuperClasses().add(oclLambdaType);
 				typeId2type.put(lambdaTypeId, lambdaType);
