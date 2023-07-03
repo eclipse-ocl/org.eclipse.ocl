@@ -343,11 +343,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
+		boolean isOrdered = true;												// Ecore default
+		boolean isUnique = true;												// Ecore default
+		int lowerBound = isRequired ? 1 : 0;
+		int upperBound = 1;
 		if ((pivotType == null) || (pivotType instanceof VoidType)) {				// Occurs for Operation return type
-			eTypedElement.setLowerBound(0);
-			eTypedElement.setUpperBound(1);
-			eTypedElement.setOrdered(true);
-			eTypedElement.setUnique(true);
+			lowerBound = 0;
+			upperBound = 1;
 		}
 		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
 			CollectionType collectionType = (CollectionType)pivotType;
@@ -359,17 +361,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			else {
 				eTypedElement.setEType((EClassifier)eObject);
 			}
-			eTypedElement.setOrdered(collectionType.isOrdered());
-			eTypedElement.setUnique(collectionType.isUnique());
+			isOrdered = collectionType.isOrdered();
+			isUnique = collectionType.isUnique();
 			IntegerValue lower = collectionType.getLowerValue();
 			UnlimitedNaturalValue upper = collectionType.getUpperValue();
 			try {
-				eTypedElement.setLowerBound(lower.intValue());
+				lowerBound = lower.intValue();
 			} catch (InvalidValueException e) {
 				logger.error("Illegal lower bound", e);
 			}
 			try {
-				eTypedElement.setUpperBound(upper.isUnlimited() ? -1 : upper.intValue());
+				upperBound = upper.isUnlimited() ? -1 : upper.intValue();
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}
@@ -435,10 +437,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					break;
 				}
 			}
-			eTypedElement.setOrdered(true);
-			eTypedElement.setUnique(true);
-			eTypedElement.setLowerBound(0);
-			eTypedElement.setUpperBound(1);
+		//	lowerBound = 0;
+		//	upperBound = 1;
 		}
 		else if (pivotType instanceof MapType) {
 			MapType mapType = (MapType)pivotType;
@@ -466,24 +466,16 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 				}
 			}
-			eTypedElement.setOrdered(true);		// sic; Ecore idiom is OrderedSet(Entry(K,V)[*|1])[1]
-			eTypedElement.setUnique(true);
-			eTypedElement.setLowerBound(0);
-			eTypedElement.setUpperBound(-1);
+			lowerBound = 0;
+			upperBound = -1;
 		}
 		else {
-			if (isRequired) {
-				eTypedElement.setLowerBound(1);
-				eTypedElement.setUpperBound(1);
-			}
-			else {
-				eTypedElement.setLowerBound(0);
-				eTypedElement.setUpperBound(1);
-			}
-			eTypedElement.setUnique(true);
-			eTypedElement.setOrdered(true);		// Ecore default
 			setEType(eTypedElement, pivotType, isRequired);
 		}
+		eTypedElement.setLowerBound(lowerBound);
+		eTypedElement.setUpperBound(upperBound);
+		eTypedElement.setOrdered(isOrdered);
+		eTypedElement.setUnique(isUnique);
 	}
 
 	@Override
