@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -243,7 +242,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
-		else if (Boolean.valueOf(AnnotationUtil.getEAnnotationValue(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
+		else if (Boolean.valueOf(AnnotationUtil.getEAnnotationValue(eReference, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_SELF))) {
 			asProperty.setOpposite(asProperty);
 		}
 		else {
@@ -531,7 +530,25 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-						CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+						String kind = AnnotationUtil.getEAnnotationValue(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+						CollectionType genericCollectionType = null;
+						if (kind != null) {
+							if ("Collection".equals(kind)) {
+								genericCollectionType = standardLibrary.getCollectionType();
+							}
+							else if ("OrderedCollection".equals(kind)) {
+								genericCollectionType = standardLibrary.getOrderedCollectionType();
+							}
+							else if ("UniqueCollection".equals(kind)) {
+								genericCollectionType = standardLibrary.getUniqueCollectionType();
+							}
+							else {
+								converter.error("Unsupported " + AnnotationUtil.COLLECTION_ANNOTATION_SOURCE + "." + AnnotationUtil.COLLECTION_KIND + "\"" + kind + "\"");
+							}
+						}
+						if (genericCollectionType == null) {
+							genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+						}
 						pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
 					}
 				}

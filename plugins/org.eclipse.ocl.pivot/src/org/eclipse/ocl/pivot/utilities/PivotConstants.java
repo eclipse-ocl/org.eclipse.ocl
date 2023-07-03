@@ -71,17 +71,6 @@ public interface PivotConstants
 	static final @NonNull String META_ANNOTATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/MetaAnnotation";
 	static final @NonNull String SYSML_ANNOTATION_SOURCE = "http://www.omg.org/spec/SysML";
 	static final @NonNull String EXTENDED_META_DATA_ANNOTATION_SOURCE = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
-	/**
-	 * ETypedElement annotation identifying that a collection is non-free.
-	 */
-	static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
-	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
-
-	/**
-	 * EReference annotation identifying that a Property is cyclic.
-	 */
-	static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Property";
-	static final @NonNull String PROPERTY_SELF = "self";
 
 	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.

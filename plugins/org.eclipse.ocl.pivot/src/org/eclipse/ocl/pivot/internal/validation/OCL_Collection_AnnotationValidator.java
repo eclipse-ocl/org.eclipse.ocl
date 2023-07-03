@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.validation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 
 /**
  *  An annotation validator for http://www.eclipse.org/OCL/Collection annotations.
@@ -23,7 +23,7 @@ public final class OCL_Collection_AnnotationValidator extends BasicEAnnotationVa
 {
 	public static final @NonNull OCL_Collection_AnnotationValidator INSTANCE = new OCL_Collection_AnnotationValidator();
 	public static final @NonNull String ANNOTATION_NAME = "OCL_Collection";
-	public static final @NonNull String ANNOTATION_SOURCE = PivotConstants.COLLECTION_ANNOTATION_SOURCE;
+	public static final @NonNull String ANNOTATION_SOURCE = AnnotationUtil.COLLECTION_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
 	public OCL_Collection_AnnotationValidator() {

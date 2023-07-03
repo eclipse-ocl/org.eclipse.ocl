@@ -41,6 +41,20 @@ public class AnnotationUtil
 	public static final @NonNull String CLASSIFIER_ROLE_LAMBDA = "Lambda";
 
 	/**
+	 * ETypedElement annotation qualification.
+	 */
+	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
+	/**
+	 * ETypedElement annotation identifying that a collection is null-free.
+	 */
+	public static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
+	/**
+	 * ETypedElement annotation identifying the name of the abstract Pivot collection class when other than
+	 * the concrete Bag/OrderedSet/Sequence/Set deduced from ordered/unique attributes.
+	 */
+	public static final @NonNull String COLLECTION_KIND = "kind";
+
+	/**
 	 * EOperation annotation qualifying that an operation is transient (not-cached).
 	 * @since 1.3
 	 */
@@ -110,6 +124,15 @@ public class AnnotationUtil
 	public static final @NonNull String PRECEDENCE_ASSOCIATIVITY = "associativity";
 //	public static final @NonNull String PRECEDENCE_ORDER = "order";
 
+	/**
+	 * EReference annotation qualification.
+	 */
+	public static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Property";
+	/**
+	 * EReference annotation identifying that a Property is cyclic.
+	 */
+	public static final @NonNull String PROPERTY_SELF = "self";
+
 	public static final class EAnnotationComparator implements Comparator<EAnnotation>
 	{
 		public static final @NonNull EAnnotationComparator INSTANCE = new EAnnotationComparator();
@@ -168,6 +191,15 @@ public class AnnotationUtil
 	public static boolean isOriginalNameKey(@Nullable String source, @Nullable String key) {
 		return DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI.equals(source)
 				&& DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME.equals(key);
+	}
+
+	public static @Nullable String removeDetail(@NonNull EModelElement eModelElement, @NonNull String source, @NonNull String key) {
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(source);
+		if (eAnnotation == null) {
+			return null;
+		}
+		EMap<String, String> details = eAnnotation.getDetails();
+		return details.removeKey(key);
 	}
 
 	public static @Nullable String setDetail(@NonNull EModelElement eModelElement, @NonNull String source, @NonNull String key, @Nullable String value) {

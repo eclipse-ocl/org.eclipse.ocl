@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -159,9 +160,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	public static boolean isNullFree(@NonNull ENamedElement eObject) {
 		boolean isNullFree;
-		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+		EAnnotation eAnnotation = eObject.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
-			String isNullFreeValue = eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE);
+			String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
 			if (isNullFreeValue != null) {
 				isNullFree = Boolean.valueOf(isNullFreeValue);
 			}

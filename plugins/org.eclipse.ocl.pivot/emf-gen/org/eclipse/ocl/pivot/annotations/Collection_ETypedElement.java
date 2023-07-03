@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#isNullFree <em>Null Free</em>}</li>
  * </ul>
  *
@@ -29,6 +30,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Collection_ETypedElement extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Kind</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Kind</em>' attribute.
+	 * @see #setKind(String)
+	 * @see org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage#getCollection_ETypedElement_Kind()
+	 * @model
+	 * @generated
+	 */
+	String getKind();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.annotations.Collection_ETypedElement#getKind <em>Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Kind</em>' attribute.
+	 * @see #getKind()
+	 * @generated
+	 */
+	void setKind(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Null Free</b></em>' attribute.
 	 * <!-- begin-user-doc -->

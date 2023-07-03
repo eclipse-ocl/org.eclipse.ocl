@@ -782,7 +782,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<@NonNull EAnnotation> excludedAnnotations) {
-		EAnnotation propertyAnnotation = eObject.getEAnnotation(PivotConstants.PROPERTY_ANNOTATION_SOURCE);
+		EAnnotation propertyAnnotation = eObject.getEAnnotation(AnnotationUtil.PROPERTY_ANNOTATION_SOURCE);
 		if (propertyAnnotation != null) {
 			if (excludedAnnotations == null) {
 				excludedAnnotations = new ArrayList<>();
@@ -842,7 +842,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement, List<@NonNull EAnnotation> excludedAnnotations) {
 		copyNamedElement(pivotElement, eTypedElement);
 		List<@NonNull EAnnotation> excludedAnnotations2 = excludedAnnotations;
-		EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+		EAnnotation eAnnotation = eTypedElement.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
 			excludedAnnotations2 = excludedAnnotations != null ? new ArrayList<>(excludedAnnotations) : new ArrayList<>();
 			excludedAnnotations2.add(eAnnotation);

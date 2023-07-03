@@ -76,7 +76,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		addHandler("http://www.eclipse.org/emf/CDO", new DefaultEAnnotationConverter("filter", "persistent"));
 		addHandler(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
 		addHandler(PivotConstants.IMPORT_ANNOTATION_SOURCE, NullEAnnotationConverter.INSTANCE);
-		addHandler(PivotConstants.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
+		addHandler(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
 		addHandler(AnnotationUtil.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
 	//	addHandler(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
 		addHandler(AnnotationUtil.PARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
@@ -167,12 +167,12 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		public static final @NonNull EAnnotationConverter INSTANCE = new CollectionEAnnotationConverter();
 
 		private CollectionEAnnotationConverter() {
-			super(PivotConstants.COLLECTION_IS_NULL_FREE);
+			super(AnnotationUtil.COLLECTION_IS_NULL_FREE, AnnotationUtil.COLLECTION_KIND);
 		}
 
 		@Override
 		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(key)) {
+			if (AnnotationUtil.COLLECTION_IS_NULL_FREE.equals(key)) {
 				EObject eContainer = eAnnotation.eContainer();
 				assert eContainer != null;
 				Element asContainer = external2AS.getCreated(Element.class, eContainer);
@@ -180,6 +180,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 				if (!(asContainer instanceof org.eclipse.ocl.pivot.Package)) {
 					return null;	// Suppress redundant annotation
 				}
+			}
+			else if (AnnotationUtil.COLLECTION_KIND.equals(key)) {
+				return null;	// Suppress redundant annotation
 			}
 			return super.convert(external2AS, eAnnotation, key, value);
 		}

@@ -35,6 +35,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -43,7 +44,10 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -53,6 +57,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -371,9 +376,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			boolean prevailingCollectionIsNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
 				if (eContainer instanceof ENamedElement) {
-					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
 					if (eAnnotation != null) {
-						String isNullFreeValue = eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE);
+						String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
 						if (isNullFreeValue != null) {
 							prevailingCollectionIsNullFree = Boolean.valueOf(isNullFreeValue);
 						}
@@ -387,17 +392,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					;													// EOperation for an EParameter
 				}
 			}
-			EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 			if (collectionType.isIsNullFree() != prevailingCollectionIsNullFree) {
-				if (eAnnotation == null) {
-					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
-				eTypedElement.getEAnnotations().add(eAnnotation);
+				AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
 			}
 			else {
-				eTypedElement.getEAnnotations().remove(eAnnotation);
+				AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE);
+			}
+			if ((collectionType instanceof BagType) || (collectionType instanceof OrderedSetType) || (collectionType instanceof SequenceType) || (collectionType instanceof SetType)) {
+				AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+			}
+			else {
+				AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND, collectionType.getName());
 			}
 		}
 		else if (pivotType instanceof LambdaType) {
@@ -618,10 +623,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			if (pivotOpposite != null) {
 				if (pivotOpposite == pivotProperty) {		// Workaround Bug 582030
 					eReference.setEOpposite(null);
-					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.PROPERTY_ANNOTATION_SOURCE);
-					eAnnotation.getDetails().put(PivotConstants.PROPERTY_SELF, Boolean.TRUE.toString());
-					eReference.getEAnnotations().add(eAnnotation);
+					AnnotationUtil.setDetail(eReference, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_SELF, Boolean.TRUE.toString());
 				}
 				else if (pivotOpposite.isIsImplicit()) {
 					// FIXME Use EAnnotations for non-navigable opposites as identified by an Association
