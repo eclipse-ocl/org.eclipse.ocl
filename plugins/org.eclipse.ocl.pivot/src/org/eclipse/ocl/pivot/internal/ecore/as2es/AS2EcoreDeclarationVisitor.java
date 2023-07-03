@@ -744,8 +744,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (implementationClass != null) {
 			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IMPLEMENTATION, implementationClass);
 		}
+		if (pivotOperation.isIsInvalidating()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_INVALIDATING, "true");
+		}
 		if (pivotOperation.isIsTransient()) {
 			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, "true");
+		}
+		if (pivotOperation.isIsValidating()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_VALIDATING, "true");
 		}
 		Precedence precedence = pivotOperation.getPrecedence();
 		if (precedence != null) {

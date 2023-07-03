@@ -64,9 +64,17 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String OPERATION_IS_CONSTRAINT = "isConstraint";		// XXX replace originalName
 	/**
+	 * 	 The operation is: true - invalidating (may source an invalid), blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_INVALIDATING = "isInvalidating";
+	/**
 	 * 	 The operation is: true - transient (not-cached), blank/false - regular.
 	 */
 	public static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
+	/**
+	 * 	 The operation is: true - validating (may absorb an invalid), blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_VALIDATING = "isValidating";
 	/**
 	 * 	 The operation is: fully qualified implementation class name.
 	 */

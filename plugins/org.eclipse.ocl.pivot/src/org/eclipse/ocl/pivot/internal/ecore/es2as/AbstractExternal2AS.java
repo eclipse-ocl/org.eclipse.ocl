@@ -248,8 +248,16 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			// XXX	assert asOperation instanceof Iteration;
 				return null;
 			}
+			else if (AnnotationUtil.OPERATION_IS_INVALIDATING.equals(key)) {
+				asOperation.setIsInvalidating((value != null) && Boolean.parseBoolean(value));
+				return null;
+			}
 			else if (AnnotationUtil.OPERATION_IS_TRANSIENT.equals(key)) {
 				asOperation.setIsTransient((value != null) && Boolean.parseBoolean(value));
+				return null;
+			}
+			else if (AnnotationUtil.OPERATION_IS_VALIDATING.equals(key)) {
+				asOperation.setIsValidating((value != null) && Boolean.parseBoolean(value));
 				return null;
 			}
 			else if (AnnotationUtil.OPERATION_PRECEDENCE.equals(key)) {

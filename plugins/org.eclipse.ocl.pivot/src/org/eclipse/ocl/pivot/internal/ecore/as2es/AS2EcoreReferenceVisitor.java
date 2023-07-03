@@ -544,6 +544,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
 		EClassifier eDataType = getCreated(EClassifier.class, pivotDataType);
+		if (eDataType instanceof EClass) {
+			resolveSuperClasses((EClass)eDataType, pivotDataType);
+		}
 		return eDataType;
 	}
 
