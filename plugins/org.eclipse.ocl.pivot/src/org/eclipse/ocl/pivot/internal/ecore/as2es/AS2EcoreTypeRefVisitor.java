@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
@@ -336,13 +337,15 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 	 */
 	@Override
 	public EObject visitTupleType(@NonNull TupleType pivotType) {
-		EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
-		if (eClassifier != null) {
-			return eClassifier;
+		EClass tupleEClass = context.getTupleEClass(pivotType);
+		if (tupleEClass.getETypeParameters().isEmpty()) {
+			return tupleEClass;
 		}
-		else {
-			return OCLstdlibPackage.Literals.OCL_TUPLE;
-		}
+		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+		eGenericType.setEClassifier(tupleEClass);
+		List<@NonNull TemplateParameter> templateParameters = context.gatherTemplateParameters(pivotType);
+		safeVisitAll(eGenericType.getETypeArguments(), templateParameters);
+		return eGenericType;
 	}
 
 	@Override

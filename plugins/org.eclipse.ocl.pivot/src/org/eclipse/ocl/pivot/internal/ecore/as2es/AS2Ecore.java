@@ -24,8 +24,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -55,9 +57,16 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -72,6 +81,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class AS2Ecore extends AbstractConversion
@@ -402,6 +412,11 @@ public class AS2Ecore extends AbstractConversion
 	 */
 	private /*@LazyNonNull*/ Map<@NonNull EPackage, @NonNull List<@NonNull EClass>> ePackage2syntheticClasses = null;
 
+	/**
+	 * First EPackage - used for sythetics.
+	 */
+	private /*@LazyNonNull*/ EPackage eRootPackage = null;
+
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		super(environmentFactory);
 		this.options = options != null ? options : new HashMap<>();
@@ -455,8 +470,25 @@ public class AS2Ecore extends AbstractConversion
 					if (ePackage2syntheticClassifiers2 != null) {
 						EPackage ePackage = (EPackage)eObject;
 						List<@NonNull EClass> syntheticClasses = ePackage2syntheticClassifiers2.get(ePackage);
-						Collections.sort(syntheticClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-						ePackage.getEClassifiers().addAll(syntheticClasses);
+						if (syntheticClasses != null) {
+							Collections.sort(syntheticClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+							int entryCount = 0;
+							int lambdaCount = 0;
+							int tupleCount = 0;
+							for (@NonNull EClass eClass : syntheticClasses) {
+								String name = eClass.getName();
+								if (name.startsWith("Entry")) {
+									eClass.setName("_Entry_" + ++entryCount);
+								}
+								else if (name.startsWith("Lambda")) {
+									eClass.setName("_Lambda_" + ++lambdaCount);
+								}
+								if (name.startsWith("Tuple")) {
+									eClass.setName("_Tuple_" + ++tupleCount);
+								}
+							}
+							ePackage.getEClassifiers().addAll(syntheticClasses);
+						}
 					}
 				}
 			}
@@ -482,6 +514,41 @@ public class AS2Ecore extends AbstractConversion
 			errors = errors2 = new ArrayList<>();
 		}
 		errors2.add(new XMIException(message));
+	}
+
+	/**
+	 * Populate templateParameters with an ordered set of the template paramters transitively referenced by type.
+	 */
+	public @NonNull List<@NonNull TemplateParameter> gatherTemplateParameters(@NonNull Type type) {
+		UniqueList<@NonNull TemplateParameter> templateParameters = new UniqueList<>();
+		gatherTemplateParameters(type, templateParameters);
+		return templateParameters;
+	}
+
+	/**
+	 * Populate templateParameters with an ordered set of the template paramters transitovely referenced by type.
+	 */
+	private void gatherTemplateParameters(@NonNull Type type, @NonNull UniqueList<@NonNull TemplateParameter> templateParameters) {
+		if (type instanceof TemplateParameter) {
+			templateParameters.add((TemplateParameter) type);
+		}
+		else {
+			if (type instanceof TemplateableElement) {
+				for (@NonNull TemplateBinding templateBinding : PivotUtil.getOwnedBindings((TemplateableElement)type)) {
+					for (@NonNull TemplateParameterSubstitution templateParameterSubstitution : PivotUtil.getOwnedSubstitutions(templateBinding)) {
+						Element actual = PivotUtil.getActual(templateParameterSubstitution);
+						if (actual instanceof Type) {
+							gatherTemplateParameters((Type)actual, templateParameters);
+						}
+					}
+				}
+			}
+			if (type instanceof TupleType) {		// TupleType is not really a TemplateableElement
+				for (@NonNull Property part : PivotUtil.getOwnedProperties((TupleType)type)) {
+					gatherTemplateParameters(PivotUtil.getType(part), templateParameters);
+				}
+			}
+		}
 	}
 
 	public <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
@@ -513,17 +580,17 @@ public class AS2Ecore extends AbstractConversion
 		return ecoreURI;
 	}
 
-	public @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
+	public @NonNull EClass getEntryEClass(@NonNull MapType pivotType) {
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append("_Entry_");
+		s.append("Entry_");
 		s.append(keyType instanceof DataType ? "D" : "C");
 		s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
 		s.append(valueType instanceof DataType ? "D" : "C");
 		s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
 		String entryName = s.toString();
-		List<@NonNull EClass> syntheticClasses = getSyntheticClasses(ePackage);
+		List<@NonNull EClass> syntheticClasses = getSyntheticClasses();
 		EClass eClass = NameUtil.getENamedElement(syntheticClasses, entryName);
 		if (eClass != null) {
 			return eClass;
@@ -565,19 +632,24 @@ public class AS2Ecore extends AbstractConversion
 		return eClass;
 	}
 
-	public @NonNull EClass getLambdaEClass(@NonNull EPackage ePackage, @NonNull LambdaType pivotType) {
+
+	public @NonNull EPackage getERootPackage() {
+		return ClassUtil.nonNullState(eRootPackage);
+	}
+
+	public @NonNull EClass getLambdaEClass(@NonNull LambdaType pivotType) {
 		Type contextType = PivotUtil.getContextType(pivotType);
 		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
 		Type resultType = PivotUtil.getResultType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append("_Lambda_");
+		s.append("Lambda_");
 		s.append(contextType instanceof DataType ? "D" : "C");
 		for (Type parameterType : parameterTypes) {
 			s.append(parameterType instanceof DataType ? "D" : "C");
 		}
 		s.append(resultType instanceof DataType ? "D" : "C");
 		String lambdaName = s.toString();
-		List<@NonNull EClass> syntheticClasses = getSyntheticClasses(ePackage);
+		List<@NonNull EClass> syntheticClasses = getSyntheticClasses();
 		EClass eClass = NameUtil.getENamedElement(syntheticClasses, lambdaName);
 		if (eClass != null) {
 			return eClass;
@@ -612,7 +684,8 @@ public class AS2Ecore extends AbstractConversion
 		return primitiveTypesUriPrefix;
 	}
 
-	private @NonNull List<@NonNull EClass> getSyntheticClasses(@NonNull EPackage ePackage) {
+	private @NonNull List<@NonNull EClass> getSyntheticClasses() {
+		EPackage ePackage = getERootPackage();
 		if (ePackage2syntheticClasses == null) {
 			ePackage2syntheticClasses = new HashMap<>();
 		}
@@ -622,6 +695,56 @@ public class AS2Ecore extends AbstractConversion
 			ePackage2syntheticClasses.put(ePackage, syntheticClasses);
 		}
 		return syntheticClasses;
+	}
+
+	public @NonNull EClass getTupleEClass( @NonNull TupleType pivotType) {
+	//	Type keyType = PivotUtil.getKeyType(pivotType);
+	//	Type valueType = PivotUtil.getValueType(pivotType);
+	//	StringBuilder s = new StringBuilder();
+	//	s.append("_Lambda_");
+	//	s.append(keyType instanceof DataType ? "D" : "C");
+	//	s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
+	//	s.append(valueType instanceof DataType ? "D" : "C");
+	//	s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
+		String tupleName = AS2Moniker.toString(pivotType);
+		List<@NonNull EClass> syntheticClasses = getSyntheticClasses();
+		EClass eClass = NameUtil.getENamedElement(syntheticClasses, tupleName);
+		if (eClass != null) {
+			return eClass;
+		}
+		List<@NonNull TemplateParameter> templateParameters = gatherTemplateParameters(pivotType);
+		templateParameters.size();
+		eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName(tupleName);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_TUPLE);
+		syntheticClasses.add(eClass);
+		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
+		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
+		//
+		for (Property asProperty : PivotUtil.getOwnedProperties(pivotType)) {
+			Type type = asProperty.getType();
+			ENamedElement eClassifierOrTypeParameter = getCreated(ENamedElement.class, type);
+			EStructuralFeature eFeature = eClassifierOrTypeParameter instanceof EDataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
+			eFeature.setName(asProperty.getName());
+			if (eClassifierOrTypeParameter instanceof EClassifier) {
+				setEType(eFeature, eClassifierOrTypeParameter);
+			}
+			else if (eClassifierOrTypeParameter instanceof ETypeParameter) {
+				ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+				eTypeParameter.setName(((ETypeParameter)eClassifierOrTypeParameter).getName());
+				eTypeParameters.add(eTypeParameter);
+				EGenericType eGenericPartType = EcoreFactory.eINSTANCE.createEGenericType();
+				eGenericPartType.setETypeParameter(eTypeParameter);
+				eFeature.setEGenericType(eGenericPartType);
+			}
+			eFeature.setLowerBound(asProperty.isIsRequired() ? 1 : 0);
+			eFeature.setUpperBound(1);
+			eStructuralFeatures.add(eFeature);
+		}
+		//
+		return eClass;
 	}
 
 	/**
@@ -695,6 +818,12 @@ public class AS2Ecore extends AbstractConversion
 			}
 		}
 	}
+	public void setEPackage(@NonNull EPackage ePackage) {
+		if (eRootPackage  == null) {
+			eRootPackage = ePackage;
+		}
+	}
+
 	public void setEType(@NonNull ETypedElement eTypedElement, @NonNull EObject eObject) {
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);

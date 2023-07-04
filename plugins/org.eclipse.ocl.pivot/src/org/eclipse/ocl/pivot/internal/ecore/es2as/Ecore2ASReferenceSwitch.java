@@ -425,9 +425,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	public @NonNull TypedElement caseETypedElement(ETypedElement eTypedElement) {
 		assert eTypedElement != null;
 		TypedElement pivotElement = converter.getCreated(TypedElement.class, eTypedElement);
-		if (pivotElement == null) {
-			return oclInvalidProperty;
-		}
+	//	if (pivotElement == null) {
+		//	pivotElement = (TypedElement)doInPackageSwitch(eTypedElement);
+		//	if (pivotElement == null) {
+	//			return oclInvalidProperty;
+		//	}
+	//	}
 		boolean isRequired;
 		Type pivotType;
 		EGenericType eType = eTypedElement.getEGenericType();
@@ -436,6 +439,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 			boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
 			boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
+			boolean isTuple = AnnotationUtil.CLASSIFIER_ROLE_TUPLE.equals(role);
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
 			if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map
@@ -489,6 +493,32 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				assert contextType != null;
 				assert resultType != null;
 				pivotType = standardLibrary.getLambdaType(contextType, parameterTypes, resultType, null);
+			}
+			else if (isTuple) {
+				Collection<@NonNull Property> parts = new ArrayList<>();
+				for (EStructuralFeature eFeature : ((EClass)eClassifier).getEStructuralFeatures()) {
+					String partName = eFeature.getName();
+					Type partType = (Type)doInPackageSwitch(eFeature);
+					Property property = PivotUtil.createProperty(partName, partType);
+					parts.add(property);
+				}
+				pivotType = standardLibrary.getTupleType("Tuple", parts , null);
+
+
+
+				if (upper > 1) {
+					boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
+					boolean isOrdered = eTypedElement.isOrdered();
+					boolean isUnique = eTypedElement.isUnique();
+					IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
+					UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+					CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+					pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
+				}
+
+
+
+				isRequired = eTypedElement.isRequired();
 			}
 			else {
 				pivotType = converter.getASType(eType);

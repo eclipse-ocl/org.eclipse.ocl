@@ -28,7 +28,7 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String CLASSIFIER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Classifier";
 	/**
-	 * 	 The classifier role may be "Entry" or "Lambda" or blank.
+	 * 	 The classifier role may be "Entry" or "Lambda" or "Tuple" or blank.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE = "role";
 	/**
@@ -36,9 +36,13 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE_ENTRY = "Entry";
 	/**
-	 * 	 A LambdaXXXX<C, P..., R> types a Lambda wth Context, Paramter(s) and Result.
+	 * 	 A LambdaXXXX<C, P..., R> types a Lambda with Context, Paramter(s) and Result.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE_LAMBDA = "Lambda";
+	/**
+	 * 	 A TupleXXXX<P...> types a Tuple with parts.
+	 */
+	public static final @NonNull String CLASSIFIER_ROLE_TUPLE = "Tuple";
 
 	/**
 	 * ETypedElement annotation qualification.

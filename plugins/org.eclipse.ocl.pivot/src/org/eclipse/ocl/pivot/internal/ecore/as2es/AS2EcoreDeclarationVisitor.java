@@ -764,6 +764,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public @NonNull EPackage visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		@SuppressWarnings("null")
 		@NonNull EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		context.setEPackage(ePackage);
 		copyNamedElement(ePackage, pivotPackage);
 		context.defer(pivotPackage);		// Defer delegate annotation analysis
 		if (pivotPackage.eIsSet(PivotPackage.Literals.PACKAGE__NS_PREFIX)) {
