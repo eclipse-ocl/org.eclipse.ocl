@@ -139,34 +139,44 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="_Entry_COCO" instanceClassName="java.util.Map$Entry"
+  <eClassifiers xsi:type="ecore:EClass" name="_Entry_1" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key">
-      <eGenericType eTypeParameter="#//_Entry_COCO/K"/>
+      <eGenericType eTypeParameter="#//_Entry_1/K"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value">
-      <eGenericType eTypeParameter="#//_Entry_COCO/V"/>
+      <eGenericType eTypeParameter="#//_Entry_1/V"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Entry_CRCR" instanceClassName="java.util.Map$Entry"
+  <eClassifiers xsi:type="ecore:EClass" name="_Entry_2" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1">
-      <eGenericType eTypeParameter="#//_Entry_CRCR/K"/>
+      <eGenericType eTypeParameter="#//_Entry_2/K"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1">
-      <eGenericType eTypeParameter="#//_Entry_CRCR/V"/>
+      <eGenericType eTypeParameter="#//_Entry_2/V"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CC" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_1" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_2" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="_Tuple_1" abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eTypeParameters name="T2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="first" lowerBound="1">
+      <eGenericType eTypeParameter="#//_Tuple_1/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="second" lowerBound="1">
+      <eGenericType eTypeParameter="#//_Tuple_1/T2"/>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>
