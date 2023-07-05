@@ -153,7 +153,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEGenericType(EGenericType eGenericType) {
+	public Object caseEGenericType(EGenericType eGenericType) {		// XXX cf doEGenericType
 		assert eGenericType != null;
 		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 		if (eTypeParameter != null) {
@@ -173,6 +173,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				for (int i = 0; i < iSize; i++) {
 					EGenericType eTypeArgument = eTypeArguments.get(i);
 					Type asActualType = (Type)doInPackageSwitch(eTypeArgument);
+					assert asActualType != null;
 					TemplateParameter asFormalParameter = asFormalParameters.get(i);
 					bindings.put(asFormalParameter, asActualType);
 				}
@@ -428,12 +429,13 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return oclInvalidProperty;
 		}
-		if (eTypedElement.getEGenericType() == null) {					// Null for Operation returning void
+		EGenericType eGenericType = eTypedElement.getEGenericType();
+		if (eGenericType == null) {					// Null for Operation returning void
 			pivotElement.setType(standardLibrary.getOclVoidType());
 			pivotElement.setIsRequired(false);
 			return pivotElement;
 		}
-		else if (doETypedElement(pivotElement, eTypedElement, null)) {
+		else if (doEGenericType(pivotElement, eGenericType, null)) {
 			return pivotElement;
 		}
 		else {
@@ -485,73 +487,69 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		}
 	}
 
-	public Object doInPackageSwitch(EObject eObject) {
-		int classifierID = eObject.eClass().getClassifierID();
-		return doSwitch(classifierID, eObject);
-	}
-
-	protected boolean doETypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement, @Nullable Map<ETypeParameter, @NonNull EGenericType> parameter2argument) {
-		EGenericType eType = eTypedElement.getEGenericType();
-		assert eTypedElement == eType.eContainer();			// XXX change call parameter
-		assert eType != null;				// Null for Operation returning void handled by caller
-		boolean isRequired;
+	protected boolean doEGenericType(@NonNull TypedElement pivotElement, @NonNull EGenericType eGenericType, @Nullable Map<@NonNull ETypeParameter, @NonNull EGenericType> parameter2argument) {
+		// Null eGenericType for Operation returning void handled by caller;
+		ETypedElement eTypedElement = (ETypedElement)eGenericType.eContainer();
+		assert eTypedElement != null;
+		//
+		// Traverse known Lambda parameter/argument bindings
+		//
 		if (parameter2argument != null) {
-			for (ETypeParameter eTypeParameter; (eTypeParameter = eType.getETypeParameter()) != null; ) {
-				assert eType.getEClassifier() == null;
+			for (ETypeParameter eTypeParameter; (eTypeParameter = eGenericType.getETypeParameter()) != null; ) {
+				assert eGenericType.getEClassifier() == null;
 				EGenericType eTypeArgument = parameter2argument.get(eTypeParameter);
 				if (eTypeArgument != null) {
-					eType = eTypeArgument;
+					eGenericType = eTypeArgument;
 				}
 				else {
 					break;
 				}
 			}
 		}
-		Type pivotType = null;
-		assert eType != null;
-		EClassifier eClassifier = eType.getEClassifier();
-		ETypeParameter eTypeParameter = eType.getETypeParameter();
+		assert eGenericType != null;
+		EClassifier eClassifier = eGenericType.getEClassifier();
+		//
+		//	Resolve an ETypeParameter to its already created element.
+		//
+		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 		if (eTypeParameter != null) {
 			assert eClassifier == null;
-			pivotType = converter.getCreated(Type.class, eTypeParameter);
-		//	EGenericType eTypeArgument = parameter2argument != null ? parameter2argument.get(eTypeParameter) : null;
-		//	if (eTypeArgument != null) {			// XXX loop
-		//		eType = eTypeArgument;
-		//		eClassifier = eTypeArgument.getEClassifier();
-		//		eTypeParameter = eTypeArgument.getETypeParameter();
-		//	}
+			TemplateParameter asTemplateParameter = converter.getCreated(TemplateParameter.class, eTypeParameter);
+			assert asTemplateParameter != null;
+			setTypeAndMultiplicity(pivotElement, asTemplateParameter, eTypedElement);
+			return true;
 		}
-		if (pivotType == null) {
-			assert eClassifier != null;
-			List<EGenericType> eTypeArguments1 = eType.getETypeArguments();
-			List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
-			int iSize = eTypeArguments1.size();
-			assert iSize == eTypeParameters.size();
-			if (iSize > 0) {
-				if (parameter2argument == null) {
-					parameter2argument = new HashMap<>();
-				}
-				for (int i = 0; i < iSize; i++) {
-					parameter2argument.put(eTypeParameters.get(i), eTypeArguments1.get(i));
-				}
+		assert eClassifier != null;
+		List<@NonNull EGenericType> eTypeArguments1 = ClassUtil.nullFree(eGenericType.getETypeArguments());
+		List<@NonNull ETypeParameter> eTypeParameters = ClassUtil.nullFree(eClassifier.getETypeParameters());
+		int iSize = eTypeArguments1.size();
+		assert iSize == eTypeParameters.size();
+		if (iSize > 0) {
+			if (parameter2argument == null) {
+				parameter2argument = new HashMap<>();
+			}
+			for (int i = 0; i < iSize; i++) {
+				parameter2argument.put(eTypeParameters.get(i), eTypeArguments1.get(i));
 			}
 		}
+		Type pivotType = null;
+		boolean isRequired;
+		int lower = eTypedElement.getLowerBound();
+		int upper = eTypedElement.getUpperBound();
 		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 		boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
 		boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
 		boolean isTuple = AnnotationUtil.CLASSIFIER_ROLE_TUPLE.equals(role);
-		int lower = eTypedElement.getLowerBound();
-		int upper = eTypedElement.getUpperBound();
 		if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map
-			pivotType = converter.getCreated(Type.class, eType);
+			pivotType = converter.getCreated(Type.class, eGenericType);
 			assert converter.isEntryClass(eClassifier);
 			assert pivotType == null;
 			assert eClassifier != null;
 			isRequired = true;
-			pivotType = getImplicitEntryClassMapType(eType);
+			pivotType = getImplicitEntryClassMapType(eGenericType);
 		}
 		else if ((lower == 0) && (upper == -1) && converter.isEntryClass(eClassifier)) {
-			org.eclipse.ocl.pivot.Class pivotEntryType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eType);
+			org.eclipse.ocl.pivot.Class pivotEntryType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eGenericType);
 			assert converter.isEntryClass(eClassifier);
 			assert pivotEntryType != null;
 			assert eClassifier != null;
@@ -562,12 +560,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 		}
 		else if (/*(lower == 0) &&*/ (upper == 1) && isLambda) {
-			pivotType = converter.getCreated(Type.class, eType);
+			pivotType = converter.getCreated(Type.class, eGenericType);
 			assert !converter.isEntryClass(eClassifier);
 			assert pivotType == null;
 			assert eClassifier != null;
 			isRequired = /*(upper == 1) &&*/ (lower >= 1);
-			List<EGenericType> eTypeArguments2 = eType.getETypeArguments();
+			List<EGenericType> eTypeArguments2 = eGenericType.getETypeArguments();
 			final int size = eTypeArguments2.size();
 			assert size >= 2;
 			Type contextType = null;
@@ -599,31 +597,20 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			Collection<@NonNull Property> parts = new ArrayList<>();
 			for (EStructuralFeature eFeature : ((EClass)eClassifier).getEStructuralFeatures()) {
 				String partName = eFeature.getName();
+				assert partName != null;
 				Property property = PivotUtil.createProperty(partName, null);
-				boolean ok = doETypedElement(property, eFeature, parameter2argument);
+				EGenericType eGenericPartType = eFeature.getEGenericType();
+				assert eGenericPartType != null;
+				boolean ok = doEGenericType(property, eGenericPartType, parameter2argument);
 				assert ok;
 				parts.add(property);
 			}
 			pivotType = standardLibrary.getTupleType("Tuple", parts , null);
-
-
-
-			if (upper > 1) {
-				boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
-				boolean isOrdered = eTypedElement.isOrdered();
-				boolean isUnique = eTypedElement.isUnique();
-				IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
-				UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-				CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
-				pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
-			}
-
-
-
-			isRequired = eTypedElement.isRequired();
+			pivotType = setTypeAndMultiplicity(pivotElement, pivotType, eTypedElement);
+			return true;
 		}
 		else {
-			pivotType = converter.getASType(eType);
+			pivotType = converter.getASType(eGenericType);
 			assert pivotType != null;
 			if (upper == 1) {
 				if (lower == 0) {
@@ -688,6 +675,11 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		pivotElement.setType(pivotType);
 		pivotElement.setIsRequired(isRequired);
 		return true;
+	}
+
+	public Object doInPackageSwitch(EObject eObject) {
+		int classifierID = eObject.eClass().getClassifierID();
+		return doSwitch(classifierID, eObject);
 	}
 
 	public <T extends Element> void doSwitchAll(Class<T> pivotClass, Collection<T> pivotElements, List<? extends EObject> eObjects) {
@@ -767,5 +759,46 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 		}
 		return null;
+	}
+
+	private @NonNull Type setTypeAndMultiplicity(@NonNull TypedElement asTypedElement, @NonNull Type asElementType, @NonNull ETypedElement eTypedElement) {
+		int upper = eTypedElement.getUpperBound();
+		if (upper == 1) {
+			boolean isRequired = eTypedElement.isRequired();
+			asTypedElement.setType(asElementType);
+			asTypedElement.setIsRequired(isRequired);
+			return asElementType;
+		}
+		else {
+			int lower = eTypedElement.getLowerBound();
+			boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
+			boolean isOrdered = eTypedElement.isOrdered();
+			boolean isUnique = eTypedElement.isUnique();
+			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
+			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+			String kind = AnnotationUtil.getEAnnotationValue(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+			CollectionType genericCollectionType = null;
+			if (kind != null) {
+				if ("Collection".equals(kind)) {
+					genericCollectionType = standardLibrary.getCollectionType();
+				}
+				else if ("OrderedCollection".equals(kind)) {
+					genericCollectionType = standardLibrary.getOrderedCollectionType();
+				}
+				else if ("UniqueCollection".equals(kind)) {
+					genericCollectionType = standardLibrary.getUniqueCollectionType();
+				}
+				else {
+					converter.error("Unsupported " + AnnotationUtil.COLLECTION_ANNOTATION_SOURCE + "." + AnnotationUtil.COLLECTION_KIND + "\"" + kind + "\"");
+				}
+			}
+			if (genericCollectionType == null) {
+				genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+			}
+			Type asType = standardLibrary.getCollectionType(genericCollectionType, asElementType, isNullFree, lowerValue, upperValue);
+			asTypedElement.setType(asType);
+			asTypedElement.setIsRequired(true);
+			return asType;
+		}
 	}
 }
