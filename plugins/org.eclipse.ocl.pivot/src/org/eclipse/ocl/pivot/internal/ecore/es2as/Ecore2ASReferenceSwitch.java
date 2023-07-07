@@ -585,6 +585,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			asTypedElement.setIsRequired(true);
 		} */
 		else {
+		//	assert eGenericType.getETypeArguments().isEmpty();
 			Type asElementType = converter.getASType(eGenericType);
 			assert asElementType != null;
 			setTypeAndMultiplicity(asTypedElement, asElementType, eTypedElement);
@@ -593,6 +594,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	protected @NonNull Type doEGenericType(@NonNull EGenericType eGenericType) {
+		Type asType2 = converter.getCreated(Type.class, eGenericType);
+		if (asType2 != null) {
+			return asType2;
+		}
 		// Null eGenericType for Operation returning void handled by caller;
 	//	ETypedElement eTypedElement = (ETypedElement)eGenericType.eContainer();
 	//	assert eTypedElement != null;
@@ -657,12 +662,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			asTypedElement.setIsRequired(true);
 		} */
 		else {
-
-			assert eClassifier != null;
 			Type asType = (Type)doInPackageSwitch(eClassifier);
 			assert asType != null;
-		//	List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
-		//	final int iSize = eTypeArguments.size();
 			if (iSize > 0) {
 				TemplateableElement asTemplateableElement = (TemplateableElement)asType;
 				TemplateSignature asSignature = asTemplateableElement.getOwnedSignature();
@@ -678,15 +679,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 				asType = standardLibrary.getSpecializedType(asType, bindings);
 			}
-			return asType;  //xxx typeArguments
-
-
-
-
-
-		//	Type asElementType = converter.getASType(eGenericType);
-		//	assert asElementType != null;
-		//	return asElementType;
+			return asType;
 		}
 	}
 
@@ -848,15 +841,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				if (converter.cannotBeOptional(eTypedElement)) {
 					lower = 1;
 					Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
-				}
-				else {
-					EClassifier eClassifier = eTypedElement.getEGenericType().getEClassifier();
-					if (eClassifier instanceof EDataType) {
-						Class<?> instanceClass = eClassifier.getInstanceClass();
-						if ((instanceClass == Boolean.class) && (asElementType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
-							asElementType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
-						}
-					}
 				}
 			}
 			asTypedElement.setType(asElementType);

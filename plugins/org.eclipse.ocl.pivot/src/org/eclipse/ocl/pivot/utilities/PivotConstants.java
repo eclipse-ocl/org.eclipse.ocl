@@ -59,12 +59,6 @@ public interface PivotConstants
 	 * the prefix.
 	 */
 	static final @NonNull String PRIMITIVE_TYPES_URI_PREFIX = "PRIMITIVE_TYPES_URI_PREFIX";
-
-	/**
-	 * EPackage annotation identifying models that must be imported.
-	 * Each detail is an alias-name, import uri pair.
-	 */
-	static final @NonNull String IMPORT_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Import";
 	/**
 	 * @since 1.4
 	 */

@@ -631,12 +631,18 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	public <@NonNull T extends TypedElementCS> T refreshTypedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull TypedElement object) {
 		T csElement = refreshNamedElement(csClass, csEClass, object);
 		final Type type = object.getType();
-		final Type elementType;
+		//
+		//	Determine the outer (decorated) Ecore-style type.
+		//
+		Type elementType;
+		// An EList is an element class with collection decorations for one of the four concrete collections
+		boolean isEList = (type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType());
+		// An EMap is an entry class with collection decorations
 		boolean isEMap = (type instanceof MapType) && (((MapType)type).getEntryClass() != null);
 		if (isEMap) {
 			elementType = ((MapType)type).getEntryClass();
 		}
-		else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
+		else if (isEList) {
 			PivotUtil.debugWellContainedness(type);
 			elementType = ((CollectionType)type).getElementType();
 		}
@@ -646,6 +652,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		else {
 			elementType = type;
 		}
+		//
+		//	Replace ecore types by their OCL equivalents
+		//
 		if (elementType != null) {
 			PivotUtil.debugWellContainedness(elementType);
 			TypedRefCS typeRef = visitReference(TypedRefCS.class, elementType, null);
@@ -668,7 +677,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
 				refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
 			}
-			else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
+			else if (isEList) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
 				lower = collectionType.getLower().intValue();

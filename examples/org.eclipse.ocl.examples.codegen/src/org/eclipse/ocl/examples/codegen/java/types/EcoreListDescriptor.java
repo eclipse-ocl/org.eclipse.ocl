@@ -40,6 +40,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 		this.standardLibrary = standardLibrary;
 		this.elementType = elementType;
 		this.ecoreElementTypeDescriptor = ecoreElementTypeDescriptor;
+		assert !ecoreElementTypeDescriptor.isPrimitive();
 	}
 
 	@Override

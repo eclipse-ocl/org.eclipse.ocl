@@ -670,7 +670,8 @@ public class PivotUtil
 	 * @since 1.16
 	 */
 	public static @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EDataType eDataType) {
-		boolean isBoolean = eDataType.getInstanceClass() == Boolean.class;
+		Class<?> instanceClass = eDataType.getInstanceClass();
+		boolean isBoolean = (instanceClass == Boolean.class) || (instanceClass == boolean.class);
 		PrimitiveType pivotType = isBoolean ? PivotFactory.eINSTANCE.createBooleanType() : PivotFactory.eINSTANCE.createPrimitiveType();
 		pivotType.setName(eDataType.getName());
 		((PivotObjectImpl)pivotType).setESObject(eDataType);
@@ -2188,7 +2189,7 @@ public class PivotUtil
 	@Deprecated /* @deprecated not used - try CSResource.setParserContext */
 	public static boolean setParserContext(@NonNull CSResource csResource, @NonNull EObject eObject, Object... unusedParameters) throws ParserException {
 		EnvironmentFactoryAdapter adapter = OCLInternal.adapt(csResource);
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) adapter.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = adapter.getEnvironmentFactory();
 		Element pivotElement = environmentFactory.getTechnology().getParseableElement(environmentFactory, eObject);
 		if (pivotElement == null) {
 			return false;

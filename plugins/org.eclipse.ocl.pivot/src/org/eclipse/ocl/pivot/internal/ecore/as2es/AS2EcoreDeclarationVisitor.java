@@ -83,7 +83,6 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
@@ -377,6 +376,53 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eAnnotation;
 	}
 
+	/**
+	 * Return all namespaces imported by pivotModel.
+	 *
+	 * Accurately identifying whether a reference is from an Ecore/OCL specialization is too hard.
+	 *
+	private @NonNull Set<@NonNull Namespace> resolveImportedNamespaces(@NonNull Model pivotModel) {
+		Set<@NonNull Namespace> importedNamespaces = new HashSet<>();
+		Map<EObject, Collection<Setting>> eObject2settings = EcoreUtil.ExternalCrossReferencer.find(pivotModel);
+		for (Map.Entry<EObject, Collection<Setting>> entry : eObject2settings.entrySet()) {
+			EObject eTarget = entry.getKey();
+			for (EObject eContainer1 = eTarget; eContainer1 != null; eContainer1 = eContainer1.eContainer()) {
+				if ((eContainer1 instanceof org.eclipse.ocl.pivot.Package) || (eContainer1 instanceof Model)) {
+					Namespace importedNamespace = (Namespace)eContainer1;
+					for (Setting setting : entry.getValue()) {
+						EObject eSource = setting.getEObject();
+						EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+						for (EObject eContainer2 = eSource; eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
+							if ((eContainer2 instanceof VariableDeclaration) && eStructuralFeature == PivotPackage.Literals.TYPED_ELEMENT__TYPE ) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							}
+							else if ((eContainer2 instanceof TemplateParameterSubstitution) && eStructuralFeature == PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL ) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							}
+						/*	else if ((eContainer2 instanceof VariableDeclaration) /*|| (eContainer2 instanceof OCLExpression) || (eContainer2 instanceof ExpressionInOCL)* /) {
+								importedNamespaces.add(importedNamespace);
+								break;
+							} * /
+							else if ((eContainer2 instanceof Feature)) {
+								if (eTarget instanceof Element) {
+									EObject esObject = ((Element)eTarget).getESObject();
+									if ((esObject != EcorePackage.Literals.EBIG_DECIMAL) && (esObject != EcorePackage.Literals.EBIG_DECIMAL) && (esObject != EcorePackage.Literals.EBOOLEAN) && (esObject != EcorePackage.Literals.EBOOLEAN_OBJECT) && (esObject != EcorePackage.Literals.ESTRING)) {
+										importedNamespaces.add(importedNamespace);
+									}
+								}
+								break;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		return importedNamespaces;
+	} */
+
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {
 		for (Element pivotObject : pivotObjects) {
 			@SuppressWarnings("unchecked")
@@ -639,20 +685,18 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		List<Import> imports = pivotModel.getOwnedImports();
 		if (imports.size() > 0) {
-			if (imports.size() > 0) {
+			if (imports.size() > 1) {
 				imports = new ArrayList<Import>(imports);
-				Collections.sort(imports, new Comparator<Import>()
-				{
-					@Override
-					public int compare(Import o1, Import o2) {
-						String n1 = o1.getName();
-						String n2 = o2.getName();
-						if (n1 == null) n1 = "";
-						if (n2 == null) n2 = "";
-						return n1.compareTo(n2);
-					}
-				}
-						);
+				Collections.sort(imports, new Comparator<Import>() {
+						@Override
+						public int compare(Import o1, Import o2) {
+							String n1 = o1.getName();
+							String n2 = o2.getName();
+							if (n1 == null) n1 = "";
+							if (n2 == null) n2 = "";
+							return n1.compareTo(n2);
+						}
+					});
 			}
 			URI ecoreURI = context.getEcoreURI();
 			int noNames = 0;
@@ -665,9 +709,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					}
 				}
 			}
+		//	Set<@NonNull Namespace> resolvedImportedNamespaces = null;
+		//	if (context.getOptions().get(AS2Ecore.OPTION_OPTIMIZE_IMPORTS) == Boolean.TRUE) {
+		//		resolvedImportedNamespaces = resolveImportedNamespaces(pivotModel);
+		//	}
 			for (Import anImport : imports) {
 				Namespace importedNamespace = anImport.getImportedNamespace();
-				if (importedNamespace != null) {
+				if ((importedNamespace != null) /*&& ((resolvedImportedNamespaces == null) || resolvedImportedNamespaces.contains(importedNamespace))*/) {
 					EObject eTarget = importedNamespace.getESObject();
 					String value;
 					if (eTarget != null) {
@@ -693,9 +741,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						key = value;
 						value = null;
 					}
-					String oldValue = AnnotationUtil.setDetail(firstElement, PivotConstants.IMPORT_ANNOTATION_SOURCE, key, value);
+					String oldValue = AnnotationUtil.setDetail(firstElement, AnnotationUtil.IMPORT_ANNOTATION_SOURCE, key, value);
 					if (oldValue != null) {
-						System.out.println("Conflicting " + PivotConstants.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
+						System.out.println("Conflicting " + AnnotationUtil.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
 					}
 				}
 			}

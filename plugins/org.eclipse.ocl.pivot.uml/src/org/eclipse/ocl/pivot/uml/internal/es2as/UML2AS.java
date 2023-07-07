@@ -508,6 +508,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 			} */
 		}
 
+		protected void addCreatedMap(Map<@NonNull EObject, @NonNull Element> createdMap) {
+			if (createdMap != null) {
+				for (Map.Entry<@NonNull EObject, @NonNull Element> entry : createdMap.entrySet()) {
+					addCreated(entry.getKey(), entry.getValue());
+				}
+			}
+		}
+
 		@Override
 		public void addGenericType(@NonNull EGenericType eObject) {
 			//			throw new UnsupportedOperationException();				// FIXME
@@ -727,7 +735,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					return null;
 				}
 				try {
-					return ((EnvironmentFactoryInternal)environmentFactory).getASOf(requiredClass, eObject);
+					return environmentFactory.getASOf(requiredClass, eObject);
 				} catch (ParserException e) {
 					return null;		// Never happens since UML element will never be a parsed one such as an OCLExpression
 				}
@@ -811,7 +819,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 						else {
 							Map<@NonNull EObject, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
 							if (importedCreatedMap != null) {
-								createMap.putAll(importedCreatedMap);
+							//	createMap.putAll(importedCreatedMap);
+								addCreatedMap(importedCreatedMap);
 								//								for (@NonNull EObject key : importedCreatedMap.keySet()) {
 								//									Element value = importedCreatedMap.get(key);
 								//									assert value != null;
@@ -1331,6 +1340,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void loadPackageOriginalTypeEAnnotations(@NonNull EPackage ePackage) {
+		throw new UnsupportedOperationException();			// XXX FIXME
 	}
 
 	public abstract void queueUse(@NonNull EObject eObject);

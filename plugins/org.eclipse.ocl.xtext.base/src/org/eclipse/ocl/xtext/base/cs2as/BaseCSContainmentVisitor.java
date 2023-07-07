@@ -315,8 +315,10 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	@Override
 	public Continuation<?> visitDataTypeCS(@NonNull DataTypeCS csElement) {
 		DataType pivotElement;
-		if (csElement.isIsPrimitive()) {
-			pivotElement = refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, csElement);
+		if (csElement.isIsPrimitive()) {		// XXX BooleanType
+			String instanceClassName = csElement.getInstanceClassName().trim();
+			boolean isBoolean = Boolean.class.getName().equals(instanceClassName) || boolean.class.getName().equals(instanceClassName);
+			pivotElement = refreshNamedElement(PrimitiveType.class, isBoolean ? PivotPackage.Literals.BOOLEAN_TYPE : PivotPackage.Literals.PRIMITIVE_TYPE, csElement);
 		}
 		else {
 			pivotElement = refreshNamedElement(DataType.class, PivotPackage.Literals.DATA_TYPE, csElement);

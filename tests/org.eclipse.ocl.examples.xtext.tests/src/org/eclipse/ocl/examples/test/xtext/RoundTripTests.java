@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -497,6 +498,7 @@ public class RoundTripTests extends XtextTestCase
 						"		}\n" +
 						"	}\n" +
 						"}\n";
+		EAnnotationConverter.addKnownEAnnotationSource(null);
 		TestFile testFile = createOCLinEcoreFile("Bug426927.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
@@ -529,7 +531,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testAnnotationsRoundTrip_480635() throws IOException, InterruptedException {
-		Ecore2AS.addKnownEAnnotationSource("documentation");
+		EAnnotationConverter.addKnownEAnnotationSource("documentation");
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -829,7 +831,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testOCLstdlibASRoundTrip() throws IOException, InterruptedException, ParserException {
-		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/ocl");
+		EAnnotationConverter.addKnownEAnnotationSource("http://www.omg.org/ocl");
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true);
 		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
@@ -930,7 +932,7 @@ public class RoundTripTests extends XtextTestCase
 	} */
 
 	public void testSysMLRoundTrip() throws IOException, InterruptedException {
-		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/spec/SysML");
+		EAnnotationConverter.addKnownEAnnotationSource("http://www.omg.org/spec/SysML");
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -1000,7 +1002,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testXMLNamespaceRoundTrip() throws IOException, InterruptedException, ParserException {
-		Ecore2AS.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
+		EAnnotationConverter.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
 		doRoundTripFromEcore(getTestModelURI("models/ecore/XMLNamespace.ecore"));
 	}
 

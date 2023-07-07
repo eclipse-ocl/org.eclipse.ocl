@@ -265,6 +265,16 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return visitor;
 	}
 
+	protected @NonNull EObject resolveElementType(@NonNull Type elementType, @NonNull ETypedElement eTypedElement, boolean isRequired) {
+		EGenericType eGenericType = context.getEquivalentEcoreType(elementType, isRequired);
+		if (eGenericType != null) {
+			return eGenericType;
+		}
+		EObject eObject = typeRefVisitor.safeVisit(elementType);
+		assert eObject != null;
+		return eObject;
+	}
+
 	private void resolveSuperClasses(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
 		List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
 		EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
@@ -313,36 +323,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
-		assert !(pivotType instanceof MapType);
-		/*	if (pivotType instanceof MapType) {
-			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
-			if (entryClass != null) {
-				setEType(eTypedElement, entryClass, isRequired);
-				eTypedElement.setOrdered(true);		// sic; Ecore idiom
-				eTypedElement.setUnique(true);
-				eTypedElement.setLowerBound(0);
-				eTypedElement.setUpperBound(-1);
-			}
-			else {
-				for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
-					if (eContainer instanceof EPackage) {
-						EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);
-						eTypedElement.setEType(entryEClass);
-						break;
-					}
-				}
-				eTypedElement.setUpperBound(-1);
-			}
-			return;
-		} */
-		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(pivotType);
-		context.setEType(eTypedElement, eObject);
-	}
-
 	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
 		boolean isOrdered = true;												// Ecore default
 		boolean isUnique = true;												// Ecore default
@@ -351,124 +331,133 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if ((pivotType == null) || (pivotType instanceof VoidType)) {				// Occurs for Operation return type
 			lowerBound = 0;
 			upperBound = 1;
-		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
-			CollectionType collectionType = (CollectionType)pivotType;
-			Type elementType = collectionType.getElementType();
-			EObject eObject = typeRefVisitor.safeVisit(elementType);
-			if (eObject instanceof EGenericType) {
-				eTypedElement.setEGenericType((EGenericType)eObject);
-			}
-			else {
-				eTypedElement.setEType((EClassifier)eObject);
-			}
-			isOrdered = collectionType.isOrdered();
-			isUnique = collectionType.isUnique();
-			IntegerValue lower = collectionType.getLowerValue();
-			UnlimitedNaturalValue upper = collectionType.getUpperValue();
-			try {
-				lowerBound = lower.intValue();
-			} catch (InvalidValueException e) {
-				logger.error("Illegal lower bound", e);
-			}
-			try {
-				upperBound = upper.isUnlimited() ? -1 : upper.intValue();
-			} catch (InvalidValueException e) {
-				logger.error("Illegal upper bound", e);
-			}
-			boolean prevailingCollectionIsNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
-			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
-				if (eContainer instanceof ENamedElement) {
-					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
-					if (eAnnotation != null) {
-						String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
-						if (isNullFreeValue != null) {
-							prevailingCollectionIsNullFree = Boolean.valueOf(isNullFreeValue);
+		} else {
+			CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
+			if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != standardLibrary.getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
+				CollectionType collectionType = (CollectionType)pivotType;
+				Type elementType = collectionType.getElementType();
+				EObject eObject = resolveElementType(elementType, eTypedElement, isRequired);
+				context.setEType(elementType, eTypedElement, eObject);
+				isOrdered = collectionType.isOrdered();
+				isUnique = collectionType.isUnique();
+				IntegerValue lower = collectionType.getLowerValue();
+				UnlimitedNaturalValue upper = collectionType.getUpperValue();
+				try {
+					lowerBound = lower.intValue();
+				} catch (InvalidValueException e) {
+					logger.error("Illegal lower bound", e);
+				}
+				try {
+					upperBound = upper.isUnlimited() ? -1 : upper.intValue();
+				} catch (InvalidValueException e) {
+					logger.error("Illegal upper bound", e);
+				}
+				boolean prevailingCollectionIsNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
+				for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
+					if (eContainer instanceof ENamedElement) {
+						EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
+						if (eAnnotation != null) {
+							String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
+							if (isNullFreeValue != null) {
+								prevailingCollectionIsNullFree = Boolean.valueOf(isNullFreeValue);
+							}
+							break;
 						}
+					}
+					else if (eContainer instanceof EAnnotation) {			// UML applied Stereotype EAnnotation
 						break;
 					}
+					else {
+						;													// EOperation for an EParameter
+					}
 				}
-				else if (eContainer instanceof EAnnotation) {			// UML applied Stereotype EAnnotation
-					break;
+				if (collectionType.isIsNullFree() != prevailingCollectionIsNullFree) {
+					AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
 				}
 				else {
-					;													// EOperation for an EParameter
+					AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE);
+				}
+				if ((collectionType instanceof BagType) || (collectionType instanceof OrderedSetType) || (collectionType instanceof SequenceType) || (collectionType instanceof SetType)) {
+					AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+				}
+				else {
+					AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND, collectionType.getName());
 				}
 			}
-			if (collectionType.isIsNullFree() != prevailingCollectionIsNullFree) {
-				AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
-			}
-			else {
-				AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_IS_NULL_FREE);
-			}
-			if ((collectionType instanceof BagType) || (collectionType instanceof OrderedSetType) || (collectionType instanceof SequenceType) || (collectionType instanceof SetType)) {
-				AnnotationUtil.removeDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
-			}
-			else {
-				AnnotationUtil.setDetail(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND, collectionType.getName());
-			}
-		}
-		else if (pivotType instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)pivotType;
-			EClass lambdaEClass = context.getLambdaEClass(lambdaType);
-			//
-			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setEClassifier(lambdaEClass);
-			eTypedElement.setEGenericType(eGenericType);
-			List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
-			//
-			Type contextType = PivotUtil.getContextType(lambdaType);
-			ETypeParameter eContextType = getCreated(ETypeParameter.class, contextType);
-			EGenericType eContextGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eContextGenericType.setETypeParameter(eContextType);
-			eTypeArguments.add(eContextGenericType);
-			//
-			for (Type parameterType : PivotUtil.getParameterType(lambdaType)) {
-				ETypeParameter eParameterType = getCreated(ETypeParameter.class, parameterType);
-				EGenericType eParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-				eParameterGenericType.setETypeParameter(eParameterType);
-				eTypeArguments.add(eParameterGenericType);
-			}
-			//
-			Type resultType = PivotUtil.getResultType(lambdaType);
-			EGenericType eResultGenericType = getTypeRefVisitor(isRequired, false/*resultType instanceof DataType*/).resolveEGenericType2(resultType);
-			eTypeArguments.add(eResultGenericType);
-		}
-		else if (pivotType instanceof MapType) {
-			MapType mapType = (MapType)pivotType;
-			org.eclipse.ocl.pivot.Class entryClass = mapType.getEntryClass();
-			if (entryClass != null) {
-				setEType(eTypedElement, entryClass, isRequired);		// XXX never happens
-			}
-			else {
-				EClass entryEClass = context.getEntryEClass(mapType);
+			else if (pivotType instanceof LambdaType) {
+				LambdaType lambdaType = (LambdaType)pivotType;
+				EClass lambdaEClass = context.getLambdaEClass(lambdaType);
+				//
 				EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-				eGenericType.setEClassifier(entryEClass);
-				eTypedElement.setEGenericType(eGenericType);
+				eGenericType.setEClassifier(lambdaEClass);
 				List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 				//
-				Type keyType = PivotUtil.getKeyType(mapType);
-				EGenericType eKeyGenericType = resolveType(mapType.isKeysAreNullFree(), keyType);
-				eTypeArguments.add(eKeyGenericType);
+				Type contextType = PivotUtil.getContextType(lambdaType);
+				ETypeParameter eContextType = getCreated(ETypeParameter.class, contextType);
+				EGenericType eContextGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+				eContextGenericType.setETypeParameter(eContextType);
+				eTypeArguments.add(eContextGenericType);
 				//
-				Type valueType = PivotUtil.getValueType(mapType);
-				EGenericType eValueGenericType = resolveType(mapType.isValuesAreNullFree(), valueType);
-				eTypeArguments.add(eValueGenericType);
+				for (Type parameterType : PivotUtil.getParameterType(lambdaType)) {
+					ETypeParameter eParameterType = getCreated(ETypeParameter.class, parameterType);
+					EGenericType eParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+					eParameterGenericType.setETypeParameter(eParameterType);
+					eTypeArguments.add(eParameterGenericType);
+				}
+				//
+				Type resultType = PivotUtil.getResultType(lambdaType);
+				EGenericType eResultGenericType = getTypeRefVisitor(isRequired, false/*resultType instanceof DataType*/).resolveEGenericType2(resultType);
+				eTypeArguments.add(eResultGenericType);
+				//
+				AS2Ecore.setResolvedEType(eTypedElement, eGenericType);
 			}
-			lowerBound = 0;
-			upperBound = -1;
-		}
-		else if (pivotType instanceof TupleType) {
-			TupleType tupleType = (TupleType)pivotType;
-			EClass tupleEClass = context.getTupleEClass(tupleType);
-			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setEClassifier(tupleEClass);
-			eTypedElement.setEGenericType(eGenericType);
-			lowerBound = 0;
-			upperBound = -1;
-		}
-		else {
-			setEType(eTypedElement, pivotType, isRequired);
+			else if (pivotType instanceof MapType) {
+				MapType mapType = (MapType)pivotType;
+				org.eclipse.ocl.pivot.Class entryClass = mapType.getEntryClass();
+				if (entryClass != null) {
+				//	setEType(eTypedElement, entryClass, isRequired);		// XXX never happens
+				//	private void zzsetEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
+					assert !(entryClass instanceof MapType);
+					EObject eObject = getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(entryClass);
+					assert eObject != null;
+					context.setEType(entryClass, eTypedElement, eObject);
+				//	}
+				}
+				else {
+					EClass entryEClass = context.getEntryEClass(mapType);
+					EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+					eGenericType.setEClassifier(entryEClass);
+					List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
+					//
+					Type keyType = PivotUtil.getKeyType(mapType);
+					EGenericType eKeyGenericType = resolveType(mapType.isKeysAreNullFree(), keyType);
+					eTypeArguments.add(eKeyGenericType);
+					//
+					Type valueType = PivotUtil.getValueType(mapType);
+					EGenericType eValueGenericType = resolveType(mapType.isValuesAreNullFree(), valueType);
+					eTypeArguments.add(eValueGenericType);
+					//
+					AS2Ecore.setResolvedEType(eTypedElement, eGenericType);
+				}
+				lowerBound = 0;
+				upperBound = -1;
+			}
+			else if (pivotType instanceof TupleType) {
+				TupleType tupleType = (TupleType)pivotType;
+				EClass tupleEClass = context.getTupleEClass(tupleType);
+			//	EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			//	eGenericType.setEClassifier(tupleEClass);
+				AS2Ecore.setResolvedEType(eTypedElement, tupleEClass);
+				lowerBound = 0;
+				upperBound = -1;
+			}
+			else {
+				EObject eObject = resolveElementType(pivotType, eTypedElement, isRequired);
+				assert !(pivotType instanceof MapType);
+				EObject eObject2 = eObject;//getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(pivotType);
+				assert eObject2 != null;
+				context.setEType(pivotType, eTypedElement, eObject2);
+			}
 		}
 		eTypedElement.setLowerBound(lowerBound);
 		eTypedElement.setUpperBound(upperBound);
@@ -605,6 +594,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public EObject visitProperty(@NonNull Property pivotProperty) {
 		if (pivotProperty.isIsImplicit()) {
 			return null;
+		}
+		if ("source".equals(pivotProperty.getName())) {
+			getClass();			// XXX
 		}
 		EStructuralFeature eStructuralFeature = getCreated(EStructuralFeature.class, pivotProperty);
 		if (eStructuralFeature == null) {

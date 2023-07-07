@@ -400,10 +400,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public Object caseEGenericType(EGenericType eObject) {
 		EClassifier eClassifier = eObject.getEClassifier();
 		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		if (role == null) {
+	//	if (role == null) {
 			doSwitchAll(eObject.getETypeArguments());
 			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
-		}
+	//	}
+	//	for (EObject eObject2 : eObject.getETypeArguments()) {
+	//		doSwitch(eObject2);
+	//	}
 		return true;
 	}
 
@@ -424,6 +427,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEPackage(EPackage ePackage) {
 		assert ePackage != null;;
+		converter.loadPackageOriginalTypeEAnnotations(ePackage);
 		org.eclipse.ocl.pivot.Package pivotElement;
 		if (converter.isLibrary(ePackage)) {
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
@@ -480,7 +484,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				adapter.getAliasMap().put(ePackage, moniker);
 			}
 		}
-		List<@NonNull EAnnotation> exclusions = new ArrayList<>();
+		List<@NonNull EAnnotation> exclusions = new ArrayList<>();			// XXX eliminate
 		EAnnotation eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
 		if (eAnnotation != null) {
 			exclusions.add(eAnnotation);

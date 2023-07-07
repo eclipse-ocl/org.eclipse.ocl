@@ -10,10 +10,7 @@
  *   E.D.Willink (CEA List) - Bug 424057 - UML 2.5 CG *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ecore.es2as;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -27,315 +24,26 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
 	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS es2as = environmentFactory.getMetamodelManager().getES2AS(resource);
 		return es2as;
-	}
-
-	private static final @NonNull Map<@NonNull String, @NonNull EAnnotationConverter> source2eAnnotationConverter = new HashMap<>();
-
-	public static void addHandler(@NonNull String source, @NonNull EAnnotationConverter eAnnotationConverter) {
-		EAnnotationConverter old = source2eAnnotationConverter.put(source, eAnnotationConverter);
-		assert (old == null) || (old == eAnnotationConverter);
-	}
-
-	static {
-		addHandler(EcorePackage.eNS_URI, EcoreEAnnotationConverter.INSTANCE);
-		addHandler(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, GenModelEAnnotationConverter.INSTANCE);
-		addHandler(PivotConstants.EXTENDED_META_DATA_ANNOTATION_SOURCE, DefaultEAnnotationConverter.ALL_KEYS_KNOWN);
-		addHandler("http://www.eclipse.org/emf/CDO", new DefaultEAnnotationConverter("filter", "persistent"));
-		addHandler(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
-		addHandler(PivotConstants.IMPORT_ANNOTATION_SOURCE, NullEAnnotationConverter.INSTANCE);
-		addHandler(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
-		addHandler(AnnotationUtil.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
-	//	addHandler(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
-		addHandler(AnnotationUtil.PARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
-		addHandler(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE, PrecedenceEAnnotationConverter.INSTANCE);
-	}
-
-	private static interface EAnnotationConverter
-	{
-		@Nullable List<@NonNull Detail> convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation);
-	}
-
-	private static class DefaultEAnnotationConverter implements EAnnotationConverter
-	{
-		public static final @NonNull String[] ARRAY_OF_ALL_KNOWN_KEYS = null;
-		public static final @NonNull EAnnotationConverter NO_KEYS_KNOWN = new DefaultEAnnotationConverter();
-		public static final @NonNull EAnnotationConverter ALL_KEYS_KNOWN = new DefaultEAnnotationConverter(ARRAY_OF_ALL_KNOWN_KEYS);
-
-		protected @NonNull String @Nullable [] knownKeys;			// explicitly known keys, empty for none, null for all
-
-		protected DefaultEAnnotationConverter(@NonNull String ... knownKeys) {
-			this.knownKeys = knownKeys;
-		}
-
-		@Override
-		public @Nullable List<@NonNull Detail> convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
-			EMap<String, String> eDetails = eAnnotation.getDetails();
-			if (eDetails.isEmpty()) {
-				return new ArrayList<>();
-			}
-			List<@NonNull Detail> asDetails = null;
-			for (Map.Entry<String, String> eDetail : eDetails) {
-				String key = eDetail.getKey();
-				String value = eDetail.getValue();
-				Detail asDetail = convert(external2AS, eAnnotation, key, value);
-				if (asDetail != null) {
-					if (asDetails == null) {
-						asDetails = new ArrayList<>();
-					}
-					asDetails.add(asDetail);
-				}
-			}
-			return asDetails;
-		}
-
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (Ecore2AS.UNKNOWN_EANNOTATIONS.isActive()) {
-				@NonNull String[] knownKeys2 = knownKeys;
-				if (knownKeys2 != null) {
-					boolean isKnown = false;
-					for (@NonNull String knownKey : knownKeys2) {
-						if (knownKey.equals(key)) {
-							isKnown = true;
-							break;
-						}
-					}
-					if (!isKnown) {
-						Ecore2AS.UNKNOWN_EANNOTATIONS.println(eAnnotation.getSource() + "::" + key + " : " + value);
-					}
-				}
-			}
-			Detail asDetail = PivotFactory.eINSTANCE.createDetail();
-			asDetail.setName(key);
-			asDetail.getValues().add(value);
-			return asDetail;
-		}
-
-		protected @NonNull Element getASContainer(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
-			EObject eContainer = eAnnotation.eContainer();
-			assert eContainer != null;
-			Element asContainer = external2AS.getCreated(Element.class, eContainer);
-			assert asContainer != null;
-			return asContainer;
-		}
-	}
-
-	private static class NullEAnnotationConverter implements EAnnotationConverter
-	{
-		public static @NonNull EAnnotationConverter INSTANCE = new NullEAnnotationConverter();
-
-		@Override
-		public @Nullable List<@NonNull Detail> convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
-			return null;
-		}
-	}
-
-	private static class CollectionEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new CollectionEAnnotationConverter();
-
-		private CollectionEAnnotationConverter() {
-			super(AnnotationUtil.COLLECTION_IS_NULL_FREE, AnnotationUtil.COLLECTION_KIND);
-		}
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (AnnotationUtil.COLLECTION_IS_NULL_FREE.equals(key)) {
-				EObject eContainer = eAnnotation.eContainer();
-				assert eContainer != null;
-				Element asContainer = external2AS.getCreated(Element.class, eContainer);
-				assert asContainer != null;
-				if (!(asContainer instanceof org.eclipse.ocl.pivot.Package)) {
-					return null;	// Suppress redundant annotation
-				}
-			}
-			else if (AnnotationUtil.COLLECTION_KIND.equals(key)) {
-				return null;	// Suppress redundant annotation
-			}
-			return super.convert(external2AS, eAnnotation, key, value);
-		}
-	}
-
-	private static class EcoreEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new EcoreEAnnotationConverter();
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if ("constraints".equals(key)) {
-				return null;	// Suppress redundant annotation
-			}
-			else {
-				return super.convert(external2AS, eAnnotation, key, value);
-			}
-		}
-	}
-
-	private static class GenModelEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new GenModelEAnnotationConverter();
-
-		private GenModelEAnnotationConverter() {
-			super("body", "suppressedGetVisibility", "suppressedIsSetVisibility", "suppressedSetVisibility", "suppressedUnsetVisibility", "suppressedVisibility");
-		}
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(key)) {
-				Element asContainer = getASContainer(external2AS, eAnnotation);
-				Comment asComment = PivotFactory.eINSTANCE.createComment();
-				asComment.setBody(value);
-				asContainer.getOwnedComments().add(asComment);
-				return null;	// Suppress redundant annotation
-			}
-			else {
-				return super.convert(external2AS, eAnnotation, key, value);
-			}
-		}
-	}
-
-	private static class OperationEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new OperationEAnnotationConverter();
-
-		private OperationEAnnotationConverter() {
-			super(AnnotationUtil.OPERATION_ACCUMULATORS, AnnotationUtil.OPERATION_IMPLEMENTATION, AnnotationUtil.OPERATION_IS_TRANSIENT, AnnotationUtil.OPERATION_ITERATORS, AnnotationUtil.OPERATION_PRECEDENCE);
-		}
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			EObject eContainer = eAnnotation.eContainer();
-			assert eContainer != null;
-			Operation asOperation = external2AS.getCreated(Operation.class, eContainer);
-			assert asOperation != null;
-			if (AnnotationUtil.OPERATION_IMPLEMENTATION.equals(key)) {
-				asOperation.setImplementationClass(value);
-				return null;
-			}
-			else if (AnnotationUtil.OPERATION_ACCUMULATORS.equals(key) || AnnotationUtil.OPERATION_ITERATORS.equals(key)) {
-			// XXX	assert asOperation instanceof Iteration;
-				return null;
-			}
-			else if (AnnotationUtil.OPERATION_IS_INVALIDATING.equals(key)) {
-				asOperation.setIsInvalidating((value != null) && Boolean.parseBoolean(value));
-				return null;
-			}
-			else if (AnnotationUtil.OPERATION_IS_TRANSIENT.equals(key)) {
-				asOperation.setIsTransient((value != null) && Boolean.parseBoolean(value));
-				return null;
-			}
-			else if (AnnotationUtil.OPERATION_IS_VALIDATING.equals(key)) {
-				asOperation.setIsValidating((value != null) && Boolean.parseBoolean(value));
-				return null;
-			}
-			else if (AnnotationUtil.OPERATION_PRECEDENCE.equals(key)) {
-				Library asLibrary = (Library) asOperation.getOwningClass().getOwningPackage();
-				asOperation.setPrecedence(NameUtil.getNameable(asLibrary.getOwnedPrecedences(), value));
-				return null;
-			}
-			return super.convert(external2AS, eAnnotation, key, value);
-		}
-	}
-
-/*	private static class PackageEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new PackageEAnnotationConverter();
-
-		private PackageEAnnotationConverter() {
-			super(AnnotationUtil.PACKAGE_ROLE);
-		}
-	} */
-
-	private static class ParameterEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new ParameterEAnnotationConverter();
-
-		private ParameterEAnnotationConverter() {
-			super(AnnotationUtil.PARAMETER_IS_TYPE_OF);
-		}
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			EObject eContainer = eAnnotation.eContainer();
-			assert eContainer != null;
-			Parameter asParameter = external2AS.getCreated(Parameter.class, eContainer);
-			assert asParameter != null;
-			if (AnnotationUtil.PARAMETER_IS_TYPE_OF.equals(key)) {
-				asParameter.setIsTypeof(Boolean.valueOf(value));
-				return null;
-			}
-			return super.convert(external2AS, eAnnotation, key, value);
-		}
-	}
-
-	private static class PrecedenceEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static final @NonNull EAnnotationConverter INSTANCE = new PrecedenceEAnnotationConverter();
-
-		private PrecedenceEAnnotationConverter() {
-			super(ARRAY_OF_ALL_KNOWN_KEYS);
-		}
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			assert key != null;
-			EObject eContainer = eAnnotation.eContainer();
-			assert eContainer != null;
-			Library asLibrary = external2AS.getCreated(Library.class, eContainer);
-			assert asLibrary != null;
-			Precedence asPrecedence = PivotUtil.createPrecedence(key, AssociativityKind.getByName(value));
-			asLibrary.getOwnedPrecedences().add(asPrecedence);
-			return null;
-		}
-	}
-
-	private static class UMLEAnnotationConverter extends DefaultEAnnotationConverter
-	{
-		public static @NonNull EAnnotationConverter INSTANCE = new UMLEAnnotationConverter();
-
-		@Override
-		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME.equals(key)) {
-				Element asContainer = getASContainer(external2AS, eAnnotation);
-				assert ClassUtil.safeEquals(((NamedElement)asContainer).getName(), value);
-				return null;	// Suppress redundant annotation
-			}
-			else {
-				return super.convert(external2AS, eAnnotation, key, value);
-			}
-		}
 	}
 
 	protected AbstractExternal2AS(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -464,6 +172,8 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		return false;
 	}
 
+	public abstract void loadPackageOriginalTypeEAnnotations(@NonNull EPackage ePackage);
+
 	public abstract void queueEAnnotation(@NonNull EAnnotation eAnnotation);
 
 	public abstract void queueReference(@NonNull EObject eObject);
@@ -487,28 +197,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	}
 
 	protected void resolveEAnnotation(@NonNull EAnnotation eAnnotation) {
-		String source = eAnnotation.getSource();
-		boolean hasReferences = !eAnnotation.getReferences().isEmpty();
-		EAnnotationConverter eAnnotationConverter = source2eAnnotationConverter.get(source);
-		if (eAnnotationConverter == null) {
-			boolean isKnown = (Ecore2AS.knownEAnnotationSources != null) && Ecore2AS.knownEAnnotationSources.contains(source);
-			if (isKnown) {
-				eAnnotationConverter = DefaultEAnnotationConverter.ALL_KEYS_KNOWN;
-			}
-			else {
-				eAnnotationConverter = DefaultEAnnotationConverter.NO_KEYS_KNOWN;
-			}
-		}
-		List<@NonNull Detail> asDetails = eAnnotationConverter.convert(this, eAnnotation);
-		Annotation asAnnotation = null;
-		if (hasReferences || (asDetails != null)) {			// XXX contents ???
-			asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
-			asAnnotation.setName(source);
-		}
-		if (asDetails != null) {
-			assert asAnnotation != null;
-			asAnnotation.getOwnedDetails().addAll(asDetails);
-		}
+		Annotation asAnnotation = EAnnotationConverter.convert(this, eAnnotation);
 		if (asAnnotation != null) {
 			EObject eContainer = eAnnotation.eContainer();
 			assert eContainer != null;
@@ -518,9 +207,6 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			assert assertConsistentDuplication(asAnnotation, asAnnotations, eContainer);
 			asAnnotations.add(asAnnotation);
 			addMapping(eAnnotation, asAnnotation);
-		}
-		if (hasReferences) {
-			queueReference(eAnnotation);
 		}
 	}
 }

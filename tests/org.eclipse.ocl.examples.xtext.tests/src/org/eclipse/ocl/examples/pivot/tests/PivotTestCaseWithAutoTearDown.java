@@ -103,6 +103,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	}
 
 	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
+		assert !assignIds;			// Hidden generic type cannot have id
 		String inputName = fileName + ".oclinecore";
 		TestFile oclInEcoreFile = createOCLinEcoreFile(inputName, fileContent);
 		URI inputURI = oclInEcoreFile.getFileURI();

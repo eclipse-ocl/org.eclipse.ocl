@@ -33,11 +33,11 @@ org.eclipse.ocl.pivot/completeClasses=false
 # Trace maintenance of CompletePackages 
 org.eclipse.ocl.pivot/completePackages=false
 
+# Trace default conversion of unknown EAnnotions to Annotations. Use Ecore2AS.addKnownEAnnotationSource to specify a known EAnnoation.
+org.eclipse.ocl.pivot/eAnnotationConverter/unknown=false
+
 # Trace conversion of not-optional primitive types such as EBoolean
 org.eclipse.ocl.pivot/ecore2as/notOptional=false
-
-# Trace default conversion of unknown EAnnotions to Annotations. Use Ecore2AS.addKnownEAnnotationSource to specify a known EAnnoation.
-org.eclipse.ocl.pivot/ecore2as/unknownEAnnotations=false
 
 # Trace creation/attach/detach/dispose of EnvironmentFactory instances
 org.eclipse.ocl.pivot/environmentFactory/attach=false

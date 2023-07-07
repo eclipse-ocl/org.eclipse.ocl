@@ -766,7 +766,7 @@ public class EditTests extends XtextTestCase
 						"		invariant NameNotEmpty: name->notEmpty();\n" +
 						"	}\n" +
 						"}\n";
-		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument, true);
+		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument, false);
 		ocl0.dispose();
 		//
 		//	Load and instrument test document
@@ -824,7 +824,7 @@ public class EditTests extends XtextTestCase
 			newPivotContent.add(eObject);
 		}
 		assertEquals(loadPivotContent.size(), newPivotContent.size());
-		assertEquals(loadPivotContent, newPivotContent);
+		assertEquals(loadPivotContent, newPivotContent);					// XXX why did this ever work?
 		{
 			BaseCSResource xtextResource2 = (BaseCSResource) ocl1.getResourceSet().createResource(ecoreURI.appendFileExtension("oclinecore"), OCLinEcoreCSPackage.eCONTENT_TYPE);
 			xtextResource2.setURI(ecoreURI);
