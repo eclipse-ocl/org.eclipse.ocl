@@ -250,7 +250,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
 
 	/**
-	 * List of all EDataTypes that might need special case mapping via the ecore2asMap. Non-null during declaration pass.
+	 * List of all EDataTypes. Non-null during declaration pass.
 	 */
 	private @Nullable List<@NonNull EDataType> eDataTypes = null;
 
@@ -264,13 +264,12 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected final @NonNull Resource ecoreResource;
 
 	protected Model pivotModel = null;						// Set by importResource
-	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> zzecore2asMap = new HashMap<>();
 
 	/**
 	 * The loadableURI of the ecoreResource, which may differ from ecoreResource.getURI() when
 	 * ecoreResource is an installed package whose nsURI may not be globally registered. The accessible
 	 * URI is used for the AS URI to ensure that the saved serialized XMI is loadable using the source
-	 * *.ecore's rather than the missing nsURI regisyrations.
+	 * *.ecore's rather than the missing nsURI registrations.
 	 */
 	private URI ecoreURI = null;
 
@@ -611,18 +610,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		else {
 			return null;
 		}
-	}
-
-	public void initializeEcore2ASMap() {
-	/*	org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
-		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
-		org.eclipse.ocl.pivot.Class realType = standardLibrary.getRealType();
-		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, integerType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, realType);
-		ecore2asMap.put(EcorePackage.Literals.ESTRING, stringType); */
 	}
 
 	/**
@@ -970,16 +957,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 1.17
 	 */
-	protected void resolveDataTypeMappings() {
-	//	ecore2asMap = new HashMap<>();
-		initializeEcore2ASMap();
-		assert eDataTypes != null;
-		eDataTypes = null;
-	}
-
-	/**
-	 * @since 1.17
-	 */
 	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
 		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.nonNull(pivotModel)));
@@ -1286,9 +1263,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		resolveAliases(asResource);
 		metamodelManager.installResource(asResource);
 		/*
-		 * Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.
+		 * XXX Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.
 		 */
-		resolveDataTypeMappings();
+		assert eDataTypes != null;
+		eDataTypes = null;
 		/*
 		 * Resolve EAnnotations.
 		 */

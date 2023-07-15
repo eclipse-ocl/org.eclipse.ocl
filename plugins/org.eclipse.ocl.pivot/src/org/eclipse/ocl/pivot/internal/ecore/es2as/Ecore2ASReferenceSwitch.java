@@ -87,17 +87,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 {
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_ORDERED_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_LOWER_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UPPER_KEY;
-
 	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
@@ -159,36 +148,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		assert eGenericType != null;
 		Type asType = doEGenericType(eGenericType);
 		return asType;
-	/*	ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
-		if (eTypeParameter != null) {
-			return doInPackageSwitch(eTypeParameter);
-		}
-		EClassifier eClassifier = eGenericType.getEClassifier();
-		if (eClassifier != null) {
-			Type asType = (Type)doInPackageSwitch(eClassifier);
-			assert asType != null;
-			List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
-			final int iSize = eTypeArguments.size();
-			if (iSize > 0) {
-				TemplateableElement asTemplateableElement = (TemplateableElement)asType;
-				TemplateSignature asSignature = asTemplateableElement.getOwnedSignature();
-				assert asSignature != null;
-				List<@NonNull TemplateParameter> asFormalParameters = PivotUtilInternal.getOwnedParametersList(asSignature);
-				TemplateParameterSubstitutions bindings = new SimpleTemplateParameterSubstitutions();
-				for (int i = 0; i < iSize; i++) {
-					EGenericType eTypeArgument = eTypeArguments.get(i);
-					Type asActualType = (Type)doInPackageSwitch(eTypeArgument);
-					assert asActualType != null;
-					TemplateParameter asFormalParameter = asFormalParameters.get(i);
-					bindings.put(asFormalParameter, asActualType);
-				}
-				asType = standardLibrary.getSpecializedType(asType, bindings);
-			}
-			return asType;  //xxx typeArguments
-		} */
-	//	throw new UnsupportedOperationException();
-	//	boolean ok = doEGenericType(???, eGenericType, null);
-	//	assert ok;
 	}
 
 	@Override
