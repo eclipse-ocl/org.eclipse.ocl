@@ -42,6 +42,9 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 		else if (BigInteger.class == instanceClass) {
 			return new UnboxedValueDescriptor(elementId, BigInteger.class);
 		}
+		else if (Boolean.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Boolean.class);
+		}
 		else if (Byte.class == instanceClass) {
 			return new UnboxedValueDescriptor(elementId, Byte.class);
 		}
