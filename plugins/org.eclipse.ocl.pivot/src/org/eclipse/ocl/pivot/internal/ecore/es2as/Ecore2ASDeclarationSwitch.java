@@ -46,7 +46,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -399,7 +398,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEGenericType(EGenericType eObject) {
 		EClassifier eClassifier = eObject.getEClassifier();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+	//	String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 	//	if (role == null) {
 			doSwitchAll(eObject.getETypeArguments());
 			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
@@ -499,8 +498,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-			if (role == null) {
+			if (!AnnotationUtil.hasSyntheticRole(eClassifier)) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
 				newList.add(pivotObject);
@@ -694,17 +692,17 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					constraint.setOwnedSpecification(specification);
 					if (preName != null) {
 						pivotElement.getOwnedPreconditions().add(constraint);
-						constraint.setName(preName);
+						constraint.setName(preName.length() > 0 ? preName : null);
 					}
 					else {
 						pivotElement.getOwnedPostconditions().add(constraint);
-						constraint.setName(postName);
+						constraint.setName((postName != null) && (postName.length() > 0) ? postName : null);
 					}
 					copyAnnotationComment(constraint, oclAnnotation, key);
 				}
 			}
 		}
-		EAnnotation precedenceAnnotation = eOperation.getEAnnotation(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE);
+	/*	EAnnotation precedenceAnnotation = eOperation.getEAnnotation(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE);
 		if (precedenceAnnotation != null) {
 		//	if (excludedAnnotations == null) {
 		//		excludedAnnotations = new ArrayList<>();
@@ -716,7 +714,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			AssociativityKind associativity = associativityString != null ? AssociativityKind.getByName(associativityString) : null;
 		//	String precedence = eDetails.get(AnnotationUtil.OPERATION_PRECEDENCE);
 		//	pivotElement.setPrecedence(precedence);
-		}
+		} */
 		return excludedAnnotations;
 	}
 
@@ -786,13 +784,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<@NonNull EAnnotation> excludedAnnotations) {
-		EAnnotation propertyAnnotation = eObject.getEAnnotation(AnnotationUtil.PROPERTY_ANNOTATION_SOURCE);
-		if (propertyAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(propertyAnnotation);
-		}
+	//	EAnnotation propertyAnnotation = eObject.getEAnnotation(AnnotationUtil.PROPERTY_ANNOTATION_SOURCE);
+	//	if (propertyAnnotation != null) {
+	//		if (excludedAnnotations == null) {
+	//			excludedAnnotations = new ArrayList<>();
+	//		}
+	//		excludedAnnotations.add(propertyAnnotation);
+	//	}
 		EAnnotation redefinesAnnotation = eObject.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		if (redefinesAnnotation != null) {
 			if (excludedAnnotations == null) {

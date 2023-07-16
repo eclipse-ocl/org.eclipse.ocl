@@ -994,8 +994,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 		assert !eGenericType.getETypeArguments().isEmpty();
 		EClassifier eClassifier = eGenericType.getEClassifier();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		if (role != null) {
+		if (AnnotationUtil.hasSyntheticRole(eClassifier)) {
 			return null;
 		}
 		List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
@@ -1152,8 +1151,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			return pivotType;
 		}
 		EClassifier eClassifier = eGenericType.getEClassifier();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		if (role != null) {
+		if (AnnotationUtil.hasSyntheticRole(eClassifier)) {
 			return null;
 		}
 		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();

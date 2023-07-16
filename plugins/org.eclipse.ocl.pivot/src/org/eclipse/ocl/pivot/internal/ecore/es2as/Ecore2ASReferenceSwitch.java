@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -60,6 +61,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -69,6 +71,7 @@ import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -190,6 +193,26 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 			}
 			doSwitchAll(Type.class, ClassUtil.<Type>nullFree(asOperation.getRaisedExceptions()), eOperation.getEGenericExceptions());
+			for (Constraint postCondition : asOperation.getOwnedPostconditions()) {
+			//	setResultVariable(specification, contextOperation, resultName);
+				ExpressionInOCL specification = (ExpressionInOCL)postCondition.getOwnedSpecification();
+				Type returnType = pivotElement.getType();
+				if (returnType != null) {					// FIXME BUG 385711 Use OclVoid rather than null
+					Variable resultVariable = specification.getOwnedResult();
+					if (resultVariable == null) {
+						resultVariable = PivotFactory.eINSTANCE.createParameterVariable();
+					}
+					resultVariable.setName(PivotConstants.RESULT_NAME);
+					Type type = PivotUtil.getType(pivotElement);
+					boolean isRequired = pivotElement.isIsRequired();
+					resultVariable.setType(type);
+					resultVariable.setIsRequired(isRequired);
+					specification.setOwnedResult(resultVariable);
+				}
+				else {
+					specification.setOwnedResult(null);
+				}
+			}
 			return asOperation;
 		}
 	}

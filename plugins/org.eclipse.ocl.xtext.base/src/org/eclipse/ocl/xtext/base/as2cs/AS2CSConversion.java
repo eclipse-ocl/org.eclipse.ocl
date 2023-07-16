@@ -32,6 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -458,7 +459,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public <@NonNull T extends NamedElementCS> T refreshNamedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull NamedElement object) {
-		return refreshNamedElement(csClass, csEClass, object, "«null»");
+		return refreshNamedElement(csClass, csEClass, object, object instanceof Constraint ? null : "«null»");
 	}
 
 	public <@NonNull T extends NamedElementCS> T refreshNamedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull NamedElement object, @Nullable String replacementNameForNull) {

@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
@@ -31,6 +32,10 @@ public class AnnotationUtil
 	 * 	 The classifier role may be "Entry" or "Lambda" or "Tuple" or blank.
 	 */
 	public static final @NonNull String CLASSIFIER_ROLE = "role";
+	/**
+	 * 	 A DataType class is a DataType mapped to an EClass, rather than EDataType, to support features
+	 */
+	public static final @NonNull String CLASSIFIER_ROLE_DATA_TYPE = "DataType";
 	/**
 	 * 	 An EntryXXXX<K,V> class types a Map Entry with Class/DataType and Required/Optional types.
 	 */
@@ -73,6 +78,10 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Operation";
 	/**
+	 * 	 The operation is a coercion: true - coercion, blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_COERCION = "isCoercion";
+	/**
 	 * 	 The operation is a constraint validator: true - transient (not-cached), blank/false - regular.
 	 */
 	public static final @NonNull String OPERATION_IS_CONSTRAINT = "isConstraint";		// XXX replace originalName
@@ -81,9 +90,17 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String OPERATION_IS_INVALIDATING = "isInvalidating";
 	/**
+	 * EOperation annotation identifying that an OPeration is static.
+	 */
+	public static final @NonNull String OPERATION_IS_STATIC = "isStatic";
+	/**
 	 * 	 The operation is: true - transient (not-cached), blank/false - regular.
 	 */
 	public static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
+	/**
+	 * 	 The EOPeration return is: true - a type, blank/false - regular.
+	 */
+	public static final @NonNull String OPERATION_IS_TYPE_OF = "isTypeOf";
 	/**
 	 * 	 The operation is: true - validating (may absorb an invalid), blank/false - regular.
 	 */
@@ -151,6 +168,14 @@ public class AnnotationUtil
 	public static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Property";
 //	public static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Property";
 	/**
+	 * 	 The property is: fully qualified implementation class name.
+	 */
+	public static final @NonNull String PROPERTY_IMPLEMENTATION = "implementation";
+	/**
+	 * EStructuralFeature annotation identifying that a Property is static.
+	 */
+	public static final @NonNull String PROPERTY_IS_STATIC = "isStatic";
+	/**
 	 * EReference annotation identifying that a Property is cyclic.
 	 */
 	public static final @NonNull String PROPERTY_SELF = "self";
@@ -205,6 +230,11 @@ public class AnnotationUtil
 		return (details.size() == 1) && PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(source)
 				&& details.containsKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
 	} */
+
+	public static boolean hasSyntheticRole(@NonNull EClassifier eClassifier) {
+		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+		return (role != null) && !CLASSIFIER_ROLE_DATA_TYPE.equals(role);
+	}
 
 	public static boolean isDocumentationKey(@Nullable String source, @Nullable String key) {
 		return PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(source)

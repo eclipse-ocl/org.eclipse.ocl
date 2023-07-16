@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.AnnotationImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
@@ -72,6 +74,7 @@ public class EAnnotationConverter
 		add(PivotConstantsInternal.SUBSETS_ANNOTATION_SOURCE, SubsetsEAnnotationConverter.INSTANCE);
 		add(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
 		// OCL
+		add(AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, ClassifierEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
@@ -231,6 +234,22 @@ public class EAnnotationConverter
 		}
 	}
 
+	private static class ClassifierEAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new ClassifierEAnnotationConverter();
+
+		@Override
+		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
+			if (AnnotationUtil.CLASSIFIER_ROLE.equals(key)) {
+				// Suppress redundant annotation
+			}
+			else {
+				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
+			}
+			return asAnnotation;
+		}
+	}
+
 	private static class CollectionEAnnotationConverter extends EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new CollectionEAnnotationConverter();
@@ -360,11 +379,23 @@ public class EAnnotationConverter
 			else if (AnnotationUtil.OPERATION_ACCUMULATORS.equals(key) || AnnotationUtil.OPERATION_ITERATORS.equals(key)) {
 				// XXX	assert asOperation instanceof Iteration;
 			}
+			else if (AnnotationUtil.OPERATION_IS_COERCION.equals(key)) {
+				org.eclipse.ocl.pivot.Class owningClass = asOperation.getOwningClass();
+				if ((owningClass instanceof PrimitiveType) && Boolean.parseBoolean(value)) {
+					((PrimitiveType)owningClass).getCoercions().add(asOperation);
+				}
+			}
 			else if (AnnotationUtil.OPERATION_IS_INVALIDATING.equals(key)) {
 				asOperation.setIsInvalidating((value != null) && Boolean.parseBoolean(value));
 			}
+			else if (AnnotationUtil.OPERATION_IS_STATIC.equals(key)) {
+				asOperation.setIsStatic((value != null) && Boolean.parseBoolean(value));
+			}
 			else if (AnnotationUtil.OPERATION_IS_TRANSIENT.equals(key)) {
 				asOperation.setIsTransient((value != null) && Boolean.parseBoolean(value));
+			}
+			else if (AnnotationUtil.OPERATION_IS_TYPE_OF.equals(key)) {
+				asOperation.setIsTypeof(Boolean.valueOf(value));
 			}
 			else if (AnnotationUtil.OPERATION_IS_VALIDATING.equals(key)) {
 				asOperation.setIsValidating((value != null) && Boolean.parseBoolean(value));
@@ -412,7 +443,6 @@ public class EAnnotationConverter
 			assert asParameter != null;
 			if (AnnotationUtil.PARAMETER_IS_TYPE_OF.equals(key)) {
 				asParameter.setIsTypeof(Boolean.valueOf(value));
-				//	Suppress redundant annotation detail
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
@@ -444,7 +474,17 @@ public class EAnnotationConverter
 
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (AnnotationUtil.PROPERTY_SELF.equals(key)) {
+			EObject eContainer = eAnnotation.eContainer();
+			assert eContainer != null;
+			Property asProperty = external2AS.getCreated(Property.class, eContainer);
+			assert asProperty != null;
+			if (AnnotationUtil.PROPERTY_IMPLEMENTATION.equals(key)) {
+				asProperty.setImplementationClass(value);
+			}
+			else if (AnnotationUtil.PROPERTY_IS_STATIC.equals(key)) {
+				asProperty.setIsStatic((value != null) && Boolean.parseBoolean(value));
+			}
+			else if (AnnotationUtil.PROPERTY_SELF.equals(key)) {
 				//	Suppress redundant annotation detail
 			}
 			else {

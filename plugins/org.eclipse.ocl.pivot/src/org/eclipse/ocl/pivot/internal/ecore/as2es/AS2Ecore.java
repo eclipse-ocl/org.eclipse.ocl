@@ -865,6 +865,23 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
+	 * REturn true if asDataType can be realized by an Ecore EDayaType.
+	 */
+	public boolean isEcoreDataType(@NonNull DataType asDataType) {
+		if (asDataType.getOwnedOperations().size() > 0) {
+			if (isKeepOperations()) {
+				return false;
+			}
+		}
+		if (asDataType.getOwnedProperties().size() > 0) {
+		//	if (isKeepOperations()) {
+				return false;
+		//	}
+		}
+		return true;
+	}
+
+	/**
 	 * Return tre if asPackage is a Pivot Metamodel.
 	 */
 	public boolean isPivot(org.eclipse.ocl.pivot.@NonNull Package asPackage) {

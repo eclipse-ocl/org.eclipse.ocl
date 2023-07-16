@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -279,6 +280,32 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 	}
 
+	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {
+		TemplateSignature templateSignature = pivotElement.getOwnedSignature();
+		if (templateSignature != null) {
+			List<TemplateParameter> parameters = templateSignature.getOwnedParameters();
+			safeVisitAll(eTypeParameters, parameters);
+		}
+	}
+
+	protected void copyTypedElement(@NonNull ETypedElement eTypedElement, @NonNull TypedElement pivotTypedElement) {
+		copyNamedElement(eTypedElement, pivotTypedElement);
+		context.defer(pivotTypedElement);		// Defer type/multiplicity setting
+	}
+
+	protected @Nullable EAnnotation createOppositeEAnnotation(@NonNull Property property) {
+		OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromProperty(property);
+		if (oppositePropertyDetails == null) {
+			return null;
+		}
+		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		eAnnotation.setSource(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
+		EMap<String, String> details = eAnnotation.getDetails();
+		assert details != null;
+		oppositePropertyDetails.addToDetails(details);
+		return eAnnotation;
+	}
+
 	public @NonNull String getValidName(@NonNull NamedElement pivotNamedElement) {
 		String name = NameUtil.getName(pivotNamedElement);
 		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
@@ -348,32 +375,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		return false;
-	}
-
-	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {
-		TemplateSignature templateSignature = pivotElement.getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> parameters = templateSignature.getOwnedParameters();
-			safeVisitAll(eTypeParameters, parameters);
-		}
-	}
-
-	protected void copyTypedElement(@NonNull ETypedElement eTypedElement, @NonNull TypedElement pivotTypedElement) {
-		copyNamedElement(eTypedElement, pivotTypedElement);
-		context.defer(pivotTypedElement);		// Defer type/multiplicity setting
-	}
-
-	protected @Nullable EAnnotation createOppositeEAnnotation(@NonNull Property property) {
-		OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromProperty(property);
-		if (oppositePropertyDetails == null) {
-			return null;
-		}
-		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-		eAnnotation.setSource(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
-		EMap<String, String> details = eAnnotation.getDetails();
-		assert details != null;
-		oppositePropertyDetails.addToDetails(details);
-		return eAnnotation;
 	}
 
 	/**
@@ -455,25 +456,29 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		if (pivotAnyType.getOwnedBindings().size() > 0) {
+		@NonNull EClass eClass = visitClass(pivotAnyType);
+	/*	if (pivotAnyType.getOwnedBindings().size() > 0) {
 			return null;
 		}
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		copyClassifier(eClass, pivotAnyType);
+		copyClassifier(eClass, pivotAnyType); */
 		Class<?> instanceClass = null;
 		String name = pivotAnyType.getName();
 		if (TypeId.OCL_ANY_NAME.equals(name)) {
 			instanceClass = Object.class;
 		}
-		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(true); //pivotAnyType.isIsAbstract());
-		eClass.setInterface(true); //pivotAnyType.isIsInterface());
+	//	eClass.setInstanceClass(instanceClass);
+	//	eClass.setAbstract(true); //pivotAnyType.isIsAbstract());
+	//	eClass.setInterface(true); //pivotAnyType.isIsInterface());
 		return eClass;
 	}
 
 	@Override
 	public EClass visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		if ("OclAny".equals(pivotClass.getName())) {
+			getClass();		// XXX
+		}
 		if (pivotClass.getOwnedBindings().size() > 0) {
 			return null;
 		}
@@ -575,8 +580,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
-		if ((pivotDataType.getOwnedOperations().size() > 0) && context.isKeepOperations()) {
-			return (EObject) super.visitDataType(pivotDataType);
+		if (!context.isEcoreDataType(pivotDataType)) {
+			EClass asDataType = visitClass(pivotDataType);
+			AnnotationUtil.setDetail(asDataType, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_DATA_TYPE);
+			return asDataType;
 		}
 		if (pivotDataType.getOwnedBindings().size() > 0) {
 			return null;
@@ -792,14 +799,24 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (implementationClass != null) {
 			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IMPLEMENTATION, implementationClass);
 		}
+		org.eclipse.ocl.pivot.Class owningClass = pivotOperation.getOwningClass();
+		if ((owningClass instanceof PrimitiveType) && ((PrimitiveType)owningClass).getCoercions().contains(pivotOperation)) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_COERCION, Boolean.TRUE.toString());
+		}
 		if (pivotOperation.isIsInvalidating()) {
-			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_INVALIDATING, "true");
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_INVALIDATING, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsStatic()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_STATIC, Boolean.TRUE.toString());
 		}
 		if (pivotOperation.isIsTransient()) {
-			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, "true");
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, Boolean.TRUE.toString());
+		}
+		if (pivotOperation.isIsTypeof()) {
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TYPE_OF, Boolean.TRUE.toString());
 		}
 		if (pivotOperation.isIsValidating()) {
-			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_VALIDATING, "true");
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_VALIDATING, Boolean.TRUE.toString());
 		}
 		Precedence precedence = pivotOperation.getPrecedence();
 		if (precedence != null) {
@@ -885,7 +902,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			eReference.setResolveProxies(pivotProperty.isIsResolveProxies());
 			eStructuralFeature = eReference;
 		}
-		else if (type instanceof DataType) {
+		else if ((type instanceof DataType) && context.isEcoreDataType((DataType)type)) {
 			EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 			eAttribute.setID(pivotProperty.isIsID());
 			eStructuralFeature = eAttribute;
@@ -966,6 +983,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			eAnnotation.setSource(PivotConstants.REDEFINES_ANNOTATION_SOURCE);
 			eStructuralFeature.getEAnnotations().add(eAnnotation);
 		} */
+		String implementationClass = pivotProperty.getImplementationClass();
+		if (implementationClass != null) {
+			AnnotationUtil.setDetail(eStructuralFeature, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_IMPLEMENTATION, implementationClass);
+		}
+		if (pivotProperty.isIsStatic()) {
+			AnnotationUtil.setDetail(eStructuralFeature, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_IS_STATIC, "true");
+		}
 		return eStructuralFeature;
 	}
 

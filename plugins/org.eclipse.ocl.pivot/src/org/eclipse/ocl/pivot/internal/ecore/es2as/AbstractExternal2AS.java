@@ -159,8 +159,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	public boolean isRequired(@NonNull EPackage ePackage) {
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-			if (role == null) {
+			if (!AnnotationUtil.hasSyntheticRole(eClassifier)) {
 				return true;
 			}
 		}
