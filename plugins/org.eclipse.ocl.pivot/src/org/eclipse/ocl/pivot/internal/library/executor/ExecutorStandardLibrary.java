@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -274,6 +275,12 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
 		initClass(asClass, eClassifier, typeId, flags, typeParameters);
 		return asClass;
+	}
+
+	public void createComment(@NonNull Element element, @NonNull String string) {
+		Comment asComment = PivotFactory.eINSTANCE.createComment();
+		asComment.setBody(string);
+		element.getOwnedComments().add(asComment);
 	}
 
 	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {

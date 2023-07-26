@@ -528,7 +528,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
 			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
 			appendTablesPackageQualification(asEnumeration);
-			appendTablesSubackageQualification(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME);
+		//	appendTablesSubackageQualification(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(asEnumeration);
 			s.append("__");
