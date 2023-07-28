@@ -4545,6 +4545,7 @@ public class OCLstdlibTables extends AbstractTables
 	static {
 		OrphanageImpl.checkSuperClasses = true;
 		Init.initEnd();
+		OrphanageImpl.checkSuperClasses = false;
 	}
 
 	/*
