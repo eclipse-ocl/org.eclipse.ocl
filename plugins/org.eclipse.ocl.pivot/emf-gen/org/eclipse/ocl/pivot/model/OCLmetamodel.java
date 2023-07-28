@@ -28,18 +28,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -48,11 +45,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -291,7 +284,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
-			root.getOwnedPackages().add(orphanage);
+		//	root.getOwnedPackages().add(orphanage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 

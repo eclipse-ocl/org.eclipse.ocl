@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -51,10 +50,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -313,7 +311,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
-			model.getOwnedPackages().add(orphanage);
+		//	model.getOwnedPackages().add(orphanage);
 		}
 
 		private Precedence prec_ADDITIVE;
