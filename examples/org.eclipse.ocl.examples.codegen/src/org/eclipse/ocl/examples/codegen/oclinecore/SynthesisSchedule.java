@@ -376,10 +376,10 @@ public class SynthesisSchedule
 		addDependency(allTypesSlot, typeParametersSlot);
 		addDependency(allFragmentsSlot, allTypesSlot);
 		addDependency(parameterListsSlot, allFragmentsSlot);
-		addDependency(allOperationsSlot, parameterListsSlot);
+		addDependency(typeFragmentsSlot, parameterListsSlot);
+		addDependency(allOperationsSlot, typeFragmentsSlot);
 		addDependency(allPropertiesSlot, allOperationsSlot);
-		addDependency(typeFragmentsSlot, allPropertiesSlot);
-		addDependency(fragmentOperationsSlot, typeFragmentsSlot);
+		addDependency(fragmentOperationsSlot, allPropertiesSlot);
 		addDependency(fragmentPropertiesSlot, fragmentOperationsSlot);
 		addDependency(enumerationLiteralsSlot, fragmentPropertiesSlot);
 	}
