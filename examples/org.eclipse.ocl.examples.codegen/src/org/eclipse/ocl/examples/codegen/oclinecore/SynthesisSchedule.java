@@ -55,6 +55,8 @@ public class SynthesisSchedule
 	 */
 	public static class Slot //implements Nameable
 	{
+		public static final @NonNull String ROLE_ALL_OPERATIONS = "ALL_OPERATIONS";
+		public static final @NonNull String ROLE_ALL_PROPERTIES = "ALL_PROPERTIES";
 		public static final @NonNull String ROLE_COMMENTS = "CTOR";
 		public static final @NonNull String ROLE_CTOR = "CTOR";
 		public static final @NonNull String ROLE_ENUMERATION_LITERALS = "ENUMERATION_LITERALS";
@@ -356,10 +358,15 @@ public class SynthesisSchedule
 	}
 
 	public void doModel(@NonNull Model asModel) {
+		Slot allOperationsSlot = getSlot(asModel, Slot.ROLE_ALL_OPERATIONS);
+		Slot allPropertiesSlot = getSlot(asModel, Slot.ROLE_ALL_PROPERTIES);
 		Slot typeFragmentsSlot = getSlot(asModel, Slot.ROLE_TYPE_FRAGMENTS);
 		Slot fragmentOperationsSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_OPERATIONS);
 		Slot fragmentPropertiesSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_PROPERTIES);
 		Slot enumerationLiteralsSlot = getSlot(asModel, Slot.ROLE_ENUMERATION_LITERALS);
+	//	addDependency(allOperationsSlot, typeFragmentsSlot);
+		addDependency(allPropertiesSlot, allOperationsSlot);
+		addDependency(typeFragmentsSlot, allPropertiesSlot);
 		addDependency(fragmentOperationsSlot, typeFragmentsSlot);
 		addDependency(fragmentPropertiesSlot, fragmentOperationsSlot);
 		addDependency(enumerationLiteralsSlot, fragmentPropertiesSlot);

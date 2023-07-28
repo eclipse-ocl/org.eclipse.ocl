@@ -930,19 +930,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("\t// " + role + " " + element + "\n");
 				//	}
 				}
-				else if (role == Slot.ROLE_OPERATIONS) {
-					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)element;
-				//	Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>> sortedOperations = fragmentOperations.get(asClass);
-				//	if (sortedOperations != null) {
-				//		declareFragmentOperations(asClass, sortedOperations);
-				//	}
+				else if (role == Slot.ROLE_ALL_OPERATIONS) {
+					declareOperations();
 				}
-				else if (role == Slot.ROLE_PROPERTIES) {
-					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)element;
-				//	List<@NonNull Property> sortedProperties = fragmentProperties.get(asClass);
-				//	if (sortedProperties != null) {
-				//		declareFragmentProperties(asClass, sortedProperties);
-				//	}
+				else if (role == Slot.ROLE_ALL_PROPERTIES) {
+					declareProperties();
 				}
 				else if (role == Slot.ROLE_TYPE_FRAGMENTS) {
 					declareTypeFragments();
@@ -961,7 +953,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("\t// " + role + " " + element + "\n");
 				}
 			}
-			s.append("\n");
+		/*	s.append("\n");
 			s.append("\t@SuppressWarnings(\"unused\")\n");
 			s.append("\tprivate static Object unusedInit" + stage.getName() + " = new Object() {{\n");
 			for (@NonNull Slot slot : stage.getSlots()) {
@@ -971,7 +963,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					declareComments(element);
 				}
 			}
-			s.append("\t}};\n");
+			s.append("\t}};\n"); */
 		}
 	}
 
@@ -1357,10 +1349,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		declareFragments();
 		s.append("\n");
 		declareParameterLists();
-		s.append("\n");
-		declareOperations();
-		s.append("\n");
-		declareProperties();
+	//	s.append("\n");
+	//	declareOperations();
+	//	s.append("\n");
+	//	declareProperties();
 	//	s.append("\n");
 	//	declareTypeFragments();
 	//	s.append("\n");

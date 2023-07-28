@@ -1943,6 +1943,11 @@ public class PivotTables extends AbstractTables
 		public static void init() {}
 	}
 
+
+	// CTOR http://www.eclipse.org/ocl/2015/Library
+	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
+
 	/**
 	 *	The operation descriptors for each operation of each type.
 	 *
@@ -2044,6 +2049,9 @@ public class PivotTables extends AbstractTables
 		public static void init() {}
 
 	}
+	// CTOR $$
+	// CTOR ocl
+	// CTOR pivot
 
 	/**
 	 *	The property descriptors for each property of each type.
@@ -2563,19 +2571,1004 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR Boolean
+	// CTOR EcoreObject
+	// CTOR JavaClass
+	// CTOR LibraryFeature
+	// CTOR Object
+	// CTOR Throwable
+	// CTOR AssociativityKind
+	// CTOR CollectionKind
+	// CTOR PseudostateKind
+	// CTOR TransitionKind
+	// CTOR Integer
+	// CTOR Real
+	// CTOR String
+	// CTOR UnlimitedNatural
+	// CTOR OclAny
+	// CTOR OclElement
+	// CTOR OclEnumeration
+	// CTOR Annotation
+	// CTOR AnyType
+	// CTOR AssociationClass
+	// CTOR AssociationClassCallExp
+	// CTOR BagType
+	// CTOR Behavior
+	// CTOR BooleanLiteralExp
+	// CTOR BooleanType
+	// CTOR CallExp
+	// CTOR CallOperationAction
+	// CTOR Class
+	// CTOR CollectionItem
+	// CTOR CollectionLiteralExp
+	// CTOR CollectionLiteralPart
+	// CTOR CollectionRange
+	// CTOR CollectionType
+	// CTOR Comment
+	// CTOR CompleteClass
+	// CTOR CompleteEnvironment
+	// CTOR CompleteModel
+	// CTOR CompletePackage
+	// CTOR CompleteStandardLibrary
+	// CTOR ConnectionPointReference
+	// CTOR Constraint
+	// CTOR DataType
+	// CTOR Detail
+	// CTOR DynamicBehavior
+	// CTOR DynamicElement
+	// CTOR DynamicProperty
+	// CTOR DynamicType
+	// CTOR DynamicValueSpecification
+	// CTOR Element
+	// CTOR ElementExtension
+	// CTOR ElementLiteralExp
+	// CTOR EnumLiteralExp
+	// CTOR Enumeration
+	// CTOR EnumerationLiteral
+	// CTOR ExpressionInOCL
+	// CTOR Feature
+	// CTOR FeatureCallExp
+	// CTOR FinalState
+	// CTOR IfExp
+	// CTOR Import
+	// CTOR InstanceSpecification
+	// CTOR IntegerLiteralExp
+	// CTOR InvalidLiteralExp
+	// CTOR InvalidType
+	// CTOR IterableType
+	// CTOR IterateExp
+	// CTOR Iteration
+	// CTOR IteratorExp
+	// CTOR IteratorVariable
+	// CTOR JavaType
+	// CTOR LambdaType
+	// CTOR LanguageExpression
+	// CTOR LetExp
+	// CTOR LetVariable
+	// CTOR Library
+	// CTOR LiteralExp
+	// CTOR LoopExp
+	// CTOR MapLiteralExp
+	// CTOR MapLiteralPart
+	// CTOR MapType
+	// CTOR MessageExp
+	// CTOR MessageType
+	// CTOR Model
+	// CTOR MorePivotable
+	// CTOR Nameable
+	// CTOR NamedElement
+	// CTOR Namespace
+	// CTOR NavigationCallExp
+	// CTOR NullLiteralExp
+	// CTOR NumericLiteralExp
+	// CTOR OCLExpression
+	// CTOR Operation
+	// CTOR OperationCallExp
+	// CTOR OppositePropertyCallExp
+	// CTOR OrderedSetType
+	// CTOR OrphanCompletePackage
+	// CTOR Orphanage
+	// CTOR Package
+	// CTOR Parameter
+	// CTOR ParameterVariable
+	// CTOR Pivotable
+	// CTOR Precedence
+	// CTOR PrimitiveCompletePackage
+	// CTOR PrimitiveLiteralExp
+	// CTOR PrimitiveType
+	// CTOR Profile
+	// CTOR ProfileApplication
+	// CTOR Property
+	// CTOR PropertyCallExp
+	// CTOR Pseudostate
+	// CTOR RealLiteralExp
+	// CTOR ReferringElement
+	// CTOR Region
+	// CTOR ResultVariable
+	// CTOR SelfType
+	// CTOR SendSignalAction
+	// CTOR SequenceType
+	// CTOR SetType
+	// CTOR ShadowExp
+	// CTOR ShadowPart
+	// CTOR Signal
+	// CTOR Slot
+	// CTOR StandardLibrary
+	// CTOR State
+	// CTOR StateExp
+	// CTOR StateMachine
+	// CTOR Stereotype
+	// CTOR StereotypeExtender
+	// CTOR StringLiteralExp
+	// CTOR TemplateBinding
+	// CTOR TemplateParameter
+	// CTOR TemplateParameterSubstitution
+	// CTOR TemplateSignature
+	// CTOR TemplateableElement
+	// CTOR Transition
+	// CTOR Trigger
+	// CTOR TupleLiteralExp
+	// CTOR TupleLiteralPart
+	// CTOR TuplePart
+	// CTOR TupleType
+	// CTOR Type
+	// CTOR TypeExp
+	// CTOR TypedElement
+	// CTOR UnlimitedNaturalLiteralExp
+	// CTOR UnspecifiedValueExp
+	// CTOR ValueSpecification
+	// CTOR Variable
+	// CTOR VariableDeclaration
+	// CTOR VariableExp
+	// CTOR Vertex
+	// CTOR Visitable
+	// CTOR VoidType
+	// CTOR WildcardType
+	// CTOR Bag(Annotation)
+	// CTOR Bag(AssociationClassCallExp)
+	// CTOR Bag(CallOperationAction)
+	// CTOR Bag(Class)
+	// CTOR Bag(CollectionType)
+	// CTOR Bag(CompleteClass)
+	// CTOR Bag(CompleteModel)
+	// CTOR Bag(CompletePackage)
+	// CTOR Bag(ConnectionPointReference)
+	// CTOR Bag(Constraint)
+	// CTOR Bag(DataType)
+	// CTOR Bag(DynamicElement)
+	// CTOR Bag(DynamicProperty)
+	// CTOR Bag(ElementExtension)
+	// CTOR Bag(EnumLiteralExp)
+	// CTOR Bag(Import)
+	// CTOR Bag(InstanceSpecification)
+	// CTOR Bag(LambdaType)
+	// CTOR Bag(LoopExp)
+	// CTOR Bag(MapType)
+	// CTOR Bag(MessageType)
+	// CTOR Bag(NavigationCallExp)
+	// CTOR Bag(OCLExpression)
+	// CTOR Bag(OperationCallExp)
+	// CTOR Bag(Operation)
+	// CTOR Bag(OppositePropertyCallExp)
+	// CTOR Bag(Package)
+	// CTOR Bag(PrimitiveType)
+	// CTOR Bag(PropertyCallExp)
+	// CTOR Bag(Property)
+	// CTOR Bag(Region)
+	// CTOR Bag(SendSignalAction)
+	// CTOR Bag(ShadowPart)
+	// CTOR Bag(Slot)
+	// CTOR Bag(StateExp)
+	// CTOR Bag(StateMachine)
+	// CTOR Bag(State)
+	// CTOR Bag(TemplateBinding)
+	// CTOR Bag(TemplateParameterSubstitution)
+	// CTOR Bag(TemplateParameter)
+	// CTOR Bag(TemplateableElement)
+	// CTOR Bag(TypeExp)
+	// CTOR Bag(TypedElement)
+	// CTOR Bag(VariableDeclaration)
+	// CTOR Bag(VariableExp)
+	// CTOR Bag(Variable)
+	// CTOR Bag(WildcardType)
+	// CTOR OrderedSet(CollectionLiteralPart)
+	// CTOR OrderedSet(Detail)
+	// CTOR OrderedSet(Element)
+	// CTOR OrderedSet(EnumerationLiteral)
+	// CTOR OrderedSet(Import)
+	// CTOR OrderedSet(IteratorVariable[*|?])
+	// CTOR OrderedSet(MapLiteralPart)
+	// CTOR OrderedSet(OCLExpression)
+	// CTOR OrderedSet(Operation)
+	// CTOR OrderedSet(Parameter)
+	// CTOR OrderedSet(Precedence)
+	// CTOR OrderedSet(Property)
+	// CTOR OrderedSet(ShadowPart)
+	// CTOR OrderedSet(TemplateParameter[+|1])
+	// CTOR OrderedSet(TupleLiteralPart)
+	// CTOR OrderedSet(ValueSpecification)
+	// CTOR OrderedSet(Variable)
+	// CTOR Sequence(Type)
+	// CTOR Set(Behavior)
+	// CTOR Set(Class)
+	// CTOR Set(Comment)
+	// CTOR Set(CompleteClass)
+	// CTOR Set(CompletePackage)
+	// CTOR Set(ConnectionPointReference)
+	// CTOR Set(Constraint)
+	// CTOR Set(DynamicProperty)
+	// CTOR Set(ElementExtension)
+	// CTOR Set(Element)
+	// CTOR Set(InstanceSpecification)
+	// CTOR Set(Model)
+	// CTOR Set(Operation)
+	// CTOR Set(Package)
+	// CTOR Set(ProfileApplication)
+	// CTOR Set(Property)
+	// CTOR Set(Pseudostate)
+	// CTOR Set(Region)
+	// CTOR Set(Region[+|1])
+	// CTOR Set(Slot)
+	// CTOR Set(StateMachine)
+	// CTOR Set(State)
+	// CTOR Set(StereotypeExtender)
+	// CTOR Set(TemplateBinding)
+	// CTOR Set(TemplateParameterSubstitution[+|1])
+	// CTOR Set(Transition)
+	// CTOR Set(Trigger)
+	// CTOR Set(Type)
+	// CTOR Set(Vertex)
 
-
-	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
-	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
-	// CTOR http://www.eclipse.org/ocl/2015/Library
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit0 = new Object() {{
-	}};
-
-	// CTOR $$
-	// CTOR ocl
-	// CTOR pivot
+	// CTOR pivot::Annotation::ownedContents
+	// CTOR pivot::Annotation::ownedDetails
+	// CTOR pivot::Annotation::references
+	// CTOR pivot::AssociationClass::AssociationClassCallExp
+	// CTOR pivot::AssociationClass::unownedAttributes
+	// CTOR pivot::AssociationClassCallExp::referredAssociationClass
+	// CTOR pivot::Behavior::Class
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::State
+	// CTOR pivot::Behavior::owningTransition
+	// CTOR pivot::BooleanLiteralExp::booleanSymbol
+	// CTOR pivot::CallExp::isImplicit
+	// CTOR pivot::CallExp::isSafe
+	// CTOR pivot::CallExp::ownedSource
+	// CTOR pivot::CallOperationAction::MessageExp
+	// CTOR pivot::CallOperationAction::operation
+	// CTOR pivot::Class::Class
+	// CTOR pivot::Class::CompleteClass
+	// CTOR pivot::Class::DataType
+	// CTOR pivot::Class::InstanceSpecification
+	// CTOR pivot::Class::MapType
+	// CTOR pivot::Class::TemplateParameter
+	// CTOR pivot::Class::WildcardType
+	// CTOR pivot::Class::extenders
+	// CTOR pivot::Class::instanceClassName
+	// CTOR pivot::Class::isAbstract
+	// CTOR pivot::Class::isActive
+	// CTOR pivot::Class::isInterface
+	// CTOR pivot::Class::ownedBehaviors
+	// CTOR pivot::Class::ownedInvariants
+	// CTOR pivot::Class::ownedOperations
+	// CTOR pivot::Class::ownedProperties
+	// CTOR pivot::Class::owningPackage
+	// CTOR pivot::Class::superClasses
+	// CTOR pivot::CollectionItem::ownedItem
+	// CTOR pivot::CollectionLiteralExp::kind
+	// CTOR pivot::CollectionLiteralExp::ownedParts
+	// CTOR pivot::CollectionLiteralPart::CollectionLiteralExp
+	// CTOR pivot::CollectionRange::ownedFirst
+	// CTOR pivot::CollectionRange::ownedLast
+	// CTOR pivot::CollectionType::elementType
+	// CTOR pivot::CollectionType::isNullFree
+	// CTOR pivot::CollectionType::lower
+	// CTOR pivot::CollectionType::upper
+	// CTOR pivot::Comment::annotatedElements
+	// CTOR pivot::Comment::body
+	// CTOR pivot::Comment::owningElement
+	// CTOR pivot::CompleteClass::owningCompletePackage
+	// CTOR pivot::CompleteClass::partialClasses
+	// CTOR pivot::CompleteEnvironment::ownedCompleteModel
+	// CTOR pivot::CompleteEnvironment::ownedStandardLibrary
+	// CTOR pivot::CompleteModel::orphanCompletePackage
+	// CTOR pivot::CompleteModel::ownedCompletePackages
+	// CTOR pivot::CompleteModel::owningCompleteEnvironment
+	// CTOR pivot::CompleteModel::partialModels
+	// CTOR pivot::CompleteModel::primitiveCompletePackage
+	// CTOR pivot::CompletePackage::ownedCompleteClasses
+	// CTOR pivot::CompletePackage::ownedCompletePackages
+	// CTOR pivot::CompletePackage::owningCompleteModel
+	// CTOR pivot::CompletePackage::owningCompletePackage
+	// CTOR pivot::CompletePackage::partialPackages
+	// CTOR pivot::CompleteStandardLibrary::owningCompleteEnvironment
+	// CTOR pivot::ConnectionPointReference::entries
+	// CTOR pivot::ConnectionPointReference::exits
+	// CTOR pivot::ConnectionPointReference::owningState
+	// CTOR pivot::Constraint::Class
+	// CTOR pivot::Constraint::Constraint
+	// CTOR pivot::Constraint::Namespace
+	// CTOR pivot::Constraint::constrainedElements
+	// CTOR pivot::Constraint::context
+	// CTOR pivot::Constraint::isCallable
+	// CTOR pivot::Constraint::ownedSpecification
+	// CTOR pivot::Constraint::owningPostContext
+	// CTOR pivot::Constraint::owningPreContext
+	// CTOR pivot::Constraint::owningState
+	// CTOR pivot::Constraint::owningTransition
+	// CTOR pivot::Constraint::redefinedConstraints
+	// CTOR pivot::DataType::behavioralClass
+	// CTOR pivot::DataType::isSerializable
+	// CTOR pivot::DataType::value
+	// CTOR pivot::Detail::Annotation
+	// CTOR pivot::Detail::values
+	// CTOR pivot::DynamicElement::metaType
+	// CTOR pivot::DynamicProperty::DynamicType
+	// CTOR pivot::DynamicProperty::default
+	// CTOR pivot::DynamicProperty::referredProperty
+	// CTOR pivot::DynamicType::ownedDynamicProperties
+	// CTOR pivot::Element::Annotation
+	// CTOR pivot::Element::Annotation
+	// CTOR pivot::Element::Constraint
+	// CTOR pivot::Element::Element
+	// CTOR pivot::Element::annotatingComments
+	// CTOR pivot::Element::ownedAnnotations
+	// CTOR pivot::Element::ownedComments
+	// CTOR pivot::Element::ownedExtensions
+	// CTOR pivot::ElementExtension::base
+	// CTOR pivot::ElementExtension::isApplied
+	// CTOR pivot::ElementExtension::isRequired
+	// CTOR pivot::ElementExtension::stereotype
+	// CTOR pivot::ElementLiteralExp::referredElement
+	// CTOR pivot::EnumLiteralExp::referredLiteral
+	// CTOR pivot::Enumeration::ownedLiterals
+	// CTOR pivot::EnumerationLiteral::EnumLiteralExp
+	// CTOR pivot::EnumerationLiteral::literal
+	// CTOR pivot::EnumerationLiteral::owningEnumeration
+	// CTOR pivot::EnumerationLiteral::value
+	// CTOR pivot::ExpressionInOCL::ownedBody
+	// CTOR pivot::ExpressionInOCL::ownedContext
+	// CTOR pivot::ExpressionInOCL::ownedParameters
+	// CTOR pivot::ExpressionInOCL::ownedResult
+	// CTOR pivot::Feature::implementation
+	// CTOR pivot::Feature::implementationClass
+	// CTOR pivot::Feature::isStatic
+	// CTOR pivot::FeatureCallExp::isPre
+	// CTOR pivot::IfExp::isElseIf
+	// CTOR pivot::IfExp::ownedCondition
+	// CTOR pivot::IfExp::ownedElse
+	// CTOR pivot::IfExp::ownedThen
+	// CTOR pivot::Import::Model
+	// CTOR pivot::Import::importedNamespace
+	// CTOR pivot::Import::xmiidVersion
+	// CTOR pivot::InstanceSpecification::classes
+	// CTOR pivot::InstanceSpecification::ownedSlots
+	// CTOR pivot::InstanceSpecification::ownedSpecification
+	// CTOR pivot::InstanceSpecification::owningPackage
+	// CTOR pivot::IntegerLiteralExp::integerSymbol
+	// CTOR pivot::IterateExp::ownedResult
+	// CTOR pivot::Iteration::LoopExp
+	// CTOR pivot::Iteration::ownedAccumulators
+	// CTOR pivot::Iteration::ownedIterators
+	// CTOR pivot::IteratorVariable::LoopExp
+	// CTOR pivot::JavaType::javaClass
+	// CTOR pivot::LambdaType::contextType
+	// CTOR pivot::LambdaType::parameterType
+	// CTOR pivot::LambdaType::resultType
+	// CTOR pivot::LanguageExpression::InstanceSpecification
+	// CTOR pivot::LanguageExpression::Operation
+	// CTOR pivot::LanguageExpression::Property
+	// CTOR pivot::LanguageExpression::body
+	// CTOR pivot::LanguageExpression::language
+	// CTOR pivot::LanguageExpression::owningConstraint
+	// CTOR pivot::LetExp::ownedIn
+	// CTOR pivot::LetExp::ownedVariable
+	// CTOR pivot::Library::ownedPrecedences
+	// CTOR pivot::LoopExp::ownedBody
+	// CTOR pivot::LoopExp::ownedCoIterators
+	// CTOR pivot::LoopExp::ownedIterators
+	// CTOR pivot::LoopExp::referredIteration
+	// CTOR pivot::MapLiteralExp::ownedParts
+	// CTOR pivot::MapLiteralPart::MapLiteralExp
+	// CTOR pivot::MapLiteralPart::ownedKey
+	// CTOR pivot::MapLiteralPart::ownedValue
+	// CTOR pivot::MapType::entryClass
+	// CTOR pivot::MapType::keyType
+	// CTOR pivot::MapType::keysAreNullFree
+	// CTOR pivot::MapType::valueType
+	// CTOR pivot::MapType::valuesAreNullFree
+	// CTOR pivot::MessageExp::ownedArguments
+	// CTOR pivot::MessageExp::ownedCalledOperation
+	// CTOR pivot::MessageExp::ownedSentSignal
+	// CTOR pivot::MessageExp::ownedTarget
+	// CTOR pivot::MessageType::referredOperation
+	// CTOR pivot::MessageType::referredSignal
+	// CTOR pivot::Model::CompleteModel
+	// CTOR pivot::Model::externalURI
+	// CTOR pivot::Model::ownedImports
+	// CTOR pivot::Model::ownedPackages
+	// CTOR pivot::Model::xmiidVersion
+	// CTOR pivot::NamedElement::name
+	// CTOR pivot::Namespace::Constraint
+	// CTOR pivot::Namespace::Import
+	// CTOR pivot::Namespace::ownedConstraints
+	// CTOR pivot::NavigationCallExp::navigationSource
+	// CTOR pivot::NavigationCallExp::qualifiers
+	// CTOR pivot::OCLExpression::CallExp
+	// CTOR pivot::OCLExpression::CollectionItem
+	// CTOR pivot::OCLExpression::CollectionRange
+	// CTOR pivot::OCLExpression::CollectionRange
+	// CTOR pivot::OCLExpression::ExpressionInOCL
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::IfExp
+	// CTOR pivot::OCLExpression::LetExp
+	// CTOR pivot::OCLExpression::LoopExp
+	// CTOR pivot::OCLExpression::MapLiteralPart
+	// CTOR pivot::OCLExpression::MapLiteralPart
+	// CTOR pivot::OCLExpression::MessageExp
+	// CTOR pivot::OCLExpression::MessageExp
+	// CTOR pivot::OCLExpression::NavigationCallExp
+	// CTOR pivot::OCLExpression::OperationCallExp
+	// CTOR pivot::OCLExpression::ShadowPart
+	// CTOR pivot::OCLExpression::TupleLiteralPart
+	// CTOR pivot::OCLExpression::Variable
+	// CTOR pivot::OCLExpression::typeValue
+	// CTOR pivot::Operation::CallOperationAction
+	// CTOR pivot::Operation::MessageType
+	// CTOR pivot::Operation::Operation
+	// CTOR pivot::Operation::OperationCallExp
+	// CTOR pivot::Operation::PrimitiveType
+	// CTOR pivot::Operation::bodyExpression
+	// CTOR pivot::Operation::isInvalidating
+	// CTOR pivot::Operation::isTransient
+	// CTOR pivot::Operation::isTypeof
+	// CTOR pivot::Operation::isValidating
+	// CTOR pivot::Operation::ownedParameters
+	// CTOR pivot::Operation::ownedPostconditions
+	// CTOR pivot::Operation::ownedPreconditions
+	// CTOR pivot::Operation::owningClass
+	// CTOR pivot::Operation::precedence
+	// CTOR pivot::Operation::raisedExceptions
+	// CTOR pivot::Operation::redefinedOperations
+	// CTOR pivot::OperationCallExp::isVirtual
+	// CTOR pivot::OperationCallExp::ownedArguments
+	// CTOR pivot::OperationCallExp::referredOperation
+	// CTOR pivot::OppositePropertyCallExp::referredProperty
+	// CTOR pivot::OrphanCompletePackage::CompleteModel
+	// CTOR pivot::Package::CompletePackage
+	// CTOR pivot::Package::Model
+	// CTOR pivot::Package::Package
+	// CTOR pivot::Package::URI
+	// CTOR pivot::Package::importedPackages
+	// CTOR pivot::Package::nsPrefix
+	// CTOR pivot::Package::ownedClasses
+	// CTOR pivot::Package::ownedInstances
+	// CTOR pivot::Package::ownedPackages
+	// CTOR pivot::Package::ownedProfileApplications
+	// CTOR pivot::Package::owningPackage
+	// CTOR pivot::Parameter::Iteration
+	// CTOR pivot::Parameter::Iteration
+	// CTOR pivot::Parameter::Variable
+	// CTOR pivot::Parameter::isTypeof
+	// CTOR pivot::Parameter::owningOperation
+	// CTOR pivot::Precedence::Library
+	// CTOR pivot::Precedence::Operation
+	// CTOR pivot::Precedence::associativity
+	// CTOR pivot::Precedence::order
+	// CTOR pivot::PrimitiveCompletePackage::CompleteModel
+	// CTOR pivot::PrimitiveType::coercions
+	// CTOR pivot::Profile::profileApplications
+	// CTOR pivot::ProfileApplication::appliedProfile
+	// CTOR pivot::ProfileApplication::isStrict
+	// CTOR pivot::ProfileApplication::owningPackage
+	// CTOR pivot::Property::DynamicProperty
+	// CTOR pivot::Property::NavigationCallExp
+	// CTOR pivot::Property::OppositePropertyCallExp
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::Property
+	// CTOR pivot::Property::PropertyCallExp
+	// CTOR pivot::Property::ShadowPart
+	// CTOR pivot::Property::Slot
+	// CTOR pivot::Property::associationClass
+	// CTOR pivot::Property::defaultValue
+	// CTOR pivot::Property::defaultValueString
+	// CTOR pivot::Property::isComposite
+	// CTOR pivot::Property::isDerived
+	// CTOR pivot::Property::isID
+	// CTOR pivot::Property::isImplicit
+	// CTOR pivot::Property::isReadOnly
+	// CTOR pivot::Property::isResolveProxies
+	// CTOR pivot::Property::isTransient
+	// CTOR pivot::Property::isUnsettable
+	// CTOR pivot::Property::isVolatile
+	// CTOR pivot::Property::keys
+	// CTOR pivot::Property::opposite
+	// CTOR pivot::Property::ownedExpression
+	// CTOR pivot::Property::owningClass
+	// CTOR pivot::Property::redefinedProperties
+	// CTOR pivot::Property::referredProperty
+	// CTOR pivot::Property::subsettedProperty
+	// CTOR pivot::PropertyCallExp::referredProperty
+	// CTOR pivot::Pseudostate::ConnectionPointReference
+	// CTOR pivot::Pseudostate::ConnectionPointReference
+	// CTOR pivot::Pseudostate::kind
+	// CTOR pivot::Pseudostate::owningState
+	// CTOR pivot::Pseudostate::owningStateMachine
+	// CTOR pivot::RealLiteralExp::realSymbol
+	// CTOR pivot::Region::Region
+	// CTOR pivot::Region::extendedRegion
+	// CTOR pivot::Region::ownedSubvertexes
+	// CTOR pivot::Region::ownedTransitions
+	// CTOR pivot::Region::owningState
+	// CTOR pivot::Region::owningStateMachine
+	// CTOR pivot::SendSignalAction::MessageExp
+	// CTOR pivot::SendSignalAction::signal
+	// CTOR pivot::ShadowExp::ownedParts
+	// CTOR pivot::ShadowExp::value
+	// CTOR pivot::ShadowPart::ShadowExp
+	// CTOR pivot::ShadowPart::ownedInit
+	// CTOR pivot::ShadowPart::referredProperty
+	// CTOR pivot::Signal::MessageType
+	// CTOR pivot::Signal::SendSignalAction
+	// CTOR pivot::Slot::definingProperty
+	// CTOR pivot::Slot::ownedValues
+	// CTOR pivot::Slot::owningInstance
+	// CTOR pivot::State::State
+	// CTOR pivot::State::StateExp
+	// CTOR pivot::State::isComposite
+	// CTOR pivot::State::isOrthogonal
+	// CTOR pivot::State::isSimple
+	// CTOR pivot::State::isSubmachineState
+	// CTOR pivot::State::ownedConnectionPoints
+	// CTOR pivot::State::ownedConnections
+	// CTOR pivot::State::ownedDeferrableTriggers
+	// CTOR pivot::State::ownedDoActivity
+	// CTOR pivot::State::ownedEntry
+	// CTOR pivot::State::ownedExit
+	// CTOR pivot::State::ownedRegions
+	// CTOR pivot::State::ownedStateInvariant
+	// CTOR pivot::State::redefinedState
+	// CTOR pivot::State::submachines
+	// CTOR pivot::StateExp::referredState
+	// CTOR pivot::StateMachine::StateMachine
+	// CTOR pivot::StateMachine::extendedStateMachines
+	// CTOR pivot::StateMachine::ownedConnectionPoints
+	// CTOR pivot::StateMachine::ownedRegions
+	// CTOR pivot::StateMachine::submachineStates
+	// CTOR pivot::Stereotype::ElementExtension
+	// CTOR pivot::Stereotype::ownedExtenders
+	// CTOR pivot::StereotypeExtender::class
+	// CTOR pivot::StereotypeExtender::isRequired
+	// CTOR pivot::StereotypeExtender::owningStereotype
+	// CTOR pivot::StringLiteralExp::stringSymbol
+	// CTOR pivot::TemplateBinding::ownedSubstitutions
+	// CTOR pivot::TemplateBinding::owningElement
+	// CTOR pivot::TemplateBinding::templateSignature
+	// CTOR pivot::TemplateParameter::TemplateParameterSubstitution
+	// CTOR pivot::TemplateParameter::WildcardType
+	// CTOR pivot::TemplateParameter::constrainingClasses
+	// CTOR pivot::TemplateParameter::owningSignature
+	// CTOR pivot::TemplateParameterSubstitution::actual
+	// CTOR pivot::TemplateParameterSubstitution::formal
+	// CTOR pivot::TemplateParameterSubstitution::ownedWildcard
+	// CTOR pivot::TemplateParameterSubstitution::owningBinding
+	// CTOR pivot::TemplateSignature::TemplateBinding
+	// CTOR pivot::TemplateSignature::ownedParameters
+	// CTOR pivot::TemplateSignature::owningElement
+	// CTOR pivot::TemplateableElement::TemplateableElement
+	// CTOR pivot::TemplateableElement::generic
+	// CTOR pivot::TemplateableElement::ownedBindings
+	// CTOR pivot::TemplateableElement::ownedSignature
+	// CTOR pivot::Transition::kind
+	// CTOR pivot::Transition::ownedEffect
+	// CTOR pivot::Transition::ownedGuard
+	// CTOR pivot::Transition::ownedTriggers
+	// CTOR pivot::Transition::owningRegion
+	// CTOR pivot::Transition::source
+	// CTOR pivot::Transition::target
+	// CTOR pivot::Trigger::owningState
+	// CTOR pivot::Trigger::owningTransition
+	// CTOR pivot::TupleLiteralExp::ownedParts
+	// CTOR pivot::TupleLiteralPart::TupleLiteralExp
+	// CTOR pivot::TupleLiteralPart::ownedInit
+	// CTOR pivot::Type::CollectionType
+	// CTOR pivot::Type::DynamicElement
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::LambdaType
+	// CTOR pivot::Type::MapType
+	// CTOR pivot::Type::MapType
+	// CTOR pivot::Type::OCLExpression
+	// CTOR pivot::Type::Operation
+	// CTOR pivot::Type::TemplateParameterSubstitution
+	// CTOR pivot::Type::TypeExp
+	// CTOR pivot::Type::TypedElement
+	// CTOR pivot::Type::VariableDeclaration
+	// CTOR pivot::TypeExp::referredType
+	// CTOR pivot::TypedElement::isMany
+	// CTOR pivot::TypedElement::isRequired
+	// CTOR pivot::TypedElement::type
+	// CTOR pivot::UnlimitedNaturalLiteralExp::unlimitedNaturalSymbol
+	// CTOR pivot::ValueSpecification::Slot
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::ExpressionInOCL
+	// CTOR pivot::Variable::IterateExp
+	// CTOR pivot::Variable::LetExp
+	// CTOR pivot::Variable::LoopExp
+	// CTOR pivot::Variable::isImplicit
+	// CTOR pivot::Variable::ownedInit
+	// CTOR pivot::Variable::representedParameter
+	// CTOR pivot::VariableDeclaration::VariableExp
+	// CTOR pivot::VariableDeclaration::typeValue
+	// CTOR pivot::VariableExp::isImplicit
+	// CTOR pivot::VariableExp::referredVariable
+	// CTOR pivot::Vertex::incomingTransitions
+	// CTOR pivot::Vertex::outgoingTransitions
+	// CTOR pivot::Vertex::owningRegion
+	// CTOR pivot::WildcardType::TemplateParameterSubstitution
+	// CTOR pivot::WildcardType::constrainingClasses
+	// CTOR pivot::WildcardType::templateParameter
+	// CTOR pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
+	// CTOR pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
+	// CTOR pivot::Element::allOwnedElements() : Set(Element)
+	// CTOR pivot::Element::getValue(Type[1],String[1]) : Element[?]
+	// CTOR pivot::OCLExpression::isNonNull() : Boolean[1]
+	// CTOR pivot::OCLExpression::isNull() : Boolean[1]
+	// CTOR pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
+	// CTOR pivot::Property::isAttribute(Property[1]) : Boolean[1]
+	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
+	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
+	// CTOR pivot::ReferringElement::getReferredElement() : Element[1]
+	// CTOR pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// CTOR pivot::Type::flattenedType() : Type[?]
+	// CTOR pivot::Type::isClass() : Class[?]
+	// CTOR pivot::Type::isTemplateParameter() : TemplateParameter[?]
+	// CTOR pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
+	// CTOR pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]
+	// CTOR pivot::ValueSpecification::booleanValue() : Boolean[1]
+	// CTOR pivot::ValueSpecification::integerValue() : Integer[?]
+	// CTOR pivot::ValueSpecification::isComputable() : Boolean[1]
+	// CTOR pivot::ValueSpecification::isNull() : Boolean[1]
+	// CTOR pivot::ValueSpecification::stringValue() : String[?]
+	// CTOR pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
+	// OPERATIONS Boolean
+	// OPERATIONS EcoreObject
+	// OPERATIONS JavaClass
+	// OPERATIONS LibraryFeature
+	// OPERATIONS Object
+	// OPERATIONS Throwable
+	// OPERATIONS AssociativityKind
+	// OPERATIONS CollectionKind
+	// OPERATIONS PseudostateKind
+	// OPERATIONS TransitionKind
+	// OPERATIONS Integer
+	// OPERATIONS Real
+	// OPERATIONS String
+	// OPERATIONS UnlimitedNatural
+	// OPERATIONS Annotation
+	// OPERATIONS AnyType
+	// OPERATIONS AssociationClass
+	// OPERATIONS AssociationClassCallExp
+	// OPERATIONS BagType
+	// OPERATIONS Behavior
+	// OPERATIONS BooleanLiteralExp
+	// OPERATIONS BooleanType
+	// OPERATIONS CallExp
+	// OPERATIONS CallOperationAction
+	// OPERATIONS Class
+	// OPERATIONS CollectionItem
+	// OPERATIONS CollectionLiteralExp
+	// OPERATIONS CollectionLiteralPart
+	// OPERATIONS CollectionRange
+	// OPERATIONS CollectionType
+	// OPERATIONS Comment
+	// OPERATIONS CompleteClass
+	// OPERATIONS CompleteEnvironment
+	// OPERATIONS CompleteStandardLibrary
+	// OPERATIONS ConnectionPointReference
+	// OPERATIONS Constraint
+	// OPERATIONS DataType
+	// OPERATIONS Detail
+	// OPERATIONS DynamicBehavior
+	// OPERATIONS DynamicElement
+	// OPERATIONS DynamicProperty
+	// OPERATIONS DynamicType
+	// OPERATIONS DynamicValueSpecification
+	// OPERATIONS ElementExtension
+	// OPERATIONS ElementLiteralExp
+	// OPERATIONS EnumLiteralExp
+	// OPERATIONS Enumeration
+	// OPERATIONS EnumerationLiteral
+	// OPERATIONS ExpressionInOCL
+	// OPERATIONS Feature
+	// OPERATIONS FeatureCallExp
+	// OPERATIONS FinalState
+	// OPERATIONS IfExp
+	// OPERATIONS Import
+	// OPERATIONS InstanceSpecification
+	// OPERATIONS IntegerLiteralExp
+	// OPERATIONS InvalidLiteralExp
+	// OPERATIONS InvalidType
+	// OPERATIONS IterableType
+	// OPERATIONS IterateExp
+	// OPERATIONS Iteration
+	// OPERATIONS IteratorExp
+	// OPERATIONS IteratorVariable
+	// OPERATIONS JavaType
+	// OPERATIONS LambdaType
+	// OPERATIONS LanguageExpression
+	// OPERATIONS LetExp
+	// OPERATIONS LetVariable
+	// OPERATIONS Library
+	// OPERATIONS LiteralExp
+	// OPERATIONS LoopExp
+	// OPERATIONS MapLiteralExp
+	// OPERATIONS MapLiteralPart
+	// OPERATIONS MapType
+	// OPERATIONS MessageExp
+	// OPERATIONS MessageType
+	// OPERATIONS Model
+	// OPERATIONS MorePivotable
+	// OPERATIONS Nameable
+	// OPERATIONS NamedElement
+	// OPERATIONS Namespace
+	// OPERATIONS NavigationCallExp
+	// OPERATIONS NullLiteralExp
+	// OPERATIONS NumericLiteralExp
+	// OPERATIONS Operation
+	// OPERATIONS OppositePropertyCallExp
+	// OPERATIONS OrderedSetType
+	// OPERATIONS OrphanCompletePackage
+	// OPERATIONS Orphanage
+	// OPERATIONS Package
+	// OPERATIONS Parameter
+	// OPERATIONS ParameterVariable
+	// OPERATIONS Pivotable
+	// OPERATIONS Precedence
+	// OPERATIONS PrimitiveCompletePackage
+	// OPERATIONS PrimitiveLiteralExp
+	// OPERATIONS PrimitiveType
+	// OPERATIONS Profile
+	// OPERATIONS ProfileApplication
+	// OPERATIONS Pseudostate
+	// OPERATIONS RealLiteralExp
+	// OPERATIONS Region
+	// OPERATIONS ResultVariable
+	// OPERATIONS SendSignalAction
+	// OPERATIONS SequenceType
+	// OPERATIONS SetType
+	// OPERATIONS ShadowExp
+	// OPERATIONS ShadowPart
+	// OPERATIONS Signal
+	// OPERATIONS Slot
+	// OPERATIONS StandardLibrary
+	// OPERATIONS State
+	// OPERATIONS StateExp
+	// OPERATIONS StateMachine
+	// OPERATIONS Stereotype
+	// OPERATIONS StereotypeExtender
+	// OPERATIONS StringLiteralExp
+	// OPERATIONS TemplateBinding
+	// OPERATIONS TemplateParameter
+	// OPERATIONS TemplateParameterSubstitution
+	// OPERATIONS TemplateSignature
+	// OPERATIONS TemplateableElement
+	// OPERATIONS Transition
+	// OPERATIONS Trigger
+	// OPERATIONS TupleLiteralExp
+	// OPERATIONS TupleLiteralPart
+	// OPERATIONS TuplePart
+	// OPERATIONS TupleType
+	// OPERATIONS TypeExp
+	// OPERATIONS UnlimitedNaturalLiteralExp
+	// OPERATIONS UnspecifiedValueExp
+	// OPERATIONS Variable
+	// OPERATIONS VariableDeclaration
+	// OPERATIONS VariableExp
+	// OPERATIONS Vertex
+	// OPERATIONS Visitable
+	// OPERATIONS VoidType
+	// OPERATIONS WildcardType
+	// PROPERTIES Boolean
+	// PROPERTIES EcoreObject
+	// PROPERTIES JavaClass
+	// PROPERTIES LibraryFeature
+	// PROPERTIES Object
+	// PROPERTIES Throwable
+	// PROPERTIES AssociativityKind
+	// PROPERTIES CollectionKind
+	// PROPERTIES PseudostateKind
+	// PROPERTIES TransitionKind
+	// PROPERTIES Integer
+	// PROPERTIES Real
+	// PROPERTIES String
+	// PROPERTIES UnlimitedNatural
+	// PROPERTIES AnyType
+	// PROPERTIES BagType
+	// PROPERTIES BooleanType
+	// PROPERTIES DynamicBehavior
+	// PROPERTIES DynamicValueSpecification
+	// PROPERTIES FinalState
+	// PROPERTIES InvalidLiteralExp
+	// PROPERTIES InvalidType
+	// PROPERTIES IterableType
+	// PROPERTIES IteratorExp
+	// PROPERTIES LetVariable
+	// PROPERTIES LiteralExp
+	// PROPERTIES MorePivotable
+	// PROPERTIES Nameable
+	// PROPERTIES NullLiteralExp
+	// PROPERTIES NumericLiteralExp
+	// PROPERTIES OrderedSetType
+	// PROPERTIES Orphanage
+	// PROPERTIES ParameterVariable
+	// PROPERTIES Pivotable
+	// PROPERTIES PrimitiveLiteralExp
+	// PROPERTIES ReferringElement
+	// PROPERTIES ResultVariable
+	// PROPERTIES SelfType
+	// PROPERTIES SequenceType
+	// PROPERTIES SetType
+	// PROPERTIES StandardLibrary
+	// PROPERTIES TuplePart
+	// PROPERTIES TupleType
+	// PROPERTIES UnspecifiedValueExp
+	// PROPERTIES Visitable
+	// PROPERTIES VoidType
+	// SUPER_CLASSES Boolean
+	// SUPER_CLASSES EcoreObject
+	// SUPER_CLASSES JavaClass
+	// SUPER_CLASSES LibraryFeature
+	// SUPER_CLASSES Object
+	// SUPER_CLASSES Throwable
+	// SUPER_CLASSES AssociativityKind
+	// SUPER_CLASSES CollectionKind
+	// SUPER_CLASSES PseudostateKind
+	// SUPER_CLASSES TransitionKind
+	// SUPER_CLASSES Integer
+	// SUPER_CLASSES Real
+	// SUPER_CLASSES String
+	// SUPER_CLASSES UnlimitedNatural
+	// SUPER_CLASSES Annotation
+	// SUPER_CLASSES AnyType
+	// SUPER_CLASSES AssociationClass
+	// SUPER_CLASSES AssociationClassCallExp
+	// SUPER_CLASSES BagType
+	// SUPER_CLASSES Behavior
+	// SUPER_CLASSES BooleanLiteralExp
+	// SUPER_CLASSES BooleanType
+	// SUPER_CLASSES CallExp
+	// SUPER_CLASSES CallOperationAction
+	// SUPER_CLASSES Class
+	// SUPER_CLASSES CollectionItem
+	// SUPER_CLASSES CollectionLiteralExp
+	// SUPER_CLASSES CollectionLiteralPart
+	// SUPER_CLASSES CollectionRange
+	// SUPER_CLASSES CollectionType
+	// SUPER_CLASSES Comment
+	// SUPER_CLASSES CompleteClass
+	// SUPER_CLASSES CompleteEnvironment
+	// SUPER_CLASSES CompleteModel
+	// SUPER_CLASSES CompletePackage
+	// SUPER_CLASSES CompleteStandardLibrary
+	// SUPER_CLASSES ConnectionPointReference
+	// SUPER_CLASSES Constraint
+	// SUPER_CLASSES DataType
+	// SUPER_CLASSES Detail
+	// SUPER_CLASSES DynamicBehavior
+	// SUPER_CLASSES DynamicElement
+	// SUPER_CLASSES DynamicProperty
+	// SUPER_CLASSES DynamicType
+	// SUPER_CLASSES DynamicValueSpecification
+	// SUPER_CLASSES Element
+	// SUPER_CLASSES ElementExtension
+	// SUPER_CLASSES ElementLiteralExp
+	// SUPER_CLASSES EnumLiteralExp
+	// SUPER_CLASSES Enumeration
+	// SUPER_CLASSES EnumerationLiteral
+	// SUPER_CLASSES ExpressionInOCL
+	// SUPER_CLASSES Feature
+	// SUPER_CLASSES FeatureCallExp
+	// SUPER_CLASSES FinalState
+	// SUPER_CLASSES IfExp
+	// SUPER_CLASSES Import
+	// SUPER_CLASSES InstanceSpecification
+	// SUPER_CLASSES IntegerLiteralExp
+	// SUPER_CLASSES InvalidLiteralExp
+	// SUPER_CLASSES InvalidType
+	// SUPER_CLASSES IterableType
+	// SUPER_CLASSES IterateExp
+	// SUPER_CLASSES Iteration
+	// SUPER_CLASSES IteratorExp
+	// SUPER_CLASSES IteratorVariable
+	// SUPER_CLASSES JavaType
+	// SUPER_CLASSES LambdaType
+	// SUPER_CLASSES LanguageExpression
+	// SUPER_CLASSES LetExp
+	// SUPER_CLASSES LetVariable
+	// SUPER_CLASSES Library
+	// SUPER_CLASSES LiteralExp
+	// SUPER_CLASSES LoopExp
+	// SUPER_CLASSES MapLiteralExp
+	// SUPER_CLASSES MapLiteralPart
+	// SUPER_CLASSES MapType
+	// SUPER_CLASSES MessageExp
+	// SUPER_CLASSES MessageType
+	// SUPER_CLASSES Model
+	// SUPER_CLASSES MorePivotable
+	// SUPER_CLASSES Nameable
+	// SUPER_CLASSES NamedElement
+	// SUPER_CLASSES Namespace
+	// SUPER_CLASSES NavigationCallExp
+	// SUPER_CLASSES NullLiteralExp
+	// SUPER_CLASSES NumericLiteralExp
+	// SUPER_CLASSES OCLExpression
+	// SUPER_CLASSES Operation
+	// SUPER_CLASSES OperationCallExp
+	// SUPER_CLASSES OppositePropertyCallExp
+	// SUPER_CLASSES OrderedSetType
+	// SUPER_CLASSES OrphanCompletePackage
+	// SUPER_CLASSES Orphanage
+	// SUPER_CLASSES Package
+	// SUPER_CLASSES Parameter
+	// SUPER_CLASSES ParameterVariable
+	// SUPER_CLASSES Pivotable
+	// SUPER_CLASSES Precedence
+	// SUPER_CLASSES PrimitiveCompletePackage
+	// SUPER_CLASSES PrimitiveLiteralExp
+	// SUPER_CLASSES PrimitiveType
+	// SUPER_CLASSES Profile
+	// SUPER_CLASSES ProfileApplication
+	// SUPER_CLASSES Property
+	// SUPER_CLASSES PropertyCallExp
+	// SUPER_CLASSES Pseudostate
+	// SUPER_CLASSES RealLiteralExp
+	// SUPER_CLASSES ReferringElement
+	// SUPER_CLASSES Region
+	// SUPER_CLASSES ResultVariable
+	// SUPER_CLASSES SelfType
+	// SUPER_CLASSES SendSignalAction
+	// SUPER_CLASSES SequenceType
+	// SUPER_CLASSES SetType
+	// SUPER_CLASSES ShadowExp
+	// SUPER_CLASSES ShadowPart
+	// SUPER_CLASSES Signal
+	// SUPER_CLASSES Slot
+	// SUPER_CLASSES StandardLibrary
+	// SUPER_CLASSES State
+	// SUPER_CLASSES StateExp
+	// SUPER_CLASSES StateMachine
+	// SUPER_CLASSES Stereotype
+	// SUPER_CLASSES StereotypeExtender
+	// SUPER_CLASSES StringLiteralExp
+	// SUPER_CLASSES TemplateBinding
+	// SUPER_CLASSES TemplateParameter
+	// SUPER_CLASSES TemplateParameterSubstitution
+	// SUPER_CLASSES TemplateSignature
+	// SUPER_CLASSES TemplateableElement
+	// SUPER_CLASSES Transition
+	// SUPER_CLASSES Trigger
+	// SUPER_CLASSES TupleLiteralExp
+	// SUPER_CLASSES TupleLiteralPart
+	// SUPER_CLASSES TuplePart
+	// SUPER_CLASSES TupleType
+	// SUPER_CLASSES Type
+	// SUPER_CLASSES TypeExp
+	// SUPER_CLASSES TypedElement
+	// SUPER_CLASSES UnlimitedNaturalLiteralExp
+	// SUPER_CLASSES UnspecifiedValueExp
+	// SUPER_CLASSES ValueSpecification
+	// SUPER_CLASSES Variable
+	// SUPER_CLASSES VariableDeclaration
+	// SUPER_CLASSES VariableExp
+	// SUPER_CLASSES Vertex
+	// SUPER_CLASSES Visitable
+	// SUPER_CLASSES VoidType
+	// SUPER_CLASSES WildcardType
 	/**
 	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
 	 */
@@ -4565,999 +5558,122 @@ public class PivotTables extends AbstractTables
 		public static void init() {}
 	}
 
-	@SuppressWarnings("unused")
-	private static Object unusedInit1 = new Object() {{
-			// LIBRARY.createComment(_ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
-	}};
-
-	// CTOR Boolean
-	// CTOR EcoreObject
-	// CTOR JavaClass
-	// CTOR LibraryFeature
-	// CTOR Object
-	// CTOR Throwable
-	// CTOR AssociativityKind
-	// CTOR CollectionKind
-	// CTOR PseudostateKind
-	// CTOR TransitionKind
-	// CTOR Integer
-	// CTOR Real
-	// CTOR String
-	// CTOR UnlimitedNatural
-	// CTOR OclAny
-	// CTOR OclElement
-	// CTOR OclEnumeration
-	// CTOR Annotation
-	// CTOR AnyType
-	// CTOR AssociationClass
-	// CTOR AssociationClassCallExp
-	// CTOR BagType
-	// CTOR Behavior
-	// CTOR BooleanLiteralExp
-	// CTOR BooleanType
-	// CTOR CallExp
-	// CTOR CallOperationAction
-	// CTOR Class
-	// CTOR CollectionItem
-	// CTOR CollectionLiteralExp
-	// CTOR CollectionLiteralPart
-	// CTOR CollectionRange
-	// CTOR CollectionType
-	// CTOR Comment
-	// CTOR CompleteClass
-	// CTOR CompleteEnvironment
-	// CTOR CompleteModel
-	// CTOR CompletePackage
-	// CTOR CompleteStandardLibrary
-	// CTOR ConnectionPointReference
-	// CTOR Constraint
-	// CTOR DataType
-	// CTOR Detail
-	// CTOR DynamicBehavior
-	// CTOR DynamicElement
-	// CTOR DynamicProperty
-	// CTOR DynamicType
-	// CTOR DynamicValueSpecification
-	// CTOR Element
-	// CTOR ElementExtension
-	// CTOR ElementLiteralExp
-	// CTOR EnumLiteralExp
-	// CTOR Enumeration
-	// CTOR EnumerationLiteral
-	// CTOR ExpressionInOCL
-	// CTOR Feature
-	// CTOR FeatureCallExp
-	// CTOR FinalState
-	// CTOR IfExp
-	// CTOR Import
-	// CTOR InstanceSpecification
-	// CTOR IntegerLiteralExp
-	// CTOR InvalidLiteralExp
-	// CTOR InvalidType
-	// CTOR IterableType
-	// CTOR IterateExp
-	// CTOR Iteration
-	// CTOR IteratorExp
-	// CTOR IteratorVariable
-	// CTOR JavaType
-	// CTOR LambdaType
-	// CTOR LanguageExpression
-	// CTOR LetExp
-	// CTOR LetVariable
-	// CTOR Library
-	// CTOR LiteralExp
-	// CTOR LoopExp
-	// CTOR MapLiteralExp
-	// CTOR MapLiteralPart
-	// CTOR MapType
-	// CTOR MessageExp
-	// CTOR MessageType
-	// CTOR Model
-	// CTOR MorePivotable
-	// CTOR Nameable
-	// CTOR NamedElement
-	// CTOR Namespace
-	// CTOR NavigationCallExp
-	// CTOR NullLiteralExp
-	// CTOR NumericLiteralExp
-	// CTOR OCLExpression
-	// CTOR Operation
-	// CTOR OperationCallExp
-	// CTOR OppositePropertyCallExp
-	// CTOR OrderedSetType
-	// CTOR OrphanCompletePackage
-	// CTOR Orphanage
-	// CTOR Package
-	// CTOR Parameter
-	// CTOR ParameterVariable
-	// CTOR Pivotable
-	// CTOR Precedence
-	// CTOR PrimitiveCompletePackage
-	// CTOR PrimitiveLiteralExp
-	// CTOR PrimitiveType
-	// CTOR Profile
-	// CTOR ProfileApplication
-	// CTOR Property
-	// CTOR PropertyCallExp
-	// CTOR Pseudostate
-	// CTOR RealLiteralExp
-	// CTOR ReferringElement
-	// CTOR Region
-	// CTOR ResultVariable
-	// CTOR SelfType
-	// CTOR SendSignalAction
-	// CTOR SequenceType
-	// CTOR SetType
-	// CTOR ShadowExp
-	// CTOR ShadowPart
-	// CTOR Signal
-	// CTOR Slot
-	// CTOR StandardLibrary
-	// CTOR State
-	// CTOR StateExp
-	// CTOR StateMachine
-	// CTOR Stereotype
-	// CTOR StereotypeExtender
-	// CTOR StringLiteralExp
-	// CTOR TemplateBinding
-	// CTOR TemplateParameter
-	// CTOR TemplateParameterSubstitution
-	// CTOR TemplateSignature
-	// CTOR TemplateableElement
-	// CTOR Transition
-	// CTOR Trigger
-	// CTOR TupleLiteralExp
-	// CTOR TupleLiteralPart
-	// CTOR TuplePart
-	// CTOR TupleType
-	// CTOR Type
-	// CTOR TypeExp
-	// CTOR TypedElement
-	// CTOR UnlimitedNaturalLiteralExp
-	// CTOR UnspecifiedValueExp
-	// CTOR ValueSpecification
-	// CTOR Variable
-	// CTOR VariableDeclaration
-	// CTOR VariableExp
-	// CTOR Vertex
-	// CTOR Visitable
-	// CTOR VoidType
-	// CTOR WildcardType
-	// CTOR Bag(Annotation)
-	// CTOR Bag(AssociationClassCallExp)
-	// CTOR Bag(CallOperationAction)
-	// CTOR Bag(Class)
-	// CTOR Bag(CollectionType)
-	// CTOR Bag(CompleteClass)
-	// CTOR Bag(CompleteModel)
-	// CTOR Bag(CompletePackage)
-	// CTOR Bag(ConnectionPointReference)
-	// CTOR Bag(Constraint)
-	// CTOR Bag(DataType)
-	// CTOR Bag(DynamicElement)
-	// CTOR Bag(DynamicProperty)
-	// CTOR Bag(ElementExtension)
-	// CTOR Bag(EnumLiteralExp)
-	// CTOR Bag(Import)
-	// CTOR Bag(InstanceSpecification)
-	// CTOR Bag(LambdaType)
-	// CTOR Bag(LoopExp)
-	// CTOR Bag(MapType)
-	// CTOR Bag(MessageType)
-	// CTOR Bag(NavigationCallExp)
-	// CTOR Bag(OCLExpression)
-	// CTOR Bag(OperationCallExp)
-	// CTOR Bag(Operation)
-	// CTOR Bag(OppositePropertyCallExp)
-	// CTOR Bag(Package)
-	// CTOR Bag(PrimitiveType)
-	// CTOR Bag(PropertyCallExp)
-	// CTOR Bag(Property)
-	// CTOR Bag(Region)
-	// CTOR Bag(SendSignalAction)
-	// CTOR Bag(ShadowPart)
-	// CTOR Bag(Slot)
-	// CTOR Bag(StateExp)
-	// CTOR Bag(StateMachine)
-	// CTOR Bag(State)
-	// CTOR Bag(TemplateBinding)
-	// CTOR Bag(TemplateParameterSubstitution)
-	// CTOR Bag(TemplateParameter)
-	// CTOR Bag(TemplateableElement)
-	// CTOR Bag(TypeExp)
-	// CTOR Bag(TypedElement)
-	// CTOR Bag(VariableDeclaration)
-	// CTOR Bag(VariableExp)
-	// CTOR Bag(Variable)
-	// CTOR Bag(WildcardType)
-	// CTOR OrderedSet(CollectionLiteralPart)
-	// CTOR OrderedSet(Detail)
-	// CTOR OrderedSet(Element)
-	// CTOR OrderedSet(EnumerationLiteral)
-	// CTOR OrderedSet(Import)
-	// CTOR OrderedSet(IteratorVariable[*|?])
-	// CTOR OrderedSet(MapLiteralPart)
-	// CTOR OrderedSet(OCLExpression)
-	// CTOR OrderedSet(Operation)
-	// CTOR OrderedSet(Parameter)
-	// CTOR OrderedSet(Precedence)
-	// CTOR OrderedSet(Property)
-	// CTOR OrderedSet(ShadowPart)
-	// CTOR OrderedSet(TemplateParameter[+|1])
-	// CTOR OrderedSet(TupleLiteralPart)
-	// CTOR OrderedSet(ValueSpecification)
-	// CTOR OrderedSet(Variable)
-	// CTOR Sequence(Type)
-	// CTOR Set(Behavior)
-	// CTOR Set(Class)
-	// CTOR Set(Comment)
-	// CTOR Set(CompleteClass)
-	// CTOR Set(CompletePackage)
-	// CTOR Set(ConnectionPointReference)
-	// CTOR Set(Constraint)
-	// CTOR Set(DynamicProperty)
-	// CTOR Set(ElementExtension)
-	// CTOR Set(Element)
-	// CTOR Set(InstanceSpecification)
-	// CTOR Set(Model)
-	// CTOR Set(Operation)
-	// CTOR Set(Package)
-	// CTOR Set(ProfileApplication)
-	// CTOR Set(Property)
-	// CTOR Set(Pseudostate)
-	// CTOR Set(Region)
-	// CTOR Set(Region[+|1])
-	// CTOR Set(Slot)
-	// CTOR Set(StateMachine)
-	// CTOR Set(State)
-	// CTOR Set(StereotypeExtender)
-	// CTOR Set(TemplateBinding)
-	// CTOR Set(TemplateParameterSubstitution[+|1])
-	// CTOR Set(Transition)
-	// CTOR Set(Trigger)
-	// CTOR Set(Type)
-	// CTOR Set(Vertex)
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit2 = new Object() {{
-			// LIBRARY.createComment(_Boolean, "Boolean is used for logical expressions, consisting of the predefined values true and false.");
-			// LIBRARY.createComment(_PseudostateKind, "PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates.");
-			// LIBRARY.createComment(_TransitionKind, "TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions.");
-			// LIBRARY.createComment(_Integer, "Integer is a primitive type representing integer values.");
-			// LIBRARY.createComment(_Real, "Real is a primitive type representing the mathematical concept of real.");
-			// LIBRARY.createComment(_String, "String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.");
-			// LIBRARY.createComment(_UnlimitedNatural, "UnlimitedNatural is a primitive type representing unlimited natural values.");
-			// LIBRARY.createComment(_OclAny, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
-			// LIBRARY.createComment(_OclElement, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
-			// LIBRARY.createComment(_OclEnumeration, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
-			// LIBRARY.createComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
-			// LIBRARY.createComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
-			// LIBRARY.createComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
-			// LIBRARY.createComment(_Comment, "A Comment is a textual annotation that can be attached to a set of Elements.");
-			// LIBRARY.createComment(_ConnectionPointReference, "A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State.");
-			// LIBRARY.createComment(_Constraint, "A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements.");
-			// LIBRARY.createComment(_DataType, "A DataType is a type whose instances are identified only by their value.");
-			// LIBRARY.createComment(_Element, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
-			// LIBRARY.createComment(_Enumeration, "An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.");
-			// LIBRARY.createComment(_EnumerationLiteral, "An EnumerationLiteral is a user-defined data value for an Enumeration.");
-			// LIBRARY.createComment(_Feature, "A Feature declares a behavioral or structural characteristic of Classifiers.");
-			// LIBRARY.createComment(_FinalState, "A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.");
-			// LIBRARY.createComment(_InstanceSpecification, "An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.");
-			// LIBRARY.createComment(_JavaType, "JavaType supports the use of a Java class as part of a foreign operation or property call.");
-			// LIBRARY.createComment(_Model, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
-			// LIBRARY.createComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
-			// LIBRARY.createComment(_Namespace, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
-			// LIBRARY.createComment(_Operation, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
-			// LIBRARY.createComment(_Package, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
-			// LIBRARY.createComment(_Parameter, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
-			// LIBRARY.createComment(_PrimitiveType, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
-			// LIBRARY.createComment(_Profile, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
-			// LIBRARY.createComment(_ProfileApplication, "A profile application is used to show which profiles have been applied to a package.");
-			// LIBRARY.createComment(_Property, "A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
-			// LIBRARY.createComment(_Pseudostate, "A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step.");
-			// LIBRARY.createComment(_Region, "A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel.");
-			// LIBRARY.createComment(_Signal, "A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.");
-			// LIBRARY.createComment(_Slot, "A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.");
-			// LIBRARY.createComment(_State, "A State models a situation during which some (usually implicit) invariant condition holds.");
-			// LIBRARY.createComment(_StateMachine, "StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine.");
-			// LIBRARY.createComment(_Stereotype, "A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass.");
-			// LIBRARY.createComment(_TemplateBinding, "A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template.");
-			// LIBRARY.createComment(_TemplateParameter, "A TemplateParameter exposes a ParameterableElement as a formal parameter of a template.");
-			// LIBRARY.createComment(_TemplateParameterSubstitution, "A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.");
-			// LIBRARY.createComment(_TemplateSignature, "A Template Signature bundles the set of formal TemplateParameters for a template.");
-			// LIBRARY.createComment(_TemplateableElement, "A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates.");
-			// LIBRARY.createComment(_Transition, "A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it.");
-			// LIBRARY.createComment(_Trigger, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
-			// LIBRARY.createComment(_Type, "A Type constrains the values represented by a TypedElement.");
-			// LIBRARY.createComment(_TypedElement, "A TypedElement is a NamedElement that may have a Type specified for it.");
-			// LIBRARY.createComment(_ValueSpecification, "A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.");
-			// LIBRARY.createComment(_Vertex, "A Vertex is an abstraction of a node in a StateMachine graph. It can be the source or destination of any number of Transitions.");
-			// LIBRARY.createComment(_WildcardType, "A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization.");
-	}};
-
-	// CTOR pivot::Annotation::ownedContents
-	// CTOR pivot::Annotation::ownedDetails
-	// CTOR pivot::Annotation::references
-	// CTOR pivot::AssociationClass::AssociationClassCallExp
-	// CTOR pivot::AssociationClass::unownedAttributes
-	// CTOR pivot::AssociationClassCallExp::referredAssociationClass
-	// CTOR pivot::Behavior::Class
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::owningTransition
-	// CTOR pivot::BooleanLiteralExp::booleanSymbol
-	// CTOR pivot::CallExp::isImplicit
-	// CTOR pivot::CallExp::isSafe
-	// CTOR pivot::CallExp::ownedSource
-	// CTOR pivot::CallOperationAction::MessageExp
-	// CTOR pivot::CallOperationAction::operation
-	// CTOR pivot::Class::Class
-	// CTOR pivot::Class::CompleteClass
-	// CTOR pivot::Class::DataType
-	// CTOR pivot::Class::InstanceSpecification
-	// CTOR pivot::Class::MapType
-	// CTOR pivot::Class::TemplateParameter
-	// CTOR pivot::Class::WildcardType
-	// CTOR pivot::Class::extenders
-	// CTOR pivot::Class::instanceClassName
-	// CTOR pivot::Class::isAbstract
-	// CTOR pivot::Class::isActive
-	// CTOR pivot::Class::isInterface
-	// CTOR pivot::Class::ownedBehaviors
-	// CTOR pivot::Class::ownedInvariants
-	// CTOR pivot::Class::ownedOperations
-	// CTOR pivot::Class::ownedProperties
-	// CTOR pivot::Class::owningPackage
-	// CTOR pivot::Class::superClasses
-	// CTOR pivot::CollectionItem::ownedItem
-	// CTOR pivot::CollectionLiteralExp::kind
-	// CTOR pivot::CollectionLiteralExp::ownedParts
-	// CTOR pivot::CollectionLiteralPart::CollectionLiteralExp
-	// CTOR pivot::CollectionRange::ownedFirst
-	// CTOR pivot::CollectionRange::ownedLast
-	// CTOR pivot::CollectionType::elementType
-	// CTOR pivot::CollectionType::isNullFree
-	// CTOR pivot::CollectionType::lower
-	// CTOR pivot::CollectionType::upper
-	// CTOR pivot::Comment::annotatedElements
-	// CTOR pivot::Comment::body
-	// CTOR pivot::Comment::owningElement
-	// CTOR pivot::CompleteClass::owningCompletePackage
-	// CTOR pivot::CompleteClass::partialClasses
-	// CTOR pivot::CompleteEnvironment::ownedCompleteModel
-	// CTOR pivot::CompleteEnvironment::ownedStandardLibrary
-	// CTOR pivot::CompleteModel::orphanCompletePackage
-	// CTOR pivot::CompleteModel::ownedCompletePackages
-	// CTOR pivot::CompleteModel::owningCompleteEnvironment
-	// CTOR pivot::CompleteModel::partialModels
-	// CTOR pivot::CompleteModel::primitiveCompletePackage
-	// CTOR pivot::CompletePackage::ownedCompleteClasses
-	// CTOR pivot::CompletePackage::ownedCompletePackages
-	// CTOR pivot::CompletePackage::owningCompleteModel
-	// CTOR pivot::CompletePackage::owningCompletePackage
-	// CTOR pivot::CompletePackage::partialPackages
-	// CTOR pivot::CompleteStandardLibrary::owningCompleteEnvironment
-	// CTOR pivot::ConnectionPointReference::entries
-	// CTOR pivot::ConnectionPointReference::exits
-	// CTOR pivot::ConnectionPointReference::owningState
-	// CTOR pivot::Constraint::Class
-	// CTOR pivot::Constraint::Constraint
-	// CTOR pivot::Constraint::Namespace
-	// CTOR pivot::Constraint::constrainedElements
-	// CTOR pivot::Constraint::context
-	// CTOR pivot::Constraint::isCallable
-	// CTOR pivot::Constraint::ownedSpecification
-	// CTOR pivot::Constraint::owningPostContext
-	// CTOR pivot::Constraint::owningPreContext
-	// CTOR pivot::Constraint::owningState
-	// CTOR pivot::Constraint::owningTransition
-	// CTOR pivot::Constraint::redefinedConstraints
-	// CTOR pivot::DataType::behavioralClass
-	// CTOR pivot::DataType::isSerializable
-	// CTOR pivot::DataType::value
-	// CTOR pivot::Detail::Annotation
-	// CTOR pivot::Detail::values
-	// CTOR pivot::DynamicElement::metaType
-	// CTOR pivot::DynamicProperty::DynamicType
-	// CTOR pivot::DynamicProperty::default
-	// CTOR pivot::DynamicProperty::referredProperty
-	// CTOR pivot::DynamicType::ownedDynamicProperties
-	// CTOR pivot::Element::Annotation
-	// CTOR pivot::Element::Annotation
-	// CTOR pivot::Element::Constraint
-	// CTOR pivot::Element::Element
-	// CTOR pivot::Element::annotatingComments
-	// CTOR pivot::Element::ownedAnnotations
-	// CTOR pivot::Element::ownedComments
-	// CTOR pivot::Element::ownedExtensions
-	// CTOR pivot::ElementExtension::base
-	// CTOR pivot::ElementExtension::isApplied
-	// CTOR pivot::ElementExtension::isRequired
-	// CTOR pivot::ElementExtension::stereotype
-	// CTOR pivot::ElementLiteralExp::referredElement
-	// CTOR pivot::EnumLiteralExp::referredLiteral
-	// CTOR pivot::Enumeration::ownedLiterals
-	// CTOR pivot::EnumerationLiteral::EnumLiteralExp
-	// CTOR pivot::EnumerationLiteral::literal
-	// CTOR pivot::EnumerationLiteral::owningEnumeration
-	// CTOR pivot::EnumerationLiteral::value
-	// CTOR pivot::ExpressionInOCL::ownedBody
-	// CTOR pivot::ExpressionInOCL::ownedContext
-	// CTOR pivot::ExpressionInOCL::ownedParameters
-	// CTOR pivot::ExpressionInOCL::ownedResult
-	// CTOR pivot::Feature::implementation
-	// CTOR pivot::Feature::implementationClass
-	// CTOR pivot::Feature::isStatic
-	// CTOR pivot::FeatureCallExp::isPre
-	// CTOR pivot::IfExp::isElseIf
-	// CTOR pivot::IfExp::ownedCondition
-	// CTOR pivot::IfExp::ownedElse
-	// CTOR pivot::IfExp::ownedThen
-	// CTOR pivot::Import::Model
-	// CTOR pivot::Import::importedNamespace
-	// CTOR pivot::Import::xmiidVersion
-	// CTOR pivot::InstanceSpecification::classes
-	// CTOR pivot::InstanceSpecification::ownedSlots
-	// CTOR pivot::InstanceSpecification::ownedSpecification
-	// CTOR pivot::InstanceSpecification::owningPackage
-	// CTOR pivot::IntegerLiteralExp::integerSymbol
-	// CTOR pivot::IterateExp::ownedResult
-	// CTOR pivot::Iteration::LoopExp
-	// CTOR pivot::Iteration::ownedAccumulators
-	// CTOR pivot::Iteration::ownedIterators
-	// CTOR pivot::IteratorVariable::LoopExp
-	// CTOR pivot::JavaType::javaClass
-	// CTOR pivot::LambdaType::contextType
-	// CTOR pivot::LambdaType::parameterType
-	// CTOR pivot::LambdaType::resultType
-	// CTOR pivot::LanguageExpression::InstanceSpecification
-	// CTOR pivot::LanguageExpression::Operation
-	// CTOR pivot::LanguageExpression::Property
-	// CTOR pivot::LanguageExpression::body
-	// CTOR pivot::LanguageExpression::language
-	// CTOR pivot::LanguageExpression::owningConstraint
-	// CTOR pivot::LetExp::ownedIn
-	// CTOR pivot::LetExp::ownedVariable
-	// CTOR pivot::Library::ownedPrecedences
-	// CTOR pivot::LoopExp::ownedBody
-	// CTOR pivot::LoopExp::ownedCoIterators
-	// CTOR pivot::LoopExp::ownedIterators
-	// CTOR pivot::LoopExp::referredIteration
-	// CTOR pivot::MapLiteralExp::ownedParts
-	// CTOR pivot::MapLiteralPart::MapLiteralExp
-	// CTOR pivot::MapLiteralPart::ownedKey
-	// CTOR pivot::MapLiteralPart::ownedValue
-	// CTOR pivot::MapType::entryClass
-	// CTOR pivot::MapType::keyType
-	// CTOR pivot::MapType::keysAreNullFree
-	// CTOR pivot::MapType::valueType
-	// CTOR pivot::MapType::valuesAreNullFree
-	// CTOR pivot::MessageExp::ownedArguments
-	// CTOR pivot::MessageExp::ownedCalledOperation
-	// CTOR pivot::MessageExp::ownedSentSignal
-	// CTOR pivot::MessageExp::ownedTarget
-	// CTOR pivot::MessageType::referredOperation
-	// CTOR pivot::MessageType::referredSignal
-	// CTOR pivot::Model::CompleteModel
-	// CTOR pivot::Model::externalURI
-	// CTOR pivot::Model::ownedImports
-	// CTOR pivot::Model::ownedPackages
-	// CTOR pivot::Model::xmiidVersion
-	// CTOR pivot::NamedElement::name
-	// CTOR pivot::Namespace::Constraint
-	// CTOR pivot::Namespace::Import
-	// CTOR pivot::Namespace::ownedConstraints
-	// CTOR pivot::NavigationCallExp::navigationSource
-	// CTOR pivot::NavigationCallExp::qualifiers
-	// CTOR pivot::OCLExpression::CallExp
-	// CTOR pivot::OCLExpression::CollectionItem
-	// CTOR pivot::OCLExpression::CollectionRange
-	// CTOR pivot::OCLExpression::CollectionRange
-	// CTOR pivot::OCLExpression::ExpressionInOCL
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::LetExp
-	// CTOR pivot::OCLExpression::LoopExp
-	// CTOR pivot::OCLExpression::MapLiteralPart
-	// CTOR pivot::OCLExpression::MapLiteralPart
-	// CTOR pivot::OCLExpression::MessageExp
-	// CTOR pivot::OCLExpression::MessageExp
-	// CTOR pivot::OCLExpression::NavigationCallExp
-	// CTOR pivot::OCLExpression::OperationCallExp
-	// CTOR pivot::OCLExpression::ShadowPart
-	// CTOR pivot::OCLExpression::TupleLiteralPart
-	// CTOR pivot::OCLExpression::Variable
-	// CTOR pivot::OCLExpression::typeValue
-	// CTOR pivot::Operation::CallOperationAction
-	// CTOR pivot::Operation::MessageType
-	// CTOR pivot::Operation::Operation
-	// CTOR pivot::Operation::OperationCallExp
-	// CTOR pivot::Operation::PrimitiveType
-	// CTOR pivot::Operation::bodyExpression
-	// CTOR pivot::Operation::isInvalidating
-	// CTOR pivot::Operation::isTransient
-	// CTOR pivot::Operation::isTypeof
-	// CTOR pivot::Operation::isValidating
-	// CTOR pivot::Operation::ownedParameters
-	// CTOR pivot::Operation::ownedPostconditions
-	// CTOR pivot::Operation::ownedPreconditions
-	// CTOR pivot::Operation::owningClass
-	// CTOR pivot::Operation::precedence
-	// CTOR pivot::Operation::raisedExceptions
-	// CTOR pivot::Operation::redefinedOperations
-	// CTOR pivot::OperationCallExp::isVirtual
-	// CTOR pivot::OperationCallExp::ownedArguments
-	// CTOR pivot::OperationCallExp::referredOperation
-	// CTOR pivot::OppositePropertyCallExp::referredProperty
-	// CTOR pivot::OrphanCompletePackage::CompleteModel
-	// CTOR pivot::Package::CompletePackage
-	// CTOR pivot::Package::Model
-	// CTOR pivot::Package::Package
-	// CTOR pivot::Package::URI
-	// CTOR pivot::Package::importedPackages
-	// CTOR pivot::Package::nsPrefix
-	// CTOR pivot::Package::ownedClasses
-	// CTOR pivot::Package::ownedInstances
-	// CTOR pivot::Package::ownedPackages
-	// CTOR pivot::Package::ownedProfileApplications
-	// CTOR pivot::Package::owningPackage
-	// CTOR pivot::Parameter::Iteration
-	// CTOR pivot::Parameter::Iteration
-	// CTOR pivot::Parameter::Variable
-	// CTOR pivot::Parameter::isTypeof
-	// CTOR pivot::Parameter::owningOperation
-	// CTOR pivot::Precedence::Library
-	// CTOR pivot::Precedence::Operation
-	// CTOR pivot::Precedence::associativity
-	// CTOR pivot::Precedence::order
-	// CTOR pivot::PrimitiveCompletePackage::CompleteModel
-	// CTOR pivot::PrimitiveType::coercions
-	// CTOR pivot::Profile::profileApplications
-	// CTOR pivot::ProfileApplication::appliedProfile
-	// CTOR pivot::ProfileApplication::isStrict
-	// CTOR pivot::ProfileApplication::owningPackage
-	// CTOR pivot::Property::DynamicProperty
-	// CTOR pivot::Property::NavigationCallExp
-	// CTOR pivot::Property::OppositePropertyCallExp
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::PropertyCallExp
-	// CTOR pivot::Property::ShadowPart
-	// CTOR pivot::Property::Slot
-	// CTOR pivot::Property::associationClass
-	// CTOR pivot::Property::defaultValue
-	// CTOR pivot::Property::defaultValueString
-	// CTOR pivot::Property::isComposite
-	// CTOR pivot::Property::isDerived
-	// CTOR pivot::Property::isID
-	// CTOR pivot::Property::isImplicit
-	// CTOR pivot::Property::isReadOnly
-	// CTOR pivot::Property::isResolveProxies
-	// CTOR pivot::Property::isTransient
-	// CTOR pivot::Property::isUnsettable
-	// CTOR pivot::Property::isVolatile
-	// CTOR pivot::Property::keys
-	// CTOR pivot::Property::opposite
-	// CTOR pivot::Property::ownedExpression
-	// CTOR pivot::Property::owningClass
-	// CTOR pivot::Property::redefinedProperties
-	// CTOR pivot::Property::referredProperty
-	// CTOR pivot::Property::subsettedProperty
-	// CTOR pivot::PropertyCallExp::referredProperty
-	// CTOR pivot::Pseudostate::ConnectionPointReference
-	// CTOR pivot::Pseudostate::ConnectionPointReference
-	// CTOR pivot::Pseudostate::kind
-	// CTOR pivot::Pseudostate::owningState
-	// CTOR pivot::Pseudostate::owningStateMachine
-	// CTOR pivot::RealLiteralExp::realSymbol
-	// CTOR pivot::Region::Region
-	// CTOR pivot::Region::extendedRegion
-	// CTOR pivot::Region::ownedSubvertexes
-	// CTOR pivot::Region::ownedTransitions
-	// CTOR pivot::Region::owningState
-	// CTOR pivot::Region::owningStateMachine
-	// CTOR pivot::SendSignalAction::MessageExp
-	// CTOR pivot::SendSignalAction::signal
-	// CTOR pivot::ShadowExp::ownedParts
-	// CTOR pivot::ShadowExp::value
-	// CTOR pivot::ShadowPart::ShadowExp
-	// CTOR pivot::ShadowPart::ownedInit
-	// CTOR pivot::ShadowPart::referredProperty
-	// CTOR pivot::Signal::MessageType
-	// CTOR pivot::Signal::SendSignalAction
-	// CTOR pivot::Slot::definingProperty
-	// CTOR pivot::Slot::ownedValues
-	// CTOR pivot::Slot::owningInstance
-	// CTOR pivot::State::State
-	// CTOR pivot::State::StateExp
-	// CTOR pivot::State::isComposite
-	// CTOR pivot::State::isOrthogonal
-	// CTOR pivot::State::isSimple
-	// CTOR pivot::State::isSubmachineState
-	// CTOR pivot::State::ownedConnectionPoints
-	// CTOR pivot::State::ownedConnections
-	// CTOR pivot::State::ownedDeferrableTriggers
-	// CTOR pivot::State::ownedDoActivity
-	// CTOR pivot::State::ownedEntry
-	// CTOR pivot::State::ownedExit
-	// CTOR pivot::State::ownedRegions
-	// CTOR pivot::State::ownedStateInvariant
-	// CTOR pivot::State::redefinedState
-	// CTOR pivot::State::submachines
-	// CTOR pivot::StateExp::referredState
-	// CTOR pivot::StateMachine::StateMachine
-	// CTOR pivot::StateMachine::extendedStateMachines
-	// CTOR pivot::StateMachine::ownedConnectionPoints
-	// CTOR pivot::StateMachine::ownedRegions
-	// CTOR pivot::StateMachine::submachineStates
-	// CTOR pivot::Stereotype::ElementExtension
-	// CTOR pivot::Stereotype::ownedExtenders
-	// CTOR pivot::StereotypeExtender::class
-	// CTOR pivot::StereotypeExtender::isRequired
-	// CTOR pivot::StereotypeExtender::owningStereotype
-	// CTOR pivot::StringLiteralExp::stringSymbol
-	// CTOR pivot::TemplateBinding::ownedSubstitutions
-	// CTOR pivot::TemplateBinding::owningElement
-	// CTOR pivot::TemplateBinding::templateSignature
-	// CTOR pivot::TemplateParameter::TemplateParameterSubstitution
-	// CTOR pivot::TemplateParameter::WildcardType
-	// CTOR pivot::TemplateParameter::constrainingClasses
-	// CTOR pivot::TemplateParameter::owningSignature
-	// CTOR pivot::TemplateParameterSubstitution::actual
-	// CTOR pivot::TemplateParameterSubstitution::formal
-	// CTOR pivot::TemplateParameterSubstitution::ownedWildcard
-	// CTOR pivot::TemplateParameterSubstitution::owningBinding
-	// CTOR pivot::TemplateSignature::TemplateBinding
-	// CTOR pivot::TemplateSignature::ownedParameters
-	// CTOR pivot::TemplateSignature::owningElement
-	// CTOR pivot::TemplateableElement::TemplateableElement
-	// CTOR pivot::TemplateableElement::generic
-	// CTOR pivot::TemplateableElement::ownedBindings
-	// CTOR pivot::TemplateableElement::ownedSignature
-	// CTOR pivot::Transition::kind
-	// CTOR pivot::Transition::ownedEffect
-	// CTOR pivot::Transition::ownedGuard
-	// CTOR pivot::Transition::ownedTriggers
-	// CTOR pivot::Transition::owningRegion
-	// CTOR pivot::Transition::source
-	// CTOR pivot::Transition::target
-	// CTOR pivot::Trigger::owningState
-	// CTOR pivot::Trigger::owningTransition
-	// CTOR pivot::TupleLiteralExp::ownedParts
-	// CTOR pivot::TupleLiteralPart::TupleLiteralExp
-	// CTOR pivot::TupleLiteralPart::ownedInit
-	// CTOR pivot::Type::CollectionType
-	// CTOR pivot::Type::DynamicElement
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::MapType
-	// CTOR pivot::Type::MapType
-	// CTOR pivot::Type::OCLExpression
-	// CTOR pivot::Type::Operation
-	// CTOR pivot::Type::TemplateParameterSubstitution
-	// CTOR pivot::Type::TypeExp
-	// CTOR pivot::Type::TypedElement
-	// CTOR pivot::Type::VariableDeclaration
-	// CTOR pivot::TypeExp::referredType
-	// CTOR pivot::TypedElement::isMany
-	// CTOR pivot::TypedElement::isRequired
-	// CTOR pivot::TypedElement::type
-	// CTOR pivot::UnlimitedNaturalLiteralExp::unlimitedNaturalSymbol
-	// CTOR pivot::ValueSpecification::Slot
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::IterateExp
-	// CTOR pivot::Variable::LetExp
-	// CTOR pivot::Variable::LoopExp
-	// CTOR pivot::Variable::isImplicit
-	// CTOR pivot::Variable::ownedInit
-	// CTOR pivot::Variable::representedParameter
-	// CTOR pivot::VariableDeclaration::VariableExp
-	// CTOR pivot::VariableDeclaration::typeValue
-	// CTOR pivot::VariableExp::isImplicit
-	// CTOR pivot::VariableExp::referredVariable
-	// CTOR pivot::Vertex::incomingTransitions
-	// CTOR pivot::Vertex::outgoingTransitions
-	// CTOR pivot::Vertex::owningRegion
-	// CTOR pivot::WildcardType::TemplateParameterSubstitution
-	// CTOR pivot::WildcardType::constrainingClasses
-	// CTOR pivot::WildcardType::templateParameter
-	// CTOR pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
-	// CTOR pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
-	// CTOR pivot::Element::allOwnedElements() : Set(Element)
-	// CTOR pivot::Element::getValue(Type[1],String[1]) : Element[?]
-	// CTOR pivot::OCLExpression::isNonNull() : Boolean[1]
-	// CTOR pivot::OCLExpression::isNull() : Boolean[1]
-	// CTOR pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
-	// CTOR pivot::Property::isAttribute(Property[1]) : Boolean[1]
-	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
-	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
-	// CTOR pivot::ReferringElement::getReferredElement() : Element[1]
-	// CTOR pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// CTOR pivot::Type::flattenedType() : Type[?]
-	// CTOR pivot::Type::isClass() : Class[?]
-	// CTOR pivot::Type::isTemplateParameter() : TemplateParameter[?]
-	// CTOR pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// CTOR pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]
-	// CTOR pivot::ValueSpecification::booleanValue() : Boolean[1]
-	// CTOR pivot::ValueSpecification::integerValue() : Integer[?]
-	// CTOR pivot::ValueSpecification::isComputable() : Boolean[1]
-	// CTOR pivot::ValueSpecification::isNull() : Boolean[1]
-	// CTOR pivot::ValueSpecification::stringValue() : String[?]
-	// CTOR pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
-	// SUPER_CLASSES Boolean
-	// SUPER_CLASSES EcoreObject
-	// SUPER_CLASSES JavaClass
-	// SUPER_CLASSES LibraryFeature
-	// SUPER_CLASSES Object
-	// SUPER_CLASSES Throwable
-	// SUPER_CLASSES AssociativityKind
-	// SUPER_CLASSES CollectionKind
-	// SUPER_CLASSES PseudostateKind
-	// SUPER_CLASSES TransitionKind
-	// SUPER_CLASSES Integer
-	// SUPER_CLASSES Real
-	// SUPER_CLASSES String
-	// SUPER_CLASSES UnlimitedNatural
-	// SUPER_CLASSES Annotation
-	// SUPER_CLASSES AnyType
-	// SUPER_CLASSES AssociationClass
-	// SUPER_CLASSES AssociationClassCallExp
-	// SUPER_CLASSES BagType
-	// SUPER_CLASSES Behavior
-	// SUPER_CLASSES BooleanLiteralExp
-	// SUPER_CLASSES BooleanType
-	// SUPER_CLASSES CallExp
-	// SUPER_CLASSES CallOperationAction
-	// SUPER_CLASSES Class
-	// SUPER_CLASSES CollectionItem
-	// SUPER_CLASSES CollectionLiteralExp
-	// SUPER_CLASSES CollectionLiteralPart
-	// SUPER_CLASSES CollectionRange
-	// SUPER_CLASSES CollectionType
-	// SUPER_CLASSES Comment
-	// SUPER_CLASSES CompleteClass
-	// SUPER_CLASSES CompleteEnvironment
-	// SUPER_CLASSES CompleteModel
-	// SUPER_CLASSES CompletePackage
-	// SUPER_CLASSES CompleteStandardLibrary
-	// SUPER_CLASSES ConnectionPointReference
-	// SUPER_CLASSES Constraint
-	// SUPER_CLASSES DataType
-	// SUPER_CLASSES Detail
-	// SUPER_CLASSES DynamicBehavior
-	// SUPER_CLASSES DynamicElement
-	// SUPER_CLASSES DynamicProperty
-	// SUPER_CLASSES DynamicType
-	// SUPER_CLASSES DynamicValueSpecification
-	// SUPER_CLASSES Element
-	// SUPER_CLASSES ElementExtension
-	// SUPER_CLASSES ElementLiteralExp
-	// SUPER_CLASSES EnumLiteralExp
-	// SUPER_CLASSES Enumeration
-	// SUPER_CLASSES EnumerationLiteral
-	// SUPER_CLASSES ExpressionInOCL
-	// SUPER_CLASSES Feature
-	// SUPER_CLASSES FeatureCallExp
-	// SUPER_CLASSES FinalState
-	// SUPER_CLASSES IfExp
-	// SUPER_CLASSES Import
-	// SUPER_CLASSES InstanceSpecification
-	// SUPER_CLASSES IntegerLiteralExp
-	// SUPER_CLASSES InvalidLiteralExp
-	// SUPER_CLASSES InvalidType
-	// SUPER_CLASSES IterableType
-	// SUPER_CLASSES IterateExp
-	// SUPER_CLASSES Iteration
-	// SUPER_CLASSES IteratorExp
-	// SUPER_CLASSES IteratorVariable
-	// SUPER_CLASSES JavaType
-	// SUPER_CLASSES LambdaType
-	// SUPER_CLASSES LanguageExpression
-	// SUPER_CLASSES LetExp
-	// SUPER_CLASSES LetVariable
-	// SUPER_CLASSES Library
-	// SUPER_CLASSES LiteralExp
-	// SUPER_CLASSES LoopExp
-	// SUPER_CLASSES MapLiteralExp
-	// SUPER_CLASSES MapLiteralPart
-	// SUPER_CLASSES MapType
-	// SUPER_CLASSES MessageExp
-	// SUPER_CLASSES MessageType
-	// SUPER_CLASSES Model
-	// SUPER_CLASSES MorePivotable
-	// SUPER_CLASSES Nameable
-	// SUPER_CLASSES NamedElement
-	// SUPER_CLASSES Namespace
-	// SUPER_CLASSES NavigationCallExp
-	// SUPER_CLASSES NullLiteralExp
-	// SUPER_CLASSES NumericLiteralExp
-	// SUPER_CLASSES OCLExpression
-	// SUPER_CLASSES Operation
-	// SUPER_CLASSES OperationCallExp
-	// SUPER_CLASSES OppositePropertyCallExp
-	// SUPER_CLASSES OrderedSetType
-	// SUPER_CLASSES OrphanCompletePackage
-	// SUPER_CLASSES Orphanage
-	// SUPER_CLASSES Package
-	// SUPER_CLASSES Parameter
-	// SUPER_CLASSES ParameterVariable
-	// SUPER_CLASSES Pivotable
-	// SUPER_CLASSES Precedence
-	// SUPER_CLASSES PrimitiveCompletePackage
-	// SUPER_CLASSES PrimitiveLiteralExp
-	// SUPER_CLASSES PrimitiveType
-	// SUPER_CLASSES Profile
-	// SUPER_CLASSES ProfileApplication
-	// SUPER_CLASSES Property
-	// SUPER_CLASSES PropertyCallExp
-	// SUPER_CLASSES Pseudostate
-	// SUPER_CLASSES RealLiteralExp
-	// SUPER_CLASSES ReferringElement
-	// SUPER_CLASSES Region
-	// SUPER_CLASSES ResultVariable
-	// SUPER_CLASSES SelfType
-	// SUPER_CLASSES SendSignalAction
-	// SUPER_CLASSES SequenceType
-	// SUPER_CLASSES SetType
-	// SUPER_CLASSES ShadowExp
-	// SUPER_CLASSES ShadowPart
-	// SUPER_CLASSES Signal
-	// SUPER_CLASSES Slot
-	// SUPER_CLASSES StandardLibrary
-	// SUPER_CLASSES State
-	// SUPER_CLASSES StateExp
-	// SUPER_CLASSES StateMachine
-	// SUPER_CLASSES Stereotype
-	// SUPER_CLASSES StereotypeExtender
-	// SUPER_CLASSES StringLiteralExp
-	// SUPER_CLASSES TemplateBinding
-	// SUPER_CLASSES TemplateParameter
-	// SUPER_CLASSES TemplateParameterSubstitution
-	// SUPER_CLASSES TemplateSignature
-	// SUPER_CLASSES TemplateableElement
-	// SUPER_CLASSES Transition
-	// SUPER_CLASSES Trigger
-	// SUPER_CLASSES TupleLiteralExp
-	// SUPER_CLASSES TupleLiteralPart
-	// SUPER_CLASSES TuplePart
-	// SUPER_CLASSES TupleType
-	// SUPER_CLASSES Type
-	// SUPER_CLASSES TypeExp
-	// SUPER_CLASSES TypedElement
-	// SUPER_CLASSES UnlimitedNaturalLiteralExp
-	// SUPER_CLASSES UnspecifiedValueExp
-	// SUPER_CLASSES ValueSpecification
-	// SUPER_CLASSES Variable
-	// SUPER_CLASSES VariableDeclaration
-	// SUPER_CLASSES VariableExp
-	// SUPER_CLASSES Vertex
-	// SUPER_CLASSES Visitable
-	// SUPER_CLASSES VoidType
-	// SUPER_CLASSES WildcardType
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit3 = new Object() {{
-			// LIBRARY.createComment(_Class__isAbstract, "If true, the Class does not provide a complete declaration and cannot be instantiated. An abstract Class is typically used as a target of Associations or Generalizations.\n\nIf true, the Classifier can only be instantiated by instantiating one of its specializations. An abstract Classifier is intended to be used by other Classifiers e.g., as the target of Associations or Generalizations.");
-			// LIBRARY.createComment(_Class__isActive, "Determines whether an object specified by this Class is active or not. If true, then the owning Class is referred to as an active Class. If false, then such a Class is referred to as a passive Class.");
-			// LIBRARY.createComment(_Class__ownedBehaviors, "Behaviors owned by a BehavioredClassifier.");
-			// LIBRARY.createComment(_Class__ownedOperations, "The Operations owned by the Class.");
-			// LIBRARY.createComment(_Class__ownedProperties, "The Properties owned by the StructuredClassifier.\n\nThe attributes (i.e., the Properties) owned by the Class.");
-			// LIBRARY.createComment(_Comment__annotatedElements, "References the Element(s) being commented.");
-			// LIBRARY.createComment(_Comment__body, "Specifies a string that is the comment.");
-			// LIBRARY.createComment(_ConnectionPointReference__entries, "The entryPoint Pseudostates corresponding to this connection point.");
-			// LIBRARY.createComment(_ConnectionPointReference__exits, "The exitPoints kind Pseudostates corresponding to this connection point.");
-			// LIBRARY.createComment(_ConnectionPointReference__owningState, "The State in which the ConnectionPointReference is defined.");
-			// LIBRARY.createComment(_Constraint__constrainedElements, "The ordered set of Elements referenced by this Constraint.");
-			// LIBRARY.createComment(_Constraint__ownedSpecification, "A condition that must be true when evaluated in order for the Constraint to be satisfied.");
-			// LIBRARY.createComment(_DataType__behavioralClass, "An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior.");
-			// LIBRARY.createComment(_DataType__value, "The value pseudo-property accesses a String-valued representation of the DataType.");
-			// LIBRARY.createComment(_Element__ownedAnnotations, "Additional Annotations, or more arbitrary DynamicElements");
-			// LIBRARY.createComment(_Element__ownedComments, "The Comments owned by this Element.");
-			// LIBRARY.createComment(_ElementLiteralExp__referredElement, "This is an Object to avoid injecting a confusing opposite into EObject ");
-			// LIBRARY.createComment(_Enumeration__ownedLiterals, "The ordered set of literals owned by this Enumeration.");
-			// LIBRARY.createComment(_EnumerationLiteral__owningEnumeration, "The Enumeration that this EnumerationLiteral is a member of.");
-			// LIBRARY.createComment(_Feature__isStatic, "Specifies whether this Feature characterizes individual instances classified by the Classifier (false) or the Classifier itself (true).");
-			// LIBRARY.createComment(_IfExp__isElseIf, "True if this IfExp corresponds to an \'elseif\' in the OCL source, false if it corresponds to an \'if\'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer.");
-			// LIBRARY.createComment(_InstanceSpecification__classes, "The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.");
-			// LIBRARY.createComment(_InstanceSpecification__ownedSlots, "A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.");
-			// LIBRARY.createComment(_InstanceSpecification__ownedSpecification, "A specification of how to compute, derive, or construct the instance.");
-			// LIBRARY.createComment(_MapType__entryClass, "A type for an entry that may allow an external syntax serialization as a set-of-entryClass.");
-			// LIBRARY.createComment(_NamedElement__name, "The name of the NamedElement.");
-			// LIBRARY.createComment(_Namespace__ownedConstraints, "Specifies a set of Constraints owned by this Namespace.");
-			// LIBRARY.createComment(_OCLExpression__typeValue, "When oclType() returns a Class value with a known actual type, the typeValue propagates the known type.");
-			// LIBRARY.createComment(_Operation__isInvalidating, "Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.");
-			// LIBRARY.createComment(_Operation__isValidating, "Whether this operation may return a non-invalid result for invalid inputs.");
-			// LIBRARY.createComment(_Operation__ownedParameters, "The ordered set of formal Parameters of this BehavioralFeature.\n\nThe parameters owned by this Operation.");
-			// LIBRARY.createComment(_Operation__ownedPostconditions, "An optional set of Constraints specifying the state of the system when the Operation is completed.");
-			// LIBRARY.createComment(_Operation__ownedPreconditions, "An optional set of Constraints on the state of the system when the Operation is invoked.");
-			// LIBRARY.createComment(_Operation__owningClass, "The Class that owns this operation, if any.");
-			// LIBRARY.createComment(_Operation__raisedExceptions, "The Types representing exceptions that may be raised during an invocation of this BehavioralFeature.\n\nThe Types representing exceptions that may be raised during an invocation of this operation.");
-			// LIBRARY.createComment(_Operation__redefinedOperations, "The Operations that are redefined by this Operation.");
-			// LIBRARY.createComment(_Package__URI, "Provides an identifier for the package that can be used for many purposes. A URI is the universally unique identification of the package following the IETF URI specification, RFC 2396 http://www.ietf.org/rfc/rfc2396.txt and it must comply with those syntax rules.");
-			// LIBRARY.createComment(_Package__ownedClasses, "References the packaged elements that are Types.");
-			// LIBRARY.createComment(_Package__ownedInstances, "The instance specification that owns this slot.");
-			// LIBRARY.createComment(_Package__ownedPackages, "References the packaged elements that are Packages.");
-			// LIBRARY.createComment(_Package__ownedProfileApplications, "References the ProfileApplications that indicate which profiles have been applied to the Package.");
-			// LIBRARY.createComment(_Package__owningPackage, "References the Package that owns this Package.");
-			// LIBRARY.createComment(_Parameter__owningOperation, "The Operation owning this parameter.");
-			// LIBRARY.createComment(_ProfileApplication__appliedProfile, "References the Profiles that are applied to a Package through this ProfileApplication.");
-			// LIBRARY.createComment(_ProfileApplication__isStrict, "Specifies that the Profile filtering rules for the metaclasses of the referenced metamodel shall be strictly applied.");
-			// LIBRARY.createComment(_ProfileApplication__owningPackage, "The package that owns the profile application.");
-			// LIBRARY.createComment(_Property__isDerived, "Specifies whether the Property is derived, i.e., whether its value or values can be computed from other information.");
-			// LIBRARY.createComment(_Property__isID, "True indicates this property can be used to uniquely identify an instance of the containing Class.");
-			// LIBRARY.createComment(_Property__isReadOnly, "If isReadOnly is true, the StructuralFeature may not be written to after initialization.");
-			// LIBRARY.createComment(_Property__opposite, "In the case where the Property is one end of a binary association this gives the other end.");
-			// LIBRARY.createComment(_Property__owningClass, "The Class that owns this Property, if any.");
-			// LIBRARY.createComment(_Property__redefinedProperties, "The properties that are redefined by this property, if any.");
-			// LIBRARY.createComment(_Property__subsettedProperty, "The properties of which this Property is constrained to be a subset, if any.");
-			// LIBRARY.createComment(_Pseudostate__kind, "Determines the precise type of the Pseudostate and can be one of: entryPoint, exitPoint, initial, deepHistory, shallowHistory, join, fork, junction, terminate or choice.");
-			// LIBRARY.createComment(_Pseudostate__owningState, "The State that owns this Pseudostate and in which it appears.");
-			// LIBRARY.createComment(_Pseudostate__owningStateMachine, "The StateMachine in which this Pseudostate is defined. This only applies to Pseudostates of the kind entryPoint or exitPoint.");
-			// LIBRARY.createComment(_Region__extendedRegion, "The region of which this region is an extension.");
-			// LIBRARY.createComment(_Region__ownedSubvertexes, "The set of Vertices that are owned by this Region.");
-			// LIBRARY.createComment(_Region__ownedTransitions, "The set of Transitions owned by the Region.");
-			// LIBRARY.createComment(_Region__owningState, "The State that owns the Region. If a Region is owned by a State, then it cannot also be owned by a StateMachine.");
-			// LIBRARY.createComment(_Region__owningStateMachine, "The StateMachine that owns the Region. If a Region is owned by a StateMachine, then it cannot also be owned by a State.");
-			// LIBRARY.createComment(_Slot__definingProperty, "The StructuralFeature that specifies the values that may be held by the Slot.");
-			// LIBRARY.createComment(_Slot__ownedValues, "The value or values held by the Slot.");
-			// LIBRARY.createComment(_Slot__owningInstance, "The InstanceSpecification that owns this Slot.");
-			// LIBRARY.createComment(_State__isComposite, "A state with isComposite=true is said to be a composite State. A composite State is a State that contains at least one Region.");
-			// LIBRARY.createComment(_State__isOrthogonal, "A State with isOrthogonal=true is said to be an orthogonal composite State An orthogonal composite State contains two or more Regions.");
-			// LIBRARY.createComment(_State__isSimple, "A State with isSimple=true is said to be a simple State A simple State does not have any Regions and it does not refer to any submachine StateMachine.");
-			// LIBRARY.createComment(_State__isSubmachineState, "A State with isSubmachineState=true is said to be a submachine State Such a State refers to another StateMachine(submachine).");
-			// LIBRARY.createComment(_State__ownedConnectionPoints, "The entry and exit Pseudostates of a composite State. These can only be entry or exit Pseudostates, and they must have different names. They can only be defined for composite States.");
-			// LIBRARY.createComment(_State__ownedConnections, "The entry and exit connection points used in conjunction with this (submachine) State, i.e., as targets and sources, respectively, in the Region with the submachine State. A connection point reference references the corresponding definition of a connection point Pseudostate in the StateMachine referenced by the submachine State.");
-			// LIBRARY.createComment(_State__ownedDeferrableTriggers, "A list of Triggers that are candidates to be retained by the StateMachine if they trigger no Transitions out of the State (not consumed). A deferred Trigger is retained until the StateMachine reaches a State configuration where it is no longer deferred.");
-			// LIBRARY.createComment(_State__ownedDoActivity, "An optional Behavior that is executed while being in the State. The execution starts when this State is entered, and ceases either by itself when done, or when the State is exited, whichever comes first.");
-			// LIBRARY.createComment(_State__ownedEntry, "An optional Behavior that is executed whenever this State is entered regardless of the Transition taken to reach the State. If defined, entry Behaviors are always executed to completion prior to any internal Behavior or Transitions performed within the State.");
-			// LIBRARY.createComment(_State__ownedExit, "An optional Behavior that is executed whenever this State is exited regardless of which Transition was taken out of the State. If defined, exit Behaviors are always executed to completion only after all internal and transition Behaviors have completed execution.");
-			// LIBRARY.createComment(_State__ownedRegions, "The Regions owned directly by the State.");
-			// LIBRARY.createComment(_State__ownedStateInvariant, "Specifies conditions that are always true when this State is the current State. In ProtocolStateMachines state invariants are additional conditions to the preconditions of the outgoing Transitions, and to the postcondition of the incoming Transitions.");
-			// LIBRARY.createComment(_State__redefinedState, "The State of which this State is a redefinition.");
-			// LIBRARY.createComment(_State__submachines, "The StateMachine that is to be inserted in place of the (submachine) State.");
-			// LIBRARY.createComment(_StateMachine__extendedStateMachines, "The StateMachines of which this is an extension.");
-			// LIBRARY.createComment(_StateMachine__ownedConnectionPoints, "The connection points defined for this StateMachine. They represent the interface of the StateMachine when used as part of submachine State");
-			// LIBRARY.createComment(_StateMachine__ownedRegions, "The Regions owned directly by the StateMachine.");
-			// LIBRARY.createComment(_StateMachine__submachineStates, "References the submachine(s) in case of a submachine State. Multiple machines are referenced in case of a concurrent State.");
-			// LIBRARY.createComment(_TemplateBinding__ownedSubstitutions, "The TemplateParameterSubstitutions owned by this TemplateBinding.");
-			// LIBRARY.createComment(_TemplateBinding__owningElement, "The TemplateableElement that is bound by this TemplateBinding.");
-			// LIBRARY.createComment(_TemplateBinding__templateSignature, "The TemplateSignature for the template that is the target of this TemplateBinding.");
-			// LIBRARY.createComment(_TemplateParameter__owningSignature, "The TemplateSignature that owns this TemplateParameter.");
-			// LIBRARY.createComment(_TemplateParameterSubstitution__actual, "The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.");
-			// LIBRARY.createComment(_TemplateParameterSubstitution__formal, "The formal TemplateParameter that is associated with this TemplateParameterSubstitution.");
-			// LIBRARY.createComment(_TemplateParameterSubstitution__owningBinding, "The TemplateBinding that owns this TemplateParameterSubstitution.");
-			// LIBRARY.createComment(_TemplateSignature__ownedParameters, "The formal parameters that are owned by this TemplateSignature.");
-			// LIBRARY.createComment(_TemplateSignature__owningElement, "The TemplateableElement that owns this TemplateSignature.");
-			// LIBRARY.createComment(_TemplateableElement__ownedBindings, "The optional TemplateBindings from this TemplateableElement to one or more templates.");
-			// LIBRARY.createComment(_TemplateableElement__ownedSignature, "The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template.");
-			// LIBRARY.createComment(_Transition__kind, "Indicates the precise type of the Transition.");
-			// LIBRARY.createComment(_Transition__ownedEffect, "Specifies an optional behavior to be performed when the Transition fires.");
-			// LIBRARY.createComment(_Transition__ownedGuard, "A guard is a Constraint that provides a fine-grained control over the firing of the Transition. The guard is evaluated when an Event occurrence is dispatched by the StateMachine. If the guard is true at that time, the Transition may be enabled, otherwise, it is disabled. Guards should be pure expressions without side effects. Guard expressions with side effects are ill formed.");
-			// LIBRARY.createComment(_Transition__ownedTriggers, "Specifies the Triggers that may fire the transition.");
-			// LIBRARY.createComment(_Transition__owningRegion, "Designates the Region that owns this Transition.");
-			// LIBRARY.createComment(_Transition__source, "Designates the originating Vertex (State or Pseudostate) of the Transition.");
-			// LIBRARY.createComment(_Transition__target, "Designates the target Vertex that is reached when the Transition is taken.");
-			// LIBRARY.createComment(_TypedElement__type, "The type of the TypedElement.");
-			// LIBRARY.createComment(_Vertex__incomingTransitions, "Specifies the Transitions entering this Vertex.");
-			// LIBRARY.createComment(_Vertex__outgoingTransitions, "Specifies the Transitions departing from this Vertex.");
-			// LIBRARY.createComment(_Vertex__owningRegion, "The Region that contains this Vertex.");
-			// LIBRARY.createComment(_Element__allOwnedElements, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
-			// LIBRARY.createComment(_Type__flattenedType, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
-			// LIBRARY.createComment(_ValueSpecification__booleanValue, "The query booleanValue() gives a single Boolean value when one can be computed.");
-			// LIBRARY.createComment(_ValueSpecification__integerValue, "The query integerValue() gives a single Integer value when one can be computed.");
-			// LIBRARY.createComment(_ValueSpecification__isComputable, "The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.");
-			// LIBRARY.createComment(_ValueSpecification__isNull, "The query isNull() returns true when it can be computed that the value is null.");
-			// LIBRARY.createComment(_ValueSpecification__stringValue, "The query stringValue() gives a single String value when one can be computed.");
-			// LIBRARY.createComment(_ValueSpecification__unlimitedValue, "The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.");
-	}};
-
+	// OPERATIONS CompleteModel
+	// OPERATIONS CompletePackage
+	// OPERATIONS Element
+	// OPERATIONS OCLExpression
+	// OPERATIONS OperationCallExp
+	// OPERATIONS Property
+	// OPERATIONS PropertyCallExp
+	// OPERATIONS ReferringElement
+	// OPERATIONS SelfType
+	// OPERATIONS Type
+	// OPERATIONS TypedElement
+	// OPERATIONS ValueSpecification
+	// PROPERTIES Annotation
+	// PROPERTIES AssociationClass
+	// PROPERTIES AssociationClassCallExp
+	// PROPERTIES Behavior
+	// PROPERTIES BooleanLiteralExp
+	// PROPERTIES CallExp
+	// PROPERTIES CallOperationAction
+	// PROPERTIES Class
+	// PROPERTIES CollectionItem
+	// PROPERTIES CollectionLiteralExp
+	// PROPERTIES CollectionLiteralPart
+	// PROPERTIES CollectionRange
+	// PROPERTIES CollectionType
+	// PROPERTIES Comment
+	// PROPERTIES CompleteClass
+	// PROPERTIES CompleteEnvironment
+	// PROPERTIES CompleteModel
+	// PROPERTIES CompletePackage
+	// PROPERTIES CompleteStandardLibrary
+	// PROPERTIES ConnectionPointReference
+	// PROPERTIES Constraint
+	// PROPERTIES DataType
+	// PROPERTIES Detail
+	// PROPERTIES DynamicElement
+	// PROPERTIES DynamicProperty
+	// PROPERTIES DynamicType
+	// PROPERTIES Element
+	// PROPERTIES ElementExtension
+	// PROPERTIES ElementLiteralExp
+	// PROPERTIES EnumLiteralExp
+	// PROPERTIES Enumeration
+	// PROPERTIES EnumerationLiteral
+	// PROPERTIES ExpressionInOCL
+	// PROPERTIES Feature
+	// PROPERTIES FeatureCallExp
+	// PROPERTIES IfExp
+	// PROPERTIES Import
+	// PROPERTIES InstanceSpecification
+	// PROPERTIES IntegerLiteralExp
+	// PROPERTIES IterateExp
+	// PROPERTIES Iteration
+	// PROPERTIES IteratorVariable
+	// PROPERTIES JavaType
+	// PROPERTIES LambdaType
+	// PROPERTIES LanguageExpression
+	// PROPERTIES LetExp
+	// PROPERTIES Library
+	// PROPERTIES LoopExp
+	// PROPERTIES MapLiteralExp
+	// PROPERTIES MapLiteralPart
+	// PROPERTIES MapType
+	// PROPERTIES MessageExp
+	// PROPERTIES MessageType
+	// PROPERTIES Model
+	// PROPERTIES NamedElement
+	// PROPERTIES Namespace
+	// PROPERTIES NavigationCallExp
+	// PROPERTIES OCLExpression
+	// PROPERTIES Operation
+	// PROPERTIES OperationCallExp
+	// PROPERTIES OppositePropertyCallExp
+	// PROPERTIES OrphanCompletePackage
+	// PROPERTIES Package
+	// PROPERTIES Parameter
+	// PROPERTIES Precedence
+	// PROPERTIES PrimitiveCompletePackage
+	// PROPERTIES PrimitiveType
+	// PROPERTIES Profile
+	// PROPERTIES ProfileApplication
+	// PROPERTIES Property
+	// PROPERTIES PropertyCallExp
+	// PROPERTIES Pseudostate
+	// PROPERTIES RealLiteralExp
+	// PROPERTIES Region
+	// PROPERTIES SendSignalAction
+	// PROPERTIES ShadowExp
+	// PROPERTIES ShadowPart
+	// PROPERTIES Signal
+	// PROPERTIES Slot
+	// PROPERTIES State
+	// PROPERTIES StateExp
+	// PROPERTIES StateMachine
+	// PROPERTIES Stereotype
+	// PROPERTIES StereotypeExtender
+	// PROPERTIES StringLiteralExp
+	// PROPERTIES TemplateBinding
+	// PROPERTIES TemplateParameter
+	// PROPERTIES TemplateParameterSubstitution
+	// PROPERTIES TemplateSignature
+	// PROPERTIES TemplateableElement
+	// PROPERTIES Transition
+	// PROPERTIES Trigger
+	// PROPERTIES TupleLiteralExp
+	// PROPERTIES TupleLiteralPart
+	// PROPERTIES Type
+	// PROPERTIES TypeExp
+	// PROPERTIES TypedElement
+	// PROPERTIES UnlimitedNaturalLiteralExp
+	// PROPERTIES ValueSpecification
+	// PROPERTIES Variable
+	// PROPERTIES VariableDeclaration
+	// PROPERTIES VariableExp
+	// PROPERTIES Vertex
+	// PROPERTIES WildcardType
 	// TYPE pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
 	// TYPE pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
 	// TYPE pivot::Element::allOwnedElements() : Set(Element)
@@ -5581,10 +5697,6 @@ public class PivotTables extends AbstractTables
 	// TYPE pivot::ValueSpecification::isNull() : Boolean[1]
 	// TYPE pivot::ValueSpecification::stringValue() : String[?]
 	// TYPE pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit4 = new Object() {{
-	}};
 
 	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
@@ -13245,10 +13357,6 @@ public class PivotTables extends AbstractTables
 	}
 
 
-	@SuppressWarnings("unused")
-	private static Object unusedInit5 = new Object() {{
-	}};
-
 	/**
 	 *	The lists of local properties for the local fragment of each type.
 	 */
@@ -15882,10 +15990,6 @@ public class PivotTables extends AbstractTables
 	}
 
 
-	@SuppressWarnings("unused")
-	private static Object unusedInit6 = new Object() {{
-	}};
-
 	/**
 	 *	The lists of enumeration literals for each enumeration.
 	 */
@@ -15967,10 +16071,6 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit7 = new Object() {{
-	}};
 
 	/**
 	 * The multiple packages above avoid problems with the Java 65536 byte limit but introduce a difficulty in ensuring that
