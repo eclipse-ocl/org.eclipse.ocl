@@ -183,7 +183,7 @@ public class OCLstdlibTests extends XtextTestCase
 				List<Element> javaTypes = new ArrayList<Element>(((org.eclipse.ocl.pivot.Class)javaElement).getSuperClasses());
 				Collections.sort(fileTypes, MonikeredComparator.INSTANCE);
 				Collections.sort(javaTypes, MonikeredComparator.INSTANCE);
-				assertEquals(fileTypes.size(), javaTypes.size());
+				assertEquals("superClasses of " + fileElement, fileTypes.size(), javaTypes.size());
 				for (int i = 0; i < fileTypes.size(); i++) {
 					Element fileType = fileTypes.get(i);
 					Element javaType = javaTypes.get(i);

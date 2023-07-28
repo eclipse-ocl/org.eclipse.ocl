@@ -426,7 +426,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		int thatDepth = abstractThat.getDepth();
-		if ((thatDepth ==  1) && abstractThat.isUndefined()) {
+		if ((thatDepth == 1) && abstractThat.isUndefined()) {
 			return this;
 		}
 		int thisDepth = getDepth();
@@ -716,7 +716,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
-		System.out.println("initFragments " + NameUtil.debugSimpleName(this) + " : " + this + " " + fragments + " : " + depthCounts);
 		assert this.mutable == null;
 		assert this.fragments == null;
 		assert this.indexes == null;

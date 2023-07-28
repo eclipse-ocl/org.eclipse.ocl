@@ -59,8 +59,8 @@ public class NameUtil
 	public static final class ToStringComparator implements Comparator<@NonNull Object>
 	{
 		/**
-		 * Provide a simple shared INSTABCE for comparison based on toString().
-		 * If toString() is mpre expensive that a Map.get() a toString() cache can be
+		 * Provide a simple shared INSTANCE for comparison based on toString().
+		 * If toString() is more expensive than a Map.get() a toString() cache can be
 		 * activated by constructing a new ToStringComparator instance.
 		 */
 		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator(null);

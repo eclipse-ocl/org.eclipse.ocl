@@ -14,7 +14,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -138,11 +136,11 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return nameQueries.getEcoreLiteral(property);
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> pkge2primitiveTypes = new HashMap<>();
 		return pkge2primitiveTypes;
-	}
+	} */
 
 	@Override
 	protected @NonNull Model getThisModel() {

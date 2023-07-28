@@ -651,6 +651,7 @@ public class PivotUtil
 	}
 
 	public static @NonNull Parameter createParameter(@NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+		assert asType != null;
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
 		asParameter.setType(asType);

@@ -712,7 +712,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		for (org.eclipse.ocl.pivot.Class superClass : unspecializedClass.getSuperClasses()) {
 			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
 			if (superTemplateBindings.size() > 0) {
-				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<TemplateParameterSubstitution>();
+				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<>();
 				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
 					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
 						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
@@ -748,7 +748,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					}
 				}
 				else {
-					List<@NonNull Type> superTemplateArgumentList = new ArrayList<@NonNull Type>(superSpecializedTemplateParameterSubstitutions.size());
+					List<@NonNull Type> superTemplateArgumentList = new ArrayList<>(superSpecializedTemplateParameterSubstitutions.size());
 					for (TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution : superSpecializedTemplateParameterSubstitutions) {
 						Type actual = superSpecializedTemplateParameterSubstitution.getActual();
 						if (actual != null) {
