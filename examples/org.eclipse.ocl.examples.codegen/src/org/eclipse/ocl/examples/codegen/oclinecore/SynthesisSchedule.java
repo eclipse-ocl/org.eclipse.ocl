@@ -55,18 +55,22 @@ public class SynthesisSchedule
 	 */
 	public static class Slot //implements Nameable
 	{
+		public static final @NonNull String ROLE_ALL_FRAGMENTS = "ALL_FRAGMENTS";
 		public static final @NonNull String ROLE_ALL_OPERATIONS = "ALL_OPERATIONS";
 		public static final @NonNull String ROLE_ALL_PROPERTIES = "ALL_PROPERTIES";
-		public static final @NonNull String ROLE_COMMENTS = "CTOR";
+		public static final @NonNull String ROLE_ALL_TYPES = "ALL_TYPES";
+		public static final @NonNull String ROLE_COMMENTS = "COMMENTS";
 		public static final @NonNull String ROLE_CTOR = "CTOR";
 		public static final @NonNull String ROLE_ENUMERATION_LITERALS = "ENUMERATION_LITERALS";
 		public static final @NonNull String ROLE_FRAGMENT_OPERATIONS = "FRAGMENT_OPERATIONS";
 		public static final @NonNull String ROLE_FRAGMENT_PROPERTIES = "FRAGMENT_PROPERTIES";
 		public static final @NonNull String ROLE_OPERATIONS = "OPERATIONS";
+		public static final @NonNull String ROLE_PARAMETER_LISTS = "PARAMETER_LISTS";
 		public static final @NonNull String ROLE_PROPERTIES = "PROPERTIES";
 		public static final @NonNull String ROLE_SUPER_CLASSES = "SUPER_CLASSES";
 		public static final @NonNull String ROLE_TYPE = "TYPE";
 		public static final @NonNull String ROLE_TYPE_FRAGMENTS = "TYPE_FRAGMENTS";
+		public static final @NonNull String ROLE_TYPE_PARAMETERS = "TYPE_PARAMETERS";
 	//	protected final @NonNull String name;
 		protected final @NonNull Element element;
 		protected final @NonNull String role;
@@ -142,8 +146,8 @@ public class SynthesisSchedule
 			if (diff != 0) {
 				return diff;
 			}
-			s1 = c1.getName();
-			s2 = c2.getName();
+			s1 = e1 instanceof Model ? ((Model)e1).getExternalURI() : c1.getName();
+			s2 = e2 instanceof Model ? ((Model)e2).getExternalURI() : c2.getName();
 			diff = s1.compareTo(s2);
 			if (diff != 0) {
 				return diff;
@@ -358,13 +362,21 @@ public class SynthesisSchedule
 	}
 
 	public void doModel(@NonNull Model asModel) {
+		Slot allFragmentsSlot = getSlot(asModel, Slot.ROLE_ALL_FRAGMENTS);
 		Slot allOperationsSlot = getSlot(asModel, Slot.ROLE_ALL_OPERATIONS);
 		Slot allPropertiesSlot = getSlot(asModel, Slot.ROLE_ALL_PROPERTIES);
-		Slot typeFragmentsSlot = getSlot(asModel, Slot.ROLE_TYPE_FRAGMENTS);
+		Slot allTypesSlot = getSlot(asModel, Slot.ROLE_ALL_TYPES);
+		Slot enumerationLiteralsSlot = getSlot(asModel, Slot.ROLE_ENUMERATION_LITERALS);
 		Slot fragmentOperationsSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_OPERATIONS);
 		Slot fragmentPropertiesSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_PROPERTIES);
-		Slot enumerationLiteralsSlot = getSlot(asModel, Slot.ROLE_ENUMERATION_LITERALS);
-	//	addDependency(allOperationsSlot, typeFragmentsSlot);
+		Slot parameterListsSlot = getSlot(asModel, Slot.ROLE_PARAMETER_LISTS);
+		Slot typeFragmentsSlot = getSlot(asModel, Slot.ROLE_TYPE_FRAGMENTS);
+		Slot typeParametersSlot = getSlot(asModel, Slot.ROLE_TYPE_PARAMETERS);
+	//	addDependency(typeParametersSlot, ??);
+		addDependency(allTypesSlot, typeParametersSlot);
+		addDependency(allFragmentsSlot, allTypesSlot);
+		addDependency(parameterListsSlot, allFragmentsSlot);
+		addDependency(allOperationsSlot, parameterListsSlot);
 		addDependency(allPropertiesSlot, allOperationsSlot);
 		addDependency(typeFragmentsSlot, allPropertiesSlot);
 		addDependency(fragmentOperationsSlot, typeFragmentsSlot);

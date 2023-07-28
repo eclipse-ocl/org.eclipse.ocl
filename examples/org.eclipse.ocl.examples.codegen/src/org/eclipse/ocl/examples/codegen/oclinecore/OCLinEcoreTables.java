@@ -930,6 +930,18 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("\t// " + role + " " + element + "\n");
 				//	}
 				}
+				else if (role == Slot.ROLE_TYPE_PARAMETERS) {
+					declareTypeParameters();
+				}
+				else if (role == Slot.ROLE_ALL_TYPES) {
+					declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
+				}
+				else if (role == Slot.ROLE_ALL_FRAGMENTS) {
+					declareFragments();
+				}
+				else if (role == Slot.ROLE_PARAMETER_LISTS) {
+					declareParameterLists();
+				}
 				else if (role == Slot.ROLE_ALL_OPERATIONS) {
 					declareOperations();
 				}
@@ -1341,14 +1353,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 
 		precedingPackageName = getTablesClassName();
-		s.append("\n");
-		declareTypeParameters();
-		s.append("\n");
-		declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
-		s.append("\n");
-		declareFragments();
-		s.append("\n");
-		declareParameterLists();
+	//	s.append("\n");
+	//	declareTypeParameters();
+	//	s.append("\n");
+	//	declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
+	//	s.append("\n");
+	//	declareFragments();
+	//	s.append("\n");
+	//	declareParameterLists();
 	//	s.append("\n");
 	//	declareOperations();
 	//	s.append("\n");
