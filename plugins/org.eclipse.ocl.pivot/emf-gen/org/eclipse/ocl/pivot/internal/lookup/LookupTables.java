@@ -85,6 +85,19 @@ public class LookupTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement_0 = TypeId.ORDERED_SET.getSpecializedId(LookupTables.CLSSid_NamedElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull PropertyId PROPid_namedElements = LookupTables.CLSSid_LookupEnvironment.getPropertyId("namedElements");
 
+
+	// CTOR http://www.eclipse.org/emf/2002/Ecore
+	// CTOR http://www.eclipse.org/ocl/2015/Library
+	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Lookup.ecore
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
+
+	// CTOR $$
+	// CTOR ocl
+	// CTOR ecore
+	// CTOR lookup
+	// CTOR pivot
+	// CTOR pivot
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -136,6 +149,15 @@ public class LookupTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR ecore::EBoolean
+	// CTOR OclElement
+	// CTOR lookup::Executor
+	// CTOR lookup::LookupEnvironment
+	// CTOR NamedElement
+	// CTOR NamedElement
+	// CTOR Collection(addElements.NE)
+	// CTOR Bag(lookup::LookupEnvironment)
+	// CTOR OrderedSet(NamedElement)
 
 	/**
 	 *	The fragment descriptors for the local elements of each type and its supertypes.
@@ -163,7 +185,21 @@ public class LookupTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR lookup::LookupEnvironment::LookupEnvironment
+	// CTOR lookup::LookupEnvironment::namedElements
+	// CTOR lookup::LookupEnvironment::parentEnv
+	// CTOR pivot::NamedElement::LookupEnvironment
+	// CTOR lookup::LookupEnvironment::addElement(NamedElement[?]) : lookup::LookupEnvironment[1]
+	// CTOR lookup::LookupEnvironment::addElements(NE)(Collection(addElements.NE)) : lookup::LookupEnvironment[1]
+	// CTOR lookup::LookupEnvironment::getExecutor() : lookup::Executor[?]
+	// CTOR lookup::LookupEnvironment::hasFinalResult() : ecore::EBoolean[1]
+	// OPERATIONS lookup::Executor
+	// OPERATIONS NamedElement
+	// PROPERTIES lookup::Executor
+	// SUPER_CLASSES lookup::Executor
+	// SUPER_CLASSES lookup::LookupEnvironment
 
+	// OPERATIONS lookup::LookupEnvironment
 	/**
 	 *	The parameter type lists shared by operations.
 	 *
@@ -188,6 +224,12 @@ public class LookupTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// PROPERTIES lookup::LookupEnvironment
+	// PROPERTIES NamedElement
+	// TYPE lookup::LookupEnvironment::addElement(NamedElement[?]) : lookup::LookupEnvironment[1]
+	// TYPE lookup::LookupEnvironment::addElements(NE)(Collection(addElements.NE)) : lookup::LookupEnvironment[1]
+	// TYPE lookup::LookupEnvironment::getExecutor() : lookup::Executor[?]
+	// TYPE lookup::LookupEnvironment::hasFinalResult() : ecore::EBoolean[1]
 
 	/**
 	 *	The operation descriptors for each operation of each type.
@@ -249,23 +291,6 @@ public class LookupTables extends AbstractTables
 		public static void init() {}
 	}
 
-
-	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
-	// CTOR http://www.eclipse.org/ocl/2015/Library
-	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
-	// CTOR http://www.eclipse.org/emf/2002/Ecore
-	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Lookup.ecore
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit0 = new Object() {{
-	}};
-
-	// CTOR $$
-	// CTOR ocl
-	// CTOR ecore
-	// CTOR lookup
-	// CTOR pivot
-	// CTOR pivot
 	/**
 	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
 	 */
@@ -306,51 +331,6 @@ public class LookupTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit1 = new Object() {{
-		// LIBRARY.createComment(_ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
-	}};
-
-	// CTOR ecore::EBoolean
-	// CTOR OclElement
-	// CTOR lookup::Executor
-	// CTOR lookup::LookupEnvironment
-	// CTOR NamedElement
-	// CTOR NamedElement
-	// CTOR Collection(addElements.NE)
-	// CTOR Bag(lookup::LookupEnvironment)
-	// CTOR OrderedSet(NamedElement)
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit2 = new Object() {{
-		// LIBRARY.createComment(_OclElement, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
-		// LIBRARY.createComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
-	}};
-
-	// CTOR lookup::LookupEnvironment::LookupEnvironment
-	// CTOR lookup::LookupEnvironment::namedElements
-	// CTOR lookup::LookupEnvironment::parentEnv
-	// CTOR pivot::NamedElement::LookupEnvironment
-	// CTOR lookup::LookupEnvironment::addElement(NamedElement[?]) : lookup::LookupEnvironment[1]
-	// CTOR lookup::LookupEnvironment::addElements(NE)(Collection(addElements.NE)) : lookup::LookupEnvironment[1]
-	// CTOR lookup::LookupEnvironment::getExecutor() : lookup::Executor[?]
-	// CTOR lookup::LookupEnvironment::hasFinalResult() : ecore::EBoolean[1]
-	// SUPER_CLASSES lookup::Executor
-	// SUPER_CLASSES lookup::LookupEnvironment
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit3 = new Object() {{
-	}};
-
-	// TYPE lookup::LookupEnvironment::addElement(NamedElement[?]) : lookup::LookupEnvironment[1]
-	// TYPE lookup::LookupEnvironment::addElements(NE)(Collection(addElements.NE)) : lookup::LookupEnvironment[1]
-	// TYPE lookup::LookupEnvironment::getExecutor() : lookup::Executor[?]
-	// TYPE lookup::LookupEnvironment::hasFinalResult() : ecore::EBoolean[1]
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit4 = new Object() {{
-	}};
 
 	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
@@ -454,10 +434,6 @@ public class LookupTables extends AbstractTables
 	}
 
 
-	@SuppressWarnings("unused")
-	private static Object unusedInit5 = new Object() {{
-	}};
-
 	/**
 	 *	The lists of local properties for the local fragment of each type.
 	 */
@@ -496,10 +472,6 @@ public class LookupTables extends AbstractTables
 	}
 
 
-	@SuppressWarnings("unused")
-	private static Object unusedInit6 = new Object() {{
-	}};
-
 	/**
 	 *	The lists of enumeration literals for each enumeration.
 	 */
@@ -522,10 +494,6 @@ public class LookupTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-
-	@SuppressWarnings("unused")
-	private static Object unusedInit7 = new Object() {{
-	}};
 
 	/**
 	 * The multiple packages above avoid problems with the Java 65536 byte limit but introduce a difficulty in ensuring that
