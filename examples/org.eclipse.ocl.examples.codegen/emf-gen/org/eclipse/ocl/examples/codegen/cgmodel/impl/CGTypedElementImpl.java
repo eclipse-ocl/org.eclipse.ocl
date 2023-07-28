@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -17,6 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -223,7 +225,17 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	 */
 	@Override
 	public @Nullable TypeId getASTypeId() {
-		return ast instanceof TypedElement ? ((TypedElement) ast).getTypeId() : null;
+		if (ast instanceof TypedElement) {
+			Type type = ((TypedElement)ast).getType();
+			if (type instanceof DataType) {
+				Type behavioralType = ((DataType)type).getBehavioralClass();
+				if (behavioralType != null) {
+					type = behavioralType;
+				}
+			}
+			return type.getTypeId();
+		}
+		return null;
 	}
 
 } //CGTypedElementImpl

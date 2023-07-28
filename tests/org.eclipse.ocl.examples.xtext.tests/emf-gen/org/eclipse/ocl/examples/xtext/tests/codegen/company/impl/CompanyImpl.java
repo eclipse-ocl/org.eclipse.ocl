@@ -199,7 +199,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		/**
 		 *
 		 * let
-		 *   table : Set(Tuple(range:Sequence(Integer[*|?]), size:company::CompanySizeKind[1])) = Set{
+		 *   table : Set(Tuple(range:Sequence(Integer), size:company::CompanySizeKind[1])) = Set{
 		 *     Tuple{range = Sequence{0..49}, size = CompanySizeKind::small
 		 *     }
 		 *     , Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium
