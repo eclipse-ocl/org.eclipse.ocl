@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -50,9 +51,10 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -2781,7 +2783,6 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots5a() {
-			// define ALL_OPERATIONS Model
 			_Collection_Bag_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collectNested_V, true, 0, -1);
 			_Collection_Bag_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collect_V, true, 0, -1);
 			_Collection_Bag_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Bag_flatten_T2, true, 0, -1);
@@ -2883,10 +2884,10 @@ public class OCLstdlib extends ASResourceImpl
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
 		}
 
 		private void installSlots5b() {
-			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
@@ -3090,10 +3091,11 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_oclAsType.setIsInvalidating(true);
 			op_OclVoid_oclAsType.setIsRequired(false);
 			createParameter(op_OclVoid_oclAsType, "type", tp_OclVoid_oclAsType_TT, true).setIsTypeof(true);
+			// define TYPE_FRAGMENTS Model
 		}
 
 		private void installSlots6a() {
-			// define ALL_PROPERTIES Model
+			// define ALL_OPERATIONS Model
 			// define CTOR Property
 			// define CTOR Property
 			_Collection_Tuple_T = getCollectionType(_Collection_Collection_T, _Tuple, true, 0, -1);
@@ -3365,6 +3367,7 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots7a() {
+			// define ALL_PROPERTIES Model
 			// define CTOR Property
 			// define CTOR Property
 			// define CTOR Property
@@ -3458,7 +3461,6 @@ public class OCLstdlib extends ASResourceImpl
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
 			// define PROPERTIES CollectionType
-			// define PROPERTIES BagType
 			// define PROPERTIES BagType
 			// define PROPERTIES BagType
 			// define PROPERTIES BagType
@@ -3468,6 +3470,7 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots7b() {
+			// define PROPERTIES BagType
 			// define PROPERTIES BagType
 			// define PROPERTIES BagType
 			// define PROPERTIES BagType
@@ -3574,7 +3577,6 @@ public class OCLstdlib extends ASResourceImpl
 			op_UniqueCollection__neg_.setType(_UniqueCollection_UniqueCollection_T_T);
 			op_UniqueCollection__neg_.setPrecedence(prec_ADDITIVE);
 			createParameter(op_UniqueCollection__neg_, "s", _UniqueCollection_OclAny_T, true);
-			// define TYPE_FRAGMENTS Model
 		}
 
 		private void installSlots8() {

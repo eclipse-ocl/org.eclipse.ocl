@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.oclstdlib;
 
+import java.lang.Object;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -30,7 +31,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 // import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -4543,9 +4543,7 @@ public class OCLstdlibTables extends AbstractTables
 	}
 
 	static {
-		OrphanageImpl.checkSuperClasses = true;
 		Init.initEnd();
-		OrphanageImpl.checkSuperClasses = false;
 	}
 
 	/*
