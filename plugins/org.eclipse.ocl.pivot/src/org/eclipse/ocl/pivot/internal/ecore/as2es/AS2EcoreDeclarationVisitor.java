@@ -468,9 +468,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (TypeId.OCL_ANY_NAME.equals(name)) {
 			instanceClass = Object.class;
 		}
-		eClass.setInstanceClass(instanceClass);				// XXX migrate tol model
-	//	eClass.setAbstract(true); //pivotAnyType.isIsAbstract());
-		eClass.setInterface(true); //pivotAnyType.isIsInterface());			// XXX migrate tol model
+		eClass.setInstanceClass(instanceClass);								// XXX migrate to model
+		eClass.setAbstract(true); //pivotAnyType.isIsAbstract());			// XXX migrate to model
+		eClass.setInterface(true); //pivotAnyType.isIsInterface());			// XXX migrate to model
 		return eClass;
 	}
 
