@@ -146,7 +146,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
 	protected final @NonNull ImportManager importManager;
-	private final @NonNull SynthesisSchedule synthesisSchedule;
+	private final @NonNull SynthesisSchedule synthesisSchedule;	// XXX not actually necessary
 	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
 	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
 

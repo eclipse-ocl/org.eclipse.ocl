@@ -23,6 +23,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 
+import java.lang.Object;
+import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
@@ -299,6 +301,67 @@ public class CodegencompanyTables extends AbstractTables
 	// TYPE company::Employee::reportsTo(company::Employee[?]) : ecore::EBoolean[1]
 
 	/**
+	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
+	 */
+	public static class TypeFragments {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		private static final @NonNull FlatFragment @NonNull [] _Bug418716 =
+		{
+			Fragments._Bug418716__OclAny /* 0 */,
+			Fragments._Bug418716__OclElement /* 1 */,
+			Fragments._Bug418716__Bug418716 /* 2 */
+		};
+		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Company =
+		{
+			Fragments._Company__OclAny /* 0 */,
+			Fragments._Company__OclElement /* 1 */,
+			Fragments._Company__Company /* 2 */
+		};
+		private static final int @NonNull [] __Company = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
+		{
+			Fragments._CompanySizeKind__OclAny /* 0 */,
+			Fragments._CompanySizeKind__OclElement /* 1 */,
+			Fragments._CompanySizeKind__OclType /* 2 */,
+			Fragments._CompanySizeKind__OclEnumeration /* 3 */,
+			Fragments._CompanySizeKind__CompanySizeKind /* 4 */
+		};
+		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Employee =
+		{
+			Fragments._Employee__OclAny /* 0 */,
+			Fragments._Employee__OclElement /* 1 */,
+			Fragments._Employee__Employee /* 2 */
+		};
+		private static final int @NonNull [] __Employee = { 1,1,1 };
+
+		/**
+		 *	Install the fragment descriptors in the class descriptors.
+		 */
+		static {
+			Types._Bug418716.initFragments(_Bug418716, __Bug418716);
+			Types._Company.initFragments(_Company, __Company);
+			Types._CompanySizeKind.initFragments(_CompanySizeKind, __CompanySizeKind);
+			Types._Employee.initFragments(_Employee, __Employee);
+
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of CodegencompanyTables::TypeFragments and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
+
+	/**
 	 *	The operation descriptors for each operation of each type.
 	 *
 	 * @noextend This class is not intended to be subclassed by clients.
@@ -308,7 +371,7 @@ public class CodegencompanyTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			TypeFragments.init();
 		}
 
 		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
@@ -369,73 +432,12 @@ public class CodegencompanyTables extends AbstractTables
 	}
 
 	/**
-	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
-	 */
-	public static class TypeFragments {
-		static {
-			Init.initStart();
-			Properties.init();
-		}
-
-		private static final @NonNull FlatFragment @NonNull [] _Bug418716 =
-		{
-			Fragments._Bug418716__OclAny /* 0 */,
-			Fragments._Bug418716__OclElement /* 1 */,
-			Fragments._Bug418716__Bug418716 /* 2 */
-		};
-		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Company =
-		{
-			Fragments._Company__OclAny /* 0 */,
-			Fragments._Company__OclElement /* 1 */,
-			Fragments._Company__Company /* 2 */
-		};
-		private static final int @NonNull [] __Company = { 1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
-		{
-			Fragments._CompanySizeKind__OclAny /* 0 */,
-			Fragments._CompanySizeKind__OclElement /* 1 */,
-			Fragments._CompanySizeKind__OclType /* 2 */,
-			Fragments._CompanySizeKind__OclEnumeration /* 3 */,
-			Fragments._CompanySizeKind__CompanySizeKind /* 4 */
-		};
-		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _Employee =
-		{
-			Fragments._Employee__OclAny /* 0 */,
-			Fragments._Employee__OclElement /* 1 */,
-			Fragments._Employee__Employee /* 2 */
-		};
-		private static final int @NonNull [] __Employee = { 1,1,1 };
-
-		/**
-		 *	Install the fragment descriptors in the class descriptors.
-		 */
-		static {
-			Types._Bug418716.initFragments(_Bug418716, __Bug418716);
-			Types._Company.initFragments(_Company, __Company);
-			Types._CompanySizeKind.initFragments(_CompanySizeKind, __CompanySizeKind);
-			Types._Employee.initFragments(_Employee, __Employee);
-
-			Init.initEnd();
-		}
-
-		/**
-		 * Force initialization of the fields of CodegencompanyTables::TypeFragments and all preceding sub-packages.
-		 */
-		public static void init() {}
-	}
-
-	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
 	 */
 	public static class FragmentOperations {
 		static {
 			Init.initStart();
-			TypeFragments.init();
+			Properties.init();
 		}
 
 		private static final @NonNull Operation @NonNull [] _Bug418716__Bug418716 = {};
