@@ -264,7 +264,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else {
 			s.appendClassReference(null, TypeUtil.class);
-			s.append(".EMPTY_PARAMETER_TYPESx2x");
+			s.append(".EMPTY_PARAMETER_TYPES");
 		}
 	}
 

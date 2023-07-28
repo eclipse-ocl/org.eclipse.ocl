@@ -213,6 +213,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
+	public static boolean checkSuperClasses = false;		// XXX
+
 	private static final Logger logger = Logger.getLogger(OrphanageImpl.class);
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
@@ -666,7 +668,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				collectionType.getOwnedBindings().add(templateBinding);
-				assert genericType.getSuperClasses().size() > 0;				// XXX
+				if (checkSuperClasses) {
+					System.out.println("getCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType + " " + NameUtil.debugSimpleName(genericType) + " : " + genericType);
+					assert genericType.getSuperClasses().size() > 0;				// XXX
+				}
 				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);

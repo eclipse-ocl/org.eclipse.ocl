@@ -49,11 +49,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
 {
-	/**
-	 * @since 1.1
-	 */
-	public static @NonNull ParameterTypes EMPTY_PARAMETER_TYPES = createParameterTypes();
-	public static @NonNull Object @NonNull [] EMPTY_PARAMETER_TYPESx2x = new @NonNull Object [] {};
+	public static @NonNull Object @NonNull [] EMPTY_PARAMETER_TYPES = new @NonNull Object [] {};
 
 	public static boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();

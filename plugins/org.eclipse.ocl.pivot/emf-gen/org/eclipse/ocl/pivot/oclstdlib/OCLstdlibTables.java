@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.oclstdlib;
 
-import java.lang.Object;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -1123,7 +1122,7 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Bag,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Bag,
+		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Bag,
 			7, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Bag,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -1148,7 +1147,7 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._Boolean,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._Boolean,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation.INSTANCE);
@@ -1160,11 +1159,11 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies2 = LIBRARY.createOperation("implies2", Parameters._Boolean, Types._Boolean,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__or2 = LIBRARY.createOperation("or2", Parameters._Boolean, Types._Boolean,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
+		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__xor2 = LIBRARY.createOperation("xor2", Parameters._Boolean, Types._Boolean,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
@@ -1175,13 +1174,13 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__any = LIBRARY.createOperation("any", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Collection,
 			7, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -1205,7 +1204,7 @@ public class OCLstdlibTables extends AbstractTables
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__0_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			18, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__2_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
@@ -1225,17 +1224,17 @@ public class OCLstdlibTables extends AbstractTables
 			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_T_OclAny, Types._Collection,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_T_1_Tacc, Types._Collection,
 			30, TypeUtil.createTemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__one = LIBRARY.createOperation("one", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
@@ -1249,11 +1248,11 @@ public class OCLstdlibTables extends AbstractTables
 			38, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Collection,
 			39, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			40, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Collection,
 			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
+		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Collection,
 			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation("union", Parameters._Collection__0_T__, Types._Collection,
 			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
@@ -1262,13 +1261,13 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Integer,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Integer,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___div_ = LIBRARY.createOperation("/", Parameters._OclSelf, Types._Integer,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__div = LIBRARY.createOperation("div", Parameters._Integer, Types._Integer,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivOperation.INSTANCE);
@@ -1278,9 +1277,9 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__mod = LIBRARY.createOperation("mod", Parameters._Integer, Types._Integer,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericModOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
+		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Integer,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
 
 		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Map,
@@ -1341,15 +1340,15 @@ public class OCLstdlibTables extends AbstractTables
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includingMap = LIBRARY.createOperation("includingMap", Parameters._Map__2_K2_3_V2__, Types._Map,
 			28, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_K_OclAny, Types._Map,
 			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Map__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_K_2_Tacc, Types._Map,
 			31, TypeUtil.createTemplateParameters(TypeParameters._2_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
-		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__one = LIBRARY.createOperation("one", Parameters._Lambda_0_K_Boolean, Types._Map,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
@@ -1357,40 +1356,40 @@ public class OCLstdlibTables extends AbstractTables
 			35, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
 		public static final @NonNull Operation _Map__select = LIBRARY.createOperation("select", Parameters._Lambda_0_K_Boolean, Types._Map,
 			36, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
-		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
+		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Map,
 			38, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclAny___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclAny,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclAny,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclAny,
 			3, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsInState = LIBRARY.createOperation("oclIsInState", Parameters._OclState, Types._OclAny,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclAny,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclAny,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__1_oclLog = LIBRARY.createOperation("oclLog", Parameters._String, Types._OclAny,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
+		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclAny,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation("<", Parameters._OclSelf, Types._OclComparable,
@@ -1408,25 +1407,25 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclAsModelType = LIBRARY.createOperation("oclAsModelType", Parameters._0_TT, Types._OclElement,
 			1, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__1_oclBase = LIBRARY.createOperation("oclBase", Parameters._OclType, Types._OclElement,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation("oclExtension", Parameters._OclStereotype, Types._OclElement,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation("oclExtensions", Parameters._OclStereotype, Types._OclElement,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation("oclIsModelKindOf", Parameters._OclType, Types._OclElement,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclEnumeration__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclEnumeration,
@@ -1444,32 +1443,32 @@ public class OCLstdlibTables extends AbstractTables
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclInvalid,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclInvalid,
 			7, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			8, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclInvalid,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclInvalid,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
+		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
+		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclStereotype__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclStereotype,
@@ -1477,7 +1476,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _OclSummable__sum = LIBRARY.createOperation("sum", Parameters._OclSelf, Types._OclSummable,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclSummable,
+		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclSummable,
 			1, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclTuple,
@@ -1498,7 +1497,7 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._OclVoid,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._OclVoid,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
@@ -1508,32 +1507,32 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__concat = LIBRARY.createOperation("concat", Parameters._String, Types._OclVoid,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclVoid,
 			11, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclVoid,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclVoid,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
+		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedCollection__at = LIBRARY.createOperation("at", Parameters._Integer, Types._OrderedCollection,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
+		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedCollection,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedCollection__indexOf = LIBRARY.createOperation("indexOf", Parameters._0_T, Types._OrderedCollection,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
+		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedCollection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._OrderedSet,
@@ -1556,7 +1555,7 @@ public class OCLstdlibTables extends AbstractTables
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._OrderedSet,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
+		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedSet,
 			10, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__including = LIBRARY.createOperation("including", Parameters._0_T, Types._OrderedSet,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -1570,7 +1569,7 @@ public class OCLstdlibTables extends AbstractTables
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
+		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OrderedSet,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
@@ -1587,7 +1586,7 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Real___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Real,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Real___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Real,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
@@ -1597,17 +1596,17 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Real___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Real,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
-		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
 		public static final @NonNull Operation _Real__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._Real,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull Operation _Real__min = LIBRARY.createOperation("min", Parameters._OclSelf, Types._Real,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
-		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
-		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
+		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Real,
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Sequence,
@@ -1628,7 +1627,7 @@ public class OCLstdlibTables extends AbstractTables
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Sequence,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
+		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Sequence,
 			9, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Sequence,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -1642,7 +1641,7 @@ public class OCLstdlibTables extends AbstractTables
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Sequence,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
+		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Sequence,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Sequence,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
@@ -1671,7 +1670,7 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Set__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Set,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Set,
+		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Set,
 			8, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Set__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Set,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
@@ -1704,7 +1703,7 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String__at = LIBRARY.createOperation("at", Parameters._Integer, Types._String,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
-		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCharactersOperation.INSTANCE);
 		public static final @NonNull Operation _String__compareTo = LIBRARY.createOperation("compareTo", Parameters._OclSelf, Types._String,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCompareToOperation.INSTANCE);
@@ -1724,7 +1723,7 @@ public class OCLstdlibTables extends AbstractTables
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation.INSTANCE);
 		public static final @NonNull Operation _String__replaceFirst = LIBRARY.createOperation("replaceFirst", Parameters._String___String, Types._String,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation.INSTANCE);
-		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__startsWith = LIBRARY.createOperation("startsWith", Parameters._String, Types._String,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
@@ -1734,29 +1733,29 @@ public class OCLstdlibTables extends AbstractTables
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation.INSTANCE);
 		public static final @NonNull Operation _String__substring = LIBRARY.createOperation("substring", Parameters._Integer___Integer, Types._String,
 			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToBooleanOperation.INSTANCE);
-		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToIntegerOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToRealOperation.INSTANCE);
-		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__1_tokenize = LIBRARY.createOperation("tokenize", Parameters._String, Types._String,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__2_tokenize = LIBRARY.createOperation("tokenize", Parameters._String___Boolean, Types._String,
 			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
-		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
+		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", TypeUtil.EMPTY_PARAMETER_TYPES, Types._String,
 			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
 
 		public static final @NonNull Operation _UniqueCollection___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
@@ -1776,7 +1775,7 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
 		public static final @NonNull Operation _UnlimitedNatural__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._UnlimitedNatural,
 			2, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._UnlimitedNatural,
+		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPES, Types._UnlimitedNatural,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 
 		static {
@@ -4543,6 +4542,7 @@ public class OCLstdlibTables extends AbstractTables
 	}
 
 	static {
+	//	OrphanageImpl.checkSuperClasses = true;				// XXX
 		Init.initEnd();
 	}
 

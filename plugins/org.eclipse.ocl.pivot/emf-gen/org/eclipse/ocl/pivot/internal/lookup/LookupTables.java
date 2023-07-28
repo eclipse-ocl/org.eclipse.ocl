@@ -19,7 +19,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.lookup;
 
-import java.lang.Object;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
@@ -248,9 +247,9 @@ public class LookupTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation("addElements", Parameters._Collection__0_NE__, Types._LookupEnvironment,
 			1, TypeUtil.createTemplateParameters(TypeParameters._0_NE), null);
-		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation("getExecutor", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation("getExecutor", TypeUtil.EMPTY_PARAMETER_TYPES, Types._LookupEnvironment,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation("hasFinalResult", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation("hasFinalResult", TypeUtil.EMPTY_PARAMETER_TYPES, Types._LookupEnvironment,
 			3, TemplateParameters.EMPTY_LIST, null);
 
 		static {

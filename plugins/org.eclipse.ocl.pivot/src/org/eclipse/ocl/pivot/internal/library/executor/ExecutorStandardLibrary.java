@@ -301,6 +301,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class cses, org.eclipse.ocl.pivot.@NonNull Class cses2) {
+		System.out.println("createFragment " + NameUtil.debugSimpleName(cses) + " : " + cses + " " + NameUtil.debugSimpleName(cses2) + " : " + cses2);
 		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
 	}
 
@@ -354,6 +355,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull Object @Nullable [] parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		System.out.println("createOperation " + asClass + "." + name + "(" + parameterTypes + ")");
 		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
 	//	asOperation.setESObject(eOperation);
@@ -815,6 +817,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
 		asClass.setFlatClass(flatClass);
+		System.out.println("initClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 	}
 
 	public void initLiterals(@NonNull Enumeration asEnumeration, @NonNull EnumerationLiteral @NonNull [] asEnumerationLiterals) {

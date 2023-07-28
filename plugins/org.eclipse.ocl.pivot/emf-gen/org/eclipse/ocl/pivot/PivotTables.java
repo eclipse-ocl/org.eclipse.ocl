@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.Object;
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.Enumeration;
 // import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -3100,10 +3098,10 @@ public class PivotTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._BooleanType,
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._BooleanType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Class,
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Class,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation("getOwnedCompletePackage", Parameters._String, Types._CompleteModel,
@@ -3112,49 +3110,49 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _CompletePackage__getOwnedCompleteClass = LIBRARY.createOperation("getOwnedCompleteClass", Parameters._String, Types._CompletePackage,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation("allOwnedElements", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Element,
+		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation("allOwnedElements", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Element,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation("getValue", Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Enumeration,
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._InvalidType,
+		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._InvalidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OCLExpression,
+		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OCLExpression,
+		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OperationCallExp,
+		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OperationCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _Property__isAttribute = LIBRARY.createOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation("getSpecializedReferredPropertyOwningType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._PropertyCallExp,
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation("getSpecializedReferredPropertyOwningType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation("getSpecializedReferredPropertyType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._PropertyCallExp,
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation("getSpecializedReferredPropertyType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation("getReferredElement", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ReferringElement,
+		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation("getReferredElement", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ReferringElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._SelfType,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Stereotype,
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Stereotype,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation("conformsTo", Parameters._Type, Types._Type,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation("flattenedType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation("flattenedType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation("isClass", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation("isClass", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation("isTemplateParameter", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Type,
+		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation("isTemplateParameter", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
 			3, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Type__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._Type,
 			4, TemplateParameters.EMPTY_LIST, null);
@@ -3162,20 +3160,20 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation("CompatibleBody", Parameters._ValueSpecification, Types._TypedElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation("integerValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation("integerValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation("isComputable", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation("isComputable", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			3, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation("stringValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation("stringValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			4, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation("unlimitedValue", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation("unlimitedValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
 			5, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._VoidType,
+		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._VoidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {

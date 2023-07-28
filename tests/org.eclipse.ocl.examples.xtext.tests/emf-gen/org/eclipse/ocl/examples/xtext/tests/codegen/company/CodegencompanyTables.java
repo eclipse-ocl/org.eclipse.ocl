@@ -23,8 +23,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 
-import java.lang.Object;
-import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
@@ -313,7 +311,7 @@ public class CodegencompanyTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Employee,
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation("reportsTo", Parameters._Employee, Types._Employee,
 			1, TemplateParameters.EMPTY_LIST, null);
