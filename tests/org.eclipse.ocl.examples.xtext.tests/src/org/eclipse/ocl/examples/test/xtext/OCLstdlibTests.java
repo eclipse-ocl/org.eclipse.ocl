@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -127,9 +128,15 @@ public class OCLstdlibTests extends XtextTestCase
 	//		System.out.println("Java : " + moniker);
 	//	}
 		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
+		Orphanage sharedOrphanage = OrphanageImpl.basicGetSharedOrphanage(resourceSet);
+		assert sharedOrphanage != null;
+		Map<String,Element> orphanageMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(sharedOrphanage.eResource()));
 		for (String moniker : fileMoniker2asMap.keySet()) {
 			Element fileElement = fileMoniker2asMap.get(moniker);
 			Element javaElement = javaMoniker2asMap.get(moniker);
+			if (javaElement == null) {
+				javaElement = orphanageMoniker2asMap.get(moniker);
+			}
 			if (javaElement == null) {
 				boolean isExpression = false;
 				for (EObject eObject = fileElement; eObject != null; eObject = eObject.eContainer()) {
