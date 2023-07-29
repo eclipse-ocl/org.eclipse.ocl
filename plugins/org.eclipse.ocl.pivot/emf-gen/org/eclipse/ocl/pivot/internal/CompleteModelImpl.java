@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -717,21 +718,24 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
 						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
 						Type superActual = superParameterSubstitution.getActual();
-						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
-							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								if (specializedParameterSubstitution.getFormal() == superActual) {
-									Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
-									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+						if (superActual instanceof TemplateParameter) {
+							TemplateParameterId actualTemplateParameterId = ((TemplateParameter)superActual).getTemplateParameterId();
+							for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
+								for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
+									if (specializedParameterSubstitution.getFormal().getTemplateParameterId() == actualTemplateParameterId) {
+										Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
+										TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
+										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+										break;
+									}
+								}
+								if (superSpecializedTemplateParameterSubstitution != null) {
 									break;
 								}
 							}
 							if (superSpecializedTemplateParameterSubstitution != null) {
-								break;
+								superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
 							}
-						}
-						if (superSpecializedTemplateParameterSubstitution != null) {
-							superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
 						}
 					}
 				}

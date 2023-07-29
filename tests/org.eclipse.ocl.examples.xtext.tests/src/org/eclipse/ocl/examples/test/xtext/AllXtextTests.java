@@ -76,10 +76,10 @@ extends TestCase {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
 		TestSuite result = new TestSuite(testSuiteName);
-//XXX		result.addTestSuite(MonikerTests.class);
-//XXX		result.addTestSuite(PivotTests.class);
-//XXX		result.addTestSuite(OCLstdlibTests.class);
-//XXX		result.addTestSuite(PrecedenceTests.class);
+		result.addTestSuite(MonikerTests.class);
+		result.addTestSuite(PivotTests.class);
+		result.addTestSuite(OCLstdlibTests.class);
+		result.addTestSuite(PrecedenceTests.class);
 		result.addTestSuite(EvaluateBooleanOperationsTest.class);
 		result.addTestSuite(EvaluateClassifierOperationsTest.class);
 		result.addTestSuite(EvaluateCollectionOperationsTest.class);

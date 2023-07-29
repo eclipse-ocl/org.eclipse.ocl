@@ -1188,6 +1188,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
+		assert specializedClass.getSuperClasses().size() == unspecializedClass.getSuperClasses().size();
 	}
 
 	@Override

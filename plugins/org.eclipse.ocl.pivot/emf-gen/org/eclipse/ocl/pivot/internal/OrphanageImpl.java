@@ -634,7 +634,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		CollectionTypeId genericTypeId = genericType.getTypeId();
 		TypeId elementTypeId = elementType.getTypeId();
 		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
-		if ("Sequence<$0:Sequence::selectByKind::TT,$1:true,$2:0,$3:*>".equals(specializedTypeId.toString())) {
+		if ("Bag<$0:Annotation,$1:true,$2:0,$3:*>".equals(specializedTypeId.toString())) {
 			getClass();		// XXX
 		}
 		synchronized (typeId2type) {
@@ -701,6 +701,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				addOrphanClass(collectionType);
 			}
 			assert collectionType.isWellContained();
+			assert collectionType.getSuperClasses().size() > 0;				// XXX
 			return collectionType;
 		}
 	}
