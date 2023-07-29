@@ -172,8 +172,13 @@ implements Type {
 
 	@Override
 	public @Nullable Orphanage basicGetSharedOrphanage() {
-		EObject eContainer = eContainer();
-		return (eContainer instanceof Orphanage) && (eContainer().eResource() instanceof OrphanResource) ? (Orphanage)eContainer : null;
+		if (eContainer == null) {
+			return null;
+		}
+		if (eContainer.eIsProxy()) {
+			return null;			// Can happen when finalizing
+		}
+		return (eContainer instanceof Orphanage) && (eContainer.eResource() instanceof OrphanResource) ? (Orphanage)eContainer : null;
 	}
 
 	@Override

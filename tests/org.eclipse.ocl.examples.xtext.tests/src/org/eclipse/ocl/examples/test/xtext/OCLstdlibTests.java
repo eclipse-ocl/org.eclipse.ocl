@@ -350,6 +350,9 @@ public class OCLstdlibTests extends XtextTestCase
 				assertEquals(fileType.getClass(), javaType.getClass());
 				String fileMoniker = AS2Moniker.toString(fileType);
 				String javaMoniker = AS2Moniker.toString(javaType);
+				if (!fileMoniker.equals(javaMoniker)) {
+					getClass();		// XXX
+				}
 				assertEquals(fileMoniker, javaMoniker);
 			}
 			if (fileElement instanceof Feature) {

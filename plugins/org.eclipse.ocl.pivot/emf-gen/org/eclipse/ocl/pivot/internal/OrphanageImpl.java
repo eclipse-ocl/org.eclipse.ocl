@@ -669,7 +669,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				collectionType.getOwnedBindings().add(templateBinding);
-				System.out.println("getCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType + " " + NameUtil.debugSimpleName(genericType) + " : " + genericType);
+			//	System.out.println("getCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType + " " + NameUtil.debugSimpleName(genericType) + " : " + genericType);
 				if ("Sequence(selectByKind.TT[*|?])".equals(collectionType.toString())) {
 					getClass();		// XXX
 				}

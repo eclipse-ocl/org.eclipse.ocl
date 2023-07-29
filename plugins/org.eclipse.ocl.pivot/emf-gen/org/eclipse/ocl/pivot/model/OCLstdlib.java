@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -72,7 +71,7 @@ public class OCLstdlib extends ASResourceImpl
 	/**
 	 *	The static package-of-types pivot model of the Standard Library.
 	 */
-	private static OCLstdlib INSTANCE = null;
+//	private static OCLstdlib INSTANCE = null;
 
 	/**
 	 *	The URI of this Standard Library.
@@ -91,9 +90,9 @@ public class OCLstdlib extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
-	public static @Nullable OCLstdlib basicGetDefault() {
-		return INSTANCE;
-	}
+//	public static @Nullable OCLstdlib basicGetDefault() {
+//		return INSTANCE;
+//	}
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource.
@@ -102,13 +101,13 @@ public class OCLstdlib extends ASResourceImpl
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
 	public static @NonNull OCLstdlib getDefault() {
-		OCLstdlib oclstdlib = INSTANCE;
-		if (oclstdlib == null) {
+//		OCLstdlib oclstdlib = INSTANCE;
+//		if (oclstdlib == null) {
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			oclstdlib = INSTANCE = new ReadOnly(asURI);
+			OCLstdlib oclstdlib = new ReadOnly(asURI);
 			Contents contents = new Contents(oclstdlib, "http://www.eclipse.org/ocl/2015/Library");
 			oclstdlib.setSaveable(false);
-		}
+//		}
 		return oclstdlib;
 	}
 
@@ -168,7 +167,7 @@ public class OCLstdlib extends ASResourceImpl
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 		OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
-		INSTANCE = null;
+	//	INSTANCE = null;
 	}
 
 	/**
@@ -222,12 +221,12 @@ public class OCLstdlib extends ASResourceImpl
 		 */
 		@Override
 		public void load(Map<?, ?> options) throws IOException {
-			if (this != INSTANCE) {
+		//	if (this != INSTANCE) {
 				super.load(options);
-			}
-			else {
-				setLoaded(true);
-			}
+		//	}
+		//	else {
+		//		setLoaded(true);
+		//	}
 		}
 
 		/**

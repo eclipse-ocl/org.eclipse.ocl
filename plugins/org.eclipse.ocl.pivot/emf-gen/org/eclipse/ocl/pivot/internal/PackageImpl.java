@@ -225,6 +225,7 @@ implements org.eclipse.ocl.pivot.Package {
 		uri = newURI;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldURI, uri));
+		System.out.println("[" + Thread.currentThread().getName() + "] setURIGen " + NameUtil.debugSimpleName(this) + " " + uri);
 	}
 
 	/**

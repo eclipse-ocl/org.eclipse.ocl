@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -63,9 +62,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -114,9 +111,9 @@ public class PivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-	//	PivotUtilInternal.noDebug = false;
+		PivotUtilInternal.noDebug = false;
 	//	DEBUG_GC = true;
-	//	DEBUG_ID = true;
+		DEBUG_ID = true;
 	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
@@ -908,7 +905,7 @@ public class PivotTestCase extends TestCase
 		/**
 		 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
 		 * and which might be resolved using the wrong strategy in another test.
-		 */
+		 *
 		OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
 		if (oclstdlib != null) {
 			for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
@@ -921,7 +918,7 @@ public class PivotTestCase extends TestCase
 					}
 				}
 			}
-		}
+		} */
 		super.tearDown();
 	}
 
