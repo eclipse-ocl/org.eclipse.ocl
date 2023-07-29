@@ -1014,6 +1014,25 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		org.eclipse.ocl.pivot.Class unspecializedPivotClass = unspecializedPivotType.isClass();
 		assert unspecializedPivotClass != null;			// FIXME
+		if (eClassifier instanceof EClass) {
+			EList<EGenericType> eGenericSuperTypes = ((EClass)eClassifier).getEGenericSuperTypes();
+			if (eGenericSuperTypes.size() > 0) {
+				List<org.eclipse.ocl.pivot.@NonNull Class> asSuperTypes = new ArrayList<>();
+				for (EGenericType eGenericSuperType : eGenericSuperTypes) {
+					if (eGenericSuperType.getETypeArguments().isEmpty()) {
+						org.eclipse.ocl.pivot.Class asSuperType = (org.eclipse.ocl.pivot.Class)resolveType(resolvedSpecializations, eGenericSuperType);
+						asSuperTypes.add(asSuperType);
+					}
+					else {
+						asSuperTypes = null;
+						break;
+					}
+				}
+				if (asSuperTypes != null) {
+					refreshList(unspecializedPivotClass.getSuperClasses(), asSuperTypes);
+				}
+			}
+		}
 		return standardLibrary.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
