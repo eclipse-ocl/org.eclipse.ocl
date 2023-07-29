@@ -58,7 +58,7 @@ public class OCLmetamodel extends ASResourceImpl
 	/**
 	 *	The static package-of-types pivot model of the Pivot Metamodel.
 	 */
-	private static OCLmetamodel INSTANCE = null;
+//	private static OCLmetamodel INSTANCE = null;
 
 	/**
 	 *	The URI of this Metamodel.
@@ -86,12 +86,12 @@ public class OCLmetamodel extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
-		OCLmetamodel metamodelResource = INSTANCE;
-		if (metamodelResource == null) {
-			metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+//		OCLmetamodel metamodelResource = INSTANCE;
+//		if (metamodelResource == null) {
+		OCLmetamodel metamodelResource = new ReadOnly(PIVOT_AS_URI);
 			Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodelResource.setSaveable(false);
-		}
+//		}
 		return metamodelResource;
 	}
 
@@ -145,7 +145,7 @@ public class OCLmetamodel extends ASResourceImpl
 	 */
 	public static void uninstall() {
 		OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
-		INSTANCE = null;
+	//	INSTANCE = null;
 	}
 
 	protected OCLmetamodel(@NonNull URI uri) {
@@ -211,12 +211,12 @@ public class OCLmetamodel extends ASResourceImpl
 		 */
 		@Override
 		public void load(Map<?, ?> options) throws IOException {
-			if (this != INSTANCE) {
+		//	if (this != INSTANCE) {
 				super.load(options);
-			}
-			else {
-				setLoaded(true);
-			}
+		//	}
+		//	else {
+		//		setLoaded(true);
+		//	}
 		}
 
 		/**
