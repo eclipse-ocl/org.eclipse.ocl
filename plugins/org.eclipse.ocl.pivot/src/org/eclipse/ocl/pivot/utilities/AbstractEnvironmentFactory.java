@@ -143,6 +143,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
+	private final @NonNull Map<@NonNull Class<?>, @NonNull Object> instanceClass2instance = new HashMap<>();
+
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
 	 *
@@ -310,6 +312,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + (attachCount-1) + ":" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
 		}
+	}
+
+	@Override
+	public <T> @Nullable T basicGetInstance( @NonNull Class<T> instanceClass) {
+		return (T)instanceClass2instance.get(instanceClass);
 	}
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
@@ -1014,6 +1021,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void setEvaluationTracingEnabled(boolean b) {
 		traceEvaluation = b;
+	}
+
+	@Override
+	public <T> void setInstance(@NonNull Class<T> instanceClass, @NonNull T instance) {
+		instanceClass2instance.put(instanceClass, instance);
 	}
 
 	@Override

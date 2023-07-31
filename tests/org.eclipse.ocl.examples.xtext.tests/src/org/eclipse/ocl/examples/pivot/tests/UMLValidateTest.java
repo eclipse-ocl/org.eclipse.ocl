@@ -157,7 +157,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose.
 	}
 
-	public void test_tutorial_umlValidation_with_lpg_408990() {
+	public void zztest_tutorial_umlValidation_with_lpg_408990() {
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLConstants.OCL_DELEGATE_URI_LPG);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();

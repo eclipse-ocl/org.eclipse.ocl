@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -101,13 +102,15 @@ public class OCLstdlib extends ASResourceImpl
 	 * It cannot be unloaded or rather unloading has no effect.
 	 */
 	public static @NonNull OCLstdlib getDefault() {
-//		OCLstdlib oclstdlib = INSTANCE;
-//		if (oclstdlib == null) {
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		ReadOnly oclstdlib = environmentFactory.basicGetInstance(ReadOnly.class);
+		if (oclstdlib == null) {
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			OCLstdlib oclstdlib = new ReadOnly(asURI);
+			oclstdlib = new ReadOnly(asURI);
 			Contents contents = new Contents(oclstdlib, "http://www.eclipse.org/ocl/2015/Library");
 			oclstdlib.setSaveable(false);
-//		}
+			environmentFactory.setInstance(ReadOnly.class, oclstdlib);
+		}
 		return oclstdlib;
 	}
 

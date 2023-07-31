@@ -45,7 +45,9 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -86,12 +88,14 @@ public class OCLmetamodel extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
-//		OCLmetamodel metamodelResource = INSTANCE;
-//		if (metamodelResource == null) {
-		OCLmetamodel metamodelResource = new ReadOnly(PIVOT_AS_URI);
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+		ReadOnly metamodelResource = environmentFactory.basicGetInstance(ReadOnly.class);
+		if (metamodelResource == null) {
+			metamodelResource = new ReadOnly(PIVOT_AS_URI);
 			Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodelResource.setSaveable(false);
-//		}
+			environmentFactory.setInstance(ReadOnly.class, metamodelResource);
+		}
 		return metamodelResource;
 	}
 

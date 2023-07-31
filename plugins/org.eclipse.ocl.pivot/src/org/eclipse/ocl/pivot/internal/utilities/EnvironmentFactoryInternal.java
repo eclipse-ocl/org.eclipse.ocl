@@ -79,6 +79,11 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	void attach(@NonNull Object attachOwner);
 
 	/**
+	 * Return the instance of instanceClass associated with this class, or null if none registered b y setInstance.
+	 */
+	<T> @Nullable T basicGetInstance(@NonNull Class<T> instanceClass);
+
+	/**
 	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a load strategy that uses whichever of
 	 * the namespace or platform URI is first encountered and which suppresses diagnostics about subsequent use of the
 	 * other form of URI.
@@ -162,6 +167,10 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	void setCSI2ASMapping(ICSI2ASMapping csi2asMapping);
 
 	void setEvaluationTracingEnabled(boolean b);
+	/**
+	 * Specify instance as the instance of instanceClass to be associated with this class.
+	 */
+	<T> void setInstance(@NonNull Class<T> instanceClass, @NonNull T instance);
 
 	/**
 	 * Specify an Eclipse project with respect to which project-specific preferences are resolved.
@@ -169,4 +178,5 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	void setProject(@Nullable IProject project);
 
 	void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity);
+
 }
