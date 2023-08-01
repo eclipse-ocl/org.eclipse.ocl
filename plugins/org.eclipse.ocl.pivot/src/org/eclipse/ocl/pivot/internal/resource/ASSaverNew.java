@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * ASSaverNew ensures that all references to synthesized types are terminated by local copies of the synthesized types.
@@ -66,8 +68,16 @@ public class ASSaverNew extends AbstractASSaver
 	@SuppressWarnings("serial")
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
+		private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2localType = new HashMap<>();
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
+			for (@NonNull EObject eObject : new TreeIterable(resource)) {
+				if (eObject instanceof Type) {
+					Type type = (Type)eObject;
+					TypeId typeId = type.getTypeId();
+					typeId2localType.put(typeId, type);
+				}
+			}
 		}
 
 		@Override
@@ -84,6 +94,18 @@ public class ASSaverNew extends AbstractASSaver
 				copyValues.clear();						// Avoid dupicate superclasses when reloading
 			}
 			super.copyReference(eReference, eObject, copyEObject);
+		}
+
+		@Override
+		public @Nullable EObject get(Object key) {
+			if (key instanceof Type) {
+				TypeId typeId = ((Type)key).getTypeId();
+				Type localType = typeId2localType.get(typeId);
+				if (localType != null) {
+					return localType;
+				}
+			}
+			return super.get(key);
 		}
 	}
 
@@ -238,9 +260,16 @@ public class ASSaverNew extends AbstractASSaver
 				assert eObject != null;
 				EObject localEObject = eObject;
 				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
+					//
+					// If eObject needs localizing, create local copy
+					//
+					// XXX also localize references that are completed elsewhere but partialled locally
 					if (eContainer == sharedOrphanage) {
 						if (localOrphanage == null) {
 							localOrphanage = OrphanageImpl.createLocalOrphanage(asModel);
+						}
+						if (eObject.toString().startsWith("Bag(Map")) {
+							getClass();			// XXX
 						}
 						EObject eSource = eObject;
 						if (eObject instanceof Property) {				// If Tuple Property referenced (before Tuple)
@@ -272,6 +301,9 @@ public class ASSaverNew extends AbstractASSaver
 						break;
 					}
 				}
+				//
+				// If eObject was localized, redirect all references
+				//
 				if (localEObject != eObject) {
 					Collection<Setting> settings = references.get(eObject);
 					assert settings != null;

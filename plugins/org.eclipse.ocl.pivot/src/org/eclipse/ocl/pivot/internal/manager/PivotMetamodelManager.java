@@ -1710,6 +1710,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (name == null) {
 			return;
 		}
+		if ("entryClass".equals(thisProperty.getName())) {
+			getClass();		// XXX
+		}
+
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
@@ -1722,10 +1726,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		else {
 			CollectionType genericCollectionType = standardLibrary.getCollectionType(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE);
-			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass,
-				PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE));
+			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass, null, null, null));
 			newOpposite.setIsRequired(true);
 		}
 		Model thisModel = PivotUtil.getContainingModel(thisClass);

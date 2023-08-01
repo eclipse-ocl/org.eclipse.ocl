@@ -634,7 +634,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		CollectionTypeId genericTypeId = genericType.getTypeId();
 		TypeId elementTypeId = elementType.getTypeId();
 		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
-		if ("Bag<$0:Annotation,$1:true,$2:0,$3:*>".equals(specializedTypeId.toString())) {
+		if ("Bag<$0:MapType,$1:true,$2:0,$3:*>".equals(specializedTypeId.toString())) {
 			getClass();		// XXX
 		}
 		synchronized (typeId2type) {

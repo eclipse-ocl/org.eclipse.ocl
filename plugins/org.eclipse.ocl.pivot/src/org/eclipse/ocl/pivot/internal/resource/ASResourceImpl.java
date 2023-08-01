@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -265,7 +264,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		this.asResourceFactory = asResourceFactory;
 		//	assert PivotUtilInternal.isASURI(uri);
 		//	PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
-		System.out.println("[" + Thread.currentThread().getName() + "] ctor " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] ctor " + NameUtil.debugSimpleName(this) + " " + getURI());
 	}
 
 	/**
@@ -337,41 +336,41 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	public void doLoad(InputStream inputStream, Map<?, ?> options)
 			throws IOException {
-		System.out.println("[" + Thread.currentThread().getName() + "] doLoad1 " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doLoad1 " + NameUtil.debugSimpleName(this) + " " + getURI());
 		super.doLoad(inputStream, options);
 	}
 
 	@Override
 	public void doSave(OutputStream outputStream, Map<?, ?> options)
 			throws IOException {
-		System.out.println("[" + Thread.currentThread().getName() + "] doSave1 " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doSave1 " + NameUtil.debugSimpleName(this) + " " + getURI());
 		super.doSave(outputStream, options);
 	}
 
 	@Override
 	public void doSave(Writer writer, Map<?, ?> options)
 			throws IOException {
-		System.out.println("[" + Thread.currentThread().getName() + "] doSave2 " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doSave2 " + NameUtil.debugSimpleName(this) + " " + getURI());
 		super.doSave(writer, options);
 	}
 
 	@Override
 	public void doLoad(Node node, Map<?, ?> options)
 			throws IOException {
-		System.out.println("[" + Thread.currentThread().getName() + "] doLoad2 " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doLoad2 " + NameUtil.debugSimpleName(this) + " " + getURI());
 		super.doLoad(node, options);
 	}
 
 	@Override
 	public void doLoad(InputSource inputSource, Map<?, ?> options)
 			throws IOException {
-		System.out.println("[" + Thread.currentThread().getName() + "] doLoad3 " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doLoad3 " + NameUtil.debugSimpleName(this) + " " + getURI());
 		super.doLoad(inputSource, options);
 	}
 
 	@Override
 	protected void doUnload() {
-		System.out.println("[" + Thread.currentThread().getName() + "] doUnload " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] doUnload " + NameUtil.debugSimpleName(this) + " " + getURI());
 		isUnloading = true;
 		try {
 			super.doUnload();
@@ -591,7 +590,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	public void setURI(URI uri) {
 		super.setURI(uri);
-		System.out.println("[" + Thread.currentThread().getName() + "] setURI " + NameUtil.debugSimpleName(this) + " " + getURI());
+	//	System.out.println("[" + Thread.currentThread().getName() + "] setURI " + NameUtil.debugSimpleName(this) + " " + getURI());
 	}
 
 	/**
