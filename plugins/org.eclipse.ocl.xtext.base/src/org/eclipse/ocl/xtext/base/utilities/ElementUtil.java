@@ -60,6 +60,7 @@ import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
@@ -262,13 +263,13 @@ public class ElementUtil
 							for (Constraint asConstraint : asType.getOwnedInvariants()) {
 								LanguageExpression specification = asConstraint.getOwnedSpecification();
 								if (specification != null) {
-									return ((EnvironmentFactoryInternal)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
+									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
 								}
 							}
 							for (Operation asOperation : asType.getOwnedOperations()) {
 								LanguageExpression specification = asOperation.getBodyExpression();
 								if (specification != null) {
-									return ((EnvironmentFactoryInternal)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
+									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
 								}
 							}
 						}
@@ -549,8 +550,12 @@ public class ElementUtil
 			csMultiplicity.unsetIsNonNullFree();
 			csMultiplicity.setIsNullFree(true);
 		}
-		else {
+		else if (csMultiplicity instanceof MultiplicityBoundsCS){
 			csMultiplicity.setIsNonNullFree(true);
+			csMultiplicity.unsetIsNullFree();
+		}
+		else {
+			csMultiplicity.unsetIsNonNullFree();
 			csMultiplicity.unsetIsNullFree();
 		}
 	}
