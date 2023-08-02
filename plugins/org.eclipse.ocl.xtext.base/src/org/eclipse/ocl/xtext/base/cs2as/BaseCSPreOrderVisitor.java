@@ -270,12 +270,11 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				if (csTemplateBinding != null)  {
 					for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 						TypeRefCS ownedActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-						if (ownedActualParameter instanceof WildcardTypeRefCS) {
-							return true;
-						}
-						Type actualParameterClass = (Type) ownedActualParameter.getPivot();
-						if (actualParameterClass == null) {
-							return false;
+						if (!(ownedActualParameter instanceof WildcardTypeRefCS)) {
+							Type actualParameterClass = (Type) ownedActualParameter.getPivot();
+							if (actualParameterClass == null) {
+								return false;
+							}
 						}
 					}
 				}
