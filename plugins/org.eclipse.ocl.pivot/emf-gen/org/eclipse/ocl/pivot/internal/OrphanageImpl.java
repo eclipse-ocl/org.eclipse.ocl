@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -673,7 +674,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				if ("Sequence(selectByKind.TT[*|?])".equals(collectionType.toString())) {
 					getClass();		// XXX
 				}
-				assert genericType.getSuperClasses().size() > 0;				// XXX
+				List<Class> superClasses = genericType.getSuperClasses();
+				if (superClasses.size() <= 0) {
+					System.out.println("getCollectionType " + NameUtil.debugSimpleName(genericType) + " : " + superClasses.size());
+				}
+				assert superClasses.size() > 0;				// XXX
 				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);

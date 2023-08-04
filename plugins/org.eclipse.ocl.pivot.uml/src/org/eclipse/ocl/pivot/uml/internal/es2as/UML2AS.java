@@ -790,12 +790,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 		protected void installAliases(@NonNull Resource asResource) {
 			AliasAdapter umlAdapter = AliasAdapter.findAdapter(umlResource);
 			if (umlAdapter != null) {
-				Map<EObject, String> umlAliasMap = umlAdapter.getAliasMap();
+				Map<@NonNull EObject, String> umlAliasMap = umlAdapter.getAliasMap();
 				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
-				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+				assert pivotAdapter != null;
+				Map<@NonNull EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 				for (EObject eObject : umlAliasMap.keySet()) {
 					String alias = umlAliasMap.get(eObject);
 					Element element = createMap.get(eObject);
+					assert element != null;
 					pivotAliasMap.put(element, alias);
 				}
 			}

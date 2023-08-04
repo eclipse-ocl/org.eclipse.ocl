@@ -36,11 +36,13 @@ import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -68,22 +70,45 @@ public class ASSaverNew extends AbstractASSaver
 	@SuppressWarnings("serial")
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
+		/**
+		 * Mapping from local or shared/remote to local original/copy. Local original/copy arte required since
+		 * localization of a bidirectional may get the opposite local from the outset so we don't need tol re-localize.
+		 */
+		private final @NonNull Map<@NonNull Type, @NonNull Type> oldType2localType = new HashMap<>();
+		/**
+		 * Mapping from the typeid of an original local to the local original/copy. THis ensures that the
+		 * various partial types of a complete type all map to the local without requirinmg access to a CompleteModel.
+		 */
 		private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2localType = new HashMap<>();
+
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
+			//
+			//	Identify the local types we want to reference in place of remote/shared equivalents.
+			//
 			for (@NonNull EObject eObject : new TreeIterable(resource)) {
 				if (eObject instanceof Type) {
 					Type type = (Type)eObject;
 					TypeId typeId = type.getTypeId();
 					typeId2localType.put(typeId, type);
+					oldType2localType.put(type, type);
 				}
 			}
 		}
 
 		@Override
 		public EObject copy(EObject eObject) {
+			assert eObject != null;
 			assert !(eObject instanceof TemplateParameter);		// Generalized class never needs localizing.
-			return super.copy(eObject);
+			EObject copy = super.copy(eObject);
+			assert copy != null;
+			if (eObject instanceof Type) {
+				Type oldType = (Type)eObject;
+				Type newType = (Type)copy;
+				oldType2localType.put(oldType, newType);
+				oldType2localType.put(newType, newType);		// Avoid get confusion
+			}
+			return copy;
 		}
 
 		@Override
@@ -99,10 +124,17 @@ public class ASSaverNew extends AbstractASSaver
 		@Override
 		public @Nullable EObject get(Object key) {
 			if (key instanceof Type) {
-				TypeId typeId = ((Type)key).getTypeId();
-				Type localType = typeId2localType.get(typeId);
+				Type type = (Type)key;
+				Type localType = oldType2localType.get(type);
 				if (localType != null) {
 					return localType;
+				}
+				if (!(key instanceof WildcardType)) {
+					TypeId typeId = type.getTypeId();
+					localType = typeId2localType.get(typeId);
+					if (localType != null) {
+						return localType;
+					}
 				}
 			}
 			return super.get(key);
@@ -343,7 +375,7 @@ public class ASSaverNew extends AbstractASSaver
 				for (Setting setting : settings) {
 					EObject settingSource = setting.getEObject();
 					EStructuralFeature settingReference = setting.getEStructuralFeature();
-				//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(settingSource) + " " + settingSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
+					System.out.println("Not-localized: " + NameUtil.debugSimpleName(settingSource) + " " + settingSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
 				}
 			}
 		}

@@ -690,9 +690,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				converter.error("No 'value' EGenericType for map '" + eClass.getName() + "");
 			}
 			else {
-				Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
-				Type keyType = converter.resolveType(resolvedSpecializations, keyGenericType);
-				Type valueType = converter.resolveType(resolvedSpecializations, valueGenericType);
+				Type keyType = converter.resolveType(keyGenericType);
+				Type valueType = converter.resolveType(valueGenericType);
 				if ((keyType != null) && (valueType != null)) {
 					boolean keysAreNullFree = keyFeature.isRequired();
 					boolean valuesAreNullFree = valueFeature.isRequired();
@@ -730,9 +729,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			EGenericType valueGenericType = eTypeArguments.get(1);
 			assert keyGenericType != null;
 			assert valueGenericType != null;
-			Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
-			Type keyType = converter.resolveType(resolvedSpecializations, keyGenericType);
-			Type valueType = converter.resolveType(resolvedSpecializations, valueGenericType);
+			Type keyType = converter.resolveType(keyGenericType);
+			Type valueType = converter.resolveType(valueGenericType);
 			if ((keyType != null) && (valueType != null)) {
 				boolean keysAreNullFree = keyFeature.isRequired();
 				boolean valuesAreNullFree = valueFeature.isRequired();

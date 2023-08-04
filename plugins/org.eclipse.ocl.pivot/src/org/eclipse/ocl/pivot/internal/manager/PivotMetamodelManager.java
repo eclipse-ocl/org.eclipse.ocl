@@ -1710,10 +1710,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (name == null) {
 			return;
 		}
-		if ("entryClass".equals(thisProperty.getName())) {
-			getClass();		// XXX
-		}
-
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();

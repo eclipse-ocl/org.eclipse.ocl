@@ -396,16 +396,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEGenericType(EGenericType eObject) {
-		EClassifier eClassifier = eObject.getEClassifier();
-	//	String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-	//	if (role == null) {
-			doSwitchAll(eObject.getETypeArguments());
-			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
-	//	}
-	//	for (EObject eObject2 : eObject.getETypeArguments()) {
-	//		doSwitch(eObject2);
-	//	}
+	public Object caseEGenericType(EGenericType eGenericType) {
+		assert eGenericType != null;
+		doSwitchAll(eGenericType.getETypeArguments());
+		if (eGenericType.eContainingFeature() != EcorePackage.Literals.ECLASS__EGENERIC_SUPER_TYPES) {
+			converter.addGenericType(eGenericType);		// Wait till all unspecialized types converted
+		}
 		return true;
 	}
 
@@ -497,7 +493,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		doSwitchAll(pivotElement.getOwnedPackages(), ePackage.getESubpackages());
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
-		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+		for (EClassifier eClassifier : ClassUtil.nullFree(ePackage.getEClassifiers())) {
 			if (!AnnotationUtil.hasSyntheticRole(eClassifier)) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
