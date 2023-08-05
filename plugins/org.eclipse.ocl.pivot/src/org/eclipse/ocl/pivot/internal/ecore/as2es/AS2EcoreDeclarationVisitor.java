@@ -455,22 +455,28 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
-	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		@NonNull EClass eClass = visitClass(pivotAnyType);
-	/*	if (pivotAnyType.getOwnedBindings().size() > 0) {
+	public EObject visitAnyType(@NonNull AnyType asAnyType) {
+		@NonNull EClass eClass = visitClass(asAnyType);
+	/*	if (asAnyType.getOwnedBindings().size() > 0) {
 			return null;
 		}
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		copyClassifier(eClass, pivotAnyType); */
-		Class<?> instanceClass = null;
-		String name = pivotAnyType.getName();
-		if (TypeId.OCL_ANY_NAME.equals(name)) {
-			instanceClass = Object.class;
+		copyClassifier(eClass, asAnyType); */
+		String name = asAnyType.getName();
+		if (asAnyType.eIsSet(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME)) {
+			eClass.setInstanceClassName(asAnyType.getInstanceClassName());
 		}
-		eClass.setInstanceClass(instanceClass);								// XXX migrate to model
-		eClass.setAbstract(true); //pivotAnyType.isIsAbstract());			// XXX migrate to model
-		eClass.setInterface(true); //pivotAnyType.isIsInterface());			// XXX migrate to model
+		else {
+			eClass.eUnset(EcorePackage.Literals.ECLASSIFIER__INSTANCE_CLASS_NAME);
+		}
+		//	Class<?> instanceClass = null;
+		//	if (TypeId.OCL_ANY_NAME.equals(name)) {
+		//		instanceClass = Object.class;
+		//	}
+		//	eClass.setInstanceClass(instanceClass);
+		eClass.setAbstract(asAnyType.isIsAbstract());
+		eClass.setInterface(asAnyType.isIsInterface());
 		return eClass;
 	}
 
