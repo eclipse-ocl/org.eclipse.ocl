@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +41,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -366,7 +364,7 @@ public class ASSaverNew extends AbstractASSaver
 		if (localOrphanage != null) {
 			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
 		}
-		Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
+	/*	Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
 		for (EObject eObject : references2.keySet()) {
 			Collection<Setting> settings = references2.get(eObject);
 			assert settings != null;
@@ -378,7 +376,7 @@ public class ASSaverNew extends AbstractASSaver
 					System.out.println("Not-localized: " + NameUtil.debugSimpleName(settingSource) + " " + settingSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
 				}
 			}
-		}
+		} */
 	}
 
 	/**

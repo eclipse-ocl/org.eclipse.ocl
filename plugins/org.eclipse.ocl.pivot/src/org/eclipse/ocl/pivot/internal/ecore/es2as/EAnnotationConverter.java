@@ -18,8 +18,10 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Comment;
@@ -34,6 +36,7 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.AnnotationImpl;
+import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -68,12 +71,26 @@ public class EAnnotationConverter
 		add("http://www.eclipse.org/emf/CDO", CDOEAnnotationConverter.INSTANCE);
 		// EMF
 		add(EcorePackage.eNS_URI, EcoreEAnnotationConverter.INSTANCE);
+	//	add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI, EMOFExtendedMetaDataEAnnotationConverter.INSTANCE);
+		add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0 + "#" + OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY, EMOFExtendedMetaDataEAnnotationConverter.INSTANCE);
 		add(PivotConstants.EXTENDED_META_DATA_ANNOTATION_SOURCE, ExtendedMetaDataEAnnotationConverter.INSTANCE);
 		add(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, GenModelEAnnotationConverter.INSTANCE);
+	//	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
+	//	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
+	//	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
+	//	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
 		// UML
+		add(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE, DuplicatesEAnnotationConverter.INSTANCE);
+		add(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE, RedefinesEAnnotationConverter.INSTANCE);
 		add(PivotConstantsInternal.SUBSETS_ANNOTATION_SOURCE, SubsetsEAnnotationConverter.INSTANCE);
 		add(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
+		add(PivotConstantsInternal.UNION_ANNOTATION_SOURCE, UnionEAnnotationConverter.INSTANCE);
 		// OCL
+		add(OCLConstants.OCL_DELEGATE_URI_DEBUG, DelegateURIEAnnotationConverter.INSTANCE);
+		add(OCLConstants.OCL_DELEGATE_URI_LPG, DelegateURIEAnnotationConverter.INSTANCE);
+		add(OCLConstants.OCL_DELEGATE_URI_PIVOT, DelegateURIEAnnotationConverter.INSTANCE);
+		add(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE, ASLibraryEAnnotationConverter.INSTANCE);
+		add(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE, ASMetamodelEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, ClassifierEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
@@ -118,11 +135,19 @@ public class EAnnotationConverter
 				eAnnotationConverter = DebugEverythingEAnnotationConverter.INSTANCE;
 			}
 		}
-		Annotation asAnnotation = null;
-		asAnnotation = eAnnotationConverter.convertDetails(external2AS, asAnnotation, eAnnotation);
-		asAnnotation = eAnnotationConverter.convertContents(external2AS, asAnnotation, eAnnotation);
-		asAnnotation = eAnnotationConverter.convertReferences(external2AS, asAnnotation, eAnnotation);
+		Annotation asAnnotation = eAnnotationConverter.convertAll(external2AS, eAnnotation);
 //		System.out.println("convert " + NameUtil.debugSimpleName(eAnnotation) + " => " + NameUtil.debugSimpleName(asAnnotation));
+		return asAnnotation;
+	}
+
+	protected @Nullable Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+		return convertAll(external2AS, null, eAnnotation);
+	}
+
+	protected final @Nullable Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+		asAnnotation = convertDetails(external2AS, asAnnotation, eAnnotation);
+		asAnnotation = convertContents(external2AS, asAnnotation, eAnnotation);
+		asAnnotation = convertReferences(external2AS, asAnnotation, eAnnotation);
 		return asAnnotation;
 	}
 
@@ -218,6 +243,22 @@ public class EAnnotationConverter
 		return UNKNOWN_EANNOTATIONS.isActive();
 	}
 
+	private static class ASLibraryEAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new ASLibraryEAnnotationConverter();
+
+		@Override
+		protected Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+			Annotation asAnnotation = createAnnotation(external2AS, eAnnotation);
+			return super.convertAll(external2AS, asAnnotation, eAnnotation);
+		}
+	}
+
+	private static class ASMetamodelEAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new ASMetamodelEAnnotationConverter();
+	}
+
 	private static class CDOEAnnotationConverter extends EAnnotationConverter
 	{
 		public static @NonNull EAnnotationConverter INSTANCE = new CDOEAnnotationConverter();
@@ -281,6 +322,15 @@ public class EAnnotationConverter
 	private static class DebugEverythingEAnnotationConverter extends EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new DebugEverythingEAnnotationConverter();
+
+		@Override
+		protected Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+			if (traceUnknownEAnnotations()) {
+				UNKNOWN_EANNOTATIONS.println("\"" + eAnnotation.getSource() + "\"");
+			}
+			Annotation asAnnotation = createAnnotation(external2AS, eAnnotation);
+			return super.convertAll(external2AS, asAnnotation, eAnnotation);
+		}
 	}
 
 	private static class DebugNothingEAnnotationConverter extends EAnnotationConverter
@@ -293,6 +343,45 @@ public class EAnnotationConverter
 		}
 	}
 
+	private static class DelegateURIEAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new DelegateURIEAnnotationConverter();
+
+		@Override
+		protected @Nullable Annotation convertDetails(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+			return asAnnotation;
+		}
+	}
+
+	private static class DuplicatesEAnnotationConverter extends EAnnotationConverter
+	{
+		public static @NonNull EAnnotationConverter INSTANCE = new DuplicatesEAnnotationConverter();
+
+		@Override
+		protected @Nullable Annotation convertContents(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+			// contents propagate
+			return asAnnotation;
+		}
+	}
+
+	private static class EMOFExtendedMetaDataEAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new EMOFExtendedMetaDataEAnnotationConverter();
+
+		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet(OppositePropertyDetails.BODY_KEY, OppositePropertyDetails.LOWER_KEY, OppositePropertyDetails.ORDERED_KEY, OppositePropertyDetails.UNIQUE_KEY, OppositePropertyDetails.UPPER_KEY);
+
+		@Override
+		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
+			if (knownKeys.contains(key)) {
+				// suppress redundant annotation - key+value supported by an AS Property
+			}
+			else {
+				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
+			}
+			return asAnnotation;
+		}
+	}
+
 	private static class EcoreEAnnotationConverter extends EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new EcoreEAnnotationConverter();
@@ -300,7 +389,10 @@ public class EAnnotationConverter
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
 			if ("constraints".equals(key)) {
-				// Suppress redundant annotation
+				// Suppress redundant annotation - there is a Constraint for each element
+			}
+			else if ("invocationDelegates".equals(key) || "settingDelegates".equals(key) || "validationDelegates".equals(key)) {
+				// Suppress redundant annotation - need for delegates is computed
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
@@ -494,6 +586,17 @@ public class EAnnotationConverter
 		}
 	}
 
+	private static class RedefinesEAnnotationConverter extends EAnnotationConverter
+	{
+		public static @NonNull EAnnotationConverter INSTANCE = new RedefinesEAnnotationConverter();
+
+		@Override
+		protected @Nullable Annotation convertReferences(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+			// References populate the newCreateMap in Ecore2AS.loadPackageOriginalTypeEAnnotations invoked from caseEPackage.
+			return asAnnotation;
+		}
+	}
+
 	private static class SubsetsEAnnotationConverter extends EAnnotationConverter
 	{
 		public static @NonNull EAnnotationConverter INSTANCE = new SubsetsEAnnotationConverter();
@@ -535,6 +638,17 @@ public class EAnnotationConverter
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
 			}
+			return asAnnotation;
+		}
+	}
+
+	private static class UnionEAnnotationConverter extends EAnnotationConverter
+	{
+		public static @NonNull EAnnotationConverter INSTANCE = new UnionEAnnotationConverter();
+
+		@Override
+		protected @Nullable Annotation convertReferences(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+			// References populate the newCreateMap in Ecore2AS.loadPackageOriginalTypeEAnnotations invoked from caseEPackage.
 			return asAnnotation;
 		}
 	}

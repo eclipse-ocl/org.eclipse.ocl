@@ -44,7 +44,7 @@ public interface PivotConstantsInternal
 	 * @since 1.14
 	 */
 	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
-	//	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
+	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
 
 	/**
 	 * The default values for a totally blind implicit opposite are determined by what it is safe to use for a fully deduced opposite.

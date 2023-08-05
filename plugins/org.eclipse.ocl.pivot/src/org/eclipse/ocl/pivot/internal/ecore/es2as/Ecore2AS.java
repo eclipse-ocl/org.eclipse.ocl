@@ -931,6 +931,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		return uri;
 	}
 
+
 	@Override
 	public void queueEAnnotation(@NonNull EAnnotation eAnnotation) {
 		if (eAnnotations == null) {
@@ -1043,7 +1044,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @since 1.7
 	 */
 	protected @Nullable Type resolveGenericType(@NonNull EGenericType eGenericType) {
-	//	System.out.println("resolveGenericType " + eGenericType);
 		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 		assert !eGenericType.getETypeArguments().isEmpty();
 		EClassifier eClassifier = eGenericType.getEClassifier();
