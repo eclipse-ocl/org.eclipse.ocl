@@ -12,8 +12,10 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.ECollections;
@@ -21,6 +23,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
@@ -61,6 +65,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -429,6 +434,70 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	public static boolean isOrphanage(String uri) {
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
+	}
+
+	public static void pruneStaleOrphans(@NonNull Model asModel) {
+		org.eclipse.ocl.pivot.Package localOrphanage = OrphanageImpl.basicGetOrphanage(asModel);
+		if (localOrphanage != null) {
+			Set<@NonNull EObject> referencedElements = new HashSet<>();
+			referencedElements.add(asModel);
+			for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+				referencedElements.add(asPackage);
+				if (asPackage != localOrphanage) {
+					for (EObject eObject : new TreeIterable(asPackage, false)) {
+						referencedElements.add(eObject);
+					}
+				}
+			}
+			Set<@NonNull EObject> moreReferencedElements = new HashSet<>(referencedElements);
+			while (true) {
+				Set<@NonNull EObject> yetMoreReferencedElements = new HashSet<>();
+				for (EObject eObject : moreReferencedElements) {
+					if (eObject != localOrphanage) {
+						for (EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
+							if (eStructuralFeature instanceof EReference) {
+								EReference eReference = (EReference)eStructuralFeature;
+								if (!eReference.isContainer() && !eReference.isDerived() && !eReference.isTransient() && !eReference.isVolatile()) {
+									if (eReference.isMany()) {
+										@SuppressWarnings("unchecked")
+										List<Object> objects = (List<Object>)eObject.eGet(eReference);
+										if (objects != null) {
+											for (Object object : objects) {
+												if (object instanceof EObject) {
+													EObject eObject2 = (EObject)object;
+													if (referencedElements.add(eObject2)) {
+														yetMoreReferencedElements.add(eObject2);
+													}
+												}
+											}
+										}
+									}
+									else {
+										Object object = eObject.eGet(eReference);
+										if (object instanceof EObject) {
+											EObject eObject2 = (EObject)object;
+											if (referencedElements.add(eObject2)) {
+												yetMoreReferencedElements.add(eObject2);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if (yetMoreReferencedElements.isEmpty()) {
+					break;
+				}
+				moreReferencedElements = yetMoreReferencedElements;
+			}
+			List<org.eclipse.ocl.pivot.Class> orphanClasses = localOrphanage.getOwnedClasses();
+			for (org.eclipse.ocl.pivot.Class orphanClass : new ArrayList<>(orphanClasses)) {
+				if (!referencedElements.contains(orphanClass)) {
+					orphanClasses.remove(orphanClass);
+				}
+			}
+		}
 	}
 
 	private @Nullable StandardLibrary standardLibrary = null;

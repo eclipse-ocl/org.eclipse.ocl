@@ -1132,7 +1132,12 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		if (asResource != null) {
 			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
-				append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
+				try {
+					append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
+				}
+				catch(Throwable e) {
+					append("(?)");
+				}
 			}
 		}
 		return null;
