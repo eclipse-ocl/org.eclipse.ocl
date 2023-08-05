@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Library;
@@ -429,10 +428,8 @@ public class EAnnotationConverter
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
 			if (PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(key)) {
 				Element asContainer = getASContainer(external2AS, eAnnotation);
-				Comment asComment = PivotFactory.eINSTANCE.createComment();
-				asComment.setBody(value);
-				asContainer.getOwnedComments().add(asComment);
-				// Suppress redundant annotation
+				external2AS.createComments(asContainer, value);
+				// Suppress processed annotation
 			}
 			else if (knownKeys.contains(key)) {
 				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation, key, value);

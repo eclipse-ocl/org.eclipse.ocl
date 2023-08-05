@@ -35,6 +35,10 @@ public interface PivotConstantsInternal
 	static final @NonNull String DOCUMENTATION_ANNOTATION_SOURCE = GenModelPackage.eNS_URI;
 	static final @NonNull String DOCUMENTATION_ANNOTATION_KEY = "documentation";
 
+	/* Separator between  multiple AS Comments folded into a single Ecore body */
+	static final String DOCUMENTATION_SEPARATOR = "\n\n\r\r\n\n";
+
+
 	/**
 	 * Ecore encoding of a UML redefines
 	 */

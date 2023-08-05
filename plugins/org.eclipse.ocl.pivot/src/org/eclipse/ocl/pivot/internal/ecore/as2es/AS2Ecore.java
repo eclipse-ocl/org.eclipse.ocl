@@ -226,14 +226,6 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
-	 * @deprecated Use copyCommentsAndDocumentation
-	 */
-	@Deprecated
-	public static void copyComments(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
-		copyCommentsAndDocumentation(eModelElement, pivotElement);
-	}
-
-	/**
 	 * Create/add/remove a http://www.eclipse.org/emf/2002/GenModel::documentation detail to eModelElement
 	 * to correspond to the splice of all pivotElement's Comment bodies and http://www.eclipse.org/emf/2002/GenModel
 	 * Annotation documentation details.
@@ -271,7 +263,7 @@ public class AS2Ecore extends AbstractConversion
 				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 				allEAnnotations.add(eAnnotation);
 			}
-			String value = StringUtil.splice(newComments, "");
+			String value = StringUtil.splice(newComments, PivotConstantsInternal.DOCUMENTATION_SEPARATOR);
 			eAnnotation.getDetails().put(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY, value);
 		}
 		else {

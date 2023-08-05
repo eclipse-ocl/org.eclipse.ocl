@@ -707,9 +707,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.getOwnedComments().clear();
 		String comment = AnnotationUtil.getEAnnotationValue(eModelElement, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
 		if (comment != null) {
-			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
-			pivotComment.setBody(comment);
-			pivotElement.getOwnedComments().add(pivotComment);
+			converter.createComments(pivotElement, comment);
 		}
 	}
 

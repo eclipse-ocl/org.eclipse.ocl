@@ -29,9 +29,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -102,6 +104,22 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			}
 		}
 		return false;
+	}
+
+	public void createComments(@NonNull Element asContainer, @Nullable String text) {
+		List<Comment> asComments = asContainer.getOwnedComments();
+		if (text != null) {
+			for (@NonNull String body : text.split(PivotConstantsInternal.DOCUMENTATION_SEPARATOR)) {
+				Comment asComment = PivotFactory.eINSTANCE.createComment();
+				asComment.setBody(body);
+				asComments.add(asComment);
+			}
+		}
+		else {
+			Comment asComment = PivotFactory.eINSTANCE.createComment();
+		//	asComment.setBody(body);
+			asComments.add(asComment);
+		}
 	}
 
 	@Override
