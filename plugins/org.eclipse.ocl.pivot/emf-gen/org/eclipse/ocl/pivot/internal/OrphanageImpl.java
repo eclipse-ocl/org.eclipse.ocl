@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -526,18 +525,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert getOwnedClasses().contains(orphanClass);
 	}
 
-/*	private void addOrphanWildcard(@NonNull WildcardType orphanWildcard) {
-	//	TypeId typeId = orphanClass.getTypeId();
-	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
-	//	Type old = typeId2type.get(typeId);
-	//	assert old == orphanClass;
-		assert !getOwnedClasses().contains(orphanWildcard);
-		orphanWildcard.setOwningPackage(this);
-		assert orphanWildcard.eContainer() == this;
-		assert getOwnedClasses().contains(orphanWildcard);
-		wildcardCount++;
-	} */
-
 	@Override
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
 		super.addPackageListener(partialPackages);
@@ -739,15 +726,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				collectionType.getOwnedBindings().add(templateBinding);
-			//	System.out.println("getCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType + " " + NameUtil.debugSimpleName(genericType) + " : " + genericType);
-				if ("Sequence(selectByKind.TT[*|?])".equals(collectionType.toString())) {
-					getClass();		// XXX
-				}
-				List<Class> superClasses = genericType.getSuperClasses();
-				if (superClasses.size() <= 0) {
-					System.out.println("getCollectionType " + NameUtil.debugSimpleName(genericType) + " : " + superClasses.size());
-				}
-				assert superClasses.size() > 0;				// XXX
+				assert genericType.getSuperClasses().size() > 0;
 				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);
@@ -767,10 +746,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				assert specializedTypeId == ((CollectionTypeImpl)collectionType).immutableGetTypeId();		// XXX
 				if (basicGetType(specializedTypeId, true) != collectionType) {			// XXX debugging
 					basicGetType(specializedTypeId, true);
-				}
-				String s = collectionType.toString();
-				if (s.contains("Set(Bag(b::B")) {
-					getClass();		// XXX
 				}
 				addOrphanClass(collectionType);
 			}
