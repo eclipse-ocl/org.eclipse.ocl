@@ -301,10 +301,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			if (!substitutions.isEmpty()) {
 				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 				Type templateArgument = substitutions.get(templateParameter);
-				if (templateArgument == null) {
-					assert false;
-					templateArgument = templateParameter;
-				}
 				assert templateArgument != null;
 				Object nullFreeObject = substitutions.getValue(templateParameter, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE);
 				Object lowerObject = substitutions.getValue(templateParameter, PivotPackage.Literals.COLLECTION_TYPE__LOWER);
@@ -326,14 +322,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				TemplateParameter valueTemplateParameter = ownedParameters.get(1);
 				Type keyTemplateArgument = substitutions.get(keyTemplateParameter);
 				Type valueTemplateArgument = substitutions.get(valueTemplateParameter);
-				if (keyTemplateArgument == null) {
-					assert false;
-					keyTemplateArgument = keyTemplateParameter;
-				}
-				if (valueTemplateArgument == null) {
-					assert false;
-					valueTemplateArgument = valueTemplateParameter;
-				}
 				assert keyTemplateArgument != null;
 				assert valueTemplateArgument != null;
 				Object nullFreeKeysObject = substitutions.getValue(keyTemplateParameter, PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE);
