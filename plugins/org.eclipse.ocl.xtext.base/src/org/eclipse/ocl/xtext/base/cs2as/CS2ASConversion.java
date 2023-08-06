@@ -968,18 +968,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextType, null);
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
-				Operation contextOperation = (Operation)eContainer;
-				if (contextOperation != null) {
-					setOperationContext(pivotSpecification, contextOperation, null);
+				if (eContainer != null) {
+					setOperationContext(pivotSpecification, (Operation)eContainer, null);
 				}
 				else {
 					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
 				}
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
-				Operation contextOperation = (Operation)eContainer;
-				if (contextOperation != null) {
-					setOperationContext(pivotSpecification, contextOperation, PivotConstants.RESULT_NAME);
+				if (eContainer != null) {
+					setOperationContext(pivotSpecification, (Operation)eContainer, PivotConstants.RESULT_NAME);
 				}
 				else {
 					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
