@@ -111,21 +111,21 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 			TemplateableElement asTemplateableElement = (TemplateableElement)asType;
 			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(asTemplateableElement);
 			if (templateParameters != null) {
-				asType = standardLibrary.resolveContextSpecialization(asType);
+				asType = standardLibrary.resolveIncompleteSpecialization(asType);
 			}
 		}
 		EObject eType = asType.accept(this);
 		if (eType instanceof EGenericType) {
 			return (EGenericType) eType;
 		}
-		else if (eType instanceof ETypeParameter) {
-			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setETypeParameter((ETypeParameter) eType);
-			return eGenericType;
-		}
 		else {
 			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setEClassifier((EClassifier) eType);
+			if (eType instanceof ETypeParameter) {
+				eGenericType.setETypeParameter((ETypeParameter)eType);
+			}
+			else {
+				eGenericType.setEClassifier((EClassifier)eType);
+			}
 			return eGenericType;
 		}
 	}

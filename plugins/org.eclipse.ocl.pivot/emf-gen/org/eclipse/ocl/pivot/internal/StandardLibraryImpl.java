@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.TuplePart;
@@ -436,5 +437,20 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return asType;
 		}
 		return getContextSpecializedType(asType);
+	}
+
+	@Override
+	public @NonNull Type resolveIncompleteSpecialization(@NonNull Type asType) {
+		if (TemplateSpecialisation.needsSpecialisation(asType)) {
+			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(this);
+			templateSpecialization.installEquivalence(asType, asType);
+			return getSpecializedType(asType, templateSpecialization);
+		}
+
+	//	Type specializedType = getSpecializedType(asType, new WildcardSpecialization());
+	//	if (asType != specializedType) {
+		//	System.out.println("resolveIncompleteSpecialization " + asType + " => " + specializedType);
+	//	}
+		return asType;
 	}
 } //AbstractStandardLibraryImpl
