@@ -355,6 +355,12 @@ public interface StandardLibrary extends Element
 
 	@NonNull Orphanage getOrphanage();
 
+	/**
+	 * Return the specializatioon of asType suitable for use as the type of self in a feature. A generic class
+	 * is specializaed by its own templayte paramerters.
+	 */
+	@NonNull Type getSelfSpecializedType(@NonNull Type asType);
+
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 
 	/**

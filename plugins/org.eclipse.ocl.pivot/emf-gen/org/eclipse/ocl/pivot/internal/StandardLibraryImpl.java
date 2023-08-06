@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -282,6 +283,30 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public @NonNull Type getSelfSpecializedType(@NonNull Type asType) {
+		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
+		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
+		assert asTemplateSignature != null;
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+		if (asType instanceof CollectionType) {
+			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
+			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
+		}
+		else if (asType instanceof MapType) {
+			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
+			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
+			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	@Override
 	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
 		if ((substitutions == null) || substitutions.isEmpty()) {
 			return type;
@@ -400,10 +425,16 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
-		Type specializedType = getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
-		if (asType != specializedType) {
-		//	System.out.println("resolveSelfSpecialization " + asType + " => " + specializedType);
+		if (!(asType instanceof TemplateableElement)) {
+			return asType;
 		}
-		return specializedType;
+		TemplateableElement asTemplateableElement = (TemplateableElement)asType;
+		if ((asTemplateableElement.getGeneric() != null)) {
+			return asType;
+		}
+		if ((asTemplateableElement.getOwnedSignature() == null)) {
+			return asType;
+		}
+		return getSelfSpecializedType(asType);
 	}
 } //AbstractStandardLibraryImpl

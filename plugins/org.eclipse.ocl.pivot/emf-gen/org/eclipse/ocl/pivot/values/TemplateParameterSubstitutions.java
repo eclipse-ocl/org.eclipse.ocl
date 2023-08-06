@@ -99,26 +99,6 @@ public interface TemplateParameterSubstitutions
 		}
 	}
 
-	public static final @NonNull TemplateParameterSubstitutions SELF = new Self();
-
-	public static class Self implements TemplateParameterSubstitutions
-	{
-		@Override
-		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
-			return templateParameter;
-		}
-
-		@Override
-		public boolean isEmpty() {
-			return false;
-		}
-
-		@Override
-		public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
-			return null;
-		}
-	};
-
 	public static class SimpleTemplateParameterSubstitutions implements TemplateParameterSubstitutions
 	{
 		protected final @NonNull Map<@NonNull TemplateParameter, @NonNull Type> formal2actual = new HashMap<>();
