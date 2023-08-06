@@ -33,9 +33,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -124,20 +122,6 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 		getHelper().refreshName(contextVariable, selfVariableName);
 		getHelper().setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
-	}
-
-	public void setOperationContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @Nullable String resultName) {
-		Variable contextVariable = pivotSpecification.getOwnedContext();
-		//		pivotSpecification.getParameterVariable().clear();
-		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
-			PivotHelper helper = getHelper();
-			Type contextType = helper.getContextType(PivotUtil.getOwningClass(contextOperation));
-			getHelper().setType(contextVariable, contextType, true);
-			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
-		}
-		if (resultName != null) {
-			setResultVariable(pivotSpecification, contextOperation, resultName);
-		}
 	}
 
 	/**

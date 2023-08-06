@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
@@ -992,7 +993,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
 					setOperationContext(pivotSpecification, contextOperation, null);
 				}
 				else {
@@ -1002,7 +1002,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
 					setOperationContext(pivotSpecification, contextOperation, PivotConstants.RESULT_NAME);
 				}
 				else {
@@ -1178,6 +1177,22 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	@Deprecated
 	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
 		getHelper().setContextVariable(pivotSpecification, selfVariableName, contextType, contextInstance);
+	}
+
+	private void setOperationContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @Nullable String resultName) {
+		PivotHelper helper = getHelper();
+		helper.setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+		Variable contextVariable = pivotSpecification.getOwnedContext();
+		//		pivotSpecification.getParameterVariable().clear();
+		assert contextVariable != null;
+		if (!contextOperation.eIsProxy()) {
+			Type contextType = helper.getContextType(PivotUtil.getOwningClass(contextOperation));
+			helper.setType(contextVariable, contextType, true);
+			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
+		}
+		if (resultName != null) {
+			setResultVariable(pivotSpecification, contextOperation, resultName);
+		}
 	}
 
 	public void setReferredIteration(@NonNull LoopExp expression, @Nullable Iteration iteration) {
