@@ -398,7 +398,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				eContextGenericType.setETypeParameter(eContextType);
 				eTypeArguments.add(eContextGenericType);
 				//
-				for (Type parameterType : PivotUtil.getParameterType(lambdaType)) {
+				for (Type parameterType : PivotUtil.getParameterTypes(lambdaType)) {
 					ETypeParameter eParameterType = getCreated(ETypeParameter.class, parameterType);
 					EGenericType eParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 					eParameterGenericType.setETypeParameter(eParameterType);

@@ -735,7 +735,7 @@ public class AS2Ecore extends AbstractConversion
 
 	public @NonNull EClass getLambdaEClass(@NonNull LambdaType pivotType) {
 		Type contextType = PivotUtil.getContextType(pivotType);
-		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
+		List<@NonNull Type> parameterTypes = PivotUtil.getParameterTypes(pivotType);
 		Type resultType = PivotUtil.getResultType(pivotType);
 		StringBuilder s = new StringBuilder();
 		s.append("Lambda_");

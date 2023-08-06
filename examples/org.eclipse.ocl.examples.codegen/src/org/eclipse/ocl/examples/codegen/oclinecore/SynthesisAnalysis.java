@@ -175,7 +175,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 		Slot slot = synthesisSchedule.getSlot(asLambdaType);
 		synthesisSchedule.addDependency(slot, asLambdaType.getContextType());
 		synthesisSchedule.addDependency(slot, asLambdaType.getResultType());
-		for (@NonNull Type asParameterType : PivotUtil.getParameterType(asLambdaType)) {
+		for (@NonNull Type asParameterType : PivotUtil.getParameterTypes(asLambdaType)) {
 			synthesisSchedule.addDependency(slot, asParameterType);
 		}
 	//	doSuperClasses(asLambdaType);

@@ -350,9 +350,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
 			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
-			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
+			@NonNull List<@NonNull Type> parameterTypes = PivotUtil.getParameterTypes(lambdaType);
 			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
-			return getLambdaType(contextType, parameterType, resultType, substitutions);
+			return getLambdaType(contextType, parameterTypes, resultType, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
