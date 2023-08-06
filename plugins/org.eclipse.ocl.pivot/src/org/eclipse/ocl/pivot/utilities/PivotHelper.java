@@ -551,7 +551,7 @@ public class PivotHelper
 		}
 		TemplateableElement generic = ((TemplateableElement)asType).getGeneric();
 		assert generic == null;
-		return standardLibrary.resolveSelfSpecialization(asType);
+		return standardLibrary.resolveContextSpecialization(asType);
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
@@ -792,7 +792,7 @@ public class PivotHelper
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
 		Type primaryType;
 		if (type != null) {
-			type = standardLibrary.resolveSelfSpecialization(type);
+			type = standardLibrary.resolveContextSpecialization(type);
 			primaryType = metamodelManager.getPrimaryType(type);
 		}
 		else {

@@ -105,6 +105,12 @@ public interface StandardLibrary extends Element
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
 	/**
+	 * Return the specializatioon of asType suitable for use as the type of self in a feature. A generic class
+	 * is specialized by its own templayte paramerters.
+	 */
+	@NonNull Type getContextSpecializedType(@NonNull Type asType);
+
+	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
 	 * <tt>Enumeration</tt>.
 	 *
@@ -308,6 +314,8 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
+	@NonNull Orphanage getOrphanage();
+
 	/**
 	 * Obtains the package containing the library types
 	 */
@@ -353,14 +361,6 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@NonNull Orphanage getOrphanage();
-
-	/**
-	 * Return the specializatioon of asType suitable for use as the type of self in a feature. A generic class
-	 * is specializaed by its own templayte paramerters.
-	 */
-	@NonNull Type getSelfSpecializedType(@NonNull Type asType);
-
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 
 	/**
@@ -399,6 +399,7 @@ public interface StandardLibrary extends Element
 
 	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
 
-	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
+	@NonNull Type resolveContextSpecialization(@NonNull Type asType);
+
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

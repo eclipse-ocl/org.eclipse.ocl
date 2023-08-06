@@ -111,7 +111,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 			TemplateableElement asTemplateableElement = (TemplateableElement)asType;
 			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(asTemplateableElement);
 			if (templateParameters != null) {
-				asType = standardLibrary.resolveSelfSpecialization(asType);
+				asType = standardLibrary.resolveContextSpecialization(asType);
 			}
 		}
 		EObject eType = asType.accept(this);

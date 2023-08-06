@@ -168,6 +168,30 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public @NonNull Type getContextSpecializedType(@NonNull Type asType) {
+		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
+		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
+		assert asTemplateSignature != null;
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+		if (asType instanceof CollectionType) {
+			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
+			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
+		}
+		else if (asType instanceof MapType) {
+			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
+			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
+			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return getFlatModel().getFlatClass(asClass);
 	}
@@ -280,30 +304,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull Type getSelfSpecializedType(@NonNull Type asType) {
-		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
-		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
-		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
-		assert asTemplateSignature != null;
-		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
-		if (asType instanceof CollectionType) {
-			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
-			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
-		}
-		else if (asType instanceof MapType) {
-			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
-			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
-			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
-		}
-		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
-			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
 	}
 
 	@Override
@@ -424,7 +424,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
+	public @NonNull Type resolveContextSpecialization(@NonNull Type asType) {
 		if (!(asType instanceof TemplateableElement)) {
 			return asType;
 		}
@@ -435,6 +435,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if ((asTemplateableElement.getOwnedSignature() == null)) {
 			return asType;
 		}
-		return getSelfSpecializedType(asType);
+		return getContextSpecializedType(asType);
 	}
 } //AbstractStandardLibraryImpl

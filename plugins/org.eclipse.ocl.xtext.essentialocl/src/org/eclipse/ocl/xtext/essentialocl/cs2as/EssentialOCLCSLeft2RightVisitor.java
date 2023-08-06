@@ -750,7 +750,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
 			}
 			Type resolvedSourceType = PivotUtil.getType(sourceExp);
-			Type propertySourceType = standardLibrary.resolveSelfSpecialization(PivotUtil.getOwningClass(resolvedProperty));
+			Type propertySourceType = standardLibrary.resolveContextSpecialization(PivotUtil.getOwningClass(resolvedProperty));
 			if (resolvedSourceType.conformsTo(standardLibrary, propertySourceType)) {
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
 			}
