@@ -14,16 +14,17 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions.SimpleTemplateParameterSubstitutions;
 
 /**
@@ -44,53 +45,49 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 	 */
 	public static boolean needsSpecialisation(@Nullable Type referencedType)	// XXX simplify to template argument scan
 	{
-		if (referencedType == null) {
-			return false;
+		return (referencedType != null) && needsSpecialisation(referencedType, referencedType);
+	}
+
+	private static boolean needsSpecialisation(@NonNull Type outerType, @NonNull Type referencedType)	// XXX simplify to template argument scan
+	{
+		if (referencedType instanceof TemplateParameter) {
+			return referencedType != outerType;
 		}
-		else if (referencedType instanceof TemplateParameter) {
-			return true;
-		}
-		else if (referencedType instanceof CollectionType) {
-			Type elementType = ((CollectionType)referencedType).getElementType();
-			return needsSpecialisation(elementType);
+		else if (referencedType instanceof PrimitiveType) {							// Fast non-generic bypass
 		}
 		else if (referencedType instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)referencedType;
-			Type contextType = lambdaType.getContextType();
-			if (needsSpecialisation(contextType)) {
+			Type contextType = PivotUtil.getContextType(lambdaType);
+			if (needsSpecialisation(outerType, contextType)) {
 				return true;
 			}
-			Type resultType = lambdaType.getResultType();
-			if (needsSpecialisation(resultType)) {
+			Type resultType = PivotUtil.getResultType(lambdaType);
+			if (needsSpecialisation(outerType, resultType)) {
 				return true;
 			}
-			for (Type parameterType : lambdaType.getParameterTypes()) {
-				if (needsSpecialisation(parameterType)) {
+			for (Type parameterType : PivotUtil.getParameterTypes(lambdaType)) {
+				if (needsSpecialisation(outerType, parameterType)) {
 					return true;
 				}
 			}
-			return false;
-		}
-		else if (referencedType instanceof MapType) {
-			final MapType mapType = (MapType)referencedType;
-			Type keyType = mapType.getKeyType();
-			Type valueType = mapType.getValueType();
-			return needsSpecialisation(keyType) ||  needsSpecialisation(valueType);
 		}
 		else if (referencedType instanceof TupleType) {
 			TupleType tupleType = (TupleType)referencedType;
-			for (Property tuplePart : tupleType.getOwnedProperties()) {
-				Type tuplePartType = tuplePart.getType();
-				if (needsSpecialisation(tuplePartType)) {
+			for (Property tuplePart : PivotUtil.getOwnedProperties(tupleType)) {
+				Type tuplePartType = PivotUtil.getType(tuplePart);
+				if (needsSpecialisation(outerType, tuplePartType)) {
 					return true;
 				}
 			}
-			return false;
 		}
-		else if (referencedType instanceof org.eclipse.ocl.pivot.Class) {
+		else if (referencedType instanceof org.eclipse.ocl.pivot.Class) {			// includes CollectionTYpe/MapType
 			TemplateSignature templateSignature = ((org.eclipse.ocl.pivot.Class)referencedType).getOwnedSignature();
 			if (templateSignature != null) {
-				return true;
+				for (TemplateParameter parameter : PivotUtil.getOwnedParameters(templateSignature)) {
+					if (needsSpecialisation(outerType, parameter)) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;
@@ -103,17 +100,14 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 	}
 
 	public void installEquivalence(@Nullable Type resolvedType, @Nullable Type referencedType) {
-		if (resolvedType == null) {
-			return;
+		if ((resolvedType == null) || (referencedType == null)) {
+	//		return;
 		}
-		if (referencedType == null) {
-			return;
-		}
-		if (referencedType instanceof CollectionType) {
-			if (resolvedType instanceof CollectionType) {
-				Type resolvedElementType = ((CollectionType)resolvedType).getElementType();
-				Type referencedElementType = ((CollectionType)referencedType).getElementType();
-				installEquivalence(resolvedElementType, referencedElementType);
+		else if (referencedType instanceof TemplateParameter) {
+			TemplateParameter templateParameter = (TemplateParameter)referencedType;
+			Type old = formal2actual.put(templateParameter, resolvedType);
+			if ((old == null) || (old == resolvedType)) {
+				return;
 			}
 		}
 		else if (referencedType instanceof LambdaType) {
@@ -124,28 +118,14 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 				installEquivalence(resolvedLambdaType.getResultType(), referencedLambdaType.getResultType());
 				List<? extends Type> resolvedParameterTypes = resolvedLambdaType.getParameterTypes();
 				List<? extends Type> referencedParameterTypes = referencedLambdaType.getParameterTypes();
-				for (int i = 0; i < Math.min(resolvedParameterTypes.size(), referencedParameterTypes.size()); i++) {
+				int iSize = referencedParameterTypes.size();
+				assert iSize == resolvedParameterTypes.size();
+				for (int i = 0; i < iSize; i++) {
 					Type resolvedParameterType = resolvedParameterTypes.get(i);
 					Type referencedParameterType = referencedParameterTypes.get(i);
 					installEquivalence(resolvedParameterType, referencedParameterType);
 				}
-			}
-		}
-		else if (referencedType instanceof MapType) {
-			if (resolvedType instanceof MapType) {
-				Type resolvedKeyType = ((MapType)resolvedType).getKeyType();
-				Type resolvedValueType = ((MapType)resolvedType).getValueType();
-				Type referencedKeyType = ((MapType)referencedType).getKeyType();
-				Type referencedValueType = ((MapType)referencedType).getValueType();
-				installEquivalence(resolvedKeyType, referencedKeyType);
-				installEquivalence(resolvedValueType, referencedValueType);
-			}
-		}
-		else if (referencedType instanceof TemplateParameter) {
-			TemplateParameter templateParameter = (TemplateParameter)referencedType;
-			if (formal2actual.put(templateParameter, resolvedType) != null) {
-			//	formal2actual.put(templateParameter, null);
-				throw new UnsupportedOperationException();		// XXX
+				return;
 			}
 		}
 		else if (referencedType instanceof TupleType) {
@@ -161,13 +141,28 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 						installEquivalence(resolvedTuplePartType, referencedTuplePartType);
 					}
 				}
+				return;
 			}
 		}
-		else if (referencedType instanceof org.eclipse.ocl.pivot.Class) {
+		else if (referencedType instanceof org.eclipse.ocl.pivot.Class) {		// include CollectionType and MapType
 			if (resolvedType instanceof org.eclipse.ocl.pivot.Class) {
-				throw new UnsupportedOperationException();		// scan parameters/arguments
+				TemplateSignature referencedTemplateSignature = ((org.eclipse.ocl.pivot.Class)referencedType).getOwnedSignature();
+				TemplateSignature resolvedTemplateSignature = ((org.eclipse.ocl.pivot.Class)resolvedType).getOwnedSignature();
+				if ((referencedTemplateSignature != null) && (resolvedTemplateSignature != null)) {
+					List<@NonNull TemplateParameter> referencedParameters = PivotUtilInternal.getOwnedParametersList(referencedTemplateSignature);
+					List<@NonNull TemplateParameter> resolvedParameters = PivotUtilInternal.getOwnedParametersList(resolvedTemplateSignature);
+					int iSize = referencedParameters.size();
+					assert iSize == resolvedParameters.size();
+					for (int i = 0; i < iSize; i++) {
+						TemplateParameter referencedParameter = referencedParameters.get(i);
+						TemplateParameter resolvedParameter = resolvedParameters.get(i);
+						installEquivalence(referencedParameter, resolvedParameter);
+					}
+				}
+				return;
 			}
 		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
