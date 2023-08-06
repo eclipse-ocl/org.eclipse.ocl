@@ -254,18 +254,18 @@ public class SynthesisSchedule
 		Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> transitiveSlotPredecessors = computeTransitiveSlotPredecessors(directSlotPredecessors);
 		stages = computeStagedSlots(transitiveSlotPredecessors);
 		slots = new ArrayList<>();
-		StringBuilder s = new StringBuilder();
+	//	StringBuilder s = new StringBuilder();
 		for (@NonNull Stage stage : stages) {
-			s.append("\nStage " + stage.getName());
+	//		s.append("\nStage " + stage.getName());
 			for (@NonNull Slot slot : stage.getSlots()) {
-				s.append("\n  " + slot);
-				for (@NonNull Slot predecessor : slot.predecessors) {
-					s.append("\n    requires: " + predecessor);
-				}
+	//			s.append("\n  " + slot);
+	//			for (@NonNull Slot predecessor : slot.predecessors) {
+	//				s.append("\n    requires: " + predecessor);
+	//			}
 				slots.add(slot);
 			}
 		}
-		System.out.println(s.toString());
+	//	System.out.println(s.toString());
 		Collections.sort(slots, slotComparator);
 	}
 
