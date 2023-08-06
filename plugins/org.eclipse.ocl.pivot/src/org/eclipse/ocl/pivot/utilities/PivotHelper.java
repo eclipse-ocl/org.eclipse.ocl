@@ -792,7 +792,7 @@ public class PivotHelper
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
 		Type primaryType;
 		if (type != null) {
-			type = standardLibrary.resolveContextSpecialization(type);
+			type = standardLibrary.resolveIncompleteSpecialization(type);
 			primaryType = metamodelManager.getPrimaryType(type);
 		}
 		else {

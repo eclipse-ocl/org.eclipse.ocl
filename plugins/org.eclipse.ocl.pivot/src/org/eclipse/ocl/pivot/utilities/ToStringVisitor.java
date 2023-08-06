@@ -1362,12 +1362,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
-	@Override
-	public String visitWildcardType(@NonNull WildcardType object) {
-		appendName(object);
-		return null;
-	}
-
 	/**
 	 * Callback for an UnspecifiedValueExp visit.
 	 *
@@ -1420,6 +1414,29 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitVoidType(@NonNull VoidType object) {
 		appendName(object);
+		return null;
+	}
+
+	@Override
+	public String visitWildcardType(@NonNull WildcardType asWildcardType) {
+		appendName(asWildcardType);
+		List<org.eclipse.ocl.pivot.Class> constrainingClasses = asWildcardType.getConstrainingClasses();
+		int size = constrainingClasses.size();
+		if (size > 0) {
+			append(" extends ");
+			if (size > 1) {
+				append("{");
+			}
+			for (int i = 0; i < size; i++) {
+				if (i > 0) {
+					append(",");
+				}
+				constrainingClasses.get(i).accept(this);
+			}
+			if (size > 1) {
+				append("}");
+			}
+		}
 		return null;
 	}
 
