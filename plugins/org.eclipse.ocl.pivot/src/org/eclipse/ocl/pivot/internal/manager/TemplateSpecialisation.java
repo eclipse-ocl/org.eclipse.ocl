@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions.SimpleTemplat
 public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 {
 	/**
-	 * Return true if a referencedType transitively declars a TemplateParameter.
+	 * Return true if a referencedType transitively declares a TemplateParameter.
 	 */
 	public static boolean needsCompletion(@Nullable Type asType) {
 		if (asType instanceof org.eclipse.ocl.pivot.Class) {
@@ -63,20 +63,21 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 		return false;
 	}
 	/**
-	 * Return true if a referencedType transitively references a TemplateParamter.
+	 * Return true if a referencedType transitively references a TemplateParameter.
 	 */
 	public static boolean needsSpecialisation(@Nullable Type referencedType) {	// XXX simplify to template argument scan
-		return (referencedType != null) && needsSpecialisation(referencedType, referencedType);
+		return needsCompletion(referencedType);
+	//	return (referencedType != null) && !(referencedType instanceof TemplateParameter) && needsSpecialisation(referencedType, referencedType);
 	}
 
-	private static boolean needsSpecialisation(@NonNull Type outerType, @NonNull Type referencedType) {	// XXX simplify to template argument scan
+	private static boolean needsSpecialisation(@NonNull Type zzouterType, @NonNull Type referencedType) {	// XXX simplify to template argument scan
 		if (referencedType instanceof TemplateParameter) {
-			return referencedType != outerType;
+			return true; //referencedType != outerType;
 		}
 		else if (referencedType instanceof PrimitiveType) {							// Fast non-generic bypass
 		}
 		else if (referencedType instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)referencedType;
+		/*	LambdaType lambdaType = (LambdaType)referencedType;
 			Type contextType = PivotUtil.getContextType(lambdaType);
 			if (needsSpecialisation(outerType, contextType)) {
 				return true;
@@ -89,25 +90,25 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 				if (needsSpecialisation(outerType, parameterType)) {
 					return true;
 				}
-			}
+			} */
 		}
 		else if (referencedType instanceof TupleType) {
-			TupleType tupleType = (TupleType)referencedType;
+		/*	TupleType tupleType = (TupleType)referencedType;
 			for (Property tuplePart : PivotUtil.getOwnedProperties(tupleType)) {
 				Type tuplePartType = PivotUtil.getType(tuplePart);
 				if (needsSpecialisation(outerType, tuplePartType)) {
 					return true;
 				}
-			}
+			} */
 		}
 		else if (referencedType instanceof org.eclipse.ocl.pivot.Class) {			// includes CollectionTYpe/MapType
 			TemplateSignature templateSignature = ((org.eclipse.ocl.pivot.Class)referencedType).getOwnedSignature();
 			if (templateSignature != null) {
-				for (TemplateParameter parameter : PivotUtil.getOwnedParameters(templateSignature)) {
-					if (needsSpecialisation(outerType, parameter)) {
+			//	for (TemplateParameter parameter : PivotUtil.getOwnedParameters(templateSignature)) {
+			//		if (needsSpecialisation(outerType, parameter)) {
 						return true;
-					}
-				}
+			//		}
+			//	}
 			}
 		}
 		return false;
