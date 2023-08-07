@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
@@ -789,11 +790,13 @@ public class PivotHelper
 		}
 	}
 
-	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
+	public void setType(@NonNull TypedElement asTypedElement, Type asType, boolean isRequired) {
+		assert !TemplateSpecialisation.needsCompletion(asType);
+		assert !TemplateSpecialisation.needsSpecialisation(asType);
 		Type primaryType;
-		if (type != null) {
-			type = standardLibrary.resolveIncompleteSpecialization(type);
-			primaryType = metamodelManager.getPrimaryType(type);
+		if (asType != null) {
+			asType = standardLibrary.resolveIncompleteSpecialization(asType);
+			primaryType = metamodelManager.getPrimaryType(asType);
 		}
 		else {
 			primaryType = null;

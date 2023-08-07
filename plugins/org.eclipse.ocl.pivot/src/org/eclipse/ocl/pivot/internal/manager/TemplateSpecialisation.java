@@ -18,7 +18,9 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -41,15 +43,33 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions.SimpleTemplat
 public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 {
 	/**
+	 * Return true if a referencedType transitively declars a TemplateParameter.
+	 */
+	public static boolean needsCompletion(@Nullable Type asType) {
+		if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asType;
+			TemplateSignature asTemplateSignature = asClass.getOwnedSignature();
+			if (asTemplateSignature != null) {
+				return true;
+			}
+			for (TemplateBinding asTemplateBinding : PivotUtil.getOwnedBindings(asClass)) {
+				for (TemplateParameterSubstitution asTemplateParameterSubstitution : PivotUtil.getOwnedSubstitutions(asTemplateBinding)) {
+					if (needsCompletion(asTemplateParameterSubstitution.getActual())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	/**
 	 * Return true if a referencedType transitively references a TemplateParamter.
 	 */
-	public static boolean needsSpecialisation(@Nullable Type referencedType)	// XXX simplify to template argument scan
-	{
+	public static boolean needsSpecialisation(@Nullable Type referencedType) {	// XXX simplify to template argument scan
 		return (referencedType != null) && needsSpecialisation(referencedType, referencedType);
 	}
 
-	private static boolean needsSpecialisation(@NonNull Type outerType, @NonNull Type referencedType)	// XXX simplify to template argument scan
-	{
+	private static boolean needsSpecialisation(@NonNull Type outerType, @NonNull Type referencedType) {	// XXX simplify to template argument scan
 		if (referencedType instanceof TemplateParameter) {
 			return referencedType != outerType;
 		}
