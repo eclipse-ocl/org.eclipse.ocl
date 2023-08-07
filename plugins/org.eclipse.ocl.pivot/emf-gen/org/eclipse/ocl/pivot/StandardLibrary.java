@@ -105,10 +105,10 @@ public interface StandardLibrary extends Element
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
 	/**
-	 * Return the specializatioon of asType suitable for use as the type of self in a feature. A generic class
-	 * is specialized by its own templayte paramerters.
+	 * Return the specialization of asType suitable for use as the type of self in a feature. A generic class
+	 * is specialized by its own template paramerters.
 	 */
-	@NonNull Type getContextSpecializedType(@NonNull Type asType);
+//	@NonNull Type getContextSpecializedType(@NonNull Type asType);
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -124,6 +124,12 @@ public interface StandardLibrary extends Element
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	@NonNull FlatModel getFlatModel();
+
+	/**
+	 * Return the specialization of the under-specified generic asType suitable for type of Variable. Missing (all) parameters
+	 * are filled in with distinct WildCardTypes.
+	 */
+//	@NonNull Type getIncompleteSpecializedType(@NonNull Type asType);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

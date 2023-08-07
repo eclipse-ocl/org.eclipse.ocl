@@ -169,30 +169,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull Type getContextSpecializedType(@NonNull Type asType) {
-		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
-		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
-		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
-		assert asTemplateSignature != null;
-		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
-		if (asType instanceof CollectionType) {
-			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
-			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
-		}
-		else if (asType instanceof MapType) {
-			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
-			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
-			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
-		}
-		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
-			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return getFlatModel().getFlatClass(asClass);
 	}
@@ -424,33 +400,65 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	}
 
+	/**
+	 * Return the specialization of asType suitable for use as the type of self in a feature. A generic class
+	 * is specialized by its own template paramerters.
+	 */
 	@Override
 	public @NonNull Type resolveContextSpecialization(@NonNull Type asType) {
-		if (!(asType instanceof TemplateableElement)) {
+		if (!TemplateSpecialisation.needsSpecialisation(asType)) {
 			return asType;
 		}
-		TemplateableElement asTemplateableElement = (TemplateableElement)asType;
-		if ((asTemplateableElement.getGeneric() != null)) {
-			return asType;
+		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
+		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
+		assert asTemplateSignature != null;
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+		if (asType instanceof CollectionType) {
+			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
+			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
 		}
-		if ((asTemplateableElement.getOwnedSignature() == null)) {
-			return asType;
+		else if (asType instanceof MapType) {
+			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
+			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
+			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
 		}
-		return getContextSpecializedType(asType);
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
+	/**
+	 * Return the specialization of the under-specified generic asType suitable for type of Variable. Missing (all) parameters
+	 * are filled in with distinct WildCardTypes.
+	 */
 	@Override
 	public @NonNull Type resolveIncompleteSpecialization(@NonNull Type asType) {
-		if (TemplateSpecialisation.needsSpecialisation(asType)) {
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(this);
-			templateSpecialization.installEquivalence(asType, asType);
-			return getSpecializedType(asType, templateSpecialization);
+		if (!TemplateSpecialisation.needsSpecialisation(asType) || (asType instanceof LambdaType) || (asType instanceof TupleType)) {
+			return asType;
 		}
-
-	//	Type specializedType = getSpecializedType(asType, new WildcardSpecialization());
-	//	if (asType != specializedType) {
-		//	System.out.println("resolveIncompleteSpecialization " + asType + " => " + specializedType);
+		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
+		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
+		assert asTemplateSignature != null;
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+	/*	if (asType instanceof CollectionType) {
+			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
+			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
+		}
+		else if (asType instanceof MapType) {
+			TemplateParameter keyTemplateParameter = asTemplateParameters.get(0);
+			TemplateParameter valueTemplateParameter = asTemplateParameters.get(1);
+			return getMapType(keyTemplateParameter, null, valueTemplateParameter, null);
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
+		}
+		else { */
+			throw new UnsupportedOperationException();
 	//	}
-		return asType;
 	}
 } //AbstractStandardLibraryImpl

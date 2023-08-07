@@ -1346,7 +1346,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	@Override
 	public void loadPackageOriginalTypeEAnnotations(@NonNull EPackage ePackage) {
-		throw new UnsupportedOperationException();			// XXX FIXME
+	//	throw new UnsupportedOperationException();			// XXX FIXME
 	}
 
 	public abstract void queueUse(@NonNull EObject eObject);

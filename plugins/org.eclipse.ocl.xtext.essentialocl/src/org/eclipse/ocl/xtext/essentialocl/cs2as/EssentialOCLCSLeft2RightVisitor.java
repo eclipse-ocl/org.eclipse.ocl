@@ -254,7 +254,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	public EssentialOCLCSLeft2RightVisitor(@NonNull CS2ASConversion context) {
 		super(context);
-		this.environmentFactory = (EnvironmentFactoryInternal) context.getEnvironmentFactory();
+		this.environmentFactory = context.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		/*this.nameResolver = new PivotNameResolver(environmentFactory); // FIXME factory method*/
