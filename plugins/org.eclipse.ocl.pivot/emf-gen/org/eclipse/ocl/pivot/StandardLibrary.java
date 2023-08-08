@@ -45,7 +45,7 @@ public interface StandardLibrary extends Element
 	@Nullable InvalidType basicGetOclInvalidType();
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
-	public boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
+	boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
 	boolean conformsToLambdaType(@NonNull LambdaType firstLambdaType, @NonNull LambdaType secondLambdaType);
 	boolean conformsToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
 	boolean conformsToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);

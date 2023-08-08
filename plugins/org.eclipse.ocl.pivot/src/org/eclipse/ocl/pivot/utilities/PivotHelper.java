@@ -184,7 +184,7 @@ public class PivotHelper
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = metamodelManager.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
+		Type commonType = standardLibrary.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);

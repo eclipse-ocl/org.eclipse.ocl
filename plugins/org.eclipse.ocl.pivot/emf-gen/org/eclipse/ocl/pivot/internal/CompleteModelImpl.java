@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -418,13 +417,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI) {
 		completeURIs.addPackageURI2completeURI(packageURI, newCompleteURI);
-	}
-
-	@Deprecated
-	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return environmentFactory.getStandardLibrary().conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
 	}
 
 	@Override

@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -381,13 +380,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		pivotElement.setOwningPackage(ownedCompleteModel.getOrphanage());
 	} */
-
-	@Deprecated
-	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return ownedStandardLibrary.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {

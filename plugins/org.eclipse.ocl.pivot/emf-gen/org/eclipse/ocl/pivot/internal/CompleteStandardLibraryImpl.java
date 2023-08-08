@@ -647,7 +647,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			if (rightPropertyType == null) {
 				return null;				// Never happens
 			}
-			Type commonType = environmentFactory.getMetamodelManager().getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
+			Type commonType = getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
 			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
 			commonPartIds.add(commonPartId);
 		}

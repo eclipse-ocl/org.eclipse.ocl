@@ -397,22 +397,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	/**
-	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
-	 * zero if both matches are of equal validity.
-	 */
-	@Deprecated
-	public int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
-			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings) {
-		return standardLibrary.compareOperationMatches(reference, referenceBindings, candidate, candidateBindings);
-	}
-
-	@Override @Deprecated
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return standardLibrary.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {		// FIXME move to PivotHelper
 		BooleanLiteralExp asBoolean = PivotFactory.eINSTANCE.createBooleanLiteralExp();
 		asBoolean.setBooleanSymbol(booleanSymbol);
@@ -430,7 +414,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * @since 1.1
 	 */
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {		// FIXME move to PivotHelper
-		Type commonType = getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
+		Type commonType = standardLibrary.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
@@ -840,12 +824,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		return bodyExpression;
 	} */
-
-	@Deprecated
-	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		return standardLibrary.getCommonType(leftType, leftSubstitutions, rightType, rightSubstitutions);
-	}
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {

@@ -1578,7 +1578,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					commonType = type;
 				}
 				else if (commonType != type) {
-					commonType = metamodelManager.getCommonType(commonType, TemplateParameterSubstitutions.EMPTY, type, TemplateParameterSubstitutions.EMPTY);
+					commonType = standardLibrary.getCommonType(commonType, TemplateParameterSubstitutions.EMPTY, type, TemplateParameterSubstitutions.EMPTY);
 				}
 			}
 			if (pivotPart instanceof CollectionItem) {
@@ -1651,7 +1651,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (pivotLast != null) {
 			Type secondType = pivotLast.getType();
 			if (secondType != null) {
-				type = metamodelManager.getCommonType(type, TemplateParameterSubstitutions.EMPTY, secondType, TemplateParameterSubstitutions.EMPTY);
+				type = standardLibrary.getCommonType(type, TemplateParameterSubstitutions.EMPTY, secondType, TemplateParameterSubstitutions.EMPTY);
 			}
 			isRequired &= pivotLast.isIsRequired();
 		}
@@ -1752,7 +1752,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Type elseType = elseExpression != null ? elseExpression.getType() : null;
 			Type commonType = null;
 			if ((thenType != null) && (elseType != null)) {
-				commonType = metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY);
+				commonType = standardLibrary.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY);
 				if ((commonType != thenType) && (commonType != elseType)) {
 					PrimitiveType integerType = standardLibrary.getIntegerType();
 					Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
@@ -1779,7 +1779,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			expression.setOwnedElse(elseExpression);
 			Type thenTypeValue = thenExpression != null ? thenExpression.getTypeValue() : null;
 			Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
-			Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? metamodelManager.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
+			Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? standardLibrary.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
 			boolean isRequired = ((thenExpression != null) && thenExpression.isIsRequired()) && ((elseExpression != null) && elseExpression.isIsRequired());
 			helper.setType(expression, commonType, isRequired, commonTypeValue);
 		}
@@ -2037,7 +2037,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								keyType = asKeyType;
 							}
 							else if (keyType != asKeyType) {
-								keyType = metamodelManager.getCommonType(keyType, TemplateParameterSubstitutions.EMPTY, asKeyType, TemplateParameterSubstitutions.EMPTY);
+								keyType = standardLibrary.getCommonType(keyType, TemplateParameterSubstitutions.EMPTY, asKeyType, TemplateParameterSubstitutions.EMPTY);
 							}
 						}
 					}
@@ -2059,7 +2059,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								valueType = asValueType;
 							}
 							else if (valueType != asValueType) {
-								valueType = metamodelManager.getCommonType(valueType, TemplateParameterSubstitutions.EMPTY, asValueType, TemplateParameterSubstitutions.EMPTY);
+								valueType = standardLibrary.getCommonType(valueType, TemplateParameterSubstitutions.EMPTY, asValueType, TemplateParameterSubstitutions.EMPTY);
 							}
 						}
 					}

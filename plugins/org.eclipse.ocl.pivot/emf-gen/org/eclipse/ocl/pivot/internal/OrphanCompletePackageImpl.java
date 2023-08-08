@@ -86,7 +86,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 					return super.getCompleteClass(asType);
 				}
 			};
-			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
+			return completeEnvironmentImpl.getOwnedStandardLibrary().conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
 		}
 
 		@Override
