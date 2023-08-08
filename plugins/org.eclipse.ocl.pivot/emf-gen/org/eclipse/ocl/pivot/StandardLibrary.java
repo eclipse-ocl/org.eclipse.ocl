@@ -429,5 +429,7 @@ public interface StandardLibrary extends Element
 
 	@NonNull Type resolveIncompleteSpecialization(@NonNull Type asType);
 
+	@NonNull Type resolveLowerBoundSpecialization(@NonNull Type asType);
+
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

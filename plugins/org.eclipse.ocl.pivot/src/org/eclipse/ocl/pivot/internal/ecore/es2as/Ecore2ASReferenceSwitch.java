@@ -93,13 +93,13 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
-	private final @NonNull Property oclInvalidProperty;
+//	private final @NonNull Property oclInvalidProperty;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.metamodelManager = converter.getMetamodelManager();
 		this.standardLibrary = metamodelManager.getStandardLibrary();
-		this.oclInvalidProperty = standardLibrary.getOclInvalidProperty();
+//		this.oclInvalidProperty = standardLibrary.getOclInvalidProperty();	-- defer so that first create is at first error
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		assert eReference != null;
 		//		Property pivotElement = converter.getCreated(Property.class, eObject);
 		Property asProperty = caseEStructuralFeature(eReference);
-		if (asProperty == oclInvalidProperty) {
+		if (asProperty == standardLibrary.basicGetOclInvalidProperty()) {
 			return this;
 		}
 		doSwitchAll(Property.class, ClassUtil.<Property>nullFree(asProperty.getKeys()), eReference.getEKeys());
@@ -256,8 +256,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	public @NonNull Property caseEStructuralFeature(EStructuralFeature eStructuralFeature) {
 		assert eStructuralFeature != null;
 		TypedElement pivotElement = caseETypedElement(eStructuralFeature);
-		if (pivotElement == oclInvalidProperty) {
-			return oclInvalidProperty;
+		Property basicGetOclInvalidProperty = standardLibrary.basicGetOclInvalidProperty();
+		if (pivotElement == basicGetOclInvalidProperty) {
+			return basicGetOclInvalidProperty;
 		}
 		Property asProperty = (Property)pivotElement;
 		EAnnotation redefinesAnnotation = eStructuralFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
@@ -416,7 +417,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		assert eTypedElement != null;
 		TypedElement pivotElement = converter.getCreated(TypedElement.class, eTypedElement);
 		if (pivotElement == null) {
-			return oclInvalidProperty;
+			return standardLibrary.getOclInvalidProperty();
 		}
 		EGenericType eGenericType = eTypedElement.getEGenericType();
 		if (eGenericType == null) {					// Null for Operation returning void
@@ -428,7 +429,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			return pivotElement;
 		}
 		else {
-			return oclInvalidProperty;
+			return standardLibrary.getOclInvalidProperty();
 		}
 	}
 

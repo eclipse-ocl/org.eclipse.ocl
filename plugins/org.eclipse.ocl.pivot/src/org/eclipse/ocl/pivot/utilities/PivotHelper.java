@@ -768,6 +768,7 @@ public class PivotHelper
 		else {
 			assert !asOperation.isIsTypeof();			// typeof return declaration must now be realized by an operation override
 		}
+		assert !TemplateSpecialisation.needsCompletion(returnType);
 		setType(asCallExp, returnType, returnIsRequired, (Type)returnValue);
 	}
 

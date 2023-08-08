@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -154,7 +155,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
 		//
-		//	Resolve first template parameters to its substitution
+		//	Resolve first template parameter to its substitution
 		//
 		TemplateParameter firstTemplateParameter = firstType.isTemplateParameter();
 		if (firstTemplateParameter != null) {
@@ -164,7 +165,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 		}
 		//
-		//	Accrue solution to the econd template parameter
+		//	Accrue solution to the second template parameter
 		//
 		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
 		if (secondTemplateParameter != null) {
@@ -177,6 +178,24 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		if (firstType == secondType) {
 			return true;
+		}
+		if (firstType instanceof InvalidType) {
+			return true;
+		}
+		else if (secondType instanceof InvalidType) {
+			return false;
+		}
+		else if (firstType instanceof VoidType) {
+			return true;
+		}
+		else if (secondType instanceof VoidType) {
+			return false;
+		}
+		else if (secondType instanceof AnyType) {
+			return true;
+		}
+		else if (firstType instanceof AnyType) {
+			return false;
 		}
 		//
 		//	Normalize types to their behavioral class
@@ -194,7 +213,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if ((firstType instanceof DataType) && (secondType instanceof DataType)) {
 			if ((firstType instanceof CollectionType) && (secondType instanceof CollectionType)) {
-				return conformsToCollectionType((CollectionType)firstType, firstSubstitutions, (CollectionType)secondType, secondSubstitutions);
+				CollectionType firstClass2 = (CollectionType)firstType;
+				return conformsToCollectionType(firstClass2, firstSubstitutions, (CollectionType)secondType, secondSubstitutions);
 			}
 			else if ((firstType instanceof MapType) && (secondType instanceof MapType)) {
 				return conformsToMapType((MapType)firstType, firstSubstitutions, (MapType)secondType, secondSubstitutions);
@@ -206,9 +226,83 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				return conformsToTupleType((TupleType)firstType, firstSubstitutions, (TupleType)secondType, secondSubstitutions);
 			}
 		}
+		else if ((firstType instanceof org.eclipse.ocl.pivot.Class) && (secondType instanceof org.eclipse.ocl.pivot.Class)) {
+			org.eclipse.ocl.pivot.Class firstClass = (org.eclipse.ocl.pivot.Class)firstType;
+			org.eclipse.ocl.pivot.Class secondClass = (org.eclipse.ocl.pivot.Class)secondType;
+			return conformsToClassType(firstClass, firstSubstitutions, secondClass, secondSubstitutions);
+		}
 		FlatClass firstFlatClass2 = getFlatClass((org.eclipse.ocl.pivot.Class)firstType);			// XXX cast
 		FlatClass secondFlatClass2 = getFlatClass((org.eclipse.ocl.pivot.Class)secondType);			// XXX cast
 		return firstFlatClass2.isSubFlatClassOf(secondFlatClass2);
+	}
+
+	protected boolean conformsToClassType(org.eclipse.ocl.pivot.@NonNull Class firstClass, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			org.eclipse.ocl.pivot.@NonNull Class secondClass, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
+		org.eclipse.ocl.pivot.Class firstGeneric = (org.eclipse.ocl.pivot.Class)firstClass.getGeneric();
+		org.eclipse.ocl.pivot.Class secondGeneric = (org.eclipse.ocl.pivot.Class)secondClass.getGeneric();
+		if (firstGeneric == null) {
+			firstGeneric = firstClass;
+		}
+		if (secondGeneric == null) {
+			secondGeneric = secondClass;
+		}
+		if (firstGeneric != secondGeneric) {
+			FlatClass firstFlatClass = getFlatClass(firstGeneric);
+			FlatClass secondFlatClass = getFlatClass(secondGeneric);
+			if (!firstFlatClass.isSubFlatClassOf(secondFlatClass)) {
+				return false;
+			}
+		}
+		TemplateSignature firstTemplateSignature = firstGeneric.getOwnedSignature();
+		TemplateSignature secondTemplateSignature = secondGeneric.getOwnedSignature();
+		if (firstTemplateSignature == null) {
+			assert secondTemplateSignature == null;
+			return true;
+		}
+		assert secondTemplateSignature != null;
+		List<TemplateParameter> firstTemplateParameters = firstTemplateSignature.getOwnedParameters();
+		List<TemplateParameter> secondTemplateParameters = secondTemplateSignature.getOwnedParameters();
+		int iSize = firstTemplateParameters.size();
+		if (iSize != secondTemplateParameters.size()) {
+			return false;
+		}
+		List<Type> firstTemplateArguments = new ArrayList<>();
+		for (TemplateBinding templateBinding : firstClass.getOwnedBindings()) {
+			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				firstTemplateArguments.add(templateParameterSubstitution.getActual());
+			}
+		}
+		List<Type> secondTemplateArguments = new ArrayList<>();
+		for (TemplateBinding templateBinding : secondClass.getOwnedBindings()) {
+			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				secondTemplateArguments.add(templateParameterSubstitution.getActual());
+			}
+		}
+		for (int i = 0; i < iSize; i++) {		// XXX validate bindings sizes
+			Type firstType;
+			if (firstClass.getOwnedSignature() != null) {
+				firstType = firstTemplateSignature.getOwnedParameters().get(i);
+			}
+			else {
+				firstType = firstTemplateArguments.get(i);
+			}
+			Type secondType;
+			if (secondClass.getOwnedSignature() != null) {
+				secondType = secondTemplateSignature.getOwnedParameters().get(i);
+			}
+			else {
+				secondType = secondTemplateArguments.get(i);
+			}
+			if (firstType != secondType) {
+				if ((firstType == null) || (secondType == null)) {
+					return false;
+				}
+				if (!conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/*	@Override
@@ -950,13 +1044,13 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	/**
 	 * Return the specialization of asType suitable for use as the type of self in a feature. A generic class
-	 * is specialized by its own template paramerters.
+	 * is specialized by its own template parameters.
 	 */
 	@Override
 	public @NonNull Type resolveContextSpecialization(@NonNull Type asType) {
 		if (!TemplateSpecialisation.needsSpecialisation(asType)) {
 			return asType;
-		}
+		}		// XXX transitive
 		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
 		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
 		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
@@ -1008,5 +1102,41 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		else { */
 			throw new UnsupportedOperationException();
 	//	}
+	}
+
+	/**
+	 * Return the specialization of asType suitable for use as a type literal. A generic class
+	 * is specialized by its lower bound.
+	 */
+	@Override
+	public @NonNull Type resolveLowerBoundSpecialization(@NonNull Type asType) {
+		assert TemplateSpecialisation.needsCompletion(asType);
+		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
+		TemplateableElement genericType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = genericType.getOwnedSignature();
+		assert asTemplateSignature != null;
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+		if (asType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)asType;
+			org.eclipse.ocl.pivot.Class asLowerBound = getLowerBound(asTemplateParameters.get(0));
+			return getCollectionType((CollectionType)genericType, asLowerBound, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+		}
+		else if (asType instanceof MapType) {
+			MapType mapType = (MapType)asType;
+			org.eclipse.ocl.pivot.Class keyType = getLowerBound(asTemplateParameters.get(0));
+			org.eclipse.ocl.pivot.Class valueType = getLowerBound(asTemplateParameters.get(1));
+			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class classType = (org.eclipse.ocl.pivot.Class)asType;
+			List<org.eclipse.ocl.pivot.@NonNull Class> lowerBounds = new ArrayList<>();		// XX use defined templagteArguments
+			for (TemplateParameter asTemplateParameter : asTemplateParameters) {
+				lowerBounds.add(getLowerBound(asTemplateParameter));
+			}
+			return getLibraryType((org.eclipse.ocl.pivot.Class)genericType, lowerBounds);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 } //AbstractStandardLibraryImpl

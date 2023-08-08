@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -752,7 +753,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			Type resolvedSourceType = PivotUtil.getType(sourceExp);
 			Type propertySourceType = standardLibrary.resolveContextSpecialization(PivotUtil.getOwningClass(resolvedProperty));
-			if (resolvedSourceType.conformsTo(standardLibrary, propertySourceType)) {
+		//	if (resolvedSourceType.conformsTo(standardLibrary, propertySourceType)) {
+			if (standardLibrary.conformsTo(resolvedSourceType, TemplateParameterSubstitutions.EMPTY, propertySourceType, TemplateParameterSubstitutions.EMPTY)) {
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
 			}
 			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
@@ -1533,8 +1535,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {		// FIXME Class
 		assert type instanceof org.eclipse.ocl.pivot.Class;		// Not TemplateParameter
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
-		Type asType = standardLibrary.getMetaclass(type);
-		helper.setType(expression, asType, true, type);
+		if (TemplateSpecialisation.needsCompletion(type)) {
+			type = standardLibrary.resolveLowerBoundSpecialization(type);
+		}
+		Type asMetaclass = standardLibrary.getMetaclass(type);
+		helper.setType(expression, asMetaclass, true, type);
 		expression.setReferredType(type);
 		expression.setName(type.getName());
 		return expression;
@@ -2308,6 +2313,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		TypedRefCS csType = csTypeLiteralExp.getOwnedType();
 		//		context.visitInOrder(csType, null);
 		Type type = PivotUtil.getPivot(Type.class, csType);
+		assert type != null;
+		if (TemplateSpecialisation.needsCompletion(type)) {
+			type = standardLibrary.resolveLowerBoundSpecialization(type);
+		}
+		assert !TemplateSpecialisation.needsCompletion(type);
+		assert !TemplateSpecialisation.needsSpecialisation(type);
 		return type != null ? resolveTypeExp(csTypeLiteralExp, type) : null;
 	}
 
