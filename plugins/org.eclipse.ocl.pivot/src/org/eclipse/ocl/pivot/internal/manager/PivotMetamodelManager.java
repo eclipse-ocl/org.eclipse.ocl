@@ -59,8 +59,6 @@ import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterableType;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -69,7 +67,6 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
@@ -79,7 +76,6 @@ import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
@@ -128,7 +124,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
@@ -406,80 +401,16 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
 	 * zero if both matches are of equal validity.
 	 */
+	@Deprecated
 	public int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
 			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings) {
-		if ((reference instanceof Iteration) && (candidate instanceof Iteration)) {
-			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
-			if (iteratorCountDelta != 0) {
-				return iteratorCountDelta;
-			}
-			org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
-			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
-			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
-			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
-			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
-				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-					return 1;
-				}
-				else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-					return -1;
-				}
-			}
-		}
-		List<Parameter> candidateParameters = candidate.getOwnedParameters();
-		List<Parameter> referenceParameters = reference.getOwnedParameters();
-		int parameterCountDelta = candidateParameters.size() - referenceParameters.size();
-		if (parameterCountDelta != 0) {
-			return parameterCountDelta;
-		}
-		boolean referenceConformsToCandidate = true;
-		boolean candidateConformsToReference = true;
-		for (int i = 0; i < candidateParameters.size(); i++) {
-			Parameter referenceParameter = referenceParameters.get(i);
-			Parameter candidateParameter = candidateParameters.get(i);
-			if ((referenceParameter == null) || (candidateParameter == null)) {					// Doesn't happen (just a spurious NPE guard)
-				referenceConformsToCandidate = false;
-				candidateConformsToReference = false;
-			}
-			else {
-				Type referenceType = ClassUtil.nonNullState(PivotUtil.getType(referenceParameter));
-				Type candidateType = ClassUtil.nonNullState(PivotUtil.getType(candidateParameter));
-				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-				if (referenceType != candidateType) {
-					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-						referenceConformsToCandidate = false;
-					}
-					if (!conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-						candidateConformsToReference = false;
-					}
-				}
-			}
-		}
-		if (referenceConformsToCandidate != candidateConformsToReference) {
-			return referenceConformsToCandidate ? 1 : -1;
-		}
-		Type referenceType = ClassUtil.nonNullModel(reference.getOwningClass());
-		Type candidateType = ClassUtil.nonNullModel(candidate.getOwningClass());
-		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-		if (referenceType != candidateType) {
-			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-				return 1;
-			}
-			else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-				return -1;
-			}
-		}
-		return 0;
+		return standardLibrary.compareOperationMatches(reference, referenceBindings, candidate, candidateBindings);
 	}
 
-	@Override
+	@Override @Deprecated
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeModel.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
+		return standardLibrary.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
 	}
 
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {		// FIXME move to PivotHelper
@@ -910,38 +841,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return bodyExpression;
 	} */
 
+	@Deprecated
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			Type commonTupleType = standardLibrary.getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonTupleType == null) {
-				return standardLibrary.getOclAnyType();
-			}
-			return commonTupleType;
-		}
-		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
-			FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
-			FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getPivotClass());
-			CollectionType leftCollectionType = (CollectionType)leftType;
-			CollectionType rightCollectionType = (CollectionType)rightType;
-			Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
-			Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
-			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
-			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return standardLibrary.getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
-		}
-		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
-			return rightType;
-		}
-		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
-			return leftType;
-		}
-		FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
-		FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
-		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-		return getPrimaryClass(commonFlatClass.getPivotClass());
+		return standardLibrary.getCommonType(leftType, leftSubstitutions, rightType, rightSubstitutions);
 	}
 
 	@Override
@@ -1330,7 +1233,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		String metaclassName = standardLibrary.getMetaclassName(asInstanceType);
 		return ClassUtil.nonNullState(getASClass(metaclassName));
 	}
 
@@ -1803,26 +1706,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return false;
 	}
 
+	@Deprecated
 	public boolean isTypeServeable(@NonNull Type type) {
-		//		if (pivotType .getUnspecializedElement() != null) {
-		//			return false;
-		//		}
-		if (type.isTemplateParameter() != null) {
-			return false;
-		}
-		//		if (pivotType instanceof UnspecifiedType) {
-		//			return false;
-		//		}
-		if (type instanceof LambdaType) {
-			return false;
-		}
-		//		if (pivotType instanceof TupleType) {
-		//			return false;
-		//		}
-		if (type.eContainer() instanceof TemplateParameterSubstitution) {
-			return false;
-		}
-		return true;
+		return standardLibrary.isTypeServeable(type);
 	}
 
 	/**

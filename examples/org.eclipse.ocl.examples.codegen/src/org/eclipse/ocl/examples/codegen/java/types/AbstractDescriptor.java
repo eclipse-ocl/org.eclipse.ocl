@@ -26,6 +26,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Type;
@@ -410,8 +411,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		if (type instanceof Enumeration) {
 			return false;
 		}
-		Type oclTypeType = metamodelManager.getStandardLibrary().getOclTypeType();
-		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
+		Type oclTypeType = standardLibrary.getOclTypeType();
+		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
+	@Deprecated
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	void dispose();

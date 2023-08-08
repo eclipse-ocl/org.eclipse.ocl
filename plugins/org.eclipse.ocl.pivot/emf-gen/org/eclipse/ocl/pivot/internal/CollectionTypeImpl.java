@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -646,7 +645,7 @@ implements CollectionType {
 			return true;
 		}
 		if (type instanceof CollectionType) {
-			return TypeUtil.conformsToCollectionType(standardLibrary, this, (CollectionType)type);
+			return standardLibrary.conformsToCollectionType(this, (CollectionType)type);
 		}
 		if (getGeneric() != null) {
 			return ((Type)getGeneric()).conformsTo(standardLibrary, type);
@@ -725,7 +724,7 @@ implements CollectionType {
 		if (!(type instanceof CollectionType)) {
 			return false;
 		}
-		return TypeUtil.isEqualToCollectionType(standardLibrary, this, (CollectionType)type);
+		return standardLibrary.isEqualToCollectionType(this, (CollectionType)type);
 	}
 
 	@Override

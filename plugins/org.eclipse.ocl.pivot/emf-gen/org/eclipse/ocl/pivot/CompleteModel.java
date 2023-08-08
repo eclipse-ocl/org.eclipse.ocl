@@ -133,6 +133,7 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getOwnedCompletePackage(String name);
 
 	void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI);
+	@Deprecated
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();

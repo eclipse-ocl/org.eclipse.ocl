@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -85,7 +86,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -578,7 +578,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		String metaclassName = getMetaclassName(asInstanceType);
 		return ClassUtil.nonNullState(getPivotType(metaclassName));
 	}
 
@@ -856,6 +856,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
+	protected boolean isSameCompleteClass(@NonNull Type firstType, @NonNull Type secondType) {
+		return firstType == secondType;
+	}
+
+	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		if (!PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
@@ -870,6 +875,17 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 			return false;
 		}
 		return (keyType == OCLstdlibTables.TypeParameters._0_K) && (valueType == OCLstdlibTables.TypeParameters._1_V);
+	}
+
+	@Override
+	protected @NonNull Type resolveBehavioralType(@NonNull Type asType) {
+		if (asType instanceof DataType) {
+			Type behavioralClass = ((DataType)asType).getBehavioralClass();
+			if (behavioralClass != null) {
+				asType = behavioralClass;
+			}
+		}
+		return asType;
 	}
 
 	public void resetSeverities() {

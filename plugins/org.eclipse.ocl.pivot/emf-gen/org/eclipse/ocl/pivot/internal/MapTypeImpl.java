@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -696,7 +695,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			return true;
 		}
 		if (type instanceof MapType) {
-			return TypeUtil.conformsToMapType(standardLibrary, this, (MapType)type);
+			return standardLibrary.conformsToMapType(this, (MapType)type);
 		}
 		if (getGeneric() != null) {
 			return ((Type)getGeneric()).conformsTo(standardLibrary, type);

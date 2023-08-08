@@ -420,10 +420,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		completeURIs.addPackageURI2completeURI(packageURI, newCompleteURI);
 	}
 
+	@Deprecated
 	@Override
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeEnvironment.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
+		return environmentFactory.getStandardLibrary().conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
 	}
 
 	@Override

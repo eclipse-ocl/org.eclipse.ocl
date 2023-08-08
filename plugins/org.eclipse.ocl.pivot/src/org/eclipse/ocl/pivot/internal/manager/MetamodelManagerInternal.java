@@ -66,6 +66,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 
 	void addLockedElement(@NonNull Object lockedElement);
 
+	@Deprecated
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 

@@ -43,6 +43,12 @@ public interface StandardLibrary extends Element
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+	public boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
+	boolean conformsToLambdaType(@NonNull LambdaType firstLambdaType, @NonNull LambdaType secondLambdaType);
+	boolean conformsToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
+	boolean conformsToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);
 	void dispose();
 
 	/**
@@ -100,6 +106,9 @@ public interface StandardLibrary extends Element
 	 * May return an InvalidType if elementType is a proxy.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
 	@Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
@@ -168,6 +177,7 @@ public interface StandardLibrary extends Element
 	 * Return the metaclass to which classType conforms.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
+	@NonNull String getMetaclassName(@NonNull Type asInstanceType);
 
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
@@ -404,6 +414,11 @@ public interface StandardLibrary extends Element
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
 	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
+
+	boolean isEqualToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
+	boolean isEqualToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
+	boolean isEqualToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);
+	boolean isTypeServeable(@NonNull Type type);
 
 	@NonNull Type resolveContextSpecialization(@NonNull Type asType);
 

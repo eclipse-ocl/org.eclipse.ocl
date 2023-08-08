@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -595,7 +594,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		if (!(type instanceof LambdaType)) {
 			return false;
 		}
-		return TypeUtil.conformsToLambdaType(standardLibrary, this, (LambdaType)type);
+		return standardLibrary.conformsToLambdaType(this, (LambdaType)type);
 	}
 
 	private ParametersId parametersId = null;
