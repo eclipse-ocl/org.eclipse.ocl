@@ -27,10 +27,13 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
@@ -60,7 +63,21 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
-	protected static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	private static @NonNull TemplateParameterId @Nullable [] computeTemplateParameterIds(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		TemplateSignature asTemplateSignature = asClass.getOwnedSignature();
+		if (asTemplateSignature == null) {
+			return null;
+		}
+		List<TemplateParameter> asTemplateParameters = asTemplateSignature.getOwnedParameters();
+		int size = asTemplateParameters.size();
+		@NonNull TemplateParameterId [] asTemplateParameterIds = new @NonNull TemplateParameterId[size];
+		for (int i = 0; i < size; i++) {
+			asTemplateParameterIds[i] = asTemplateParameters.get(i).getTemplateParameterId();
+		}
+		return null;
+	}
+
+	private static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		int flags = 0;
 		if (asClass instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)asClass;
@@ -71,7 +88,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				flags |= UNIQUE;
 			}
 		}
-		if (asClass instanceof AnyType){
+		if (asClass instanceof AnyType) {
 			flags |= OCL_ANY;
 		} else if (asClass instanceof VoidType){
 			flags |= OCL_VOID;
@@ -88,6 +105,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
 	protected final int flags;
+	protected final @NonNull TemplateParameterId @Nullable [] templateParameterIds;
 
 	/**
 	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
@@ -134,10 +152,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	private @Nullable Set<@NonNull FlatClass> subFlatClasses = null;
 
-	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
+	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		this.flatModel = flatModel;
 		this.name = name;
-		this.flags = flags;
+		this.templateParameterIds = computeTemplateParameterIds(asClass);
+		this.flags = computeFlags(asClass);
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
 	}
 

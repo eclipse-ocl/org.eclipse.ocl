@@ -34,7 +34,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		super(flatModel, NameUtil.getName(asClass), computeFlags(asClass));
+		super(flatModel, NameUtil.getName(asClass), asClass);
 		this.asClass = asClass;
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
 	}

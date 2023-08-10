@@ -58,7 +58,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;	// ??? demote to a UMLFlatClass
 
 	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
-		super(flatModel, NameUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
+		super(flatModel, NameUtil.getName(completeClass), completeClass.getPrimaryClass());
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
 	}
