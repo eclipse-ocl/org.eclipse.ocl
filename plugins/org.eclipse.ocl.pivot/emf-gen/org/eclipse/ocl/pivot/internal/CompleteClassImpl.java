@@ -588,12 +588,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
+	public @NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter) {
 		return getFlatClass().getOperations(featureFilter);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	public @NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		return getFlatClass().getOperationOverloads(featureFilter, name);
 	}
 
@@ -681,12 +681,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter) {
 		return getFlatClass().getProperties(featureFilter, null);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name) {
 		return getFlatClass().getProperties(featureFilter, name);
 	}
 
