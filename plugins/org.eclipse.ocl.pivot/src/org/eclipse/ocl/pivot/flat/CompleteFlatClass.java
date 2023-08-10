@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -51,11 +49,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull CompleteClassImpl completeClass;
-
-	/**
-	 * Lazily created map from state name to the known state.
-	 */
-	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;	// ??? demote to a UMLFlatClass
 
 	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
 		super(flatModel, NameUtil.getName(completeClass), completeClass.getPrimaryClass());
@@ -204,28 +197,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return completeClass.getPrimaryClass();
 	}
 
-	public @NonNull Iterable<@NonNull State> getStates() {
-		Map<@NonNull String, @NonNull State> name2states2 = name2states;
-		if (name2states2 == null) {
-			name2states2 = initStates();
-		}
-		return name2states2.values();
-	}
-
-	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
-		Map<@NonNull String, @NonNull State> name2states2 = name2states;
-		if (name2states2 == null) {
-			name2states2 = initStates();
-		}
-		State state = name2states2.get(name);
-		if (state == null) {
-			return PivotMetamodelManager.EMPTY_STATE_LIST;
-		}
-		else {
-			return Collections.singletonList(state);
-		}
-	}
-
 	@Override
 	protected void initOperationsInternal() {
 		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
@@ -248,6 +219,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 	}
 
+	@Override
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
 		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
@@ -261,18 +233,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			}
 		}
 		return name2states;
-	}
-	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
-		for (@NonNull Region region : regions) {
-			for (@NonNull Vertex vertex : ClassUtil.nullFree(region.getOwnedSubvertexes())) {
-				if (vertex instanceof State) {
-					State state = (State) vertex;
-					name2states.put(vertex.getName(), state);
-					@NonNull List<@NonNull Region> nestedRegions = ClassUtil.nullFree(state.getOwnedRegions());
-					initStatesForRegions(name2states, nestedRegions);
-				}
-			}
-		}
 	}
 
 	@Override

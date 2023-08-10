@@ -361,7 +361,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return eDynamicIsSet(featureID);
 	}
 
-	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+	private /*@LazyNonNull*/ /*Complete*/FlatClass flatClass = null;
 
 	/**
 	 * The cached value of the '{@link #getPartialClasses() <em>Partial Classes</em>}' reference list.
@@ -544,8 +544,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull CompleteFlatClass getFlatClass() {
-		CompleteFlatClass flatClass2 = flatClass;
+	public final @NonNull FlatClass getFlatClass() {
+		FlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
 			CompleteFlatModel completeFlatModel = getCompleteModel().getFlatModel();
 			flatClass = flatClass2 = completeFlatModel.createFlatClass(this);
@@ -574,17 +574,17 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return getFlatClass().getOperation(operationId);
+		return getFlatClass().basicGetOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return getFlatClass().getOperation(operationId);
+		return getFlatClass().basicGetOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		return getFlatClass().getOperationOverloads(pivotOperation);
+		return getFlatClass().basicGetOperationOverloads(pivotOperation);
 	}
 
 	@Override
