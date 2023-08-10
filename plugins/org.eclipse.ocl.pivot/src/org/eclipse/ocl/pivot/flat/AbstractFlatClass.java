@@ -20,13 +20,15 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.JavaType;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -58,13 +60,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
-	public static int computeFlags(@NonNull Type asType) {
-		assert !(asType instanceof JavaType);
-//			return 0;			// XXX Avoid UOE from getTypeId().
-//		}
+	protected static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		int flags = 0;
-		if (asType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)asType;
+		if (asClass instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)asClass;
 			if (collectionType.isOrdered()) {
 				flags |= ORDERED;
 			}
@@ -72,17 +71,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				flags |= UNIQUE;
 			}
 		}
-		TypeId typeId = asType.getTypeId();
-		if (typeId == TypeId.OCL_ANY){
+		if (asClass instanceof AnyType){
 			flags |= OCL_ANY;
-		}
-		else if (typeId == TypeId.OCL_VOID){
+		} else if (asClass instanceof VoidType){
 			flags |= OCL_VOID;
 		}
-		else if (typeId == TypeId.OCL_INVALID){
+		else if (asClass instanceof InvalidType){
 			flags |= OCL_INVALID;
 		}
-		if ((asType instanceof org.eclipse.ocl.pivot.Class) && ((org.eclipse.ocl.pivot.Class)asType).isIsAbstract()) {
+		if (asClass.isIsAbstract()) {
 			flags |= ABSTRACT;
 		}
 		return flags;

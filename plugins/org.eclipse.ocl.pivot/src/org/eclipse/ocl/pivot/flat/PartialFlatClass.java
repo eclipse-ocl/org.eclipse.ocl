@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -34,7 +34,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		super(flatModel, NameUtil.getName(asClass), 0);
+		super(flatModel, NameUtil.getName(asClass), computeFlags(asClass));
 		this.asClass = asClass;
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
 	}
