@@ -76,6 +76,9 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Class</b></em>'.
@@ -1359,6 +1362,22 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			}
 		}
 		return normalizedTypeId2;
+	}
+
+	@Override
+	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSelfAndAllSuperClasses() {
+		FlatClass flatClass = getFlatClass();
+		@NonNull Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class> function = new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		{
+			@Override
+			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
+				return input.getBaseFlatClass().getPivotClass();
+			}
+		};
+		@NonNull Iterable<@NonNull FlatFragment> allSuperFragments = flatClass.getAllSuperFragments();
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> selfAndAllSuperClasses = Iterables.transform(allSuperFragments, function);
+		assert selfAndAllSuperClasses != null;
+		return selfAndAllSuperClasses;
 	}
 
 	@Override

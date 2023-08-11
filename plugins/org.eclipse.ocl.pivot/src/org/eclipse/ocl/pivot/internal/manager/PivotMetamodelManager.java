@@ -777,7 +777,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
-		return completeClass.getSuperCompleteClasses();
+		return completeClass.getSelfAndAllSuperCompleteClasses();
 	}
 
 	@Deprecated

@@ -62,7 +62,7 @@ public class FinalAnalysis
 		this.metamodelManager = metamodelManager;
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {
-				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSuperCompleteClasses()) {
+				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSelfAndAllSuperCompleteClasses()) {
 					Set<@NonNull CompleteClass> subCompleteClasses = superCompleteClass2subCompleteClasses.get(superCompleteClass);
 					if (subCompleteClasses == null) {
 						subCompleteClasses = new HashSet<>();

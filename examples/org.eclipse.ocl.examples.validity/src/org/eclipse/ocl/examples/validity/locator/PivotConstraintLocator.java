@@ -59,7 +59,7 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 			if (environmentFactory != null) {
 				Set<@NonNull TypeURI> allTypes = new HashSet<@NonNull TypeURI>();
 				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainingObject);
-				for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+				for (CompleteClass superCompleteClass : completeClass.getSelfAndAllSuperCompleteClasses()) {
 					for (org.eclipse.ocl.pivot.Class partialClass : superCompleteClass.getPartialClasses()) {
 						EObject eTarget = partialClass.getESObject();
 						if (eTarget != null) {

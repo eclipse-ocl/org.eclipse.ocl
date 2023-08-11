@@ -118,7 +118,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 
 	@Override
 	protected void initOperationsInternal() {
-		for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class superType : asClass.getSelfAndAllSuperClasses()) {
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
 			//	initMemberOperationsFrom(unspecializedPartialType);
 			//	if (INIT_MEMBER_OPERATIONS.isActive()) {
@@ -172,7 +172,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	@Override
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
-		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : PivotUtil.getSuperClasses(asClass)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : asClass.getSelfAndAllSuperClasses()) {
 			for (@NonNull Behavior behavior : ClassUtil.nullFree(asSuperClass.getOwnedBehaviors())) {
 				if (behavior instanceof StateMachine) {
 					@NonNull List<@NonNull Region> regions = ClassUtil.nullFree(((StateMachine)behavior).getOwnedRegions());

@@ -701,6 +701,22 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
+	public @NonNull Iterable<@NonNull CompleteClass> getSelfAndAllSuperCompleteClasses() {
+		FlatClass flatClass = getFlatClass();
+		@NonNull Function<@NonNull FlatFragment, @NonNull CompleteClass> function = new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
+		{
+			@Override
+			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
+				return input.getBaseFlatClass().getCompleteClass();
+			}
+		};
+		@NonNull Iterable<@NonNull FlatFragment> allSuperFragments = flatClass.getAllSuperFragments();
+		Iterable<@NonNull CompleteClass> selfAndAllSuperCompleteClasses = Iterables.transform(allSuperFragments, function);
+		assert selfAndAllSuperCompleteClasses != null;
+		return selfAndAllSuperCompleteClasses;
+	}
+
+	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull ? extends Type> templateArguments) {
 		TemplateParameters templateArgumentsParameters = TypeUtil.createTemplateParameters(templateArguments);
 		TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
@@ -755,18 +771,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
 		return getFlatClass().getStates(name);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
-		{
-			@Override
-			public @NonNull CompleteClass apply(FlatFragment input) {
-				return input.getBaseFlatClass().getCompleteClass();
-			}
-		});
 	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {

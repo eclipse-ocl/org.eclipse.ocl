@@ -199,7 +199,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected void initOperationsInternal() {
-		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+		for (@NonNull CompleteClass superCompleteClass : completeClass.getSelfAndAllSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
 				CompleteClass unspecializedCompleteClass = completeClass.getCompleteModel().getCompleteClass(unspecializedType);
@@ -222,7 +222,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
-		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+		for (@NonNull CompleteClass superCompleteClass : completeClass.getSelfAndAllSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superPartialClass : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 				for (@NonNull Behavior behavior : ClassUtil.nullFree(superPartialClass.getOwnedBehaviors())) {
 					if (behavior instanceof StateMachine) {

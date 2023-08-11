@@ -350,6 +350,8 @@ extends Type, Namespace, TemplateableElement {
 
 	void addClassListener(@NonNull IClassListener partialFlatClass);
 
+	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSelfAndAllSuperClasses();
+
 	void removeClassListener(@NonNull IClassListener partialFlatClass);
 
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] depthCounts);

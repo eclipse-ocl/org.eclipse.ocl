@@ -346,7 +346,7 @@ public class UMLOCLEValidator implements EValidator
 							if (stereotype != null) {
 								HashSet<org.eclipse.ocl.pivot.Constraint> allConstraints = new HashSet<org.eclipse.ocl.pivot.Constraint>();
 								CompleteClass completeStereotype = environmentFactory.getCompleteModel().getCompleteClass(stereotype);
-								for (CompleteClass completeClass : completeStereotype.getSuperCompleteClasses()) {
+								for (CompleteClass completeClass : completeStereotype.getSelfAndAllSuperCompleteClasses()) {
 									for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 										allConstraints.addAll(partialClass.getOwnedInvariants());
 									}
