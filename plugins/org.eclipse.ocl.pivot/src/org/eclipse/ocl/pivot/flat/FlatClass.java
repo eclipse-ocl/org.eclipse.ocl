@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -118,6 +119,7 @@ public interface FlatClass extends Nameable
 	@Nullable Operation basicGetOperation(@NonNull OperationId operationId);
 	@Nullable Iterable<@NonNull Operation> basicGetOperationOverloads(@NonNull Operation pivotOperation);
 	@Nullable Property basicGetProperty(@NonNull String name);
+	org.eclipse.ocl.pivot.@NonNull Class getASClass();
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
@@ -133,12 +135,12 @@ public interface FlatClass extends Nameable
 	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();
+	@NonNull FlatClass getGenericFlatClass();
 	@Override
 	@NonNull String getName();
 	@NonNull Iterable<@NonNull Operation> getOperationOverloads(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	@NonNull Iterable<@NonNull Operation> getOperations();
 	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter);
-	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	@NonNull FlatFragment getSelfFragment();
 	@NonNull Operation @NonNull [] getSelfOperations();
@@ -147,11 +149,13 @@ public interface FlatClass extends Nameable
 	@NonNull Iterable<@NonNull State> getStates();
 	@NonNull Iterable<@NonNull State> getStates(@Nullable String name);
 	@NonNull FragmentIterable getSuperFragments(int depth);
+	@NonNull TemplateParameterId @Nullable [] getTemplateParameterIds();
 
 	/**
 	 * Initialize the super-fragment hierarchy from the compile-time analysis.
 	 */
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
+//	@NonNull Map<@NonNull String, @NonNull State> initStates();
 	boolean isAbstract();
 	boolean isInvalid();
 	boolean isOrdered();

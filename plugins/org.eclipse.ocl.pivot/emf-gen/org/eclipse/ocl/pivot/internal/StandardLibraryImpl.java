@@ -465,7 +465,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			FlatClass leftFlatClass = leftType.getFlatClass(this);
 			FlatClass rightFlatClass = rightType.getFlatClass(this);
 			FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getPivotClass());
+			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getASClass());
 			CollectionType leftCollectionType = (CollectionType)leftType;
 			CollectionType rightCollectionType = (CollectionType)rightType;
 			Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
@@ -483,7 +483,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		FlatClass leftFlatClass = leftType.getFlatClass(this);
 		FlatClass rightFlatClass = rightType.getFlatClass(this);
 		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-		return getPrimaryClass(commonFlatClass.getPivotClass());
+		return getPrimaryClass(commonFlatClass.getASClass());
 	}
 
 	@Override

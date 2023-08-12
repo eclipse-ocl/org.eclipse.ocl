@@ -658,7 +658,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
-				return input.getBaseFlatClass().getPivotClass();
+				return input.getBaseFlatClass().getASClass();
 			}
 		});
 	}

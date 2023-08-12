@@ -664,7 +664,7 @@ implements CollectionType {
 		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
 		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
 		FlatClass commonFlatClass = thisFlatClass.getCommonFlatClass(thatFlatClass);
-		org.eclipse.ocl.pivot.Class commonType = commonFlatClass.getPivotClass();
+		org.eclipse.ocl.pivot.Class commonType = commonFlatClass.getASClass();
 		if (type instanceof CollectionType) {
 			CollectionType thatCollectionType = (CollectionType)type;
 			Type thisElementType = this.getElementType();

@@ -1225,7 +1225,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (flatClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
-		CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());
+		CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getASClass());
 		Iterable<? extends Operation> operationOverloads = completeClass.getOperationOverloads(pivotOperation);
 		if (operationOverloads != null) {
 			return operationOverloads;
@@ -1294,7 +1294,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
 		if (flatClass != null) {					// Null for an EAnnotation element
-			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
+			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getASClass());		// XXX why use FlatClass at all ??
 			Operation operation = completeClass.getOperation(pivotOperation);
 			if (operation != null) {
 				return operation;

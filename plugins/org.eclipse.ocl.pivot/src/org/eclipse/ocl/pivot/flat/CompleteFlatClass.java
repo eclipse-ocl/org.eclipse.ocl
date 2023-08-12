@@ -46,11 +46,11 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public abstract class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull CompleteClassImpl completeClass;
 
-	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
+	protected CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
 		super(flatModel, NameUtil.getName(completeClass), completeClass.getPrimaryClass());
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
@@ -190,11 +190,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			}
 		}
 		return bestOperation;					// null if not known locally, caller must try superfragments.
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return completeClass.getPrimaryClass();
 	}
 
 	@Override

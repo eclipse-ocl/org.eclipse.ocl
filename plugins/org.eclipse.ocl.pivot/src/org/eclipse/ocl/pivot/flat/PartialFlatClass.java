@@ -36,13 +36,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * This calls is not yet used by itself since current usage always provides a EClassifier
  * for the more refined EcoreFlatClass.
  */
-public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
-
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, NameUtil.getName(asClass), asClass);
-		this.asClass = asClass;
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
 	}
 
@@ -109,11 +106,6 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return asClass;
 	}
 
 	@Override

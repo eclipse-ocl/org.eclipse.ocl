@@ -66,7 +66,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
-	private static @NonNull TemplateParameterId @Nullable [] computeTemplateParameterIds(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	protected static @NonNull TemplateParameterId @Nullable [] computeTemplateParameterIds(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		TemplateSignature asTemplateSignature = asClass.getOwnedSignature();
 		if (asTemplateSignature == null) {
 			return null;
@@ -77,7 +77,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		for (int i = 0; i < size; i++) {
 			asTemplateParameterIds[i] = asTemplateParameters.get(i).getTemplateParameterId();
 		}
-		return null;
+		return asTemplateParameterIds;
 	}
 
 	private static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -107,8 +107,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
+	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 	protected final int flags;
-	protected final @NonNull TemplateParameterId @Nullable [] templateParameterIds;
 
 	/**
 	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
@@ -163,7 +163,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		this.flatModel = flatModel;
 		this.name = name;
-		this.templateParameterIds = computeTemplateParameterIds(asClass);
+		this.asClass = asClass;
 		this.flags = computeFlags(asClass);
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
 	}
@@ -381,6 +381,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
+	@Override
+	public final org.eclipse.ocl.pivot.@NonNull Class getASClass() {
+		return asClass;
+	}
+
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
 	 */
@@ -564,6 +569,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * Return the possibly overloaded declaration of asOperation from flatFragment, or null.
 	 */
 	protected abstract @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation);
+
+	@Override
+	public @NonNull FlatClass getGenericFlatClass() {
+		return this;
+	}
 
 	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
 		int index = apparentOperation.getIndex();
@@ -765,6 +775,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
+	public @NonNull TemplateParameterId @Nullable [] getTemplateParameterIds() {
+		return null;
+	}
+
+	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
 		assert this.mutable == null;
 		assert this.fragments == null;
@@ -942,6 +957,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
+//	@Override
 	protected abstract @NonNull Map<@NonNull String, @NonNull State> initStates();
 
 	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
@@ -1118,7 +1134,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	@Override
 	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes) {
 		assert standardLibrary == getStandardLibrary();
-		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
+		for (Operation localOperation : getASClass().getOwnedOperations()) {
 			if (localOperation.getName().equals(operationName)) {
 				ParametersId firstParametersId = localOperation.getParametersId();
 				int iMax = firstParametersId.size();
@@ -1127,7 +1143,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					for (; i < iMax; i++) {
 						TypeId firstParameterId = firstParametersId.get(i);
 						assert firstParameterId != null;
-						@NonNull Type secondParameterType = argumentTypes[i].getPivotClass();
+						@NonNull Type secondParameterType = argumentTypes[i].getASClass();
 						if (firstParameterId != secondParameterType.getTypeId()) {
 							break;
 						}

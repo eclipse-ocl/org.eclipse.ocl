@@ -1244,7 +1244,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			assert typeKey != null;
 			Type type = key2type.get(typeKey);
 			if (type == null) {
-				type = getFlatClass(typeKey).getPivotClass();
+				type = getFlatClass(typeKey).getASClass();
 				assert type != null;
 				key2type.put(typeKey, type);
 			}

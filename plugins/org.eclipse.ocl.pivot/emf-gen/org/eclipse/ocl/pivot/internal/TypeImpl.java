@@ -240,7 +240,7 @@ implements Type {
 		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
 		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
 		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
+		return thisFlatClass.getCommonFlatClass(thatFlatClass).getASClass();
 	}
 
 	@Override

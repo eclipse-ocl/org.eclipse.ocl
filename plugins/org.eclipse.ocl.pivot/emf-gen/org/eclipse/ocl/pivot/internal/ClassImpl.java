@@ -1189,7 +1189,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
 		//	return getInheritance(standardLibrary).getPivotClass();
-			return getFlatClass(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getASClass();
 		}
 		catch (Throwable e) {
 			return this;			// WIP FIXME should never happen
@@ -1296,7 +1296,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			};
 			if (flatClass != null) {
 				for (FlatFragment flatFragment : flatClass.getAllSuperFragments()) {
-					superClasses2.add(flatFragment.getDerivedFlatClass().getPivotClass());
+					superClasses2.add(flatFragment.getDerivedFlatClass().getASClass());
 				}
 			}
 		}
@@ -1371,7 +1371,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
-				return input.getBaseFlatClass().getPivotClass();
+				return input.getBaseFlatClass().getASClass();
 			}
 		};
 		@NonNull Iterable<@NonNull FlatFragment> allSuperFragments = flatClass.getAllSuperFragments();

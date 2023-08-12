@@ -378,7 +378,7 @@ public class TemplateParameterImpl
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
-			return getFlatClass(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getASClass();
 		}
 		catch (Throwable e) {
 			return standardLibrary.getOclAnyType();			// FIXME should never happen
