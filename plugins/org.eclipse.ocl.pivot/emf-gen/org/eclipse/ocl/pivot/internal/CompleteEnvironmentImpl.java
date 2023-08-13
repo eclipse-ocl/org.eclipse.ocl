@@ -404,6 +404,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
+	//	if (pivotType instanceof WildcardType) {		// Class wrap fro OrphanCompleteClass ok
+	//		pivotType = ownedStandardLibrary.getLowerBound((WildcardType)pivotType);
+	//	}
 		if (pivotType instanceof TemplateParameter) {
 			pivotType = ownedStandardLibrary.getLowerBound((TemplateParameter) pivotType);
 		}

@@ -18,9 +18,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -66,8 +68,14 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
+		protected final @NonNull FlatClass genericFlatClass;
+
+		public OrphanCompleteClassImpl(@NonNull FlatClass genericFlatClass) {
+			this.genericFlatClass = genericFlatClass;
+		}
+
 		@Override
-		public boolean conformsTo(final @NonNull CompleteClass thatCompleteClass) {
+		public boolean conformsTo(@NonNull CompleteClass thatCompleteClass) {
 			final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
 			final org.eclipse.ocl.pivot.@NonNull Class thatClass = thatCompleteClass.getPrimaryClass();
 			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()	{	// FIXME avoid this horrible fudge
@@ -126,11 +134,14 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 				return orphanCompleteClass;
 			}
 		}
-		final org.eclipse.ocl.pivot.@NonNull Class orphanClass = type;
-		OrphanCompleteClassImpl completeClass = new OrphanCompleteClassImpl();
-		completeClass.setName(orphanClass.getName());
-		completeClass.getPartialClasses().add(orphanClass);
-		class2orphanCompleteClass.put(orphanClass, new WeakReference<OrphanCompleteClassImpl>(completeClass));
+		Type generic = (Type)type.getGeneric();
+		if (generic == null) generic = type;		// Tuples and Lambdas are not generic
+		CompleteStandardLibrary standardLibrary = getCompleteModel().getEnvironmentFactory().getStandardLibrary();
+		FlatClass genericFlatClass = generic.getFlatClass(standardLibrary);
+		OrphanCompleteClassImpl completeClass = new OrphanCompleteClassImpl(genericFlatClass);
+		completeClass.setName(type.getName());
+		completeClass.getPartialClasses().add(type);
+		class2orphanCompleteClass.put(type, new WeakReference<OrphanCompleteClassImpl>(completeClass));
 		return completeClass;
 	}
 

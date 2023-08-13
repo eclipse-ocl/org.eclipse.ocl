@@ -11,8 +11,8 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
-
 import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -28,13 +28,14 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -478,6 +479,12 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	public @NonNull WildcardId computeId() {
 		assert templateParameter != null;
 		return IdManager.getWildcardId(templateParameter.getTemplateParameterId());
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class lowerBound = standardLibrary.getLowerBound(this);
+		return lowerBound.getFlatClass(standardLibrary);
 	}
 
 //	public void setTemplateParameterId(@NonNull WildcardId wildcardId, @NonNull TemplateParameterId templateParameterId) {
