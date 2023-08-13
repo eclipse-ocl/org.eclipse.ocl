@@ -405,7 +405,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, ownedStandardLibrary.getOclAnyType());
+			pivotType = ownedStandardLibrary.getLowerBound((TemplateParameter) pivotType);
 		}
 		if (pivotType instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();

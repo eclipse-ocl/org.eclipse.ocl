@@ -1050,7 +1050,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		TemplateParameter templateParameter = staticType.isTemplateParameter();
 		if (templateParameter != null) {
-			return PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+			return standardLibrary.getLowerBound(templateParameter);
 		}
 		throw new UnsupportedOperationException();
 	}

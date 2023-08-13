@@ -111,6 +111,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -1126,6 +1127,14 @@ public class PivotUtil
 		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
 	}
 
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull TemplateParameter asTemplateParameter) {
+		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
+	}
+
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull WildcardType asWildcard) {
+		return ClassUtil.nullFree(asWildcard.getConstrainingClasses());
+	}
+
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
@@ -1961,6 +1970,10 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getResultType());
+	}
+
+	public static @NonNull TemplateParameter getTemplateParameter(@NonNull WildcardType asWildcard) {
+		return ClassUtil.nonNullState(asWildcard.getTemplateParameter());
 	}
 
 	/**

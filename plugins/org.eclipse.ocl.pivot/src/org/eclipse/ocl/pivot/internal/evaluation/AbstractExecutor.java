@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NullValue;
 
@@ -437,7 +436,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			if (actualSourceClass == null)  {
 				TemplateParameter templateParameter = actualSourceType.isTemplateParameter();
 				if (templateParameter != null) {
-					actualSourceClass = PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
+					actualSourceClass = standardLibrary.getLowerBound(templateParameter);
 				}
 			}
 		}

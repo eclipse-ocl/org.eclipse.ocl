@@ -39,6 +39,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
+	org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter asTemplateParameter);
+	org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull WildcardType asWildcard);
 	@Nullable AnyType basicGetOclAnyType();
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
@@ -156,6 +158,9 @@ public interface StandardLibrary extends Element
 	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+
+	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter asTemplateParameter);
+	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull WildcardType asWildcard);
 
 	org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 

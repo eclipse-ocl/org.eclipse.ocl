@@ -329,7 +329,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 						else {
 							TemplateParameter formalParameter = ownedTemplateParameterSubstitution.getFormal();
 							if (formalParameter != null) {
-								actualType = PivotUtil.basicGetLowerBound(formalParameter);
+								actualType = standardLibrary.getLowerBound(formalParameter);
 							}
 						}
 						if (actualType == null) {

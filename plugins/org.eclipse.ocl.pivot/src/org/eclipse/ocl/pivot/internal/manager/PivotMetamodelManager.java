@@ -1574,13 +1574,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (thatClass == null) {
 			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
 			if (thatTemplateParameter != null) {
-				org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(thatTemplateParameter);
-				if (lowerBound != null) {
-					thatClass = lowerBound;
-				}
+				thatClass = standardLibrary.basicGetLowerBound(thatTemplateParameter);
 			}
 		}
-		if ((thatClass == null) || (thatClass instanceof DataType)) {
+		// XXX ?? do we really want OclAny/OclVoid/OclInvalid opposites ??
+		if ((thatClass == null) || /*(thatClass instanceof AnyType) ||*/ (thatClass instanceof DataType)) {
 			return;
 		}
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();

@@ -113,6 +113,34 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	private @Nullable Property oclInvalidProperty = null;
 
 	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter asTemplateParameter) {
+		org.eclipse.ocl.pivot.Class asLowerBound = null;
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getConstrainingClasses(asTemplateParameter)) {
+			if (asLowerBound == null) {
+				asLowerBound = asClass;
+			}
+			else {
+				asLowerBound = (org.eclipse.ocl.pivot.Class)getCommonType(asLowerBound, TemplateParameterSubstitutions.EMPTY, asClass, TemplateParameterSubstitutions.EMPTY);
+			}
+		}
+		return asLowerBound;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull WildcardType asWildcard) {
+		org.eclipse.ocl.pivot.Class asLowerBound = basicGetLowerBound(PivotUtil.getTemplateParameter(asWildcard));
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getConstrainingClasses(asWildcard)) {
+			if (asLowerBound == null) {
+				asLowerBound = asClass;
+			}
+			else {
+				asLowerBound = (org.eclipse.ocl.pivot.Class)getCommonType(asLowerBound, TemplateParameterSubstitutions.EMPTY, asClass, TemplateParameterSubstitutions.EMPTY);
+			}
+		}
+		return asLowerBound;
+	}
+
+	@Override
 	public @Nullable Operation basicGetOclInvalidOperation() {
 		return oclInvalidOperation;
 	}
@@ -506,6 +534,41 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			Type specializedResultType = getSpecializedType(resultType, bindings);
 			return getOrphanage().getLambdaType(getOclLambdaType(), specializedContextType, specializedParameterTypes, specializedResultType);
 		}
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter asTemplateParameter) {
+		org.eclipse.ocl.pivot.Class asLowerBound = null;
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getConstrainingClasses(asTemplateParameter)) {
+			if (asLowerBound == null) {
+				asLowerBound = asClass;
+			}
+			else {
+				asLowerBound = (org.eclipse.ocl.pivot.Class)getCommonType(asLowerBound, TemplateParameterSubstitutions.EMPTY, asClass, TemplateParameterSubstitutions.EMPTY);
+			}
+		}
+		if (asLowerBound == null) {
+			asLowerBound = getOclAnyType();
+		}
+		return asLowerBound;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull WildcardType asWildcard) {
+		org.eclipse.ocl.pivot.Class asLowerBound = basicGetLowerBound(PivotUtil.getTemplateParameter(asWildcard));
+	//	org.eclipse.ocl.pivot.@NonNull Class asLowerBound = getLowerBound(PivotUtil.getTemplateParameter(asWildcard));
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getConstrainingClasses(asWildcard)) {
+			if (asLowerBound == null) {
+				asLowerBound = asClass;
+			}
+			else {
+				asLowerBound = (org.eclipse.ocl.pivot.Class)getCommonType(asLowerBound, TemplateParameterSubstitutions.EMPTY, asClass, TemplateParameterSubstitutions.EMPTY);
+			}
+		}
+		if (asLowerBound == null) {
+			asLowerBound = getOclAnyType();
+		}
+		return asLowerBound;
 	}
 
 	@Override

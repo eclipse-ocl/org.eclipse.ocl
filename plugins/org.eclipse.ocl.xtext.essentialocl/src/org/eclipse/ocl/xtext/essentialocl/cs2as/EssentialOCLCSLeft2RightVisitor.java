@@ -429,10 +429,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else if (asSourceType != null) {								// Search for a.b() candidates in type of a
 			TemplateParameter asTemplateParameter = asSourceType.isTemplateParameter();
 			if (asTemplateParameter != null) {
-				org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(asTemplateParameter);
-				if (lowerBound != null) {		// ?? OclAny for null
-					asSourceType = lowerBound;
-				}
+				asSourceType = standardLibrary.getLowerBound(asTemplateParameter);
+			//	org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(asTemplateParameter);
+			//	if (lowerBound != null) {		// ?? OclAny for null
+			//		asSourceType = lowerBound;
+			//	}
 			}
 			Invocations invocations = getInvocations(asSourceType, asSourceTypeValue, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
