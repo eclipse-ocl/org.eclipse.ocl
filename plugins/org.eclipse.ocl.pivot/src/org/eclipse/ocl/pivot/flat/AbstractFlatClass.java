@@ -165,7 +165,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.name = name;
 		this.asClass = asClass;
 		this.flags = computeFlags(asClass);
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + asClass + " " + Integer.toHexString(flags));
 	}
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
@@ -440,7 +440,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			Iterable<@NonNull FlatFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
 			for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
 				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
-				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
+				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass, false);
 				if (superFragment != null) {
 					AbstractFlatClass derivedFlatClass2 = (AbstractFlatClass)superFragment.derivedFlatClass;
 					Operation overload = derivedFlatClass2.getFragmentOperation(superFragment, apparentOperation);
@@ -455,7 +455,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 							depth = -1;
 							break;
 						}
-						else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
+						else if (!bestFlatClass.isSubFlatClassOf(superFlatClass, false)) {	// Non-occluded child candidate
 							bestOverload = null;
 							depth = -1;
 							break;
@@ -476,7 +476,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that) {
+	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		if (this == that) {
 			return this;
 		}
@@ -512,6 +512,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						commonFlatClass = thisBaseFlatClass;
 						break;
 					}
+					else if (ignoreTemplateArguments) {
+						FlatClass genericThisBaseFlatClass = thisBaseFlatClass.getGenericFlatClass();
+						FlatClass genericThatBaseFlatClass = thatBaseFlatClass.getGenericFlatClass();
+						if (genericThisBaseFlatClass == genericThatBaseFlatClass) {
+							commonFlatClasses++;
+							commonFlatClass = genericThisBaseFlatClass;
+							break;
+						}
+					}
 				}
 				if (commonFlatClasses > 1) { 				// More than one so must go less deep to find uniqueness
 					break;
@@ -545,7 +554,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return flatModel;
 	}
 
-	private @Nullable FlatFragment getFragment(@NonNull AbstractFlatClass that) {
+	private @Nullable FlatFragment getFragment(@NonNull AbstractFlatClass that, boolean ignoreTemplateArguments) {
 		int staticDepth = that.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
@@ -554,6 +563,13 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				FlatClass baseFlatClass = fragment.getBaseFlatClass();
 				if (baseFlatClass == that) {
 					return fragment;
+				}
+				else if (ignoreTemplateArguments) {
+					FlatClass thisGenericBaseFlatClass = baseFlatClass.getGenericFlatClass();
+					FlatClass thatGenericBaseFlatClass = that.getGenericFlatClass();
+					if (thisGenericBaseFlatClass == thatGenericBaseFlatClass) {
+						return fragment;
+					}
 				}
 			}
 		}
@@ -792,6 +808,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		this.mutable = Boolean.FALSE;
+		System.out.println("initFragments2 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+		for (@NonNull FlatFragment fragment : fragments) {
+			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+		}
 	}
 
 	/**
@@ -912,6 +932,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		installClassListeners();
+		System.out.println("initFragments1 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+		for (@NonNull FlatFragment fragment : fragments) {
+			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+		}
 	}
 
 	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
@@ -1021,12 +1045,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public boolean isSubFlatClassOf(@NonNull FlatClass that) {
+	public boolean isSubFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return getFragment(abstractThat) != null;
+			return getFragment(abstractThat, ignoreTemplateArguments) != null;
 		}
 		else {
 			return theseFlags >= thoseFlags;
@@ -1034,12 +1058,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public boolean isSuperFlatClassOf(@NonNull FlatClass that) {
+	public boolean isSuperFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments) {
 		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return abstractThat.getFragment(this) != null;
+			return abstractThat.getFragment(this, ignoreTemplateArguments) != null;
 		}
 		else {
 			return theseFlags <= thoseFlags;
@@ -1221,5 +1245,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			asProperty = null;
 		}
 		return asProperty;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return asClass.toString(); //.qualifiedNameFor(asClass);
 	}
 }

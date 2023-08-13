@@ -44,7 +44,7 @@ public class OCLVMModelManager extends AbstractModelManager
 	 * instances of the middle model and the middle model EFactory.
 	 */
 	public OCLVMModelManager(@NonNull MetamodelManagerInternal metamodelManager) {
-		this.environmentFactory = (EnvironmentFactoryInternal) metamodelManager.getEnvironmentFactory();
+		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		//	    super(metamodelManager);
 		//	    this.allInstancesTypes = transformationAnalysis.getAllInstancesTypes();
 	}
@@ -82,6 +82,6 @@ public class OCLVMModelManager extends AbstractModelManager
 				//				}
 			}
 		}
-		return (objectType != null) && objectType.conformsTo(environmentFactory.getStandardLibrary(), requiredType);
+		return (objectType != null) && environmentFactory.getStandardLibrary().conformsTo(objectType, requiredType);
 	}
 }

@@ -45,6 +45,7 @@ public interface StandardLibrary extends Element
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+	boolean conformsTo(@NonNull Type firstType, @NonNull Type secondType);
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
@@ -109,10 +110,26 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
+	/**
+	 * Return the most derived class common to leftClass and rightClass.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getCommonClass(org.eclipse.ocl.pivot.@NonNull Class leftClass, org.eclipse.ocl.pivot.@NonNull Class rightClass);
+
+	/**
+	 * Return the most derived type common to leftType and rightType.
+	 */
+	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull Type rightType);
+
 	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
-	@Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+	org.eclipse.ocl.pivot.@NonNull Class getCommonCollectionType(@NonNull CollectionType leftCollectionType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightCollectionType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	org.eclipse.ocl.pivot.@NonNull Class getCommonMapType(@NonNull MapType leftMapType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull MapType rightMapType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
 	/**
@@ -149,6 +166,8 @@ public interface StandardLibrary extends Element
 	 * @return the <tt>Integer</tt> type (an instance of PrimitiveType)
 	 */
 	@NonNull PrimitiveType getIntegerType();
+
+	org.eclipse.ocl.pivot.@NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass);
 
 	@NonNull LambdaType getLambdaType(@NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);

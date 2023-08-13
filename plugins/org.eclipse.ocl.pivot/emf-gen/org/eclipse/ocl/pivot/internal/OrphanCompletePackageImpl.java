@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -94,7 +93,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 					return super.getCompleteClass(asType);
 				}
 			};
-			return completeEnvironmentImpl.getOwnedStandardLibrary().conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
+			return completeEnvironmentImpl.getOwnedStandardLibrary().conformsTo(thisClass, thatClass);
 		}
 
 		@Override

@@ -58,7 +58,7 @@ public class ExtensionProperty extends AbstractProperty
 		List<@NonNull ElementExtension> selectedExtensions = null;
 		for (@NonNull ElementExtension elementExtension : PivotUtil.getOwnedExtensions(element)) {
 			Stereotype dynamicStereotype = elementExtension.getStereotype();
-			if ((staticType == null) || dynamicStereotype.conformsTo(executor.getStandardLibrary(), staticType)) {
+			if ((staticType == null) || executor.getStandardLibrary().conformsTo(dynamicStereotype, staticType)) {
 				if (selectedExtensions == null) {
 					selectedExtensions = new ArrayList<>();
 				}

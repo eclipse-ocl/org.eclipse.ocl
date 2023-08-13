@@ -164,7 +164,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import com.google.common.collect.Iterables;
@@ -1003,7 +1002,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Type oclTypeType = standardLibrary.getOclTypeType();
-		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		return standardLibrary.conformsTo(type, oclTypeType);
 	}
 
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {

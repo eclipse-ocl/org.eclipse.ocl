@@ -617,45 +617,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		List<Property> leftProperties = leftType.getOwnedProperties();
-		List<Property> rightProperties = rightType.getOwnedProperties();
-		int iSize = leftProperties.size();
-		if (iSize != rightProperties.size()) {
-			return null;
-		}
-		List<@NonNull TuplePartId> commonPartIds = new ArrayList<>(iSize);
-		for (int i = 0; i < iSize; i++) {
-			Property leftProperty = leftProperties.get(i);
-			if (leftProperty == null) {
-				return null;				// Never happens
-			}
-			String name = leftProperty.getName();
-			if (name == null) {
-				return null;				// Never happens
-			}
-			Property rightProperty = NameUtil.getNameable(rightProperties, name);
-			if (rightProperty == null) {
-				return null;				// Happens for inconsistent tuples
-			}
-			Type leftPropertyType = leftProperty.getType();
-			if (leftPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type rightPropertyType = rightProperty.getType();
-			if (rightPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type commonType = getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
-			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
-			commonPartIds.add(commonPartId);
-		}
-		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
-		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
-	}
-
-	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
 		return ClassUtil.nonNullState(completeModel);
 	}
@@ -686,6 +647,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);
 		}
 		return integerType2;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass) {
+		return environmentFactory.getIdResolver().getJavaType(javaClass);
 	}
 
 	@Override
@@ -1073,7 +1039,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
+			specializedTupleType = getTupleType(tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -1095,6 +1061,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		//
 		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
 		return tupleType;
+	}
+
+	@Override
+	protected @NonNull TupleType getTupleType(@NonNull TupleTypeId commonTupleTypeId) {
+		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
 	}
 
 	@Override

@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -253,8 +252,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		int index = elementId.getIndex();
 		Type oldType = context.get(index);
 		if (oldType != null) {
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			Type commonType = oldType.getCommonType(idResolver, actualType);
+			Type commonType = environmentFactory.getStandardLibrary().getCommonType(oldType, actualType);
 			Type bestType = environmentFactory.getMetamodelManager().getPrimaryType(commonType);
 			if (bestType != oldType) {
 				context.put(index, bestType);

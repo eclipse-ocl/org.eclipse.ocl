@@ -134,7 +134,7 @@ public class FinalAnalysis
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
-			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass, false)) {
 				results.add(override);
 			}
 		}
@@ -176,7 +176,7 @@ public class FinalAnalysis
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
-			if (requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
+			if (requiredFlatClass.isSuperFlatClassOf(overrideFlatClass, false)) {
 				if (candidate != null) {
 					return null;
 				}

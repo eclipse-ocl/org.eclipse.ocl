@@ -39,7 +39,7 @@ public class PropertyAttribution extends AbstractAttribution
 				environmentView.addAllProperties((org.eclipse.ocl.pivot.Class)type, FeatureFilter.SELECT_NON_STATIC);
 			}
 			else if (type instanceof TemplateParameter) {
-				for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : PivotUtil.getConstrainingClasses(((TemplateParameter)type))) {
+				for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : PivotUtil.getConstrainingClasses((TemplateParameter)type)) {
 					environmentView.addAllProperties(constrainingClass, FeatureFilter.SELECT_NON_STATIC);
 				}
 			}

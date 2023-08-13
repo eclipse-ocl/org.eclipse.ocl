@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -687,20 +686,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (type instanceof MapType) {
-			return standardLibrary.conformsToMapType(this, (MapType)type);
-		}
-		if (getGeneric() != null) {
-			return ((Type)getGeneric()).conformsTo(standardLibrary, type);
-		}
-		return super.conformsTo(standardLibrary, type);
 	}
 
 	@Override

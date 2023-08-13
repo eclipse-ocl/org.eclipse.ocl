@@ -417,7 +417,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass, false);
 	}
 
 	@Override
@@ -427,7 +427,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass, false);
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(@NonNull TemplateParameters templateArguments) {

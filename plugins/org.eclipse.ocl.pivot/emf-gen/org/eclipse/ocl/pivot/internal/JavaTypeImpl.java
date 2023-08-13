@@ -10,15 +10,12 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.lang.Class;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -28,13 +25,13 @@ import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -438,20 +435,20 @@ public class JavaTypeImpl extends ClassImpl implements JavaType
 		return visitor.visitJavaType(this);
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
+/*	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
 			return this;
 		}
 		if (!(type instanceof JavaType)) {
-			return idResolver.getStandardLibrary().getOclAnyType();
+			return standardLibrary.getOclAnyType();
 		}
 		Class<?> commonClass = getCommonClass1(javaClass, ((JavaType)type).getJavaClass());
 		if (commonClass != null) {
-			return idResolver.getJavaType(commonClass);
+			return standardLibrary.getJavaType(commonClass);
 		}
 		else {
-			return idResolver.getStandardLibrary().getOclAnyType();
+			return standardLibrary.getOclAnyType();
 		}
 	}
 	private static @Nullable Class<?> getCommonClass1(@NonNull Class<?> thisClass, @NonNull Class<?> thatClass) {
@@ -496,7 +493,7 @@ public class JavaTypeImpl extends ClassImpl implements JavaType
 			}
 		}
 		return null;
-	}
+	} */
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {

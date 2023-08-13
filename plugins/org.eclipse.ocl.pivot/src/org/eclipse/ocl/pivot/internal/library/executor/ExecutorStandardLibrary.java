@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
@@ -497,12 +498,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	public @Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
@@ -531,6 +526,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return (PrimitiveType)OCLstdlibTables.Types._Integer;
+	}
+
+	@Override
+	public @NonNull Class getJavaType(java.lang.@NonNull Class<?> javaClass) {
+		throw new UnsupportedOperationException();			// XXX do this
 	}
 
 	@Override
@@ -792,6 +792,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions bindings) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected @NonNull TupleType getTupleType(@NonNull TupleTypeId commonTupleTypeId) {
 		throw new UnsupportedOperationException();
 	}
 

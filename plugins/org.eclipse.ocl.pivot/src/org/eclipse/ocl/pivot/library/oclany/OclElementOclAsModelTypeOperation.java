@@ -49,7 +49,7 @@ public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOper
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type bestModelType = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class modelClass : modelClasses) {
-			if (argType.conformsTo(standardLibrary, modelClass)) {
+			if (standardLibrary.conformsTo(argType, modelClass)) {
 				if (bestModelType == null) {
 					bestModelType = modelClass;
 				}
@@ -62,7 +62,7 @@ public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOper
 			return sourceVal;
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class modelClass : modelClasses) {
-			if (modelClass.conformsTo(standardLibrary, argType)) {
+			if (standardLibrary.conformsTo(modelClass, argType)) {
 				if (bestModelType == null) {
 					bestModelType = modelClass;
 				}

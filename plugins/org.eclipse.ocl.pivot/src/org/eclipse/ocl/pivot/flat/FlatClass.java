@@ -130,7 +130,7 @@ public interface FlatClass extends Nameable
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
-	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
+	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that, boolean ignoreTemplateArguments);
 	@Deprecated // XXX eliminate unsound inheritance
 	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
@@ -159,8 +159,8 @@ public interface FlatClass extends Nameable
 	boolean isAbstract();
 	boolean isInvalid();
 	boolean isOrdered();
-	boolean isSubFlatClassOf(@NonNull FlatClass that);
-	boolean isSuperFlatClassOf(@NonNull FlatClass that);
+	boolean isSubFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments);
+	boolean isSuperFlatClassOf(@NonNull FlatClass that, boolean ignoreTemplateArguments);
 	boolean isUnique();
 	boolean isUndefined();
 	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);

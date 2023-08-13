@@ -332,16 +332,16 @@ public class PivotHelper
 					OCLExpression asArgument = asArguments[i];
 					Type asArgumentType = asArgument.getType();
 					if (asParameterType instanceof SelfType) {
-						if (asArgumentType.conformsTo(standardLibrary, asType) && asType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asArgumentType, asType) && standardLibrary.conformsTo(asType, asArgumentType)) {
 							exactMatches++;
 						}
 					}
 					else {
-						if (!asArgumentType.conformsTo(standardLibrary, asParameterType)) {
+						if (!standardLibrary.conformsTo(asArgumentType, asParameterType)) {
 							gotOne = false;
 							break;
 						}
-						if (asParameterType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asParameterType, asArgumentType)) {
 							exactMatches++;
 						}
 					}

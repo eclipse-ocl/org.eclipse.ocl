@@ -118,10 +118,10 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 				return iteratorCountDelta;
 			}
 			if (referenceType != candidateType) {
-				if (standardLibrary.conformsTo(specializedReferenceType, TemplateParameterSubstitutions.EMPTY, specializedCandidateType, TemplateParameterSubstitutions.EMPTY)) {
+				if (standardLibrary.conformsTo(specializedReferenceType, specializedCandidateType)) {
 					return 1;
 				}
-				else if (standardLibrary.conformsTo(specializedCandidateType, TemplateParameterSubstitutions.EMPTY, specializedReferenceType, TemplateParameterSubstitutions.EMPTY)) {
+				else if (standardLibrary.conformsTo(specializedCandidateType, specializedReferenceType)) {
 					return -1;
 				}
 			}
@@ -275,7 +275,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 								Type corcedSourceType = coercion.getType();
 							//	if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
-								if ((corcedSourceType != null) && corcedSourceType.conformsTo(standardLibrary, candidateType)) {
+								if ((corcedSourceType != null) && standardLibrary.conformsTo(corcedSourceType, candidateType)) {
 									coerceable = true;
 									break;
 								}

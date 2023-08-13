@@ -371,7 +371,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			@NonNull VariableDeclaration variable = it.next();
 			lastVariable = variable;
 			Type type = variable.getType();
-			if ((type != null) && type.conformsTo(standardLibrary, requiredType)) {
+			if ((type != null) && standardLibrary.conformsTo(type, requiredType)) {
 				return variable;
 			}
 		}
@@ -431,10 +431,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			TemplateParameter asTemplateParameter = asSourceType.isTemplateParameter();
 			if (asTemplateParameter != null) {
 				asSourceType = standardLibrary.getLowerBound(asTemplateParameter);
-			//	org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(asTemplateParameter);
-			//	if (lowerBound != null) {		// ?? OclAny for null
-			//		asSourceType = lowerBound;
-			//	}
 			}
 			Invocations invocations = getInvocations(asSourceType, asSourceTypeValue, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
@@ -468,7 +464,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
 		TemplateParameter asTemplateParameter = asType.isTemplateParameter();
 		if (asTemplateParameter != null) {
-			asType = PivotUtil.getLowerBound(asTemplateParameter, standardLibrary.getOclAnyType());
+			asType = standardLibrary.getLowerBound(asTemplateParameter);
 		}
 		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(asType, FeatureFilter.SELECT_NON_STATIC, name);
 		List<@NonNull NamedElement> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
@@ -706,13 +702,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Return a non-null coercion Operation from argType to parameterType if one is available and needed.
 	 */
 	protected @Nullable Operation resolveCoercionFrom(@NonNull Type argType, @NonNull Type parameterType) {
-		if (!standardLibrary.conformsTo(argType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
+		if (!standardLibrary.conformsTo(argType, parameterType)) {
 			CompleteClass completeClass = metamodelManager.getCompleteClass(argType);
 			for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 				if (partialClass instanceof PrimitiveType) {
 					for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 						Type corcedArgType = coercion.getType();
-						if ((corcedArgType != null) && standardLibrary.conformsTo(corcedArgType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
+						if ((corcedArgType != null) && standardLibrary.conformsTo(corcedArgType, parameterType)) {
 							return coercion;
 						}
 					}
@@ -754,7 +750,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Type resolvedSourceType = PivotUtil.getType(sourceExp);
 			Type propertySourceType = standardLibrary.resolveContextSpecialization(PivotUtil.getOwningClass(resolvedProperty));
 		//	if (resolvedSourceType.conformsTo(standardLibrary, propertySourceType)) {
-			if (standardLibrary.conformsTo(resolvedSourceType, TemplateParameterSubstitutions.EMPTY, propertySourceType, TemplateParameterSubstitutions.EMPTY)) {
+			if (standardLibrary.conformsTo(resolvedSourceType, propertySourceType)) {
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
 			}
 			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
@@ -1764,15 +1760,15 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
 					if (asCoercion != null) {
 						PrimitiveType unlimitedNaturalType = standardLibrary.getUnlimitedNaturalType();
-						if (thenType.conformsTo(standardLibrary, unlimitedNaturalType)) {
-							if (elseType.conformsTo(standardLibrary, integerType)) {
+						if (standardLibrary.conformsTo(thenType, unlimitedNaturalType)) {
+							if (standardLibrary.conformsTo(elseType, integerType)) {
 								assert elseExpression != null;
 								elseExpression = new PivotHelper(environmentFactory).createCoercionCallExp(elseExpression, asCoercion);
 								commonType = unlimitedNaturalType;
 							}
 						}
-						else if (elseType.conformsTo(standardLibrary, unlimitedNaturalType)) {
-							if (thenType.conformsTo(standardLibrary, integerType)) {
+						else if (standardLibrary.conformsTo(elseType, unlimitedNaturalType)) {
+							if (standardLibrary.conformsTo(thenType, integerType)) {
 								assert thenExpression != null;
 								thenExpression = new PivotHelper(environmentFactory).createCoercionCallExp(thenExpression, asCoercion);
 								commonType = unlimitedNaturalType;

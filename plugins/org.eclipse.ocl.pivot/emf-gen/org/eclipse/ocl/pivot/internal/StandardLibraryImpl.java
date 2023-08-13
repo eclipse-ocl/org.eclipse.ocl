@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
@@ -152,6 +153,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public boolean conformsTo(@NonNull Type firstType, @NonNull Type secondType) {
+		return conformsTo(firstType, TemplateParameterSubstitutions.EMPTY, secondType, TemplateParameterSubstitutions.EMPTY);
+	}
+
+	@Override
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
 		//
@@ -233,7 +239,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		FlatClass firstFlatClass2 = getFlatClass((org.eclipse.ocl.pivot.Class)firstType);			// XXX cast
 		FlatClass secondFlatClass2 = getFlatClass((org.eclipse.ocl.pivot.Class)secondType);			// XXX cast
-		return firstFlatClass2.isSubFlatClassOf(secondFlatClass2);
+		return firstFlatClass2.isSubFlatClassOf(secondFlatClass2, false);
 	}
 
 	protected boolean conformsToClassType(org.eclipse.ocl.pivot.@NonNull Class firstClass, @NonNull TemplateParameterSubstitutions firstSubstitutions,
@@ -249,7 +255,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (firstGeneric != secondGeneric) {
 			FlatClass firstFlatClass = getFlatClass(firstGeneric);
 			FlatClass secondFlatClass = getFlatClass(secondGeneric);
-			if (!firstFlatClass.isSubFlatClassOf(secondFlatClass)) {
+			if (!firstFlatClass.isSubFlatClassOf(secondFlatClass, true)) {
 				return false;
 			}
 		}
@@ -316,12 +322,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public boolean conformsToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
+		boolean conformsToCollectionType1 = conformsToCollectionType1(firstCollectionType, secondCollectionType);
+	//	boolean conformsToCollectionType2 = conformsToCollectionType2(firstCollectionType, secondCollectionType);
+	//	if (conformsToCollectionType1 != conformsToCollectionType2) {
+	//		conformsToCollectionType1 = conformsToCollectionType1(firstCollectionType, secondCollectionType);
+	//		conformsToCollectionType2 = conformsToCollectionType2(firstCollectionType, secondCollectionType);
+	//	}
+		return conformsToCollectionType1;
+	}
+
+	private boolean conformsToCollectionType1(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
+		return conformsToCollectionType(firstCollectionType, TemplateParameterSubstitutions.EMPTY, secondCollectionType, TemplateParameterSubstitutions.EMPTY);
+	}
+
+/*	private boolean conformsToCollectionType2(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
 		if (firstContainerType != secondContainerType) {
 			FlatClass firstFlatClass = firstContainerType.getFlatClass(this);
 			FlatClass secondFlatClass = secondContainerType.getFlatClass(this);
-			if (!secondFlatClass.isSuperFlatClassOf(firstFlatClass)) {
+			if (!secondFlatClass.isSuperFlatClassOf(firstFlatClass, true)) {
 				return false;
 			}
 		}
@@ -346,7 +366,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return false;
 		}
 		return true;
-	}
+	} */
 
 	protected boolean conformsToCollectionType(@NonNull CollectionType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull CollectionType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
@@ -355,7 +375,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (firstContainerType != secondContainerType) {
 			FlatClass firstContainerFlatClass = getFlatClass(firstContainerType);
 			FlatClass secondContainerFlatClass = getFlatClass(secondContainerType);
-			if (!firstContainerFlatClass.isSubFlatClassOf(secondContainerFlatClass)) {
+			if (!firstContainerFlatClass.isSubFlatClassOf(secondContainerFlatClass, true)) {
 				return false;
 			}
 		}
@@ -421,7 +441,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public boolean conformsToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType) {
-		//		Type firstContainerType = firstMapType.getContainerType();
+		return conformsToMapType(firstMapType, TemplateParameterSubstitutions.EMPTY, secondMapType, TemplateParameterSubstitutions.EMPTY);
+	}
+/*		//		Type firstContainerType = firstMapType.getContainerType();
 		//		Type secondContainerType = secondMapType.getContainerType();
 		//		if (firstContainerType != secondContainerType) {
 		//			CompleteInheritance firstInheritance = firstContainerType.getInheritance(standardLibrary);
@@ -451,7 +473,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 		}
 		return true;
-	}
+	} */
 
 	protected boolean conformsToMapType(@NonNull MapType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull MapType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
@@ -489,7 +511,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		FlatClass firstFlatClass = firstTupleType.getFlatClass(this);
 		FlatClass secondFlatClass = secondTupleType.getFlatClass(this);
-		return firstFlatClass.isSuperFlatClassOf(secondFlatClass);
+		return firstFlatClass.isSuperFlatClassOf(secondFlatClass, false);
 	}
 
 	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
@@ -574,27 +596,93 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonCollectionType(@NonNull CollectionType leftCollectionType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightCollectionType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+		FlatClass leftFlatClass = leftCollectionType.getFlatClass(this);
+		FlatClass rightFlatClass = rightCollectionType.getFlatClass(this);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass, true);
+		org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getASClass());
+		Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
+		Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
+		Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
+		boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
+		return getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonMapType(@NonNull MapType leftMapType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull MapType rightMapType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+		Type leftKeyType = ClassUtil.nonNullModel(leftMapType.getKeyType());
+		Type rightKeyType = ClassUtil.nonNullModel(rightMapType.getKeyType());
+		Type commonKeyType = getCommonType(leftKeyType, leftSubstitutions, rightKeyType, rightSubstitutions);
+		Type leftValueType = ClassUtil.nonNullModel(leftMapType.getValueType());
+		Type rightValueType = ClassUtil.nonNullModel(rightMapType.getValueType());
+		Type commonValueType = getCommonType(leftValueType, leftSubstitutions, rightValueType, rightSubstitutions);
+		boolean commonIsKeysAreNullFree = leftMapType.isKeysAreNullFree() && rightMapType.isKeysAreNullFree();
+		boolean commonIsValuesAreNullFree = leftMapType.isValuesAreNullFree() && rightMapType.isValuesAreNullFree();
+		return getMapType(commonKeyType, commonIsKeysAreNullFree, commonValueType, commonIsValuesAreNullFree);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+		List<Property> leftProperties = leftType.getOwnedProperties();
+		List<Property> rightProperties = rightType.getOwnedProperties();
+		int iSize = leftProperties.size();
+		if (iSize != rightProperties.size()) {
+			return getOclAnyType();
+		}
+		List<@NonNull TuplePartId> commonPartIds = new ArrayList<>(iSize);
+		for (int i = 0; i < iSize; i++) {
+			Property leftProperty = leftProperties.get(i);
+			if (leftProperty == null) {
+				return getOclAnyType();				// Never happens
+			}
+			String name = leftProperty.getName();
+			if (name == null) {
+				return getOclAnyType();				// Never happens
+			}
+			Property rightProperty = NameUtil.getNameable(rightProperties, name);
+			if (rightProperty == null) {
+				return getOclAnyType();				// Happens for inconsistent tuples
+			}
+			Type leftPropertyType = leftProperty.getType();
+			if (leftPropertyType == null) {
+				return getOclAnyType();				// Never happens
+			}
+			Type rightPropertyType = rightProperty.getType();
+			if (rightPropertyType == null) {
+				return getOclAnyType();				// Never happens
+			}
+			Type commonType = getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
+			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
+			commonPartIds.add(commonPartId);
+		}
+		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
+		return getTupleType(commonTupleTypeId);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonClass(org.eclipse.ocl.pivot.@NonNull Class leftClass, org.eclipse.ocl.pivot.@NonNull Class rightClass) {
+		return (org.eclipse.ocl.pivot.Class)getCommonType(leftClass, TemplateParameterSubstitutions.EMPTY, rightClass, TemplateParameterSubstitutions.EMPTY);
+	}
+
+	@Override
+	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull Type rightType) {
+		return getCommonType(leftType, TemplateParameterSubstitutions.EMPTY, rightType, TemplateParameterSubstitutions.EMPTY);
+	}
+
+	@Override
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			Type commonTupleType = getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonTupleType == null) {
-				return getOclAnyType();
-			}
-			return commonTupleType;
-		}
 		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			FlatClass leftFlatClass = leftType.getFlatClass(this);
-			FlatClass rightFlatClass = rightType.getFlatClass(this);
-			FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
-			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getASClass());
-			CollectionType leftCollectionType = (CollectionType)leftType;
-			CollectionType rightCollectionType = (CollectionType)rightType;
-			Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
-			Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
-			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
-			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
+			return getCommonCollectionType((CollectionType)leftType, leftSubstitutions, (CollectionType)rightType, rightSubstitutions);
+		}
+		if ((leftType instanceof MapType) && (rightType instanceof MapType)) {
+			return getCommonMapType((MapType)leftType, leftSubstitutions, (MapType)rightType, rightSubstitutions);
+		}
+		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
+			return getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
 		}
 		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
 			return rightType;
@@ -604,7 +692,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		FlatClass leftFlatClass = leftType.getFlatClass(this);
 		FlatClass rightFlatClass = rightType.getFlatClass(this);
-		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass, false);
 		return getPrimaryClass(commonFlatClass.getASClass());
 	}
 
@@ -941,6 +1029,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		return tupleType;
 	}
+
+	protected abstract @NonNull TupleType getTupleType(@NonNull TupleTypeId commonTupleTypeId);		// XXX promote
 
 	@Override
 	public @NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter) {

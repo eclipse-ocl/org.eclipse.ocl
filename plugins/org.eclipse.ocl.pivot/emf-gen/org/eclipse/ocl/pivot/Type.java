@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
@@ -58,16 +57,6 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return the shared Orphanage that contains this type or null if not in a shared Orphanage.
 	 */
 	@Nullable Orphanage basicGetSharedOrphanage();
-
-	/**
-	 * Return true if this type conform to thatType within standardLibrary.
-	 */
-	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
-
-	/**
-	 * Return the most derived type common to this type and thatType within standardLibrary.
-	 */
-	@NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType);
 
 	/**
 	 * Return the inheritance description for this type within standardLibrary.

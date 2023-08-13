@@ -88,10 +88,12 @@ public abstract class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME 
 				if (superFlatClasses == null) {
 					superFlatClasses = new ArrayList<>();
 				}
-				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
+			//	CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
+				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(partialSuperClass);
 				FlatClass superFlatClass = superCompleteClass.getFlatClass();
 				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 					superFlatClasses.add(superFlatClass);
+//					System.out.println("computeDirectSuperFlatClasses " + NameUtil.debugSimpleName(this) + " : " + this + " -> " + NameUtil.debugSimpleName(superFlatClass) + " : " + superFlatClass + " for " + partialSuperClass);
 				}
 			}
 		}
@@ -247,12 +249,5 @@ public abstract class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME 
 		}
 		completeClass.uninstall();
 		super.resetFragments();
-	}
-
-	// XXX resetStates
-
-	@Override
-	public @NonNull String toString() {
-		return NameUtil.qualifiedNameFor(completeClass);
 	}
 }

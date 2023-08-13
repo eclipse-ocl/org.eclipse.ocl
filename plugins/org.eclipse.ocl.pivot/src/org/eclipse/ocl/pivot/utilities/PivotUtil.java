@@ -1111,7 +1111,7 @@ public class PivotUtil
 			return (org.eclipse.ocl.pivot.Class)type;
 		}
 		else if (type instanceof TemplateParameter) {
-			return getLowerBound((TemplateParameter)type, standardLibrary.getOclAnyType());
+			return standardLibrary.getLowerBound((TemplateParameter)type);
 		}
 		return standardLibrary.getOclVoidType();			// Never happens
 	}
@@ -1342,14 +1342,6 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
 		return ClassUtil.nonNullState(mapType.getKeyType());
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter templateParameter, org.eclipse.ocl.pivot.@NonNull Class oclAnyType) {
-		org.eclipse.ocl.pivot.Class lowerBound = basicGetLowerBound(templateParameter);
-		return lowerBound != null ? lowerBound : oclAnyType;
 	}
 
 	/**

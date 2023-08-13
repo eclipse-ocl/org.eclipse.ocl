@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * EcoreOCLEValidator provides the validation support for Ecore elements that exploit OCL.
@@ -957,7 +956,7 @@ public class EcoreOCLEValidator implements EValidator
 		}
 		assert asType != null;
 		assert asExpressionType != null;
-		if (!standardLibrary.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY)) {
+		if (!standardLibrary.conformsTo(asExpressionType, asType)) {
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
 				String message = StringUtil.bind(INCOMPATIBLE_TYPE_2, asExpressionType, role != null ? role : PivotConstantsInternal.UNKNOWN_ROLE, objectLabel);
@@ -1001,7 +1000,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (requiredType != null) {
 			Type asExpressionType = expressionInOCL.getType();
 			assert asExpressionType != null;
-			if (!environmentFactory.getStandardLibrary().conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {
+			if (!environmentFactory.getStandardLibrary().conformsTo(asExpressionType, requiredType)) {
 				allOk = false;
 				if (diagnostics != null) {
 					String role = PivotUtilInternal.getSpecificationRole(asSpecification);

@@ -38,10 +38,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -640,63 +638,8 @@ implements CollectionType {
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (type instanceof CollectionType) {
-			return standardLibrary.conformsToCollectionType(this, (CollectionType)type);
-		}
-		if (getGeneric() != null) {
-			return ((Type)getGeneric()).conformsTo(standardLibrary, type);
-		}
-		return super.conformsTo(standardLibrary, type);
-	}
-
-	@Override
 	public Type flattenedType() {
 		return getElementType();
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		FlatClass commonFlatClass = thisFlatClass.getCommonFlatClass(thatFlatClass);
-		org.eclipse.ocl.pivot.Class commonType = commonFlatClass.getASClass();
-		if (type instanceof CollectionType) {
-			CollectionType thatCollectionType = (CollectionType)type;
-			Type thisElementType = this.getElementType();
-			Type thatElementType = ClassUtil.nonNullEMF(thatCollectionType.getElementType());
-			boolean commonIsNullFree = this.isIsNullFree() && thatCollectionType.isIsNullFree();
-			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
-			if (!commonFlatClass.isAbstract()) {
-				CollectionType commonCollectionType = (CollectionType)commonType;
-				return standardLibrary.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
-			}
-			else {
-				if (isOrdered() && thatCollectionType.isOrdered()) {
-					if (isUnique() && thatCollectionType.isUnique()) {
-						return standardLibrary.getOrderedSetType(commonElementType, commonIsNullFree, null, null);
-					}
-					else {
-						return standardLibrary.getSequenceType(commonElementType, commonIsNullFree, null, null);
-					}
-				}
-				else {
-					if (isUnique() && thatCollectionType.isUnique()) {
-						return standardLibrary.getSetType(commonElementType, commonIsNullFree, null, null);
-					}
-					else {
-						return standardLibrary.getBagType(commonElementType, commonIsNullFree, null, null);
-					}
-				}
-			}
-		}
-		else {
-			return commonType;
-		}
 	}
 
 	@Override

@@ -25,8 +25,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl.OrphanResource;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -181,16 +179,6 @@ implements Type {
 		return (eContainer instanceof Orphanage) && (eContainer.eResource() instanceof OrphanResource) ? (Orphanage)eContainer : null;
 	}
 
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.isSubFlatClassOf(thatFlatClass);
-	}
-
 	/**
 	 * Create and return an instance of this type.
 	 *
@@ -230,17 +218,6 @@ implements Type {
 			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
-		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.getCommonFlatClass(thatFlatClass).getASClass();
 	}
 
 	@Override

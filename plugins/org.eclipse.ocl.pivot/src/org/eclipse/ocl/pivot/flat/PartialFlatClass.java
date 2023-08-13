@@ -67,6 +67,7 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 			FlatClass superFlatClass = flatModel2.getFlatClass(asSuperClass);
 			if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 				superFlatClasses.add(superFlatClass);
+			//	System.out.println("computeDirectSuperFlatClasses " + NameUtil.debugSimpleName(this) + " : " + this + " -> " + NameUtil.debugSimpleName(superFlatClass) + " : " + superFlatClass + " for " + asSuperClass);
 			}
 		}
 		if (superFlatClasses == null) {
@@ -187,8 +188,8 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 		super.resetFragments();
 	}
 
-	@Override
-	public @NonNull String toString() {
-		return NameUtil.qualifiedNameFor(asClass);
-	}
+//	@Override
+//	public @NonNull String toString() {
+//		return NameUtil.qualifiedNameFor(asClass);
+//	}
 }

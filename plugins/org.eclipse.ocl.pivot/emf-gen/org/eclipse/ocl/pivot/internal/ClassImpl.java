@@ -1160,17 +1160,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return computeId();
 	}
 
-/*	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
-		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
-		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
-		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
-	} */
-
 	public @NonNull FlatClass getFlatClass() {
 		assert flatClass != null;
 		return flatClass;

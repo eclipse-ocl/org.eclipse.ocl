@@ -422,7 +422,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			Type parameterType = asParameters.get(0).getType();
 			if ((parameterType instanceof SelfType) && (actualSourceType != null)) {
 				Type actualArgType = idResolver.getStaticTypeOfValue(parameterType, sourceAndArgumentValues[1]);
-				actualSourceType = actualSourceType.getCommonType(idResolver, actualArgType);
+				actualSourceType = environmentFactory.getStandardLibrary().getCommonType(actualSourceType, actualArgType);
 			}
 		}
 		//
