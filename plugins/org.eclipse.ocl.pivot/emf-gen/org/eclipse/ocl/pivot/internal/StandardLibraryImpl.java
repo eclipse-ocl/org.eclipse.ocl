@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
@@ -829,6 +830,15 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return getMetaclass(instanceType);
 	}
 
+	private @NonNull Type getNormalizedType(@NonNull Type type) {
+		try {
+			return type.getFlatClass(this).getASClass();
+		}
+		catch (Throwable e) {
+			return type instanceof TemplateParameter ? getOclAnyType() : type;			// WIP FIXME should never happen
+		}
+	}
+
 	@Override
 	public @NonNull Operation getOclInvalidOperation() {
 		Operation oclInvalidOperation2 = oclInvalidOperation;
@@ -1038,10 +1048,35 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public boolean isEqualTo(@NonNull Type firstType, @NonNull Type secondType) {
+		if ((firstType instanceof CollectionType) && (secondType instanceof CollectionType)) {
+			return isEqualToCollectionType((CollectionType)firstType, (CollectionType)secondType);
+		}
+		if ((firstType instanceof JavaType) && (secondType instanceof JavaType)) {
+			return firstType == secondType;
+		}
+		if ((firstType instanceof MapType) && (secondType instanceof MapType)) {
+			return isEqualToMapType((MapType)firstType, (MapType)secondType);
+		}
+	//	if ((firstType instanceof LambdaType) && (secondType instanceof LambdaType)) {
+	//		return isEqualToLambdaType((LambdaType)firstType, (LambdaType)secondType);
+	//	}
+		if ((firstType instanceof TupleType) && (secondType instanceof TupleType)) {
+			return isEqualToTupleType((TupleType)firstType, (TupleType)secondType);
+		}
+		if (firstType == secondType) {
+			return true;
+		}
+		firstType = getNormalizedType(firstType);
+		secondType = getNormalizedType(secondType);
+		return firstType == secondType;
+	}
+
+	@Override
 	public boolean isEqualToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
-		if ((firstContainerType != secondContainerType) && !firstContainerType.isEqualToUnspecializedType(this, secondContainerType)) {
+		if (firstContainerType != secondContainerType) { //&& !isEqualToUnspecializedType(firstContainerType, secondContainerType)) {
 			return false;
 		}
 		Type firstElementType = firstCollectionType.getElementType();
@@ -1050,7 +1085,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			if ((firstElementType == null) || (secondElementType == null)) {
 				return false;
 			}
-			if (!firstElementType.isEqualTo(this, secondElementType)) {
+			if (!isEqualTo(firstElementType, secondElementType)) {
 				return false;
 			}
 		}
@@ -1070,7 +1105,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			if ((firstKeyType == null) || (secondKeyType == null)) {
 				return false;
 			}
-			if (!firstKeyType.isEqualTo(this, secondKeyType)) {
+			if (!isEqualTo(firstKeyType, secondKeyType)) {
 				return false;
 			}
 		}
@@ -1080,7 +1115,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			if ((firstValueType == null) || (secondValueType == null)) {
 				return false;
 			}
-			if (!firstValueType.isEqualTo(this, secondValueType)) {
+			if (!isEqualTo(firstValueType, secondValueType)) {
 				return false;
 			}
 		}

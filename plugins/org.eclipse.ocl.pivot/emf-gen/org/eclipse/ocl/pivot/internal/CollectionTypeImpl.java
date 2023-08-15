@@ -660,17 +660,6 @@ implements CollectionType {
 	}
 
 	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof CollectionType)) {
-			return false;
-		}
-		return standardLibrary.isEqualToCollectionType(this, (CollectionType)type);
-	}
-
-	@Override
 	public Type getElementType() {
 		TemplateSignature templateSignature = getOwnedSignature();
 		if (templateSignature != null) {

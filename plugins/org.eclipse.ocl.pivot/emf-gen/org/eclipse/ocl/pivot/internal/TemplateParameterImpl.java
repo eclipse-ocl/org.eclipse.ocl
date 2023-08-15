@@ -375,16 +375,6 @@ public class TemplateParameterImpl
 		return standardLibrary.getFlatClass(lowerBound);
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		try {
-			return getFlatClass(standardLibrary).getASClass();
-		}
-		catch (Throwable e) {
-			return standardLibrary.getOclAnyType();			// FIXME should never happen
-		}
-	}
-
 	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
 
 	@Override

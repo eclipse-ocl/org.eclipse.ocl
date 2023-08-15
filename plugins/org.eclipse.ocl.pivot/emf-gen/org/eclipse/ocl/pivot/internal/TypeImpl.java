@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
@@ -218,24 +217,6 @@ implements Type {
 			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		Type thisType = this.getNormalizedType(standardLibrary);
-		Type thatType = type.getNormalizedType(standardLibrary);
-		return thisType == thatType;
-	}
-
-	@Override
-	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		return false;
 	}
 
 	//	@Override

@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -503,11 +502,6 @@ public class JavaTypeImpl extends ClassImpl implements JavaType
 		else {
 			return standardLibrary.getOclAnyType().getFlatClass(standardLibrary);
 		}
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
-		return this == thatType;
 	}
 
 	@Override

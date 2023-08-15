@@ -1175,17 +1175,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		try {
-		//	return getInheritance(standardLibrary).getPivotClass();
-			return getFlatClass(standardLibrary).getASClass();
-		}
-		catch (Throwable e) {
-			return this;			// WIP FIXME should never happen
-		}
-	}
-
-	@Override
 	public @NonNull List<Operation> getOwnedOperations()
 	{
 		EList<Operation> ownedOperations2 = ownedOperations;

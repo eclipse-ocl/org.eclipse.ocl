@@ -23,12 +23,12 @@ import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclAnyOclIsTypeOfOperation INSTANCE = new OclAnyOclIsTypeOfOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**
@@ -38,7 +38,6 @@ public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
 		Type argType = asType(argVal);
-		boolean result = sourceType.isEqualTo(executor.getStandardLibrary(), argType);
-		return result;
+		return executor.getStandardLibrary().isEqualTo(sourceType, argType);
 	}
 }

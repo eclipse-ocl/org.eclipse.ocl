@@ -439,6 +439,10 @@ public interface StandardLibrary extends Element
 
 	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
 
+	/**
+	 * Return true if firstType is the same type as secondType within this standardLibrary.
+	 */
+	boolean isEqualTo(@NonNull Type firstType, @NonNull Type secondType);
 	boolean isEqualToCollectionType(@NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType);
 	boolean isEqualToMapType(@NonNull MapType firstMapType, @NonNull MapType secondMapType);
 	boolean isEqualToTupleType(@NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType);

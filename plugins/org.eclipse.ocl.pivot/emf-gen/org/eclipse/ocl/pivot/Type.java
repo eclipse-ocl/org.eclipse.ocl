@@ -64,11 +64,6 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	@NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	/**
-	 * Return the unique executable form of this type within standardLibrary.
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary);
-
-	/**
 	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this type.
 	 *
 	 * @since 1.18
@@ -81,12 +76,6 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return a unique StandardLibrary-independent identifier for this type.
 	 */
 	@NonNull TypeId getTypeId();
-
-	/**
-	 * Return true if this is the same type as thatType within standardLibrary.
-	 */
-	boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
-	boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type);
 
 	/**
 	 * Return true if this is an invalid type (with an associated error message).
