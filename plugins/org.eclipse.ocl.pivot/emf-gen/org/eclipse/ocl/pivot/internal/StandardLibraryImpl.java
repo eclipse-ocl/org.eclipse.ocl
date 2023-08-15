@@ -247,13 +247,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			org.eclipse.ocl.pivot.@NonNull Class secondClass, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
 		org.eclipse.ocl.pivot.Class firstGeneric = (org.eclipse.ocl.pivot.Class)firstClass.getGeneric();
 		org.eclipse.ocl.pivot.Class secondGeneric = (org.eclipse.ocl.pivot.Class)secondClass.getGeneric();
-		if (firstGeneric == null) {
-			firstGeneric = firstClass;
+		if ((firstGeneric == null) || (secondGeneric == null)) {					// Any non-generic allows simple isSubFlatClassOf test
+			FlatClass firstFlatClass = getFlatClass(firstClass);
+			FlatClass secondFlatClass = getFlatClass(secondClass);
+			return firstFlatClass.isSubFlatClassOf(secondFlatClass, false);
 		}
-		if (secondGeneric == null) {
-			secondGeneric = secondClass;
-		}
-		if (firstGeneric != secondGeneric) {
+		if (firstGeneric != secondGeneric) {										// Inconsistent generic requires generic isSubFlatClassOf test first
 			FlatClass firstFlatClass = getFlatClass(firstGeneric);
 			FlatClass secondFlatClass = getFlatClass(secondGeneric);
 			if (!firstFlatClass.isSubFlatClassOf(secondFlatClass, true)) {
