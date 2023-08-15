@@ -1114,6 +1114,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				if (csType != null) {
 					iteratorIsRequired = context.isRequired(csType);
 					varType = PivotUtil.getPivot(Type.class, csType);
+					if ((varType != null) && TemplateSpecialisation.needsCompletion(varType)) {
+						varType = standardLibrary.resolveLowerBoundSpecialization(varType);
+					//	varType = standardLibrary.resolveIncompleteSpecialization(varType);		// XXX wildcard
+					}
 				}
 				if (varType == null) {
 					varType = sourceElementType;

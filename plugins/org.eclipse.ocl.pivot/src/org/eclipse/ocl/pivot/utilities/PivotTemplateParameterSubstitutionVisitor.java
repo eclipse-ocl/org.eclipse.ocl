@@ -20,8 +20,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
  * @since 1.1
  * @noextend This class is not intended to be subclassed by clients. It is part of the hierarchy for auto-generated visitors.
  */
-public class PivotTemplateParameterSubstitutionVisitor extends TemplateParameterSubstitutionVisitor {
-
+public class PivotTemplateParameterSubstitutionVisitor extends TemplateParameterSubstitutionVisitor
+{
 	public PivotTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
 		super(environmentFactory, selfType);
 	}
