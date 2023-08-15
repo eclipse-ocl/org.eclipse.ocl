@@ -936,6 +936,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					wildcardTypeImpl.setName(PivotConstants.WILDCARD_NAME + wildcardCount);
 					wildcardTypeImpl.setTypeId(wildcardId);
 					wildcardTypeImpl.setTemplateParameter(templateParameter);
+					wildcardTypeImpl.getConstrainingClasses().addAll(templateParameter.getConstrainingClasses());
 					wildcardType = wildcardTypeImpl;
 					typeId2type.put(wildcardId, wildcardType);
 					addOrphanClass(wildcardType);

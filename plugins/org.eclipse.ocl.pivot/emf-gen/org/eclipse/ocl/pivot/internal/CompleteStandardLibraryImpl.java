@@ -401,7 +401,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-uyse during Tuple instantiation.
+	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-use during Tuple instantiation.
 	 */
 	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor
 	{

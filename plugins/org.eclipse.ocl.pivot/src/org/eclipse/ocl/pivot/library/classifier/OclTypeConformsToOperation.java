@@ -40,6 +40,7 @@ public class OclTypeConformsToOperation extends AbstractUntypedBinaryOperation
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type thisType = asType(sourceVal);
 		Type thatType = asType(argVal);
+	//	TemplateParameterSubstitutions bindings = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, candidateOperation);
 		return standardLibrary.conformsTo(thisType, thatType);
 	}
 }

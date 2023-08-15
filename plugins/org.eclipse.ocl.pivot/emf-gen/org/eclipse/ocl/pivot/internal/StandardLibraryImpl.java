@@ -1207,10 +1207,32 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return asType;
 		}
 		assert (asType instanceof TemplateableElement) && (((TemplateableElement)asType).getGeneric() == null);
-		TemplateableElement unspecializedType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
-		TemplateSignature asTemplateSignature = unspecializedType.getOwnedSignature();
+		TemplateableElement genericType = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)asType);
+		TemplateSignature asTemplateSignature = genericType.getOwnedSignature();
 		assert asTemplateSignature != null;
 		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+		if (asType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)asType;
+			org.eclipse.ocl.pivot.Class asWildcard = getWildcardType(asTemplateParameters.get(0));
+			return getCollectionType((CollectionType)genericType, asWildcard, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+		}
+		else if (asType instanceof MapType) {
+			MapType mapType = (MapType)asType;
+			org.eclipse.ocl.pivot.Class keyType = getWildcardType(asTemplateParameters.get(0));
+			org.eclipse.ocl.pivot.Class valueType = getWildcardType(asTemplateParameters.get(1));
+			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class classType = (org.eclipse.ocl.pivot.Class)asType;
+			List<org.eclipse.ocl.pivot.@NonNull Class> wildcards = new ArrayList<>();		// XX use defined templagteArguments
+			for (TemplateParameter asTemplateParameter : asTemplateParameters) {
+				wildcards.add(getWildcardType(asTemplateParameter));
+			}
+			return getLibraryType((org.eclipse.ocl.pivot.Class)genericType, wildcards);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	/*	if (asType instanceof CollectionType) {
 			TemplateParameter asTemplateParameter = asTemplateParameters.get(0);
 			return getCollectionType((CollectionType)unspecializedType, asTemplateParameter, null, null, null);
@@ -1224,7 +1246,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getLibraryType((org.eclipse.ocl.pivot.Class)unspecializedType, asTemplateParameters);
 		}
 		else { */
-			throw new UnsupportedOperationException();
+	//		throw new UnsupportedOperationException();
 	//	}
 	}
 
