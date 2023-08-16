@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -25,6 +27,8 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
@@ -169,6 +173,22 @@ public abstract class AbstractContents extends PivotUtil
 		DataType asType = createDataType(eDataType);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
+	}
+
+	protected @NonNull Enumeration createEnumeration(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EEnum eEnum) {
+		Enumeration asType = PivotFactory.eINSTANCE.createEnumeration();
+		asType.setName(eEnum.getName());
+		((PivotObjectImpl)asType).setESObject(eEnum);
+		asPackage.getOwnedClasses().add(asType);
+		return asType;
+	}
+
+	protected @NonNull EnumerationLiteral createEnumerationLiteral(@NonNull Enumeration asEnumeration, /*@NonNull*/ EEnumLiteral eEnumLiteral) {
+		EnumerationLiteral asEnumerationLiteral = PivotFactory.eINSTANCE.createEnumerationLiteral();
+		asEnumerationLiteral.setName(eEnumLiteral.getName());
+		((PivotObjectImpl)asEnumerationLiteral).setESObject(eEnumLiteral);
+		asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
+		return asEnumerationLiteral;
 	}
 
 	protected @NonNull Import createImport(@Nullable String name, @NonNull Namespace namespace) {

@@ -62,11 +62,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.DataType;
 			import org.eclipse.ocl.pivot.Enumeration;
 			import org.eclipse.ocl.pivot.EnumerationLiteral;
+			import org.eclipse.ocl.pivot.Iteration;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
 			import org.eclipse.ocl.pivot.Orphanage;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
+			import org.eclipse.ocl.pivot.PrimitiveType;
 			import org.eclipse.ocl.pivot.Property;
 			import org.eclipse.ocl.pivot.StandardLibrary;
 			import org.eclipse.ocl.pivot.TemplateParameter;
@@ -75,8 +77,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
+			import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
 
 			«FOR externalPackage : externalPackages»
@@ -92,11 +96,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			@SuppressWarnings("unused")
 			public class «javaClassName» extends ASResourceImpl
 			{
-				/**
-				 *	The static package-of-types pivot model of the Pivot Metamodel.
-				 */
-				private static «javaClassName» INSTANCE = null;
-
 				/**
 				 *	The URI of this Metamodel.
 				 */
@@ -123,11 +122,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 *  is used as the default when no overriding copy is registered. 
 				 */
 				public static @NonNull «javaClassName» getDefault() {
-					«javaClassName» metamodelResource = INSTANCE;
+					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+					ReadOnly metamodelResource = environmentFactory.basicGetInstance(ReadOnly.class);
 					if (metamodelResource == null) {
-						metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+						metamodelResource = new ReadOnly(PIVOT_AS_URI);
 						Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
 						metamodelResource.setSaveable(false);
+						environmentFactory.setInstance(ReadOnly.class, metamodelResource);
 					}
 					return metamodelResource;
 				}
@@ -184,7 +185,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 */
 				public static void uninstall() {
 					OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
-					INSTANCE = null;
 				}
 			
 				protected «javaClassName»(@NonNull URI uri) {
@@ -243,19 +243,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
 						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
-					}
-			
-					/**
-					 * Overridden to trivialise loading of the shared instance.
-					 */
-					@Override
-					public void load(Map<?, ?> options) throws IOException {
-						if (this != INSTANCE) {
-							super.load(options);
-						}
-						else {
-							setLoaded(true);
-						}
 					}
 			
 					/**

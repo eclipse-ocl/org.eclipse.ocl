@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -62,6 +63,7 @@ public class SynthesisSchedule
 		public static final @NonNull String ROLE_COMMENTS = "COMMENTS";
 		public static final @NonNull String ROLE_CTOR = "CTOR";
 		public static final @NonNull String ROLE_ENUMERATION_LITERALS = "ENUMERATION_LITERALS";
+		public static final @NonNull String ROLE_EXTERNAL = "EXTERNAL";
 		public static final @NonNull String ROLE_FRAGMENT_OPERATIONS = "FRAGMENT_OPERATIONS";
 		public static final @NonNull String ROLE_FRAGMENT_PROPERTIES = "FRAGMENT_PROPERTIES";
 		public static final @NonNull String ROLE_OPERATIONS = "OPERATIONS";
@@ -74,6 +76,7 @@ public class SynthesisSchedule
 	//	protected final @NonNull String name;
 		protected final @NonNull Element element;
 		protected final @NonNull String role;
+	//	private boolean isExternal = false;
 		protected final @NonNull List<@NonNull Slot> successors = new ArrayList<>();
 		private final @NonNull List<@NonNull Slot> predecessors = new ArrayList<>();
 		private int stage = -1;
@@ -104,6 +107,10 @@ public class SynthesisSchedule
 		public @NonNull List<@NonNull Slot> getSuccessors() {
 			return successors;
 		}
+
+	//	public void setExternal() {
+	//		this.isExternal  = true;
+	//	}
 
 		@Override
 		public @NonNull String toString() {
@@ -217,11 +224,13 @@ public class SynthesisSchedule
 		}
 	}
 
+	private final @NonNull List<@NonNull Model> models = new ArrayList<>();
 	private final @NonNull Map<@NonNull EObject, @NonNull Map<@NonNull String, @NonNull Slot>> eInstance2role2slot = new HashMap<>();
 	private /*LazyNonNull*/ List<@NonNull Stage> stages = null;
 	private /*LazyNonNull*/ List<@NonNull Slot> slots = null;
 	private final @NonNull SlotComparator slotComparator = new SlotComparator();
 	private int maxSlotsPerStage = 100;
+//	private final @NonNull Set<@NonNull NamedElement> externals = new HashSet<>();
 
 	public @NonNull Slot addDependency(@NonNull Slot successorSlot, /*@NonNull*/ EObject predecessor) {
 		assert predecessor != null;
@@ -241,6 +250,12 @@ public class SynthesisSchedule
 		}
 		//	}
 		return successorSlot;
+	}
+
+	public void addModel(@NonNull Model asModel) {
+		if (!models.contains(asModel)) {
+			models.add(asModel);
+		}
 	}
 
 	public @NonNull Slot addTypeDependency(@NonNull TypedElement asTypedElement, @NonNull Type type) {
@@ -448,6 +463,11 @@ public class SynthesisSchedule
 
 	public @NonNull Slot getSlot(/*@NonNull*/ EObject eInstance, @NonNull String role) {
 		assert eInstance != null;
+		Model asModel = PivotUtil.getContainingModel(eInstance);
+		assert asModel != null;
+		if (!models.contains(asModel) && !OrphanageImpl.isOrphanage(asModel)) {
+			role = Slot.ROLE_EXTERNAL;
+		}
 		Map<@NonNull String, @NonNull Slot> role2slot = eInstance2role2slot.get(eInstance);
 		if (role2slot == null) {
 			role2slot = new HashMap<>();
@@ -457,7 +477,13 @@ public class SynthesisSchedule
 		if (slot == null) {
 			slot = new Slot(eInstance, role);
 			role2slot.put(role, slot);
-			if (role != Slot.ROLE_CTOR) {
+			if (role == Slot.ROLE_EXTERNAL) {
+				if (eInstance instanceof TemplateParameter) {
+					TemplateableElement asTemplateableElement = ((TemplateParameter)eInstance).getOwningSignature().getOwningElement();
+					addDependency(slot, asTemplateableElement);
+				}
+			}
+			else if (role != Slot.ROLE_CTOR) {
 				addDependency(slot, eInstance);
 			}
 			else {
@@ -489,6 +515,17 @@ public class SynthesisSchedule
 		assert stages != null;
 		return stages;
 	}
+
+/*	public void setExternalDeclarations(@NonNull Iterable<@NonNull NamedElement> asNamedElements) {
+		for (@NonNull NamedElement asNamedElement : asNamedElements) {
+			externals.add(asNamedElement);
+		//	Map<@NonNull String, @NonNull Slot> role2slot = eInstance2role2slot.get(asNamedElement);
+		//	assert role2slot != null;
+		//	for (@NonNull Slot slot : role2slot.values()) {
+		//		slot.setExternal();
+		//	}
+		}
+	} */
 
 	public void setMaxSlotsPerStage(int maxSlotsPerStage) {
 		this.maxSlotsPerStage = maxSlotsPerStage;

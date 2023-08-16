@@ -29,11 +29,13 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -583,6 +585,12 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		ParametersId parametersId = IdManager.getParametersId(typeIds);
 		String name = NameUtil.getSafeName(this);
 		return IdManager.getLambdaTypeId(name, parametersId);
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		Type lambdaType = standardLibrary.getOclLambdaType();
+		return lambdaType.getFlatClass(standardLibrary);
 	}
 
 	private ParametersId parametersId = null;
