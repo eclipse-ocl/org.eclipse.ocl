@@ -875,32 +875,37 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append(prop.getImplementationClass());
 						s.append(".INSTANCE)");
 					}
-					else if (hasEcore(prop)) {
-						EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)prop.getESObject());
-						s.append("Property(");
-						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
-						s.append(", " );
-						pClass.accept(emitScopedLiteralVisitor);
-						s.append(", " + i + ")");
-						//						}
-					} else {
-						Property opposite = prop.getOpposite();
-						if ((opposite != null) && hasEcore(opposite)) {
-							EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)opposite.getESObject());
-							s.append("OppositeProperty(");
-							s.appendString(name);
-							s.append(", " );
-							pClass.accept(emitScopedLiteralVisitor);
-							s.append(", " + i + ", ");
-							s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
-							s.append(")");
-						}
-						else {
+					else {
+						EStructuralFeature eStructuralFeature = hasEcore(prop);
+						if (eStructuralFeature != null) {
 							s.append("Property(");
-							s.appendString(name);
+							s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
 							s.append(", " );
 							pClass.accept(emitScopedLiteralVisitor);
-							s.append(", " + i + ", null)");
+							s.append(", " + i + ")");
+							//						}
+						} else {
+							Property opposite = prop.getOpposite();
+							if ("CollectionType::elementType".equals(String.valueOf(opposite))) {
+								System.out.println("declareProperties " + NameUtil.debugSimpleName(opposite) + " " + opposite + " : " + NameUtil.debugSimpleName(prop) + " " + prop);
+								getClass();		// XXX
+							}
+							if ((opposite != null) && ((eStructuralFeature = hasEcore(opposite)) != null)) {
+								s.append("OppositeProperty(");
+								s.appendString(name);
+								s.append(", " );
+								pClass.accept(emitScopedLiteralVisitor);
+								s.append(", " + i + ", ");
+								s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
+								s.append(")");
+							}
+							else {
+								s.append("Property(");
+								s.appendString(name);
+								s.append(", " );
+								pClass.accept(emitScopedLiteralVisitor);
+								s.append(", " + i + ", null)");
+							}
 						}
 					}
 					s.append(";");
