@@ -886,10 +886,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 							//						}
 						} else {
 							Property opposite = prop.getOpposite();
-							if ("CollectionType::elementType".equals(String.valueOf(opposite))) {
-								System.out.println("declareProperties " + NameUtil.debugSimpleName(opposite) + " " + opposite + " : " + NameUtil.debugSimpleName(prop) + " " + prop);
-								getClass();		// XXX
-							}
+						//	if ("CollectionType::elementType".equals(String.valueOf(opposite))) {
+						//		System.out.println("declareProperties " + NameUtil.debugSimpleName(opposite) + " " + opposite + " : " + NameUtil.debugSimpleName(prop) + " " + prop);
+						//		getClass();		// XXX
+						//	}
 							if ((opposite != null) && ((eStructuralFeature = hasEcore(opposite)) != null)) {
 								s.append("OppositeProperty(");
 								s.appendString(name);

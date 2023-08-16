@@ -28,15 +28,20 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -46,8 +51,12 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -57,11 +66,6 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 @SuppressWarnings("unused")
 public class OCLmetamodel extends ASResourceImpl
 {
-	/**
-	 *	The static package-of-types pivot model of the Pivot Metamodel.
-	 */
-//	private static OCLmetamodel INSTANCE = null;
-
 	/**
 	 *	The URI of this Metamodel.
 	 */
@@ -149,7 +153,6 @@ public class OCLmetamodel extends ASResourceImpl
 	 */
 	public static void uninstall() {
 		OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
-	//	INSTANCE = null;
 	}
 
 	protected OCLmetamodel(@NonNull URI uri) {
@@ -211,19 +214,6 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		/**
-		 * Overridden to trivialise loading of the shared instance.
-		 */
-		@Override
-		public void load(Map<?, ?> options) throws IOException {
-		//	if (this != INSTANCE) {
-				super.load(options);
-		//	}
-		//	else {
-		//		setLoaded(true);
-		//	}
-		}
-
-		/**
 		 * Overridden to inhibit unloading of the shared instance.
 		 */
 		@Override
@@ -248,13 +238,36 @@ public class OCLmetamodel extends ASResourceImpl
 			metamodelResource.getContents().add(root);
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
 			installPackages();
-			installClassTypes();
-			installEnumerations();
-			installGenericAggregateTypes();
-			installOperationDeclarations();
-			installSpecializedAggregateTypes0();
-			installAggregateSuperTypes();
-			installOperationBodies();
+			installSlots0();
+			installSlots1();
+			installSlots2a();
+			installSlots2b();
+			installSlots3a();
+			installSlots3b();
+			installSlots3c();
+			installSlots3d();
+			installSlots3e();
+			installSlots3f();
+			installSlots3g();
+			installSlots3h();
+			installSlots3i();
+			installSlots4a();
+			installSlots4b();
+			installSlots4c();
+			installSlots4d();
+			installSlots4e();
+			installSlots4f();
+			installSlots4g();
+			installSlots4h();
+			installSlots4i();
+			installSlots4j();
+			installSlots5a();
+			installSlots5b();
+			installSlots6();
+			installSlots7();
+			installSlots8();
+			installSlots9();
+			installSlots10();
 			installProperties();
 		}
 
@@ -263,35 +276,76 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private final @NonNull Package _ocl = libraryPackage;
-		private final @NonNull CollectionType _Bag = getCollectionType(_ocl, "Bag");
-		private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
-		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
-		private final @NonNull Class _Integer = getClass(_ocl, "Integer");
-		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
-		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
-		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
-		private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
-		private final @NonNull Class _Real = getClass(_ocl, "Real");
-		private final @NonNull CollectionType _Sequence = getCollectionType(_ocl, "Sequence");
-		private final @NonNull CollectionType _Set = getCollectionType(_ocl, "Set");
-		private final @NonNull Class _String = getClass(_ocl, "String");
-		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
-		private final @NonNull Class _UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
-		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
-		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
-		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
-		private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
-		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
-		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
-		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
+		//	private final @NonNull CollectionType _Bag = getCollectionType(_ocl, "Bag");
+		//	private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
+		//	private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
+		//	private final @NonNull Class _Integer = getClass(_ocl, "Integer");
+		//	private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
+		//	private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+		//	private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
+		//	private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
+		//	private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
+		//	private final @NonNull Class _Real = getClass(_ocl, "Real");
+		//	private final @NonNull CollectionType _Sequence = getCollectionType(_ocl, "Sequence");
+		//	private final @NonNull CollectionType _Set = getCollectionType(_ocl, "Set");
+		//	private final @NonNull Class _String = getClass(_ocl, "String");
+		//	private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
+		//	private final @NonNull Class _UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
+		//	private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
+		//	private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
+		//	private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
+		//	private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
+		//	private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
+		//	private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
+		//	private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
-		//	root.getOwnedPackages().add(orphanage);
+			//	root.getOwnedPackages().add(orphanage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
+		// declare ALL_FRAGMENTS Model
+		// declare ALL_OPERATIONS Model
+		// declare ALL_PROPERTIES Model
+		// declare ALL_TYPES Model
+		private PrimitiveType _Boolean_1;
+		private Class _EcoreObject;
+		private Class _JavaClass;
+		private Class _LibraryFeature;
+		private Class _Object;
+		private Class _Throwable;
+		private Enumeration _AssociativityKind;
+		private Enumeration _CollectionKind;
+		private Enumeration _PseudostateKind;
+		private Enumeration _TransitionKind;
+		private EnumerationLiteral _AssociativityKind_left;
+		private EnumerationLiteral _AssociativityKind_right;
+		private EnumerationLiteral _CollectionKind_Bag;
+		private EnumerationLiteral _CollectionKind_Collection;
+		private EnumerationLiteral _CollectionKind_OrderedSet;
+		private EnumerationLiteral _CollectionKind_Sequence;
+		private EnumerationLiteral _CollectionKind_Set;
+		private EnumerationLiteral _PseudostateKind_choice;
+		private EnumerationLiteral _PseudostateKind_deepHistory;
+		private EnumerationLiteral _PseudostateKind_entryPoint;
+		private EnumerationLiteral _PseudostateKind_exitPoint;
+		private EnumerationLiteral _PseudostateKind_fork;
+		private EnumerationLiteral _PseudostateKind_initial;
+		private EnumerationLiteral _PseudostateKind_join;
+		private EnumerationLiteral _PseudostateKind_junction;
+		private EnumerationLiteral _PseudostateKind_shallowHistory;
+		private EnumerationLiteral _PseudostateKind_terminate;
+		private EnumerationLiteral _TransitionKind_external;
+		private EnumerationLiteral _TransitionKind_internal;
+		private EnumerationLiteral _TransitionKind_local;
+		// private Model root;
+		// private Package orphanage;
+		// private Package pivot;
+		private PrimitiveType _Integer_1;
+		private PrimitiveType _Real_1;
+		private PrimitiveType _String_1;
+		private PrimitiveType _UnlimitedNatural_1;
 		private Class _Annotation;
 		private Class _AnyType;
 		private Class _AssociationClass;
@@ -323,7 +377,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _DynamicProperty;
 		private Class _DynamicType;
 		private Class _DynamicValueSpecification;
-		private Class _EcoreObject;
 		private Class _Element;
 		private Class _ElementExtension;
 		private Class _ElementLiteralExp;
@@ -345,14 +398,12 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Iteration;
 		private Class _IteratorExp;
 		private Class _IteratorVariable;
-		private Class _JavaClass;
 		private Class _JavaType;
 		private Class _LambdaType;
 		private Class _LanguageExpression;
 		private Class _LetExp;
 		private Class _LetVariable;
 		private Class _Library;
-		private Class _LibraryFeature;
 		private Class _LiteralExp;
 		private Class _LoopExp;
 		private Class _MapLiteralExp;
@@ -369,7 +420,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _NullLiteralExp;
 		private Class _NumericLiteralExp;
 		private Class _OCLExpression;
-		private Class _Object;
 		private Class _Operation;
 		private Class _OperationCallExp;
 		private Class _OppositePropertyCallExp;
@@ -413,7 +463,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _TemplateParameterSubstitution;
 		private Class _TemplateSignature;
 		private Class _TemplateableElement;
-		private Class _Throwable;
 		private Class _Transition;
 		private Class _Trigger;
 		private Class _TupleLiteralExp;
@@ -433,482 +482,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Visitable;
 		private Class _VoidType;
 		private Class _WildcardType;
-
-		private void installClassTypes() {
-			Class type;
-
-			type = _Annotation = createClass(pivot, PivotPackage.Literals.ANNOTATION);
-			type = _AnyType = createClass(pivot, PivotPackage.Literals.ANY_TYPE);
-			type = _AssociationClass = createClass(pivot, PivotPackage.Literals.ASSOCIATION_CLASS);
-			installComment(type, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
-			type = _AssociationClassCallExp = createClass(pivot, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP);
-			type = _BagType = createClass(pivot, PivotPackage.Literals.BAG_TYPE);
-			type = _Behavior = createClass(pivot, PivotPackage.Literals.BEHAVIOR);
-			type.setIsAbstract(true);
-			installComment(type, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
-			type = _BooleanLiteralExp = createClass(pivot, PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
-			type = _BooleanType = createClass(pivot, PivotPackage.Literals.BOOLEAN_TYPE);
-			type = _CallExp = createClass(pivot, PivotPackage.Literals.CALL_EXP);
-			type.setIsAbstract(true);
-			type = _CallOperationAction = createClass(pivot, PivotPackage.Literals.CALL_OPERATION_ACTION);
-			type = _Class = createClass(pivot, PivotPackage.Literals.CLASS);
-			installComment(type, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
-			type = _CollectionItem = createClass(pivot, PivotPackage.Literals.COLLECTION_ITEM);
-			type = _CollectionLiteralExp = createClass(pivot, PivotPackage.Literals.COLLECTION_LITERAL_EXP);
-			type = _CollectionLiteralPart = createClass(pivot, PivotPackage.Literals.COLLECTION_LITERAL_PART);
-			type.setIsAbstract(true);
-			type = _CollectionRange = createClass(pivot, PivotPackage.Literals.COLLECTION_RANGE);
-			type = _CollectionType = createClass(pivot, PivotPackage.Literals.COLLECTION_TYPE);
-			type = _Comment = createClass(pivot, PivotPackage.Literals.COMMENT);
-			installComment(type, "A Comment is a textual annotation that can be attached to a set of Elements.");
-			type = _CompleteClass = createClass(pivot, PivotPackage.Literals.COMPLETE_CLASS);
-			type = _CompleteEnvironment = createClass(pivot, PivotPackage.Literals.COMPLETE_ENVIRONMENT);
-			type = _CompleteModel = createClass(pivot, PivotPackage.Literals.COMPLETE_MODEL);
-			type = _CompletePackage = createClass(pivot, PivotPackage.Literals.COMPLETE_PACKAGE);
-			type = _CompleteStandardLibrary = createClass(pivot, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY);
-			type = _ConnectionPointReference = createClass(pivot, PivotPackage.Literals.CONNECTION_POINT_REFERENCE);
-			installComment(type, "A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State.");
-			type = _Constraint = createClass(pivot, PivotPackage.Literals.CONSTRAINT);
-			installComment(type, "A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements.");
-			type = _DataType = createClass(pivot, PivotPackage.Literals.DATA_TYPE);
-			installComment(type, "A DataType is a type whose instances are identified only by their value.");
-			type = _Detail = createClass(pivot, PivotPackage.Literals.DETAIL);
-			type = _DynamicBehavior = createClass(pivot, PivotPackage.Literals.DYNAMIC_BEHAVIOR);
-			type = _DynamicElement = createClass(pivot, PivotPackage.Literals.DYNAMIC_ELEMENT);
-			type = _DynamicProperty = createClass(pivot, PivotPackage.Literals.DYNAMIC_PROPERTY);
-			type = _DynamicType = createClass(pivot, PivotPackage.Literals.DYNAMIC_TYPE);
-			type = _DynamicValueSpecification = createClass(pivot, PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION);
-			type = _EcoreObject = createClass(pivot, PivotPackage.Literals.ECORE_OBJECT);
-			type = _Element = createClass(pivot, PivotPackage.Literals.ELEMENT);
-			type.setIsAbstract(true);
-			installComment(type, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
-			type = _ElementExtension = createClass(pivot, PivotPackage.Literals.ELEMENT_EXTENSION);
-			type = _ElementLiteralExp = createClass(pivot, PivotPackage.Literals.ELEMENT_LITERAL_EXP);
-			type = _EnumLiteralExp = createClass(pivot, PivotPackage.Literals.ENUM_LITERAL_EXP);
-			type = _Enumeration = createClass(pivot, PivotPackage.Literals.ENUMERATION);
-			installComment(type, "An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.");
-			type = _EnumerationLiteral = createClass(pivot, PivotPackage.Literals.ENUMERATION_LITERAL);
-			installComment(type, "An EnumerationLiteral is a user-defined data value for an Enumeration.");
-			type = _ExpressionInOCL = createClass(pivot, PivotPackage.Literals.EXPRESSION_IN_OCL);
-			type = _Feature = createClass(pivot, PivotPackage.Literals.FEATURE);
-			type.setIsAbstract(true);
-			installComment(type, "A Feature declares a behavioral or structural characteristic of Classifiers.");
-			type = _FeatureCallExp = createClass(pivot, PivotPackage.Literals.FEATURE_CALL_EXP);
-			type.setIsAbstract(true);
-			type = _FinalState = createClass(pivot, PivotPackage.Literals.FINAL_STATE);
-			installComment(type, "A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.");
-			type = _IfExp = createClass(pivot, PivotPackage.Literals.IF_EXP);
-			type = _Import = createClass(pivot, PivotPackage.Literals.IMPORT);
-			type = _InstanceSpecification = createClass(pivot, PivotPackage.Literals.INSTANCE_SPECIFICATION);
-			installComment(type, "An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.");
-			type = _IntegerLiteralExp = createClass(pivot, PivotPackage.Literals.INTEGER_LITERAL_EXP);
-			type = _InvalidLiteralExp = createClass(pivot, PivotPackage.Literals.INVALID_LITERAL_EXP);
-			type = _InvalidType = createClass(pivot, PivotPackage.Literals.INVALID_TYPE);
-			type = _IterableType = createClass(pivot, PivotPackage.Literals.ITERABLE_TYPE);
-			type.setIsAbstract(true);
-			type = _IterateExp = createClass(pivot, PivotPackage.Literals.ITERATE_EXP);
-			type = _Iteration = createClass(pivot, PivotPackage.Literals.ITERATION);
-			type = _IteratorExp = createClass(pivot, PivotPackage.Literals.ITERATOR_EXP);
-			type = _IteratorVariable = createClass(pivot, PivotPackage.Literals.ITERATOR_VARIABLE);
-			type = _JavaClass = createClass(pivot, PivotPackage.Literals.JAVA_CLASS);
-			type = _JavaType = createClass(pivot, PivotPackage.Literals.JAVA_TYPE);
-			installComment(type, "JavaType supports the use of a Java class as part of a foreign operation or property call.");
-			type = _LambdaType = createClass(pivot, PivotPackage.Literals.LAMBDA_TYPE);
-			type = _LanguageExpression = createClass(pivot, PivotPackage.Literals.LANGUAGE_EXPRESSION);
-			type.setIsAbstract(true);
-			type = _LetExp = createClass(pivot, PivotPackage.Literals.LET_EXP);
-			type = _LetVariable = createClass(pivot, PivotPackage.Literals.LET_VARIABLE);
-			type = _Library = createClass(pivot, PivotPackage.Literals.LIBRARY);
-			type = _LibraryFeature = createClass(pivot, PivotPackage.Literals.LIBRARY_FEATURE);
-			type = _LiteralExp = createClass(pivot, PivotPackage.Literals.LITERAL_EXP);
-			type.setIsAbstract(true);
-			type = _LoopExp = createClass(pivot, PivotPackage.Literals.LOOP_EXP);
-			type.setIsAbstract(true);
-			type = _MapLiteralExp = createClass(pivot, PivotPackage.Literals.MAP_LITERAL_EXP);
-			type = _MapLiteralPart = createClass(pivot, PivotPackage.Literals.MAP_LITERAL_PART);
-			type = _MapType = createClass(pivot, PivotPackage.Literals.MAP_TYPE);
-			type = _MessageExp = createClass(pivot, PivotPackage.Literals.MESSAGE_EXP);
-			type = _MessageType = createClass(pivot, PivotPackage.Literals.MESSAGE_TYPE);
-			type = _Model = createClass(pivot, PivotPackage.Literals.MODEL);
-			installComment(type, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
-			type = _MorePivotable = createClass(pivot, PivotPackage.Literals.MORE_PIVOTABLE);
-			type.setIsAbstract(true);
-			type = _Nameable = createClass(pivot, PivotPackage.Literals.NAMEABLE);
-			type.setIsAbstract(true);
-			type = _NamedElement = createClass(pivot, PivotPackage.Literals.NAMED_ELEMENT);
-			type.setIsAbstract(true);
-			installComment(type, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
-			type = _Namespace = createClass(pivot, PivotPackage.Literals.NAMESPACE);
-			type.setIsAbstract(true);
-			installComment(type, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
-			type = _NavigationCallExp = createClass(pivot, PivotPackage.Literals.NAVIGATION_CALL_EXP);
-			type.setIsAbstract(true);
-			type = _NullLiteralExp = createClass(pivot, PivotPackage.Literals.NULL_LITERAL_EXP);
-			type = _NumericLiteralExp = createClass(pivot, PivotPackage.Literals.NUMERIC_LITERAL_EXP);
-			type.setIsAbstract(true);
-			type = _OCLExpression = createClass(pivot, PivotPackage.Literals.OCL_EXPRESSION);
-			type.setIsAbstract(true);
-			type = _Object = createClass(pivot, PivotPackage.Literals.OBJECT);
-			type = _Operation = createClass(pivot, PivotPackage.Literals.OPERATION);
-			installComment(type, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
-			type = _OperationCallExp = createClass(pivot, PivotPackage.Literals.OPERATION_CALL_EXP);
-			type = _OppositePropertyCallExp = createClass(pivot, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP);
-			type = _OrderedSetType = createClass(pivot, PivotPackage.Literals.ORDERED_SET_TYPE);
-			type = _OrphanCompletePackage = createClass(pivot, PivotPackage.Literals.ORPHAN_COMPLETE_PACKAGE);
-			type = _Orphanage = createClass(pivot, PivotPackage.Literals.ORPHANAGE);
-			type = _Package = createClass(pivot, PivotPackage.Literals.PACKAGE);
-			installComment(type, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
-			type = _Parameter = createClass(pivot, PivotPackage.Literals.PARAMETER);
-			installComment(type, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
-			type = _ParameterVariable = createClass(pivot, PivotPackage.Literals.PARAMETER_VARIABLE);
-			type = _Pivotable = createClass(pivot, PivotPackage.Literals.PIVOTABLE);
-			type.setIsAbstract(true);
-			type = _Precedence = createClass(pivot, PivotPackage.Literals.PRECEDENCE);
-			type = _PrimitiveCompletePackage = createClass(pivot, PivotPackage.Literals.PRIMITIVE_COMPLETE_PACKAGE);
-			type = _PrimitiveLiteralExp = createClass(pivot, PivotPackage.Literals.PRIMITIVE_LITERAL_EXP);
-			type.setIsAbstract(true);
-			type = _PrimitiveType = createClass(pivot, PivotPackage.Literals.PRIMITIVE_TYPE);
-			installComment(type, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
-			type = _Profile = createClass(pivot, PivotPackage.Literals.PROFILE);
-			installComment(type, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
-			type = _ProfileApplication = createClass(pivot, PivotPackage.Literals.PROFILE_APPLICATION);
-			installComment(type, "A profile application is used to show which profiles have been applied to a package.");
-			type = _Property = createClass(pivot, PivotPackage.Literals.PROPERTY);
-			installComment(type, "A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
-			type = _PropertyCallExp = createClass(pivot, PivotPackage.Literals.PROPERTY_CALL_EXP);
-			type = _Pseudostate = createClass(pivot, PivotPackage.Literals.PSEUDOSTATE);
-			installComment(type, "A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step.");
-			type = _RealLiteralExp = createClass(pivot, PivotPackage.Literals.REAL_LITERAL_EXP);
-			type = _ReferringElement = createClass(pivot, PivotPackage.Literals.REFERRING_ELEMENT);
-			type.setIsAbstract(true);
-			type = _Region = createClass(pivot, PivotPackage.Literals.REGION);
-			installComment(type, "A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel.");
-			type = _ResultVariable = createClass(pivot, PivotPackage.Literals.RESULT_VARIABLE);
-			type = _SelfType = createClass(pivot, PivotPackage.Literals.SELF_TYPE);
-			type = _SendSignalAction = createClass(pivot, PivotPackage.Literals.SEND_SIGNAL_ACTION);
-			type = _SequenceType = createClass(pivot, PivotPackage.Literals.SEQUENCE_TYPE);
-			type = _SetType = createClass(pivot, PivotPackage.Literals.SET_TYPE);
-			type = _ShadowExp = createClass(pivot, PivotPackage.Literals.SHADOW_EXP);
-			type = _ShadowPart = createClass(pivot, PivotPackage.Literals.SHADOW_PART);
-			type = _Signal = createClass(pivot, PivotPackage.Literals.SIGNAL);
-			installComment(type, "A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.");
-			type = _Slot = createClass(pivot, PivotPackage.Literals.SLOT);
-			installComment(type, "A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.");
-			type = _StandardLibrary = createClass(pivot, PivotPackage.Literals.STANDARD_LIBRARY);
-			type.setIsAbstract(true);
-			type = _State = createClass(pivot, PivotPackage.Literals.STATE);
-			installComment(type, "A State models a situation during which some (usually implicit) invariant condition holds.");
-			type = _StateExp = createClass(pivot, PivotPackage.Literals.STATE_EXP);
-			type = _StateMachine = createClass(pivot, PivotPackage.Literals.STATE_MACHINE);
-			installComment(type, "StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine.");
-			type = _Stereotype = createClass(pivot, PivotPackage.Literals.STEREOTYPE);
-			installComment(type, "A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass.");
-			type = _StereotypeExtender = createClass(pivot, PivotPackage.Literals.STEREOTYPE_EXTENDER);
-			type = _StringLiteralExp = createClass(pivot, PivotPackage.Literals.STRING_LITERAL_EXP);
-			type = _TemplateBinding = createClass(pivot, PivotPackage.Literals.TEMPLATE_BINDING);
-			installComment(type, "A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template.");
-			type = _TemplateParameter = createClass(pivot, PivotPackage.Literals.TEMPLATE_PARAMETER);
-			installComment(type, "A TemplateParameter exposes a ParameterableElement as a formal parameter of a template.");
-			type = _TemplateParameterSubstitution = createClass(pivot, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION);
-			installComment(type, "A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.");
-			type = _TemplateSignature = createClass(pivot, PivotPackage.Literals.TEMPLATE_SIGNATURE);
-			installComment(type, "A Template Signature bundles the set of formal TemplateParameters for a template.");
-			type = _TemplateableElement = createClass(pivot, PivotPackage.Literals.TEMPLATEABLE_ELEMENT);
-			type.setIsAbstract(true);
-			installComment(type, "A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates.");
-			type = _Throwable = createClass(pivot, PivotPackage.Literals.THROWABLE);
-			type = _Transition = createClass(pivot, PivotPackage.Literals.TRANSITION);
-			installComment(type, "A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it.");
-			type = _Trigger = createClass(pivot, PivotPackage.Literals.TRIGGER);
-			installComment(type, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
-			type = _TupleLiteralExp = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_EXP);
-			type = _TupleLiteralPart = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_PART);
-			type = _TuplePart = createClass(pivot, PivotPackage.Literals.TUPLE_PART);
-			type.setIsAbstract(true);
-			type = _TupleType = createClass(pivot, PivotPackage.Literals.TUPLE_TYPE);
-			type = _Type = createClass(pivot, PivotPackage.Literals.TYPE);
-			type.setIsAbstract(true);
-			installComment(type, "A Type constrains the values represented by a TypedElement.");
-			type = _TypeExp = createClass(pivot, PivotPackage.Literals.TYPE_EXP);
-			type = _TypedElement = createClass(pivot, PivotPackage.Literals.TYPED_ELEMENT);
-			type.setIsAbstract(true);
-			installComment(type, "A TypedElement is a NamedElement that may have a Type specified for it.");
-			type = _UnlimitedNaturalLiteralExp = createClass(pivot, PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP);
-			type = _UnspecifiedValueExp = createClass(pivot, PivotPackage.Literals.UNSPECIFIED_VALUE_EXP);
-			type = _ValueSpecification = createClass(pivot, PivotPackage.Literals.VALUE_SPECIFICATION);
-			type.setIsAbstract(true);
-			installComment(type, "A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.");
-			type = _Variable = createClass(pivot, PivotPackage.Literals.VARIABLE);
-			type = _VariableDeclaration = createClass(pivot, PivotPackage.Literals.VARIABLE_DECLARATION);
-			type.setIsAbstract(true);
-			type = _VariableExp = createClass(pivot, PivotPackage.Literals.VARIABLE_EXP);
-			type = _Vertex = createClass(pivot, PivotPackage.Literals.VERTEX);
-			type.setIsAbstract(true);
-			installComment(type, "A Vertex is an abstraction of a node in a StateMachine graph. It can be the source or destination of any number of Transitions.");
-			type = _Visitable = createClass(pivot, PivotPackage.Literals.VISITABLE);
-			type.setIsAbstract(true);
-			type = _VoidType = createClass(pivot, PivotPackage.Literals.VOID_TYPE);
-			type = _WildcardType = createClass(pivot, PivotPackage.Literals.WILDCARD_TYPE);
-			installComment(type, "A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization.");
-
-			addSuperClass(_Annotation, _NamedElement);
-			addSuperClass(_AnyType, _Class);
-			addSuperClass(_AssociationClass, _Class);
-			addSuperClass(_AssociationClassCallExp, _NavigationCallExp);
-			addSuperClass(_BagType, _CollectionType);
-			addSuperClass(_Behavior, _Class);
-			addSuperClass(_BooleanLiteralExp, _PrimitiveLiteralExp);
-			addSuperClass(_BooleanType, _PrimitiveType);
-			addSuperClass(_CallExp, _OCLExpression);
-			addSuperClass(_CallOperationAction, _NamedElement);
-			addSuperClass(_Class, _Type);
-			addSuperClass(_Class, _Namespace);
-			addSuperClass(_Class, _TemplateableElement);
-			addSuperClass(_CollectionItem, _CollectionLiteralPart);
-			addSuperClass(_CollectionLiteralExp, _LiteralExp);
-			addSuperClass(_CollectionLiteralPart, _TypedElement);
-			addSuperClass(_CollectionRange, _CollectionLiteralPart);
-			addSuperClass(_CollectionType, _IterableType);
-			addSuperClass(_Comment, _Element);
-			addSuperClass(_CompleteClass, _NamedElement);
-			addSuperClass(_CompleteEnvironment, _Element);
-			addSuperClass(_CompleteModel, _NamedElement);
-			addSuperClass(_CompletePackage, _NamedElement);
-			addSuperClass(_CompleteStandardLibrary, _StandardLibrary);
-			addSuperClass(_ConnectionPointReference, _Vertex);
-			addSuperClass(_Constraint, _NamedElement);
-			addSuperClass(_DataType, _Class);
-			addSuperClass(_Detail, _NamedElement);
-			addSuperClass(_DynamicBehavior, _Behavior);
-			addSuperClass(_DynamicBehavior, _DynamicType);
-			addSuperClass(_DynamicElement, _Element);
-			addSuperClass(_DynamicProperty, _Element);
-			addSuperClass(_DynamicType, _Class);
-			addSuperClass(_DynamicType, _DynamicElement);
-			addSuperClass(_DynamicValueSpecification, _ValueSpecification);
-			addSuperClass(_EcoreObject, _OclAny);
-			addSuperClass(_Element, _OclElement);
-			addSuperClass(_ElementExtension, _Class);
-			addSuperClass(_ElementLiteralExp, _LiteralExp);
-			addSuperClass(_EnumLiteralExp, _LiteralExp);
-			addSuperClass(_Enumeration, _DataType);
-			addSuperClass(_EnumerationLiteral, _InstanceSpecification);
-			addSuperClass(_ExpressionInOCL, _LanguageExpression);
-			addSuperClass(_Feature, _TypedElement);
-			addSuperClass(_FeatureCallExp, _CallExp);
-			addSuperClass(_FinalState, _State);
-			addSuperClass(_IfExp, _OCLExpression);
-			addSuperClass(_Import, _NamedElement);
-			addSuperClass(_InstanceSpecification, _NamedElement);
-			addSuperClass(_IntegerLiteralExp, _NumericLiteralExp);
-			addSuperClass(_InvalidLiteralExp, _LiteralExp);
-			addSuperClass(_InvalidType, _Class);
-			addSuperClass(_IterableType, _DataType);
-			addSuperClass(_IterateExp, _LoopExp);
-			addSuperClass(_IterateExp, _ReferringElement);
-			addSuperClass(_Iteration, _Operation);
-			addSuperClass(_IteratorExp, _LoopExp);
-			addSuperClass(_IteratorExp, _ReferringElement);
-			addSuperClass(_IteratorVariable, _Variable);
-			addSuperClass(_JavaClass, _OclAny);
-			addSuperClass(_JavaType, _Class);
-			addSuperClass(_LambdaType, _DataType);
-			addSuperClass(_LanguageExpression, _ValueSpecification);
-			addSuperClass(_LetExp, _OCLExpression);
-			addSuperClass(_LetVariable, _Variable);
-			addSuperClass(_Library, _Package);
-			addSuperClass(_LibraryFeature, _OclAny);
-			addSuperClass(_LiteralExp, _OCLExpression);
-			addSuperClass(_LoopExp, _CallExp);
-			addSuperClass(_MapLiteralExp, _LiteralExp);
-			addSuperClass(_MapLiteralPart, _Element);
-			addSuperClass(_MapType, _IterableType);
-			addSuperClass(_MessageExp, _OCLExpression);
-			addSuperClass(_MessageType, _Class);
-			addSuperClass(_Model, _Namespace);
-			addSuperClass(_MorePivotable, _OclElement);
-			addSuperClass(_Nameable, _OclElement);
-			addSuperClass(_NamedElement, _Element);
-			addSuperClass(_Namespace, _NamedElement);
-			addSuperClass(_NavigationCallExp, _FeatureCallExp);
-			addSuperClass(_NullLiteralExp, _PrimitiveLiteralExp);
-			addSuperClass(_NumericLiteralExp, _PrimitiveLiteralExp);
-			addSuperClass(_OCLExpression, _TypedElement);
-			addSuperClass(_Object, _OclAny);
-			addSuperClass(_Operation, _Feature);
-			addSuperClass(_Operation, _Namespace);
-			addSuperClass(_Operation, _TemplateableElement);
-			addSuperClass(_OperationCallExp, _FeatureCallExp);
-			addSuperClass(_OperationCallExp, _ReferringElement);
-			addSuperClass(_OppositePropertyCallExp, _NavigationCallExp);
-			addSuperClass(_OrderedSetType, _CollectionType);
-			addSuperClass(_OrphanCompletePackage, _CompletePackage);
-			addSuperClass(_Orphanage, _Package);
-			addSuperClass(_Package, _Namespace);
-			addSuperClass(_Parameter, _VariableDeclaration);
-			addSuperClass(_ParameterVariable, _Variable);
-			addSuperClass(_Pivotable, _OclElement);
-			addSuperClass(_Precedence, _NamedElement);
-			addSuperClass(_PrimitiveCompletePackage, _CompletePackage);
-			addSuperClass(_PrimitiveLiteralExp, _LiteralExp);
-			addSuperClass(_PrimitiveType, _DataType);
-			addSuperClass(_Profile, _Package);
-			addSuperClass(_ProfileApplication, _Element);
-			addSuperClass(_Property, _Feature);
-			addSuperClass(_PropertyCallExp, _NavigationCallExp);
-			addSuperClass(_PropertyCallExp, _ReferringElement);
-			addSuperClass(_Pseudostate, _Vertex);
-			addSuperClass(_RealLiteralExp, _NumericLiteralExp);
-			addSuperClass(_ReferringElement, _OclElement);
-			addSuperClass(_Region, _Namespace);
-			addSuperClass(_ResultVariable, _Variable);
-			addSuperClass(_SelfType, _Class);
-			addSuperClass(_SendSignalAction, _NamedElement);
-			addSuperClass(_SequenceType, _CollectionType);
-			addSuperClass(_SetType, _CollectionType);
-			addSuperClass(_ShadowExp, _OCLExpression);
-			addSuperClass(_ShadowPart, _TypedElement);
-			addSuperClass(_Signal, _Class);
-			addSuperClass(_Slot, _Element);
-			addSuperClass(_StandardLibrary, _Element);
-			addSuperClass(_State, _Namespace);
-			addSuperClass(_State, _Vertex);
-			addSuperClass(_StateExp, _OCLExpression);
-			addSuperClass(_StateMachine, _Behavior);
-			addSuperClass(_Stereotype, _Class);
-			addSuperClass(_StereotypeExtender, _Element);
-			addSuperClass(_StringLiteralExp, _PrimitiveLiteralExp);
-			addSuperClass(_TemplateBinding, _Element);
-			addSuperClass(_TemplateParameter, _Type);
-			addSuperClass(_TemplateParameterSubstitution, _Element);
-			addSuperClass(_TemplateSignature, _Element);
-			addSuperClass(_TemplateableElement, _Element);
-			addSuperClass(_Throwable, _OclAny);
-			addSuperClass(_Transition, _Namespace);
-			addSuperClass(_Trigger, _NamedElement);
-			addSuperClass(_TupleLiteralExp, _LiteralExp);
-			addSuperClass(_TupleLiteralPart, _VariableDeclaration);
-			addSuperClass(_TuplePart, _OclElement);
-			addSuperClass(_TupleType, _DataType);
-			addSuperClass(_Type, _NamedElement);
-			addSuperClass(_TypeExp, _OCLExpression);
-			addSuperClass(_TypeExp, _ReferringElement);
-			addSuperClass(_TypedElement, _NamedElement);
-			addSuperClass(_TypedElement, _TuplePart);
-			addSuperClass(_UnlimitedNaturalLiteralExp, _NumericLiteralExp);
-			addSuperClass(_UnspecifiedValueExp, _OCLExpression);
-			addSuperClass(_ValueSpecification, _TypedElement);
-			addSuperClass(_Variable, _VariableDeclaration);
-			addSuperClass(_VariableDeclaration, _TypedElement);
-			addSuperClass(_VariableExp, _OCLExpression);
-			addSuperClass(_VariableExp, _ReferringElement);
-			addSuperClass(_Vertex, _NamedElement);
-			addSuperClass(_Visitable, _OclElement);
-			addSuperClass(_VoidType, _Class);
-			addSuperClass(_WildcardType, _Class);
-		}
-
-		private Enumeration _AssociativityKind;
-		private Enumeration _CollectionKind;
-		private Enumeration _PseudostateKind;
-		private Enumeration _TransitionKind;
-
-		private void installEnumerations() {
-			List<Class> ownedClasses;
-			Enumeration type;
-			List<EnumerationLiteral> enumerationLiterals;
-			EnumerationLiteral enumerationLiteral;
-			ownedClasses = pivot.getOwnedClasses();
-
-			ownedClasses.add(type = _AssociativityKind = createEnumeration(PivotPackage.Literals.ASSOCIATIVITY_KIND));
-			enumerationLiterals = type.getOwnedLiterals();
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("left")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("right")));
-			addSuperClass(_AssociativityKind, _OclEnumeration);
-
-			ownedClasses.add(type = _CollectionKind = createEnumeration(PivotPackage.Literals.COLLECTION_KIND));
-			enumerationLiterals = type.getOwnedLiterals();
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Collection")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Set")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("OrderedSet")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Bag")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Sequence")));
-			addSuperClass(_CollectionKind, _OclEnumeration);
-
-			ownedClasses.add(type = _PseudostateKind = createEnumeration(PivotPackage.Literals.PSEUDOSTATE_KIND));
-			enumerationLiterals = type.getOwnedLiterals();
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("initial")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("deepHistory")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("shallowHistory")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("join")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("fork")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("junction")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("choice")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("entryPoint")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("exitPoint")));
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("terminate")));
-			addSuperClass(_PseudostateKind, _OclEnumeration);
-			installComment(type, "PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates.");
-
-			ownedClasses.add(type = _TransitionKind = createEnumeration(PivotPackage.Literals.TRANSITION_KIND));
-			enumerationLiterals = type.getOwnedLiterals();
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("internal")));
-			installComment(enumerationLiteral, "Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State.");
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("local")));
-			installComment(enumerationLiteral, "Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration.");
-			enumerationLiterals.add(enumerationLiteral = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("external")));
-			installComment(enumerationLiteral, "Implies that the Transition, if triggered, will exit the composite (source) State.");
-			addSuperClass(_TransitionKind, _OclEnumeration);
-			installComment(type, "TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions.");
-		}
-
-		private CollectionType _Bag_Annotation_T;
-		private CollectionType _Bag_AssociationClassCallExp_T;
-		private CollectionType _Bag_CallOperationAction_T;
-		private CollectionType _Bag_Class_T;
-		private CollectionType _Bag_CollectionType_T;
-		private CollectionType _Bag_CompleteClass_T;
-		private CollectionType _Bag_CompleteModel_T;
-		private CollectionType _Bag_CompletePackage_T;
-		private CollectionType _Bag_ConnectionPointReference_T;
-		private CollectionType _Bag_Constraint_T;
-		private CollectionType _Bag_DataType_T;
-		private CollectionType _Bag_DynamicElement_T;
-		private CollectionType _Bag_DynamicProperty_T;
-		private CollectionType _Bag_ElementExtension_T;
-		private CollectionType _Bag_EnumLiteralExp_T;
-		private CollectionType _Bag_Import_T;
-		private CollectionType _Bag_InstanceSpecification_T;
-		private CollectionType _Bag_LambdaType_T;
-		private CollectionType _Bag_LoopExp_T;
-		private CollectionType _Bag_MapType_T;
-		private CollectionType _Bag_MessageType_T;
-		private CollectionType _Bag_NavigationCallExp_T;
-		private CollectionType _Bag_OCLExpression_T;
-		private CollectionType _Bag_OperationCallExp_T;
-		private CollectionType _Bag_Operation_T;
-		private CollectionType _Bag_OppositePropertyCallExp_T;
-		private CollectionType _Bag_Package_T;
-		private CollectionType _Bag_PrimitiveType_T;
-		private CollectionType _Bag_PropertyCallExp_T;
-		private CollectionType _Bag_Property_T;
-		private CollectionType _Bag_Region_T;
-		private CollectionType _Bag_SendSignalAction_T;
-		private CollectionType _Bag_ShadowPart_T;
-		private CollectionType _Bag_Slot_T;
-		private CollectionType _Bag_StateExp_T;
-		private CollectionType _Bag_StateMachine_T;
-		private CollectionType _Bag_State_T;
-		private CollectionType _Bag_TemplateBinding_T;
-		private CollectionType _Bag_TemplateParameterSubstitution_T;
-		private CollectionType _Bag_TemplateParameter_T;
-		private CollectionType _Bag_TemplateableElement_T;
-		private CollectionType _Bag_TypeExp_T;
-		private CollectionType _Bag_TypedElement_T;
-		private CollectionType _Bag_VariableDeclaration_T;
-		private CollectionType _Bag_VariableExp_T;
-		private CollectionType _Bag_Variable_T;
-		private CollectionType _Bag_WildcardType_T;
 		private CollectionType _Collection_String_T;
 		private CollectionType _Collection_Annotation_T;
 		private CollectionType _Collection_AssociationClassCallExp_T;
@@ -995,6 +568,96 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _OrderedCollection_Type_T;
 		private CollectionType _OrderedCollection_ValueSpecification_T;
 		private CollectionType _OrderedCollection_Variable_T;
+		private CollectionType _UniqueCollection_String_T;
+		private CollectionType _UniqueCollection_Behavior_T;
+		private CollectionType _UniqueCollection_Class_T;
+		private CollectionType _UniqueCollection_CollectionLiteralPart_T;
+		private CollectionType _UniqueCollection_Comment_T;
+		private CollectionType _UniqueCollection_CompleteClass_T;
+		private CollectionType _UniqueCollection_CompletePackage_T;
+		private CollectionType _UniqueCollection_ConnectionPointReference_T;
+		private CollectionType _UniqueCollection_Constraint_T;
+		private CollectionType _UniqueCollection_Detail_T;
+		private CollectionType _UniqueCollection_DynamicProperty_T;
+		private CollectionType _UniqueCollection_ElementExtension_T;
+		private CollectionType _UniqueCollection_Element_T;
+		private CollectionType _UniqueCollection_EnumerationLiteral_T;
+		private CollectionType _UniqueCollection_Import_T;
+		private CollectionType _UniqueCollection_InstanceSpecification_T;
+		private CollectionType _UniqueCollection_IteratorVariable_T;
+		private CollectionType _UniqueCollection_MapLiteralPart_T;
+		private CollectionType _UniqueCollection_Model_T;
+		private CollectionType _UniqueCollection_OCLExpression_T;
+		private CollectionType _UniqueCollection_Operation_T;
+		private CollectionType _UniqueCollection_Package_T;
+		private CollectionType _UniqueCollection_Parameter_T;
+		private CollectionType _UniqueCollection_Precedence_T;
+		private CollectionType _UniqueCollection_ProfileApplication_T;
+		private CollectionType _UniqueCollection_Property_T;
+		private CollectionType _UniqueCollection_Pseudostate_T;
+		private CollectionType _UniqueCollection_Region_T;
+		private CollectionType _UniqueCollection_ShadowPart_T;
+		private CollectionType _UniqueCollection_Slot_T;
+		private CollectionType _UniqueCollection_StateMachine_T;
+		private CollectionType _UniqueCollection_State_T;
+		private CollectionType _UniqueCollection_StereotypeExtender_T;
+		private CollectionType _UniqueCollection_TemplateBinding_T;
+		private CollectionType _UniqueCollection_TemplateParameterSubstitution_T;
+		private CollectionType _UniqueCollection_TemplateParameter_T;
+		private CollectionType _UniqueCollection_Transition_T;
+		private CollectionType _UniqueCollection_Trigger_T;
+		private CollectionType _UniqueCollection_TupleLiteralPart_T;
+		private CollectionType _UniqueCollection_Type_T;
+		private CollectionType _UniqueCollection_ValueSpecification_T;
+		private CollectionType _UniqueCollection_Variable_T;
+		private CollectionType _UniqueCollection_Vertex_T;
+		private CollectionType _Bag_Annotation_T;
+		private CollectionType _Bag_AssociationClassCallExp_T;
+		private CollectionType _Bag_CallOperationAction_T;
+		private CollectionType _Bag_Class_T;
+		private CollectionType _Bag_CollectionType_T;
+		private CollectionType _Bag_CompleteClass_T;
+		private CollectionType _Bag_CompleteModel_T;
+		private CollectionType _Bag_CompletePackage_T;
+		private CollectionType _Bag_ConnectionPointReference_T;
+		private CollectionType _Bag_Constraint_T;
+		private CollectionType _Bag_DataType_T;
+		private CollectionType _Bag_DynamicElement_T;
+		private CollectionType _Bag_DynamicProperty_T;
+		private CollectionType _Bag_ElementExtension_T;
+		private CollectionType _Bag_EnumLiteralExp_T;
+		private CollectionType _Bag_Import_T;
+		private CollectionType _Bag_InstanceSpecification_T;
+		private CollectionType _Bag_LambdaType_T;
+		private CollectionType _Bag_LoopExp_T;
+		private CollectionType _Bag_MapType_T;
+		private CollectionType _Bag_MessageType_T;
+		private CollectionType _Bag_NavigationCallExp_T;
+		private CollectionType _Bag_OCLExpression_T;
+		private CollectionType _Bag_OperationCallExp_T;
+		private CollectionType _Bag_Operation_T;
+		private CollectionType _Bag_OppositePropertyCallExp_T;
+		private CollectionType _Bag_Package_T;
+		private CollectionType _Bag_PrimitiveType_T;
+		private CollectionType _Bag_PropertyCallExp_T;
+		private CollectionType _Bag_Property_T;
+		private CollectionType _Bag_Region_T;
+		private CollectionType _Bag_SendSignalAction_T;
+		private CollectionType _Bag_ShadowPart_T;
+		private CollectionType _Bag_Slot_T;
+		private CollectionType _Bag_StateExp_T;
+		private CollectionType _Bag_StateMachine_T;
+		private CollectionType _Bag_State_T;
+		private CollectionType _Bag_TemplateBinding_T;
+		private CollectionType _Bag_TemplateParameterSubstitution_T;
+		private CollectionType _Bag_TemplateParameter_T;
+		private CollectionType _Bag_TemplateableElement_T;
+		private CollectionType _Bag_TypeExp_T;
+		private CollectionType _Bag_TypedElement_T;
+		private CollectionType _Bag_VariableDeclaration_T;
+		private CollectionType _Bag_VariableExp_T;
+		private CollectionType _Bag_Variable_T;
+		private CollectionType _Bag_WildcardType_T;
 		private CollectionType _OrderedSet_CollectionLiteralPart_T;
 		private CollectionType _OrderedSet_Detail_T;
 		private CollectionType _OrderedSet_Element_T;
@@ -1043,528 +706,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Set_Trigger_T;
 		private CollectionType _Set_Type_T;
 		private CollectionType _Set_Vertex_T;
-		private CollectionType _UniqueCollection_String_T;
-		private CollectionType _UniqueCollection_Behavior_T;
-		private CollectionType _UniqueCollection_Class_T;
-		private CollectionType _UniqueCollection_CollectionLiteralPart_T;
-		private CollectionType _UniqueCollection_Comment_T;
-		private CollectionType _UniqueCollection_CompleteClass_T;
-		private CollectionType _UniqueCollection_CompletePackage_T;
-		private CollectionType _UniqueCollection_ConnectionPointReference_T;
-		private CollectionType _UniqueCollection_Constraint_T;
-		private CollectionType _UniqueCollection_Detail_T;
-		private CollectionType _UniqueCollection_DynamicProperty_T;
-		private CollectionType _UniqueCollection_ElementExtension_T;
-		private CollectionType _UniqueCollection_Element_T;
-		private CollectionType _UniqueCollection_EnumerationLiteral_T;
-		private CollectionType _UniqueCollection_Import_T;
-		private CollectionType _UniqueCollection_InstanceSpecification_T;
-		private CollectionType _UniqueCollection_IteratorVariable_T;
-		private CollectionType _UniqueCollection_MapLiteralPart_T;
-		private CollectionType _UniqueCollection_Model_T;
-		private CollectionType _UniqueCollection_OCLExpression_T;
-		private CollectionType _UniqueCollection_Operation_T;
-		private CollectionType _UniqueCollection_Package_T;
-		private CollectionType _UniqueCollection_Parameter_T;
-		private CollectionType _UniqueCollection_Precedence_T;
-		private CollectionType _UniqueCollection_ProfileApplication_T;
-		private CollectionType _UniqueCollection_Property_T;
-		private CollectionType _UniqueCollection_Pseudostate_T;
-		private CollectionType _UniqueCollection_Region_T;
-		private CollectionType _UniqueCollection_ShadowPart_T;
-		private CollectionType _UniqueCollection_Slot_T;
-		private CollectionType _UniqueCollection_StateMachine_T;
-		private CollectionType _UniqueCollection_State_T;
-		private CollectionType _UniqueCollection_StereotypeExtender_T;
-		private CollectionType _UniqueCollection_TemplateBinding_T;
-		private CollectionType _UniqueCollection_TemplateParameterSubstitution_T;
-		private CollectionType _UniqueCollection_TemplateParameter_T;
-		private CollectionType _UniqueCollection_Transition_T;
-		private CollectionType _UniqueCollection_Trigger_T;
-		private CollectionType _UniqueCollection_TupleLiteralPart_T;
-		private CollectionType _UniqueCollection_Type_T;
-		private CollectionType _UniqueCollection_ValueSpecification_T;
-		private CollectionType _UniqueCollection_Variable_T;
-		private CollectionType _UniqueCollection_Vertex_T;
-
-		private void installGenericAggregateTypes() {
-			Class type;
-
-		}
-
-
-		private void installSpecializedAggregateTypes0() {
-			Class type;
-
-			type = _Bag_Annotation_T = getCollectionType(_Bag, _Annotation, true, 0, -1);
-			type = _Bag_AssociationClassCallExp_T = getCollectionType(_Bag, _AssociationClassCallExp, true, 0, -1);
-			type = _Bag_CallOperationAction_T = getCollectionType(_Bag, _CallOperationAction, true, 0, -1);
-			type = _Bag_Class_T = getCollectionType(_Bag, _Class, true, 0, -1);
-			type = _Bag_CollectionType_T = getCollectionType(_Bag, _CollectionType, true, 0, -1);
-			type = _Bag_CompleteClass_T = getCollectionType(_Bag, _CompleteClass, true, 0, -1);
-			type = _Bag_CompleteModel_T = getCollectionType(_Bag, _CompleteModel, true, 0, -1);
-			type = _Bag_CompletePackage_T = getCollectionType(_Bag, _CompletePackage, true, 0, -1);
-			type = _Bag_ConnectionPointReference_T = getCollectionType(_Bag, _ConnectionPointReference, true, 0, -1);
-			type = _Bag_Constraint_T = getCollectionType(_Bag, _Constraint, true, 0, -1);
-			type = _Bag_DataType_T = getCollectionType(_Bag, _DataType, true, 0, -1);
-			type = _Bag_DynamicElement_T = getCollectionType(_Bag, _DynamicElement, true, 0, -1);
-			type = _Bag_DynamicProperty_T = getCollectionType(_Bag, _DynamicProperty, true, 0, -1);
-			type = _Bag_ElementExtension_T = getCollectionType(_Bag, _ElementExtension, true, 0, -1);
-			type = _Bag_EnumLiteralExp_T = getCollectionType(_Bag, _EnumLiteralExp, true, 0, -1);
-			type = _Bag_Import_T = getCollectionType(_Bag, _Import, true, 0, -1);
-			type = _Bag_InstanceSpecification_T = getCollectionType(_Bag, _InstanceSpecification, true, 0, -1);
-			type = _Bag_LambdaType_T = getCollectionType(_Bag, _LambdaType, true, 0, -1);
-			type = _Bag_LoopExp_T = getCollectionType(_Bag, _LoopExp, true, 0, -1);
-			type = _Bag_MapType_T = getCollectionType(_Bag, _MapType, true, 0, -1);
-			type = _Bag_MessageType_T = getCollectionType(_Bag, _MessageType, true, 0, -1);
-			type = _Bag_NavigationCallExp_T = getCollectionType(_Bag, _NavigationCallExp, true, 0, -1);
-			type = _Bag_OCLExpression_T = getCollectionType(_Bag, _OCLExpression, true, 0, -1);
-			type = _Bag_OperationCallExp_T = getCollectionType(_Bag, _OperationCallExp, true, 0, -1);
-			type = _Bag_Operation_T = getCollectionType(_Bag, _Operation, true, 0, -1);
-			type = _Bag_OppositePropertyCallExp_T = getCollectionType(_Bag, _OppositePropertyCallExp, true, 0, -1);
-			type = _Bag_Package_T = getCollectionType(_Bag, _Package, true, 0, -1);
-			type = _Bag_PrimitiveType_T = getCollectionType(_Bag, _PrimitiveType, true, 0, -1);
-			type = _Bag_PropertyCallExp_T = getCollectionType(_Bag, _PropertyCallExp, true, 0, -1);
-			type = _Bag_Property_T = getCollectionType(_Bag, _Property, true, 0, -1);
-			type = _Bag_Region_T = getCollectionType(_Bag, _Region, true, 0, -1);
-			type = _Bag_SendSignalAction_T = getCollectionType(_Bag, _SendSignalAction, true, 0, -1);
-			type = _Bag_ShadowPart_T = getCollectionType(_Bag, _ShadowPart, true, 0, -1);
-			type = _Bag_Slot_T = getCollectionType(_Bag, _Slot, true, 0, -1);
-			type = _Bag_StateExp_T = getCollectionType(_Bag, _StateExp, true, 0, -1);
-			type = _Bag_StateMachine_T = getCollectionType(_Bag, _StateMachine, true, 0, -1);
-			type = _Bag_State_T = getCollectionType(_Bag, _State, true, 0, -1);
-			type = _Bag_TemplateBinding_T = getCollectionType(_Bag, _TemplateBinding, true, 0, -1);
-			type = _Bag_TemplateParameterSubstitution_T = getCollectionType(_Bag, _TemplateParameterSubstitution, true, 0, -1);
-			type = _Bag_TemplateParameter_T = getCollectionType(_Bag, _TemplateParameter, true, 0, -1);
-			type = _Bag_TemplateableElement_T = getCollectionType(_Bag, _TemplateableElement, true, 0, -1);
-			type = _Bag_TypeExp_T = getCollectionType(_Bag, _TypeExp, true, 0, -1);
-			type = _Bag_TypedElement_T = getCollectionType(_Bag, _TypedElement, true, 0, -1);
-			type = _Bag_VariableDeclaration_T = getCollectionType(_Bag, _VariableDeclaration, true, 0, -1);
-			type = _Bag_VariableExp_T = getCollectionType(_Bag, _VariableExp, true, 0, -1);
-			type = _Bag_Variable_T = getCollectionType(_Bag, _Variable, true, 0, -1);
-			type = _Bag_WildcardType_T = getCollectionType(_Bag, _WildcardType, true, 0, -1);
-			type = _Collection_String_T = getCollectionType(_Collection, _String, true, 0, -1);
-			type = _Collection_Annotation_T = getCollectionType(_Collection, _Annotation, true, 0, -1);
-			type = _Collection_AssociationClassCallExp_T = getCollectionType(_Collection, _AssociationClassCallExp, true, 0, -1);
-			type = _Collection_Behavior_T = getCollectionType(_Collection, _Behavior, true, 0, -1);
-			type = _Collection_CallOperationAction_T = getCollectionType(_Collection, _CallOperationAction, true, 0, -1);
-			type = _Collection_Class_T = getCollectionType(_Collection, _Class, true, 0, -1);
-			type = _Collection_CollectionLiteralPart_T = getCollectionType(_Collection, _CollectionLiteralPart, true, 0, -1);
-			type = _Collection_CollectionType_T = getCollectionType(_Collection, _CollectionType, true, 0, -1);
-			type = _Collection_Comment_T = getCollectionType(_Collection, _Comment, true, 0, -1);
-			type = _Collection_CompleteClass_T = getCollectionType(_Collection, _CompleteClass, true, 0, -1);
-			type = _Collection_CompleteModel_T = getCollectionType(_Collection, _CompleteModel, true, 0, -1);
-			type = _Collection_CompletePackage_T = getCollectionType(_Collection, _CompletePackage, true, 0, -1);
-			type = _Collection_ConnectionPointReference_T = getCollectionType(_Collection, _ConnectionPointReference, true, 0, -1);
-			type = _Collection_Constraint_T = getCollectionType(_Collection, _Constraint, true, 0, -1);
-			type = _Collection_DataType_T = getCollectionType(_Collection, _DataType, true, 0, -1);
-			type = _Collection_Detail_T = getCollectionType(_Collection, _Detail, true, 0, -1);
-			type = _Collection_DynamicElement_T = getCollectionType(_Collection, _DynamicElement, true, 0, -1);
-			type = _Collection_DynamicProperty_T = getCollectionType(_Collection, _DynamicProperty, true, 0, -1);
-			type = _Collection_ElementExtension_T = getCollectionType(_Collection, _ElementExtension, true, 0, -1);
-			type = _Collection_Element_T = getCollectionType(_Collection, _Element, true, 0, -1);
-			type = _Collection_EnumLiteralExp_T = getCollectionType(_Collection, _EnumLiteralExp, true, 0, -1);
-			type = _Collection_EnumerationLiteral_T = getCollectionType(_Collection, _EnumerationLiteral, true, 0, -1);
-			type = _Collection_Import_T = getCollectionType(_Collection, _Import, true, 0, -1);
-			type = _Collection_InstanceSpecification_T = getCollectionType(_Collection, _InstanceSpecification, true, 0, -1);
-			type = _Collection_IteratorVariable_T = getCollectionType(_Collection, _IteratorVariable, true, 0, -1);
-			type = _Collection_LambdaType_T = getCollectionType(_Collection, _LambdaType, true, 0, -1);
-			type = _Collection_LoopExp_T = getCollectionType(_Collection, _LoopExp, true, 0, -1);
-			type = _Collection_MapLiteralPart_T = getCollectionType(_Collection, _MapLiteralPart, true, 0, -1);
-			type = _Collection_MapType_T = getCollectionType(_Collection, _MapType, true, 0, -1);
-			type = _Collection_MessageType_T = getCollectionType(_Collection, _MessageType, true, 0, -1);
-			type = _Collection_Model_T = getCollectionType(_Collection, _Model, true, 0, -1);
-			type = _Collection_NavigationCallExp_T = getCollectionType(_Collection, _NavigationCallExp, true, 0, -1);
-			type = _Collection_OCLExpression_T = getCollectionType(_Collection, _OCLExpression, true, 0, -1);
-			type = _Collection_OperationCallExp_T = getCollectionType(_Collection, _OperationCallExp, true, 0, -1);
-			type = _Collection_Operation_T = getCollectionType(_Collection, _Operation, true, 0, -1);
-			type = _Collection_OppositePropertyCallExp_T = getCollectionType(_Collection, _OppositePropertyCallExp, true, 0, -1);
-			type = _Collection_Package_T = getCollectionType(_Collection, _Package, true, 0, -1);
-			type = _Collection_Parameter_T = getCollectionType(_Collection, _Parameter, true, 0, -1);
-			type = _Collection_Precedence_T = getCollectionType(_Collection, _Precedence, true, 0, -1);
-			type = _Collection_PrimitiveType_T = getCollectionType(_Collection, _PrimitiveType, true, 0, -1);
-			type = _Collection_ProfileApplication_T = getCollectionType(_Collection, _ProfileApplication, true, 0, -1);
-			type = _Collection_PropertyCallExp_T = getCollectionType(_Collection, _PropertyCallExp, true, 0, -1);
-			type = _Collection_Property_T = getCollectionType(_Collection, _Property, true, 0, -1);
-			type = _Collection_Pseudostate_T = getCollectionType(_Collection, _Pseudostate, true, 0, -1);
-			type = _Collection_Region_T = getCollectionType(_Collection, _Region, true, 0, -1);
-			type = _Collection_SendSignalAction_T = getCollectionType(_Collection, _SendSignalAction, true, 0, -1);
-			type = _Collection_ShadowPart_T = getCollectionType(_Collection, _ShadowPart, true, 0, -1);
-			type = _Collection_Slot_T = getCollectionType(_Collection, _Slot, true, 0, -1);
-			type = _Collection_StateExp_T = getCollectionType(_Collection, _StateExp, true, 0, -1);
-			type = _Collection_StateMachine_T = getCollectionType(_Collection, _StateMachine, true, 0, -1);
-			type = _Collection_State_T = getCollectionType(_Collection, _State, true, 0, -1);
-			type = _Collection_StereotypeExtender_T = getCollectionType(_Collection, _StereotypeExtender, true, 0, -1);
-			type = _Collection_TemplateBinding_T = getCollectionType(_Collection, _TemplateBinding, true, 0, -1);
-			type = _Collection_TemplateParameterSubstitution_T = getCollectionType(_Collection, _TemplateParameterSubstitution, true, 0, -1);
-			type = _Collection_TemplateParameter_T = getCollectionType(_Collection, _TemplateParameter, true, 0, -1);
-			type = _Collection_TemplateableElement_T = getCollectionType(_Collection, _TemplateableElement, true, 0, -1);
-			type = _Collection_Transition_T = getCollectionType(_Collection, _Transition, true, 0, -1);
-			type = _Collection_Trigger_T = getCollectionType(_Collection, _Trigger, true, 0, -1);
-			type = _Collection_TupleLiteralPart_T = getCollectionType(_Collection, _TupleLiteralPart, true, 0, -1);
-			type = _Collection_TypeExp_T = getCollectionType(_Collection, _TypeExp, true, 0, -1);
-			type = _Collection_Type_T = getCollectionType(_Collection, _Type, true, 0, -1);
-			type = _Collection_TypedElement_T = getCollectionType(_Collection, _TypedElement, true, 0, -1);
-			type = _Collection_ValueSpecification_T = getCollectionType(_Collection, _ValueSpecification, true, 0, -1);
-			type = _Collection_VariableDeclaration_T = getCollectionType(_Collection, _VariableDeclaration, true, 0, -1);
-			type = _Collection_VariableExp_T = getCollectionType(_Collection, _VariableExp, true, 0, -1);
-			type = _Collection_Variable_T = getCollectionType(_Collection, _Variable, true, 0, -1);
-			type = _Collection_Vertex_T = getCollectionType(_Collection, _Vertex, true, 0, -1);
-			type = _Collection_WildcardType_T = getCollectionType(_Collection, _WildcardType, true, 0, -1);
-			type = _OrderedCollection_CollectionLiteralPart_T = getCollectionType(_OrderedCollection, _CollectionLiteralPart, true, 0, -1);
-			type = _OrderedCollection_Detail_T = getCollectionType(_OrderedCollection, _Detail, true, 0, -1);
-			type = _OrderedCollection_Element_T = getCollectionType(_OrderedCollection, _Element, true, 0, -1);
-			type = _OrderedCollection_EnumerationLiteral_T = getCollectionType(_OrderedCollection, _EnumerationLiteral, true, 0, -1);
-			type = _OrderedCollection_Import_T = getCollectionType(_OrderedCollection, _Import, true, 0, -1);
-			type = _OrderedCollection_IteratorVariable_T = getCollectionType(_OrderedCollection, _IteratorVariable, true, 0, -1);
-			type = _OrderedCollection_MapLiteralPart_T = getCollectionType(_OrderedCollection, _MapLiteralPart, true, 0, -1);
-			type = _OrderedCollection_OCLExpression_T = getCollectionType(_OrderedCollection, _OCLExpression, true, 0, -1);
-			type = _OrderedCollection_Operation_T = getCollectionType(_OrderedCollection, _Operation, true, 0, -1);
-			type = _OrderedCollection_Parameter_T = getCollectionType(_OrderedCollection, _Parameter, true, 0, -1);
-			type = _OrderedCollection_Precedence_T = getCollectionType(_OrderedCollection, _Precedence, true, 0, -1);
-			type = _OrderedCollection_Property_T = getCollectionType(_OrderedCollection, _Property, true, 0, -1);
-			type = _OrderedCollection_ShadowPart_T = getCollectionType(_OrderedCollection, _ShadowPart, true, 0, -1);
-			type = _OrderedCollection_TemplateParameter_T = getCollectionType(_OrderedCollection, _TemplateParameter, true, 0, -1);
-			type = _OrderedCollection_TupleLiteralPart_T = getCollectionType(_OrderedCollection, _TupleLiteralPart, true, 0, -1);
-			type = _OrderedCollection_Type_T = getCollectionType(_OrderedCollection, _Type, true, 0, -1);
-			type = _OrderedCollection_ValueSpecification_T = getCollectionType(_OrderedCollection, _ValueSpecification, true, 0, -1);
-			type = _OrderedCollection_Variable_T = getCollectionType(_OrderedCollection, _Variable, true, 0, -1);
-			type = _OrderedSet_CollectionLiteralPart_T = getCollectionType(_OrderedSet, _CollectionLiteralPart, true, 0, -1);
-			type = _OrderedSet_Detail_T = getCollectionType(_OrderedSet, _Detail, true, 0, -1);
-			type = _OrderedSet_Element_T = getCollectionType(_OrderedSet, _Element, true, 0, -1);
-			type = _OrderedSet_EnumerationLiteral_T = getCollectionType(_OrderedSet, _EnumerationLiteral, true, 0, -1);
-			type = _OrderedSet_Import_T = getCollectionType(_OrderedSet, _Import, true, 0, -1);
-			type = _OrderedSet_IteratorVariable_F = getCollectionType(_OrderedSet, _IteratorVariable, false, 0, -1);
-			type = _OrderedSet_MapLiteralPart_T = getCollectionType(_OrderedSet, _MapLiteralPart, true, 0, -1);
-			type = _OrderedSet_OCLExpression_T = getCollectionType(_OrderedSet, _OCLExpression, true, 0, -1);
-			type = _OrderedSet_Operation_T = getCollectionType(_OrderedSet, _Operation, true, 0, -1);
-			type = _OrderedSet_Parameter_T = getCollectionType(_OrderedSet, _Parameter, true, 0, -1);
-			type = _OrderedSet_Precedence_T = getCollectionType(_OrderedSet, _Precedence, true, 0, -1);
-			type = _OrderedSet_Property_T = getCollectionType(_OrderedSet, _Property, true, 0, -1);
-			type = _OrderedSet_ShadowPart_T = getCollectionType(_OrderedSet, _ShadowPart, true, 0, -1);
-			type = _OrderedSet_TemplateParameter_T_L1 = getCollectionType(_OrderedSet, _TemplateParameter, true, 1, -1);
-			type = _OrderedSet_TupleLiteralPart_T = getCollectionType(_OrderedSet, _TupleLiteralPart, true, 0, -1);
-			type = _OrderedSet_ValueSpecification_T = getCollectionType(_OrderedSet, _ValueSpecification, true, 0, -1);
-			type = _OrderedSet_Variable_T = getCollectionType(_OrderedSet, _Variable, true, 0, -1);
-			type = _Sequence_Type_T = getCollectionType(_Sequence, _Type, true, 0, -1);
-			type = _Set_String_T_L1 = getCollectionType(_Set, _String, true, 1, -1);
-			type = _Set_Behavior_T = getCollectionType(_Set, _Behavior, true, 0, -1);
-			type = _Set_Class_T = getCollectionType(_Set, _Class, true, 0, -1);
-			type = _Set_Comment_T = getCollectionType(_Set, _Comment, true, 0, -1);
-			type = _Set_CompleteClass_T = getCollectionType(_Set, _CompleteClass, true, 0, -1);
-			type = _Set_CompletePackage_T = getCollectionType(_Set, _CompletePackage, true, 0, -1);
-			type = _Set_ConnectionPointReference_T = getCollectionType(_Set, _ConnectionPointReference, true, 0, -1);
-			type = _Set_Constraint_T = getCollectionType(_Set, _Constraint, true, 0, -1);
-			type = _Set_DynamicProperty_T = getCollectionType(_Set, _DynamicProperty, true, 0, -1);
-			type = _Set_ElementExtension_T = getCollectionType(_Set, _ElementExtension, true, 0, -1);
-			type = _Set_Element_T = getCollectionType(_Set, _Element, true, 0, -1);
-			type = _Set_InstanceSpecification_T = getCollectionType(_Set, _InstanceSpecification, true, 0, -1);
-			type = _Set_Model_T = getCollectionType(_Set, _Model, true, 0, -1);
-			type = _Set_Operation_T = getCollectionType(_Set, _Operation, true, 0, -1);
-			type = _Set_Package_T = getCollectionType(_Set, _Package, true, 0, -1);
-			type = _Set_ProfileApplication_T = getCollectionType(_Set, _ProfileApplication, true, 0, -1);
-			type = _Set_Property_T = getCollectionType(_Set, _Property, true, 0, -1);
-			type = _Set_Pseudostate_T = getCollectionType(_Set, _Pseudostate, true, 0, -1);
-			type = _Set_Region_T = getCollectionType(_Set, _Region, true, 0, -1);
-			type = _Set_Region_T_L1 = getCollectionType(_Set, _Region, true, 1, -1);
-			type = _Set_Slot_T = getCollectionType(_Set, _Slot, true, 0, -1);
-			type = _Set_StateMachine_T = getCollectionType(_Set, _StateMachine, true, 0, -1);
-			type = _Set_State_T = getCollectionType(_Set, _State, true, 0, -1);
-			type = _Set_StereotypeExtender_T = getCollectionType(_Set, _StereotypeExtender, true, 0, -1);
-			type = _Set_TemplateBinding_T = getCollectionType(_Set, _TemplateBinding, true, 0, -1);
-			type = _Set_TemplateParameterSubstitution_T_L1 = getCollectionType(_Set, _TemplateParameterSubstitution, true, 1, -1);
-			type = _Set_Transition_T = getCollectionType(_Set, _Transition, true, 0, -1);
-			type = _Set_Trigger_T = getCollectionType(_Set, _Trigger, true, 0, -1);
-			type = _Set_Type_T = getCollectionType(_Set, _Type, true, 0, -1);
-			type = _Set_Vertex_T = getCollectionType(_Set, _Vertex, true, 0, -1);
-			type = _UniqueCollection_String_T = getCollectionType(_UniqueCollection, _String, true, 0, -1);
-			type = _UniqueCollection_Behavior_T = getCollectionType(_UniqueCollection, _Behavior, true, 0, -1);
-			type = _UniqueCollection_Class_T = getCollectionType(_UniqueCollection, _Class, true, 0, -1);
-			type = _UniqueCollection_CollectionLiteralPart_T = getCollectionType(_UniqueCollection, _CollectionLiteralPart, true, 0, -1);
-			type = _UniqueCollection_Comment_T = getCollectionType(_UniqueCollection, _Comment, true, 0, -1);
-			type = _UniqueCollection_CompleteClass_T = getCollectionType(_UniqueCollection, _CompleteClass, true, 0, -1);
-			type = _UniqueCollection_CompletePackage_T = getCollectionType(_UniqueCollection, _CompletePackage, true, 0, -1);
-			type = _UniqueCollection_ConnectionPointReference_T = getCollectionType(_UniqueCollection, _ConnectionPointReference, true, 0, -1);
-			type = _UniqueCollection_Constraint_T = getCollectionType(_UniqueCollection, _Constraint, true, 0, -1);
-			type = _UniqueCollection_Detail_T = getCollectionType(_UniqueCollection, _Detail, true, 0, -1);
-			type = _UniqueCollection_DynamicProperty_T = getCollectionType(_UniqueCollection, _DynamicProperty, true, 0, -1);
-			type = _UniqueCollection_ElementExtension_T = getCollectionType(_UniqueCollection, _ElementExtension, true, 0, -1);
-			type = _UniqueCollection_Element_T = getCollectionType(_UniqueCollection, _Element, true, 0, -1);
-			type = _UniqueCollection_EnumerationLiteral_T = getCollectionType(_UniqueCollection, _EnumerationLiteral, true, 0, -1);
-			type = _UniqueCollection_Import_T = getCollectionType(_UniqueCollection, _Import, true, 0, -1);
-			type = _UniqueCollection_InstanceSpecification_T = getCollectionType(_UniqueCollection, _InstanceSpecification, true, 0, -1);
-			type = _UniqueCollection_IteratorVariable_T = getCollectionType(_UniqueCollection, _IteratorVariable, true, 0, -1);
-			type = _UniqueCollection_MapLiteralPart_T = getCollectionType(_UniqueCollection, _MapLiteralPart, true, 0, -1);
-			type = _UniqueCollection_Model_T = getCollectionType(_UniqueCollection, _Model, true, 0, -1);
-			type = _UniqueCollection_OCLExpression_T = getCollectionType(_UniqueCollection, _OCLExpression, true, 0, -1);
-			type = _UniqueCollection_Operation_T = getCollectionType(_UniqueCollection, _Operation, true, 0, -1);
-			type = _UniqueCollection_Package_T = getCollectionType(_UniqueCollection, _Package, true, 0, -1);
-			type = _UniqueCollection_Parameter_T = getCollectionType(_UniqueCollection, _Parameter, true, 0, -1);
-			type = _UniqueCollection_Precedence_T = getCollectionType(_UniqueCollection, _Precedence, true, 0, -1);
-			type = _UniqueCollection_ProfileApplication_T = getCollectionType(_UniqueCollection, _ProfileApplication, true, 0, -1);
-			type = _UniqueCollection_Property_T = getCollectionType(_UniqueCollection, _Property, true, 0, -1);
-			type = _UniqueCollection_Pseudostate_T = getCollectionType(_UniqueCollection, _Pseudostate, true, 0, -1);
-			type = _UniqueCollection_Region_T = getCollectionType(_UniqueCollection, _Region, true, 0, -1);
-			type = _UniqueCollection_ShadowPart_T = getCollectionType(_UniqueCollection, _ShadowPart, true, 0, -1);
-			type = _UniqueCollection_Slot_T = getCollectionType(_UniqueCollection, _Slot, true, 0, -1);
-			type = _UniqueCollection_StateMachine_T = getCollectionType(_UniqueCollection, _StateMachine, true, 0, -1);
-			type = _UniqueCollection_State_T = getCollectionType(_UniqueCollection, _State, true, 0, -1);
-			type = _UniqueCollection_StereotypeExtender_T = getCollectionType(_UniqueCollection, _StereotypeExtender, true, 0, -1);
-			type = _UniqueCollection_TemplateBinding_T = getCollectionType(_UniqueCollection, _TemplateBinding, true, 0, -1);
-			type = _UniqueCollection_TemplateParameterSubstitution_T = getCollectionType(_UniqueCollection, _TemplateParameterSubstitution, true, 0, -1);
-			type = _UniqueCollection_TemplateParameter_T = getCollectionType(_UniqueCollection, _TemplateParameter, true, 0, -1);
-			type = _UniqueCollection_Transition_T = getCollectionType(_UniqueCollection, _Transition, true, 0, -1);
-			type = _UniqueCollection_Trigger_T = getCollectionType(_UniqueCollection, _Trigger, true, 0, -1);
-			type = _UniqueCollection_TupleLiteralPart_T = getCollectionType(_UniqueCollection, _TupleLiteralPart, true, 0, -1);
-			type = _UniqueCollection_Type_T = getCollectionType(_UniqueCollection, _Type, true, 0, -1);
-			type = _UniqueCollection_ValueSpecification_T = getCollectionType(_UniqueCollection, _ValueSpecification, true, 0, -1);
-			type = _UniqueCollection_Variable_T = getCollectionType(_UniqueCollection, _Variable, true, 0, -1);
-			type = _UniqueCollection_Vertex_T = getCollectionType(_UniqueCollection, _Vertex, true, 0, -1);
-		}
-
-		private void installAggregateSuperTypes() {
-			addSuperClass(_Bag_Annotation_T, _Collection_Annotation_T);
-			addSuperClass(_Bag_AssociationClassCallExp_T, _Collection_AssociationClassCallExp_T);
-			addSuperClass(_Bag_CallOperationAction_T, _Collection_CallOperationAction_T);
-			addSuperClass(_Bag_Class_T, _Collection_Class_T);
-			addSuperClass(_Bag_CollectionType_T, _Collection_CollectionType_T);
-			addSuperClass(_Bag_CompleteClass_T, _Collection_CompleteClass_T);
-			addSuperClass(_Bag_CompleteModel_T, _Collection_CompleteModel_T);
-			addSuperClass(_Bag_CompletePackage_T, _Collection_CompletePackage_T);
-			addSuperClass(_Bag_ConnectionPointReference_T, _Collection_ConnectionPointReference_T);
-			addSuperClass(_Bag_Constraint_T, _Collection_Constraint_T);
-			addSuperClass(_Bag_DataType_T, _Collection_DataType_T);
-			addSuperClass(_Bag_DynamicElement_T, _Collection_DynamicElement_T);
-			addSuperClass(_Bag_DynamicProperty_T, _Collection_DynamicProperty_T);
-			addSuperClass(_Bag_ElementExtension_T, _Collection_ElementExtension_T);
-			addSuperClass(_Bag_EnumLiteralExp_T, _Collection_EnumLiteralExp_T);
-			addSuperClass(_Bag_Import_T, _Collection_Import_T);
-			addSuperClass(_Bag_InstanceSpecification_T, _Collection_InstanceSpecification_T);
-			addSuperClass(_Bag_LambdaType_T, _Collection_LambdaType_T);
-			addSuperClass(_Bag_LoopExp_T, _Collection_LoopExp_T);
-			addSuperClass(_Bag_MapType_T, _Collection_MapType_T);
-			addSuperClass(_Bag_MessageType_T, _Collection_MessageType_T);
-			addSuperClass(_Bag_NavigationCallExp_T, _Collection_NavigationCallExp_T);
-			addSuperClass(_Bag_OCLExpression_T, _Collection_OCLExpression_T);
-			addSuperClass(_Bag_OperationCallExp_T, _Collection_OperationCallExp_T);
-			addSuperClass(_Bag_Operation_T, _Collection_Operation_T);
-			addSuperClass(_Bag_OppositePropertyCallExp_T, _Collection_OppositePropertyCallExp_T);
-			addSuperClass(_Bag_Package_T, _Collection_Package_T);
-			addSuperClass(_Bag_PrimitiveType_T, _Collection_PrimitiveType_T);
-			addSuperClass(_Bag_PropertyCallExp_T, _Collection_PropertyCallExp_T);
-			addSuperClass(_Bag_Property_T, _Collection_Property_T);
-			addSuperClass(_Bag_Region_T, _Collection_Region_T);
-			addSuperClass(_Bag_SendSignalAction_T, _Collection_SendSignalAction_T);
-			addSuperClass(_Bag_ShadowPart_T, _Collection_ShadowPart_T);
-			addSuperClass(_Bag_Slot_T, _Collection_Slot_T);
-			addSuperClass(_Bag_StateExp_T, _Collection_StateExp_T);
-			addSuperClass(_Bag_StateMachine_T, _Collection_StateMachine_T);
-			addSuperClass(_Bag_State_T, _Collection_State_T);
-			addSuperClass(_Bag_TemplateBinding_T, _Collection_TemplateBinding_T);
-			addSuperClass(_Bag_TemplateParameterSubstitution_T, _Collection_TemplateParameterSubstitution_T);
-			addSuperClass(_Bag_TemplateParameter_T, _Collection_TemplateParameter_T);
-			addSuperClass(_Bag_TemplateableElement_T, _Collection_TemplateableElement_T);
-			addSuperClass(_Bag_TypeExp_T, _Collection_TypeExp_T);
-			addSuperClass(_Bag_TypedElement_T, _Collection_TypedElement_T);
-			addSuperClass(_Bag_VariableDeclaration_T, _Collection_VariableDeclaration_T);
-			addSuperClass(_Bag_VariableExp_T, _Collection_VariableExp_T);
-			addSuperClass(_Bag_Variable_T, _Collection_Variable_T);
-			addSuperClass(_Bag_WildcardType_T, _Collection_WildcardType_T);
-			addSuperClass(_Collection_String_T, _OclAny);
-			addSuperClass(_Collection_Annotation_T, _OclAny);
-			addSuperClass(_Collection_AssociationClassCallExp_T, _OclAny);
-			addSuperClass(_Collection_Behavior_T, _OclAny);
-			addSuperClass(_Collection_CallOperationAction_T, _OclAny);
-			addSuperClass(_Collection_Class_T, _OclAny);
-			addSuperClass(_Collection_CollectionLiteralPart_T, _OclAny);
-			addSuperClass(_Collection_CollectionType_T, _OclAny);
-			addSuperClass(_Collection_Comment_T, _OclAny);
-			addSuperClass(_Collection_CompleteClass_T, _OclAny);
-			addSuperClass(_Collection_CompleteModel_T, _OclAny);
-			addSuperClass(_Collection_CompletePackage_T, _OclAny);
-			addSuperClass(_Collection_ConnectionPointReference_T, _OclAny);
-			addSuperClass(_Collection_Constraint_T, _OclAny);
-			addSuperClass(_Collection_DataType_T, _OclAny);
-			addSuperClass(_Collection_Detail_T, _OclAny);
-			addSuperClass(_Collection_DynamicElement_T, _OclAny);
-			addSuperClass(_Collection_DynamicProperty_T, _OclAny);
-			addSuperClass(_Collection_ElementExtension_T, _OclAny);
-			addSuperClass(_Collection_Element_T, _OclAny);
-			addSuperClass(_Collection_EnumLiteralExp_T, _OclAny);
-			addSuperClass(_Collection_EnumerationLiteral_T, _OclAny);
-			addSuperClass(_Collection_Import_T, _OclAny);
-			addSuperClass(_Collection_InstanceSpecification_T, _OclAny);
-			addSuperClass(_Collection_IteratorVariable_T, _OclAny);
-			addSuperClass(_Collection_LambdaType_T, _OclAny);
-			addSuperClass(_Collection_LoopExp_T, _OclAny);
-			addSuperClass(_Collection_MapLiteralPart_T, _OclAny);
-			addSuperClass(_Collection_MapType_T, _OclAny);
-			addSuperClass(_Collection_MessageType_T, _OclAny);
-			addSuperClass(_Collection_Model_T, _OclAny);
-			addSuperClass(_Collection_NavigationCallExp_T, _OclAny);
-			addSuperClass(_Collection_OCLExpression_T, _OclAny);
-			addSuperClass(_Collection_OperationCallExp_T, _OclAny);
-			addSuperClass(_Collection_Operation_T, _OclAny);
-			addSuperClass(_Collection_OppositePropertyCallExp_T, _OclAny);
-			addSuperClass(_Collection_Package_T, _OclAny);
-			addSuperClass(_Collection_Parameter_T, _OclAny);
-			addSuperClass(_Collection_Precedence_T, _OclAny);
-			addSuperClass(_Collection_PrimitiveType_T, _OclAny);
-			addSuperClass(_Collection_ProfileApplication_T, _OclAny);
-			addSuperClass(_Collection_PropertyCallExp_T, _OclAny);
-			addSuperClass(_Collection_Property_T, _OclAny);
-			addSuperClass(_Collection_Pseudostate_T, _OclAny);
-			addSuperClass(_Collection_Region_T, _OclAny);
-			addSuperClass(_Collection_SendSignalAction_T, _OclAny);
-			addSuperClass(_Collection_ShadowPart_T, _OclAny);
-			addSuperClass(_Collection_Slot_T, _OclAny);
-			addSuperClass(_Collection_StateExp_T, _OclAny);
-			addSuperClass(_Collection_StateMachine_T, _OclAny);
-			addSuperClass(_Collection_State_T, _OclAny);
-			addSuperClass(_Collection_StereotypeExtender_T, _OclAny);
-			addSuperClass(_Collection_TemplateBinding_T, _OclAny);
-			addSuperClass(_Collection_TemplateParameterSubstitution_T, _OclAny);
-			addSuperClass(_Collection_TemplateParameter_T, _OclAny);
-			addSuperClass(_Collection_TemplateableElement_T, _OclAny);
-			addSuperClass(_Collection_Transition_T, _OclAny);
-			addSuperClass(_Collection_Trigger_T, _OclAny);
-			addSuperClass(_Collection_TupleLiteralPart_T, _OclAny);
-			addSuperClass(_Collection_TypeExp_T, _OclAny);
-			addSuperClass(_Collection_Type_T, _OclAny);
-			addSuperClass(_Collection_TypedElement_T, _OclAny);
-			addSuperClass(_Collection_ValueSpecification_T, _OclAny);
-			addSuperClass(_Collection_VariableDeclaration_T, _OclAny);
-			addSuperClass(_Collection_VariableExp_T, _OclAny);
-			addSuperClass(_Collection_Variable_T, _OclAny);
-			addSuperClass(_Collection_Vertex_T, _OclAny);
-			addSuperClass(_Collection_WildcardType_T, _OclAny);
-			addSuperClass(_OrderedCollection_CollectionLiteralPart_T, _Collection_CollectionLiteralPart_T);
-			addSuperClass(_OrderedCollection_Detail_T, _Collection_Detail_T);
-			addSuperClass(_OrderedCollection_Element_T, _Collection_Element_T);
-			addSuperClass(_OrderedCollection_EnumerationLiteral_T, _Collection_EnumerationLiteral_T);
-			addSuperClass(_OrderedCollection_Import_T, _Collection_Import_T);
-			addSuperClass(_OrderedCollection_IteratorVariable_T, _Collection_IteratorVariable_T);
-			addSuperClass(_OrderedCollection_MapLiteralPart_T, _Collection_MapLiteralPart_T);
-			addSuperClass(_OrderedCollection_OCLExpression_T, _Collection_OCLExpression_T);
-			addSuperClass(_OrderedCollection_Operation_T, _Collection_Operation_T);
-			addSuperClass(_OrderedCollection_Parameter_T, _Collection_Parameter_T);
-			addSuperClass(_OrderedCollection_Precedence_T, _Collection_Precedence_T);
-			addSuperClass(_OrderedCollection_Property_T, _Collection_Property_T);
-			addSuperClass(_OrderedCollection_ShadowPart_T, _Collection_ShadowPart_T);
-			addSuperClass(_OrderedCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
-			addSuperClass(_OrderedCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
-			addSuperClass(_OrderedCollection_Type_T, _Collection_Type_T);
-			addSuperClass(_OrderedCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
-			addSuperClass(_OrderedCollection_Variable_T, _Collection_Variable_T);
-			addSuperClass(_OrderedSet_CollectionLiteralPart_T, _OrderedCollection_CollectionLiteralPart_T);
-			addSuperClass(_OrderedSet_CollectionLiteralPart_T, _UniqueCollection_CollectionLiteralPart_T);
-			addSuperClass(_OrderedSet_Detail_T, _OrderedCollection_Detail_T);
-			addSuperClass(_OrderedSet_Detail_T, _UniqueCollection_Detail_T);
-			addSuperClass(_OrderedSet_Element_T, _OrderedCollection_Element_T);
-			addSuperClass(_OrderedSet_Element_T, _UniqueCollection_Element_T);
-			addSuperClass(_OrderedSet_EnumerationLiteral_T, _OrderedCollection_EnumerationLiteral_T);
-			addSuperClass(_OrderedSet_EnumerationLiteral_T, _UniqueCollection_EnumerationLiteral_T);
-			addSuperClass(_OrderedSet_Import_T, _OrderedCollection_Import_T);
-			addSuperClass(_OrderedSet_Import_T, _UniqueCollection_Import_T);
-			addSuperClass(_OrderedSet_IteratorVariable_F, _OrderedCollection_IteratorVariable_T);
-			addSuperClass(_OrderedSet_IteratorVariable_F, _UniqueCollection_IteratorVariable_T);
-			addSuperClass(_OrderedSet_MapLiteralPart_T, _OrderedCollection_MapLiteralPart_T);
-			addSuperClass(_OrderedSet_MapLiteralPart_T, _UniqueCollection_MapLiteralPart_T);
-			addSuperClass(_OrderedSet_OCLExpression_T, _OrderedCollection_OCLExpression_T);
-			addSuperClass(_OrderedSet_OCLExpression_T, _UniqueCollection_OCLExpression_T);
-			addSuperClass(_OrderedSet_Operation_T, _OrderedCollection_Operation_T);
-			addSuperClass(_OrderedSet_Operation_T, _UniqueCollection_Operation_T);
-			addSuperClass(_OrderedSet_Parameter_T, _OrderedCollection_Parameter_T);
-			addSuperClass(_OrderedSet_Parameter_T, _UniqueCollection_Parameter_T);
-			addSuperClass(_OrderedSet_Precedence_T, _OrderedCollection_Precedence_T);
-			addSuperClass(_OrderedSet_Precedence_T, _UniqueCollection_Precedence_T);
-			addSuperClass(_OrderedSet_Property_T, _OrderedCollection_Property_T);
-			addSuperClass(_OrderedSet_Property_T, _UniqueCollection_Property_T);
-			addSuperClass(_OrderedSet_ShadowPart_T, _OrderedCollection_ShadowPart_T);
-			addSuperClass(_OrderedSet_ShadowPart_T, _UniqueCollection_ShadowPart_T);
-			addSuperClass(_OrderedSet_TemplateParameter_T_L1, _OrderedCollection_TemplateParameter_T);
-			addSuperClass(_OrderedSet_TemplateParameter_T_L1, _UniqueCollection_TemplateParameter_T);
-			addSuperClass(_OrderedSet_TupleLiteralPart_T, _OrderedCollection_TupleLiteralPart_T);
-			addSuperClass(_OrderedSet_TupleLiteralPart_T, _UniqueCollection_TupleLiteralPart_T);
-			addSuperClass(_OrderedSet_ValueSpecification_T, _OrderedCollection_ValueSpecification_T);
-			addSuperClass(_OrderedSet_ValueSpecification_T, _UniqueCollection_ValueSpecification_T);
-			addSuperClass(_OrderedSet_Variable_T, _OrderedCollection_Variable_T);
-			addSuperClass(_OrderedSet_Variable_T, _UniqueCollection_Variable_T);
-			addSuperClass(_Sequence_Type_T, _OrderedCollection_Type_T);
-			addSuperClass(_Set_String_T_L1, _UniqueCollection_String_T);
-			addSuperClass(_Set_Behavior_T, _UniqueCollection_Behavior_T);
-			addSuperClass(_Set_Class_T, _UniqueCollection_Class_T);
-			addSuperClass(_Set_Comment_T, _UniqueCollection_Comment_T);
-			addSuperClass(_Set_CompleteClass_T, _UniqueCollection_CompleteClass_T);
-			addSuperClass(_Set_CompletePackage_T, _UniqueCollection_CompletePackage_T);
-			addSuperClass(_Set_ConnectionPointReference_T, _UniqueCollection_ConnectionPointReference_T);
-			addSuperClass(_Set_Constraint_T, _UniqueCollection_Constraint_T);
-			addSuperClass(_Set_DynamicProperty_T, _UniqueCollection_DynamicProperty_T);
-			addSuperClass(_Set_ElementExtension_T, _UniqueCollection_ElementExtension_T);
-			addSuperClass(_Set_Element_T, _UniqueCollection_Element_T);
-			addSuperClass(_Set_InstanceSpecification_T, _UniqueCollection_InstanceSpecification_T);
-			addSuperClass(_Set_Model_T, _UniqueCollection_Model_T);
-			addSuperClass(_Set_Operation_T, _UniqueCollection_Operation_T);
-			addSuperClass(_Set_Package_T, _UniqueCollection_Package_T);
-			addSuperClass(_Set_ProfileApplication_T, _UniqueCollection_ProfileApplication_T);
-			addSuperClass(_Set_Property_T, _UniqueCollection_Property_T);
-			addSuperClass(_Set_Pseudostate_T, _UniqueCollection_Pseudostate_T);
-			addSuperClass(_Set_Region_T, _UniqueCollection_Region_T);
-			addSuperClass(_Set_Region_T_L1, _UniqueCollection_Region_T);
-			addSuperClass(_Set_Slot_T, _UniqueCollection_Slot_T);
-			addSuperClass(_Set_StateMachine_T, _UniqueCollection_StateMachine_T);
-			addSuperClass(_Set_State_T, _UniqueCollection_State_T);
-			addSuperClass(_Set_StereotypeExtender_T, _UniqueCollection_StereotypeExtender_T);
-			addSuperClass(_Set_TemplateBinding_T, _UniqueCollection_TemplateBinding_T);
-			addSuperClass(_Set_TemplateParameterSubstitution_T_L1, _UniqueCollection_TemplateParameterSubstitution_T);
-			addSuperClass(_Set_Transition_T, _UniqueCollection_Transition_T);
-			addSuperClass(_Set_Trigger_T, _UniqueCollection_Trigger_T);
-			addSuperClass(_Set_Type_T, _UniqueCollection_Type_T);
-			addSuperClass(_Set_Vertex_T, _UniqueCollection_Vertex_T);
-			addSuperClass(_UniqueCollection_String_T, _Collection_String_T);
-			addSuperClass(_UniqueCollection_Behavior_T, _Collection_Behavior_T);
-			addSuperClass(_UniqueCollection_Class_T, _Collection_Class_T);
-			addSuperClass(_UniqueCollection_CollectionLiteralPart_T, _Collection_CollectionLiteralPart_T);
-			addSuperClass(_UniqueCollection_Comment_T, _Collection_Comment_T);
-			addSuperClass(_UniqueCollection_CompleteClass_T, _Collection_CompleteClass_T);
-			addSuperClass(_UniqueCollection_CompletePackage_T, _Collection_CompletePackage_T);
-			addSuperClass(_UniqueCollection_ConnectionPointReference_T, _Collection_ConnectionPointReference_T);
-			addSuperClass(_UniqueCollection_Constraint_T, _Collection_Constraint_T);
-			addSuperClass(_UniqueCollection_Detail_T, _Collection_Detail_T);
-			addSuperClass(_UniqueCollection_DynamicProperty_T, _Collection_DynamicProperty_T);
-			addSuperClass(_UniqueCollection_ElementExtension_T, _Collection_ElementExtension_T);
-			addSuperClass(_UniqueCollection_Element_T, _Collection_Element_T);
-			addSuperClass(_UniqueCollection_EnumerationLiteral_T, _Collection_EnumerationLiteral_T);
-			addSuperClass(_UniqueCollection_Import_T, _Collection_Import_T);
-			addSuperClass(_UniqueCollection_InstanceSpecification_T, _Collection_InstanceSpecification_T);
-			addSuperClass(_UniqueCollection_IteratorVariable_T, _Collection_IteratorVariable_T);
-			addSuperClass(_UniqueCollection_MapLiteralPart_T, _Collection_MapLiteralPart_T);
-			addSuperClass(_UniqueCollection_Model_T, _Collection_Model_T);
-			addSuperClass(_UniqueCollection_OCLExpression_T, _Collection_OCLExpression_T);
-			addSuperClass(_UniqueCollection_Operation_T, _Collection_Operation_T);
-			addSuperClass(_UniqueCollection_Package_T, _Collection_Package_T);
-			addSuperClass(_UniqueCollection_Parameter_T, _Collection_Parameter_T);
-			addSuperClass(_UniqueCollection_Precedence_T, _Collection_Precedence_T);
-			addSuperClass(_UniqueCollection_ProfileApplication_T, _Collection_ProfileApplication_T);
-			addSuperClass(_UniqueCollection_Property_T, _Collection_Property_T);
-			addSuperClass(_UniqueCollection_Pseudostate_T, _Collection_Pseudostate_T);
-			addSuperClass(_UniqueCollection_Region_T, _Collection_Region_T);
-			addSuperClass(_UniqueCollection_ShadowPart_T, _Collection_ShadowPart_T);
-			addSuperClass(_UniqueCollection_Slot_T, _Collection_Slot_T);
-			addSuperClass(_UniqueCollection_StateMachine_T, _Collection_StateMachine_T);
-			addSuperClass(_UniqueCollection_State_T, _Collection_State_T);
-			addSuperClass(_UniqueCollection_StereotypeExtender_T, _Collection_StereotypeExtender_T);
-			addSuperClass(_UniqueCollection_TemplateBinding_T, _Collection_TemplateBinding_T);
-			addSuperClass(_UniqueCollection_TemplateParameterSubstitution_T, _Collection_TemplateParameterSubstitution_T);
-			addSuperClass(_UniqueCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
-			addSuperClass(_UniqueCollection_Transition_T, _Collection_Transition_T);
-			addSuperClass(_UniqueCollection_Trigger_T, _Collection_Trigger_T);
-			addSuperClass(_UniqueCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
-			addSuperClass(_UniqueCollection_Type_T, _Collection_Type_T);
-			addSuperClass(_UniqueCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
-			addSuperClass(_UniqueCollection_Variable_T, _Collection_Variable_T);
-			addSuperClass(_UniqueCollection_Vertex_T, _Collection_Vertex_T);
-		}
 		private Operation op_CompleteModel_getOwnedCompletePackage;
 		private Operation op_CompletePackage_getOwnedCompleteClass;
 		private Operation op_Element_allOwnedElements;
@@ -1588,8 +729,1559 @@ public class OCLmetamodel extends ASResourceImpl
 		private Operation op_ValueSpecification_isNull;
 		private Operation op_ValueSpecification_stringValue;
 		private Operation op_ValueSpecification_unlimitedValue;
+		// declare ENUMERATION_LITERALS Model
+		private Class _Boolean;
+		private Class _Integer;
+		private Class _Real;
+		private Class _String;
+		private Class _UnlimitedNatural;
+		private Class _OclAny;
+		private Class _OclElement;
+		private Class _OclEnumeration;
+		private TemplateParameter _Bag_T;
+		private TemplateParameter _Collection_T;
+		private TemplateParameter _OrderedCollection_T;
+		private TemplateParameter _OrderedSet_T;
+		private TemplateParameter _Sequence_T;
+		private TemplateParameter _Set_T;
+		private TemplateParameter _UniqueCollection_T;
+		private CollectionType _Collection;
+		private CollectionType _OrderedCollection;
+		private CollectionType _UniqueCollection;
+		private CollectionType _Bag;
+		private CollectionType _OrderedSet;
+		private CollectionType _Sequence;
+		private CollectionType _Set;
+		// declare FRAGMENT_OPERATIONS Model
+		// declare FRAGMENT_PROPERTIES Model
+		// declare OPERATIONS BooleanType
+		// declare OPERATIONS DataType
+		// declare OPERATIONS DataType
+		// declare OPERATIONS DataType
+		// declare OPERATIONS DataType
+		// declare OPERATIONS DataType
+		// declare OPERATIONS Enumeration
+		// declare OPERATIONS Enumeration
+		// declare OPERATIONS Enumeration
+		// declare OPERATIONS Enumeration
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS PrimitiveType
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS Class
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS CollectionType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS BagType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS OrderedSetType
+		// declare OPERATIONS SequenceType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare OPERATIONS SetType
+		// declare PARAMETER_LISTS Model
+		// declare PROPERTIES BooleanType
+		// declare PROPERTIES DataType
+		// declare PROPERTIES DataType
+		// declare PROPERTIES DataType
+		// declare PROPERTIES DataType
+		// declare PROPERTIES DataType
+		// declare PROPERTIES Enumeration
+		// declare PROPERTIES Enumeration
+		// declare PROPERTIES Enumeration
+		// declare PROPERTIES Enumeration
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES PrimitiveType
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES Class
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES CollectionType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES BagType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES OrderedSetType
+		// declare PROPERTIES SequenceType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare PROPERTIES SetType
+		// declare TYPE_FRAGMENTS Model
+		// declare TYPE_PARAMETERS Model
 
-		private void installOperationDeclarations() {
+		private void installSlots0() {
+			//	root = defineModel_name(root, "Pivot.ecore");
+			_Boolean = getClass(_ocl, "Boolean");
+			_Integer = getClass(_ocl, "Integer");
+			_Real = getClass(_ocl, "Real");
+			_String = getClass(_ocl, "String");
+			_UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
+			_OclAny = getClass(_ocl, "OclAny");
+			_OclElement = getClass(_ocl, "OclElement");
+			_OclEnumeration = getClass(_ocl, "OclEnumeration");
+			_Collection = getCollectionType(_ocl, "Collection");
+			_OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
+			_UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
+			_Bag = getCollectionType(_ocl, "Bag");
+			_OrderedSet = getCollectionType(_ocl, "OrderedSet");
+			_Sequence = getCollectionType(_ocl, "Sequence");
+			_Set = getCollectionType(_ocl, "Set");
+		}
+
+		private void installSlots1() {
+			//	orphanage = definePackage_name(orphanage, "$$");
+			//	pivot = definePackage_name(pivot, "pivot");
+			_Bag_T = getTemplateParameter(_Bag, 0);
+			_Collection_T = getTemplateParameter(_Collection, 0);
+			_OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
+			_OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
+			_Sequence_T = getTemplateParameter(_Sequence, 0);
+			_Set_T = getTemplateParameter(_Set, 0);
+			_UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
+			// define TYPE_PARAMETERS Model
+		}
+
+		private void installSlots2a() {
+			// define ALL_TYPES Model
+			_Boolean = createPrimitiveType(pivot, PivotPackage.Literals.BOOLEAN);
+			_EcoreObject = createClass(pivot, PivotPackage.Literals.ECORE_OBJECT);
+			_JavaClass = createClass(pivot, PivotPackage.Literals.JAVA_CLASS);
+			_LibraryFeature = createClass(pivot, PivotPackage.Literals.LIBRARY_FEATURE);
+			_Object = createClass(pivot, PivotPackage.Literals.OBJECT);
+			_Throwable = createClass(pivot, PivotPackage.Literals.THROWABLE);
+			_AssociativityKind = createEnumeration(pivot, PivotPackage.Literals.ASSOCIATIVITY_KIND);
+			_CollectionKind = createEnumeration(pivot, PivotPackage.Literals.COLLECTION_KIND);
+			_PseudostateKind = createEnumeration(pivot, PivotPackage.Literals.PSEUDOSTATE_KIND);
+			_TransitionKind = createEnumeration(pivot, PivotPackage.Literals.TRANSITION_KIND);
+			_Integer = createPrimitiveType(pivot, PivotPackage.Literals.INTEGER);
+			_Real = createPrimitiveType(pivot, PivotPackage.Literals.REAL);
+			_String = createPrimitiveType(pivot, PivotPackage.Literals.STRING);
+			_UnlimitedNatural = createPrimitiveType(pivot, PivotPackage.Literals.UNLIMITED_NATURAL);
+			_Annotation = createClass(pivot, PivotPackage.Literals.ANNOTATION);
+			_AnyType = createClass(pivot, PivotPackage.Literals.ANY_TYPE);
+			_AssociationClass = createClass(pivot, PivotPackage.Literals.ASSOCIATION_CLASS);
+			_AssociationClassCallExp = createClass(pivot, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP);
+			_BagType = createClass(pivot, PivotPackage.Literals.BAG_TYPE);
+			_Behavior = createClass(pivot, PivotPackage.Literals.BEHAVIOR);
+			_Behavior.setIsAbstract(true);
+			_BooleanLiteralExp = createClass(pivot, PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
+			_BooleanType = createClass(pivot, PivotPackage.Literals.BOOLEAN_TYPE);
+			_CallExp = createClass(pivot, PivotPackage.Literals.CALL_EXP);
+			_CallExp.setIsAbstract(true);
+			_CallOperationAction = createClass(pivot, PivotPackage.Literals.CALL_OPERATION_ACTION);
+			_Class = createClass(pivot, PivotPackage.Literals.CLASS);
+			_CollectionItem = createClass(pivot, PivotPackage.Literals.COLLECTION_ITEM);
+			_CollectionLiteralExp = createClass(pivot, PivotPackage.Literals.COLLECTION_LITERAL_EXP);
+			_CollectionLiteralPart = createClass(pivot, PivotPackage.Literals.COLLECTION_LITERAL_PART);
+			_CollectionLiteralPart.setIsAbstract(true);
+			_CollectionRange = createClass(pivot, PivotPackage.Literals.COLLECTION_RANGE);
+			_CollectionType = createClass(pivot, PivotPackage.Literals.COLLECTION_TYPE);
+			_Comment = createClass(pivot, PivotPackage.Literals.COMMENT);
+			_CompleteClass = createClass(pivot, PivotPackage.Literals.COMPLETE_CLASS);
+			_CompleteEnvironment = createClass(pivot, PivotPackage.Literals.COMPLETE_ENVIRONMENT);
+			_CompleteModel = createClass(pivot, PivotPackage.Literals.COMPLETE_MODEL);
+			_CompletePackage = createClass(pivot, PivotPackage.Literals.COMPLETE_PACKAGE);
+			_CompleteStandardLibrary = createClass(pivot, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY);
+			_ConnectionPointReference = createClass(pivot, PivotPackage.Literals.CONNECTION_POINT_REFERENCE);
+			_Constraint = createClass(pivot, PivotPackage.Literals.CONSTRAINT);
+			_DataType = createClass(pivot, PivotPackage.Literals.DATA_TYPE);
+			_Detail = createClass(pivot, PivotPackage.Literals.DETAIL);
+			_DynamicBehavior = createClass(pivot, PivotPackage.Literals.DYNAMIC_BEHAVIOR);
+			_DynamicElement = createClass(pivot, PivotPackage.Literals.DYNAMIC_ELEMENT);
+			_DynamicProperty = createClass(pivot, PivotPackage.Literals.DYNAMIC_PROPERTY);
+			_DynamicType = createClass(pivot, PivotPackage.Literals.DYNAMIC_TYPE);
+			_DynamicValueSpecification = createClass(pivot, PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION);
+			_Element = createClass(pivot, PivotPackage.Literals.ELEMENT);
+			_Element.setIsAbstract(true);
+			_ElementExtension = createClass(pivot, PivotPackage.Literals.ELEMENT_EXTENSION);
+			_ElementLiteralExp = createClass(pivot, PivotPackage.Literals.ELEMENT_LITERAL_EXP);
+			_EnumLiteralExp = createClass(pivot, PivotPackage.Literals.ENUM_LITERAL_EXP);
+			_Enumeration = createClass(pivot, PivotPackage.Literals.ENUMERATION);
+			_EnumerationLiteral = createClass(pivot, PivotPackage.Literals.ENUMERATION_LITERAL);
+			_ExpressionInOCL = createClass(pivot, PivotPackage.Literals.EXPRESSION_IN_OCL);
+			_Feature = createClass(pivot, PivotPackage.Literals.FEATURE);
+			_Feature.setIsAbstract(true);
+			_FeatureCallExp = createClass(pivot, PivotPackage.Literals.FEATURE_CALL_EXP);
+			_FeatureCallExp.setIsAbstract(true);
+			_FinalState = createClass(pivot, PivotPackage.Literals.FINAL_STATE);
+			_IfExp = createClass(pivot, PivotPackage.Literals.IF_EXP);
+			_Import = createClass(pivot, PivotPackage.Literals.IMPORT);
+			_InstanceSpecification = createClass(pivot, PivotPackage.Literals.INSTANCE_SPECIFICATION);
+			_IntegerLiteralExp = createClass(pivot, PivotPackage.Literals.INTEGER_LITERAL_EXP);
+			_InvalidLiteralExp = createClass(pivot, PivotPackage.Literals.INVALID_LITERAL_EXP);
+			_InvalidType = createClass(pivot, PivotPackage.Literals.INVALID_TYPE);
+			_IterableType = createClass(pivot, PivotPackage.Literals.ITERABLE_TYPE);
+			_IterableType.setIsAbstract(true);
+			_IterateExp = createClass(pivot, PivotPackage.Literals.ITERATE_EXP);
+			_Iteration = createClass(pivot, PivotPackage.Literals.ITERATION);
+			_IteratorExp = createClass(pivot, PivotPackage.Literals.ITERATOR_EXP);
+			_IteratorVariable = createClass(pivot, PivotPackage.Literals.ITERATOR_VARIABLE);
+			_JavaType = createClass(pivot, PivotPackage.Literals.JAVA_TYPE);
+			_LambdaType = createClass(pivot, PivotPackage.Literals.LAMBDA_TYPE);
+			_LanguageExpression = createClass(pivot, PivotPackage.Literals.LANGUAGE_EXPRESSION);
+			_LanguageExpression.setIsAbstract(true);
+			_LetExp = createClass(pivot, PivotPackage.Literals.LET_EXP);
+			_LetVariable = createClass(pivot, PivotPackage.Literals.LET_VARIABLE);
+			_Library = createClass(pivot, PivotPackage.Literals.LIBRARY);
+			_LiteralExp = createClass(pivot, PivotPackage.Literals.LITERAL_EXP);
+			_LiteralExp.setIsAbstract(true);
+			_LoopExp = createClass(pivot, PivotPackage.Literals.LOOP_EXP);
+			_LoopExp.setIsAbstract(true);
+			_MapLiteralExp = createClass(pivot, PivotPackage.Literals.MAP_LITERAL_EXP);
+			_MapLiteralPart = createClass(pivot, PivotPackage.Literals.MAP_LITERAL_PART);
+			_MapType = createClass(pivot, PivotPackage.Literals.MAP_TYPE);
+			_MessageExp = createClass(pivot, PivotPackage.Literals.MESSAGE_EXP);
+			_MessageType = createClass(pivot, PivotPackage.Literals.MESSAGE_TYPE);
+			_Model = createClass(pivot, PivotPackage.Literals.MODEL);
+			_MorePivotable = createClass(pivot, PivotPackage.Literals.MORE_PIVOTABLE);
+			_MorePivotable.setIsAbstract(true);
+			_Nameable = createClass(pivot, PivotPackage.Literals.NAMEABLE);
+			_Nameable.setIsAbstract(true);
+			_NamedElement = createClass(pivot, PivotPackage.Literals.NAMED_ELEMENT);
+			_NamedElement.setIsAbstract(true);
+			_Namespace = createClass(pivot, PivotPackage.Literals.NAMESPACE);
+			_Namespace.setIsAbstract(true);
+			_NavigationCallExp = createClass(pivot, PivotPackage.Literals.NAVIGATION_CALL_EXP);
+			_NavigationCallExp.setIsAbstract(true);
+			_NullLiteralExp = createClass(pivot, PivotPackage.Literals.NULL_LITERAL_EXP);
+			_NumericLiteralExp = createClass(pivot, PivotPackage.Literals.NUMERIC_LITERAL_EXP);
+			_NumericLiteralExp.setIsAbstract(true);
+			_OCLExpression = createClass(pivot, PivotPackage.Literals.OCL_EXPRESSION);
+			_OCLExpression.setIsAbstract(true);
+			_Operation = createClass(pivot, PivotPackage.Literals.OPERATION);
+			_OperationCallExp = createClass(pivot, PivotPackage.Literals.OPERATION_CALL_EXP);
+			_OppositePropertyCallExp = createClass(pivot, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP);
+			_OrderedSetType = createClass(pivot, PivotPackage.Literals.ORDERED_SET_TYPE);
+			_OrphanCompletePackage = createClass(pivot, PivotPackage.Literals.ORPHAN_COMPLETE_PACKAGE);
+			_Orphanage = createClass(pivot, PivotPackage.Literals.ORPHANAGE);
+			_Package = createClass(pivot, PivotPackage.Literals.PACKAGE);
+			_Parameter = createClass(pivot, PivotPackage.Literals.PARAMETER);
+			_ParameterVariable = createClass(pivot, PivotPackage.Literals.PARAMETER_VARIABLE);
+			_Pivotable = createClass(pivot, PivotPackage.Literals.PIVOTABLE);
+			_Pivotable.setIsAbstract(true);
+			_Precedence = createClass(pivot, PivotPackage.Literals.PRECEDENCE);
+		}
+
+		private void installSlots2b() {
+			_PrimitiveCompletePackage = createClass(pivot, PivotPackage.Literals.PRIMITIVE_COMPLETE_PACKAGE);
+			_PrimitiveLiteralExp = createClass(pivot, PivotPackage.Literals.PRIMITIVE_LITERAL_EXP);
+			_PrimitiveLiteralExp.setIsAbstract(true);
+			_PrimitiveType = createClass(pivot, PivotPackage.Literals.PRIMITIVE_TYPE);
+			_Profile = createClass(pivot, PivotPackage.Literals.PROFILE);
+			_ProfileApplication = createClass(pivot, PivotPackage.Literals.PROFILE_APPLICATION);
+			_Property = createClass(pivot, PivotPackage.Literals.PROPERTY);
+			_PropertyCallExp = createClass(pivot, PivotPackage.Literals.PROPERTY_CALL_EXP);
+			_Pseudostate = createClass(pivot, PivotPackage.Literals.PSEUDOSTATE);
+			_RealLiteralExp = createClass(pivot, PivotPackage.Literals.REAL_LITERAL_EXP);
+			_ReferringElement = createClass(pivot, PivotPackage.Literals.REFERRING_ELEMENT);
+			_ReferringElement.setIsAbstract(true);
+			_Region = createClass(pivot, PivotPackage.Literals.REGION);
+			_ResultVariable = createClass(pivot, PivotPackage.Literals.RESULT_VARIABLE);
+			_SelfType = createClass(pivot, PivotPackage.Literals.SELF_TYPE);
+			_SendSignalAction = createClass(pivot, PivotPackage.Literals.SEND_SIGNAL_ACTION);
+			_SequenceType = createClass(pivot, PivotPackage.Literals.SEQUENCE_TYPE);
+			_SetType = createClass(pivot, PivotPackage.Literals.SET_TYPE);
+			_ShadowExp = createClass(pivot, PivotPackage.Literals.SHADOW_EXP);
+			_ShadowPart = createClass(pivot, PivotPackage.Literals.SHADOW_PART);
+			_Signal = createClass(pivot, PivotPackage.Literals.SIGNAL);
+			_Slot = createClass(pivot, PivotPackage.Literals.SLOT);
+			_StandardLibrary = createClass(pivot, PivotPackage.Literals.STANDARD_LIBRARY);
+			_StandardLibrary.setIsAbstract(true);
+			_State = createClass(pivot, PivotPackage.Literals.STATE);
+			_StateExp = createClass(pivot, PivotPackage.Literals.STATE_EXP);
+			_StateMachine = createClass(pivot, PivotPackage.Literals.STATE_MACHINE);
+			_Stereotype = createClass(pivot, PivotPackage.Literals.STEREOTYPE);
+			_StereotypeExtender = createClass(pivot, PivotPackage.Literals.STEREOTYPE_EXTENDER);
+			_StringLiteralExp = createClass(pivot, PivotPackage.Literals.STRING_LITERAL_EXP);
+			_TemplateBinding = createClass(pivot, PivotPackage.Literals.TEMPLATE_BINDING);
+			_TemplateParameter = createClass(pivot, PivotPackage.Literals.TEMPLATE_PARAMETER);
+			_TemplateParameterSubstitution = createClass(pivot, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION);
+			_TemplateSignature = createClass(pivot, PivotPackage.Literals.TEMPLATE_SIGNATURE);
+			_TemplateableElement = createClass(pivot, PivotPackage.Literals.TEMPLATEABLE_ELEMENT);
+			_TemplateableElement.setIsAbstract(true);
+			_Transition = createClass(pivot, PivotPackage.Literals.TRANSITION);
+			_Trigger = createClass(pivot, PivotPackage.Literals.TRIGGER);
+			_TupleLiteralExp = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_EXP);
+			_TupleLiteralPart = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_PART);
+			_TuplePart = createClass(pivot, PivotPackage.Literals.TUPLE_PART);
+			_TuplePart.setIsAbstract(true);
+			_TupleType = createClass(pivot, PivotPackage.Literals.TUPLE_TYPE);
+			_Type = createClass(pivot, PivotPackage.Literals.TYPE);
+			_Type.setIsAbstract(true);
+			_TypeExp = createClass(pivot, PivotPackage.Literals.TYPE_EXP);
+			_TypedElement = createClass(pivot, PivotPackage.Literals.TYPED_ELEMENT);
+			_TypedElement.setIsAbstract(true);
+			_UnlimitedNaturalLiteralExp = createClass(pivot, PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP);
+			_UnspecifiedValueExp = createClass(pivot, PivotPackage.Literals.UNSPECIFIED_VALUE_EXP);
+			_ValueSpecification = createClass(pivot, PivotPackage.Literals.VALUE_SPECIFICATION);
+			_ValueSpecification.setIsAbstract(true);
+			_Variable = createClass(pivot, PivotPackage.Literals.VARIABLE);
+			_VariableDeclaration = createClass(pivot, PivotPackage.Literals.VARIABLE_DECLARATION);
+			_VariableDeclaration.setIsAbstract(true);
+			_VariableExp = createClass(pivot, PivotPackage.Literals.VARIABLE_EXP);
+			_Vertex = createClass(pivot, PivotPackage.Literals.VERTEX);
+			_Vertex.setIsAbstract(true);
+			_Visitable = createClass(pivot, PivotPackage.Literals.VISITABLE);
+			_Visitable.setIsAbstract(true);
+			_VoidType = createClass(pivot, PivotPackage.Literals.VOID_TYPE);
+			_WildcardType = createClass(pivot, PivotPackage.Literals.WILDCARD_TYPE);
+		}
+
+		private void installSlots3a() {
+			// define ALL_FRAGMENTS Model
+			installComment(_Boolean, "Boolean is used for logical expressions, consisting of the predefined values true and false.");
+			installComment(_PseudostateKind, "PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates.");
+			installComment(_TransitionKind, "TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions.");
+			installComment(_Integer, "Integer is a primitive type representing integer values.");
+			installComment(_Real, "Real is a primitive type representing the mathematical concept of real.");
+			installComment(_String, "String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.");
+			installComment(_UnlimitedNatural, "UnlimitedNatural is a primitive type representing unlimited natural values.");
+			installComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
+			installComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
+			installComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
+			installComment(_Comment, "A Comment is a textual annotation that can be attached to a set of Elements.");
+			installComment(_ConnectionPointReference, "A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State.");
+			installComment(_Constraint, "A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements.");
+			installComment(_DataType, "A DataType is a type whose instances are identified only by their value.");
+			installComment(_Element, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
+			installComment(_Enumeration, "An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.");
+			installComment(_EnumerationLiteral, "An EnumerationLiteral is a user-defined data value for an Enumeration.");
+			installComment(_Feature, "A Feature declares a behavioral or structural characteristic of Classifiers.");
+			installComment(_FinalState, "A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.");
+			installComment(_InstanceSpecification, "An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.");
+			installComment(_JavaType, "JavaType supports the use of a Java class as part of a foreign operation or property call.");
+			installComment(_Model, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
+			installComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
+			installComment(_Namespace, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
+			installComment(_Operation, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
+			installComment(_Package, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
+			installComment(_Parameter, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
+			installComment(_PrimitiveType, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
+			installComment(_Profile, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
+			installComment(_ProfileApplication, "A profile application is used to show which profiles have been applied to a package.");
+			installComment(_Property, "A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
+			installComment(_Pseudostate, "A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step.");
+			installComment(_Region, "A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel.");
+			installComment(_Signal, "A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.");
+			installComment(_Slot, "A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.");
+			installComment(_State, "A State models a situation during which some (usually implicit) invariant condition holds.");
+			installComment(_StateMachine, "StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine.");
+			installComment(_Stereotype, "A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass.");
+			installComment(_TemplateBinding, "A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template.");
+			installComment(_TemplateParameter, "A TemplateParameter exposes a ParameterableElement as a formal parameter of a template.");
+			installComment(_TemplateParameterSubstitution, "A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.");
+			installComment(_TemplateSignature, "A Template Signature bundles the set of formal TemplateParameters for a template.");
+			installComment(_TemplateableElement, "A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates.");
+			installComment(_Transition, "A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it.");
+			installComment(_Trigger, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
+			installComment(_Type, "A Type constrains the values represented by a TypedElement.");
+			installComment(_TypedElement, "A TypedElement is a NamedElement that may have a Type specified for it.");
+			installComment(_ValueSpecification, "A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.");
+			installComment(_Vertex, "A Vertex is an abstraction of a node in a StateMachine graph. It can be the source or destination of any number of Transitions.");
+			installComment(_WildcardType, "A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization.");
+			_AssociativityKind_left = createEnumerationLiteral(_AssociativityKind, PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("left"));
+			_AssociativityKind_right = createEnumerationLiteral(_AssociativityKind, PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral("right"));
+			_CollectionKind_Bag = createEnumerationLiteral(_CollectionKind, PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Bag"));
+			_CollectionKind_Collection = createEnumerationLiteral(_CollectionKind, PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Collection"));
+			_CollectionKind_OrderedSet = createEnumerationLiteral(_CollectionKind, PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("OrderedSet"));
+			_CollectionKind_Sequence = createEnumerationLiteral(_CollectionKind, PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Sequence"));
+			_CollectionKind_Set = createEnumerationLiteral(_CollectionKind, PivotPackage.Literals.COLLECTION_KIND.getEEnumLiteral("Set"));
+			_PseudostateKind_choice = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("choice"));
+			_PseudostateKind_deepHistory = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("deepHistory"));
+			_PseudostateKind_entryPoint = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("entryPoint"));
+			_PseudostateKind_exitPoint = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("exitPoint"));
+			_PseudostateKind_fork = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("fork"));
+			_PseudostateKind_initial = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("initial"));
+			_PseudostateKind_join = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("join"));
+			_PseudostateKind_junction = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("junction"));
+			_PseudostateKind_shallowHistory = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("shallowHistory"));
+			_PseudostateKind_terminate = createEnumerationLiteral(_PseudostateKind, PivotPackage.Literals.PSEUDOSTATE_KIND.getEEnumLiteral("terminate"));
+			_TransitionKind_external = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("external"));
+			_TransitionKind_internal = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("internal"));
+			_TransitionKind_local = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("local"));
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+		}
+
+		private void installSlots3b() {
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+		}
+
+		private void installSlots3c() {
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+		}
+
+		private void installSlots3d() {
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			_Collection_String_T = getCollectionType(_Collection, _String, true, 0, -1);
+			_Collection_Annotation_T = getCollectionType(_Collection, _Annotation, true, 0, -1);
+			_Collection_AssociationClassCallExp_T = getCollectionType(_Collection, _AssociationClassCallExp, true, 0, -1);
+			_Collection_Behavior_T = getCollectionType(_Collection, _Behavior, true, 0, -1);
+			_Collection_CallOperationAction_T = getCollectionType(_Collection, _CallOperationAction, true, 0, -1);
+			_Collection_Class_T = getCollectionType(_Collection, _Class, true, 0, -1);
+			_Collection_CollectionLiteralPart_T = getCollectionType(_Collection, _CollectionLiteralPart, true, 0, -1);
+			_Collection_CollectionType_T = getCollectionType(_Collection, _CollectionType, true, 0, -1);
+			_Collection_Comment_T = getCollectionType(_Collection, _Comment, true, 0, -1);
+			_Collection_CompleteClass_T = getCollectionType(_Collection, _CompleteClass, true, 0, -1);
+			_Collection_CompleteModel_T = getCollectionType(_Collection, _CompleteModel, true, 0, -1);
+			_Collection_CompletePackage_T = getCollectionType(_Collection, _CompletePackage, true, 0, -1);
+			_Collection_ConnectionPointReference_T = getCollectionType(_Collection, _ConnectionPointReference, true, 0, -1);
+			_Collection_Constraint_T = getCollectionType(_Collection, _Constraint, true, 0, -1);
+			_Collection_DataType_T = getCollectionType(_Collection, _DataType, true, 0, -1);
+			_Collection_Detail_T = getCollectionType(_Collection, _Detail, true, 0, -1);
+			_Collection_DynamicElement_T = getCollectionType(_Collection, _DynamicElement, true, 0, -1);
+			_Collection_DynamicProperty_T = getCollectionType(_Collection, _DynamicProperty, true, 0, -1);
+			_Collection_ElementExtension_T = getCollectionType(_Collection, _ElementExtension, true, 0, -1);
+			_Collection_Element_T = getCollectionType(_Collection, _Element, true, 0, -1);
+			_Collection_EnumLiteralExp_T = getCollectionType(_Collection, _EnumLiteralExp, true, 0, -1);
+			_Collection_EnumerationLiteral_T = getCollectionType(_Collection, _EnumerationLiteral, true, 0, -1);
+			_Collection_Import_T = getCollectionType(_Collection, _Import, true, 0, -1);
+			_Collection_InstanceSpecification_T = getCollectionType(_Collection, _InstanceSpecification, true, 0, -1);
+			_Collection_IteratorVariable_T = getCollectionType(_Collection, _IteratorVariable, true, 0, -1);
+			_Collection_LambdaType_T = getCollectionType(_Collection, _LambdaType, true, 0, -1);
+			_Collection_LoopExp_T = getCollectionType(_Collection, _LoopExp, true, 0, -1);
+			_Collection_MapLiteralPart_T = getCollectionType(_Collection, _MapLiteralPart, true, 0, -1);
+			_Collection_MapType_T = getCollectionType(_Collection, _MapType, true, 0, -1);
+			_Collection_MessageType_T = getCollectionType(_Collection, _MessageType, true, 0, -1);
+			_Collection_Model_T = getCollectionType(_Collection, _Model, true, 0, -1);
+			_Collection_NavigationCallExp_T = getCollectionType(_Collection, _NavigationCallExp, true, 0, -1);
+			_Collection_OCLExpression_T = getCollectionType(_Collection, _OCLExpression, true, 0, -1);
+			_Collection_OperationCallExp_T = getCollectionType(_Collection, _OperationCallExp, true, 0, -1);
+			_Collection_Operation_T = getCollectionType(_Collection, _Operation, true, 0, -1);
+			_Collection_OppositePropertyCallExp_T = getCollectionType(_Collection, _OppositePropertyCallExp, true, 0, -1);
+			_Collection_Package_T = getCollectionType(_Collection, _Package, true, 0, -1);
+			_Collection_Parameter_T = getCollectionType(_Collection, _Parameter, true, 0, -1);
+			_Collection_Precedence_T = getCollectionType(_Collection, _Precedence, true, 0, -1);
+			_Collection_PrimitiveType_T = getCollectionType(_Collection, _PrimitiveType, true, 0, -1);
+			_Collection_ProfileApplication_T = getCollectionType(_Collection, _ProfileApplication, true, 0, -1);
+			_Collection_PropertyCallExp_T = getCollectionType(_Collection, _PropertyCallExp, true, 0, -1);
+			_Collection_Property_T = getCollectionType(_Collection, _Property, true, 0, -1);
+			_Collection_Pseudostate_T = getCollectionType(_Collection, _Pseudostate, true, 0, -1);
+			_Collection_Region_T = getCollectionType(_Collection, _Region, true, 0, -1);
+			_Collection_SendSignalAction_T = getCollectionType(_Collection, _SendSignalAction, true, 0, -1);
+			_Collection_ShadowPart_T = getCollectionType(_Collection, _ShadowPart, true, 0, -1);
+			_Collection_Slot_T = getCollectionType(_Collection, _Slot, true, 0, -1);
+			_Collection_StateExp_T = getCollectionType(_Collection, _StateExp, true, 0, -1);
+			_Collection_StateMachine_T = getCollectionType(_Collection, _StateMachine, true, 0, -1);
+			_Collection_State_T = getCollectionType(_Collection, _State, true, 0, -1);
+			_Collection_StereotypeExtender_T = getCollectionType(_Collection, _StereotypeExtender, true, 0, -1);
+			_Collection_TemplateBinding_T = getCollectionType(_Collection, _TemplateBinding, true, 0, -1);
+			_Collection_TemplateParameterSubstitution_T = getCollectionType(_Collection, _TemplateParameterSubstitution, true, 0, -1);
+			_Collection_TemplateParameter_T = getCollectionType(_Collection, _TemplateParameter, true, 0, -1);
+			_Collection_TemplateableElement_T = getCollectionType(_Collection, _TemplateableElement, true, 0, -1);
+			_Collection_Transition_T = getCollectionType(_Collection, _Transition, true, 0, -1);
+			_Collection_Trigger_T = getCollectionType(_Collection, _Trigger, true, 0, -1);
+			_Collection_TupleLiteralPart_T = getCollectionType(_Collection, _TupleLiteralPart, true, 0, -1);
+			_Collection_TypeExp_T = getCollectionType(_Collection, _TypeExp, true, 0, -1);
+			_Collection_Type_T = getCollectionType(_Collection, _Type, true, 0, -1);
+			_Collection_TypedElement_T = getCollectionType(_Collection, _TypedElement, true, 0, -1);
+			_Collection_ValueSpecification_T = getCollectionType(_Collection, _ValueSpecification, true, 0, -1);
+			_Collection_VariableDeclaration_T = getCollectionType(_Collection, _VariableDeclaration, true, 0, -1);
+			_Collection_VariableExp_T = getCollectionType(_Collection, _VariableExp, true, 0, -1);
+			_Collection_Variable_T = getCollectionType(_Collection, _Variable, true, 0, -1);
+			_Collection_Vertex_T = getCollectionType(_Collection, _Vertex, true, 0, -1);
+			_Collection_WildcardType_T = getCollectionType(_Collection, _WildcardType, true, 0, -1);
+			_OrderedCollection_CollectionLiteralPart_T = getCollectionType(_OrderedCollection, _CollectionLiteralPart, true, 0, -1);
+			_OrderedCollection_Detail_T = getCollectionType(_OrderedCollection, _Detail, true, 0, -1);
+			_OrderedCollection_Element_T = getCollectionType(_OrderedCollection, _Element, true, 0, -1);
+			_OrderedCollection_EnumerationLiteral_T = getCollectionType(_OrderedCollection, _EnumerationLiteral, true, 0, -1);
+			_OrderedCollection_Import_T = getCollectionType(_OrderedCollection, _Import, true, 0, -1);
+			_OrderedCollection_IteratorVariable_T = getCollectionType(_OrderedCollection, _IteratorVariable, true, 0, -1);
+			_OrderedCollection_MapLiteralPart_T = getCollectionType(_OrderedCollection, _MapLiteralPart, true, 0, -1);
+			_OrderedCollection_OCLExpression_T = getCollectionType(_OrderedCollection, _OCLExpression, true, 0, -1);
+			_OrderedCollection_Operation_T = getCollectionType(_OrderedCollection, _Operation, true, 0, -1);
+			_OrderedCollection_Parameter_T = getCollectionType(_OrderedCollection, _Parameter, true, 0, -1);
+			_OrderedCollection_Precedence_T = getCollectionType(_OrderedCollection, _Precedence, true, 0, -1);
+			_OrderedCollection_Property_T = getCollectionType(_OrderedCollection, _Property, true, 0, -1);
+			_OrderedCollection_ShadowPart_T = getCollectionType(_OrderedCollection, _ShadowPart, true, 0, -1);
+			_OrderedCollection_TemplateParameter_T = getCollectionType(_OrderedCollection, _TemplateParameter, true, 0, -1);
+		}
+
+		private void installSlots3e() {
+			_OrderedCollection_TupleLiteralPart_T = getCollectionType(_OrderedCollection, _TupleLiteralPart, true, 0, -1);
+			_OrderedCollection_Type_T = getCollectionType(_OrderedCollection, _Type, true, 0, -1);
+			_OrderedCollection_ValueSpecification_T = getCollectionType(_OrderedCollection, _ValueSpecification, true, 0, -1);
+			_OrderedCollection_Variable_T = getCollectionType(_OrderedCollection, _Variable, true, 0, -1);
+			_UniqueCollection_String_T = getCollectionType(_UniqueCollection, _String, true, 0, -1);
+			_UniqueCollection_Behavior_T = getCollectionType(_UniqueCollection, _Behavior, true, 0, -1);
+			_UniqueCollection_Class_T = getCollectionType(_UniqueCollection, _Class, true, 0, -1);
+			_UniqueCollection_CollectionLiteralPart_T = getCollectionType(_UniqueCollection, _CollectionLiteralPart, true, 0, -1);
+			_UniqueCollection_Comment_T = getCollectionType(_UniqueCollection, _Comment, true, 0, -1);
+			_UniqueCollection_CompleteClass_T = getCollectionType(_UniqueCollection, _CompleteClass, true, 0, -1);
+			_UniqueCollection_CompletePackage_T = getCollectionType(_UniqueCollection, _CompletePackage, true, 0, -1);
+			_UniqueCollection_ConnectionPointReference_T = getCollectionType(_UniqueCollection, _ConnectionPointReference, true, 0, -1);
+			_UniqueCollection_Constraint_T = getCollectionType(_UniqueCollection, _Constraint, true, 0, -1);
+			_UniqueCollection_Detail_T = getCollectionType(_UniqueCollection, _Detail, true, 0, -1);
+			_UniqueCollection_DynamicProperty_T = getCollectionType(_UniqueCollection, _DynamicProperty, true, 0, -1);
+			_UniqueCollection_ElementExtension_T = getCollectionType(_UniqueCollection, _ElementExtension, true, 0, -1);
+			_UniqueCollection_Element_T = getCollectionType(_UniqueCollection, _Element, true, 0, -1);
+			_UniqueCollection_EnumerationLiteral_T = getCollectionType(_UniqueCollection, _EnumerationLiteral, true, 0, -1);
+			_UniqueCollection_Import_T = getCollectionType(_UniqueCollection, _Import, true, 0, -1);
+			_UniqueCollection_InstanceSpecification_T = getCollectionType(_UniqueCollection, _InstanceSpecification, true, 0, -1);
+			_UniqueCollection_IteratorVariable_T = getCollectionType(_UniqueCollection, _IteratorVariable, true, 0, -1);
+			_UniqueCollection_MapLiteralPart_T = getCollectionType(_UniqueCollection, _MapLiteralPart, true, 0, -1);
+			_UniqueCollection_Model_T = getCollectionType(_UniqueCollection, _Model, true, 0, -1);
+			_UniqueCollection_OCLExpression_T = getCollectionType(_UniqueCollection, _OCLExpression, true, 0, -1);
+			_UniqueCollection_Operation_T = getCollectionType(_UniqueCollection, _Operation, true, 0, -1);
+			_UniqueCollection_Package_T = getCollectionType(_UniqueCollection, _Package, true, 0, -1);
+			_UniqueCollection_Parameter_T = getCollectionType(_UniqueCollection, _Parameter, true, 0, -1);
+			_UniqueCollection_Precedence_T = getCollectionType(_UniqueCollection, _Precedence, true, 0, -1);
+			_UniqueCollection_ProfileApplication_T = getCollectionType(_UniqueCollection, _ProfileApplication, true, 0, -1);
+			_UniqueCollection_Property_T = getCollectionType(_UniqueCollection, _Property, true, 0, -1);
+			_UniqueCollection_Pseudostate_T = getCollectionType(_UniqueCollection, _Pseudostate, true, 0, -1);
+			_UniqueCollection_Region_T = getCollectionType(_UniqueCollection, _Region, true, 0, -1);
+			_UniqueCollection_ShadowPart_T = getCollectionType(_UniqueCollection, _ShadowPart, true, 0, -1);
+			_UniqueCollection_Slot_T = getCollectionType(_UniqueCollection, _Slot, true, 0, -1);
+			_UniqueCollection_StateMachine_T = getCollectionType(_UniqueCollection, _StateMachine, true, 0, -1);
+			_UniqueCollection_State_T = getCollectionType(_UniqueCollection, _State, true, 0, -1);
+			_UniqueCollection_StereotypeExtender_T = getCollectionType(_UniqueCollection, _StereotypeExtender, true, 0, -1);
+			_UniqueCollection_TemplateBinding_T = getCollectionType(_UniqueCollection, _TemplateBinding, true, 0, -1);
+			_UniqueCollection_TemplateParameterSubstitution_T = getCollectionType(_UniqueCollection, _TemplateParameterSubstitution, true, 0, -1);
+			_UniqueCollection_TemplateParameter_T = getCollectionType(_UniqueCollection, _TemplateParameter, true, 0, -1);
+			_UniqueCollection_Transition_T = getCollectionType(_UniqueCollection, _Transition, true, 0, -1);
+			_UniqueCollection_Trigger_T = getCollectionType(_UniqueCollection, _Trigger, true, 0, -1);
+			_UniqueCollection_TupleLiteralPart_T = getCollectionType(_UniqueCollection, _TupleLiteralPart, true, 0, -1);
+			_UniqueCollection_Type_T = getCollectionType(_UniqueCollection, _Type, true, 0, -1);
+			_UniqueCollection_ValueSpecification_T = getCollectionType(_UniqueCollection, _ValueSpecification, true, 0, -1);
+			_UniqueCollection_Variable_T = getCollectionType(_UniqueCollection, _Variable, true, 0, -1);
+			_UniqueCollection_Vertex_T = getCollectionType(_UniqueCollection, _Vertex, true, 0, -1);
+			_Bag_Annotation_T = getCollectionType(_Bag, _Annotation, true, 0, -1);
+			_Bag_AssociationClassCallExp_T = getCollectionType(_Bag, _AssociationClassCallExp, true, 0, -1);
+			_Bag_CallOperationAction_T = getCollectionType(_Bag, _CallOperationAction, true, 0, -1);
+			_Bag_Class_T = getCollectionType(_Bag, _Class, true, 0, -1);
+			_Bag_CollectionType_T = getCollectionType(_Bag, _CollectionType, true, 0, -1);
+			_Bag_CompleteClass_T = getCollectionType(_Bag, _CompleteClass, true, 0, -1);
+			_Bag_CompleteModel_T = getCollectionType(_Bag, _CompleteModel, true, 0, -1);
+			_Bag_CompletePackage_T = getCollectionType(_Bag, _CompletePackage, true, 0, -1);
+			_Bag_ConnectionPointReference_T = getCollectionType(_Bag, _ConnectionPointReference, true, 0, -1);
+			_Bag_Constraint_T = getCollectionType(_Bag, _Constraint, true, 0, -1);
+			_Bag_DataType_T = getCollectionType(_Bag, _DataType, true, 0, -1);
+			_Bag_DynamicElement_T = getCollectionType(_Bag, _DynamicElement, true, 0, -1);
+			_Bag_DynamicProperty_T = getCollectionType(_Bag, _DynamicProperty, true, 0, -1);
+			_Bag_ElementExtension_T = getCollectionType(_Bag, _ElementExtension, true, 0, -1);
+			_Bag_EnumLiteralExp_T = getCollectionType(_Bag, _EnumLiteralExp, true, 0, -1);
+			_Bag_Import_T = getCollectionType(_Bag, _Import, true, 0, -1);
+			_Bag_InstanceSpecification_T = getCollectionType(_Bag, _InstanceSpecification, true, 0, -1);
+			_Bag_LambdaType_T = getCollectionType(_Bag, _LambdaType, true, 0, -1);
+			_Bag_LoopExp_T = getCollectionType(_Bag, _LoopExp, true, 0, -1);
+			_Bag_MapType_T = getCollectionType(_Bag, _MapType, true, 0, -1);
+			_Bag_MessageType_T = getCollectionType(_Bag, _MessageType, true, 0, -1);
+			_Bag_NavigationCallExp_T = getCollectionType(_Bag, _NavigationCallExp, true, 0, -1);
+			_Bag_OCLExpression_T = getCollectionType(_Bag, _OCLExpression, true, 0, -1);
+			_Bag_OperationCallExp_T = getCollectionType(_Bag, _OperationCallExp, true, 0, -1);
+			_Bag_Operation_T = getCollectionType(_Bag, _Operation, true, 0, -1);
+			_Bag_OppositePropertyCallExp_T = getCollectionType(_Bag, _OppositePropertyCallExp, true, 0, -1);
+			_Bag_Package_T = getCollectionType(_Bag, _Package, true, 0, -1);
+			_Bag_PrimitiveType_T = getCollectionType(_Bag, _PrimitiveType, true, 0, -1);
+			_Bag_PropertyCallExp_T = getCollectionType(_Bag, _PropertyCallExp, true, 0, -1);
+			_Bag_Property_T = getCollectionType(_Bag, _Property, true, 0, -1);
+			_Bag_Region_T = getCollectionType(_Bag, _Region, true, 0, -1);
+			_Bag_SendSignalAction_T = getCollectionType(_Bag, _SendSignalAction, true, 0, -1);
+			_Bag_ShadowPart_T = getCollectionType(_Bag, _ShadowPart, true, 0, -1);
+			_Bag_Slot_T = getCollectionType(_Bag, _Slot, true, 0, -1);
+			_Bag_StateExp_T = getCollectionType(_Bag, _StateExp, true, 0, -1);
+			_Bag_StateMachine_T = getCollectionType(_Bag, _StateMachine, true, 0, -1);
+			_Bag_State_T = getCollectionType(_Bag, _State, true, 0, -1);
+			_Bag_TemplateBinding_T = getCollectionType(_Bag, _TemplateBinding, true, 0, -1);
+			_Bag_TemplateParameterSubstitution_T = getCollectionType(_Bag, _TemplateParameterSubstitution, true, 0, -1);
+			_Bag_TemplateParameter_T = getCollectionType(_Bag, _TemplateParameter, true, 0, -1);
+			_Bag_TemplateableElement_T = getCollectionType(_Bag, _TemplateableElement, true, 0, -1);
+			_Bag_TypeExp_T = getCollectionType(_Bag, _TypeExp, true, 0, -1);
+			_Bag_TypedElement_T = getCollectionType(_Bag, _TypedElement, true, 0, -1);
+			_Bag_VariableDeclaration_T = getCollectionType(_Bag, _VariableDeclaration, true, 0, -1);
+			_Bag_VariableExp_T = getCollectionType(_Bag, _VariableExp, true, 0, -1);
+			_Bag_Variable_T = getCollectionType(_Bag, _Variable, true, 0, -1);
+			_Bag_WildcardType_T = getCollectionType(_Bag, _WildcardType, true, 0, -1);
+			_OrderedSet_CollectionLiteralPart_T = getCollectionType(_OrderedSet, _CollectionLiteralPart, true, 0, -1);
+			_OrderedSet_Detail_T = getCollectionType(_OrderedSet, _Detail, true, 0, -1);
+			_OrderedSet_Element_T = getCollectionType(_OrderedSet, _Element, true, 0, -1);
+			_OrderedSet_EnumerationLiteral_T = getCollectionType(_OrderedSet, _EnumerationLiteral, true, 0, -1);
+			_OrderedSet_Import_T = getCollectionType(_OrderedSet, _Import, true, 0, -1);
+			_OrderedSet_IteratorVariable_F = getCollectionType(_OrderedSet, _IteratorVariable, false, 0, -1);
+		}
+
+		private void installSlots3f() {
+			_OrderedSet_MapLiteralPart_T = getCollectionType(_OrderedSet, _MapLiteralPart, true, 0, -1);
+			_OrderedSet_OCLExpression_T = getCollectionType(_OrderedSet, _OCLExpression, true, 0, -1);
+			_OrderedSet_Operation_T = getCollectionType(_OrderedSet, _Operation, true, 0, -1);
+			_OrderedSet_Parameter_T = getCollectionType(_OrderedSet, _Parameter, true, 0, -1);
+			_OrderedSet_Precedence_T = getCollectionType(_OrderedSet, _Precedence, true, 0, -1);
+			_OrderedSet_Property_T = getCollectionType(_OrderedSet, _Property, true, 0, -1);
+			_OrderedSet_ShadowPart_T = getCollectionType(_OrderedSet, _ShadowPart, true, 0, -1);
+			_OrderedSet_TemplateParameter_T_L1 = getCollectionType(_OrderedSet, _TemplateParameter, true, 1, -1);
+			_OrderedSet_TupleLiteralPart_T = getCollectionType(_OrderedSet, _TupleLiteralPart, true, 0, -1);
+			_OrderedSet_ValueSpecification_T = getCollectionType(_OrderedSet, _ValueSpecification, true, 0, -1);
+			_OrderedSet_Variable_T = getCollectionType(_OrderedSet, _Variable, true, 0, -1);
+			_Sequence_Type_T = getCollectionType(_Sequence, _Type, true, 0, -1);
+			_Set_String_T_L1 = getCollectionType(_Set, _String, true, 1, -1);
+			_Set_Behavior_T = getCollectionType(_Set, _Behavior, true, 0, -1);
+			_Set_Class_T = getCollectionType(_Set, _Class, true, 0, -1);
+			_Set_Comment_T = getCollectionType(_Set, _Comment, true, 0, -1);
+			_Set_CompleteClass_T = getCollectionType(_Set, _CompleteClass, true, 0, -1);
+			_Set_CompletePackage_T = getCollectionType(_Set, _CompletePackage, true, 0, -1);
+			_Set_ConnectionPointReference_T = getCollectionType(_Set, _ConnectionPointReference, true, 0, -1);
+			_Set_Constraint_T = getCollectionType(_Set, _Constraint, true, 0, -1);
+			_Set_DynamicProperty_T = getCollectionType(_Set, _DynamicProperty, true, 0, -1);
+			_Set_ElementExtension_T = getCollectionType(_Set, _ElementExtension, true, 0, -1);
+			_Set_Element_T = getCollectionType(_Set, _Element, true, 0, -1);
+			_Set_InstanceSpecification_T = getCollectionType(_Set, _InstanceSpecification, true, 0, -1);
+			_Set_Model_T = getCollectionType(_Set, _Model, true, 0, -1);
+			_Set_Operation_T = getCollectionType(_Set, _Operation, true, 0, -1);
+			_Set_Package_T = getCollectionType(_Set, _Package, true, 0, -1);
+			_Set_ProfileApplication_T = getCollectionType(_Set, _ProfileApplication, true, 0, -1);
+			_Set_Property_T = getCollectionType(_Set, _Property, true, 0, -1);
+			_Set_Pseudostate_T = getCollectionType(_Set, _Pseudostate, true, 0, -1);
+			_Set_Region_T = getCollectionType(_Set, _Region, true, 0, -1);
+			_Set_Region_T_L1 = getCollectionType(_Set, _Region, true, 1, -1);
+			_Set_Slot_T = getCollectionType(_Set, _Slot, true, 0, -1);
+			_Set_StateMachine_T = getCollectionType(_Set, _StateMachine, true, 0, -1);
+			_Set_State_T = getCollectionType(_Set, _State, true, 0, -1);
+			_Set_StereotypeExtender_T = getCollectionType(_Set, _StereotypeExtender, true, 0, -1);
+			_Set_TemplateBinding_T = getCollectionType(_Set, _TemplateBinding, true, 0, -1);
+			_Set_TemplateParameterSubstitution_T_L1 = getCollectionType(_Set, _TemplateParameterSubstitution, true, 1, -1);
+			_Set_Transition_T = getCollectionType(_Set, _Transition, true, 0, -1);
+			_Set_Trigger_T = getCollectionType(_Set, _Trigger, true, 0, -1);
+			_Set_Type_T = getCollectionType(_Set, _Type, true, 0, -1);
+			_Set_Vertex_T = getCollectionType(_Set, _Vertex, true, 0, -1);
 			op_CompleteModel_getOwnedCompletePackage = createOperation(_CompleteModel, PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, null, null);
 			op_CompletePackage_getOwnedCompleteClass = createOperation(_CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING, null, null);
 			op_Element_allOwnedElements = createOperation(_Element, PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, null, null);
@@ -1613,117 +2305,1435 @@ public class OCLmetamodel extends ASResourceImpl
 			op_ValueSpecification_isNull = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_NULL, null, null);
 			op_ValueSpecification_stringValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___STRING_VALUE, null, null);
 			op_ValueSpecification_unlimitedValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, null, null);
+			// define OPERATIONS BooleanType
+			// define OPERATIONS DataType
+			// define OPERATIONS DataType
+			// define OPERATIONS DataType
+			// define OPERATIONS DataType
+			// define OPERATIONS DataType
+			// define OPERATIONS Enumeration
+			// define OPERATIONS Enumeration
+			// define OPERATIONS Enumeration
+			// define OPERATIONS Enumeration
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS PrimitiveType
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
 		}
 
-		private void installOperationBodies() {
-			Operation operation;
-			Parameter parameter;
+		private void installSlots3g() {
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+		}
 
-			operation = op_CompleteModel_getOwnedCompletePackage;
-			operation.setType(_CompletePackage);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "name", _String, false);
+		private void installSlots3h() {
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define PROPERTIES BooleanType
+			// define PROPERTIES DataType
+			// define PROPERTIES DataType
+			// define PROPERTIES DataType
+			// define PROPERTIES DataType
+			// define PROPERTIES DataType
+			// define PROPERTIES Enumeration
+			// define PROPERTIES Enumeration
+			// define PROPERTIES Enumeration
+			// define PROPERTIES Enumeration
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES PrimitiveType
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			addSuperClass(_Boolean, _OclAny);
+			addSuperClass(_EcoreObject, _OclAny);
+			addSuperClass(_JavaClass, _OclAny);
+			addSuperClass(_LibraryFeature, _OclAny);
+			addSuperClass(_Object, _OclAny);
+			addSuperClass(_Throwable, _OclAny);
+			addSuperClass(_AssociativityKind, _OclEnumeration);
+			addSuperClass(_CollectionKind, _OclEnumeration);
+			addSuperClass(_PseudostateKind, _OclEnumeration);
+			addSuperClass(_TransitionKind, _OclEnumeration);
+			addSuperClass(_Integer, _OclAny);
+			addSuperClass(_Real, _OclAny);
+			addSuperClass(_String, _OclAny);
+			addSuperClass(_UnlimitedNatural, _OclAny);
+			addSuperClass(_Annotation, _NamedElement);
+			addSuperClass(_AnyType, _Class);
+			addSuperClass(_AssociationClass, _Class);
+			addSuperClass(_AssociationClassCallExp, _NavigationCallExp);
+			addSuperClass(_BagType, _CollectionType);
+			addSuperClass(_Behavior, _Class);
+			addSuperClass(_BooleanLiteralExp, _PrimitiveLiteralExp);
+			addSuperClass(_BooleanType, _PrimitiveType);
+			addSuperClass(_CallExp, _OCLExpression);
+			addSuperClass(_CallOperationAction, _NamedElement);
+			addSuperClass(_Class, _Type);
+			addSuperClass(_Class, _Namespace);
+			addSuperClass(_Class, _TemplateableElement);
+			addSuperClass(_CollectionItem, _CollectionLiteralPart);
+			addSuperClass(_CollectionLiteralExp, _LiteralExp);
+			addSuperClass(_CollectionLiteralPart, _TypedElement);
+			addSuperClass(_CollectionRange, _CollectionLiteralPart);
+			addSuperClass(_CollectionType, _IterableType);
+			addSuperClass(_Comment, _Element);
+			addSuperClass(_CompleteClass, _NamedElement);
+			addSuperClass(_CompleteEnvironment, _Element);
+			addSuperClass(_CompleteModel, _NamedElement);
+			addSuperClass(_CompletePackage, _NamedElement);
+			addSuperClass(_CompleteStandardLibrary, _StandardLibrary);
+			addSuperClass(_ConnectionPointReference, _Vertex);
+			addSuperClass(_Constraint, _NamedElement);
+			addSuperClass(_DataType, _Class);
+			addSuperClass(_Detail, _NamedElement);
+			addSuperClass(_DynamicBehavior, _Behavior);
+			addSuperClass(_DynamicBehavior, _DynamicType);
+			addSuperClass(_DynamicElement, _Element);
+			addSuperClass(_DynamicProperty, _Element);
+			addSuperClass(_DynamicType, _Class);
+			addSuperClass(_DynamicType, _DynamicElement);
+			addSuperClass(_DynamicValueSpecification, _ValueSpecification);
+			addSuperClass(_Element, _OclElement);
+			addSuperClass(_ElementExtension, _Class);
+			addSuperClass(_ElementLiteralExp, _LiteralExp);
+			addSuperClass(_EnumLiteralExp, _LiteralExp);
+			addSuperClass(_Enumeration, _DataType);
+			addSuperClass(_EnumerationLiteral, _InstanceSpecification);
+		}
 
-			operation = op_CompletePackage_getOwnedCompleteClass;
-			operation.setType(_CompleteClass);
-			operation.setIsRequired(false);
-			parameter = createParameter(operation, "name", _String, false);
+		private void installSlots3i() {
+			addSuperClass(_ExpressionInOCL, _LanguageExpression);
+			addSuperClass(_Feature, _TypedElement);
+			addSuperClass(_FeatureCallExp, _CallExp);
+			addSuperClass(_FinalState, _State);
+			addSuperClass(_IfExp, _OCLExpression);
+			addSuperClass(_Import, _NamedElement);
+			addSuperClass(_InstanceSpecification, _NamedElement);
+			addSuperClass(_IntegerLiteralExp, _NumericLiteralExp);
+			addSuperClass(_InvalidLiteralExp, _LiteralExp);
+			addSuperClass(_InvalidType, _Class);
+			addSuperClass(_IterableType, _DataType);
+			addSuperClass(_IterateExp, _LoopExp);
+			addSuperClass(_IterateExp, _ReferringElement);
+			addSuperClass(_Iteration, _Operation);
+			addSuperClass(_IteratorExp, _LoopExp);
+			addSuperClass(_IteratorExp, _ReferringElement);
+			addSuperClass(_IteratorVariable, _Variable);
+			addSuperClass(_JavaType, _Class);
+			addSuperClass(_LambdaType, _DataType);
+			addSuperClass(_LanguageExpression, _ValueSpecification);
+			addSuperClass(_LetExp, _OCLExpression);
+			addSuperClass(_LetVariable, _Variable);
+			addSuperClass(_Library, _Package);
+			addSuperClass(_LiteralExp, _OCLExpression);
+			addSuperClass(_LoopExp, _CallExp);
+			addSuperClass(_MapLiteralExp, _LiteralExp);
+			addSuperClass(_MapLiteralPart, _Element);
+			addSuperClass(_MapType, _IterableType);
+			addSuperClass(_MessageExp, _OCLExpression);
+			addSuperClass(_MessageType, _Class);
+			addSuperClass(_Model, _Namespace);
+			addSuperClass(_MorePivotable, _OclElement);
+			addSuperClass(_Nameable, _OclElement);
+			addSuperClass(_NamedElement, _Element);
+			addSuperClass(_Namespace, _NamedElement);
+			addSuperClass(_NavigationCallExp, _FeatureCallExp);
+			addSuperClass(_NullLiteralExp, _PrimitiveLiteralExp);
+			addSuperClass(_NumericLiteralExp, _PrimitiveLiteralExp);
+			addSuperClass(_OCLExpression, _TypedElement);
+			addSuperClass(_Operation, _Feature);
+			addSuperClass(_Operation, _Namespace);
+			addSuperClass(_Operation, _TemplateableElement);
+			addSuperClass(_OperationCallExp, _FeatureCallExp);
+			addSuperClass(_OperationCallExp, _ReferringElement);
+			addSuperClass(_OppositePropertyCallExp, _NavigationCallExp);
+			addSuperClass(_OrderedSetType, _CollectionType);
+			addSuperClass(_OrphanCompletePackage, _CompletePackage);
+			addSuperClass(_Orphanage, _Package);
+			addSuperClass(_Package, _Namespace);
+			addSuperClass(_Parameter, _VariableDeclaration);
+			addSuperClass(_ParameterVariable, _Variable);
+			addSuperClass(_Pivotable, _OclElement);
+			addSuperClass(_Precedence, _NamedElement);
+			addSuperClass(_PrimitiveCompletePackage, _CompletePackage);
+			addSuperClass(_PrimitiveLiteralExp, _LiteralExp);
+			addSuperClass(_PrimitiveType, _DataType);
+			addSuperClass(_Profile, _Package);
+			addSuperClass(_ProfileApplication, _Element);
+			addSuperClass(_Property, _Feature);
+			addSuperClass(_PropertyCallExp, _NavigationCallExp);
+			addSuperClass(_PropertyCallExp, _ReferringElement);
+			addSuperClass(_Pseudostate, _Vertex);
+			addSuperClass(_RealLiteralExp, _NumericLiteralExp);
+			addSuperClass(_ReferringElement, _OclElement);
+			addSuperClass(_Region, _Namespace);
+			addSuperClass(_ResultVariable, _Variable);
+			addSuperClass(_SelfType, _Class);
+			addSuperClass(_SendSignalAction, _NamedElement);
+			addSuperClass(_SequenceType, _CollectionType);
+			addSuperClass(_SetType, _CollectionType);
+			addSuperClass(_ShadowExp, _OCLExpression);
+			addSuperClass(_ShadowPart, _TypedElement);
+			addSuperClass(_Signal, _Class);
+			addSuperClass(_Slot, _Element);
+			addSuperClass(_StandardLibrary, _Element);
+			addSuperClass(_State, _Namespace);
+			addSuperClass(_State, _Vertex);
+			addSuperClass(_StateExp, _OCLExpression);
+			addSuperClass(_StateMachine, _Behavior);
+			addSuperClass(_Stereotype, _Class);
+			addSuperClass(_StereotypeExtender, _Element);
+			addSuperClass(_StringLiteralExp, _PrimitiveLiteralExp);
+			addSuperClass(_TemplateBinding, _Element);
+			addSuperClass(_TemplateParameter, _Type);
+			addSuperClass(_TemplateParameterSubstitution, _Element);
+			addSuperClass(_TemplateSignature, _Element);
+			addSuperClass(_TemplateableElement, _Element);
+			addSuperClass(_Transition, _Namespace);
+			addSuperClass(_Trigger, _NamedElement);
+			addSuperClass(_TupleLiteralExp, _LiteralExp);
+			addSuperClass(_TupleLiteralPart, _VariableDeclaration);
+			addSuperClass(_TuplePart, _OclElement);
+			addSuperClass(_TupleType, _DataType);
+			addSuperClass(_Type, _NamedElement);
+			addSuperClass(_TypeExp, _OCLExpression);
+			addSuperClass(_TypeExp, _ReferringElement);
+			addSuperClass(_TypedElement, _NamedElement);
+			addSuperClass(_TypedElement, _TuplePart);
+			addSuperClass(_UnlimitedNaturalLiteralExp, _NumericLiteralExp);
+			addSuperClass(_UnspecifiedValueExp, _OCLExpression);
+			addSuperClass(_ValueSpecification, _TypedElement);
+			addSuperClass(_Variable, _VariableDeclaration);
+			addSuperClass(_VariableDeclaration, _TypedElement);
+			addSuperClass(_VariableExp, _OCLExpression);
+			addSuperClass(_VariableExp, _ReferringElement);
+			addSuperClass(_Vertex, _NamedElement);
+			addSuperClass(_Visitable, _OclElement);
+			addSuperClass(_VoidType, _Class);
+			addSuperClass(_WildcardType, _Class);
+		}
 
-			operation = op_Element_allOwnedElements;
-			operation.setType(_Set_Element_T);
-			createBodyExpression(operation, _Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_T);
-			installComment(operation, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
+		private void installSlots4a() {
+			installComment(_TransitionKind_external, "Implies that the Transition, if triggered, will exit the composite (source) State.");
+			installComment(_TransitionKind_internal, "Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State.");
+			installComment(_TransitionKind_local, "Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration.");
+			installComment(op_Element_allOwnedElements, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
+			installComment(op_Type_flattenedType, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
+			installComment(op_ValueSpecification_booleanValue, "The query booleanValue() gives a single Boolean value when one can be computed.");
+			installComment(op_ValueSpecification_integerValue, "The query integerValue() gives a single Integer value when one can be computed.");
+			installComment(op_ValueSpecification_isComputable, "The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.");
+			installComment(op_ValueSpecification_isNull, "The query isNull() returns true when it can be computed that the value is null.");
+			installComment(op_ValueSpecification_stringValue, "The query stringValue() gives a single String value when one can be computed.");
+			installComment(op_ValueSpecification_unlimitedValue, "The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.");
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+		}
 
-			operation = op_Element_getValue;
-			operation.setType(_Element);
-			operation.setIsRequired(false);
-			createBodyExpression(operation, _Element, "null", _Element);
-			parameter = createParameter(operation, "stereotype", _Type, true);
-			parameter = createParameter(operation, "propertyName", _String, true);
+		private void installSlots4b() {
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+		}
 
-			operation = op_OCLExpression_isNonNull;
-			operation.setType(_Boolean);
+		private void installSlots4c() {
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define CTOR Property
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS Class
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+		}
 
-			operation = op_OCLExpression_isNull;
-			operation.setType(_Boolean);
+		private void installSlots4d() {
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS CollectionType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+		}
 
-			operation = op_OperationCallExp_hasOclVoidOverload;
-			operation.setType(_Boolean);
-			createBodyExpression(operation, _OperationCallExp, "false", _Boolean);
+		private void installSlots4e() {
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS BagType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS OrderedSetType
+			// define OPERATIONS SequenceType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define OPERATIONS SetType
+			// define PARAMETER_LISTS Model
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+		}
 
-			operation = op_Property_isAttribute;
-			operation.setType(_Boolean);
-			createBodyExpression(operation, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean);
-			parameter = createParameter(operation, "p", _Property, true);
+		private void installSlots4f() {
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+		}
 
-			operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
-			operation.setType(_Type);
-			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.owningClass", _Type);
+		private void installSlots4g() {
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES CollectionType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES BagType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES OrderedSetType
+			// define PROPERTIES SequenceType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+		}
 
-			operation = op_PropertyCallExp_getSpecializedReferredPropertyType;
-			operation.setType(_Type);
-			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
+		private void installSlots4h() {
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			// define PROPERTIES SetType
+			checkSuperClass(_Collection_String_T, _OclAny);
+			checkSuperClass(_Collection_Annotation_T, _OclAny);
+			checkSuperClass(_Collection_AssociationClassCallExp_T, _OclAny);
+			checkSuperClass(_Collection_Behavior_T, _OclAny);
+			checkSuperClass(_Collection_CallOperationAction_T, _OclAny);
+			checkSuperClass(_Collection_Class_T, _OclAny);
+			checkSuperClass(_Collection_CollectionLiteralPart_T, _OclAny);
+			checkSuperClass(_Collection_CollectionType_T, _OclAny);
+			checkSuperClass(_Collection_Comment_T, _OclAny);
+			checkSuperClass(_Collection_CompleteClass_T, _OclAny);
+			checkSuperClass(_Collection_CompleteModel_T, _OclAny);
+			checkSuperClass(_Collection_CompletePackage_T, _OclAny);
+			checkSuperClass(_Collection_ConnectionPointReference_T, _OclAny);
+			checkSuperClass(_Collection_Constraint_T, _OclAny);
+			checkSuperClass(_Collection_DataType_T, _OclAny);
+			checkSuperClass(_Collection_Detail_T, _OclAny);
+			checkSuperClass(_Collection_DynamicElement_T, _OclAny);
+			checkSuperClass(_Collection_DynamicProperty_T, _OclAny);
+			checkSuperClass(_Collection_ElementExtension_T, _OclAny);
+			checkSuperClass(_Collection_Element_T, _OclAny);
+			checkSuperClass(_Collection_EnumLiteralExp_T, _OclAny);
+			checkSuperClass(_Collection_EnumerationLiteral_T, _OclAny);
+			checkSuperClass(_Collection_Import_T, _OclAny);
+			checkSuperClass(_Collection_InstanceSpecification_T, _OclAny);
+			checkSuperClass(_Collection_IteratorVariable_T, _OclAny);
+			checkSuperClass(_Collection_LambdaType_T, _OclAny);
+			checkSuperClass(_Collection_LoopExp_T, _OclAny);
+			checkSuperClass(_Collection_MapLiteralPart_T, _OclAny);
+			checkSuperClass(_Collection_MapType_T, _OclAny);
+			checkSuperClass(_Collection_MessageType_T, _OclAny);
+			checkSuperClass(_Collection_Model_T, _OclAny);
+			checkSuperClass(_Collection_NavigationCallExp_T, _OclAny);
+			checkSuperClass(_Collection_OCLExpression_T, _OclAny);
+			checkSuperClass(_Collection_OperationCallExp_T, _OclAny);
+			checkSuperClass(_Collection_Operation_T, _OclAny);
+			checkSuperClass(_Collection_OppositePropertyCallExp_T, _OclAny);
+			checkSuperClass(_Collection_Package_T, _OclAny);
+			checkSuperClass(_Collection_Parameter_T, _OclAny);
+			checkSuperClass(_Collection_Precedence_T, _OclAny);
+			checkSuperClass(_Collection_PrimitiveType_T, _OclAny);
+			checkSuperClass(_Collection_ProfileApplication_T, _OclAny);
+			checkSuperClass(_Collection_PropertyCallExp_T, _OclAny);
+			checkSuperClass(_Collection_Property_T, _OclAny);
+			checkSuperClass(_Collection_Pseudostate_T, _OclAny);
+			checkSuperClass(_Collection_Region_T, _OclAny);
+			checkSuperClass(_Collection_SendSignalAction_T, _OclAny);
+			checkSuperClass(_Collection_ShadowPart_T, _OclAny);
+			checkSuperClass(_Collection_Slot_T, _OclAny);
+			checkSuperClass(_Collection_StateExp_T, _OclAny);
+			checkSuperClass(_Collection_StateMachine_T, _OclAny);
+			checkSuperClass(_Collection_State_T, _OclAny);
+			checkSuperClass(_Collection_StereotypeExtender_T, _OclAny);
+			checkSuperClass(_Collection_TemplateBinding_T, _OclAny);
+			checkSuperClass(_Collection_TemplateParameterSubstitution_T, _OclAny);
+			checkSuperClass(_Collection_TemplateParameter_T, _OclAny);
+			checkSuperClass(_Collection_TemplateableElement_T, _OclAny);
+			checkSuperClass(_Collection_Transition_T, _OclAny);
+			checkSuperClass(_Collection_Trigger_T, _OclAny);
+			checkSuperClass(_Collection_TupleLiteralPart_T, _OclAny);
+			checkSuperClass(_Collection_TypeExp_T, _OclAny);
+			checkSuperClass(_Collection_Type_T, _OclAny);
+			checkSuperClass(_Collection_TypedElement_T, _OclAny);
+			checkSuperClass(_Collection_ValueSpecification_T, _OclAny);
+			checkSuperClass(_Collection_VariableDeclaration_T, _OclAny);
+			checkSuperClass(_Collection_VariableExp_T, _OclAny);
+			checkSuperClass(_Collection_Variable_T, _OclAny);
+			checkSuperClass(_Collection_Vertex_T, _OclAny);
+			checkSuperClass(_Collection_WildcardType_T, _OclAny);
+			checkSuperClass(_OrderedCollection_CollectionLiteralPart_T, _Collection_CollectionLiteralPart_T);
+			checkSuperClass(_OrderedCollection_Detail_T, _Collection_Detail_T);
+			checkSuperClass(_OrderedCollection_Element_T, _Collection_Element_T);
+			checkSuperClass(_OrderedCollection_EnumerationLiteral_T, _Collection_EnumerationLiteral_T);
+			checkSuperClass(_OrderedCollection_Import_T, _Collection_Import_T);
+			checkSuperClass(_OrderedCollection_IteratorVariable_T, _Collection_IteratorVariable_T);
+			checkSuperClass(_OrderedCollection_MapLiteralPart_T, _Collection_MapLiteralPart_T);
+			checkSuperClass(_OrderedCollection_OCLExpression_T, _Collection_OCLExpression_T);
+			checkSuperClass(_OrderedCollection_Operation_T, _Collection_Operation_T);
+			checkSuperClass(_OrderedCollection_Parameter_T, _Collection_Parameter_T);
+			checkSuperClass(_OrderedCollection_Precedence_T, _Collection_Precedence_T);
+			checkSuperClass(_OrderedCollection_Property_T, _Collection_Property_T);
+			checkSuperClass(_OrderedCollection_ShadowPart_T, _Collection_ShadowPart_T);
+			checkSuperClass(_OrderedCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
+		}
 
-			operation = op_ReferringElement_getReferredElement;
-			operation.setType(_Element);
+		private void installSlots4i() {
+			checkSuperClass(_OrderedCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
+			checkSuperClass(_OrderedCollection_Type_T, _Collection_Type_T);
+			checkSuperClass(_OrderedCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
+			checkSuperClass(_OrderedCollection_Variable_T, _Collection_Variable_T);
+			checkSuperClass(_UniqueCollection_String_T, _Collection_String_T);
+			checkSuperClass(_UniqueCollection_Behavior_T, _Collection_Behavior_T);
+			checkSuperClass(_UniqueCollection_Class_T, _Collection_Class_T);
+			checkSuperClass(_UniqueCollection_CollectionLiteralPart_T, _Collection_CollectionLiteralPart_T);
+			checkSuperClass(_UniqueCollection_Comment_T, _Collection_Comment_T);
+			checkSuperClass(_UniqueCollection_CompleteClass_T, _Collection_CompleteClass_T);
+			checkSuperClass(_UniqueCollection_CompletePackage_T, _Collection_CompletePackage_T);
+			checkSuperClass(_UniqueCollection_ConnectionPointReference_T, _Collection_ConnectionPointReference_T);
+			checkSuperClass(_UniqueCollection_Constraint_T, _Collection_Constraint_T);
+			checkSuperClass(_UniqueCollection_Detail_T, _Collection_Detail_T);
+			checkSuperClass(_UniqueCollection_DynamicProperty_T, _Collection_DynamicProperty_T);
+			checkSuperClass(_UniqueCollection_ElementExtension_T, _Collection_ElementExtension_T);
+			checkSuperClass(_UniqueCollection_Element_T, _Collection_Element_T);
+			checkSuperClass(_UniqueCollection_EnumerationLiteral_T, _Collection_EnumerationLiteral_T);
+			checkSuperClass(_UniqueCollection_Import_T, _Collection_Import_T);
+			checkSuperClass(_UniqueCollection_InstanceSpecification_T, _Collection_InstanceSpecification_T);
+			checkSuperClass(_UniqueCollection_IteratorVariable_T, _Collection_IteratorVariable_T);
+			checkSuperClass(_UniqueCollection_MapLiteralPart_T, _Collection_MapLiteralPart_T);
+			checkSuperClass(_UniqueCollection_Model_T, _Collection_Model_T);
+			checkSuperClass(_UniqueCollection_OCLExpression_T, _Collection_OCLExpression_T);
+			checkSuperClass(_UniqueCollection_Operation_T, _Collection_Operation_T);
+			checkSuperClass(_UniqueCollection_Package_T, _Collection_Package_T);
+			checkSuperClass(_UniqueCollection_Parameter_T, _Collection_Parameter_T);
+			checkSuperClass(_UniqueCollection_Precedence_T, _Collection_Precedence_T);
+			checkSuperClass(_UniqueCollection_ProfileApplication_T, _Collection_ProfileApplication_T);
+			checkSuperClass(_UniqueCollection_Property_T, _Collection_Property_T);
+			checkSuperClass(_UniqueCollection_Pseudostate_T, _Collection_Pseudostate_T);
+			checkSuperClass(_UniqueCollection_Region_T, _Collection_Region_T);
+			checkSuperClass(_UniqueCollection_ShadowPart_T, _Collection_ShadowPart_T);
+			checkSuperClass(_UniqueCollection_Slot_T, _Collection_Slot_T);
+			checkSuperClass(_UniqueCollection_StateMachine_T, _Collection_StateMachine_T);
+			checkSuperClass(_UniqueCollection_State_T, _Collection_State_T);
+			checkSuperClass(_UniqueCollection_StereotypeExtender_T, _Collection_StereotypeExtender_T);
+			checkSuperClass(_UniqueCollection_TemplateBinding_T, _Collection_TemplateBinding_T);
+			checkSuperClass(_UniqueCollection_TemplateParameterSubstitution_T, _Collection_TemplateParameterSubstitution_T);
+			checkSuperClass(_UniqueCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
+			checkSuperClass(_UniqueCollection_Transition_T, _Collection_Transition_T);
+			checkSuperClass(_UniqueCollection_Trigger_T, _Collection_Trigger_T);
+			checkSuperClass(_UniqueCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
+			checkSuperClass(_UniqueCollection_Type_T, _Collection_Type_T);
+			checkSuperClass(_UniqueCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
+			checkSuperClass(_UniqueCollection_Variable_T, _Collection_Variable_T);
+			checkSuperClass(_UniqueCollection_Vertex_T, _Collection_Vertex_T);
+			checkSuperClass(_Bag_Annotation_T, _Collection_Annotation_T);
+			checkSuperClass(_Bag_AssociationClassCallExp_T, _Collection_AssociationClassCallExp_T);
+			checkSuperClass(_Bag_CallOperationAction_T, _Collection_CallOperationAction_T);
+			checkSuperClass(_Bag_Class_T, _Collection_Class_T);
+			checkSuperClass(_Bag_CollectionType_T, _Collection_CollectionType_T);
+			checkSuperClass(_Bag_CompleteClass_T, _Collection_CompleteClass_T);
+			checkSuperClass(_Bag_CompleteModel_T, _Collection_CompleteModel_T);
+			checkSuperClass(_Bag_CompletePackage_T, _Collection_CompletePackage_T);
+			checkSuperClass(_Bag_ConnectionPointReference_T, _Collection_ConnectionPointReference_T);
+			checkSuperClass(_Bag_Constraint_T, _Collection_Constraint_T);
+			checkSuperClass(_Bag_DataType_T, _Collection_DataType_T);
+			checkSuperClass(_Bag_DynamicElement_T, _Collection_DynamicElement_T);
+			checkSuperClass(_Bag_DynamicProperty_T, _Collection_DynamicProperty_T);
+			checkSuperClass(_Bag_ElementExtension_T, _Collection_ElementExtension_T);
+			checkSuperClass(_Bag_EnumLiteralExp_T, _Collection_EnumLiteralExp_T);
+			checkSuperClass(_Bag_Import_T, _Collection_Import_T);
+			checkSuperClass(_Bag_InstanceSpecification_T, _Collection_InstanceSpecification_T);
+			checkSuperClass(_Bag_LambdaType_T, _Collection_LambdaType_T);
+			checkSuperClass(_Bag_LoopExp_T, _Collection_LoopExp_T);
+			checkSuperClass(_Bag_MapType_T, _Collection_MapType_T);
+			checkSuperClass(_Bag_MessageType_T, _Collection_MessageType_T);
+			checkSuperClass(_Bag_NavigationCallExp_T, _Collection_NavigationCallExp_T);
+			checkSuperClass(_Bag_OCLExpression_T, _Collection_OCLExpression_T);
+			checkSuperClass(_Bag_OperationCallExp_T, _Collection_OperationCallExp_T);
+			checkSuperClass(_Bag_Operation_T, _Collection_Operation_T);
+			checkSuperClass(_Bag_OppositePropertyCallExp_T, _Collection_OppositePropertyCallExp_T);
+			checkSuperClass(_Bag_Package_T, _Collection_Package_T);
+			checkSuperClass(_Bag_PrimitiveType_T, _Collection_PrimitiveType_T);
+			checkSuperClass(_Bag_PropertyCallExp_T, _Collection_PropertyCallExp_T);
+			checkSuperClass(_Bag_Property_T, _Collection_Property_T);
+			checkSuperClass(_Bag_Region_T, _Collection_Region_T);
+			checkSuperClass(_Bag_SendSignalAction_T, _Collection_SendSignalAction_T);
+			checkSuperClass(_Bag_ShadowPart_T, _Collection_ShadowPart_T);
+			checkSuperClass(_Bag_Slot_T, _Collection_Slot_T);
+			checkSuperClass(_Bag_StateExp_T, _Collection_StateExp_T);
+			checkSuperClass(_Bag_StateMachine_T, _Collection_StateMachine_T);
+			checkSuperClass(_Bag_State_T, _Collection_State_T);
+			checkSuperClass(_Bag_TemplateBinding_T, _Collection_TemplateBinding_T);
+			checkSuperClass(_Bag_TemplateParameterSubstitution_T, _Collection_TemplateParameterSubstitution_T);
+			checkSuperClass(_Bag_TemplateParameter_T, _Collection_TemplateParameter_T);
+			checkSuperClass(_Bag_TemplateableElement_T, _Collection_TemplateableElement_T);
+			checkSuperClass(_Bag_TypeExp_T, _Collection_TypeExp_T);
+			checkSuperClass(_Bag_TypedElement_T, _Collection_TypedElement_T);
+			checkSuperClass(_Bag_VariableDeclaration_T, _Collection_VariableDeclaration_T);
+			checkSuperClass(_Bag_VariableExp_T, _Collection_VariableExp_T);
+			checkSuperClass(_Bag_Variable_T, _Collection_Variable_T);
+			checkSuperClass(_Bag_WildcardType_T, _Collection_WildcardType_T);
+			checkSuperClass(_OrderedSet_CollectionLiteralPart_T, _OrderedCollection_CollectionLiteralPart_T);
+			checkSuperClass(_OrderedSet_CollectionLiteralPart_T, _UniqueCollection_CollectionLiteralPart_T);
+			checkSuperClass(_OrderedSet_Detail_T, _OrderedCollection_Detail_T);
+			checkSuperClass(_OrderedSet_Detail_T, _UniqueCollection_Detail_T);
+			checkSuperClass(_OrderedSet_Element_T, _OrderedCollection_Element_T);
+			checkSuperClass(_OrderedSet_Element_T, _UniqueCollection_Element_T);
+			checkSuperClass(_OrderedSet_EnumerationLiteral_T, _OrderedCollection_EnumerationLiteral_T);
+			checkSuperClass(_OrderedSet_EnumerationLiteral_T, _UniqueCollection_EnumerationLiteral_T);
+			checkSuperClass(_OrderedSet_Import_T, _OrderedCollection_Import_T);
+			checkSuperClass(_OrderedSet_Import_T, _UniqueCollection_Import_T);
+			checkSuperClass(_OrderedSet_IteratorVariable_F, _OrderedCollection_IteratorVariable_T);
+			checkSuperClass(_OrderedSet_IteratorVariable_F, _UniqueCollection_IteratorVariable_T);
+		}
 
-			operation = op_SelfType_specializeIn;
-			operation.setType(_Type);
-			createBodyExpression(operation, _SelfType, "selfType", _Type);
-			parameter = createParameter(operation, "expr", _CallExp, true);
-			parameter = createParameter(operation, "selfType", _Type, true);
+		private void installSlots4j() {
+			checkSuperClass(_OrderedSet_MapLiteralPart_T, _OrderedCollection_MapLiteralPart_T);
+			checkSuperClass(_OrderedSet_MapLiteralPart_T, _UniqueCollection_MapLiteralPart_T);
+			checkSuperClass(_OrderedSet_OCLExpression_T, _OrderedCollection_OCLExpression_T);
+			checkSuperClass(_OrderedSet_OCLExpression_T, _UniqueCollection_OCLExpression_T);
+			checkSuperClass(_OrderedSet_Operation_T, _OrderedCollection_Operation_T);
+			checkSuperClass(_OrderedSet_Operation_T, _UniqueCollection_Operation_T);
+			checkSuperClass(_OrderedSet_Parameter_T, _OrderedCollection_Parameter_T);
+			checkSuperClass(_OrderedSet_Parameter_T, _UniqueCollection_Parameter_T);
+			checkSuperClass(_OrderedSet_Precedence_T, _OrderedCollection_Precedence_T);
+			checkSuperClass(_OrderedSet_Precedence_T, _UniqueCollection_Precedence_T);
+			checkSuperClass(_OrderedSet_Property_T, _OrderedCollection_Property_T);
+			checkSuperClass(_OrderedSet_Property_T, _UniqueCollection_Property_T);
+			checkSuperClass(_OrderedSet_ShadowPart_T, _OrderedCollection_ShadowPart_T);
+			checkSuperClass(_OrderedSet_ShadowPart_T, _UniqueCollection_ShadowPart_T);
+			checkSuperClass(_OrderedSet_TemplateParameter_T_L1, _OrderedCollection_TemplateParameter_T);
+			checkSuperClass(_OrderedSet_TemplateParameter_T_L1, _UniqueCollection_TemplateParameter_T);
+			checkSuperClass(_OrderedSet_TupleLiteralPart_T, _OrderedCollection_TupleLiteralPart_T);
+			checkSuperClass(_OrderedSet_TupleLiteralPart_T, _UniqueCollection_TupleLiteralPart_T);
+			checkSuperClass(_OrderedSet_ValueSpecification_T, _OrderedCollection_ValueSpecification_T);
+			checkSuperClass(_OrderedSet_ValueSpecification_T, _UniqueCollection_ValueSpecification_T);
+			checkSuperClass(_OrderedSet_Variable_T, _OrderedCollection_Variable_T);
+			checkSuperClass(_OrderedSet_Variable_T, _UniqueCollection_Variable_T);
+			checkSuperClass(_Sequence_Type_T, _OrderedCollection_Type_T);
+			checkSuperClass(_Set_String_T_L1, _UniqueCollection_String_T);
+			checkSuperClass(_Set_Behavior_T, _UniqueCollection_Behavior_T);
+			checkSuperClass(_Set_Class_T, _UniqueCollection_Class_T);
+			checkSuperClass(_Set_Comment_T, _UniqueCollection_Comment_T);
+			checkSuperClass(_Set_CompleteClass_T, _UniqueCollection_CompleteClass_T);
+			checkSuperClass(_Set_CompletePackage_T, _UniqueCollection_CompletePackage_T);
+			checkSuperClass(_Set_ConnectionPointReference_T, _UniqueCollection_ConnectionPointReference_T);
+			checkSuperClass(_Set_Constraint_T, _UniqueCollection_Constraint_T);
+			checkSuperClass(_Set_DynamicProperty_T, _UniqueCollection_DynamicProperty_T);
+			checkSuperClass(_Set_ElementExtension_T, _UniqueCollection_ElementExtension_T);
+			checkSuperClass(_Set_Element_T, _UniqueCollection_Element_T);
+			checkSuperClass(_Set_InstanceSpecification_T, _UniqueCollection_InstanceSpecification_T);
+			checkSuperClass(_Set_Model_T, _UniqueCollection_Model_T);
+			checkSuperClass(_Set_Operation_T, _UniqueCollection_Operation_T);
+			checkSuperClass(_Set_Package_T, _UniqueCollection_Package_T);
+			checkSuperClass(_Set_ProfileApplication_T, _UniqueCollection_ProfileApplication_T);
+			checkSuperClass(_Set_Property_T, _UniqueCollection_Property_T);
+			checkSuperClass(_Set_Pseudostate_T, _UniqueCollection_Pseudostate_T);
+			checkSuperClass(_Set_Region_T, _UniqueCollection_Region_T);
+			checkSuperClass(_Set_Region_T_L1, _UniqueCollection_Region_T);
+			checkSuperClass(_Set_Slot_T, _UniqueCollection_Slot_T);
+			checkSuperClass(_Set_StateMachine_T, _UniqueCollection_StateMachine_T);
+			checkSuperClass(_Set_State_T, _UniqueCollection_State_T);
+			checkSuperClass(_Set_StereotypeExtender_T, _UniqueCollection_StereotypeExtender_T);
+			checkSuperClass(_Set_TemplateBinding_T, _UniqueCollection_TemplateBinding_T);
+			checkSuperClass(_Set_TemplateParameterSubstitution_T_L1, _UniqueCollection_TemplateParameterSubstitution_T);
+			checkSuperClass(_Set_Transition_T, _UniqueCollection_Transition_T);
+			checkSuperClass(_Set_Trigger_T, _UniqueCollection_Trigger_T);
+			checkSuperClass(_Set_Type_T, _UniqueCollection_Type_T);
+			checkSuperClass(_Set_Vertex_T, _UniqueCollection_Vertex_T);
+			op_CompleteModel_getOwnedCompletePackage.setType(_CompletePackage);
+			op_CompleteModel_getOwnedCompletePackage.setIsRequired(false);
+			createParameter(op_CompleteModel_getOwnedCompletePackage, "name", _String, false);
+			op_CompletePackage_getOwnedCompleteClass.setType(_CompleteClass);
+			op_CompletePackage_getOwnedCompleteClass.setIsRequired(false);
+			createParameter(op_CompletePackage_getOwnedCompleteClass, "name", _String, false);
+			op_Element_allOwnedElements.setType(_Set_Element_T);
+			createBodyExpression(op_Element_allOwnedElements, _Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_T);
+			op_Element_getValue.setType(_Element);
+			op_Element_getValue.setIsRequired(false);
+			createBodyExpression(op_Element_getValue, _Element, "null", _Element);
+			createParameter(op_Element_getValue, "stereotype", _Type, true);
+			createParameter(op_Element_getValue, "propertyName", _String, true);
+			op_OCLExpression_isNonNull.setType(_Boolean);
+			op_OCLExpression_isNull.setType(_Boolean);
+			op_OperationCallExp_hasOclVoidOverload.setType(_Boolean);
+			createBodyExpression(op_OperationCallExp_hasOclVoidOverload, _OperationCallExp, "false", _Boolean);
+			op_Property_isAttribute.setType(_Boolean);
+			createBodyExpression(op_Property_isAttribute, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean);
+			createParameter(op_Property_isAttribute, "p", _Property, true);
+			op_PropertyCallExp_getSpecializedReferredPropertyOwningType.setType(_Type);
+			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyOwningType, _PropertyCallExp, "referredProperty?.owningClass", _Type);
+			op_PropertyCallExp_getSpecializedReferredPropertyType.setType(_Type);
+			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyType, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
+			op_ReferringElement_getReferredElement.setType(_Element);
+			op_SelfType_specializeIn.setType(_Type);
+			createBodyExpression(op_SelfType_specializeIn, _SelfType, "selfType", _Type);
+			createParameter(op_SelfType_specializeIn, "expr", _CallExp, true);
+			createParameter(op_SelfType_specializeIn, "selfType", _Type, true);
+			op_Type_flattenedType.setType(_Type);
+			op_Type_flattenedType.setIsRequired(false);
+			createBodyExpression(op_Type_flattenedType, _Type, "self", _Type);
+			op_Type_isClass.setType(_Class);
+			op_Type_isClass.setIsRequired(false);
+			op_Type_isTemplateParameter.setType(_TemplateParameter);
+			op_Type_isTemplateParameter.setIsRequired(false);
+			op_Type_specializeIn.setType(_Type);
+			createBodyExpression(op_Type_specializeIn, _Type, "self", _Type);
+			createParameter(op_Type_specializeIn, "expr", _CallExp, true);
+			createParameter(op_Type_specializeIn, "selfType", _Type, true);
+			op_TypedElement_CompatibleBody.setType(_Boolean);
+			createBodyExpression(op_TypedElement_CompatibleBody, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean);
+			createParameter(op_TypedElement_CompatibleBody, "bodySpecification", _ValueSpecification, true);
+			op_ValueSpecification_booleanValue.setType(_Boolean);
+			op_ValueSpecification_integerValue.setType(_Integer);
+			op_ValueSpecification_integerValue.setIsRequired(false);
+			op_ValueSpecification_isComputable.setType(_Boolean);
+			op_ValueSpecification_isNull.setType(_Boolean);
+			op_ValueSpecification_stringValue.setType(_String);
+			op_ValueSpecification_stringValue.setIsRequired(false);
+			op_ValueSpecification_unlimitedValue.setType(_UnlimitedNatural);
+			op_ValueSpecification_unlimitedValue.setIsRequired(false);
+		}
 
-			operation = op_Type_flattenedType;
-			operation.setType(_Type);
-			operation.setIsRequired(false);
-			createBodyExpression(operation, _Type, "self", _Type);
-			installComment(operation, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
+		private void installSlots5a() {
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+		}
 
-			operation = op_Type_isClass;
-			operation.setType(_Class);
-			operation.setIsRequired(false);
+		private void installSlots5b() {
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define PROPERTIES Class
+			// define TYPE_FRAGMENTS Model
+		}
 
-			operation = op_Type_isTemplateParameter;
-			operation.setType(_TemplateParameter);
-			operation.setIsRequired(false);
+		private void installSlots6() {
+			// define ALL_OPERATIONS Model
+		}
 
-			operation = op_Type_specializeIn;
-			operation.setType(_Type);
-			createBodyExpression(operation, _Type, "self", _Type);
-			parameter = createParameter(operation, "expr", _CallExp, true);
-			parameter = createParameter(operation, "selfType", _Type, true);
+		private void installSlots7() {
+			// define ALL_PROPERTIES Model
+		}
 
-			operation = op_TypedElement_CompatibleBody;
-			operation.setType(_Boolean);
-			createBodyExpression(operation, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean);
-			parameter = createParameter(operation, "bodySpecification", _ValueSpecification, true);
+		private void installSlots8() {
+			// define FRAGMENT_OPERATIONS Model
+		}
 
-			operation = op_ValueSpecification_booleanValue;
-			operation.setType(_Boolean);
-			installComment(operation, "The query booleanValue() gives a single Boolean value when one can be computed.");
+		private void installSlots9() {
+			// define FRAGMENT_PROPERTIES Model
+		}
 
-			operation = op_ValueSpecification_integerValue;
-			operation.setType(_Integer);
-			operation.setIsRequired(false);
-			installComment(operation, "The query integerValue() gives a single Integer value when one can be computed.");
-
-			operation = op_ValueSpecification_isComputable;
-			operation.setType(_Boolean);
-			installComment(operation, "The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.");
-
-			operation = op_ValueSpecification_isNull;
-			operation.setType(_Boolean);
-			installComment(operation, "The query isNull() returns true when it can be computed that the value is null.");
-
-			operation = op_ValueSpecification_stringValue;
-			operation.setType(_String);
-			operation.setIsRequired(false);
-			installComment(operation, "The query stringValue() gives a single String value when one can be computed.");
-
-			operation = op_ValueSpecification_unlimitedValue;
-			operation.setType(_UnlimitedNatural);
-			operation.setIsRequired(false);
-			installComment(operation, "The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.");
+		private void installSlots10() {
+			// define ENUMERATION_LITERALS Model
 		}
 
 		private void installProperties() {

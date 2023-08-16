@@ -500,6 +500,17 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
 			;
 		}
+	/*	if (owningType != null) {			// XXX debugging
+			GenClass genClass = getGenClass(owningType);
+			String name = operation.getName();
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				String operationName = getName(genOperation.getEcoreOperation());
+				if (name.equals(operationName)) {
+					// FIXME parameters
+					return genOperation;
+				}
+			}
+		} */
 		throw new GenModelException("No GenFeature for " + baseOperation);
 	}
 
