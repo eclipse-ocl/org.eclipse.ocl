@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.EcoreGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -116,25 +117,30 @@ public class NameQueries
 		if (genPackage != null) {
 			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
 			assert genClass != null;
-			GenOperation genOperation = genModelHelper.getGenOperation(operation);
-			assert genOperation != null;
-			String operationID = genClass.getOperationID(genOperation, false);
-			StringBuilder s = new StringBuilder();
-			s.append(/*genPackage.getInterfacePackageName() +*/genPackage.getPackageInterfaceName());
-			s.append(".Literals.");
-			s.append(operationID);
-		/*	s.append(CodeGenUtil.upperName(type.getName()));
-			s.append("___");
-			s.append(CodeGenUtil.upperName(operation.getName()));
-			Iterable<@NonNull Parameter> ownedParameters = PivotUtil.getOwnedParameters(operation);
-			if (!Iterables.isEmpty(ownedParameters)) {
-				s.append("_");
-				for (@NonNull Parameter parameter : ownedParameters) {
+			try {
+				GenOperation genOperation = genModelHelper.getGenOperation(operation);
+				assert genOperation != null;
+				String operationID = genClass.getOperationID(genOperation, false);
+				StringBuilder s = new StringBuilder();
+				s.append(/*genPackage.getInterfacePackageName() +*/genPackage.getPackageInterfaceName());
+				s.append(".Literals.");
+				s.append(operationID);
+			/*	s.append(CodeGenUtil.upperName(type.getName()));
+				s.append("___");
+				s.append(CodeGenUtil.upperName(operation.getName()));
+				Iterable<@NonNull Parameter> ownedParameters = PivotUtil.getOwnedParameters(operation);
+				if (!Iterables.isEmpty(ownedParameters)) {
 					s.append("_");
-					s.append(parameter.getType().getName().toUpperCase(Locale.getDefault()));
-				}
-			} */
-			return s.toString();
+					for (@NonNull Parameter parameter : ownedParameters) {
+						s.append("_");
+						s.append(parameter.getType().getName().toUpperCase(Locale.getDefault()));
+					}
+				} */
+				return s.toString();
+			}
+			catch (GenModelException e) {
+			//	return "\"" + operation.getName() + "\" -- " + e.getMessage();
+			}
 		}
 		return "\"" + operation.getName() + "\"";
 	}

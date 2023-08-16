@@ -59,6 +59,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 	}
 
 	protected void analyzeContents(@NonNull Model asModel) {
+		synthesisSchedule.addModel(asModel);
 		for (@NonNull EObject eObject : new TreeIterable(asModel, true)) {
 			((Element)eObject).accept(this);
 		}
@@ -148,7 +149,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 
 	@Override
 	public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
-	//	doNamedElement(asEnumerationLiteral);
+		doNamedElement(asEnumerationLiteral);
 		return null;
 	}
 

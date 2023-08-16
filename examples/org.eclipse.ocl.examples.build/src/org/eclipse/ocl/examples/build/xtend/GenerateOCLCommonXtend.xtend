@@ -48,6 +48,9 @@ import org.eclipse.ocl.pivot.Type
 import org.eclipse.ocl.pivot.Enumeration
 import java.util.List
 import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot
+import org.eclipse.ocl.pivot.Class
+import org.eclipse.jdt.annotation.NonNull
+import org.eclipse.ocl.pivot.NamedElement
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -70,6 +73,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String declareEnumeration_name(/*@NonNull*/ Enumeration enumeration) {
 		'''
 		private Enumeration «enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»;
+		'''
+	}
+
+	protected def String declareEnumerationLiteral_name(/*@NonNull*/ EnumerationLiteral enumerationLiteral) {
+		'''
+		private EnumerationLiteral «enumerationLiteral.getPrefixedSymbolName("_" + enumerationLiteral.partialName())»;
 		'''
 	}
 
@@ -96,6 +105,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
+	protected def String declareModel_name(/*@NonNull*/ Model asModel) {
+		'''
+		// private Model «asModel.getPrefixedSymbolName("_" + asModel.partialName())»;
+		'''
+	}
+
 	protected def String declareOperation_name(/*@NonNull*/ Operation operation) {
 		'''
 		private Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())»;
@@ -104,6 +119,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String declareOperation_type(/*@NonNull*/ Operation operation) {
 		'''
+		'''
+	}
+
+	protected def String declarePackage_name(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
+		'''
+		// private Package «asPackage.getPrefixedSymbolName("_" + asPackage.partialName())»;
 		'''
 	}
 
@@ -116,14 +137,26 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String declareSlot(/*@NonNull*/ Slot slot) {
 		var element = slot.getElement();
 		var role = slot.getRole();
-		if (role == Slot.ROLE_CTOR) {
+		if (role == Slot.ROLE_EXTERNAL) {
+			switch element {
+			//	AnyType: return declareAnyType_name(element)
+				CollectionType: return declareCollectionType_name(element)
+				org.eclipse.ocl.pivot.Package: return declarePackage_name(element)
+			//	PrimitiveType: return declarePrimitiveType_external(element)
+				TemplateParameter: return declareTemplateParameter_name(element)
+				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
+			}
+		}			
+		else if (role == Slot.ROLE_CTOR) {
 			switch element {
 				CollectionType: return declareCollectionType_name(element)
 				Enumeration: return declareEnumeration_name(element)
-				EnumerationLiteral: return ""
+				EnumerationLiteral: return declareEnumerationLiteral_name(element)
 				Iteration: return declareIteration_name(element)
 				LambdaType: return declareLambdaType_name(element)
 				MapType: return declareMapType_name(element)
+				Model: return declareModel_name(element)
+				org.eclipse.ocl.pivot.Package: return declarePackage_name(element)
 				PrimitiveType: return declarePrimitiveType_name(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
 				TupleType: return declareTupleType_name(element)
@@ -148,6 +181,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			return ""
 		}
 		return "// declare " + role + " " + element.eClass().getName()
+	}
+
+	protected def String declareTemplateParameter_external(/*@NonNull*/ TemplateParameter templateParameter) {
+		'''
+		private final @NonNull TemplateParameter «templateParameter.getPrefixedSymbolName("tp_" + templateParameter.partialName())» = «templateParameter.getExternalReference()»;
+		'''
 	}
 
 	protected def String declareTemplateParameter_name(/*@NonNull*/ TemplateParameter templateParameter) {
@@ -221,13 +260,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String defineEnumeration_name(/*@NonNull*/ Enumeration enumeration) {
 		'''
-		«enumeration.getOwningPackage().getSymbolName()».getOwnedClasses().add(type = «enumeration.getSymbolName()» = «emitCreateEnumeration(enumeration)»);
+		«enumeration.getSymbolName()» = createEnumeration(«enumeration.getOwningPackage().getSymbolName()», «getEcoreLiteral(enumeration)»);
 		'''
 	}
 
 	protected def String defineEnumerationLiteral_name(/*@NonNull*/ EnumerationLiteral enumerationLiteral) {
 		'''
-		«enumerationLiteral.getOwningEnumeration().getSymbolName()».getOwnedLiterals().add(«emitCreateEnumerationLiteral(enumerationLiteral)»);
+		«enumerationLiteral.getSymbolName()» = createEnumerationLiteral(«enumerationLiteral.owningEnumeration.getSymbolName()», «getEcoreLiteral(enumerationLiteral)»);
 		'''
 	}
 
@@ -238,23 +277,23 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
 			«IF element instanceof Package»
-			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof Library»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof CollectionType»
-			private final @NonNull CollectionType «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull CollectionType «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof AnyType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof InvalidType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof SelfType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof VoidType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
-			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+		//	private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»
 			«ENDFOR»
 		'''
@@ -314,6 +353,18 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
+	protected def String defineModel_name(/*@NonNull*/ Model asModel) {
+		'''
+	//	«asModel.getSymbolName()» = defineModel_name(«asModel.getSymbolName()», "«asModel.name»");
+		'''
+	}
+
+	protected def String defineNamedElement_external(/*@NonNull*/ NamedElement asNamedElement) {
+		'''
+		«asNamedElement.getSymbolName()» = «asNamedElement.getExternalReference()»;
+		'''
+	}
+
 	protected def String defineOperation_name(/*@NonNull*/ Operation operation) {
 		'''
 		«operation.getSymbolName()» = createOperation(«operation.getOwningClass().getSymbolName()», «operation.
@@ -353,6 +404,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF (asClass instanceof PrimitiveType) && ((asClass as PrimitiveType).coercions.contains(operation))»
 			«asClass.getSymbolName()».getCoercions().add(«operation.getSymbolName()»);
 		«ENDIF»
+		'''
+	}
+
+	protected def String definePackage_name(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
+		'''
+	//	«asPackage.getSymbolName()» = definePackage_name(«asPackage.getSymbolName()», "«asPackage.name»");
 		'''
 	}
 
@@ -500,7 +557,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String defineSlot(/*@NonNull*/ Slot slot) {
 		var element = slot.getElement();
 		var role = slot.getRole();
-		if (role == Slot.ROLE_CTOR) {
+		if (role == Slot.ROLE_EXTERNAL) {
+			switch element {
+				NamedElement: return defineNamedElement_external(element)
+			}
+		}			
+		else if (role == Slot.ROLE_CTOR) {
 			switch element {
 				CollectionType: return defineCollectionType_name(element)
 				Enumeration: return defineEnumeration_name(element)
@@ -508,6 +570,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Iteration: return defineIteration_name(element)
 				LambdaType: return defineLambdaType_name(element)
 				MapType: return defineMapType_name(element)
+				Model: return defineModel_name(element)
+				org.eclipse.ocl.pivot.Package: return definePackage_name(element)
 				PrimitiveType: return definePrimitiveType_name(element)
 				TemplateParameter: return defineTemplateParameter_name(element)
 				TupleType: return defineTupleType_name(element)
@@ -587,13 +651,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		return "createEnumerationLiteral(\"" + enumerationLiteral.name + "\")";
 	} */
 
-	protected def String emitCreateEnumeration(org.eclipse.ocl.pivot.Enumeration type) {
+/* 	protected def String emitCreateEnumeration(org.eclipse.ocl.pivot.Enumeration type) {
 		return "createEnumeration(" + getEcoreLiteral(type) + ")";
-	}
+	} */
 	
-	protected def String emitCreateEnumerationLiteral(EnumerationLiteral enumerationLiteral) {
+/*	protected def String emitCreateEnumerationLiteral(EnumerationLiteral enumerationLiteral) {
 		return "createEnumerationLiteral(" + getEcoreLiteral(enumerationLiteral) + ")";
-	}
+	} */
 
 	protected def String emitCreateProperty(Property property) {
 		return "createProperty(" + property.name + ", " + property.type.getSymbolName() + ")";
@@ -618,7 +682,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«ENDIF»
 				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
 			«ENDFOR»
-			«pkg.getSymbolName()».getOwnedPackages().add(orphanage);
+			//	«pkg.getSymbolName()».getOwnedPackages().add(orphanage);
 		'''
 	}
 

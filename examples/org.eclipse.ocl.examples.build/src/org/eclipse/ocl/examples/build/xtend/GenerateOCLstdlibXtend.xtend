@@ -86,6 +86,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -112,11 +113,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			public class «javaClassName» extends ASResourceImpl
 			{
 				/**
-				 *	The static package-of-types pivot model of the Standard Library.
-				 */
-				private static «javaClassName» INSTANCE = null;
-			
-				/**
 				 *	The URI of this Standard Library.
 				 */
 				public static final @NonNull String STDLIB_URI = "«uri»";
@@ -127,29 +123,20 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				public static final @NonNull URI STDLIB_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 			
 				/**
-				 * Return the default «uri» standard Library Resource
-				 * if it jas been created, or null if not.
-				 *  This static definition auto-generated from «sourceFile»
-				 *  is used as the default when no overriding copy is registered.
-				 * It cannot be unloaded or rather unloading has no effect.
-				 */
-				public static @Nullable «javaClassName» basicGetDefault() {
-					return INSTANCE;
-				}
-			
-				/**
 				 * Return the default «uri» standard Library Resource.
 				 *  This static definition auto-generated from «sourceFile»
 				 *  is used as the default when no overriding copy is registered.
 				 * It cannot be unloaded or rather unloading has no effect.
 				 */
 				public static @NonNull «javaClassName» getDefault() {
-					«javaClassName» oclstdlib = INSTANCE;
+					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+					ReadOnly oclstdlib = environmentFactory.basicGetInstance(ReadOnly.class);
 					if (oclstdlib == null) {
 						String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-						oclstdlib = INSTANCE = new ReadOnly(asURI);
+						oclstdlib = new ReadOnly(asURI);
 						Contents contents = new Contents(oclstdlib, "«lib.getURI»");
 						oclstdlib.setSaveable(false);
+						environmentFactory.setInstance(ReadOnly.class, oclstdlib);
 					}
 					return oclstdlib;
 				}
@@ -212,7 +199,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				public static void uninstall() {
 					StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 					OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
-					INSTANCE = null;
+				//	INSTANCE = null;
 				}
 			
 				/**
@@ -259,19 +246,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
 						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
-					}
-			
-					/**
-					 * Overridden to trivialise loading of the shared instance.
-					 */
-					@Override
-					public void load(Map<?, ?> options) throws IOException {
-						if (this != INSTANCE) {
-							super.load(options);
-						}
-						else {
-							setLoaded(true);
-						}
 					}
 			
 					/**

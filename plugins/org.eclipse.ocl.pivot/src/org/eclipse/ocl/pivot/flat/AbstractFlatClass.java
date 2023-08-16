@@ -165,7 +165,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.name = name;
 		this.asClass = asClass;
 		this.flags = computeFlags(asClass);
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + asClass + " " + Integer.toHexString(flags));
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + asClass + " " + Integer.toHexString(flags));
 	}
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
@@ -808,10 +808,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		this.mutable = Boolean.FALSE;
-		System.out.println("initFragments2 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
-		for (@NonNull FlatFragment fragment : fragments) {
-			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
-		}
+	//	System.out.println("initFragments2 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+	//	for (@NonNull FlatFragment fragment : fragments) {
+	//		System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+	//	}
 	}
 
 	/**
@@ -932,10 +932,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		installClassListeners();
-		System.out.println("initFragments1 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
-		for (@NonNull FlatFragment fragment : fragments) {
-			System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
-		}
+	//	System.out.println("initFragments1 " + NameUtil.debugSimpleName(this) + " : " + this + " - " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
+	//	for (@NonNull FlatFragment fragment : fragments) {
+	//		System.out.println("\t" + NameUtil.debugSimpleName(fragment) + " : " + fragment + " -> " + NameUtil.debugSimpleName(fragment.getBaseFlatClass().getASClass()) + " : " + fragment.getBaseFlatClass().getASClass());
+	//	}
 	}
 
 	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {

@@ -26,15 +26,18 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils;
+import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -80,6 +83,11 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			return u1.compareTo(u2);
 		}
 	};
+
+	protected void addExternalReference2(@Nullable NamedElement reference, @NonNull Model root) {
+		addExternalReference(reference, root);
+		contentAnalysis.getSynthesisSchedule().getSlot(reference, Slot.ROLE_EXTERNAL);
+	}
 
 	protected CollectionType findCollectionType(Iterable<org.eclipse.ocl.pivot.Class> types, String name) {
 		CollectionType collType = null;
@@ -193,15 +201,15 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			assert asRoot instanceof Model;
 			Model asModel = (Model)asRoot;
 			initModel1(asModel);
-			CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
-			addExternalReference(standardLibrary.getBooleanType(), asModel);
-			addExternalReference(standardLibrary.getIntegerType(), asModel);
+			StandardLibrary standardLibrary = ocl.getStandardLibrary();
+			addExternalReference2(standardLibrary.getBooleanType(), asModel);
+			addExternalReference2(standardLibrary.getIntegerType(), asModel);
 			addExternalReference(standardLibrary.getOclAnyType(), asModel);
 			addExternalReference(standardLibrary.getOclElementType(), asModel);
 			addExternalReference(standardLibrary.getOclEnumerationType(), asModel);
-			addExternalReference(standardLibrary.getRealType(), asModel);
-			addExternalReference(standardLibrary.getStringType(), asModel);
-			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
+			addExternalReference2(standardLibrary.getRealType(), asModel);
+			addExternalReference2(standardLibrary.getStringType(), asModel);
+			addExternalReference2(standardLibrary.getUnlimitedNaturalType(), asModel);
 			initModel2(saver);
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);

@@ -251,7 +251,9 @@ public class ContentAnalysis extends SynthesisAnalysis
 	}
 
 	protected void analyze(@NonNull Model thisModel) {
-		for (NamedElement asElement : generateContext.external2name.keySet()) {
+		Set<@NonNull NamedElement> externals = generateContext.external2name.keySet();
+	//	getSynthesisSchedule().setExternalDeclarations(externals);
+		for (NamedElement asElement : externals) {
 			if (asElement instanceof org.eclipse.ocl.pivot.Class) {
 				CompleteClassInternal completeClass = context.getMetamodelManager().getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
 				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {

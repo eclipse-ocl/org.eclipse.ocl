@@ -318,12 +318,13 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid__0, PivotTables.PARTid_);
 
 
-	// CTOR http://www.eclipse.org/ocl/2015/Library
 	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
 	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
+	// EXTERNAL OclAny
+	// EXTERNAL OclElement
+	// EXTERNAL OclEnumeration
 
 	// CTOR $$
-	// CTOR ocl
 	// CTOR pivot
 	/**
 	 *	The type parameters for templated types and operations.
@@ -675,9 +676,6 @@ public class PivotTables extends AbstractTables
 	// CTOR Real
 	// CTOR String
 	// CTOR UnlimitedNatural
-	// CTOR OclAny
-	// CTOR OclElement
-	// CTOR OclEnumeration
 	// CTOR Annotation
 	// CTOR AnyType
 	// CTOR AssociationClass
@@ -814,11 +812,12 @@ public class PivotTables extends AbstractTables
 	// CTOR Visitable
 	// CTOR VoidType
 	// CTOR WildcardType
+	// CTOR Bag(CollectionType)
+	// CTOR Bag(MapType)
 	// CTOR Bag(Annotation)
 	// CTOR Bag(AssociationClassCallExp)
 	// CTOR Bag(CallOperationAction)
 	// CTOR Bag(Class)
-	// CTOR Bag(CollectionType)
 	// CTOR Bag(CompleteClass)
 	// CTOR Bag(CompleteModel)
 	// CTOR Bag(CompletePackage)
@@ -833,7 +832,6 @@ public class PivotTables extends AbstractTables
 	// CTOR Bag(InstanceSpecification)
 	// CTOR Bag(LambdaType)
 	// CTOR Bag(LoopExp)
-	// CTOR Bag(MapType)
 	// CTOR Bag(MessageType)
 	// CTOR Bag(NavigationCallExp)
 	// CTOR Bag(OCLExpression)
@@ -2168,6 +2166,26 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
+	// CTOR pivot::AssociativityKind::left
+	// CTOR pivot::AssociativityKind::right
+	// CTOR pivot::CollectionKind::Bag
+	// CTOR pivot::CollectionKind::Collection
+	// CTOR pivot::CollectionKind::OrderedSet
+	// CTOR pivot::CollectionKind::Sequence
+	// CTOR pivot::CollectionKind::Set
+	// CTOR pivot::PseudostateKind::choice
+	// CTOR pivot::PseudostateKind::deepHistory
+	// CTOR pivot::PseudostateKind::entryPoint
+	// CTOR pivot::PseudostateKind::exitPoint
+	// CTOR pivot::PseudostateKind::fork
+	// CTOR pivot::PseudostateKind::initial
+	// CTOR pivot::PseudostateKind::join
+	// CTOR pivot::PseudostateKind::junction
+	// CTOR pivot::PseudostateKind::shallowHistory
+	// CTOR pivot::PseudostateKind::terminate
+	// CTOR pivot::TransitionKind::external
+	// CTOR pivot::TransitionKind::internal
+	// CTOR pivot::TransitionKind::local
 	// CTOR pivot::Annotation::ownedContents
 	// CTOR pivot::Annotation::ownedDetails
 	// CTOR pivot::Annotation::references

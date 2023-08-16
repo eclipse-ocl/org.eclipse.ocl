@@ -75,7 +75,7 @@ import com.google.common.collect.Lists;
 @SuppressWarnings("all")
 public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowComponent
 {
-	final @NonNull Map<@NonNull NamedElement, @NonNull String> external2name = new HashMap<>();
+	protected final @NonNull Map<@NonNull NamedElement, @NonNull String> external2name = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull NamedElement> name2external = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
 	protected EnvironmentFactoryInternal environmentFactory;

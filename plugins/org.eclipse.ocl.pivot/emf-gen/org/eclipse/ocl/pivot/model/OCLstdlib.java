@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -38,6 +39,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -50,9 +52,10 @@ import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -70,11 +73,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLstdlib extends ASResourceImpl
 {
 	/**
-	 *	The static package-of-types pivot model of the Standard Library.
-	 */
-//	private static OCLstdlib INSTANCE = null;
-
-	/**
 	 *	The URI of this Standard Library.
 	 */
 	public static final @NonNull String STDLIB_URI = "http://www.eclipse.org/ocl/2015/Library";
@@ -83,17 +81,6 @@ public class OCLstdlib extends ASResourceImpl
 	 *	The URI of the AS representation of this Standard Library.
 	 */
 	public static final @NonNull URI STDLIB_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/Library" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
-
-	/**
-	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource
-	 * if it jas been created, or null if not.
-	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
-	 *  is used as the default when no overriding copy is registered.
-	 * It cannot be unloaded or rather unloading has no effect.
-	 */
-//	public static @Nullable OCLstdlib basicGetDefault() {
-//		return INSTANCE;
-//	}
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource.
@@ -220,19 +207,6 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		/**
-		 * Overridden to trivialise loading of the shared instance.
-		 */
-		@Override
-		public void load(Map<?, ?> options) throws IOException {
-		//	if (this != INSTANCE) {
-				super.load(options);
-		//	}
-		//	else {
-		//		setLoaded(true);
-		//	}
-		}
-
-		/**
 		 * Overridden to inhibit unloading of the shared instance.
 		 */
 		@Override
@@ -313,7 +287,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
-		//	model.getOwnedPackages().add(orphanage);
+			//	model.getOwnedPackages().add(orphanage);
 		}
 
 		private Precedence prec_ADDITIVE;
@@ -348,9 +322,9 @@ public class OCLstdlib extends ASResourceImpl
 		// declare ALL_PROPERTIES Model
 		// declare ALL_TYPES Model
 		private PrimitiveType _Boolean;
-		// declare CTOR Model
-		// declare CTOR Library
-		// declare CTOR Package
+		// private Model model;
+		// private Package ocl;
+		// private Package orphanage;
 		private PrimitiveType _Integer;
 		private PrimitiveType _Real;
 		private PrimitiveType _String;
@@ -1380,12 +1354,12 @@ public class OCLstdlib extends ASResourceImpl
 		// declare TYPE_PARAMETERS Model
 
 		private void installSlots0() {
-			// define CTOR Model
+			//	model = defineModel_name(model, "OCL-2.5.oclstdlib");
 		}
 
 		private void installSlots1() {
-			// define CTOR Library
-			// define CTOR Package
+			//	ocl = definePackage_name(ocl, "ocl");
+			//	orphanage = definePackage_name(orphanage, "$$");
 			// define TYPE_PARAMETERS Model
 		}
 
@@ -3612,6 +3586,7 @@ public class OCLstdlib extends ASResourceImpl
 			_Set_Set_selectByType_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByType_TT, true, 0, -1);
 			_Set_Set_T_T = getCollectionType(_Set_Set_T, tp_Set_T, true, 0, -1);
 			_Set_UniqueCollection_T_T = getCollectionType(_Set_Set_T, tp_UniqueCollection_T, true, 0, -1);
+			// define FRAGMENT_OPERATIONS Model
 			// define PROPERTIES Class
 			// define PROPERTIES Class
 			// define PROPERTIES InvalidType
@@ -3909,7 +3884,6 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots10() {
-			// define FRAGMENT_OPERATIONS Model
 			// define OPERATIONS LambdaType
 			// define OPERATIONS LambdaType
 			// define OPERATIONS LambdaType

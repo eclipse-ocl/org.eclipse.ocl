@@ -1194,7 +1194,7 @@
         <ownedComments body="The value type of the key-value pairs of oclText[self].&#xA;"/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" instanceClassName="org.eclipse.ocl.pivot.AnyType" isAbstract="true" name="OclAny">
+    <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclAny">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
