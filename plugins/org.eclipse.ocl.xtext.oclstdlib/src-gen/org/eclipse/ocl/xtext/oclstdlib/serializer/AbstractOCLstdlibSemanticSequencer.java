@@ -709,6 +709,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 * Constraint:
 	 *     (
 	 *         isAbstract?='abstract'?
+	 *         isInterface?='interface'?
 	 *         name=AnyName
 	 *         ownedSignature=TemplateSignatureCS?
 	 *         metaclassName=[MetaclassNameCS|AnyName]?
