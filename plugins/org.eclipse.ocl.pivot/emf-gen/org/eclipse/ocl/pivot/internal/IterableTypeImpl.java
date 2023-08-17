@@ -10,14 +10,9 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.IterableType;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Property;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +62,7 @@ public abstract class IterableTypeImpl extends DataTypeImpl implements IterableT
 		return PivotPackage.Literals.ITERABLE_TYPE;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
 		if (generic != null) {
 			return ((IterableTypeImpl)generic).getOwnedOperations();
@@ -85,6 +80,6 @@ public abstract class IterableTypeImpl extends DataTypeImpl implements IterableT
 		else {
 			return super.getOwnedProperties();
 		}
-	}
+	} */
 
 } //IterableTypeImpl

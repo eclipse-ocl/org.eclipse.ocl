@@ -95,7 +95,7 @@ AnnotationElementCS returns base::AnnotationElementCS:
 ;
 
 LibClassCS returns LibClassCS:
-	(isAbstract?='abstract')? 'type' name=AnyName
+	(isAbstract?='abstract')? (isInterface?='interface')? 'type' name=AnyName
 	(ownedSignature=TemplateSignatureCS)?
 	(':' metaclassName=[MetaclassNameCS|AnyName])?
 	('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?

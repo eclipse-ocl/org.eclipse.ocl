@@ -1130,13 +1130,13 @@ public class OCLinEcoreTablesUtils
 	}
 
 	/**
-	 * Return  true if property has an Ecore counterpart. Non-navigable opposites may have a Property
+	 * Return  the Ecore feature if property has an Ecore counterpart. Non-navigable opposites may have a Property
 	 * but no Ecore EReference.
 	 */
-	protected @NonNull Boolean hasEcore(@NonNull Property property) {
+	protected @Nullable EStructuralFeature hasEcore(@NonNull Property property) {
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType == null) {
-			return false;
+			return null;
 		}
 	//	String typeName = owningType.getName();
 	//	if (typeName == null) {
@@ -1145,20 +1145,20 @@ public class OCLinEcoreTablesUtils
 	//	List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
 		GenClassifier genClassifier = genModelHelper.getGenClassifier(owningType);
 		if (genClassifier == null) {
-			return false;
+			return null;
 		}
 		String propertyName = property.getName();
 		if (propertyName == null) {
-			return false;
+			return null;
 		}
 		List<@NonNull GenFeature> genFeatures = ClassUtil.nullFree(((GenClass)genClassifier).getAllGenFeatures());
 		for (@NonNull GenFeature genFeature : genFeatures) {
 			EStructuralFeature eFeature = genFeature.getEcoreFeature();
 			if (genModelHelper.getName(eFeature).equals(propertyName)) {
-				return true;
+				return eFeature;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	protected boolean hasSharedLibrary() {
@@ -1178,11 +1178,11 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected boolean isProperty(@NonNull Property prop) {
-		if (hasEcore(prop)) {
+		if (hasEcore(prop) != null) {
 			return true;
 		}
 		Property opposite = prop.getOpposite();
-		return (opposite != null) && hasEcore(opposite);
+		return (opposite != null) && (hasEcore(opposite) != null);
 	}
 
 	/**
