@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -68,12 +67,12 @@ public class ExplicitNavigationProperty extends AbstractProperty
 		}
 		// A specialized property such as CollectionType.elementType is returned from the specialized type
 		// An unspecialized property such as CollectionType.ownedOperation is returned from the unspecialized type
-		if ((eObject instanceof TemplateableElement) && !eObject.eIsSet(eFeature2)) {
+	/*	if ((eObject instanceof TemplateableElement) && !eObject.eIsSet(eFeature2)) {
 			TemplateableElement rawType = ((TemplateableElement)eObject).getGeneric();
 			if (rawType != null) {
 				eObject = rawType;
 			}
-		}
+		} */
 		Object eValue = eObject.eGet(eFeature2, true);
 		if (eValue != null) {
 			return executor.getIdResolver().boxedValueOf(eValue, eFeature2, returnTypeId);
