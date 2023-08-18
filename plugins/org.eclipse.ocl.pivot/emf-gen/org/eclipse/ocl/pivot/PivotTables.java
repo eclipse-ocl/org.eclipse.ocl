@@ -323,9 +323,21 @@ public class PivotTables extends AbstractTables
 	// EXTERNAL OclAny
 	// EXTERNAL OclElement
 	// EXTERNAL OclEnumeration
+	// EXTERNAL Collection(T)
+	// EXTERNAL OrderedCollection(T)
+	// EXTERNAL UniqueCollection(T)
+	// EXTERNAL Bag(T)
+	// EXTERNAL OrderedSet(T)
+	// EXTERNAL Sequence(T)
+	// EXTERNAL Set(T)
 
 	// CTOR $$
 	// CTOR pivot
+	// EXTERNAL Boolean
+	// EXTERNAL Integer
+	// EXTERNAL Real
+	// EXTERNAL String
+	// EXTERNAL UnlimitedNatural
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -662,7 +674,6 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-	// CTOR Boolean
 	// CTOR EcoreObject
 	// CTOR JavaClass
 	// CTOR LibraryFeature
@@ -672,10 +683,6 @@ public class PivotTables extends AbstractTables
 	// CTOR CollectionKind
 	// CTOR PseudostateKind
 	// CTOR TransitionKind
-	// CTOR Integer
-	// CTOR Real
-	// CTOR String
-	// CTOR UnlimitedNatural
 	// CTOR Annotation
 	// CTOR AnyType
 	// CTOR AssociationClass
@@ -2602,7 +2609,6 @@ public class PivotTables extends AbstractTables
 	// CTOR pivot::ValueSpecification::isNull() : Boolean[1]
 	// CTOR pivot::ValueSpecification::stringValue() : String[?]
 	// CTOR pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
-	// OPERATIONS Boolean
 	// OPERATIONS EcoreObject
 	// OPERATIONS JavaClass
 	// OPERATIONS LibraryFeature
@@ -2612,10 +2618,6 @@ public class PivotTables extends AbstractTables
 	// OPERATIONS CollectionKind
 	// OPERATIONS PseudostateKind
 	// OPERATIONS TransitionKind
-	// OPERATIONS Integer
-	// OPERATIONS Real
-	// OPERATIONS String
-	// OPERATIONS UnlimitedNatural
 	// OPERATIONS Annotation
 	// OPERATIONS AnyType
 	// OPERATIONS AssociationClass
@@ -2740,7 +2742,6 @@ public class PivotTables extends AbstractTables
 	// OPERATIONS Visitable
 	// OPERATIONS VoidType
 	// OPERATIONS WildcardType
-	// PROPERTIES Boolean
 	// PROPERTIES EcoreObject
 	// PROPERTIES JavaClass
 	// PROPERTIES LibraryFeature
@@ -2750,10 +2751,6 @@ public class PivotTables extends AbstractTables
 	// PROPERTIES CollectionKind
 	// PROPERTIES PseudostateKind
 	// PROPERTIES TransitionKind
-	// PROPERTIES Integer
-	// PROPERTIES Real
-	// PROPERTIES String
-	// PROPERTIES UnlimitedNatural
 	// PROPERTIES AnyType
 	// PROPERTIES BagType
 	// PROPERTIES BooleanType
@@ -2786,7 +2783,6 @@ public class PivotTables extends AbstractTables
 	// PROPERTIES UnspecifiedValueExp
 	// PROPERTIES Visitable
 	// PROPERTIES VoidType
-	// SUPER_CLASSES Boolean
 	// SUPER_CLASSES EcoreObject
 	// SUPER_CLASSES JavaClass
 	// SUPER_CLASSES LibraryFeature
@@ -2796,10 +2792,6 @@ public class PivotTables extends AbstractTables
 	// SUPER_CLASSES CollectionKind
 	// SUPER_CLASSES PseudostateKind
 	// SUPER_CLASSES TransitionKind
-	// SUPER_CLASSES Integer
-	// SUPER_CLASSES Real
-	// SUPER_CLASSES String
-	// SUPER_CLASSES UnlimitedNatural
 	// SUPER_CLASSES Annotation
 	// SUPER_CLASSES AnyType
 	// SUPER_CLASSES AssociationClass

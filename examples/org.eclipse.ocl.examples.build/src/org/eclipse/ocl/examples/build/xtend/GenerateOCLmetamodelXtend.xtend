@@ -13,9 +13,24 @@ package org.eclipse.ocl.examples.build.xtend
 import org.eclipse.ocl.pivot.Model
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.utilities.ClassUtil
+import org.eclipse.ocl.pivot.Library
 
 class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
+	protected override String defineExternals(/*@NonNull*/ Model root) {
+		var externals = root.getSortedExternals();
+		if (externals.isEmpty()) return "";
+		'''
+
+			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
+			«IF element instanceof Library»
+			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ENDIF»
+			«ENDFOR»
+		'''
+	}
+
 	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var Model root = thisModel;
 		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();

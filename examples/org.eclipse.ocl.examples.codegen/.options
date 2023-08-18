@@ -17,3 +17,6 @@ org.eclipse.ocl.examples.codegen/cse/rewrite=false
 org.eclipse.ocl.examples.codegen/classPath=false
 # Turn on tracing of the explicit compilations 
 org.eclipse.ocl.examples.codegen/compiles=false
+
+# Turn on tracing of the tables synthesis schedule 
+org.eclipse.ocl.examples.codegen/synthesis=false

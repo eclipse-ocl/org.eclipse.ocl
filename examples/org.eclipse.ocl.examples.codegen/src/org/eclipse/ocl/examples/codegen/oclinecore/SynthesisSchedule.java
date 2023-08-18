@@ -23,7 +23,11 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -37,9 +41,14 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.collect.Iterables;
 
@@ -48,6 +57,8 @@ import com.google.common.collect.Iterables;
  */
 public class SynthesisSchedule
 {
+	public static final @NonNull TracingOption SYNTHESIS = new TracingOption(CodeGenConstants.PLUGIN_ID, "synthesis");
+
 	private static final @NonNull Set<@NonNull Slot> CYCLIC_GUARD = new HashSet<>();
 
 	/**
@@ -85,6 +96,9 @@ public class SynthesisSchedule
 			this.element = (Element)eInstance;
 			this.role = role;
 	//		this.name = name;
+			if ((role == ROLE_CTOR) && (eInstance instanceof BooleanType)) {
+				getClass();		// XXX
+			}
 		}
 
 		public @NonNull Element getElement() {
@@ -224,10 +238,13 @@ public class SynthesisSchedule
 		}
 	}
 
-	private final @NonNull List<@NonNull Model> models = new ArrayList<>();
+	private final @NonNull EnvironmentFactoryInternal environmentFactory;
+	private /*@LazyNonNull*/ Model model = null;
 	private final @NonNull Map<@NonNull EObject, @NonNull Map<@NonNull String, @NonNull Slot>> eInstance2role2slot = new HashMap<>();
-	private /*LazyNonNull*/ List<@NonNull Stage> stages = null;
-	private /*LazyNonNull*/ List<@NonNull Slot> slots = null;
+//	private final @NonNull Map<@NonNull ElementId, @NonNull EObject> elementId2eInstance = new HashMap<>();
+	private final @NonNull Map<@NonNull ElementId, @NonNull Slot> externalElementId2slot = new HashMap<>();
+	private /*@LazyNonNull*/ List<@NonNull Stage> stages = null;
+	private /*@LazyNonNull*/ List<@NonNull Slot> slots = null;
 	private final @NonNull SlotComparator slotComparator = new SlotComparator();
 	private int maxSlotsPerStage = 100;
 //	private final @NonNull Set<@NonNull NamedElement> externals = new HashSet<>();
@@ -238,24 +255,53 @@ public class SynthesisSchedule
 		return addDependency(successorSlot, predecessorSlot);
 	}
 
+	public SynthesisSchedule(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		this.environmentFactory = environmentFactory;;
+	}
+
 	private @NonNull Slot addDependency(@NonNull Slot successorSlot, @NonNull Slot predecessorSlot) {
-		for (EObject eContainer = predecessorSlot.element; (eContainer = eContainer.eContainer()) != null; ) {	// Debugging - a cheap variant of all predessors
-			assert (eContainer != successorSlot.element) || (successorSlot.role != Slot.ROLE_CTOR);
+	//	assert successorSlot.role != Slot.ROLE_EXTERNAL;
+		if ((successorSlot.role != Slot.ROLE_EXTERNAL) || (predecessorSlot.role == Slot.ROLE_EXTERNAL)) {	// External can only depend on External
+			for (EObject eContainer = predecessorSlot.element; (eContainer = eContainer.eContainer()) != null; ) {	// Debugging - a cheap variant of all predessors
+				assert (eContainer != successorSlot.element) || (successorSlot.role != Slot.ROLE_CTOR);
+			}
+			//	if (successorSlot != predecessorSlot) {							// Operation may write and read a TemplateParameter
+			if (!successorSlot.predecessors.contains(predecessorSlot)) {		// Operation can depend on same type many times
+				successorSlot.predecessors.add(predecessorSlot);
+				predecessorSlot.successors.add(successorSlot);
+			//	assert predecessorSlot.element != successorSlot.element;
+			}
+			//	}
 		}
-		//	if (successorSlot != predecessorSlot) {							// Operation may write and read a TemplateParameter
-		if (!successorSlot.predecessors.contains(predecessorSlot)) {		// Operation can depend on same type many times
-			successorSlot.predecessors.add(predecessorSlot);
-			predecessorSlot.successors.add(successorSlot);
-		//	assert predecessorSlot.element != successorSlot.element;
-		}
-		//	}
 		return successorSlot;
 	}
 
-	public void addModel(@NonNull Model asModel) {
-		if (!models.contains(asModel)) {
-			models.add(asModel);
+	public void analyzeContents(@NonNull Model asModel) {
+		assert model == null;
+		this.model = asModel;
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		AnyType oclAnyType = standardLibrary.getOclAnyType();
+		if (PivotUtil.getContainingModel(oclAnyType) != asModel) {
+			addExternalSlot(oclAnyType);
+			addExternalSlot(standardLibrary.getOclElementType());
+			addExternalSlot(standardLibrary.getOclEnumerationType());
+			addExternalSlot(standardLibrary.getBooleanType());
+			addExternalSlot(standardLibrary.getIntegerType());
+			addExternalSlot(standardLibrary.getRealType());
+			addExternalSlot(standardLibrary.getStringType());
+			addExternalSlot(standardLibrary.getUnlimitedNaturalType());
+			addExternalSlot(standardLibrary.getBagType());
+			addExternalSlot(standardLibrary.getCollectionType());
+			addExternalSlot(standardLibrary.getOrderedCollectionType());
+			addExternalSlot(standardLibrary.getOrderedSetType());
+			addExternalSlot(standardLibrary.getSequenceType());
+			addExternalSlot(standardLibrary.getSetType());
+			addExternalSlot(standardLibrary.getUniqueCollectionType());
 		}
+	}
+
+	private void addExternalSlot(@NonNull Type asType) {
+		externalElementId2slot.put(asType.getTypeId(), getSlot(asType, Slot.ROLE_EXTERNAL));
 	}
 
 	public @NonNull Slot addTypeDependency(@NonNull TypedElement asTypedElement, @NonNull Type type) {
@@ -269,18 +315,24 @@ public class SynthesisSchedule
 		Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> transitiveSlotPredecessors = computeTransitiveSlotPredecessors(directSlotPredecessors);
 		stages = computeStagedSlots(transitiveSlotPredecessors);
 		slots = new ArrayList<>();
-	//	StringBuilder s = new StringBuilder();
+		StringBuilder s = SYNTHESIS.isActive() ? new StringBuilder() : null;
 		for (@NonNull Stage stage : stages) {
-	//		s.append("\nStage " + stage.getName());
+			if (s != null) {
+				s.append("\nStage " + stage.getName());
+			}
 			for (@NonNull Slot slot : stage.getSlots()) {
-	//			s.append("\n  " + slot);
-	//			for (@NonNull Slot predecessor : slot.predecessors) {
-	//				s.append("\n    requires: " + predecessor);
-	//			}
+				if (s != null) {
+					s.append("\n  " + slot);
+					for (@NonNull Slot predecessor : slot.predecessors) {
+						s.append("\n    requires: " + predecessor);
+					}
+				}
 				slots.add(slot);
 			}
 		}
-	//	System.out.println(s.toString());
+		if (s != null) {
+			SYNTHESIS.println(s.toString());
+		}
 		Collections.sort(slots, slotComparator);
 	}
 
@@ -465,7 +517,22 @@ public class SynthesisSchedule
 		assert eInstance != null;
 		Model asModel = PivotUtil.getContainingModel(eInstance);
 		assert asModel != null;
-		if (!models.contains(asModel) && !OrphanageImpl.isOrphanage(asModel)) {
+		ElementId elementId = null;
+		if (!(eInstance instanceof Model)) {
+			String stringValue = String.valueOf(eInstance);
+			if (!"OclAny::OclInvalid".equals(stringValue) && !"OclInvalid::oclBadProperty".equals(stringValue)) {
+				elementId = IdManager.getElementId(eInstance);
+				assert elementId != null : "No ElementId for " + NameUtil.debugSimpleName(eInstance) + " " + eInstance;
+			}
+		}
+		Slot externalSlot = externalElementId2slot.get(elementId);
+		if (externalSlot != null) {
+			return externalSlot;
+		}
+		if ((model != asModel) && !OrphanageImpl.isOrphanage(asModel)) {
+			EObject eInstance2 = environmentFactory.getMetamodelManager().getPrimaryElement(eInstance);
+		//	System.out.println("getSlot " + role + " " + NameUtil.debugSimpleName(eInstance) + " " + NameUtil.debugSimpleName(eInstance2) + " " + elementId);
+			eInstance = eInstance2;
 			role = Slot.ROLE_EXTERNAL;
 		}
 		Map<@NonNull String, @NonNull Slot> role2slot = eInstance2role2slot.get(eInstance);

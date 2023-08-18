@@ -150,7 +150,8 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
 			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
-		//	log.info("Generating '" + fileName + "'");
+			log.info("Generating '" + fileName + "'");
+		//	SynthesisSchedule.SYNTHESIS.setState(true);
 			initModel1(pivotModel);
 			initModel2(saver);
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);

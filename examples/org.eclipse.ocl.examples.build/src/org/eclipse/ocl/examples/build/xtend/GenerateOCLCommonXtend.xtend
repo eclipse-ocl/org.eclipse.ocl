@@ -66,7 +66,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String declareCollectionType_name(/*@NonNull*/ CollectionType type) {
 		'''
-		private CollectionType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
+		private CollectionType «type.getPrefixedSymbolName("_"+type.partialName())»;
 		'''
 	}
 
@@ -105,12 +105,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String declareModel_name(/*@NonNull*/ Model asModel) {
-		'''
-		// private Model «asModel.getPrefixedSymbolName("_" + asModel.partialName())»;
-		'''
-	}
-
 	protected def String declareOperation_name(/*@NonNull*/ Operation operation) {
 		'''
 		private Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())»;
@@ -122,9 +116,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String declarePackage_name(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
+	protected def String declarePrimitiveType_external(/*@NonNull*/ PrimitiveType primitiveType) {
 		'''
-		// private Package «asPackage.getPrefixedSymbolName("_" + asPackage.partialName())»;
+		private PrimitiveType «primitiveType.getPrefixedSymbolNameWithoutNormalization("_" + primitiveType.partialName())»;
 		'''
 	}
 
@@ -139,10 +133,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var role = slot.getRole();
 		if (role == Slot.ROLE_EXTERNAL) {
 			switch element {
-			//	AnyType: return declareAnyType_name(element)
 				CollectionType: return declareCollectionType_name(element)
-				org.eclipse.ocl.pivot.Package: return declarePackage_name(element)
-			//	PrimitiveType: return declarePrimitiveType_external(element)
+				org.eclipse.ocl.pivot.Package: return ""
+				PrimitiveType: return declarePrimitiveType_external(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
 				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
 			}
@@ -155,8 +148,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Iteration: return declareIteration_name(element)
 				LambdaType: return declareLambdaType_name(element)
 				MapType: return declareMapType_name(element)
-				Model: return declareModel_name(element)
-				org.eclipse.ocl.pivot.Package: return declarePackage_name(element)
+				Model: return ""
+				org.eclipse.ocl.pivot.Package: return ""
 				PrimitiveType: return declarePrimitiveType_name(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
 				TupleType: return declareTupleType_name(element)
@@ -174,24 +167,54 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Property: return ""
 			}
 		}
-		else if (role == Slot.ROLE_SUPER_CLASSES) {
+		else if (role == Slot.ROLE_ALL_FRAGMENTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_TYPES) {
 			return ""
 		}
 		else if (role == Slot.ROLE_COMMENTS) {
 			return ""
 		}
-		return "// declare " + role + " " + element.eClass().getName()
-	}
-
-	protected def String declareTemplateParameter_external(/*@NonNull*/ TemplateParameter templateParameter) {
-		'''
-		private final @NonNull TemplateParameter «templateParameter.getPrefixedSymbolName("tp_" + templateParameter.partialName())» = «templateParameter.getExternalReference()»;
-		'''
+		else if (role == Slot.ROLE_ENUMERATION_LITERALS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_FRAGMENT_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_PARAMETER_LISTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_SUPER_CLASSES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_TYPE_FRAGMENTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_TYPE_PARAMETERS) {
+			return ""
+		}
+		return "// declare " + role + " " + element.eClass().getName() + " " + element
 	}
 
 	protected def String declareTemplateParameter_name(/*@NonNull*/ TemplateParameter templateParameter) {
 		'''
-		private TemplateParameter «templateParameter.getPrefixedSymbolName("tp_" + templateParameter.partialName())»;
+		private TemplateParameter «templateParameter.getPrefixedSymbolName("_" + templateParameter.partialName())»;
 		'''
 	}
 
@@ -242,7 +265,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String defineCollectionType_name(/*@NonNull*/ CollectionType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		//«type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 		«ELSE»
 		«type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
@@ -271,32 +293,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineExternals(/*@NonNull*/ Model root) {
-		var externals = root.getSortedExternals();
-		if (externals.isEmpty()) return "";
-		'''
-
-			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
-			«IF element instanceof Package»
-		//	private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof Library»
-			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof CollectionType»
-		//	private final @NonNull CollectionType «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof PrimitiveType»
-		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof AnyType»
-		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof InvalidType»
-		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof SelfType»
-		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSEIF element instanceof VoidType»
-		//	private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ELSE»
-		//	private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
-			«ENDIF»
-			«ENDFOR»
-		'''
+		return "";
 	}
 
 	protected def String defineIteration_name(/*@NonNull*/ Iteration iteration) {
@@ -345,17 +342,10 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String defineMapType_name(/*@NonNull*/ MapType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		//«type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 		«ELSE»
 		«type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ENDIF»
-		'''
-	}
-
-	protected def String defineModel_name(/*@NonNull*/ Model asModel) {
-		'''
-	//	«asModel.getSymbolName()» = defineModel_name(«asModel.getSymbolName()», "«asModel.name»");
 		'''
 	}
 
@@ -404,12 +394,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF (asClass instanceof PrimitiveType) && ((asClass as PrimitiveType).coercions.contains(operation))»
 			«asClass.getSymbolName()».getCoercions().add(«operation.getSymbolName()»);
 		«ENDIF»
-		'''
-	}
-
-	protected def String definePackage_name(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
-		'''
-	//	«asPackage.getSymbolName()» = definePackage_name(«asPackage.getSymbolName()», "«asPackage.name»");
 		'''
 	}
 
@@ -570,15 +554,14 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Iteration: return defineIteration_name(element)
 				LambdaType: return defineLambdaType_name(element)
 				MapType: return defineMapType_name(element)
-				Model: return defineModel_name(element)
-				org.eclipse.ocl.pivot.Package: return definePackage_name(element)
+				Model: return ""
+				org.eclipse.ocl.pivot.Package: return ""
 				PrimitiveType: return definePrimitiveType_name(element)
+				Property: return ""
 				TemplateParameter: return defineTemplateParameter_name(element)
 				TupleType: return defineTupleType_name(element)
 				org.eclipse.ocl.pivot.Class: return defineClass_name(element)
 				Operation: return defineOperation_name(element)
-			//	Parameter: return ""
-			//	Property: return ""
 			}
 		}			
 		else if (role == Slot.ROLE_TYPE) {
@@ -601,7 +584,43 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				default: return defineElement_comments(element)
 			}		
 		}
-		return "// define " + role + " " + element.eClass().getName()
+		else if (role == Slot.ROLE_ALL_FRAGMENTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ALL_TYPES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_ENUMERATION_LITERALS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_FRAGMENT_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_OPERATIONS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_PARAMETER_LISTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_PROPERTIES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_TYPE_FRAGMENTS) {
+			return ""
+		}
+		else if (role == Slot.ROLE_TYPE_PARAMETERS) {
+			return ""
+		}
+		return "// define " + role + " " + element.eClass().getName() + " " + element
 	}
 
 	protected def String defineSlots(/*@NonNull*/ Model root) {
@@ -682,7 +701,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«ENDIF»
 				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
 			«ENDFOR»
-			//	«pkg.getSymbolName()».getOwnedPackages().add(orphanage);
 		'''
 	}
 
@@ -754,7 +772,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			TemplateBinding case element.getTemplateSignature().owningElement === null: return "null"
 			TemplateBinding: return element.owningElement.partialName()
 			TemplateParameter case element.getOwningSignature.owningElement === null: return "[" + element.getOwningSignature.partialName() + "]"
-//			TemplateParameter case element.getOwningTemplateSignature.owningTemplateableElement.getUnspecializedElement() == null: return element.javaName()
 			TemplateParameter: return element.getOwningSignature.owningElement.partialName() + "_" + element.javaName()
 			TemplateParameterSubstitution case element.owningBinding === null: return "null"
 			TemplateParameterSubstitution case element.owningBinding.owningElement === null: return "null"

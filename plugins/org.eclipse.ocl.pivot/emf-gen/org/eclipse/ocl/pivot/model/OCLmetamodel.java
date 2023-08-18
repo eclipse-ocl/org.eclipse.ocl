@@ -276,40 +276,12 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private final @NonNull Package _ocl = libraryPackage;
-		//	private final @NonNull CollectionType _Bag = getCollectionType(_ocl, "Bag");
-		//	private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
-		//	private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
-		//	private final @NonNull Class _Integer = getClass(_ocl, "Integer");
-		//	private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
-		//	private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		//	private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
-		//	private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
-		//	private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
-		//	private final @NonNull Class _Real = getClass(_ocl, "Real");
-		//	private final @NonNull CollectionType _Sequence = getCollectionType(_ocl, "Sequence");
-		//	private final @NonNull CollectionType _Set = getCollectionType(_ocl, "Set");
-		//	private final @NonNull Class _String = getClass(_ocl, "String");
-		//	private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
-		//	private final @NonNull Class _UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
-		//	private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
-		//	private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
-		//	private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
-		//	private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
-		//	private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
-		//	private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
-		//	private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
-			//	root.getOwnedPackages().add(orphanage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
-		// declare ALL_FRAGMENTS Model
-		// declare ALL_OPERATIONS Model
-		// declare ALL_PROPERTIES Model
-		// declare ALL_TYPES Model
-		private PrimitiveType _Boolean_1;
 		private Class _EcoreObject;
 		private Class _JavaClass;
 		private Class _LibraryFeature;
@@ -339,13 +311,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private EnumerationLiteral _TransitionKind_external;
 		private EnumerationLiteral _TransitionKind_internal;
 		private EnumerationLiteral _TransitionKind_local;
-		// private Model root;
-		// private Package orphanage;
-		// private Package pivot;
-		private PrimitiveType _Integer_1;
-		private PrimitiveType _Real_1;
-		private PrimitiveType _String_1;
-		private PrimitiveType _UnlimitedNatural_1;
 		private Class _Annotation;
 		private Class _AnyType;
 		private Class _AssociationClass;
@@ -729,12 +694,11 @@ public class OCLmetamodel extends ASResourceImpl
 		private Operation op_ValueSpecification_isNull;
 		private Operation op_ValueSpecification_stringValue;
 		private Operation op_ValueSpecification_unlimitedValue;
-		// declare ENUMERATION_LITERALS Model
-		private Class _Boolean;
-		private Class _Integer;
-		private Class _Real;
-		private Class _String;
-		private Class _UnlimitedNatural;
+		private PrimitiveType _Boolean;
+		private PrimitiveType _Integer;
+		private PrimitiveType _Real;
+		private PrimitiveType _String;
+		private PrimitiveType _UnlimitedNatural;
 		private Class _OclAny;
 		private Class _OclElement;
 		private Class _OclEnumeration;
@@ -752,767 +716,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _OrderedSet;
 		private CollectionType _Sequence;
 		private CollectionType _Set;
-		// declare FRAGMENT_OPERATIONS Model
-		// declare FRAGMENT_PROPERTIES Model
-		// declare OPERATIONS BooleanType
-		// declare OPERATIONS DataType
-		// declare OPERATIONS DataType
-		// declare OPERATIONS DataType
-		// declare OPERATIONS DataType
-		// declare OPERATIONS DataType
-		// declare OPERATIONS Enumeration
-		// declare OPERATIONS Enumeration
-		// declare OPERATIONS Enumeration
-		// declare OPERATIONS Enumeration
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare PARAMETER_LISTS Model
-		// declare PROPERTIES BooleanType
-		// declare PROPERTIES DataType
-		// declare PROPERTIES DataType
-		// declare PROPERTIES DataType
-		// declare PROPERTIES DataType
-		// declare PROPERTIES DataType
-		// declare PROPERTIES Enumeration
-		// declare PROPERTIES Enumeration
-		// declare PROPERTIES Enumeration
-		// declare PROPERTIES Enumeration
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare TYPE_FRAGMENTS Model
-		// declare TYPE_PARAMETERS Model
 
 		private void installSlots0() {
-			//	root = defineModel_name(root, "Pivot.ecore");
-			_Boolean = getClass(_ocl, "Boolean");
-			_Integer = getClass(_ocl, "Integer");
-			_Real = getClass(_ocl, "Real");
-			_String = getClass(_ocl, "String");
-			_UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
 			_OclAny = getClass(_ocl, "OclAny");
 			_OclElement = getClass(_ocl, "OclElement");
 			_OclEnumeration = getClass(_ocl, "OclEnumeration");
@@ -1526,8 +731,11 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private void installSlots1() {
-			//	orphanage = definePackage_name(orphanage, "$$");
-			//	pivot = definePackage_name(pivot, "pivot");
+			_Boolean = getPrimitiveType(_ocl, "Boolean");
+			_Integer = getPrimitiveType(_ocl, "Integer");
+			_Real = getPrimitiveType(_ocl, "Real");
+			_String = getPrimitiveType(_ocl, "String");
+			_UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
 			_Bag_T = getTemplateParameter(_Bag, 0);
 			_Collection_T = getTemplateParameter(_Collection, 0);
 			_OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
@@ -1535,12 +743,9 @@ public class OCLmetamodel extends ASResourceImpl
 			_Sequence_T = getTemplateParameter(_Sequence, 0);
 			_Set_T = getTemplateParameter(_Set, 0);
 			_UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
-			// define TYPE_PARAMETERS Model
 		}
 
 		private void installSlots2a() {
-			// define ALL_TYPES Model
-			_Boolean = createPrimitiveType(pivot, PivotPackage.Literals.BOOLEAN);
 			_EcoreObject = createClass(pivot, PivotPackage.Literals.ECORE_OBJECT);
 			_JavaClass = createClass(pivot, PivotPackage.Literals.JAVA_CLASS);
 			_LibraryFeature = createClass(pivot, PivotPackage.Literals.LIBRARY_FEATURE);
@@ -1550,10 +755,6 @@ public class OCLmetamodel extends ASResourceImpl
 			_CollectionKind = createEnumeration(pivot, PivotPackage.Literals.COLLECTION_KIND);
 			_PseudostateKind = createEnumeration(pivot, PivotPackage.Literals.PSEUDOSTATE_KIND);
 			_TransitionKind = createEnumeration(pivot, PivotPackage.Literals.TRANSITION_KIND);
-			_Integer = createPrimitiveType(pivot, PivotPackage.Literals.INTEGER);
-			_Real = createPrimitiveType(pivot, PivotPackage.Literals.REAL);
-			_String = createPrimitiveType(pivot, PivotPackage.Literals.STRING);
-			_UnlimitedNatural = createPrimitiveType(pivot, PivotPackage.Literals.UNLIMITED_NATURAL);
 			_Annotation = createClass(pivot, PivotPackage.Literals.ANNOTATION);
 			_AnyType = createClass(pivot, PivotPackage.Literals.ANY_TYPE);
 			_AssociationClass = createClass(pivot, PivotPackage.Literals.ASSOCIATION_CLASS);
@@ -1657,15 +858,15 @@ public class OCLmetamodel extends ASResourceImpl
 			_Pivotable = createClass(pivot, PivotPackage.Literals.PIVOTABLE);
 			_Pivotable.setIsAbstract(true);
 			_Precedence = createClass(pivot, PivotPackage.Literals.PRECEDENCE);
-		}
-
-		private void installSlots2b() {
 			_PrimitiveCompletePackage = createClass(pivot, PivotPackage.Literals.PRIMITIVE_COMPLETE_PACKAGE);
 			_PrimitiveLiteralExp = createClass(pivot, PivotPackage.Literals.PRIMITIVE_LITERAL_EXP);
 			_PrimitiveLiteralExp.setIsAbstract(true);
 			_PrimitiveType = createClass(pivot, PivotPackage.Literals.PRIMITIVE_TYPE);
 			_Profile = createClass(pivot, PivotPackage.Literals.PROFILE);
 			_ProfileApplication = createClass(pivot, PivotPackage.Literals.PROFILE_APPLICATION);
+		}
+
+		private void installSlots2b() {
 			_Property = createClass(pivot, PivotPackage.Literals.PROPERTY);
 			_PropertyCallExp = createClass(pivot, PivotPackage.Literals.PROPERTY_CALL_EXP);
 			_Pseudostate = createClass(pivot, PivotPackage.Literals.PSEUDOSTATE);
@@ -1722,17 +923,14 @@ public class OCLmetamodel extends ASResourceImpl
 			_Visitable.setIsAbstract(true);
 			_VoidType = createClass(pivot, PivotPackage.Literals.VOID_TYPE);
 			_WildcardType = createClass(pivot, PivotPackage.Literals.WILDCARD_TYPE);
+			_Collection_String_T = getCollectionType(_Collection, _String, true, 0, -1);
+			_UniqueCollection_String_T = getCollectionType(_UniqueCollection, _String, true, 0, -1);
+			_Set_String_T_L1 = getCollectionType(_Set, _String, true, 1, -1);
 		}
 
 		private void installSlots3a() {
-			// define ALL_FRAGMENTS Model
-			installComment(_Boolean, "Boolean is used for logical expressions, consisting of the predefined values true and false.");
 			installComment(_PseudostateKind, "PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates.");
 			installComment(_TransitionKind, "TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions.");
-			installComment(_Integer, "Integer is a primitive type representing integer values.");
-			installComment(_Real, "Real is a primitive type representing the mathematical concept of real.");
-			installComment(_String, "String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.");
-			installComment(_UnlimitedNatural, "UnlimitedNatural is a primitive type representing unlimited natural values.");
 			installComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
 			installComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
 			installComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
@@ -1796,263 +994,15 @@ public class OCLmetamodel extends ASResourceImpl
 			_TransitionKind_external = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("external"));
 			_TransitionKind_internal = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("internal"));
 			_TransitionKind_local = createEnumerationLiteral(_TransitionKind, PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral("local"));
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
 		}
 
 		private void installSlots3b() {
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
 		}
 
 		private void installSlots3c() {
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
 		}
 
 		private void installSlots3d() {
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			_Collection_String_T = getCollectionType(_Collection, _String, true, 0, -1);
 			_Collection_Annotation_T = getCollectionType(_Collection, _Annotation, true, 0, -1);
 			_Collection_AssociationClassCallExp_T = getCollectionType(_Collection, _AssociationClassCallExp, true, 0, -1);
 			_Collection_Behavior_T = getCollectionType(_Collection, _Behavior, true, 0, -1);
@@ -2134,16 +1084,15 @@ public class OCLmetamodel extends ASResourceImpl
 			_OrderedCollection_Property_T = getCollectionType(_OrderedCollection, _Property, true, 0, -1);
 			_OrderedCollection_ShadowPart_T = getCollectionType(_OrderedCollection, _ShadowPart, true, 0, -1);
 			_OrderedCollection_TemplateParameter_T = getCollectionType(_OrderedCollection, _TemplateParameter, true, 0, -1);
-		}
-
-		private void installSlots3e() {
 			_OrderedCollection_TupleLiteralPart_T = getCollectionType(_OrderedCollection, _TupleLiteralPart, true, 0, -1);
 			_OrderedCollection_Type_T = getCollectionType(_OrderedCollection, _Type, true, 0, -1);
 			_OrderedCollection_ValueSpecification_T = getCollectionType(_OrderedCollection, _ValueSpecification, true, 0, -1);
 			_OrderedCollection_Variable_T = getCollectionType(_OrderedCollection, _Variable, true, 0, -1);
-			_UniqueCollection_String_T = getCollectionType(_UniqueCollection, _String, true, 0, -1);
 			_UniqueCollection_Behavior_T = getCollectionType(_UniqueCollection, _Behavior, true, 0, -1);
 			_UniqueCollection_Class_T = getCollectionType(_UniqueCollection, _Class, true, 0, -1);
+		}
+
+		private void installSlots3e() {
 			_UniqueCollection_CollectionLiteralPart_T = getCollectionType(_UniqueCollection, _CollectionLiteralPart, true, 0, -1);
 			_UniqueCollection_Comment_T = getCollectionType(_UniqueCollection, _Comment, true, 0, -1);
 			_UniqueCollection_CompleteClass_T = getCollectionType(_UniqueCollection, _CompleteClass, true, 0, -1);
@@ -2237,9 +1186,6 @@ public class OCLmetamodel extends ASResourceImpl
 			_OrderedSet_EnumerationLiteral_T = getCollectionType(_OrderedSet, _EnumerationLiteral, true, 0, -1);
 			_OrderedSet_Import_T = getCollectionType(_OrderedSet, _Import, true, 0, -1);
 			_OrderedSet_IteratorVariable_F = getCollectionType(_OrderedSet, _IteratorVariable, false, 0, -1);
-		}
-
-		private void installSlots3f() {
 			_OrderedSet_MapLiteralPart_T = getCollectionType(_OrderedSet, _MapLiteralPart, true, 0, -1);
 			_OrderedSet_OCLExpression_T = getCollectionType(_OrderedSet, _OCLExpression, true, 0, -1);
 			_OrderedSet_Operation_T = getCollectionType(_OrderedSet, _Operation, true, 0, -1);
@@ -2247,12 +1193,14 @@ public class OCLmetamodel extends ASResourceImpl
 			_OrderedSet_Precedence_T = getCollectionType(_OrderedSet, _Precedence, true, 0, -1);
 			_OrderedSet_Property_T = getCollectionType(_OrderedSet, _Property, true, 0, -1);
 			_OrderedSet_ShadowPart_T = getCollectionType(_OrderedSet, _ShadowPart, true, 0, -1);
+		}
+
+		private void installSlots3f() {
 			_OrderedSet_TemplateParameter_T_L1 = getCollectionType(_OrderedSet, _TemplateParameter, true, 1, -1);
 			_OrderedSet_TupleLiteralPart_T = getCollectionType(_OrderedSet, _TupleLiteralPart, true, 0, -1);
 			_OrderedSet_ValueSpecification_T = getCollectionType(_OrderedSet, _ValueSpecification, true, 0, -1);
 			_OrderedSet_Variable_T = getCollectionType(_OrderedSet, _Variable, true, 0, -1);
 			_Sequence_Type_T = getCollectionType(_Sequence, _Type, true, 0, -1);
-			_Set_String_T_L1 = getCollectionType(_Set, _String, true, 1, -1);
 			_Set_Behavior_T = getCollectionType(_Set, _Behavior, true, 0, -1);
 			_Set_Class_T = getCollectionType(_Set, _Class, true, 0, -1);
 			_Set_Comment_T = getCollectionType(_Set, _Comment, true, 0, -1);
@@ -2305,197 +1253,12 @@ public class OCLmetamodel extends ASResourceImpl
 			op_ValueSpecification_isNull = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_NULL, null, null);
 			op_ValueSpecification_stringValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___STRING_VALUE, null, null);
 			op_ValueSpecification_unlimitedValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, null, null);
-			// define OPERATIONS BooleanType
-			// define OPERATIONS DataType
-			// define OPERATIONS DataType
-			// define OPERATIONS DataType
-			// define OPERATIONS DataType
-			// define OPERATIONS DataType
-			// define OPERATIONS Enumeration
-			// define OPERATIONS Enumeration
-			// define OPERATIONS Enumeration
-			// define OPERATIONS Enumeration
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
 		}
 
 		private void installSlots3g() {
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
 		}
 
 		private void installSlots3h() {
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define PROPERTIES BooleanType
-			// define PROPERTIES DataType
-			// define PROPERTIES DataType
-			// define PROPERTIES DataType
-			// define PROPERTIES DataType
-			// define PROPERTIES DataType
-			// define PROPERTIES Enumeration
-			// define PROPERTIES Enumeration
-			// define PROPERTIES Enumeration
-			// define PROPERTIES Enumeration
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			addSuperClass(_Boolean, _OclAny);
 			addSuperClass(_EcoreObject, _OclAny);
 			addSuperClass(_JavaClass, _OclAny);
 			addSuperClass(_LibraryFeature, _OclAny);
@@ -2505,10 +1268,6 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_CollectionKind, _OclEnumeration);
 			addSuperClass(_PseudostateKind, _OclEnumeration);
 			addSuperClass(_TransitionKind, _OclEnumeration);
-			addSuperClass(_Integer, _OclAny);
-			addSuperClass(_Real, _OclAny);
-			addSuperClass(_String, _OclAny);
-			addSuperClass(_UnlimitedNatural, _OclAny);
 			addSuperClass(_Annotation, _NamedElement);
 			addSuperClass(_AnyType, _Class);
 			addSuperClass(_AssociationClass, _Class);
@@ -2550,9 +1309,6 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_EnumLiteralExp, _LiteralExp);
 			addSuperClass(_Enumeration, _DataType);
 			addSuperClass(_EnumerationLiteral, _InstanceSpecification);
-		}
-
-		private void installSlots3i() {
 			addSuperClass(_ExpressionInOCL, _LanguageExpression);
 			addSuperClass(_Feature, _TypedElement);
 			addSuperClass(_FeatureCallExp, _CallExp);
@@ -2572,6 +1328,9 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_IteratorVariable, _Variable);
 			addSuperClass(_JavaType, _Class);
 			addSuperClass(_LambdaType, _DataType);
+		}
+
+		private void installSlots3i() {
 			addSuperClass(_LanguageExpression, _ValueSpecification);
 			addSuperClass(_LetExp, _OCLExpression);
 			addSuperClass(_LetVariable, _Variable);
@@ -2662,6 +1421,9 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Visitable, _OclElement);
 			addSuperClass(_VoidType, _Class);
 			addSuperClass(_WildcardType, _Class);
+			checkSuperClass(_Collection_String_T, _OclAny);
+			checkSuperClass(_UniqueCollection_String_T, _Collection_String_T);
+			checkSuperClass(_Set_String_T_L1, _UniqueCollection_String_T);
 		}
 
 		private void installSlots4a() {
@@ -2676,672 +1438,27 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(op_ValueSpecification_isNull, "The query isNull() returns true when it can be computed that the value is null.");
 			installComment(op_ValueSpecification_stringValue, "The query stringValue() gives a single String value when one can be computed.");
 			installComment(op_ValueSpecification_unlimitedValue, "The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.");
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
 		}
 
 		private void installSlots4b() {
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
 		}
 
 		private void installSlots4c() {
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
 		}
 
 		private void installSlots4d() {
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
 		}
 
 		private void installSlots4e() {
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define PARAMETER_LISTS Model
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
 		}
 
 		private void installSlots4f() {
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
 		}
 
 		private void installSlots4g() {
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
 		}
 
 		private void installSlots4h() {
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			checkSuperClass(_Collection_String_T, _OclAny);
 			checkSuperClass(_Collection_Annotation_T, _OclAny);
 			checkSuperClass(_Collection_AssociationClassCallExp_T, _OclAny);
 			checkSuperClass(_Collection_Behavior_T, _OclAny);
@@ -3423,17 +1540,16 @@ public class OCLmetamodel extends ASResourceImpl
 			checkSuperClass(_OrderedCollection_Property_T, _Collection_Property_T);
 			checkSuperClass(_OrderedCollection_ShadowPart_T, _Collection_ShadowPart_T);
 			checkSuperClass(_OrderedCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
-		}
-
-		private void installSlots4i() {
 			checkSuperClass(_OrderedCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
 			checkSuperClass(_OrderedCollection_Type_T, _Collection_Type_T);
 			checkSuperClass(_OrderedCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
 			checkSuperClass(_OrderedCollection_Variable_T, _Collection_Variable_T);
-			checkSuperClass(_UniqueCollection_String_T, _Collection_String_T);
 			checkSuperClass(_UniqueCollection_Behavior_T, _Collection_Behavior_T);
 			checkSuperClass(_UniqueCollection_Class_T, _Collection_Class_T);
 			checkSuperClass(_UniqueCollection_CollectionLiteralPart_T, _Collection_CollectionLiteralPart_T);
+		}
+
+		private void installSlots4i() {
 			checkSuperClass(_UniqueCollection_Comment_T, _Collection_Comment_T);
 			checkSuperClass(_UniqueCollection_CompleteClass_T, _Collection_CompleteClass_T);
 			checkSuperClass(_UniqueCollection_CompletePackage_T, _Collection_CompletePackage_T);
@@ -3532,9 +1648,6 @@ public class OCLmetamodel extends ASResourceImpl
 			checkSuperClass(_OrderedSet_Import_T, _UniqueCollection_Import_T);
 			checkSuperClass(_OrderedSet_IteratorVariable_F, _OrderedCollection_IteratorVariable_T);
 			checkSuperClass(_OrderedSet_IteratorVariable_F, _UniqueCollection_IteratorVariable_T);
-		}
-
-		private void installSlots4j() {
 			checkSuperClass(_OrderedSet_MapLiteralPart_T, _OrderedCollection_MapLiteralPart_T);
 			checkSuperClass(_OrderedSet_MapLiteralPart_T, _UniqueCollection_MapLiteralPart_T);
 			checkSuperClass(_OrderedSet_OCLExpression_T, _OrderedCollection_OCLExpression_T);
@@ -3551,6 +1664,9 @@ public class OCLmetamodel extends ASResourceImpl
 			checkSuperClass(_OrderedSet_ShadowPart_T, _UniqueCollection_ShadowPart_T);
 			checkSuperClass(_OrderedSet_TemplateParameter_T_L1, _OrderedCollection_TemplateParameter_T);
 			checkSuperClass(_OrderedSet_TemplateParameter_T_L1, _UniqueCollection_TemplateParameter_T);
+		}
+
+		private void installSlots4j() {
 			checkSuperClass(_OrderedSet_TupleLiteralPart_T, _OrderedCollection_TupleLiteralPart_T);
 			checkSuperClass(_OrderedSet_TupleLiteralPart_T, _UniqueCollection_TupleLiteralPart_T);
 			checkSuperClass(_OrderedSet_ValueSpecification_T, _OrderedCollection_ValueSpecification_T);
@@ -3558,7 +1674,6 @@ public class OCLmetamodel extends ASResourceImpl
 			checkSuperClass(_OrderedSet_Variable_T, _OrderedCollection_Variable_T);
 			checkSuperClass(_OrderedSet_Variable_T, _UniqueCollection_Variable_T);
 			checkSuperClass(_Sequence_Type_T, _OrderedCollection_Type_T);
-			checkSuperClass(_Set_String_T_L1, _UniqueCollection_String_T);
 			checkSuperClass(_Set_Behavior_T, _UniqueCollection_Behavior_T);
 			checkSuperClass(_Set_Class_T, _UniqueCollection_Class_T);
 			checkSuperClass(_Set_Comment_T, _UniqueCollection_Comment_T);
@@ -3643,97 +1758,24 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private void installSlots5a() {
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
 		}
 
 		private void installSlots5b() {
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define TYPE_FRAGMENTS Model
 		}
 
 		private void installSlots6() {
-			// define ALL_OPERATIONS Model
 		}
 
 		private void installSlots7() {
-			// define ALL_PROPERTIES Model
 		}
 
 		private void installSlots8() {
-			// define FRAGMENT_OPERATIONS Model
 		}
 
 		private void installSlots9() {
-			// define FRAGMENT_PROPERTIES Model
 		}
 
 		private void installSlots10() {
-			// define ENUMERATION_LITERALS Model
 		}
 
 		private void installProperties() {

@@ -52,14 +52,15 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
  */
 public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object, @NonNull EnvironmentFactoryInternal>
 {
-	private final @NonNull SynthesisSchedule synthesisSchedule = new SynthesisSchedule();
+	private final @NonNull SynthesisSchedule synthesisSchedule; // = new SynthesisSchedule();
 
 	protected SynthesisAnalysis(@NonNull EnvironmentFactoryInternal context) {
 		super(context);
+		this.synthesisSchedule = new SynthesisSchedule(context);
 	}
 
 	protected void analyzeContents(@NonNull Model asModel) {
-		synthesisSchedule.addModel(asModel);
+		synthesisSchedule.analyzeContents(asModel);
 		for (@NonNull EObject eObject : new TreeIterable(asModel, true)) {
 			((Element)eObject).accept(this);
 		}
@@ -70,6 +71,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 	}
 
 	protected @NonNull Slot doNamedElement(@NonNull NamedElement asNamedElement) {
+	//	asNamedElement = context.getMetamodelManager().getPrimaryElement(asNamedElement);
 		Slot slot = synthesisSchedule.getSlot(asNamedElement);
 		List<Comment> asComments = asNamedElement.getOwnedComments();
 		if (asComments.size() > 0) {
