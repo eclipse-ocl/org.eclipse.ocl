@@ -349,6 +349,10 @@ public abstract class AbstractContents extends PivotUtil
 		return ClassUtil.nonNullState(NameUtil.getNameable(asModel.getOwnedPackages(), name));
 	}
 
+	protected @NonNull PrimitiveType getPrimitiveType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (PrimitiveType)ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
 	protected @NonNull Property getProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
 		return ClassUtil.nonNullState(NameUtil.getNameable(asClass.getOwnedProperties(), name));
 	}

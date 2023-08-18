@@ -291,7 +291,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				return "getClass(" + getPrefixedSymbolName(eContainer, ((NamedElement)eContainer).getName()) + ", \"" + ((NamedElement)element).getName() + "\")";
 			}
 			else if (element instanceof PrimitiveType) {
-				return "getClass(" + getPrefixedSymbolName(eContainer, ((NamedElement)eContainer).getName()) + ", \"" + ((NamedElement)element).getName() + "\")";
+				return "getPrimitiveType(" + getPrefixedSymbolName(eContainer, ((NamedElement)eContainer).getName()) + ", \"" + ((NamedElement)element).getName() + "\")";
 			}
 			else if (element instanceof SelfType) {
 				return "getClass(" + getPrefixedSymbolName(eContainer, ((NamedElement)eContainer).getName()) + ", \"" + ((NamedElement)element).getName() + "\")";
