@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -1739,7 +1738,10 @@ implements Property {
 			synchronized (this) {
 				propertyId2 = propertyId;
 				if (propertyId2 == null) {
-					String name = ClassUtil.nonNullModel(getName());
+					String name = PivotUtil.getName(this);
+					if ((opposite != null) && isIsImplicit()) {
+						name += "~" + PivotUtil.getName(opposite);
+					}
 					TypeId typeId = getOwningClass().getTypeId();
 					propertyId = propertyId2 = typeId.getPropertyId(name);
 				}
