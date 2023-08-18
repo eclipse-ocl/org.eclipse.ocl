@@ -860,23 +860,38 @@ ruleLibClassCS returns [EObject current=null]
 	    }
 
 )
-)?	otherlv_1='type'
+)?(
+(
+		lv_isInterface_1_0=	'interface'
     {
-    	newLeafNode(otherlv_1, grammarAccess.getLibClassCSAccess().getTypeKeyword_1());
+        newLeafNode(lv_isInterface_1_0, grammarAccess.getLibClassCSAccess().getIsInterfaceInterfaceKeyword_1_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getLibClassCSRule());
+	        }
+       		setWithLastConsumed($current, "isInterface", true, "interface");
+	    }
+
+)
+)?	otherlv_2='type'
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getLibClassCSAccess().getTypeKeyword_2());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getNameAnyNameParserRuleCall_2_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getNameAnyNameParserRuleCall_3_0());
 	    }
-		lv_name_2_0=ruleAnyName		{
+		lv_name_3_0=ruleAnyName		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		set(
        			$current,
        			"name",
-        		lv_name_2_0,
+        		lv_name_3_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnyName");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -885,24 +900,24 @@ ruleLibClassCS returns [EObject current=null]
 )(
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSignatureTemplateSignatureCSParserRuleCall_3_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSignatureTemplateSignatureCSParserRuleCall_4_0());
 	    }
-		lv_ownedSignature_3_0=ruleTemplateSignatureCS		{
+		lv_ownedSignature_4_0=ruleTemplateSignatureCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		set(
        			$current,
        			"ownedSignature",
-        		lv_ownedSignature_3_0,
+        		lv_ownedSignature_4_0,
         		"org.eclipse.ocl.xtext.base.Base.TemplateSignatureCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(	otherlv_4=':'
+)?(	otherlv_5=':'
     {
-    	newLeafNode(otherlv_4, grammarAccess.getLibClassCSAccess().getColonKeyword_4_0());
+    	newLeafNode(otherlv_5, grammarAccess.getLibClassCSAccess().getColonKeyword_5_0());
     }
 (
 (
@@ -915,60 +930,60 @@ ruleLibClassCS returns [EObject current=null]
 	        }
         }
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getMetaclassNameMetaclassNameCSCrossReference_4_1_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getMetaclassNameMetaclassNameCSCrossReference_5_1_0());
 	    }
 		ruleAnyName		{
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?(	otherlv_6='conformsTo'
+))?(	otherlv_7='conformsTo'
     {
-    	newLeafNode(otherlv_6, grammarAccess.getLibClassCSAccess().getConformsToKeyword_5_0());
+    	newLeafNode(otherlv_7, grammarAccess.getLibClassCSAccess().getConformsToKeyword_6_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSuperTypesTypedRefCSParserRuleCall_5_1_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSuperTypesTypedRefCSParserRuleCall_6_1_0());
 	    }
-		lv_ownedSuperTypes_7_0=ruleTypedRefCS		{
+		lv_ownedSuperTypes_8_0=ruleTypedRefCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedSuperTypes",
-        		lv_ownedSuperTypes_7_0,
+        		lv_ownedSuperTypes_8_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_8=','
+)(	otherlv_9=','
     {
-    	newLeafNode(otherlv_8, grammarAccess.getLibClassCSAccess().getCommaKeyword_5_2_0());
+    	newLeafNode(otherlv_9, grammarAccess.getLibClassCSAccess().getCommaKeyword_6_2_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSuperTypesTypedRefCSParserRuleCall_5_2_1_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedSuperTypesTypedRefCSParserRuleCall_6_2_1_0());
 	    }
-		lv_ownedSuperTypes_9_0=ruleTypedRefCS		{
+		lv_ownedSuperTypes_10_0=ruleTypedRefCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedSuperTypes",
-        		lv_ownedSuperTypes_9_0,
+        		lv_ownedSuperTypes_10_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*)?(	otherlv_10='=>'
+))*)?(	otherlv_11='=>'
     {
-    	newLeafNode(otherlv_10, grammarAccess.getLibClassCSAccess().getEqualsSignGreaterThanSignKeyword_6_0());
+    	newLeafNode(otherlv_11, grammarAccess.getLibClassCSAccess().getEqualsSignGreaterThanSignKeyword_7_0());
     }
 (
 (
@@ -980,29 +995,29 @@ ruleLibClassCS returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getLibClassCSRule());
 	        }
         }
-	otherlv_11=RULE_SINGLE_QUOTED_STRING
+	otherlv_12=RULE_SINGLE_QUOTED_STRING
 	{
-		newLeafNode(otherlv_11, grammarAccess.getLibClassCSAccess().getImplementationJavaClassCSCrossReference_6_1_0());
+		newLeafNode(otherlv_12, grammarAccess.getLibClassCSAccess().getImplementationJavaClassCSCrossReference_7_1_0());
 	}
 
 )
-))?	otherlv_12='{'
+))?	otherlv_13='{'
     {
-    	newLeafNode(otherlv_12, grammarAccess.getLibClassCSAccess().getLeftCurlyBracketKeyword_7());
+    	newLeafNode(otherlv_13, grammarAccess.getLibClassCSAccess().getLeftCurlyBracketKeyword_8());
     }
 ((
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedOperationsOperationCSParserRuleCall_8_0_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedOperationsOperationCSParserRuleCall_9_0_0());
 	    }
-		lv_ownedOperations_13_0=ruleOperationCS		{
+		lv_ownedOperations_14_0=ruleOperationCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedOperations",
-        		lv_ownedOperations_13_0,
+        		lv_ownedOperations_14_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.OperationCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1012,16 +1027,16 @@ ruleLibClassCS returns [EObject current=null]
     |(
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedPropertiesLibPropertyCSParserRuleCall_8_1_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedPropertiesLibPropertyCSParserRuleCall_9_1_0());
 	    }
-		lv_ownedProperties_14_0=ruleLibPropertyCS		{
+		lv_ownedProperties_15_0=ruleLibPropertyCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedProperties",
-        		lv_ownedProperties_14_0,
+        		lv_ownedProperties_15_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPropertyCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1031,16 +1046,16 @@ ruleLibClassCS returns [EObject current=null]
     |(
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedConstraintsInvCSParserRuleCall_8_2_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedConstraintsInvCSParserRuleCall_9_2_0());
 	    }
-		lv_ownedConstraints_15_0=ruleInvCS		{
+		lv_ownedConstraints_16_0=ruleInvCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedConstraints",
-        		lv_ownedConstraints_15_0,
+        		lv_ownedConstraints_16_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.InvCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1050,24 +1065,24 @@ ruleLibClassCS returns [EObject current=null]
     |(
 (
 		{
-	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedAnnotationsAnnotationElementCSParserRuleCall_8_3_0());
+	        newCompositeNode(grammarAccess.getLibClassCSAccess().getOwnedAnnotationsAnnotationElementCSParserRuleCall_9_3_0());
 	    }
-		lv_ownedAnnotations_16_0=ruleAnnotationElementCS		{
+		lv_ownedAnnotations_17_0=ruleAnnotationElementCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLibClassCSRule());
 	        }
        		add(
        			$current,
        			"ownedAnnotations",
-        		lv_ownedAnnotations_16_0,
+        		lv_ownedAnnotations_17_0,
         		"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnnotationElementCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*	otherlv_17='}'
+))*	otherlv_18='}'
     {
-    	newLeafNode(otherlv_17, grammarAccess.getLibClassCSAccess().getRightCurlyBracketKeyword_9());
+    	newLeafNode(otherlv_18, grammarAccess.getLibClassCSAccess().getRightCurlyBracketKeyword_10());
     }
 )
 ;

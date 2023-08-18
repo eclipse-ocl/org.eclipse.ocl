@@ -91,8 +91,8 @@ public class OCLstdlibFormatter extends AbstractEssentialOCLFormatter {
 		}
 		{
 			LibClassCSElements a = f.getLibClassCSAccess();
-			c.setNoSpace().before(a.getCommaKeyword_5_2_0());
-			setBraces(c, a.getLeftCurlyBracketKeyword_7(), a.getRightCurlyBracketKeyword_9());
+			c.setNoSpace().before(a.getCommaKeyword_6_2_0());
+			setBraces(c, a.getLeftCurlyBracketKeyword_8(), a.getRightCurlyBracketKeyword_10());
 		}
 		{
 			DocumentationCSElements a = f.getDocumentationCSAccess();

@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
+ * from: C:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -239,6 +239,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 			PR_LibClassCS.setAlternatives(
 				createGroup(
 					setCardinality("?", createAssignment("isAbstract", "?=", createKeyword("abstract"))),
+					setCardinality("?", createAssignment("isInterface", "?=", createKeyword("interface"))),
 					createKeyword("type"),
 					createAssignment("name", "=", createRuleCall(PR_AnyName)),
 					setCardinality("?", createAssignment("ownedSignature", "=", createRuleCall(_Base.PR_TemplateSignatureCS))),
