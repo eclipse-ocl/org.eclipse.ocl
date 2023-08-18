@@ -287,7 +287,6 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
-			//	model.getOwnedPackages().add(orphanage);
 		}
 
 		private Precedence prec_ADDITIVE;
@@ -317,14 +316,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedPrecedences.add(prec_IMPLIES = createPrecedence("IMPLIES", AssociativityKind.LEFT));
 		}
 
-		// declare ALL_FRAGMENTS Model
-		// declare ALL_OPERATIONS Model
-		// declare ALL_PROPERTIES Model
-		// declare ALL_TYPES Model
 		private PrimitiveType _Boolean;
-		// private Model model;
-		// private Package ocl;
-		// private Package orphanage;
 		private PrimitiveType _Integer;
 		private PrimitiveType _Real;
 		private PrimitiveType _String;
@@ -354,64 +346,64 @@ public class OCLstdlib extends ASResourceImpl
 		private Class _OclInvalid;
 		private Class _OclSelf;
 		private Class _OclVoid;
-		private TemplateParameter tp_UnlimitedNatural_oclAsType_TT;
-		private TemplateParameter tp_Bag_collectNested_V;
-		private TemplateParameter tp_Bag_collect_V;
-		private TemplateParameter tp_Bag_flatten_T2;
-		private TemplateParameter tp_Bag_selectByKind_TT;
-		private TemplateParameter tp_Bag_selectByType_TT;
-		private TemplateParameter tp_Bag_T;
-		private TemplateParameter tp_Collection_collectBy_V;
-		private TemplateParameter tp_Collection_collectNested_V;
-		private TemplateParameter tp_Collection_collect_V;
-		private TemplateParameter tp_Collection_excludesAll_T2;
-		private TemplateParameter tp_Collection_flatten_T2;
-		private TemplateParameter tp_Collection_includesAll_T2;
-		private TemplateParameter tp_Collection_iterate_Tacc;
-		private TemplateParameter tp_Collection_product_T2;
-		private TemplateParameter tp_Collection_selectByKind_TT;
-		private TemplateParameter tp_Collection_selectByType_TT;
-		private TemplateParameter tp_Collection_T;
-		private TemplateParameter tp_Map_collectBy_V2;
-		private TemplateParameter tp_Map_collectNested_V2;
-		private TemplateParameter tp_Map_collect_V2;
-		private TemplateParameter tp_Map_excludesAll_K2;
-		private TemplateParameter tp_Map_excludesMap_K2;
-		private TemplateParameter tp_Map_excludesMap_V2;
-		private TemplateParameter tp_Map_excludingMap_K2;
-		private TemplateParameter tp_Map_excludingMap_V2;
-		private TemplateParameter tp_Map_includesAll_K2;
-		private TemplateParameter tp_Map_includesMap_K2;
-		private TemplateParameter tp_Map_includesMap_V2;
-		private TemplateParameter tp_Map_includingMap_K2;
-		private TemplateParameter tp_Map_includingMap_V2;
-		private TemplateParameter tp_Map_iterate_Tacc;
-		private TemplateParameter tp_Map_K;
-		private TemplateParameter tp_Map_V;
-		private TemplateParameter tp_OclAny_oclAsType_TT;
-		private TemplateParameter tp_OclElement_oclAsModelType_TT;
-		private TemplateParameter tp_OclInvalid_oclAsType_TT;
-		private TemplateParameter tp_OclVoid_oclAsType_TT;
-		private TemplateParameter tp_OrderedCollection_T;
-		private TemplateParameter tp_OrderedSet_collectNested_V;
-		private TemplateParameter tp_OrderedSet_collect_V;
-		private TemplateParameter tp_OrderedSet_flatten_T2;
-		private TemplateParameter tp_OrderedSet_selectByKind_TT;
-		private TemplateParameter tp_OrderedSet_selectByType_TT;
-		private TemplateParameter tp_OrderedSet_T;
-		private TemplateParameter tp_Sequence_collectNested_V;
-		private TemplateParameter tp_Sequence_collect_V;
-		private TemplateParameter tp_Sequence_flatten_T2;
-		private TemplateParameter tp_Sequence_selectByKind_TT;
-		private TemplateParameter tp_Sequence_selectByType_TT;
-		private TemplateParameter tp_Sequence_T;
-		private TemplateParameter tp_Set_collectNested_V;
-		private TemplateParameter tp_Set_collect_V;
-		private TemplateParameter tp_Set_flatten_T2;
-		private TemplateParameter tp_Set_selectByKind_TT;
-		private TemplateParameter tp_Set_selectByType_TT;
-		private TemplateParameter tp_Set_T;
-		private TemplateParameter tp_UniqueCollection_T;
+		private TemplateParameter _UnlimitedNatural_oclAsType_TT;
+		private TemplateParameter _Bag_collectNested_V;
+		private TemplateParameter _Bag_collect_V;
+		private TemplateParameter _Bag_flatten_T2;
+		private TemplateParameter _Bag_selectByKind_TT;
+		private TemplateParameter _Bag_selectByType_TT;
+		private TemplateParameter _Bag_T;
+		private TemplateParameter _Collection_collectBy_V;
+		private TemplateParameter _Collection_collectNested_V;
+		private TemplateParameter _Collection_collect_V;
+		private TemplateParameter _Collection_excludesAll_T2;
+		private TemplateParameter _Collection_flatten_T2;
+		private TemplateParameter _Collection_includesAll_T2;
+		private TemplateParameter _Collection_iterate_Tacc;
+		private TemplateParameter _Collection_product_T2;
+		private TemplateParameter _Collection_selectByKind_TT;
+		private TemplateParameter _Collection_selectByType_TT;
+		private TemplateParameter _Collection_T;
+		private TemplateParameter _Map_collectBy_V2;
+		private TemplateParameter _Map_collectNested_V2;
+		private TemplateParameter _Map_collect_V2;
+		private TemplateParameter _Map_excludesAll_K2;
+		private TemplateParameter _Map_excludesMap_K2;
+		private TemplateParameter _Map_excludesMap_V2;
+		private TemplateParameter _Map_excludingMap_K2;
+		private TemplateParameter _Map_excludingMap_V2;
+		private TemplateParameter _Map_includesAll_K2;
+		private TemplateParameter _Map_includesMap_K2;
+		private TemplateParameter _Map_includesMap_V2;
+		private TemplateParameter _Map_includingMap_K2;
+		private TemplateParameter _Map_includingMap_V2;
+		private TemplateParameter _Map_iterate_Tacc;
+		private TemplateParameter _Map_K;
+		private TemplateParameter _Map_V;
+		private TemplateParameter _OclAny_oclAsType_TT;
+		private TemplateParameter _OclElement_oclAsModelType_TT;
+		private TemplateParameter _OclInvalid_oclAsType_TT;
+		private TemplateParameter _OclVoid_oclAsType_TT;
+		private TemplateParameter _OrderedCollection_T;
+		private TemplateParameter _OrderedSet_collectNested_V;
+		private TemplateParameter _OrderedSet_collect_V;
+		private TemplateParameter _OrderedSet_flatten_T2;
+		private TemplateParameter _OrderedSet_selectByKind_TT;
+		private TemplateParameter _OrderedSet_selectByType_TT;
+		private TemplateParameter _OrderedSet_T;
+		private TemplateParameter _Sequence_collectNested_V;
+		private TemplateParameter _Sequence_collect_V;
+		private TemplateParameter _Sequence_flatten_T2;
+		private TemplateParameter _Sequence_selectByKind_TT;
+		private TemplateParameter _Sequence_selectByType_TT;
+		private TemplateParameter _Sequence_T;
+		private TemplateParameter _Set_collectNested_V;
+		private TemplateParameter _Set_collect_V;
+		private TemplateParameter _Set_flatten_T2;
+		private TemplateParameter _Set_selectByKind_TT;
+		private TemplateParameter _Set_selectByType_TT;
+		private TemplateParameter _Set_T;
+		private TemplateParameter _UniqueCollection_T;
 		private CollectionType _Collection_Integer_T;
 		private CollectionType _Collection_String_T;
 		private CollectionType _Collection_Tuple_T;
@@ -461,7 +453,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Collection_Set_selectByType_TT_T;
 		private CollectionType _Collection_Set_T_T;
 		private CollectionType _Collection_UniqueCollection_T_T;
-		private CollectionType _Collection_Collection_T;
+		private CollectionType _Collection;
 		private CollectionType _OrderedCollection_Integer_T;
 		private CollectionType _OrderedCollection_String_T;
 		private CollectionType _OrderedCollection_Bag_T_T;
@@ -480,7 +472,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedCollection_Sequence_T_T;
 		private CollectionType _OrderedCollection_Set_T_T;
 		private CollectionType _OrderedCollection_UniqueCollection_T_T;
-		private CollectionType _OrderedCollection_OrderedCollection_T;
+		private CollectionType _OrderedCollection;
 		private CollectionType _UniqueCollection_Tuple_T;
 		private CollectionType _UniqueCollection_Bag_T_T;
 		private CollectionType _UniqueCollection_Collection_T_T;
@@ -498,7 +490,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _UniqueCollection_Set_selectByType_TT_T;
 		private CollectionType _UniqueCollection_Set_T_T;
 		private CollectionType _UniqueCollection_UniqueCollection_T_T;
-		private CollectionType _UniqueCollection_UniqueCollection_T;
+		private CollectionType _UniqueCollection;
 		private MapType _Map_Collection_T_F_Collection_collectBy_V_F;
 		private MapType _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T;
 		private MapType _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T;
@@ -524,7 +516,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Bag_OclInvalid_T;
 		private CollectionType _Bag_Set_collectNested_V_T;
 		private CollectionType _Bag_Set_collect_V_T;
-		private CollectionType _Bag_Bag_T;
+		private CollectionType _Bag;
 		private CollectionType _OrderedSet_Collection_T_T;
 		private CollectionType _OrderedSet_OrderedSet_flatten_T2_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByKind_TT_T;
@@ -533,7 +525,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedSet_Sequence_T_T;
 		private CollectionType _OrderedSet_Set_T_T;
 		private CollectionType _OrderedSet_UniqueCollection_T_T;
-		private CollectionType _OrderedSet_OrderedSet_T;
+		private CollectionType _OrderedSet;
 		private CollectionType _Sequence_Integer_T;
 		private CollectionType _Sequence_String_T;
 		private CollectionType _Sequence_Bag_T_T;
@@ -546,7 +538,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Sequence_Sequence_selectByKind_TT_T;
 		private CollectionType _Sequence_Sequence_selectByType_TT_T;
 		private CollectionType _Sequence_Sequence_T_T;
-		private CollectionType _Sequence_Sequence_T;
+		private CollectionType _Sequence;
 		private CollectionType _Set_Tuple_T;
 		private CollectionType _Set_Bag_T_T;
 		private CollectionType _Set_Collection_T_T;
@@ -559,7 +551,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Set_Set_selectByType_TT_T;
 		private CollectionType _Set_Set_T_T;
 		private CollectionType _Set_UniqueCollection_T_T;
-		private CollectionType _Set_Set_T;
+		private CollectionType _Set;
 		private TupleType _Tuple;
 		private LambdaType _Lambda_Bag_T_Boolean;
 		private LambdaType _Lambda_Bag_T_Bag_collectNested_V;
@@ -924,447 +916,14 @@ public class OCLstdlib extends ASResourceImpl
 		private Operation op_UniqueCollection_symmetricDifference;
 		private Operation op_UniqueCollection_union;
 		private Operation op_VoidType_allInstances;
-		// declare ENUMERATION_LITERALS Model
-		// declare FRAGMENT_OPERATIONS Model
-		// declare FRAGMENT_PROPERTIES Model
-		// declare OPERATIONS BooleanType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS PrimitiveType
-		// declare OPERATIONS AnyType
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS Class
-		// declare OPERATIONS InvalidType
-		// declare OPERATIONS SelfType
-		// declare OPERATIONS VoidType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS CollectionType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS MapType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS BagType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS OrderedSetType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SequenceType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS SetType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare OPERATIONS LambdaType
-		// declare PARAMETER_LISTS Model
-		// declare PROPERTIES BooleanType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES PrimitiveType
-		// declare PROPERTIES AnyType
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES Class
-		// declare PROPERTIES InvalidType
-		// declare PROPERTIES SelfType
-		// declare PROPERTIES VoidType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES CollectionType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES MapType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES BagType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES OrderedSetType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SequenceType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES SetType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare PROPERTIES LambdaType
-		// declare TYPE_FRAGMENTS Model
-		// declare TYPE_PARAMETERS Model
 
 		private void installSlots0() {
-			//	model = defineModel_name(model, "OCL-2.5.oclstdlib");
 		}
 
 		private void installSlots1() {
-			//	ocl = definePackage_name(ocl, "ocl");
-			//	orphanage = definePackage_name(orphanage, "$$");
-			// define TYPE_PARAMETERS Model
 		}
 
 		private void installSlots2() {
-			// define ALL_TYPES Model
 			_Boolean = createPrimitiveType(ocl, OCLstdlibPackage.Literals.BOOLEAN);
 			_Integer = createPrimitiveType(ocl, OCLstdlibPackage.Literals.INTEGER);
 			_Real = createPrimitiveType(ocl, OCLstdlibPackage.Literals.REAL);
@@ -1409,26 +968,17 @@ public class OCLstdlib extends ASResourceImpl
 			_OclSelf.setIsAbstract(true);
 			_OclVoid = createClass(ocl, OCLstdlibPackage.Literals.OCL_VOID);
 			_OclVoid.setIsAbstract(true);
-			//_Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1);
-			_Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION);
-			//_OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
-			_OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION);
-			//_UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
-			_UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION);
-			//_Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true);
+			_Collection = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION);
+			_OrderedCollection = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION);
+			_UniqueCollection = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION);
 			_Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP);
-			//_Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
-			_Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG);
-			//_OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
-			_OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET);
-			//_Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
-			_Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE);
-			//_Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1);
-			_Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET);
+			_Bag = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG);
+			_OrderedSet = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET);
+			_Sequence = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE);
+			_Set = createCollectionType(ocl, OCLstdlibPackage.Literals.SET);
 		}
 
 		private void installSlots3a() {
-			// define ALL_FRAGMENTS Model
 			installComment(_Boolean, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
 			installComment(_Integer, "The standard type Integer represents the mathematical concept of integer.\nInteger is itself an instance of the metatype PrimitiveType (from UML).");
 			installComment(_Real, "The standard type Real represents the mathematical concept of real.\nNote that Integer is a subclass of Real,\nso for each parameter of type Real, you can use an integer as the actual parameter.\nReal is itself an instance of the metatype PrimitiveType (from UML).");
@@ -1451,56 +1001,44 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_OclInvalid, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
 			installComment(_OclSelf, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
 			installComment(_OclVoid, "The type OclVoid is a type that conforms to all other types except OclInvalid.\nIt has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.\nAny property call applied on oclText[null] results in oclText[invalid], except for the\noclIsUndefined(), oclIsInvalid(), =(OclAny) and <>(OclAny) operations.\nHowever, by virtue of the implicit conversion to a collection literal,\nan expression evaluating to oclText[null] can be used as source of collection operations (such as \u2018isEmpty\u2019).\nIf the source is the oclText[null] literal, it is implicitly converted to Bag{}.\n\nOclVoid is itself an instance of the metatype VoidType.");
-			installComment(_Collection_Collection_T, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
-			installComment(_OrderedCollection_OrderedCollection_T, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
-			installComment(_UniqueCollection_UniqueCollection_T, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
+			installComment(_Collection, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
+			installComment(_OrderedCollection, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
+			installComment(_UniqueCollection, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
 			installComment(_Map_Map_K_Map_V, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
-			installComment(_Bag_Bag_T, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
-			installComment(_OrderedSet_OrderedSet_T, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
-			installComment(_Sequence_Sequence_T, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			tp_Bag_T = createTemplateParameter(_Bag_Bag_T, "T");
-			tp_Collection_T = createTemplateParameter(_Collection_Collection_T, "T");
-			tp_Map_K = createTemplateParameter(_Map_Map_K_Map_V, "K");
-			tp_Map_V = createTemplateParameter(_Map_Map_K_Map_V, "V");
-			tp_OrderedCollection_T = createTemplateParameter(_OrderedCollection_OrderedCollection_T, "T");
-			tp_OrderedSet_T = createTemplateParameter(_OrderedSet_OrderedSet_T, "T");
-			tp_Sequence_T = createTemplateParameter(_Sequence_Sequence_T, "T");
-			tp_Set_T = createTemplateParameter(_Set_Set_T, "T");
-			tp_UniqueCollection_T = createTemplateParameter(_UniqueCollection_UniqueCollection_T, "T");
-			it_Bag_closure = createIteration(_Bag_Bag_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Bag_collectNested = createIteration(_Bag_Bag_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_Bag_collect = createIteration(_Bag_Bag_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_Bag_reject = createIteration(_Bag_Bag_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Bag_select = createIteration(_Bag_Bag_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Bag_sortedBy = createIteration(_Bag_Bag_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Collection_any = createIteration(_Collection_Collection_T, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-			it_Collection_collectBy = createIteration(_Collection_Collection_T, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-			it_Collection_collectNested = createIteration(_Collection_Collection_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_Collection_collect = createIteration(_Collection_Collection_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_Collection_exists = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_exists_1 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_exists_2 = createIteration(_Collection_Collection_T, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Collection_forAll = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_forAll_1 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_forAll_2 = createIteration(_Collection_Collection_T, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Collection_isUnique = createIteration(_Collection_Collection_T, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-			it_Collection_iterate = createIteration(_Collection_Collection_T, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-			it_Collection_one = createIteration(_Collection_Collection_T, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-			it_Collection_reject = createIteration(_Collection_Collection_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Collection_select = createIteration(_Collection_Collection_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Collection_sortedBy = createIteration(_Collection_Collection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			installComment(_Bag, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
+			installComment(_OrderedSet, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
+			installComment(_Sequence, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
+			_Bag_T = createTemplateParameter(_Bag, "T");
+			_Collection_T = createTemplateParameter(_Collection, "T");
+			_Map_K = createTemplateParameter(_Map_Map_K_Map_V, "K");
+			_Map_V = createTemplateParameter(_Map_Map_K_Map_V, "V");
+			_OrderedCollection_T = createTemplateParameter(_OrderedCollection, "T");
+			_OrderedSet_T = createTemplateParameter(_OrderedSet, "T");
+			_Sequence_T = createTemplateParameter(_Sequence, "T");
+			_Set_T = createTemplateParameter(_Set, "T");
+			_UniqueCollection_T = createTemplateParameter(_UniqueCollection, "T");
+			it_Bag_closure = createIteration(_Bag, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Bag_collectNested = createIteration(_Bag, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Bag_collect = createIteration(_Bag, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Bag_reject = createIteration(_Bag, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Bag_select = createIteration(_Bag, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Bag_sortedBy = createIteration(_Bag, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Collection_any = createIteration(_Collection, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+			it_Collection_collectBy = createIteration(_Collection, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			it_Collection_collectNested = createIteration(_Collection, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Collection_collect = createIteration(_Collection, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Collection_exists = createIteration(_Collection, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_exists_1 = createIteration(_Collection, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_exists_2 = createIteration(_Collection, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Collection_forAll = createIteration(_Collection, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_forAll_1 = createIteration(_Collection, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_forAll_2 = createIteration(_Collection, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Collection_isUnique = createIteration(_Collection, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			it_Collection_iterate = createIteration(_Collection, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+			it_Collection_one = createIteration(_Collection, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			it_Collection_reject = createIteration(_Collection, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Collection_select = createIteration(_Collection, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Collection_sortedBy = createIteration(_Collection, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 			it_Map_any = createIteration(_Map_Map_K_Map_V, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 			it_Map_collectBy = createIteration(_Map_Map_K_Map_V, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
 			it_Map_collectNested = createIteration(_Map_Map_K_Map_V, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
@@ -1516,28 +1054,28 @@ public class OCLstdlib extends ASResourceImpl
 			it_Map_one = createIteration(_Map_Map_K_Map_V, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
 			it_Map_reject = createIteration(_Map_Map_K_Map_V, "reject", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
 			it_Map_select = createIteration(_Map_Map_K_Map_V, "select", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-			it_OrderedSet_closure = createIteration(_OrderedSet_OrderedSet_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_OrderedSet_collectNested = createIteration(_OrderedSet_OrderedSet_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_OrderedSet_collect = createIteration(_OrderedSet_OrderedSet_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_OrderedSet_reject = createIteration(_OrderedSet_OrderedSet_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_OrderedSet_select = createIteration(_OrderedSet_OrderedSet_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_OrderedSet_sortedBy = createIteration(_OrderedSet_OrderedSet_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Sequence_closure = createIteration(_Sequence_Sequence_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Sequence_collectNested = createIteration(_Sequence_Sequence_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_Sequence_collect = createIteration(_Sequence_Sequence_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_Sequence_reject = createIteration(_Sequence_Sequence_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Sequence_select = createIteration(_Sequence_Sequence_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Sequence_sortedBy = createIteration(_Sequence_Sequence_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_OrderedSet_closure = createIteration(_OrderedSet, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_OrderedSet_collectNested = createIteration(_OrderedSet, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_OrderedSet_collect = createIteration(_OrderedSet, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_OrderedSet_reject = createIteration(_OrderedSet, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_OrderedSet_select = createIteration(_OrderedSet, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_OrderedSet_sortedBy = createIteration(_OrderedSet, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Sequence_closure = createIteration(_Sequence, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Sequence_collectNested = createIteration(_Sequence, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Sequence_collect = createIteration(_Sequence, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Sequence_reject = createIteration(_Sequence, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Sequence_select = createIteration(_Sequence, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Sequence_sortedBy = createIteration(_Sequence, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		}
 
 		private void installSlots3b() {
-			it_Set_closure = createIteration(_Set_Set_T, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-			it_Set_collectNested = createIteration(_Set_Set_T, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_Set_collect = createIteration(_Set_Set_T, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_Set_reject = createIteration(_Set_Set_T, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-			it_Set_select = createIteration(_Set_Set_T, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-			it_Set_sortedBy = createIteration(_Set_Set_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_UniqueCollection_sortedBy = createIteration(_UniqueCollection_UniqueCollection_T, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_Set_closure = createIteration(_Set, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			it_Set_collectNested = createIteration(_Set, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Set_collect = createIteration(_Set, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Set_reject = createIteration(_Set, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			it_Set_select = createIteration(_Set, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			it_Set_sortedBy = createIteration(_Set, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			it_UniqueCollection_sortedBy = createIteration(_UniqueCollection, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 			op_Boolean__lt__gt_ = createOperation(_Boolean, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Boolean__eq_ = createOperation(_Boolean, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Boolean_allInstances = createOperation(_Boolean, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -1616,48 +1154,48 @@ public class OCLstdlib extends ASResourceImpl
 			op_UnlimitedNatural_min = createOperation(_UnlimitedNatural, "min", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
 			op_UnlimitedNatural_oclAsType = createOperation(_UnlimitedNatural, "oclAsType", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
 			op_UnlimitedNatural_toInteger = createOperation(_UnlimitedNatural, "toInteger", "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
-			op_Bag__lt__gt_ = createOperation(_Bag_Bag_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_Bag__eq_ = createOperation(_Bag_Bag_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_Bag_excluding = createOperation(_Bag_Bag_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-			op_Bag_excludingAll = createOperation(_Bag_Bag_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Bag_flatten = createOperation(_Bag_Bag_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-			op_Bag_including = createOperation(_Bag_Bag_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-			op_Bag_includingAll = createOperation(_Bag_Bag_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Bag_selectByKind = createOperation(_Bag_Bag_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-			op_Bag_selectByType = createOperation(_Bag_Bag_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			op_Bag__lt__gt_ = createOperation(_Bag, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_Bag__eq_ = createOperation(_Bag, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_Bag_excluding = createOperation(_Bag, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			op_Bag_excludingAll = createOperation(_Bag, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			op_Bag_flatten = createOperation(_Bag, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			op_Bag_including = createOperation(_Bag, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			op_Bag_includingAll = createOperation(_Bag, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			op_Bag_selectByKind = createOperation(_Bag, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Bag_selectByType = createOperation(_Bag, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_BooleanType_allInstances = createOperation(_BooleanType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Class_allInstances = createOperation(_Class, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-			op_Collection__lt__gt_ = createOperation(_Collection_Collection_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_Collection__eq_ = createOperation(_Collection_Collection_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_Collection_asBag = createOperation(_Collection_Collection_T, "asBag", "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
-			op_Collection_asOrderedSet = createOperation(_Collection_Collection_T, "asOrderedSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
+			op_Collection__lt__gt_ = createOperation(_Collection, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_Collection__eq_ = createOperation(_Collection, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_Collection_asBag = createOperation(_Collection, "asBag", "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
+			op_Collection_asOrderedSet = createOperation(_Collection, "asOrderedSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
 		}
 
 		private void installSlots3c() {
-			op_Collection_asSequence = createOperation(_Collection_Collection_T, "asSequence", "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
-			op_Collection_asSet = createOperation(_Collection_Collection_T, "asSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
-			op_Collection_count = createOperation(_Collection_Collection_T, "count", "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
-			op_Collection_excludes = createOperation(_Collection_Collection_T, "excludes", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
-			op_Collection_excludesAll = createOperation(_Collection_Collection_T, "excludesAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
-			op_Collection_excluding = createOperation(_Collection_Collection_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-			op_Collection_excludingAll = createOperation(_Collection_Collection_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Collection_flatten = createOperation(_Collection_Collection_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-			op_Collection_includes = createOperation(_Collection_Collection_T, "includes", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
-			op_Collection_includesAll = createOperation(_Collection_Collection_T, "includesAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
-			op_Collection_including = createOperation(_Collection_Collection_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-			op_Collection_includingAll = createOperation(_Collection_Collection_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Collection_intersection = createOperation(_Collection_Collection_T, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-			op_Collection_intersection_1 = createOperation(_Collection_Collection_T, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-			op_Collection_isEmpty = createOperation(_Collection_Collection_T, "isEmpty", "org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
-			op_Collection_max = createOperation(_Collection_Collection_T, "max", "org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation", org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
-			op_Collection_min = createOperation(_Collection_Collection_T, "min", "org.eclipse.ocl.pivot.library.collection.CollectionMinOperation", org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
-			op_Collection_notEmpty = createOperation(_Collection_Collection_T, "notEmpty", "org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
-			op_Collection_product = createOperation(_Collection_Collection_T, "product", "org.eclipse.ocl.pivot.library.collection.CollectionProductOperation", org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
-			op_Collection_selectByKind = createOperation(_Collection_Collection_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-			op_Collection_selectByType = createOperation(_Collection_Collection_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-			op_Collection_size = createOperation(_Collection_Collection_T, "size", "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
-			op_Collection_sum = createOperation(_Collection_Collection_T, "sum", "org.eclipse.ocl.pivot.library.collection.CollectionSumOperation", org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
-			op_Collection_union = createOperation(_Collection_Collection_T, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
+			op_Collection_asSequence = createOperation(_Collection, "asSequence", "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
+			op_Collection_asSet = createOperation(_Collection, "asSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
+			op_Collection_count = createOperation(_Collection, "count", "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
+			op_Collection_excludes = createOperation(_Collection, "excludes", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
+			op_Collection_excludesAll = createOperation(_Collection, "excludesAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
+			op_Collection_excluding = createOperation(_Collection, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			op_Collection_excludingAll = createOperation(_Collection, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			op_Collection_flatten = createOperation(_Collection, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			op_Collection_includes = createOperation(_Collection, "includes", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
+			op_Collection_includesAll = createOperation(_Collection, "includesAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
+			op_Collection_including = createOperation(_Collection, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			op_Collection_includingAll = createOperation(_Collection, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			op_Collection_intersection = createOperation(_Collection, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+			op_Collection_intersection_1 = createOperation(_Collection, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+			op_Collection_isEmpty = createOperation(_Collection, "isEmpty", "org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
+			op_Collection_max = createOperation(_Collection, "max", "org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation", org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
+			op_Collection_min = createOperation(_Collection, "min", "org.eclipse.ocl.pivot.library.collection.CollectionMinOperation", org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
+			op_Collection_notEmpty = createOperation(_Collection, "notEmpty", "org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
+			op_Collection_product = createOperation(_Collection, "product", "org.eclipse.ocl.pivot.library.collection.CollectionProductOperation", org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
+			op_Collection_selectByKind = createOperation(_Collection, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Collection_selectByType = createOperation(_Collection, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			op_Collection_size = createOperation(_Collection, "size", "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
+			op_Collection_sum = createOperation(_Collection, "sum", "org.eclipse.ocl.pivot.library.collection.CollectionSumOperation", org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
+			op_Collection_union = createOperation(_Collection, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 			op_Enumeration_allInstances = createOperation(_Enumeration, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_InvalidType_allInstances = createOperation(_InvalidType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Map__lt__gt_ = createOperation(_Map_Map_K_Map_V, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1764,100 +1302,63 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_or = createOperation(_OclVoid, "or", "org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
 			op_OclVoid_toString = createOperation(_OclVoid, "toString", "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 			op_OclVoid_xor = createOperation(_OclVoid, "xor", "org.eclipse.ocl.pivot.library.logical.BooleanXorOperation", org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
-			op_OrderedCollection_at = createOperation(_OrderedCollection_OrderedCollection_T, "at", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
-			op_OrderedCollection_first = createOperation(_OrderedCollection_OrderedCollection_T, "first", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
-			op_OrderedCollection_indexOf = createOperation(_OrderedCollection_OrderedCollection_T, "indexOf", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
-			op_OrderedCollection_last = createOperation(_OrderedCollection_OrderedCollection_T, "last", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
-			op_OrderedSet__neg_ = createOperation(_OrderedSet_OrderedSet_T, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-			op_OrderedSet__lt__gt_ = createOperation(_OrderedSet_OrderedSet_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_OrderedSet__eq_ = createOperation(_OrderedSet_OrderedSet_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_OrderedSet_append = createOperation(_OrderedSet_OrderedSet_T, "append", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-			op_OrderedSet_appendAll = createOperation(_OrderedSet_OrderedSet_T, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-			op_OrderedSet_excluding = createOperation(_OrderedSet_OrderedSet_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-			op_OrderedSet_excludingAll = createOperation(_OrderedSet_OrderedSet_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_OrderedSet_flatten = createOperation(_OrderedSet_OrderedSet_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-			op_OrderedSet_including = createOperation(_OrderedSet_OrderedSet_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-			op_OrderedSet_includingAll = createOperation(_OrderedSet_OrderedSet_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_OrderedSet_insertAt = createOperation(_OrderedSet_OrderedSet_T, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-			op_OrderedSet_prepend = createOperation(_OrderedSet_OrderedSet_T, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-			op_OrderedSet_prependAll = createOperation(_OrderedSet_OrderedSet_T, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-			op_OrderedSet_reverse = createOperation(_OrderedSet_OrderedSet_T, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-			op_OrderedSet_selectByKind = createOperation(_OrderedSet_OrderedSet_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-			op_OrderedSet_selectByType = createOperation(_OrderedSet_OrderedSet_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-			op_OrderedSet_subOrderedSet = createOperation(_OrderedSet_OrderedSet_T, "subOrderedSet", "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
-			op_Sequence__lt__gt_ = createOperation(_Sequence_Sequence_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_Sequence__eq_ = createOperation(_Sequence_Sequence_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_Sequence_append = createOperation(_Sequence_Sequence_T, "append", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-			op_Sequence_appendAll = createOperation(_Sequence_Sequence_T, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-			op_Sequence_excluding = createOperation(_Sequence_Sequence_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-			op_Sequence_excludingAll = createOperation(_Sequence_Sequence_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Sequence_flatten = createOperation(_Sequence_Sequence_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-			op_Sequence_including = createOperation(_Sequence_Sequence_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-			op_Sequence_includingAll = createOperation(_Sequence_Sequence_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Sequence_insertAt = createOperation(_Sequence_Sequence_T, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-			op_Sequence_prepend = createOperation(_Sequence_Sequence_T, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-			op_Sequence_prependAll = createOperation(_Sequence_Sequence_T, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-			op_Sequence_reverse = createOperation(_Sequence_Sequence_T, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-			op_Sequence_selectByKind = createOperation(_Sequence_Sequence_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-			op_Sequence_selectByType = createOperation(_Sequence_Sequence_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-			op_Sequence_subSequence = createOperation(_Sequence_Sequence_T, "subSequence", "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
-			op_Set__neg_ = createOperation(_Set_Set_T, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-			op_Set__lt__gt_ = createOperation(_Set_Set_T, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_Set__eq_ = createOperation(_Set_Set_T, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_Set_excluding = createOperation(_Set_Set_T, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-			op_Set_excludingAll = createOperation(_Set_Set_T, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-			op_Set_flatten = createOperation(_Set_Set_T, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-			op_Set_including = createOperation(_Set_Set_T, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-			op_Set_includingAll = createOperation(_Set_Set_T, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-			op_Set_selectByKind = createOperation(_Set_Set_T, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-			op_Set_selectByType = createOperation(_Set_Set_T, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			op_OrderedCollection_at = createOperation(_OrderedCollection, "at", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
+			op_OrderedCollection_first = createOperation(_OrderedCollection, "first", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
+			op_OrderedCollection_indexOf = createOperation(_OrderedCollection, "indexOf", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
+			op_OrderedCollection_last = createOperation(_OrderedCollection, "last", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
+			op_OrderedSet__neg_ = createOperation(_OrderedSet, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			op_OrderedSet__lt__gt_ = createOperation(_OrderedSet, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_OrderedSet__eq_ = createOperation(_OrderedSet, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_OrderedSet_append = createOperation(_OrderedSet, "append", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+			op_OrderedSet_appendAll = createOperation(_OrderedSet, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+			op_OrderedSet_excluding = createOperation(_OrderedSet, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			op_OrderedSet_excludingAll = createOperation(_OrderedSet, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			op_OrderedSet_flatten = createOperation(_OrderedSet, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			op_OrderedSet_including = createOperation(_OrderedSet, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			op_OrderedSet_includingAll = createOperation(_OrderedSet, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			op_OrderedSet_insertAt = createOperation(_OrderedSet, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+			op_OrderedSet_prepend = createOperation(_OrderedSet, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+			op_OrderedSet_prependAll = createOperation(_OrderedSet, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+			op_OrderedSet_reverse = createOperation(_OrderedSet, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+			op_OrderedSet_selectByKind = createOperation(_OrderedSet, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_OrderedSet_selectByType = createOperation(_OrderedSet, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			op_OrderedSet_subOrderedSet = createOperation(_OrderedSet, "subOrderedSet", "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
+			op_Sequence__lt__gt_ = createOperation(_Sequence, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_Sequence__eq_ = createOperation(_Sequence, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_Sequence_append = createOperation(_Sequence, "append", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+			op_Sequence_appendAll = createOperation(_Sequence, "appendAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+			op_Sequence_excluding = createOperation(_Sequence, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			op_Sequence_excludingAll = createOperation(_Sequence, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			op_Sequence_flatten = createOperation(_Sequence, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			op_Sequence_including = createOperation(_Sequence, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			op_Sequence_includingAll = createOperation(_Sequence, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			op_Sequence_insertAt = createOperation(_Sequence, "insertAt", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+			op_Sequence_prepend = createOperation(_Sequence, "prepend", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+			op_Sequence_prependAll = createOperation(_Sequence, "prependAll", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+			op_Sequence_reverse = createOperation(_Sequence, "reverse", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+			op_Sequence_selectByKind = createOperation(_Sequence, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Sequence_selectByType = createOperation(_Sequence, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			op_Sequence_subSequence = createOperation(_Sequence, "subSequence", "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
+			op_Set__neg_ = createOperation(_Set, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			op_Set__lt__gt_ = createOperation(_Set, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_Set__eq_ = createOperation(_Set, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_Set_excluding = createOperation(_Set, "excluding", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			op_Set_excludingAll = createOperation(_Set, "excludingAll", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			op_Set_flatten = createOperation(_Set, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			op_Set_including = createOperation(_Set, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			op_Set_includingAll = createOperation(_Set, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			op_Set_selectByKind = createOperation(_Set, "selectByKind", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			op_Set_selectByType = createOperation(_Set, "selectByType", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 			op_Stereotype_allInstances = createOperation(_Stereotype, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_Type_conformsTo = createOperation(_Type, "conformsTo", "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-			op_UniqueCollection__neg_ = createOperation(_UniqueCollection_UniqueCollection_T, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-			op_UniqueCollection_intersection = createOperation(_UniqueCollection_UniqueCollection_T, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-			op_UniqueCollection_symmetricDifference = createOperation(_UniqueCollection_UniqueCollection_T, "symmetricDifference", "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
-			op_UniqueCollection_union = createOperation(_UniqueCollection_UniqueCollection_T, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
+			op_UniqueCollection__neg_ = createOperation(_UniqueCollection, "-", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			op_UniqueCollection_intersection = createOperation(_UniqueCollection, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+			op_UniqueCollection_symmetricDifference = createOperation(_UniqueCollection, "symmetricDifference", "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
+			op_UniqueCollection_union = createOperation(_UniqueCollection, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 			op_VoidType_allInstances = createOperation(_VoidType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS SelfType
-			// define PROPERTIES BooleanType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES PrimitiveType
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
 		}
 
 		private void installSlots3e() {
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES SelfType
-			// define PROPERTIES VoidType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES BagType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SetType
 			addSuperClass(_Boolean, _OclAny);
 			addSuperClass(_Integer, _Real);
 			addSuperClass(_Real, _OclComparable);
@@ -1889,7 +1390,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_OclInvalid, _OclVoid);
 			addSuperClass(_OclSelf, _OclAny);
 			addSuperClass(_OclVoid, _OclAny);
-			addSuperClass(_Collection_Collection_T, _OclAny);
+			addSuperClass(_Collection, _OclAny);
 			addSuperClass(_Map_Map_K_Map_V, _OclAny);
 		}
 
@@ -2204,126 +1705,90 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_UniqueCollection_symmetricDifference, "The set containing all the elements that are in oclText[self] or s, but not in both.");
 			installComment(op_UniqueCollection_union, "The set consisting of all elements in oclText[self] and all elements in s.");
 			installComment(op_VoidType_allInstances, "Returns oclText[Set{null}].");
-			tp_UnlimitedNatural_oclAsType_TT = createTemplateParameter(op_UnlimitedNatural_oclAsType, "TT");
-			tp_Bag_collectNested_V = createTemplateParameter(it_Bag_collectNested, "V");
-			tp_Bag_collect_V = createTemplateParameter(it_Bag_collect, "V");
-			tp_Bag_flatten_T2 = createTemplateParameter(op_Bag_flatten, "T2");
-			tp_Bag_selectByKind_TT = createTemplateParameter(op_Bag_selectByKind, "TT");
-			tp_Bag_selectByType_TT = createTemplateParameter(op_Bag_selectByType, "TT");
-			tp_Collection_collectBy_V = createTemplateParameter(it_Collection_collectBy, "V");
-			tp_Collection_collectNested_V = createTemplateParameter(it_Collection_collectNested, "V");
-			tp_Collection_collect_V = createTemplateParameter(it_Collection_collect, "V");
-			tp_Collection_excludesAll_T2 = createTemplateParameter(op_Collection_excludesAll, "T2");
-			tp_Collection_flatten_T2 = createTemplateParameter(op_Collection_flatten, "T2");
-			tp_Collection_includesAll_T2 = createTemplateParameter(op_Collection_includesAll, "T2");
-			tp_Collection_iterate_Tacc = createTemplateParameter(it_Collection_iterate, "Tacc");
-			tp_Collection_product_T2 = createTemplateParameter(op_Collection_product, "T2");
-			tp_Collection_selectByKind_TT = createTemplateParameter(op_Collection_selectByKind, "TT");
-			tp_Collection_selectByType_TT = createTemplateParameter(op_Collection_selectByType, "TT");
-			tp_Map_collectBy_V2 = createTemplateParameter(it_Map_collectBy, "V2");
-			tp_Map_collectNested_V2 = createTemplateParameter(it_Map_collectNested, "V2");
-			tp_Map_collect_V2 = createTemplateParameter(it_Map_collect, "V2");
-			tp_Map_excludesAll_K2 = createTemplateParameter(op_Map_excludesAll, "K2");
-			tp_Map_excludesMap_K2 = createTemplateParameter(op_Map_excludesMap, "K2");
-			tp_Map_excludesMap_V2 = createTemplateParameter(op_Map_excludesMap, "V2");
-			tp_Map_excludingMap_K2 = createTemplateParameter(op_Map_excludingMap, "K2");
-			tp_Map_excludingMap_V2 = createTemplateParameter(op_Map_excludingMap, "V2");
-			tp_Map_includesAll_K2 = createTemplateParameter(op_Map_includesAll, "K2");
-			tp_Map_includesMap_K2 = createTemplateParameter(op_Map_includesMap, "K2");
-			tp_Map_includesMap_V2 = createTemplateParameter(op_Map_includesMap, "V2");
-			tp_Map_includingMap_K2 = createTemplateParameter(op_Map_includingMap, "K2");
-			tp_Map_includingMap_V2 = createTemplateParameter(op_Map_includingMap, "V2");
-			tp_Map_iterate_Tacc = createTemplateParameter(it_Map_iterate, "Tacc");
-			tp_OclAny_oclAsType_TT = createTemplateParameter(op_OclAny_oclAsType, "TT");
-			tp_OclElement_oclAsModelType_TT = createTemplateParameter(op_OclElement_oclAsModelType, "TT");
-			tp_OclInvalid_oclAsType_TT = createTemplateParameter(op_OclInvalid_oclAsType, "TT");
-			tp_OclVoid_oclAsType_TT = createTemplateParameter(op_OclVoid_oclAsType, "TT");
-			tp_OrderedSet_collectNested_V = createTemplateParameter(it_OrderedSet_collectNested, "V");
-			tp_OrderedSet_collect_V = createTemplateParameter(it_OrderedSet_collect, "V");
-			tp_OrderedSet_flatten_T2 = createTemplateParameter(op_OrderedSet_flatten, "T2");
-			tp_OrderedSet_selectByKind_TT = createTemplateParameter(op_OrderedSet_selectByKind, "TT");
-			tp_OrderedSet_selectByType_TT = createTemplateParameter(op_OrderedSet_selectByType, "TT");
-			tp_Sequence_collectNested_V = createTemplateParameter(it_Sequence_collectNested, "V");
-			tp_Sequence_collect_V = createTemplateParameter(it_Sequence_collect, "V");
-			tp_Sequence_flatten_T2 = createTemplateParameter(op_Sequence_flatten, "T2");
-			tp_Sequence_selectByKind_TT = createTemplateParameter(op_Sequence_selectByKind, "TT");
-			tp_Sequence_selectByType_TT = createTemplateParameter(op_Sequence_selectByType, "TT");
-			tp_Set_collectNested_V = createTemplateParameter(it_Set_collectNested, "V");
-			tp_Set_collect_V = createTemplateParameter(it_Set_collect, "V");
-			tp_Set_flatten_T2 = createTemplateParameter(op_Set_flatten, "T2");
-			tp_Set_selectByKind_TT = createTemplateParameter(op_Set_selectByKind, "TT");
-			tp_Set_selectByType_TT = createTemplateParameter(op_Set_selectByType, "TT");
-			_Collection_Integer_T = getCollectionType(_Collection_Collection_T, _Integer, true, 0, -1);
-			_Collection_String_T = getCollectionType(_Collection_Collection_T, _String, true, 0, -1);
-			_Collection_Bag_T_T = getCollectionType(_Collection_Collection_T, tp_Bag_T, true, 0, -1);
-			_Collection_CollectionType_T = getCollectionType(_Collection_Collection_T, _CollectionType, true, 0, -1);
-			_Collection_Collection_T_T = getCollectionType(_Collection_Collection_T, tp_Collection_T, true, 0, -1);
-			_Collection_MapType_T = getCollectionType(_Collection_Collection_T, _MapType, true, 0, -1);
-			_Collection_Map_K_T = getCollectionType(_Collection_Collection_T, tp_Map_K, true, 0, -1);
-			_Collection_Map_V_T = getCollectionType(_Collection_Collection_T, tp_Map_V, true, 0, -1);
-			_Collection_OclAny_T = getCollectionType(_Collection_Collection_T, _OclAny, true, 0, -1);
-			_Collection_OclElement_T = getCollectionType(_Collection_Collection_T, _OclElement, true, 0, -1);
-			_Collection_OclInvalid_T = getCollectionType(_Collection_Collection_T, _OclInvalid, true, 0, -1);
-			_Collection_OclSelf_T = getCollectionType(_Collection_Collection_T, _OclSelf, true, 0, -1);
-			_Collection_OrderedCollection_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedCollection_T, true, 0, -1);
-			_Collection_OrderedSet_T_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_T, true, 0, -1);
-			_Collection_Sequence_T_T = getCollectionType(_Collection_Collection_T, tp_Sequence_T, true, 0, -1);
-			_Collection_Set_T_T = getCollectionType(_Collection_Collection_T, tp_Set_T, true, 0, -1);
-			_Collection_UniqueCollection_T_T = getCollectionType(_Collection_Collection_T, tp_UniqueCollection_T, true, 0, -1);
-			_Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, tp_Map_K, true, tp_Map_V, true);
-			_Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false);
-			_Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, tp_Bag_T, _Boolean);
-			_Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, tp_Bag_T, _OclAny);
-			_Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, tp_Collection_T, _Boolean);
-			_Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, tp_Collection_T, _OclAny);
-			_Lambda_Map_K_Boolean = getLambdaType(_OclLambda, tp_Map_K, _Boolean);
-			_Lambda_Map_K_OclAny = getLambdaType(_OclLambda, tp_Map_K, _OclAny);
-			_Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, tp_OrderedSet_T, _Boolean);
-			_Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, tp_OrderedSet_T, _OclAny);
-			_Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, tp_Sequence_T, _Boolean);
-			_Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, tp_Sequence_T, _OclAny);
-			_Lambda_Set_T_Boolean = getLambdaType(_OclLambda, tp_Set_T, _Boolean);
-			_Lambda_Set_T_OclAny = getLambdaType(_OclLambda, tp_Set_T, _OclAny);
-			_Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, tp_UniqueCollection_T, _OclAny);
-			// define OPERATIONS BooleanType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS PrimitiveType
-			// define OPERATIONS AnyType
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
+			_UnlimitedNatural_oclAsType_TT = createTemplateParameter(op_UnlimitedNatural_oclAsType, "TT");
+			_Bag_collectNested_V = createTemplateParameter(it_Bag_collectNested, "V");
+			_Bag_collect_V = createTemplateParameter(it_Bag_collect, "V");
+			_Bag_flatten_T2 = createTemplateParameter(op_Bag_flatten, "T2");
+			_Bag_selectByKind_TT = createTemplateParameter(op_Bag_selectByKind, "TT");
+			_Bag_selectByType_TT = createTemplateParameter(op_Bag_selectByType, "TT");
+			_Collection_collectBy_V = createTemplateParameter(it_Collection_collectBy, "V");
+			_Collection_collectNested_V = createTemplateParameter(it_Collection_collectNested, "V");
+			_Collection_collect_V = createTemplateParameter(it_Collection_collect, "V");
+			_Collection_excludesAll_T2 = createTemplateParameter(op_Collection_excludesAll, "T2");
+			_Collection_flatten_T2 = createTemplateParameter(op_Collection_flatten, "T2");
+			_Collection_includesAll_T2 = createTemplateParameter(op_Collection_includesAll, "T2");
+			_Collection_iterate_Tacc = createTemplateParameter(it_Collection_iterate, "Tacc");
+			_Collection_product_T2 = createTemplateParameter(op_Collection_product, "T2");
+			_Collection_selectByKind_TT = createTemplateParameter(op_Collection_selectByKind, "TT");
+			_Collection_selectByType_TT = createTemplateParameter(op_Collection_selectByType, "TT");
+			_Map_collectBy_V2 = createTemplateParameter(it_Map_collectBy, "V2");
+			_Map_collectNested_V2 = createTemplateParameter(it_Map_collectNested, "V2");
+			_Map_collect_V2 = createTemplateParameter(it_Map_collect, "V2");
+			_Map_excludesAll_K2 = createTemplateParameter(op_Map_excludesAll, "K2");
+			_Map_excludesMap_K2 = createTemplateParameter(op_Map_excludesMap, "K2");
+			_Map_excludesMap_V2 = createTemplateParameter(op_Map_excludesMap, "V2");
+			_Map_excludingMap_K2 = createTemplateParameter(op_Map_excludingMap, "K2");
+			_Map_excludingMap_V2 = createTemplateParameter(op_Map_excludingMap, "V2");
+			_Map_includesAll_K2 = createTemplateParameter(op_Map_includesAll, "K2");
+			_Map_includesMap_K2 = createTemplateParameter(op_Map_includesMap, "K2");
+			_Map_includesMap_V2 = createTemplateParameter(op_Map_includesMap, "V2");
+			_Map_includingMap_K2 = createTemplateParameter(op_Map_includingMap, "K2");
+			_Map_includingMap_V2 = createTemplateParameter(op_Map_includingMap, "V2");
+			_Map_iterate_Tacc = createTemplateParameter(it_Map_iterate, "Tacc");
+			_OclAny_oclAsType_TT = createTemplateParameter(op_OclAny_oclAsType, "TT");
+			_OclElement_oclAsModelType_TT = createTemplateParameter(op_OclElement_oclAsModelType, "TT");
+			_OclInvalid_oclAsType_TT = createTemplateParameter(op_OclInvalid_oclAsType, "TT");
+			_OclVoid_oclAsType_TT = createTemplateParameter(op_OclVoid_oclAsType, "TT");
+			_OrderedSet_collectNested_V = createTemplateParameter(it_OrderedSet_collectNested, "V");
+			_OrderedSet_collect_V = createTemplateParameter(it_OrderedSet_collect, "V");
+			_OrderedSet_flatten_T2 = createTemplateParameter(op_OrderedSet_flatten, "T2");
+			_OrderedSet_selectByKind_TT = createTemplateParameter(op_OrderedSet_selectByKind, "TT");
+			_OrderedSet_selectByType_TT = createTemplateParameter(op_OrderedSet_selectByType, "TT");
+			_Sequence_collectNested_V = createTemplateParameter(it_Sequence_collectNested, "V");
+			_Sequence_collect_V = createTemplateParameter(it_Sequence_collect, "V");
+			_Sequence_flatten_T2 = createTemplateParameter(op_Sequence_flatten, "T2");
+			_Sequence_selectByKind_TT = createTemplateParameter(op_Sequence_selectByKind, "TT");
+			_Sequence_selectByType_TT = createTemplateParameter(op_Sequence_selectByType, "TT");
+			_Set_collectNested_V = createTemplateParameter(it_Set_collectNested, "V");
+			_Set_collect_V = createTemplateParameter(it_Set_collect, "V");
+			_Set_flatten_T2 = createTemplateParameter(op_Set_flatten, "T2");
+			_Set_selectByKind_TT = createTemplateParameter(op_Set_selectByKind, "TT");
+			_Set_selectByType_TT = createTemplateParameter(op_Set_selectByType, "TT");
+			_Collection_Integer_T = getCollectionType(_Collection, _Integer, true, 0, -1);
+			_Collection_String_T = getCollectionType(_Collection, _String, true, 0, -1);
+			_Collection_Bag_T_T = getCollectionType(_Collection, _Bag_T, true, 0, -1);
+			_Collection_CollectionType_T = getCollectionType(_Collection, _CollectionType, true, 0, -1);
+			_Collection_Collection_T_T = getCollectionType(_Collection, _Collection_T, true, 0, -1);
+			_Collection_MapType_T = getCollectionType(_Collection, _MapType, true, 0, -1);
+			_Collection_Map_K_T = getCollectionType(_Collection, _Map_K, true, 0, -1);
+			_Collection_Map_V_T = getCollectionType(_Collection, _Map_V, true, 0, -1);
+			_Collection_OclAny_T = getCollectionType(_Collection, _OclAny, true, 0, -1);
+			_Collection_OclElement_T = getCollectionType(_Collection, _OclElement, true, 0, -1);
+			_Collection_OclInvalid_T = getCollectionType(_Collection, _OclInvalid, true, 0, -1);
+			_Collection_OclSelf_T = getCollectionType(_Collection, _OclSelf, true, 0, -1);
+			_Collection_OrderedCollection_T_T = getCollectionType(_Collection, _OrderedCollection_T, true, 0, -1);
+			_Collection_OrderedSet_T_T = getCollectionType(_Collection, _OrderedSet_T, true, 0, -1);
+			_Collection_Sequence_T_T = getCollectionType(_Collection, _Sequence_T, true, 0, -1);
+			_Collection_Set_T_T = getCollectionType(_Collection, _Set_T, true, 0, -1);
+			_Collection_UniqueCollection_T_T = getCollectionType(_Collection, _UniqueCollection_T, true, 0, -1);
+			_Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, _Map_K, true, _Map_V, true);
+			_Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_V, false);
+			_Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, _Bag_T, _Boolean);
+			_Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, _Bag_T, _OclAny);
+			_Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, _Collection_T, _Boolean);
+			_Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, _Collection_T, _OclAny);
+			_Lambda_Map_K_Boolean = getLambdaType(_OclLambda, _Map_K, _Boolean);
+			_Lambda_Map_K_OclAny = getLambdaType(_OclLambda, _Map_K, _OclAny);
+			_Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, _OrderedSet_T, _Boolean);
+			_Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, _OrderedSet_T, _OclAny);
+			_Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, _Sequence_T, _Boolean);
+			_Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, _Sequence_T, _OclAny);
+			_Lambda_Set_T_Boolean = getLambdaType(_OclLambda, _Set_T, _Boolean);
+			_Lambda_Set_T_OclAny = getLambdaType(_OclLambda, _Set_T, _OclAny);
+			_Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, _UniqueCollection_T, _OclAny);
 		}
 
 		private void installSlots4e() {
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS Class
-			// define OPERATIONS InvalidType
-			// define OPERATIONS VoidType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS MapType
-			// define OPERATIONS BagType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SetType
-			// define PARAMETER_LISTS Model
-			// define PROPERTIES AnyType
-			// define PROPERTIES Class
-			// define PROPERTIES CollectionType
-			// define PROPERTIES MapType
 			op_Boolean__lt__gt_.setType(_Boolean);
 			op_Boolean__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Boolean__lt__gt_, "object2", _OclSelf, false);
@@ -2532,41 +1997,41 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installSlots4f() {
 			op_Collection_count.setType(_Integer);
-			createParameter(op_Collection_count, "object", tp_Collection_T, false);
+			createParameter(op_Collection_count, "object", _Collection_T, false);
 			op_Collection_excludes.setType(_Boolean);
-			createParameter(op_Collection_excludes, "object", tp_Collection_T, false);
+			createParameter(op_Collection_excludes, "object", _Collection_T, false);
 			op_Collection_includes.setType(_Boolean);
-			createParameter(op_Collection_includes, "object", tp_Collection_T, false);
+			createParameter(op_Collection_includes, "object", _Collection_T, false);
 			op_Collection_isEmpty.setType(_Boolean);
-			op_Collection_max.setType(tp_Collection_T);
-			op_Collection_min.setType(tp_Collection_T);
+			op_Collection_max.setType(_Collection_T);
+			op_Collection_min.setType(_Collection_T);
 			op_Collection_notEmpty.setType(_Boolean);
 			op_Collection_size.setType(_Integer);
-			op_Collection_sum.setType(tp_Collection_T);
+			op_Collection_sum.setType(_Collection_T);
 			op_Map__lt__gt_.setType(_Boolean);
 			op_Map__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Map__lt__gt_, "object2", _OclSelf, false);
 			op_Map__eq_.setType(_Boolean);
 			op_Map__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Map__eq_, "object2", _OclSelf, false);
-			op_Map_at.setType(tp_Map_V);
+			op_Map_at.setType(_Map_V);
 			op_Map_at.setIsInvalidating(true);
 			op_Map_at.setIsRequired(false);
-			createParameter(op_Map_at, "key", tp_Map_K, false);
+			createParameter(op_Map_at, "key", _Map_K, false);
 			op_Map_excludes.setType(_Boolean);
-			createParameter(op_Map_excludes, "key", tp_Map_K, false);
+			createParameter(op_Map_excludes, "key", _Map_K, false);
 			op_Map_excludes_1.setType(_Boolean);
-			createParameter(op_Map_excludes_1, "key", tp_Map_K, false);
-			createParameter(op_Map_excludes_1, "value", tp_Map_V, false);
+			createParameter(op_Map_excludes_1, "key", _Map_K, false);
+			createParameter(op_Map_excludes_1, "value", _Map_V, false);
 			op_Map_excludesValue.setType(_Boolean);
-			createParameter(op_Map_excludesValue, "value", tp_Map_V, false);
+			createParameter(op_Map_excludesValue, "value", _Map_V, false);
 			op_Map_includes.setType(_Boolean);
-			createParameter(op_Map_includes, "key", tp_Map_K, false);
+			createParameter(op_Map_includes, "key", _Map_K, false);
 			op_Map_includes_1.setType(_Boolean);
-			createParameter(op_Map_includes_1, "key", tp_Map_K, false);
-			createParameter(op_Map_includes_1, "value", tp_Map_V, false);
+			createParameter(op_Map_includes_1, "key", _Map_K, false);
+			createParameter(op_Map_includes_1, "value", _Map_V, false);
 			op_Map_includesValue.setType(_Boolean);
-			createParameter(op_Map_includesValue, "value", tp_Map_V, false);
+			createParameter(op_Map_includesValue, "value", _Map_V, false);
 			op_Map_isEmpty.setType(_Boolean);
 			op_Map_notEmpty.setType(_Boolean);
 			op_Map_size.setType(_Integer);
@@ -2721,17 +2186,17 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_xor.setIsRequired(false);
 			op_OclVoid_xor.setPrecedence(prec_XOR);
 			createParameter(op_OclVoid_xor, "b", _Boolean, false);
-			op_OrderedCollection_at.setType(tp_OrderedCollection_T);
+			op_OrderedCollection_at.setType(_OrderedCollection_T);
 			op_OrderedCollection_at.setIsInvalidating(true);
 			op_OrderedCollection_at.setIsRequired(false);
 			createParameter(op_OrderedCollection_at, "index", _Integer, true);
-			op_OrderedCollection_first.setType(tp_OrderedCollection_T);
+			op_OrderedCollection_first.setType(_OrderedCollection_T);
 			op_OrderedCollection_first.setIsInvalidating(true);
 			op_OrderedCollection_first.setIsRequired(false);
 			op_OrderedCollection_indexOf.setType(_Integer);
 			op_OrderedCollection_indexOf.setIsRequired(false);
-			createParameter(op_OrderedCollection_indexOf, "obj", tp_OrderedCollection_T, false);
-			op_OrderedCollection_last.setType(tp_OrderedCollection_T);
+			createParameter(op_OrderedCollection_indexOf, "obj", _OrderedCollection_T, false);
+			op_OrderedCollection_last.setType(_OrderedCollection_T);
 			op_OrderedCollection_last.setIsInvalidating(true);
 			op_OrderedCollection_last.setIsRequired(false);
 			op_OrderedSet__lt__gt_.setType(_Boolean);
@@ -2757,130 +2222,66 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots5a() {
-			_Collection_Bag_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collectNested_V, true, 0, -1);
-			_Collection_Bag_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Bag_collect_V, true, 0, -1);
-			_Collection_Bag_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Bag_flatten_T2, true, 0, -1);
-			_Collection_Bag_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByKind_TT, true, 0, -1);
-			_Collection_Bag_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Bag_selectByType_TT, true, 0, -1);
-			_Collection_Collection_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collectNested_V, true, 0, -1);
-			_Collection_Collection_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Collection_collect_V, true, 0, -1);
-			_Collection_Collection_excludesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_excludesAll_T2, true, 0, -1);
-			_Collection_Collection_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_flatten_T2, true, 0, -1);
-			_Collection_Collection_includesAll_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_includesAll_T2, true, 0, -1);
-			_Collection_Collection_product_T2_T = getCollectionType(_Collection_Collection_T, tp_Collection_product_T2, true, 0, -1);
-			_Collection_Collection_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByKind_TT, true, 0, -1);
-			_Collection_Collection_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Collection_selectByType_TT, true, 0, -1);
-			_Collection_Map_collect_V2_T = getCollectionType(_Collection_Collection_T, tp_Map_collect_V2, true, 0, -1);
-			_Collection_Map_excludesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2, true, 0, -1);
-			_Collection_Map_includesAll_K2_T = getCollectionType(_Collection_Collection_T, tp_Map_includesAll_K2, true, 0, -1);
-			_Collection_OrderedSet_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			_Collection_OrderedSet_collect_V_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_collect_V, true, 0, -1);
-			_Collection_OrderedSet_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			_Collection_OrderedSet_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			_Collection_OrderedSet_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			_Collection_Sequence_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collectNested_V, true, 0, -1);
-			_Collection_Sequence_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Sequence_collect_V, true, 0, -1);
-			_Collection_Sequence_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Sequence_flatten_T2, true, 0, -1);
-			_Collection_Sequence_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			_Collection_Sequence_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			_Collection_Set_collectNested_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collectNested_V, true, 0, -1);
-			_Collection_Set_collect_V_T = getCollectionType(_Collection_Collection_T, tp_Set_collect_V, true, 0, -1);
-			_Collection_Set_flatten_T2_T = getCollectionType(_Collection_Collection_T, tp_Set_flatten_T2, true, 0, -1);
-			_Collection_Set_selectByKind_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByKind_TT, true, 0, -1);
-			_Collection_Set_selectByType_TT_T = getCollectionType(_Collection_Collection_T, tp_Set_selectByType_TT, true, 0, -1);
-			_Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, tp_Collection_T, false, tp_Collection_collectBy_V, false);
-			_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, true, tp_Map_excludesMap_V2, true);
-			_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, true, tp_Map_excludingMap_V2, true);
-			_Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, true, tp_Map_includesMap_V2, true);
-			_Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true);
-			_Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false);
-			_Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false);
+			_Collection_Bag_collectNested_V_T = getCollectionType(_Collection, _Bag_collectNested_V, true, 0, -1);
+			_Collection_Bag_collect_V_T = getCollectionType(_Collection, _Bag_collect_V, true, 0, -1);
+			_Collection_Bag_flatten_T2_T = getCollectionType(_Collection, _Bag_flatten_T2, true, 0, -1);
+			_Collection_Bag_selectByKind_TT_T = getCollectionType(_Collection, _Bag_selectByKind_TT, true, 0, -1);
+			_Collection_Bag_selectByType_TT_T = getCollectionType(_Collection, _Bag_selectByType_TT, true, 0, -1);
+			_Collection_Collection_collectNested_V_T = getCollectionType(_Collection, _Collection_collectNested_V, true, 0, -1);
+			_Collection_Collection_collect_V_T = getCollectionType(_Collection, _Collection_collect_V, true, 0, -1);
+			_Collection_Collection_excludesAll_T2_T = getCollectionType(_Collection, _Collection_excludesAll_T2, true, 0, -1);
+			_Collection_Collection_flatten_T2_T = getCollectionType(_Collection, _Collection_flatten_T2, true, 0, -1);
+			_Collection_Collection_includesAll_T2_T = getCollectionType(_Collection, _Collection_includesAll_T2, true, 0, -1);
+			_Collection_Collection_product_T2_T = getCollectionType(_Collection, _Collection_product_T2, true, 0, -1);
+			_Collection_Collection_selectByKind_TT_T = getCollectionType(_Collection, _Collection_selectByKind_TT, true, 0, -1);
+			_Collection_Collection_selectByType_TT_T = getCollectionType(_Collection, _Collection_selectByType_TT, true, 0, -1);
+			_Collection_Map_collect_V2_T = getCollectionType(_Collection, _Map_collect_V2, true, 0, -1);
+			_Collection_Map_excludesAll_K2_T = getCollectionType(_Collection, _Map_excludesAll_K2, true, 0, -1);
+			_Collection_Map_includesAll_K2_T = getCollectionType(_Collection, _Map_includesAll_K2, true, 0, -1);
+			_Collection_OrderedSet_collectNested_V_T = getCollectionType(_Collection, _OrderedSet_collectNested_V, true, 0, -1);
+			_Collection_OrderedSet_collect_V_T = getCollectionType(_Collection, _OrderedSet_collect_V, true, 0, -1);
+			_Collection_OrderedSet_flatten_T2_T = getCollectionType(_Collection, _OrderedSet_flatten_T2, true, 0, -1);
+			_Collection_OrderedSet_selectByKind_TT_T = getCollectionType(_Collection, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_Collection_OrderedSet_selectByType_TT_T = getCollectionType(_Collection, _OrderedSet_selectByType_TT, true, 0, -1);
+			_Collection_Sequence_collectNested_V_T = getCollectionType(_Collection, _Sequence_collectNested_V, true, 0, -1);
+			_Collection_Sequence_collect_V_T = getCollectionType(_Collection, _Sequence_collect_V, true, 0, -1);
+			_Collection_Sequence_flatten_T2_T = getCollectionType(_Collection, _Sequence_flatten_T2, true, 0, -1);
+			_Collection_Sequence_selectByKind_TT_T = getCollectionType(_Collection, _Sequence_selectByKind_TT, true, 0, -1);
+			_Collection_Sequence_selectByType_TT_T = getCollectionType(_Collection, _Sequence_selectByType_TT, true, 0, -1);
+			_Collection_Set_collectNested_V_T = getCollectionType(_Collection, _Set_collectNested_V, true, 0, -1);
+			_Collection_Set_collect_V_T = getCollectionType(_Collection, _Set_collect_V, true, 0, -1);
+			_Collection_Set_flatten_T2_T = getCollectionType(_Collection, _Set_flatten_T2, true, 0, -1);
+			_Collection_Set_selectByKind_TT_T = getCollectionType(_Collection, _Set_selectByKind_TT, true, 0, -1);
+			_Collection_Set_selectByType_TT_T = getCollectionType(_Collection, _Set_selectByType_TT, true, 0, -1);
+			_Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, _Collection_T, false, _Collection_collectBy_V, false);
+			_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_excludesMap_K2, true, _Map_excludesMap_V2, true);
+			_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_excludingMap_K2, true, _Map_excludingMap_V2, true);
+			_Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_includesMap_K2, true, _Map_includesMap_V2, true);
+			_Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_includingMap_K2, true, _Map_includingMap_V2, true);
+			_Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_collectBy_V2, false);
+			_Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_collectNested_V2, false);
 			_Tuple = getTupleType(_OclTuple,
-				createProperty("first", tp_Collection_T),
-				createProperty("second", tp_Collection_product_T2));
-			_Lambda_Bag_T_Bag_collectNested_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collectNested_V);
-			_Lambda_Bag_T_Bag_collect_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collect_V);
-			_Lambda_Collection_T_Collection_collectBy_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectBy_V);
-			_Lambda_Collection_T_Collection_collectNested_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectNested_V);
-			_Lambda_Collection_T_Collection_collect_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collect_V);
-			_Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_iterate_Tacc);
-			_Lambda_Map_K_Map_collectBy_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectBy_V2);
-			_Lambda_Map_K_Map_collectNested_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectNested_V2);
-			_Lambda_Map_K_Map_collect_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collect_V2);
-			_Lambda_Map_K_Map_iterate_Tacc = getLambdaType(_OclLambda, tp_Map_K, tp_Map_iterate_Tacc);
-			_Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
-			_Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collect_V);
-			_Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collectNested_V);
-			_Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collect_V);
-			_Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collectNested_V);
-			_Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collect_V);
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
+				createProperty("first", _Collection_T),
+				createProperty("second", _Collection_product_T2));
+			_Lambda_Bag_T_Bag_collectNested_V = getLambdaType(_OclLambda, _Bag_T, _Bag_collectNested_V);
+			_Lambda_Bag_T_Bag_collect_V = getLambdaType(_OclLambda, _Bag_T, _Bag_collect_V);
+			_Lambda_Collection_T_Collection_collectBy_V = getLambdaType(_OclLambda, _Collection_T, _Collection_collectBy_V);
+			_Lambda_Collection_T_Collection_collectNested_V = getLambdaType(_OclLambda, _Collection_T, _Collection_collectNested_V);
+			_Lambda_Collection_T_Collection_collect_V = getLambdaType(_OclLambda, _Collection_T, _Collection_collect_V);
+			_Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType(_OclLambda, _Collection_T, _Collection_iterate_Tacc);
+			_Lambda_Map_K_Map_collectBy_V2 = getLambdaType(_OclLambda, _Map_K, _Map_collectBy_V2);
+			_Lambda_Map_K_Map_collectNested_V2 = getLambdaType(_OclLambda, _Map_K, _Map_collectNested_V2);
+			_Lambda_Map_K_Map_collect_V2 = getLambdaType(_OclLambda, _Map_K, _Map_collect_V2);
+			_Lambda_Map_K_Map_iterate_Tacc = getLambdaType(_OclLambda, _Map_K, _Map_iterate_Tacc);
+			_Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType(_OclLambda, _OrderedSet_T, _OrderedSet_collectNested_V);
+			_Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType(_OclLambda, _OrderedSet_T, _OrderedSet_collect_V);
+			_Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType(_OclLambda, _Sequence_T, _Sequence_collectNested_V);
+			_Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, _Sequence_T, _Sequence_collect_V);
+			_Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, _Set_T, _Set_collectNested_V);
+			_Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, _Set_T, _Set_collect_V);
 		}
 
 		private void installSlots5b() {
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
 			checkSuperClass(_Collection_Integer_T, _OclAny);
 			checkSuperClass(_Collection_String_T, _OclAny);
 			checkSuperClass(_Collection_Bag_T_T, _OclAny);
@@ -2898,11 +2299,11 @@ public class OCLstdlib extends ASResourceImpl
 			checkSuperClass(_Collection_Sequence_T_T, _OclAny);
 			checkSuperClass(_Collection_Set_T_T, _OclAny);
 			checkSuperClass(_Collection_UniqueCollection_T_T, _OclAny);
-			addSuperClass(_OrderedCollection_OrderedCollection_T, _Collection_OrderedCollection_T_T);
-			addSuperClass(_UniqueCollection_UniqueCollection_T, _Collection_UniqueCollection_T_T);
+			addSuperClass(_OrderedCollection, _Collection_OrderedCollection_T_T);
+			addSuperClass(_UniqueCollection, _Collection_UniqueCollection_T_T);
 			checkSuperClass(_Map_Map_K_T_Map_V_T, _OclAny);
 			checkSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
-			addSuperClass(_Bag_Bag_T, _Collection_Bag_T_T);
+			addSuperClass(_Bag, _Collection_Bag_T_T);
 			addSuperClass(_Lambda_Bag_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_Bag_T_OclAny, _OclLambda);
 			addSuperClass(_Lambda_Collection_T_Boolean, _OclLambda);
@@ -2916,324 +2317,212 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Lambda_Set_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_Set_T_OclAny, _OclLambda);
 			addSuperClass(_Lambda_UniqueCollection_T_OclAny, _OclLambda);
-			it_Collection_any.setType(tp_Collection_T);
+			it_Collection_any.setType(_Collection_T);
 			it_Collection_any.setIsRequired(false);
-			createIterator(it_Collection_any, "i", tp_Collection_T, true);
+			createIterator(it_Collection_any, "i", _Collection_T, true);
 			createParameter(it_Collection_any, "body", _Lambda_Collection_T_Boolean, true);
 			it_Collection_exists.setType(_Boolean);
 			it_Collection_exists.setIsInvalidating(true);
 			it_Collection_exists.setIsRequired(false);
 			it_Collection_exists.setIsValidating(true);
-			createIterator(it_Collection_exists, "i", tp_Collection_T, false);
-			createIterator(it_Collection_exists, "j", tp_Collection_T, false);
-			createIterator(it_Collection_exists, "k", tp_Collection_T, false);
+			createIterator(it_Collection_exists, "i", _Collection_T, false);
+			createIterator(it_Collection_exists, "j", _Collection_T, false);
+			createIterator(it_Collection_exists, "k", _Collection_T, false);
 			createParameter(it_Collection_exists, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_exists_1.setType(_Boolean);
 			it_Collection_exists_1.setIsInvalidating(true);
 			it_Collection_exists_1.setIsRequired(false);
 			it_Collection_exists_1.setIsValidating(true);
-			createIterator(it_Collection_exists_1, "i", tp_Collection_T, false);
-			createIterator(it_Collection_exists_1, "j", tp_Collection_T, false);
+			createIterator(it_Collection_exists_1, "i", _Collection_T, false);
+			createIterator(it_Collection_exists_1, "j", _Collection_T, false);
 			createParameter(it_Collection_exists_1, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_exists_2.setType(_Boolean);
 			it_Collection_exists_2.setIsInvalidating(true);
 			it_Collection_exists_2.setIsRequired(false);
 			it_Collection_exists_2.setIsValidating(true);
-			createIterator(it_Collection_exists_2, "i", tp_Collection_T, false);
+			createIterator(it_Collection_exists_2, "i", _Collection_T, false);
 			createParameter(it_Collection_exists_2, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_forAll.setType(_Boolean);
 			it_Collection_forAll.setIsInvalidating(true);
 			it_Collection_forAll.setIsRequired(false);
 			it_Collection_forAll.setIsValidating(true);
-			createIterator(it_Collection_forAll, "i", tp_Collection_T, false);
-			createIterator(it_Collection_forAll, "j", tp_Collection_T, false);
-			createIterator(it_Collection_forAll, "k", tp_Collection_T, false);
+			createIterator(it_Collection_forAll, "i", _Collection_T, false);
+			createIterator(it_Collection_forAll, "j", _Collection_T, false);
+			createIterator(it_Collection_forAll, "k", _Collection_T, false);
 			createParameter(it_Collection_forAll, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_forAll_1.setType(_Boolean);
 			it_Collection_forAll_1.setIsInvalidating(true);
 			it_Collection_forAll_1.setIsRequired(false);
 			it_Collection_forAll_1.setIsValidating(true);
-			createIterator(it_Collection_forAll_1, "i", tp_Collection_T, false);
-			createIterator(it_Collection_forAll_1, "j", tp_Collection_T, false);
+			createIterator(it_Collection_forAll_1, "i", _Collection_T, false);
+			createIterator(it_Collection_forAll_1, "j", _Collection_T, false);
 			createParameter(it_Collection_forAll_1, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_forAll_2.setType(_Boolean);
 			it_Collection_forAll_2.setIsInvalidating(true);
 			it_Collection_forAll_2.setIsRequired(false);
 			it_Collection_forAll_2.setIsValidating(true);
-			createIterator(it_Collection_forAll_2, "i", tp_Collection_T, false);
+			createIterator(it_Collection_forAll_2, "i", _Collection_T, false);
 			createParameter(it_Collection_forAll_2, "lambda", _Lambda_Collection_T_Boolean, false);
 			it_Collection_isUnique.setType(_Boolean);
-			createIterator(it_Collection_isUnique, "i", tp_Collection_T, false);
+			createIterator(it_Collection_isUnique, "i", _Collection_T, false);
 			createParameter(it_Collection_isUnique, "lambda", _Lambda_Collection_T_OclAny, false);
 			it_Collection_one.setType(_Boolean);
-			createIterator(it_Collection_one, "i", tp_Collection_T, false);
+			createIterator(it_Collection_one, "i", _Collection_T, false);
 			createParameter(it_Collection_one, "lambda", _Lambda_Collection_T_Boolean, true);
 			it_Collection_reject.setType(_Collection_Collection_T_T);
-			createIterator(it_Collection_reject, "i", tp_Collection_T, false);
+			createIterator(it_Collection_reject, "i", _Collection_T, false);
 			createParameter(it_Collection_reject, "lambda", _Lambda_Collection_T_Boolean, true);
 			it_Collection_select.setType(_Collection_Collection_T_T);
-			createIterator(it_Collection_select, "i", tp_Collection_T, false);
+			createIterator(it_Collection_select, "i", _Collection_T, false);
 			createParameter(it_Collection_select, "lambda", _Lambda_Collection_T_Boolean, true);
-			it_Map_any.setType(tp_Map_K);
+			it_Map_any.setType(_Map_K);
 			it_Map_any.setIsRequired(false);
-			createIterator(it_Map_any, "k", tp_Map_K, true);
+			createIterator(it_Map_any, "k", _Map_K, true);
 			createParameter(it_Map_any, "body", _Lambda_Map_K_Boolean, true);
 			it_Map_exists.setType(_Boolean);
 			it_Map_exists.setIsInvalidating(true);
 			it_Map_exists.setIsRequired(false);
 			it_Map_exists.setIsValidating(true);
-			createIterator(it_Map_exists, "k1", tp_Map_K, false);
-			createIterator(it_Map_exists, "k2", tp_Map_K, false);
-			createIterator(it_Map_exists, "k3", tp_Map_K, false);
+			createIterator(it_Map_exists, "k1", _Map_K, false);
+			createIterator(it_Map_exists, "k2", _Map_K, false);
+			createIterator(it_Map_exists, "k3", _Map_K, false);
 			createParameter(it_Map_exists, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_exists_1.setType(_Boolean);
 			it_Map_exists_1.setIsInvalidating(true);
 			it_Map_exists_1.setIsRequired(false);
 			it_Map_exists_1.setIsValidating(true);
-			createIterator(it_Map_exists_1, "k1", tp_Map_K, false);
-			createIterator(it_Map_exists_1, "k2", tp_Map_K, false);
+			createIterator(it_Map_exists_1, "k1", _Map_K, false);
+			createIterator(it_Map_exists_1, "k2", _Map_K, false);
 			createParameter(it_Map_exists_1, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_exists_2.setType(_Boolean);
 			it_Map_exists_2.setIsInvalidating(true);
 			it_Map_exists_2.setIsRequired(false);
 			it_Map_exists_2.setIsValidating(true);
-			createIterator(it_Map_exists_2, "k", tp_Map_K, false);
+			createIterator(it_Map_exists_2, "k", _Map_K, false);
 			createParameter(it_Map_exists_2, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_forAll.setType(_Boolean);
 			it_Map_forAll.setIsInvalidating(true);
 			it_Map_forAll.setIsRequired(false);
 			it_Map_forAll.setIsValidating(true);
-			createIterator(it_Map_forAll, "k1", tp_Map_K, false);
-			createIterator(it_Map_forAll, "k2", tp_Map_K, false);
-			createIterator(it_Map_forAll, "k3", tp_Map_K, false);
+			createIterator(it_Map_forAll, "k1", _Map_K, false);
+			createIterator(it_Map_forAll, "k2", _Map_K, false);
+			createIterator(it_Map_forAll, "k3", _Map_K, false);
 			createParameter(it_Map_forAll, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_forAll_1.setType(_Boolean);
 			it_Map_forAll_1.setIsInvalidating(true);
 			it_Map_forAll_1.setIsRequired(false);
 			it_Map_forAll_1.setIsValidating(true);
-			createIterator(it_Map_forAll_1, "k1", tp_Map_K, false);
-			createIterator(it_Map_forAll_1, "k2", tp_Map_K, false);
+			createIterator(it_Map_forAll_1, "k1", _Map_K, false);
+			createIterator(it_Map_forAll_1, "k2", _Map_K, false);
 			createParameter(it_Map_forAll_1, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_forAll_2.setType(_Boolean);
 			it_Map_forAll_2.setIsInvalidating(true);
 			it_Map_forAll_2.setIsRequired(false);
 			it_Map_forAll_2.setIsValidating(true);
-			createIterator(it_Map_forAll_2, "k", tp_Map_K, false);
+			createIterator(it_Map_forAll_2, "k", _Map_K, false);
 			createParameter(it_Map_forAll_2, "lambda", _Lambda_Map_K_Boolean, false);
 			it_Map_isUnique.setType(_Boolean);
-			createIterator(it_Map_isUnique, "i", tp_Map_K, false);
+			createIterator(it_Map_isUnique, "i", _Map_K, false);
 			createParameter(it_Map_isUnique, "lambda", _Lambda_Map_K_OclAny, false);
 			it_Map_one.setType(_Boolean);
-			createIterator(it_Map_one, "i", tp_Map_K, false);
+			createIterator(it_Map_one, "i", _Map_K, false);
 			createParameter(it_Map_one, "lambda", _Lambda_Map_K_Boolean, true);
 			it_Map_reject.setType(_Map_Map_K_F_Map_V_F);
-			createIterator(it_Map_reject, "i", tp_Map_K, false);
+			createIterator(it_Map_reject, "i", _Map_K, false);
 			createParameter(it_Map_reject, "lambda", _Lambda_Map_K_Boolean, true);
 			it_Map_select.setType(_Map_Map_K_F_Map_V_F);
-			createIterator(it_Map_select, "i", tp_Map_K, false);
+			createIterator(it_Map_select, "i", _Map_K, false);
 			createParameter(it_Map_select, "lambda", _Lambda_Map_K_Boolean, true);
-			op_UnlimitedNatural_oclAsType.setType(tp_UnlimitedNatural_oclAsType_TT);
+			op_UnlimitedNatural_oclAsType.setType(_UnlimitedNatural_oclAsType_TT);
 			op_UnlimitedNatural_oclAsType.setIsInvalidating(true);
-			createParameter(op_UnlimitedNatural_oclAsType, "type", tp_UnlimitedNatural_oclAsType_TT, true).setIsTypeof(true);
+			createParameter(op_UnlimitedNatural_oclAsType, "type", _UnlimitedNatural_oclAsType_TT, true).setIsTypeof(true);
 			op_Collection_excluding.setType(_Collection_Collection_T_T);
-			createParameter(op_Collection_excluding, "object", tp_Collection_T, false);
+			createParameter(op_Collection_excluding, "object", _Collection_T, false);
 			op_Collection_excludingAll.setType(_Collection_Collection_T_T);
 			createParameter(op_Collection_excludingAll, "objects", _Collection_Collection_T_T, true);
 			op_Collection_including.setType(_Collection_Collection_T_T);
-			createParameter(op_Collection_including, "object", tp_Collection_T, false);
+			createParameter(op_Collection_including, "object", _Collection_T, false);
 			op_Collection_includingAll.setType(_Collection_Collection_T_T);
 			createParameter(op_Collection_includingAll, "objects", _Collection_Collection_T_T, true);
 			op_Map_excluding.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_excluding, "key", tp_Map_K, false);
+			createParameter(op_Map_excluding, "key", _Map_K, false);
 			op_Map_excluding_1.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_excluding_1, "key", tp_Map_K, false);
-			createParameter(op_Map_excluding_1, "value", tp_Map_V, false);
+			createParameter(op_Map_excluding_1, "key", _Map_K, false);
+			createParameter(op_Map_excluding_1, "value", _Map_V, false);
 			op_Map_excludingAll.setType(_Map_Map_K_T_Map_V_T);
 			createParameter(op_Map_excludingAll, "keys", _Collection_Map_K_T, true);
 			op_Map_including.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_including, "key", tp_Map_K, false);
-			createParameter(op_Map_including, "value", tp_Map_V, false);
-			op_OclAny_oclAsType.setType(tp_OclAny_oclAsType_TT);
+			createParameter(op_Map_including, "key", _Map_K, false);
+			createParameter(op_Map_including, "value", _Map_V, false);
+			op_OclAny_oclAsType.setType(_OclAny_oclAsType_TT);
 			op_OclAny_oclAsType.setIsInvalidating(true);
-			createParameter(op_OclAny_oclAsType, "type", tp_OclAny_oclAsType_TT, true).setIsTypeof(true);
-			op_OclElement_oclAsModelType.setType(tp_OclElement_oclAsModelType_TT);
+			createParameter(op_OclAny_oclAsType, "type", _OclAny_oclAsType_TT, true).setIsTypeof(true);
+			op_OclElement_oclAsModelType.setType(_OclElement_oclAsModelType_TT);
 			op_OclElement_oclAsModelType.setIsInvalidating(true);
-			createParameter(op_OclElement_oclAsModelType, "type", tp_OclElement_oclAsModelType_TT, true).setIsTypeof(true);
-			op_OclInvalid_oclAsType.setType(tp_OclInvalid_oclAsType_TT);
-			createParameter(op_OclInvalid_oclAsType, "type", tp_OclInvalid_oclAsType_TT, true).setIsTypeof(true);
-			op_OclVoid_oclAsType.setType(tp_OclVoid_oclAsType_TT);
+			createParameter(op_OclElement_oclAsModelType, "type", _OclElement_oclAsModelType_TT, true).setIsTypeof(true);
+			op_OclInvalid_oclAsType.setType(_OclInvalid_oclAsType_TT);
+			createParameter(op_OclInvalid_oclAsType, "type", _OclInvalid_oclAsType_TT, true).setIsTypeof(true);
+			op_OclVoid_oclAsType.setType(_OclVoid_oclAsType_TT);
 			op_OclVoid_oclAsType.setIsInvalidating(true);
 			op_OclVoid_oclAsType.setIsRequired(false);
-			createParameter(op_OclVoid_oclAsType, "type", tp_OclVoid_oclAsType_TT, true).setIsTypeof(true);
-			// define TYPE_FRAGMENTS Model
+			createParameter(op_OclVoid_oclAsType, "type", _OclVoid_oclAsType_TT, true).setIsTypeof(true);
 		}
 
 		private void installSlots6a() {
-			// define ALL_OPERATIONS Model
-			// define CTOR Property
-			// define CTOR Property
-			_Collection_Tuple_T = getCollectionType(_Collection_Collection_T, _Tuple, true, 0, -1);
-			_OrderedCollection_Integer_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _Integer, true, 0, -1);
-			_OrderedCollection_String_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _String, true, 0, -1);
-			_OrderedCollection_Bag_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Bag_T, true, 0, -1);
-			_OrderedCollection_Collection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Collection_T, true, 0, -1);
-			_OrderedCollection_OrderedSet_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			_OrderedCollection_OrderedSet_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collect_V, true, 0, -1);
-			_OrderedCollection_OrderedSet_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			_OrderedCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			_OrderedCollection_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			_OrderedCollection_OrderedSet_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_T, true, 0, -1);
-			_OrderedCollection_Sequence_collectNested_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collectNested_V, true, 0, -1);
-			_OrderedCollection_Sequence_collect_V_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collect_V, true, 0, -1);
-			_OrderedCollection_Sequence_flatten_T2_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_flatten_T2, true, 0, -1);
-			_OrderedCollection_Sequence_selectByKind_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			_OrderedCollection_Sequence_selectByType_TT_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			_OrderedCollection_Sequence_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_T, true, 0, -1);
-			_OrderedCollection_Set_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_Set_T, true, 0, -1);
-			_OrderedCollection_UniqueCollection_T_T = getCollectionType(_OrderedCollection_OrderedCollection_T, tp_UniqueCollection_T, true, 0, -1);
-			_UniqueCollection_Tuple_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _Tuple, true, 0, -1);
-			_UniqueCollection_Bag_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Bag_T, true, 0, -1);
-			_UniqueCollection_Collection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Collection_T, true, 0, -1);
-			_UniqueCollection_Map_K_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Map_K, true, 0, -1);
-			_UniqueCollection_OclAny_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclAny, true, 0, -1);
-			_UniqueCollection_OclElement_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclElement, true, 0, -1);
-			_UniqueCollection_OclSelf_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _OclSelf, true, 0, -1);
-			_UniqueCollection_OrderedSet_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			_UniqueCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			_UniqueCollection_OrderedSet_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			_UniqueCollection_OrderedSet_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_T, true, 0, -1);
-			_UniqueCollection_Sequence_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Sequence_T, true, 0, -1);
-			_UniqueCollection_Set_flatten_T2_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_flatten_T2, true, 0, -1);
-			_UniqueCollection_Set_selectByKind_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByKind_TT, true, 0, -1);
-			_UniqueCollection_Set_selectByType_TT_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByType_TT, true, 0, -1);
-			_UniqueCollection_Set_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T, true, 0, -1);
-			_UniqueCollection_UniqueCollection_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T, true, 0, -1);
-			_Bag_Bag_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collectNested_V, true, 0, -1);
-			_Bag_Bag_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collect_V, true, 0, -1);
-			_Bag_Bag_flatten_T2_T = getCollectionType(_Bag_Bag_T, tp_Bag_flatten_T2, true, 0, -1);
-			_Bag_Bag_selectByKind_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByKind_TT, true, 0, -1);
-			_Bag_Bag_selectByType_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByType_TT, true, 0, -1);
-			_Bag_Bag_T_T = getCollectionType(_Bag_Bag_T, tp_Bag_T, true, 0, -1);
-			_Bag_CollectionType_T = getCollectionType(_Bag_Bag_T, _CollectionType, true, 0, -1);
-			_Bag_Collection_T_T = getCollectionType(_Bag_Bag_T, tp_Collection_T, true, 0, -1);
-			_Bag_MapType_T = getCollectionType(_Bag_Bag_T, _MapType, true, 0, -1);
-			_Bag_Map_collect_V2_T = getCollectionType(_Bag_Bag_T, tp_Map_collect_V2, true, 0, -1);
-			_Bag_Map_V_T = getCollectionType(_Bag_Bag_T, tp_Map_V, true, 0, -1);
-			_Bag_OclElement_T = getCollectionType(_Bag_Bag_T, _OclElement, true, 0, -1);
-			_Bag_OclInvalid_T = getCollectionType(_Bag_Bag_T, _OclInvalid, true, 0, -1);
-			_Bag_Set_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collectNested_V, true, 0, -1);
-			_Bag_Set_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Set_collect_V, true, 0, -1);
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS MapType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
+			_Collection_Tuple_T = getCollectionType(_Collection, _Tuple, true, 0, -1);
+			_OrderedCollection_Integer_T = getCollectionType(_OrderedCollection, _Integer, true, 0, -1);
+			_OrderedCollection_String_T = getCollectionType(_OrderedCollection, _String, true, 0, -1);
+			_OrderedCollection_Bag_T_T = getCollectionType(_OrderedCollection, _Bag_T, true, 0, -1);
+			_OrderedCollection_Collection_T_T = getCollectionType(_OrderedCollection, _Collection_T, true, 0, -1);
+			_OrderedCollection_OrderedSet_collectNested_V_T = getCollectionType(_OrderedCollection, _OrderedSet_collectNested_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_collect_V_T = getCollectionType(_OrderedCollection, _OrderedSet_collect_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_flatten_T2_T = getCollectionType(_OrderedCollection, _OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedCollection, _OrderedSet_selectByType_TT, true, 0, -1);
+			_OrderedCollection_OrderedSet_T_T = getCollectionType(_OrderedCollection, _OrderedSet_T, true, 0, -1);
+			_OrderedCollection_Sequence_collectNested_V_T = getCollectionType(_OrderedCollection, _Sequence_collectNested_V, true, 0, -1);
+			_OrderedCollection_Sequence_collect_V_T = getCollectionType(_OrderedCollection, _Sequence_collect_V, true, 0, -1);
+			_OrderedCollection_Sequence_flatten_T2_T = getCollectionType(_OrderedCollection, _Sequence_flatten_T2, true, 0, -1);
+			_OrderedCollection_Sequence_selectByKind_TT_T = getCollectionType(_OrderedCollection, _Sequence_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_Sequence_selectByType_TT_T = getCollectionType(_OrderedCollection, _Sequence_selectByType_TT, true, 0, -1);
+			_OrderedCollection_Sequence_T_T = getCollectionType(_OrderedCollection, _Sequence_T, true, 0, -1);
+			_OrderedCollection_Set_T_T = getCollectionType(_OrderedCollection, _Set_T, true, 0, -1);
+			_OrderedCollection_UniqueCollection_T_T = getCollectionType(_OrderedCollection, _UniqueCollection_T, true, 0, -1);
+			_UniqueCollection_Tuple_T = getCollectionType(_UniqueCollection, _Tuple, true, 0, -1);
+			_UniqueCollection_Bag_T_T = getCollectionType(_UniqueCollection, _Bag_T, true, 0, -1);
+			_UniqueCollection_Collection_T_T = getCollectionType(_UniqueCollection, _Collection_T, true, 0, -1);
+			_UniqueCollection_Map_K_T = getCollectionType(_UniqueCollection, _Map_K, true, 0, -1);
+			_UniqueCollection_OclAny_T = getCollectionType(_UniqueCollection, _OclAny, true, 0, -1);
+			_UniqueCollection_OclElement_T = getCollectionType(_UniqueCollection, _OclElement, true, 0, -1);
+			_UniqueCollection_OclSelf_T = getCollectionType(_UniqueCollection, _OclSelf, true, 0, -1);
+			_UniqueCollection_OrderedSet_flatten_T2_T = getCollectionType(_UniqueCollection, _OrderedSet_flatten_T2, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByKind_TT_T = getCollectionType(_UniqueCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByType_TT_T = getCollectionType(_UniqueCollection, _OrderedSet_selectByType_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_T_T = getCollectionType(_UniqueCollection, _OrderedSet_T, true, 0, -1);
+			_UniqueCollection_Sequence_T_T = getCollectionType(_UniqueCollection, _Sequence_T, true, 0, -1);
+			_UniqueCollection_Set_flatten_T2_T = getCollectionType(_UniqueCollection, _Set_flatten_T2, true, 0, -1);
+			_UniqueCollection_Set_selectByKind_TT_T = getCollectionType(_UniqueCollection, _Set_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_Set_selectByType_TT_T = getCollectionType(_UniqueCollection, _Set_selectByType_TT, true, 0, -1);
+			_UniqueCollection_Set_T_T = getCollectionType(_UniqueCollection, _Set_T, true, 0, -1);
+			_UniqueCollection_UniqueCollection_T_T = getCollectionType(_UniqueCollection, _UniqueCollection_T, true, 0, -1);
+			_Bag_Bag_collectNested_V_T = getCollectionType(_Bag, _Bag_collectNested_V, true, 0, -1);
+			_Bag_Bag_collect_V_T = getCollectionType(_Bag, _Bag_collect_V, true, 0, -1);
+			_Bag_Bag_flatten_T2_T = getCollectionType(_Bag, _Bag_flatten_T2, true, 0, -1);
+			_Bag_Bag_selectByKind_TT_T = getCollectionType(_Bag, _Bag_selectByKind_TT, true, 0, -1);
+			_Bag_Bag_selectByType_TT_T = getCollectionType(_Bag, _Bag_selectByType_TT, true, 0, -1);
+			_Bag_Bag_T_T = getCollectionType(_Bag, _Bag_T, true, 0, -1);
+			_Bag_CollectionType_T = getCollectionType(_Bag, _CollectionType, true, 0, -1);
+			_Bag_Collection_T_T = getCollectionType(_Bag, _Collection_T, true, 0, -1);
+			_Bag_MapType_T = getCollectionType(_Bag, _MapType, true, 0, -1);
+			_Bag_Map_collect_V2_T = getCollectionType(_Bag, _Map_collect_V2, true, 0, -1);
+			_Bag_Map_V_T = getCollectionType(_Bag, _Map_V, true, 0, -1);
+			_Bag_OclElement_T = getCollectionType(_Bag, _OclElement, true, 0, -1);
+			_Bag_OclInvalid_T = getCollectionType(_Bag, _OclInvalid, true, 0, -1);
+			_Bag_Set_collectNested_V_T = getCollectionType(_Bag, _Set_collectNested_V, true, 0, -1);
+			_Bag_Set_collect_V_T = getCollectionType(_Bag, _Set_collect_V, true, 0, -1);
 		}
 
 		private void installSlots6b() {
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES MapType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
 			checkSuperClass(_Collection_Bag_collectNested_V_T, _OclAny);
 			checkSuperClass(_Collection_Bag_collect_V_T, _OclAny);
 			checkSuperClass(_Collection_Bag_flatten_T2_T, _OclAny);
@@ -3293,29 +2582,29 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Lambda_Set_T_Set_collectNested_V, _OclLambda);
 			addSuperClass(_Lambda_Set_T_Set_collect_V, _OclLambda);
 			it_Collection_collectBy.setType(_Map_Collection_T_F_Collection_collectBy_V_F);
-			createIterator(it_Collection_collectBy, "i", tp_Collection_T, false);
+			createIterator(it_Collection_collectBy, "i", _Collection_T, false);
 			createParameter(it_Collection_collectBy, "lambda", _Lambda_Collection_T_Collection_collectBy_V, false);
 			it_Collection_collectNested.setType(_Collection_Collection_collectNested_V_T);
-			createIterator(it_Collection_collectNested, "i", tp_Collection_T, false);
+			createIterator(it_Collection_collectNested, "i", _Collection_T, false);
 			createParameter(it_Collection_collectNested, "lambda", _Lambda_Collection_T_Collection_collectNested_V, false);
 			it_Collection_collect.setType(_Collection_Collection_collect_V_T);
-			createIterator(it_Collection_collect, "i", tp_Collection_T, false);
+			createIterator(it_Collection_collect, "i", _Collection_T, false);
 			createParameter(it_Collection_collect, "lambda", _Lambda_Collection_T_Collection_collect_V, false);
-			it_Collection_iterate.setType(tp_Collection_iterate_Tacc);
+			it_Collection_iterate.setType(_Collection_iterate_Tacc);
 			it_Collection_iterate.setIsRequired(false);
-			createIterator(it_Collection_iterate, "i", tp_Collection_T, false);
-			createAccumulator(it_Collection_iterate, "acc", tp_Collection_iterate_Tacc, false);
+			createIterator(it_Collection_iterate, "i", _Collection_T, false);
+			createAccumulator(it_Collection_iterate, "acc", _Collection_iterate_Tacc, false);
 			createParameter(it_Collection_iterate, "lambda", _Lambda_Collection_T_Collection_iterate_Tacc, false);
 			it_Map_collectBy.setType(_Map_Map_K_F_Map_collectBy_V2_F);
-			createIterator(it_Map_collectBy, "k", tp_Map_K, false);
+			createIterator(it_Map_collectBy, "k", _Map_K, false);
 			createParameter(it_Map_collectBy, "lambda", _Lambda_Map_K_Map_collectBy_V2, false);
 			it_Map_collectNested.setType(_Map_Map_K_F_Map_collectNested_V2_F);
-			createIterator(it_Map_collectNested, "k", tp_Map_K, false);
+			createIterator(it_Map_collectNested, "k", _Map_K, false);
 			createParameter(it_Map_collectNested, "lambda", _Lambda_Map_K_Map_collectNested_V2, false);
-			it_Map_iterate.setType(tp_Map_iterate_Tacc);
+			it_Map_iterate.setType(_Map_iterate_Tacc);
 			it_Map_iterate.setIsRequired(false);
-			createIterator(it_Map_iterate, "i", tp_Map_K, false);
-			createAccumulator(it_Map_iterate, "acc", tp_Map_iterate_Tacc, false);
+			createIterator(it_Map_iterate, "i", _Map_K, false);
+			createAccumulator(it_Map_iterate, "acc", _Map_iterate_Tacc, false);
 			createParameter(it_Map_iterate, "lambda", _Lambda_Map_K_Map_iterate_Tacc, false);
 			op_Collection_excludesAll.setType(_Boolean);
 			createParameter(op_Collection_excludesAll, "c2", _Collection_Collection_excludesAll_T2_T, true);
@@ -3323,9 +2612,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_Collection_includesAll.setType(_Boolean);
 			createParameter(op_Collection_includesAll, "c2", _Collection_Collection_includesAll_T2_T, true);
 			op_Collection_selectByKind.setType(_Collection_Collection_selectByKind_TT_T);
-			createParameter(op_Collection_selectByKind, "type", tp_Collection_selectByKind_TT, true).setIsTypeof(true);
+			createParameter(op_Collection_selectByKind, "type", _Collection_selectByKind_TT, true).setIsTypeof(true);
 			op_Collection_selectByType.setType(_Collection_Collection_selectByType_TT_T);
-			createParameter(op_Collection_selectByType, "type", tp_Collection_selectByType_TT, true).setIsTypeof(true);
+			createParameter(op_Collection_selectByType, "type", _Collection_selectByType_TT, true).setIsTypeof(true);
 			op_Map_excludesAll.setType(_Boolean);
 			createParameter(op_Map_excludesAll, "coll", _Collection_Map_excludesAll_K2_T, true);
 			op_Map_excludesMap.setType(_Boolean);
@@ -3341,118 +2630,9 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots7a() {
-			// define ALL_PROPERTIES Model
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define CTOR Property
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS CollectionType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define OPERATIONS BagType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES CollectionType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
 		}
 
 		private void installSlots7b() {
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
-			// define PROPERTIES BagType
 			checkSuperClass(_Collection_Tuple_T, _OclAny);
 			checkSuperClass(_OrderedCollection_Integer_T, _Collection_Integer_T);
 			checkSuperClass(_OrderedCollection_String_T, _Collection_String_T);
@@ -3504,44 +2684,44 @@ public class OCLstdlib extends ASResourceImpl
 			checkSuperClass(_Bag_OclInvalid_T, _Collection_OclInvalid_T);
 			checkSuperClass(_Bag_Set_collectNested_V_T, _Collection_Set_collectNested_V_T);
 			checkSuperClass(_Bag_Set_collect_V_T, _Collection_Set_collect_V_T);
-			addSuperClass(_OrderedSet_OrderedSet_T, _OrderedCollection_OrderedSet_T_T);
-			addSuperClass(_OrderedSet_OrderedSet_T, _UniqueCollection_OrderedSet_T_T);
-			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_T);
-			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_T);
+			addSuperClass(_OrderedSet, _OrderedCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet, _UniqueCollection_OrderedSet_T_T);
+			addSuperClass(_Sequence, _OrderedCollection_Sequence_T_T);
+			addSuperClass(_Set, _UniqueCollection_Set_T_T);
 			it_Bag_collectNested.setType(_Bag_Bag_collectNested_V_T);
-			createIterator(it_Bag_collectNested, "i", tp_Bag_T, false);
+			createIterator(it_Bag_collectNested, "i", _Bag_T, false);
 			createParameter(it_Bag_collectNested, "lambda", _Lambda_Bag_T_Bag_collectNested_V, false);
 			it_Bag_collect.setType(_Bag_Bag_collect_V_T);
-			createIterator(it_Bag_collect, "i", tp_Bag_T, false);
+			createIterator(it_Bag_collect, "i", _Bag_T, false);
 			createParameter(it_Bag_collect, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
 			it_Bag_reject.setType(_Bag_Bag_T_T);
-			createIterator(it_Bag_reject, "i", tp_Bag_T, false);
+			createIterator(it_Bag_reject, "i", _Bag_T, false);
 			createParameter(it_Bag_reject, "lambda", _Lambda_Bag_T_Boolean, true);
 			it_Bag_select.setType(_Bag_Bag_T_T);
-			createIterator(it_Bag_select, "i", tp_Bag_T, false);
+			createIterator(it_Bag_select, "i", _Bag_T, false);
 			createParameter(it_Bag_select, "lambda", _Lambda_Bag_T_Boolean, true);
 			it_Map_collect.setType(_Bag_Map_collect_V2_T);
-			createIterator(it_Map_collect, "k", tp_Map_K, false);
+			createIterator(it_Map_collect, "k", _Map_K, false);
 			createParameter(it_Map_collect, "lambda", _Lambda_Map_K_Map_collect_V2, false);
 			it_Set_collectNested.setType(_Bag_Set_collectNested_V_T);
-			createIterator(it_Set_collectNested, "i", tp_Set_T, false);
+			createIterator(it_Set_collectNested, "i", _Set_T, false);
 			createParameter(it_Set_collectNested, "lambda", _Lambda_Set_T_Set_collectNested_V, false);
 			it_Set_collect.setType(_Bag_Set_collect_V_T);
-			createIterator(it_Set_collect, "i", tp_Set_T, false);
+			createIterator(it_Set_collect, "i", _Set_T, false);
 			createParameter(it_Set_collect, "lambda", _Lambda_Set_T_Set_collect_V, false);
 			op_Bag_excluding.setType(_Bag_Bag_T_T);
-			createParameter(op_Bag_excluding, "object", tp_Bag_T, false);
+			createParameter(op_Bag_excluding, "object", _Bag_T, false);
 			op_Bag_excludingAll.setType(_Bag_Bag_T_T);
 			createParameter(op_Bag_excludingAll, "objects", _Collection_Bag_T_T, true);
 			op_Bag_flatten.setType(_Bag_Bag_flatten_T2_T);
 			op_Bag_including.setType(_Bag_Bag_T_T);
-			createParameter(op_Bag_including, "object", tp_Bag_T, false);
+			createParameter(op_Bag_including, "object", _Bag_T, false);
 			op_Bag_includingAll.setType(_Bag_Bag_T_T);
 			createParameter(op_Bag_includingAll, "objects", _Collection_Bag_T_T, true);
 			op_Bag_selectByKind.setType(_Bag_Bag_selectByKind_TT_T);
-			createParameter(op_Bag_selectByKind, "type", tp_Bag_selectByKind_TT, true).setIsTypeof(true);
+			createParameter(op_Bag_selectByKind, "type", _Bag_selectByKind_TT, true).setIsTypeof(true);
 			op_Bag_selectByType.setType(_Bag_Bag_selectByType_TT_T);
-			createParameter(op_Bag_selectByType, "type", tp_Bag_selectByType_TT, true).setIsTypeof(true);
+			createParameter(op_Bag_selectByType, "type", _Bag_selectByType_TT, true).setIsTypeof(true);
 			op_Collection_asBag.setType(_Bag_Collection_T_T);
 			op_Collection_intersection.setType(_Bag_Collection_T_T);
 			createParameter(op_Collection_intersection, "c", _Collection_Collection_T_T, true);
@@ -3554,114 +2734,45 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots8() {
-			_OrderedSet_Collection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Collection_T, true, 0, -1);
-			_OrderedSet_OrderedSet_flatten_T2_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_flatten_T2, true, 0, -1);
-			_OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
-			_OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
-			_OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, true, 0, -1);
-			_OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Sequence_T, true, 0, -1);
-			_OrderedSet_Set_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Set_T, true, 0, -1);
-			_OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T, true, 0, -1);
-			_Sequence_Integer_T = getCollectionType(_Sequence_Sequence_T, _Integer, true, 0, -1);
-			_Sequence_String_T = getCollectionType(_Sequence_Sequence_T, _String, true, 0, -1);
-			_Sequence_Bag_T_T = getCollectionType(_Sequence_Sequence_T, tp_Bag_T, true, 0, -1);
-			_Sequence_Collection_T_T = getCollectionType(_Sequence_Sequence_T, tp_Collection_T, true, 0, -1);
-			_Sequence_OrderedSet_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collectNested_V, true, 0, -1);
-			_Sequence_OrderedSet_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_OrderedSet_collect_V, true, 0, -1);
-			_Sequence_Sequence_collectNested_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collectNested_V, true, 0, -1);
-			_Sequence_Sequence_collect_V_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_collect_V, true, 0, -1);
-			_Sequence_Sequence_flatten_T2_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_flatten_T2, true, 0, -1);
-			_Sequence_Sequence_selectByKind_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByKind_TT, true, 0, -1);
-			_Sequence_Sequence_selectByType_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByType_TT, true, 0, -1);
-			_Sequence_Sequence_T_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_T, true, 0, -1);
-			_Set_Tuple_T = getCollectionType(_Set_Set_T, _Tuple, true, 0, -1);
-			_Set_Bag_T_T = getCollectionType(_Set_Set_T, tp_Bag_T, true, 0, -1);
-			_Set_Collection_T_T = getCollectionType(_Set_Set_T, tp_Collection_T, true, 0, -1);
-			_Set_Map_K_T = getCollectionType(_Set_Set_T, tp_Map_K, true, 0, -1);
-			_Set_OclElement_T = getCollectionType(_Set_Set_T, _OclElement, true, 0, -1);
-			_Set_OclSelf_T = getCollectionType(_Set_Set_T, _OclSelf, true, 0, -1);
-			_Set_OclSelf_F = getCollectionType(_Set_Set_T, _OclSelf, false, 0, -1);
-			_Set_Set_flatten_T2_T = getCollectionType(_Set_Set_T, tp_Set_flatten_T2, true, 0, -1);
-			_Set_Set_selectByKind_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByKind_TT, true, 0, -1);
-			_Set_Set_selectByType_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByType_TT, true, 0, -1);
-			_Set_Set_T_T = getCollectionType(_Set_Set_T, tp_Set_T, true, 0, -1);
-			_Set_UniqueCollection_T_T = getCollectionType(_Set_Set_T, tp_UniqueCollection_T, true, 0, -1);
-			// define FRAGMENT_OPERATIONS Model
-			// define PROPERTIES Class
-			// define PROPERTIES Class
-			// define PROPERTIES InvalidType
+			_OrderedSet_Collection_T_T = getCollectionType(_OrderedSet, _Collection_T, true, 0, -1);
+			_OrderedSet_OrderedSet_flatten_T2_T = getCollectionType(_OrderedSet, _OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet, _OrderedSet_selectByType_TT, true, 0, -1);
+			_OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet, _OrderedSet_T, true, 0, -1);
+			_OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet, _Sequence_T, true, 0, -1);
+			_OrderedSet_Set_T_T = getCollectionType(_OrderedSet, _Set_T, true, 0, -1);
+			_OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet, _UniqueCollection_T, true, 0, -1);
+			_Sequence_Integer_T = getCollectionType(_Sequence, _Integer, true, 0, -1);
+			_Sequence_String_T = getCollectionType(_Sequence, _String, true, 0, -1);
+			_Sequence_Bag_T_T = getCollectionType(_Sequence, _Bag_T, true, 0, -1);
+			_Sequence_Collection_T_T = getCollectionType(_Sequence, _Collection_T, true, 0, -1);
+			_Sequence_OrderedSet_collectNested_V_T = getCollectionType(_Sequence, _OrderedSet_collectNested_V, true, 0, -1);
+			_Sequence_OrderedSet_collect_V_T = getCollectionType(_Sequence, _OrderedSet_collect_V, true, 0, -1);
+			_Sequence_Sequence_collectNested_V_T = getCollectionType(_Sequence, _Sequence_collectNested_V, true, 0, -1);
+			_Sequence_Sequence_collect_V_T = getCollectionType(_Sequence, _Sequence_collect_V, true, 0, -1);
+			_Sequence_Sequence_flatten_T2_T = getCollectionType(_Sequence, _Sequence_flatten_T2, true, 0, -1);
+			_Sequence_Sequence_selectByKind_TT_T = getCollectionType(_Sequence, _Sequence_selectByKind_TT, true, 0, -1);
+			_Sequence_Sequence_selectByType_TT_T = getCollectionType(_Sequence, _Sequence_selectByType_TT, true, 0, -1);
+			_Sequence_Sequence_T_T = getCollectionType(_Sequence, _Sequence_T, true, 0, -1);
+			_Set_Tuple_T = getCollectionType(_Set, _Tuple, true, 0, -1);
+			_Set_Bag_T_T = getCollectionType(_Set, _Bag_T, true, 0, -1);
+			_Set_Collection_T_T = getCollectionType(_Set, _Collection_T, true, 0, -1);
+			_Set_Map_K_T = getCollectionType(_Set, _Map_K, true, 0, -1);
+			_Set_OclElement_T = getCollectionType(_Set, _OclElement, true, 0, -1);
+			_Set_OclSelf_T = getCollectionType(_Set, _OclSelf, true, 0, -1);
+			_Set_OclSelf_F = getCollectionType(_Set, _OclSelf, false, 0, -1);
+			_Set_Set_flatten_T2_T = getCollectionType(_Set, _Set_flatten_T2, true, 0, -1);
+			_Set_Set_selectByKind_TT_T = getCollectionType(_Set, _Set_selectByKind_TT, true, 0, -1);
+			_Set_Set_selectByType_TT_T = getCollectionType(_Set, _Set_selectByType_TT, true, 0, -1);
+			_Set_Set_T_T = getCollectionType(_Set, _Set_T, true, 0, -1);
+			_Set_UniqueCollection_T_T = getCollectionType(_Set, _UniqueCollection_T, true, 0, -1);
 		}
 
 		private void installSlots9a() {
-			// define CTOR Property
-			_Lambda_Bag_T_Set = getLambdaType(_OclLambda, tp_Bag_T, _Set_Bag_T_T);
-			_Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T_T);
-			_Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, tp_Sequence_T, _OrderedSet_Sequence_T_T);
-			_Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T_T);
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS OrderedSetType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SequenceType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define OPERATIONS SetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES OrderedSetType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SequenceType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
-			// define PROPERTIES SetType
+			_Lambda_Bag_T_Set = getLambdaType(_OclLambda, _Bag_T, _Set_Bag_T_T);
+			_Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, _OrderedSet_T, _OrderedSet_OrderedSet_T_T);
+			_Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, _Sequence_T, _OrderedSet_Sequence_T_T);
+			_Lambda_Set_T_Set = getLambdaType(_OclLambda, _Set_T, _Set_Set_T_T);
 			checkSuperClass(_OrderedSet_Collection_T_T, _OrderedCollection_Collection_T_T);
 			checkSuperClass(_OrderedSet_Collection_T_T, _UniqueCollection_Collection_T_T);
 			checkSuperClass(_OrderedSet_OrderedSet_flatten_T2_T, _OrderedCollection_OrderedSet_flatten_T2_T);
@@ -3706,52 +2817,52 @@ public class OCLstdlib extends ASResourceImpl
 		private void installSlots9b() {
 			checkSuperClass(_Set_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
 			it_Bag_sortedBy.setType(_Sequence_Bag_T_T);
-			createIterator(it_Bag_sortedBy, "i", tp_Bag_T, false);
+			createIterator(it_Bag_sortedBy, "i", _Bag_T, false);
 			createParameter(it_Bag_sortedBy, "lambda", _Lambda_Bag_T_OclAny, false);
 			it_Collection_sortedBy.setType(_Sequence_Collection_T_T);
-			createIterator(it_Collection_sortedBy, "i", tp_Collection_T, false);
+			createIterator(it_Collection_sortedBy, "i", _Collection_T, false);
 			createParameter(it_Collection_sortedBy, "lambda", _Lambda_Collection_T_OclAny, false);
 			it_OrderedSet_collectNested.setType(_Sequence_OrderedSet_collectNested_V_T);
-			createIterator(it_OrderedSet_collectNested, "i", tp_OrderedSet_T, false);
+			createIterator(it_OrderedSet_collectNested, "i", _OrderedSet_T, false);
 			createParameter(it_OrderedSet_collectNested, "lambda", _Lambda_OrderedSet_T_OrderedSet_collectNested_V, false);
 			it_OrderedSet_collect.setType(_Sequence_OrderedSet_collect_V_T);
-			createIterator(it_OrderedSet_collect, "i", tp_OrderedSet_T, false);
+			createIterator(it_OrderedSet_collect, "i", _OrderedSet_T, false);
 			createParameter(it_OrderedSet_collect, "lambda", _Lambda_OrderedSet_T_OrderedSet_collect_V, false);
 			it_OrderedSet_reject.setType(_OrderedSet_OrderedSet_T_T);
-			createIterator(it_OrderedSet_reject, "i", tp_OrderedSet_T, false);
+			createIterator(it_OrderedSet_reject, "i", _OrderedSet_T, false);
 			createParameter(it_OrderedSet_reject, "lambda", _Lambda_OrderedSet_T_Boolean, true);
 			it_OrderedSet_select.setType(_OrderedSet_OrderedSet_T_T);
-			createIterator(it_OrderedSet_select, "i", tp_OrderedSet_T, false);
+			createIterator(it_OrderedSet_select, "i", _OrderedSet_T, false);
 			createParameter(it_OrderedSet_select, "lambda", _Lambda_OrderedSet_T_Boolean, true);
 			it_OrderedSet_sortedBy.setType(_OrderedSet_OrderedSet_T_T);
-			createIterator(it_OrderedSet_sortedBy, "i", tp_OrderedSet_T, false);
+			createIterator(it_OrderedSet_sortedBy, "i", _OrderedSet_T, false);
 			createParameter(it_OrderedSet_sortedBy, "lambda", _Lambda_OrderedSet_T_OclAny, false);
 			it_Sequence_collectNested.setType(_Sequence_Sequence_collectNested_V_T);
-			createIterator(it_Sequence_collectNested, "i", tp_Sequence_T, false);
+			createIterator(it_Sequence_collectNested, "i", _Sequence_T, false);
 			createParameter(it_Sequence_collectNested, "lambda", _Lambda_Sequence_T_Sequence_collectNested_V, false);
 			it_Sequence_collect.setType(_Sequence_Sequence_collect_V_T);
-			createIterator(it_Sequence_collect, "i", tp_Sequence_T, false);
+			createIterator(it_Sequence_collect, "i", _Sequence_T, false);
 			createParameter(it_Sequence_collect, "lambda", _Lambda_Sequence_T_Sequence_collect_V, false);
 			it_Sequence_reject.setType(_Sequence_Sequence_T_T);
-			createIterator(it_Sequence_reject, "i", tp_Sequence_T, false);
+			createIterator(it_Sequence_reject, "i", _Sequence_T, false);
 			createParameter(it_Sequence_reject, "lambda", _Lambda_Sequence_T_Boolean, true);
 			it_Sequence_select.setType(_Sequence_Sequence_T_T);
-			createIterator(it_Sequence_select, "i", tp_Sequence_T, false);
+			createIterator(it_Sequence_select, "i", _Sequence_T, false);
 			createParameter(it_Sequence_select, "lambda", _Lambda_Sequence_T_Boolean, true);
 			it_Sequence_sortedBy.setType(_Sequence_Sequence_T_T);
-			createIterator(it_Sequence_sortedBy, "i", tp_Sequence_T, false);
+			createIterator(it_Sequence_sortedBy, "i", _Sequence_T, false);
 			createParameter(it_Sequence_sortedBy, "lambda", _Lambda_Sequence_T_OclAny, false);
 			it_Set_reject.setType(_Set_Set_T_T);
-			createIterator(it_Set_reject, "i", tp_Set_T, false);
+			createIterator(it_Set_reject, "i", _Set_T, false);
 			createParameter(it_Set_reject, "lambda", _Lambda_Set_T_Boolean, true);
 			it_Set_select.setType(_Set_Set_T_T);
-			createIterator(it_Set_select, "i", tp_Set_T, false);
+			createIterator(it_Set_select, "i", _Set_T, false);
 			createParameter(it_Set_select, "lambda", _Lambda_Set_T_Boolean, true);
 			it_Set_sortedBy.setType(_OrderedSet_Set_T_T);
-			createIterator(it_Set_sortedBy, "i", tp_Set_T, false);
+			createIterator(it_Set_sortedBy, "i", _Set_T, false);
 			createParameter(it_Set_sortedBy, "lambda", _Lambda_Set_T_OclAny, false);
 			it_UniqueCollection_sortedBy.setType(_OrderedSet_UniqueCollection_T_T);
-			createIterator(it_UniqueCollection_sortedBy, "i", tp_UniqueCollection_T, false);
+			createIterator(it_UniqueCollection_sortedBy, "i", _UniqueCollection_T, false);
 			createParameter(it_UniqueCollection_sortedBy, "lambda", _Lambda_UniqueCollection_T_OclAny, false);
 			op_Boolean_allInstances.setType(_Set_OclSelf_T);
 			createParameter(op_Boolean_allInstances, "dummy", _Integer, true);
@@ -3798,61 +2909,61 @@ public class OCLstdlib extends ASResourceImpl
 			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
 			createParameter(op_OrderedSet__neg_, "s", _UniqueCollection_OclAny_T, true);
 			op_OrderedSet_append.setType(_OrderedSet_OrderedSet_T_T);
-			createParameter(op_OrderedSet_append, "object", tp_OrderedSet_T, false);
+			createParameter(op_OrderedSet_append, "object", _OrderedSet_T, false);
 			op_OrderedSet_appendAll.setType(_OrderedSet_OrderedSet_T_T);
 			createParameter(op_OrderedSet_appendAll, "objects", _OrderedCollection_OrderedSet_T_T, true);
 			op_OrderedSet_excluding.setType(_OrderedSet_OrderedSet_T_T);
-			createParameter(op_OrderedSet_excluding, "object", tp_OrderedSet_T, false);
+			createParameter(op_OrderedSet_excluding, "object", _OrderedSet_T, false);
 			op_OrderedSet_excludingAll.setType(_OrderedSet_OrderedSet_T_T);
 			createParameter(op_OrderedSet_excludingAll, "objects", _Collection_OrderedSet_T_T, true);
 			op_OrderedSet_flatten.setType(_OrderedSet_OrderedSet_flatten_T2_T);
 			op_OrderedSet_including.setType(_OrderedSet_OrderedSet_T_T);
-			createParameter(op_OrderedSet_including, "object", tp_OrderedSet_T, false);
+			createParameter(op_OrderedSet_including, "object", _OrderedSet_T, false);
 			op_OrderedSet_includingAll.setType(_OrderedSet_OrderedSet_T_T);
 			createParameter(op_OrderedSet_includingAll, "objects", _Collection_OrderedSet_T_T, true);
 			op_OrderedSet_insertAt.setType(_OrderedSet_OrderedSet_T_T);
 			op_OrderedSet_insertAt.setIsInvalidating(true);
 			createParameter(op_OrderedSet_insertAt, "index", _Integer, true);
-			createParameter(op_OrderedSet_insertAt, "object", tp_OrderedSet_T, false);
+			createParameter(op_OrderedSet_insertAt, "object", _OrderedSet_T, false);
 			op_OrderedSet_prepend.setType(_OrderedSet_OrderedSet_T_T);
-			createParameter(op_OrderedSet_prepend, "object", tp_OrderedSet_T, false);
+			createParameter(op_OrderedSet_prepend, "object", _OrderedSet_T, false);
 			op_OrderedSet_prependAll.setType(_OrderedSet_OrderedSet_T_T);
 			createParameter(op_OrderedSet_prependAll, "objects", _OrderedCollection_OrderedSet_T_T, true);
 			op_OrderedSet_reverse.setType(_OrderedSet_OrderedSet_T_T);
 			op_OrderedSet_selectByKind.setType(_OrderedSet_OrderedSet_selectByKind_TT_T);
-			createParameter(op_OrderedSet_selectByKind, "type", tp_OrderedSet_selectByKind_TT, true).setIsTypeof(true);
+			createParameter(op_OrderedSet_selectByKind, "type", _OrderedSet_selectByKind_TT, true).setIsTypeof(true);
 			op_OrderedSet_selectByType.setType(_OrderedSet_OrderedSet_selectByType_TT_T);
-			createParameter(op_OrderedSet_selectByType, "type", tp_OrderedSet_selectByType_TT, true).setIsTypeof(true);
+			createParameter(op_OrderedSet_selectByType, "type", _OrderedSet_selectByType_TT, true).setIsTypeof(true);
 			op_OrderedSet_subOrderedSet.setType(_OrderedSet_OrderedSet_T_T);
 			op_OrderedSet_subOrderedSet.setIsInvalidating(true);
 			createParameter(op_OrderedSet_subOrderedSet, "lower", _Integer, true);
 			createParameter(op_OrderedSet_subOrderedSet, "upper", _Integer, true);
 			op_Sequence_append.setType(_Sequence_Sequence_T_T);
-			createParameter(op_Sequence_append, "object", tp_Sequence_T, false);
+			createParameter(op_Sequence_append, "object", _Sequence_T, false);
 			op_Sequence_appendAll.setType(_Sequence_Sequence_T_T);
 			createParameter(op_Sequence_appendAll, "objects", _OrderedCollection_Sequence_T_T, true);
 			op_Sequence_excluding.setType(_Sequence_Sequence_T_T);
-			createParameter(op_Sequence_excluding, "object", tp_Sequence_T, false);
+			createParameter(op_Sequence_excluding, "object", _Sequence_T, false);
 			op_Sequence_excludingAll.setType(_Sequence_Sequence_T_T);
 			createParameter(op_Sequence_excludingAll, "objects", _Collection_Sequence_T_T, true);
 			op_Sequence_flatten.setType(_Sequence_Sequence_flatten_T2_T);
 			op_Sequence_including.setType(_Sequence_Sequence_T_T);
-			createParameter(op_Sequence_including, "object", tp_Sequence_T, false);
+			createParameter(op_Sequence_including, "object", _Sequence_T, false);
 			op_Sequence_includingAll.setType(_Sequence_Sequence_T_T);
 			createParameter(op_Sequence_includingAll, "objects", _Collection_Sequence_T_T, true);
 			op_Sequence_insertAt.setType(_Sequence_Sequence_T_T);
 			op_Sequence_insertAt.setIsInvalidating(true);
 			createParameter(op_Sequence_insertAt, "index", _Integer, true);
-			createParameter(op_Sequence_insertAt, "object", tp_Sequence_T, false);
+			createParameter(op_Sequence_insertAt, "object", _Sequence_T, false);
 			op_Sequence_prepend.setType(_Sequence_Sequence_T_T);
-			createParameter(op_Sequence_prepend, "object", tp_Sequence_T, false);
+			createParameter(op_Sequence_prepend, "object", _Sequence_T, false);
 			op_Sequence_prependAll.setType(_Sequence_Sequence_T_T);
 			createParameter(op_Sequence_prependAll, "objects", _OrderedCollection_Sequence_T_T, true);
 			op_Sequence_reverse.setType(_Sequence_Sequence_T_T);
 			op_Sequence_selectByKind.setType(_Sequence_Sequence_selectByKind_TT_T);
-			createParameter(op_Sequence_selectByKind, "type", tp_Sequence_selectByKind_TT, true).setIsTypeof(true);
+			createParameter(op_Sequence_selectByKind, "type", _Sequence_selectByKind_TT, true).setIsTypeof(true);
 			op_Sequence_selectByType.setType(_Sequence_Sequence_selectByType_TT_T);
-			createParameter(op_Sequence_selectByType, "type", tp_Sequence_selectByType_TT, true).setIsTypeof(true);
+			createParameter(op_Sequence_selectByType, "type", _Sequence_selectByType_TT, true).setIsTypeof(true);
 			op_Sequence_subSequence.setType(_Sequence_Sequence_T_T);
 			op_Sequence_subSequence.setIsInvalidating(true);
 			createParameter(op_Sequence_subSequence, "lower", _Integer, true);
@@ -3861,18 +2972,18 @@ public class OCLstdlib extends ASResourceImpl
 			op_Set__neg_.setPrecedence(prec_ADDITIVE);
 			createParameter(op_Set__neg_, "s", _UniqueCollection_OclAny_T, true);
 			op_Set_excluding.setType(_Set_Set_T_T);
-			createParameter(op_Set_excluding, "object", tp_Set_T, false);
+			createParameter(op_Set_excluding, "object", _Set_T, false);
 			op_Set_excludingAll.setType(_Set_Set_T_T);
 			createParameter(op_Set_excludingAll, "objects", _Collection_Set_T_T, true);
 			op_Set_flatten.setType(_Set_Set_flatten_T2_T);
 			op_Set_including.setType(_Set_Set_T_T);
-			createParameter(op_Set_including, "object", tp_Set_T, false);
+			createParameter(op_Set_including, "object", _Set_T, false);
 			op_Set_includingAll.setType(_Set_Set_T_T);
 			createParameter(op_Set_includingAll, "objects", _Collection_Set_T_T, true);
 			op_Set_selectByKind.setType(_Set_Set_selectByKind_TT_T);
-			createParameter(op_Set_selectByKind, "type", tp_Set_selectByKind_TT, true).setIsTypeof(true);
+			createParameter(op_Set_selectByKind, "type", _Set_selectByKind_TT, true).setIsTypeof(true);
 			op_Set_selectByType.setType(_Set_Set_selectByType_TT_T);
-			createParameter(op_Set_selectByType, "type", tp_Set_selectByType_TT, true).setIsTypeof(true);
+			createParameter(op_Set_selectByType, "type", _Set_selectByType_TT, true).setIsTypeof(true);
 			op_Stereotype_allInstances.setType(_Set_OclSelf_T);
 			op_UniqueCollection_intersection.setType(_Set_UniqueCollection_T_T);
 			createParameter(op_UniqueCollection_intersection, "c", _Collection_UniqueCollection_T_T, true);
@@ -3884,39 +2995,28 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots10() {
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define OPERATIONS LambdaType
-			// define PROPERTIES Class
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
-			// define PROPERTIES LambdaType
 			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
 			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
 			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
 			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
 			it_Bag_closure.setType(_Set_Bag_T_T);
-			createIterator(it_Bag_closure, "i", tp_Bag_T, true);
+			createIterator(it_Bag_closure, "i", _Bag_T, true);
 			createParameter(it_Bag_closure, "lambda", _Lambda_Bag_T_Set, false);
 			it_OrderedSet_closure.setType(_OrderedSet_OrderedSet_T_T);
-			createIterator(it_OrderedSet_closure, "i", tp_OrderedSet_T, true);
+			createIterator(it_OrderedSet_closure, "i", _OrderedSet_T, true);
 			createParameter(it_OrderedSet_closure, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
 			it_Sequence_closure.setType(_OrderedSet_Sequence_T_T);
-			createIterator(it_Sequence_closure, "i", tp_Sequence_T, true);
+			createIterator(it_Sequence_closure, "i", _Sequence_T, true);
 			createParameter(it_Sequence_closure, "lambda", _Lambda_Sequence_T_OrderedSet, false);
 			it_Set_closure.setType(_Set_Set_T_T);
-			createIterator(it_Set_closure, "i", tp_Set_T, true);
+			createIterator(it_Set_closure, "i", _Set_T, true);
 			createParameter(it_Set_closure, "lambda", _Lambda_Set_T_Set, false);
 		}
 
 		private void installSlots11() {
-			// define FRAGMENT_PROPERTIES Model
 		}
 
 		private void installSlots12() {
-			// define ENUMERATION_LITERALS Model
 		}
 
 		private void installProperties() {
@@ -3935,8 +3035,8 @@ public class OCLstdlib extends ASResourceImpl
 			List<Property> ownedProperties;
 			Property property;
 
-			ownedProperties = _Collection_Collection_T.getOwnedProperties();
-			ownedProperties.add(property = createProperty("elementType", tp_Collection_T));
+			ownedProperties = _Collection.getOwnedProperties();
+			ownedProperties.add(property = createProperty("elementType", _Collection_T));
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
@@ -3973,13 +3073,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(property, "Evaluates to the upper bound on the number of collection elements.");
 
 			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
-			ownedProperties.add(property = createProperty("keyType", tp_Map_K));
+			ownedProperties.add(property = createProperty("keyType", _Map_K));
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			installComment(property, "The key type of the key-value pairs of oclText[self].\n\n@Deprecated Use regular MapType property");
-			ownedProperties.add(property = createProperty("valueType", tp_Map_V));
+			ownedProperties.add(property = createProperty("valueType", _Map_V));
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -300,6 +301,33 @@ public final class IdManager
 		org.eclipse.ocl.pivot.Package parentPackage = anEnumeration.getOwningPackage();
 		assert parentPackage != null;
 		return parentPackage.getPackageId().getEnumerationId(name);
+	}
+
+	public static @Nullable ElementId getElementId(EObject eObject) {
+		if (eObject instanceof Type) {
+			return ((Type)eObject).getTypeId();
+		}
+		if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+			return ((org.eclipse.ocl.pivot.Package)eObject).getPackageId();
+		}
+		if (eObject instanceof Operation) {
+			return ((Operation)eObject).getOperationId();
+		}
+		if (eObject instanceof Property) {
+			if (eObject.eContainer() instanceof TupleType) {
+				return ((TupleType)eObject.eContainer()).getTupleTypeId().getPartId((PivotUtil.getName((Property)eObject)));
+			}
+			else {
+				return ((Property)eObject).getPropertyId();
+			}
+		}
+		if (eObject instanceof TemplateParameter) {
+			return ((TemplateParameter)eObject).getTemplateParameterId();
+		}
+		if (eObject instanceof EnumerationLiteral) {
+			return ((EnumerationLiteral)eObject).getEnumerationLiteralId();
+		}
+		return null;
 	}
 
 	/**
