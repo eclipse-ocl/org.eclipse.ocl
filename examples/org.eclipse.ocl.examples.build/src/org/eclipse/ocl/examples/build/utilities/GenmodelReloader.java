@@ -49,9 +49,11 @@ public class GenmodelReloader extends AbstractProjectComponent
 {
 	protected Logger log = Logger.getLogger(getClass());
 	//	protected String modelImporter = UMLImporter.class.getName();
-	protected String genModel;							// URI of the genmodel
-	protected String ecoreFile = null;					// Explicit file URI of the Ecore
+	protected String genModel;
+	protected String ecoreFile = null;
 	protected boolean showProgress = false;				// Set true to show genmodel new tasks
+	protected String outputGenModel = null;
+	protected String outputEcoreFile = null;
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -62,6 +64,9 @@ public class GenmodelReloader extends AbstractProjectComponent
 		//		if (modelImporter == null) {
 		//			issues.addError(this, "modelImporter class not specified.");
 		//		}
+		if ((outputGenModel == null) == (outputEcoreFile != null)) {
+			issues.addError(this, "both/neither outputGenModel/outputEcoreFile must be specified.");
+		}
 	}
 
 	public String getEcoreFile() {
@@ -155,6 +160,19 @@ public class GenmodelReloader extends AbstractProjectComponent
 			//			    URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 			//				ecoreResource.setURI(ecoreURI);		// change file:... to platform:...
 			//		    }
+			if ((outputGenModel != null) && (outputEcoreFile != null)) {
+				URI outputGenModelURI = URI.createPlatformResourceURI(outputGenModel, true);
+				URI ecoreFileURI = URI.createPlatformResourceURI(ecoreFile, true);
+				URI outputEcoreFileURI = URI.createPlatformResourceURI(outputEcoreFile, true);
+				for (Resource resource : resources) {
+					if (resource.getURI().equals(genModelURI)) {
+						resource.setURI(outputGenModelURI);
+					}
+					else if (resource.getURI().equals(ecoreFileURI)) {
+						resource.setURI(outputEcoreFileURI);
+					}
+				}
+			}
 			Map<Object, Object> genModelSaveOptions = getGenModelSaveOptions();
 			for (Resource resource : resources) {
 				XMIUtil.retainLineWidth(genModelSaveOptions, resource);
@@ -169,12 +187,33 @@ public class GenmodelReloader extends AbstractProjectComponent
 		}
 	}
 
+	/**
+	 * 	Optional workspace-relative path to the loaded ecore. If specified new-lines in documentation EAnnotation are normalized.
+	 */
 	public void setEcoreFile(String ecoreFile) {
 		this.ecoreFile = ecoreFile;
 	}
 
+	/**
+	 * 	workspace-relative path to the loaded genmodel
+	 */
 	public void setGenModel(String genModel) {
 		this.genModel = genModel;
+	}
+
+	/**
+	 * 	Optional workspace-relative path to the saved reloaded ecore.
+	 */
+	public void setOutputEcoreFile(String outputEcoreFile) {
+		this.outputEcoreFile = outputEcoreFile;
+	}
+
+	/**
+	 * 	Optional workspace-relative path to the saved reloaded genmodel. If omitted the reloaded gen model is saved
+	 * to the ionput genmodel.
+	 */
+	public void setOutputGenModel(String outputGenModel) {
+		this.outputGenModel = outputGenModel;
 	}
 
 	//	public void setModelImporter(String modelImporter) {

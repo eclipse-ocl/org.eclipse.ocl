@@ -256,23 +256,25 @@ Workflow {
     	projectName = "${internalProjectName}"
     	genModel = "/${internalProjectName}/model/Pivot.genmodel"
     	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
-    }
+    	outputGenModel = "/${internalProjectName}/model-gen/Pivot.genmodel"
+  	 	outputEcoreFile = "/${internalProjectName}/model-gen/Pivot.ecore"
+     }
     
     component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true
 //    	projectName = "${internalProjectName}"
-    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	genModel = "/${internalProjectName}/model-gen/Pivot.genmodel"
 //    	clearResourceSet = false
 //    	modelSlot = "${ecoreSlot}"
     }
 
     component = GenerateASVisitors { resourceSet = pivotGenerateResourceSet
     	projectName = "${internalProjectName}"
-    	genModelFile = "model/Pivot.genmodel"
+    	genModelFile = "model-gen/Pivot.genmodel"
     }
     
     component = GenerateOCLmetamodelXtend { resourceSet = pivotGenerateResourceSet
     	projectName = "${internalProjectName}"
-    	modelFile = "model/Pivot.ecore"
+    	modelFile = "model-gen/Pivot.ecore"
     	uri = "http://www.eclipse.org/ocl/2015/Pivot"
     	javaFolder = "emf-gen"
     	javaPackageName = "${pivotProjectName}.model"
