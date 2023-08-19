@@ -9,7 +9,7 @@
  *   E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: /org.eclipse.ocl.pivot/model/Pivot.ecore
+ * from: /org.eclipse.ocl.pivot/model-gen/Pivot.ecore
  * by: org.eclipse.ocl.examples.build.xtend.GenerateOCLmetamodel.xtend
  * and: org.eclipse.ocl.examples.build.GeneratePivotMetamodel.mwe2
  *
@@ -60,7 +60,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
- * auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore.
+ * auto-generated from /org.eclipse.ocl.pivot/model-gen/Pivot.ecore.
  * It facilitates efficient model loading without the overheads of model reading.
  */
 @SuppressWarnings("unused")
@@ -88,7 +88,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Resource using the default OCL Standard Library.
-	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
+	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model-gen/Pivot.ecore
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
@@ -105,7 +105,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Model using the default OCL Standard Library.
-	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
+	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model-gen/Pivot.ecore
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull Model getDefaultModel() {
@@ -116,7 +116,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Package using the default OCL Standard Library.
-	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
+	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model-gen/Pivot.ecore
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull Package getDefaultPackage() {

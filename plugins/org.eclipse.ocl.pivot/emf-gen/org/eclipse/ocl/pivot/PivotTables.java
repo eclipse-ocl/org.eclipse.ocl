@@ -11,10 +11,10 @@
  * This code is 100% auto-generated
  * from:
  *   http://www.eclipse.org/ocl/2015/Library
- *   /org.eclipse.ocl.pivot/model/Pivot.ecore
+ *   /org.eclipse.ocl.pivot/model-gen/Pivot.ecore
  *   http://www.eclipse.org/ocl/2015/Library
  * using:
- *   /org.eclipse.ocl.pivot/model/Pivot.genmodel
+ *   /org.eclipse.ocl.pivot/model-gen/Pivot.genmodel
  *   org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables
  *
  * Do not edit it.
@@ -319,7 +319,7 @@ public class PivotTables extends AbstractTables
 
 
 	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
-	// CTOR platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore
+	// CTOR platform:/resource/org.eclipse.ocl.pivot/model-gen/Pivot.ecore
 	// EXTERNAL OclAny
 	// EXTERNAL OclElement
 	// EXTERNAL OclEnumeration
