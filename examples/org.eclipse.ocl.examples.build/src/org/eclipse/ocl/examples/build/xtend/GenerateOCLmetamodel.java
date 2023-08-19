@@ -215,7 +215,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 				fw.append(metamodel);
 			}
 			fw.close();
-			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("ecore", "oclas");
+			String saveFile = "/" + projectName + "/" + modelFile.replace("ecore", "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
 			//			log.info("Loading '" + saveURI + "'");
 			//			AS2XMIid as2id = AS2XMIid.load(saveURI);
