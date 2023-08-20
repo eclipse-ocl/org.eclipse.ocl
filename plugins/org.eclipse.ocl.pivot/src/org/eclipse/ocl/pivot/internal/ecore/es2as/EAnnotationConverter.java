@@ -71,8 +71,9 @@ public class EAnnotationConverter
 		// EMF
 		add(EcorePackage.eNS_URI, EcoreEAnnotationConverter.INSTANCE);
 	//	add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI, EMOFExtendedMetaDataEAnnotationConverter.INSTANCE);
-		add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0 + "#" + OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY, EMOFExtendedMetaDataEAnnotationConverter.INSTANCE);
-		add(PivotConstants.EXTENDED_META_DATA_ANNOTATION_SOURCE, ExtendedMetaDataEAnnotationConverter.INSTANCE);
+		add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0 , EMOFExtendedMetaDataEAnnotationConverter.INSTANCE);
+		add(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0 + "#" + OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY, EMOFExtendedMetaData2EAnnotationConverter.INSTANCE);
+			add(PivotConstants.EXTENDED_META_DATA_ANNOTATION_SOURCE, ExtendedMetaDataEAnnotationConverter.INSTANCE);
 		add(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, GenModelEAnnotationConverter.INSTANCE);
 	//	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
 	//	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
@@ -85,6 +86,7 @@ public class EAnnotationConverter
 		add(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
 		add(PivotConstantsInternal.UNION_ANNOTATION_SOURCE, UnionEAnnotationConverter.INSTANCE);
 		// OCL
+		add(OCLConstants.OCL_DELEGATE_URI, DelegateURIEAnnotationConverter.INSTANCE);
 		add(OCLConstants.OCL_DELEGATE_URI_DEBUG, DelegateURIEAnnotationConverter.INSTANCE);
 		add(OCLConstants.OCL_DELEGATE_URI_LPG, DelegateURIEAnnotationConverter.INSTANCE);
 		add(OCLConstants.OCL_DELEGATE_URI_PIVOT, DelegateURIEAnnotationConverter.INSTANCE);
@@ -366,6 +368,24 @@ public class EAnnotationConverter
 	private static class EMOFExtendedMetaDataEAnnotationConverter extends EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new EMOFExtendedMetaDataEAnnotationConverter();
+
+		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet("Property.oppositeRoleName");
+
+		@Override
+		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
+			if (knownKeys.contains(key)) {
+				// suppress redundant annotation - key+value supported by an AS Property
+			}
+			else {
+				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
+			}
+			return asAnnotation;
+		}
+	}
+
+	private static class EMOFExtendedMetaData2EAnnotationConverter extends EAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new EMOFExtendedMetaData2EAnnotationConverter();
 
 		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet(OppositePropertyDetails.BODY_KEY, OppositePropertyDetails.LOWER_KEY, OppositePropertyDetails.ORDERED_KEY, OppositePropertyDetails.UNIQUE_KEY, OppositePropertyDetails.UPPER_KEY);
 

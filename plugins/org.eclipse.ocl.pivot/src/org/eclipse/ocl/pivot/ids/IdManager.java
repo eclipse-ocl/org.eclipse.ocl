@@ -247,7 +247,7 @@ public final class IdManager
 			return bindingsId != null ? (ClassId)unspecializedClassId.getSpecializedId(bindingsId) : unspecializedClassId;
 		}
 		else {
-			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
+			return getUnspecifiedTypeId(aType);		// FIXME This occurs for an ElementExtension in StereotypesTest.test_uml_enums_412685
 		}
 	}
 
@@ -734,9 +734,9 @@ public final class IdManager
 	 * Return the typeId for aType.
 	 */
 	@Deprecated
-	public static @NonNull UnspecifiedIdImpl getUnspecifiedTypeId(@NonNull Type aType) {
+	public static @NonNull UnspecifiedIdImpl getUnspecifiedTypeId(@NonNull Type aType) {	// FIXME see Bug 582312
 		UnspecifiedIdImpl newId = new UnspecifiedIdImpl(PRIVATE_INSTANCE, aType);
-			System.out.println("getUnspecifiedTypeId " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
+		System.out.println("getUnspecifiedTypeId " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
 		return newId;
 	}
 
