@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-@Deprecated
+@Deprecated			// FIXME see Bug 582312
 public class UnspecifiedIdImpl extends AbstractTypeId implements UnspecifiedId, ClassId, DataTypeId
 {
 	protected final @NonNull Type type;

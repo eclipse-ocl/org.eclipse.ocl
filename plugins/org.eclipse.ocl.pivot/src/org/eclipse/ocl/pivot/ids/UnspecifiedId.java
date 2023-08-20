@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * A UnspecifiedTypeId provides a unique identifier for an unspecified type such as an under-specified type.
  */
-@Deprecated
+@Deprecated	// FIXME see Bug 582312
 public interface UnspecifiedId extends TypeId
 {
 	@NonNull Object getSpecifier();
