@@ -383,7 +383,7 @@ public class FileNewWizardTest extends TestCase
 		s.append("			body: name?.toUpperCase();\n");
 		s.append("		}\n");
 		s.append("		attribute name : String[?];\n");
-		s.append("		property children#parent : Example[*] { ordered composes };\n");
+		s.append("		property children#parent : Example[*|1] { ordered composes };\n");
 		s.append("		property parent#children : Example[?];\n");
 		s.append("		invariant NameIsLowerCase('Expected a lowercase name rather than '' + name + '''):\n");
 		s.append("			name = name?.toLowerCase();\n");
