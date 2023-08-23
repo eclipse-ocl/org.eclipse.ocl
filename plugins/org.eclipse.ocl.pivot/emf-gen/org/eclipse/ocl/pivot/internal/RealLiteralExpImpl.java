@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +68,7 @@ public class RealLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number REAL_SYMBOL_EDEFAULT = null;
+	protected static final RealValue REAL_SYMBOL_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getRealSymbol() <em>Real Symbol</em>}' attribute.
@@ -77,7 +78,7 @@ public class RealLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected Number realSymbol = REAL_SYMBOL_EDEFAULT;
+	protected RealValue realSymbol = REAL_SYMBOL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -104,7 +105,7 @@ public class RealLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public Number getRealSymbol() {
+	public RealValue getRealSymbol() {
 		return realSymbol;
 	}
 
@@ -114,9 +115,9 @@ public class RealLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public void setRealSymbol(Number newRealSymbol)
+	public void setRealSymbol(RealValue newRealSymbol)
 	{
-		Number oldRealSymbol = realSymbol;
+		RealValue oldRealSymbol = realSymbol;
 		realSymbol = newRealSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldRealSymbol, realSymbol));
@@ -195,7 +196,7 @@ public class RealLiteralExpImpl
 				setTypeValue((Type)newValue);
 				return;
 			case 9:
-				setRealSymbol((Number)newValue);
+				setRealSymbol((RealValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);

@@ -185,7 +185,7 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String TYPED_ELEMENT_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-TypedElement";
 	/**
-	 * EReETypedElementference annotation identifying the OCL type such as String that was replaced by an Ecore type such as EString.
+	 * ETypedElement annotation identifying the OCL type such as String that was replaced by an Ecore type such as EString.
 	 */
 	public static final @NonNull String TYPED_ELEMENT_ORIGINAL_TYPE = "originalType";
 

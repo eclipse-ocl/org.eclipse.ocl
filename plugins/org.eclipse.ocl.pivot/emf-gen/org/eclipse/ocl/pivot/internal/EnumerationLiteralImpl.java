@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -100,7 +101,7 @@ implements EnumerationLiteral {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number VALUE_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	protected static final IntegerValue VALUE_EDEFAULT = (IntegerValue)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -109,7 +110,7 @@ implements EnumerationLiteral {
 	 * @generated
 	 * @ordered
 	 */
-	protected Number value = VALUE_EDEFAULT;
+	protected IntegerValue value = VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -208,7 +209,7 @@ implements EnumerationLiteral {
 	 * @generated
 	 */
 	@Override
-	public Number getValue()
+	public IntegerValue getValue()
 	{
 		return value;
 	}
@@ -219,9 +220,9 @@ implements EnumerationLiteral {
 	 * @generated
 	 */
 	@Override
-	public void setValue(Number newValue)
+	public void setValue(IntegerValue newValue)
 	{
-		Number oldValue = value;
+		IntegerValue oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldValue, value));
@@ -393,7 +394,7 @@ implements EnumerationLiteral {
 				setOwningEnumeration((Enumeration)newValue);
 				return;
 			case 11:
-				setValue((Number)newValue);
+				setValue((IntegerValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);

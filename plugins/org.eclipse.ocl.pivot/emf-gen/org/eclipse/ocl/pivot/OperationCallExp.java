@@ -110,7 +110,7 @@ extends FeatureCallExp, ReferringElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	boolean hasOclVoidOverload();
+	Boolean hasOclVoidOverload();
 
 	/**
 	 * <!-- begin-user-doc -->

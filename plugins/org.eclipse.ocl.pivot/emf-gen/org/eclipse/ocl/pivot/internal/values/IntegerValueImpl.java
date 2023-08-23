@@ -15,10 +15,10 @@ import java.math.BigDecimal;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -160,7 +160,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 	@Override
 	public @NonNull LiteralExp createLiteralExp() {
 		IntegerLiteralExp literalExp = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		literalExp.setIntegerSymbol(asNumber());
+		literalExp.setIntegerSymbol(this);
 		return literalExp;
 	}
 

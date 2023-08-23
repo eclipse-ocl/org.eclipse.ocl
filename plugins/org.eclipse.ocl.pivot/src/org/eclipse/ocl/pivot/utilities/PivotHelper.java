@@ -82,7 +82,10 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -123,12 +126,12 @@ public class PivotHelper
 	public @NonNull OCLExpression createCoercionCallExp(@NonNull OCLExpression asExpression, @NonNull Operation coercion) {
 		if (asExpression instanceof IntegerLiteralExp) {
 			IntegerLiteralExp asIntegerLiteralExp = (IntegerLiteralExp)asExpression;
-			Number integerSymbol = asIntegerLiteralExp.getIntegerSymbol();
-			if (integerSymbol.longValue() >= 0) {
+			IntegerValue integerSymbol = asIntegerLiteralExp.getIntegerSymbol();
+			if (integerSymbol.signum() >= 0) {
 				org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 				Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
 				if (coercion == asCoercion) {
-					return createUnlimitedNaturalLiteralExp(integerSymbol);
+					return createUnlimitedNaturalLiteralExp(integerSymbol.asUnlimitedNaturalValue());
 				}
 			}
 		}
@@ -203,7 +206,7 @@ public class PivotHelper
 		return asImport;
 	}
 
-	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {
+	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull IntegerValue integerSymbol) {
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
 		asInteger.setIntegerSymbol(integerSymbol);
 		asInteger.setType(standardLibrary.getIntegerType());
@@ -436,7 +439,7 @@ public class PivotHelper
 		return PivotUtil.createPropertyCallExp(asSource, asProperty);
 	}
 
-	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
+	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull RealValue realSymbol) {
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
 		asReal.setRealSymbol(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
@@ -507,7 +510,7 @@ public class PivotHelper
 		return asTypeExp;
 	}
 
-	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {
+	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalValue unlimitedNaturalSymbol) {
 		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
 		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
 		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());

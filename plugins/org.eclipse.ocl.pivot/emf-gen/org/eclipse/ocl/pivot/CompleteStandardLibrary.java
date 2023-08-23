@@ -75,5 +75,9 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	@NonNull CompleteStandardLibrary init(@NonNull CompleteModelInternal completeModel);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
+	/**
+	 * Define the behavioralClass of asDataType preferring and returning a partial class in the saem model as asDataType.
+	 */
+	@Nullable PrimitiveType setBehavioralClass(@NonNull DataType asDataType, @Nullable PrimitiveType behavioralClass);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 } // StandardLibrary

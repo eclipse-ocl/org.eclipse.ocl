@@ -5805,16 +5805,41 @@ extends EPackage
 	EEnum getTransitionKind();
 
 	/**
-	 * Returns the meta object for data type '<em>Boolean</em>'.
+	 * Returns the meta object for data type '{@link java.lang.Boolean <em>Boolean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Boolean is used for logical expressions, consisting of the predefined values true and false.
      * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
+	 * @see java.lang.Boolean
 	 * @generated
 	 */
 	EDataType getBoolean();
+
+	/**
+	 * Returns the meta object for data type '<em>EBoolean</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * EBoolean is used within the Pivot AS to support precisely non-null true/false values.
+     * <!-- end-model-doc -->
+	 * @return the meta object for data type '<em>EBoolean</em>'.
+	 * @generated
+	 */
+	EDataType getEBoolean();
+
+	/**
+	 * Returns the meta object for data type '<em>EInt</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * EInt is used within the Pivot AS to support precisely non-null small integer values.
+     * <!-- end-model-doc -->
+	 * @return the meta object for data type '<em>EInt</em>'.
+	 * @generated
+	 */
+	EDataType getEInt();
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.ecore.EObject <em>Ecore Object</em>}'.
@@ -5827,14 +5852,14 @@ extends EPackage
 	EDataType getEcoreObject();
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Integer is a primitive type representing integer values.
      * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
-	 * @see java.lang.Number
+	 * @see org.eclipse.ocl.pivot.values.IntegerValue
 	 * @generated
 	 */
 	EDataType getInteger();
@@ -5870,14 +5895,14 @@ extends EPackage
 	EDataType getObject();
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Real is a primitive type representing the mathematical concept of real.
      * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
-	 * @see java.lang.Number
+	 * @see org.eclipse.ocl.pivot.values.RealValue
 	 * @generated
 	 */
 	EDataType getReal();
@@ -5906,14 +5931,14 @@ extends EPackage
 	EDataType getThrowable();
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * UnlimitedNatural is a primitive type representing unlimited natural values.
      * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
-	 * @see java.lang.Number
+	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
 	 * @generated
 	 */
 	EDataType getUnlimitedNatural();
@@ -10588,10 +10613,29 @@ extends EPackage
 		 * The meta object literal for the '<em>Boolean</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see java.lang.Boolean
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getBoolean()
 		 * @generated
 		 */
 		EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '<em>EBoolean</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getEBoolean()
+		 * @generated
+		 */
+		EDataType EBOOLEAN = eINSTANCE.getEBoolean();
+
+		/**
+		 * The meta object literal for the '<em>EInt</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getEInt()
+		 * @generated
+		 */
+		EDataType EINT = eINSTANCE.getEInt();
 
 		/**
 		 * The meta object literal for the '<em>Ecore Object</em>' data type.
@@ -10607,7 +10651,7 @@ extends EPackage
 		 * The meta object literal for the '<em>Integer</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.lang.Number
+		 * @see org.eclipse.ocl.pivot.values.IntegerValue
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getInteger()
 		 * @generated
 		 */
@@ -10647,7 +10691,7 @@ extends EPackage
 		 * The meta object literal for the '<em>Real</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.lang.Number
+		 * @see org.eclipse.ocl.pivot.values.RealValue
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getReal()
 		 * @generated
 		 */
@@ -10677,7 +10721,7 @@ extends EPackage
 		 * The meta object literal for the '<em>Unlimited Natural</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.lang.Number
+		 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUnlimitedNatural()
 		 * @generated
 		 */

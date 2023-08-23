@@ -127,6 +127,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -464,7 +465,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		asProperty.setOpposite(oppositeProperty);
 	}
 
-	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {		// FIXME move to PivotHelper
+	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull IntegerValue integerSymbol) {		// FIXME move to PivotHelper
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
 		asInteger.setIntegerSymbol(integerSymbol);
 		asInteger.setType(standardLibrary.getIntegerType());
@@ -524,7 +525,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return precedenceManager;
 	}
 
-	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {		// FIXME move to PivotHelper
+	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull RealValue realSymbol) {		// FIXME move to PivotHelper
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
 		asReal.setRealSymbol(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
@@ -540,7 +541,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return asString;
 	}
 
-	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
+	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalValue unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
 		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
 		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
 		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());

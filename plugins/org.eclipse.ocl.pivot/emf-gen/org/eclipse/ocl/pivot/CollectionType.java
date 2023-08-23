@@ -97,11 +97,11 @@ public interface CollectionType extends IterableType {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Lower</em>' attribute.
-	 * @see #setLower(Number)
+	 * @see #setLower(IntegerValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCollectionType_Lower()
 	 * @generated
 	 */
-	Number getLower();
+	IntegerValue getLower();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CollectionType#getLower <em>Lower</em>}' attribute.
@@ -111,7 +111,7 @@ public interface CollectionType extends IterableType {
 	 * @see #getLower()
 	 * @generated
 	 */
-	void setLower(Number value);
+	void setLower(IntegerValue value);
 
 	/**
 	 * Returns the value of the '<em><b>Upper</b></em>' attribute.
@@ -123,11 +123,11 @@ public interface CollectionType extends IterableType {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Upper</em>' attribute.
-	 * @see #setUpper(Number)
+	 * @see #setUpper(UnlimitedNaturalValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCollectionType_Upper()
 	 * @generated
 	 */
-	Number getUpper();
+	UnlimitedNaturalValue getUpper();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CollectionType#getUpper <em>Upper</em>}' attribute.
@@ -137,10 +137,10 @@ public interface CollectionType extends IterableType {
 	 * @see #getUpper()
 	 * @generated
 	 */
-	void setUpper(Number value);
+	void setUpper(UnlimitedNaturalValue value);
 
-	void setLowerValue(@NonNull IntegerValue lower);
-	void setUpperValue(@NonNull UnlimitedNaturalValue upper);
+//	void setLowerValue(@NonNull IntegerValue lower);
+//	void setUpperValue(@NonNull UnlimitedNaturalValue upper);
 
 	org.eclipse.ocl.pivot.@NonNull Class getContainerType();
 	@NonNull IntegerValue getLowerValue();

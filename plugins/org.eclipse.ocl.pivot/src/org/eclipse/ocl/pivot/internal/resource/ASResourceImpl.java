@@ -45,10 +45,12 @@ import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -476,7 +478,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public int getXmiidVersion() {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {
-				Number xmiidVersion = ((Model)eRoot).getXmiidVersion();
+				Number xmiidVersion = (Number)((Model)eRoot).getXmiidVersion();
 				if (xmiidVersion != null) {
 					return xmiidVersion.intValue();
 				}
@@ -506,7 +508,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		int preIndex = string.lastIndexOf("\n", index);
 		int postIndex = string.indexOf("\n", index);
 		String refText = string.substring(preIndex, postIndex).trim();
-		System.err.println("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
+		NameUtil.errPrintln("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
 		// PivotLUSSIDs.isExternallyReferenceable determines what gets xmi:ids
 		return false;
 	}
@@ -600,7 +602,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public void setXmiidVersion(int xmiidVersion) {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {
-				((Model)eRoot).setXmiidVersion(xmiidVersion);
+				((Model)eRoot).setXmiidVersion(ValueUtil.integerValueOf(xmiidVersion));
 			}
 		}
 	}

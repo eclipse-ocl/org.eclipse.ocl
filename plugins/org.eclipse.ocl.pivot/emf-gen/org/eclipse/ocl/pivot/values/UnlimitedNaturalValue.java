@@ -40,6 +40,11 @@ public interface UnlimitedNaturalValue extends NumberValue {
 	/**
 	 * @generated NOT
 	 */
+	long longValue();
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull UnlimitedNaturalValue max(@NonNull UnlimitedNaturalValue right);
 
 	/**

@@ -174,7 +174,7 @@ inv TypeIsEnumerationType: self.type = referredLiteral?.owningEnumeration
 
 context IfExp
 /** The type of the condition of an if expression must be Boolean. */
-inv ConditionTypeIsBoolean: self.ownedCondition.type = Boolean
+inv ConditionTypeIsBoolean: let type = self.ownedCondition.type in (type <> null) and type.conformsTo(Boolean) and not type.conformsTo(OclVoid)
 
 /* The type of the if expression is the most common supertype of the else and then expressions. */
 --context IfExp
