@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,22 +67,21 @@ public interface Model extends Namespace
 	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Xmiid Version</em>' attribute.
-	 * @see #setXmiidVersion(Number)
+	 * @see #setXmiidVersion(IntegerValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getModel_XmiidVersion()
 	 * @generated
 	 */
-	Number getXmiidVersion();
+	IntegerValue getXmiidVersion();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Model#getXmiidVersion <em>Xmiid Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Xmiid Version</em>' attribute.
 	 * @see #getXmiidVersion()
 	 * @generated
 	 */
-	void setXmiidVersion(Number value);
+	void setXmiidVersion(IntegerValue value);
 
 	/**
 	 * Returns the value of the '<em><b>External URI</b></em>' attribute.

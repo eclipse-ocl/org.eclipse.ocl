@@ -295,8 +295,7 @@ public class FlowAnalysis
 				if (!(secondExpression instanceof IntegerLiteralExp)) {
 					return false;
 				}
-				if (((IntegerLiteralExp)firstExpression).getIntegerSymbol()
-						!= ((IntegerLiteralExp)secondExpression).getIntegerSymbol()) {
+				if (!((IntegerLiteralExp)firstExpression).getIntegerSymbol().equals(((IntegerLiteralExp)secondExpression).getIntegerSymbol())) {
 					return false;
 				}
 			}
@@ -466,8 +465,7 @@ public class FlowAnalysis
 				if (!(secondExpression instanceof RealLiteralExp)) {
 					return false;
 				}
-				if (((RealLiteralExp)firstExpression).getRealSymbol()
-						!= ((RealLiteralExp)secondExpression).getRealSymbol()) {
+				if (!((RealLiteralExp)firstExpression).getRealSymbol().equals(((RealLiteralExp)secondExpression).getRealSymbol())) {
 					return false;
 				}
 			}

@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -1225,7 +1226,7 @@ public class Ecore2AS extends AbstractExternal2AS
 								behavioralClass = null;
 							}
 							else {
-								((DataType)pivotElement).setBehavioralClass(behavioralClass);
+								behavioralClass = standardLibrary.setBehavioralClass(((DataType)pivotElement), (PrimitiveType) behavioralClass);
 								superClass = behavioralClass;
 							}
 						}

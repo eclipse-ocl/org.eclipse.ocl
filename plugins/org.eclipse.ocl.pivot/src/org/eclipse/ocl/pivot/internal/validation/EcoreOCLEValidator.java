@@ -44,6 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -998,6 +999,12 @@ public class EcoreOCLEValidator implements EValidator
 		}
 		boolean allOk = true;
 		if (requiredType != null) {
+			if (requiredType instanceof DataType) {
+				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)requiredType).getBehavioralClass();
+				if (behavioralClass != null) {
+					requiredType = behavioralClass;
+				}
+			}
 			Type asExpressionType = expressionInOCL.getType();
 			assert asExpressionType != null;
 			if (!environmentFactory.getStandardLibrary().conformsTo(asExpressionType, requiredType)) {

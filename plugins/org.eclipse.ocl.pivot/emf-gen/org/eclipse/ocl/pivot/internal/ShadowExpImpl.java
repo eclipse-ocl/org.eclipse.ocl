@@ -513,13 +513,15 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/*@Caught*/ @Nullable Object CAUGHT_or_0;
 							try {
 								final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
+								final /*@NonInvalid*/ @NonNull Boolean BOXED_isDerived = isDerived;
 								final /*@NonInvalid*/ @Nullable Boolean or;
-								if (isDerived) {
+								if (BOXED_isDerived) {
 									or = ValueUtil.TRUE_VALUE;
 								}
 								else {
 									final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
-									if (isImplicit) {
+									final /*@NonInvalid*/ @NonNull Boolean BOXED_isImplicit = isImplicit;
+									if (BOXED_isImplicit) {
 										or = ValueUtil.TRUE_VALUE;
 									}
 									else {
@@ -532,7 +534,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 								else {
 									final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
-									if (isStatic) {
+									final /*@NonInvalid*/ @NonNull Boolean BOXED_isStatic = isStatic;
+									if (BOXED_isStatic) {
 										or_0 = ValueUtil.TRUE_VALUE;
 									}
 									else {
@@ -555,7 +558,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							}
 							else {
 								final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
-								if (isTransient) {
+								final /*@NonInvalid*/ @NonNull Boolean BOXED_isTransient = isTransient;
+								if (BOXED_isTransient) {
 									or_1 = ValueUtil.TRUE_VALUE;
 								}
 								else {
@@ -646,18 +650,20 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * isVolatile or not isRequired
 							 */
 							final /*@NonInvalid*/ boolean isVolatile = _1_5.isIsVolatile();
+							final /*@NonInvalid*/ @NonNull Boolean BOXED_isVolatile = isVolatile;
 							final /*@Thrown*/ @Nullable Boolean or_2;
-							if (isVolatile) {
+							if (BOXED_isVolatile) {
 								or_2 = ValueUtil.TRUE_VALUE;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isRequired = _1_5.isIsRequired();
+								final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
 								final /*@NonInvalid*/ @Nullable Boolean not;
-								if (!isRequired) {
+								if (!BOXED_isRequired) {
 									not = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									if (isRequired) {
+									if (BOXED_isRequired) {
 										not = ValueUtil.FALSE_VALUE;
 									}
 									else {
@@ -731,7 +737,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										throw new InvalidValueException("Null source for \'Property::isComposite\'");
 									}
 									final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
-									CAUGHT_isComposite = isComposite;
+									final /*@Thrown*/ @NonNull Boolean BOXED_isComposite = isComposite;
+									CAUGHT_isComposite = BOXED_isComposite;
 								}
 								catch (Exception e) {
 									CAUGHT_isComposite = ValueUtil.createInvalidValue(e);

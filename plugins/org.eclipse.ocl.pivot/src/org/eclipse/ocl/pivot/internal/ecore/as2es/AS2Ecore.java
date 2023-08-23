@@ -90,6 +90,10 @@ public class AS2Ecore extends AbstractConversion
 	 * An InverseConversion is installed as an Ecore2AS converter following an AS2Ecore conversion so
 	 * that requests for Ecore2AS conversions are satisfied by inverting the AS2Ecore rather than by
 	 * performing an additional conflicting Ecore2AS conversion.
+	 * <br>
+	 * This functionality is convenient for some test cases, but fails to provide the full functionality
+	 * of Ecore2AS implied by some dodgy casts. Rather than improve the functionality, the real problem is
+	 * probably the inappropriate over-use of an OCL/EnvironmentFactory. Use distinct OCLs for each direction.
 	 *
 	 * @since 1.4
 	 */

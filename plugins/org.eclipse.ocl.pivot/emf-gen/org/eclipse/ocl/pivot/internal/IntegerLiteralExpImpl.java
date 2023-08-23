@@ -84,7 +84,7 @@ public class IntegerLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number INTEGER_SYMBOL_EDEFAULT = null;
+	protected static final IntegerValue INTEGER_SYMBOL_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getIntegerSymbol() <em>Integer Symbol</em>}' attribute.
@@ -94,7 +94,7 @@ public class IntegerLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected Number integerSymbol = INTEGER_SYMBOL_EDEFAULT;
+	protected IntegerValue integerSymbol = INTEGER_SYMBOL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -121,7 +121,7 @@ public class IntegerLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public Number getIntegerSymbol() {
+	public IntegerValue getIntegerSymbol() {
 		return integerSymbol;
 	}
 
@@ -131,9 +131,9 @@ public class IntegerLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public void setIntegerSymbol(Number newIntegerSymbol)
+	public void setIntegerSymbol(IntegerValue newIntegerSymbol)
 	{
-		Number oldIntegerSymbol = integerSymbol;
+		IntegerValue oldIntegerSymbol = integerSymbol;
 		integerSymbol = newIntegerSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIntegerSymbol, integerSymbol));
@@ -257,7 +257,7 @@ public class IntegerLiteralExpImpl
 				setTypeValue((Type)newValue);
 				return;
 			case 9:
-				setIntegerSymbol((Number)newValue);
+				setIntegerSymbol((IntegerValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);

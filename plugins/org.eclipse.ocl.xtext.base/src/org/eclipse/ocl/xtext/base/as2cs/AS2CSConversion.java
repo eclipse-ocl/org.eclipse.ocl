@@ -59,7 +59,9 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS.Factory;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -243,21 +245,22 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		documentCS.getOwnedImports().addAll(imports);
 	}
 
-	public @NonNull MultiplicityCS createMultiplicityCS(int lower, int upper, boolean isNullFree) {
+	public @NonNull MultiplicityCS createMultiplicityCS(@NonNull IntegerValue lowerValue, @NonNull UnlimitedNaturalValue upperValue, boolean isNullFree) {
 		String stringValue = null;
+		int lower = lowerValue.intValue();
 		if (lower == 0) {
-			if (upper == 1) {
-				stringValue = "?";
-			}
-			else if (upper == -1) {
+			if (upperValue.isUnlimited()) {
 				stringValue = "*";
+			}
+			else if (upperValue.intValue() == 1) {
+				stringValue = "?";
 			}
 			//			else if (upper == -2) {
 			//				stringValue = "0..?";
 			//			}
 		}
 		else if (lower == 1) {
-			if (upper == -1) {
+			if (upperValue.isUnlimited()) {
 				stringValue = "+";
 			}
 		}
@@ -272,8 +275,11 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (lower != 1) {
 				csMultiplicityBounds.setLowerBound(lower);
 			}
-			if (upper != lower) {
-				csMultiplicityBounds.setUpperBound(upper);
+			if (upperValue.isUnlimited()) {
+				csMultiplicityBounds.setUpperBound(-1);
+			}
+			else if (upperValue.intValue() != lower) {
+				csMultiplicityBounds.setUpperBound(upperValue.intValue());
 			}
 			csMultiplicity = csMultiplicityBounds;
 		}
@@ -667,12 +673,12 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		TypedRefCS csTypeRef = csElement.getOwnedType();
 		if (csTypeRef != null) {
 			boolean isNullFree ;
-			int lower;
-			int upper;
+			IntegerValue lower;
+			UnlimitedNaturalValue upper;
 			if (isEMap) {
 				isNullFree = true;
-				lower = object.isIsRequired() ? 1 : 0;
-				upper = -1;
+				lower = object.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
+				upper = ValueUtil.UNLIMITED_VALUE;
 				List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
 				//	refreshQualifiers(qualifiers, "composes", object.isIsComposite());
 				refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
@@ -681,17 +687,16 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			else if (isEList) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
-				lower = collectionType.getLower().intValue();
-				Number upper2 = collectionType.getUpper();
-				upper = upper2 instanceof Unlimited ? -1 : upper2.intValue();
+				lower = collectionType.getLower();
+				upper = collectionType.getUpper();
 				List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
 				refreshQualifiers(qualifiers, "ordered", "!ordered", collectionType.isOrdered() ? Boolean.TRUE : null);
 				refreshQualifiers(qualifiers, "unique", "!unique", collectionType.isUnique() ? null : Boolean.FALSE);
 			}
 			else {
 				isNullFree = false;
-				lower = object.isIsRequired() ? 1 : 0;
-				upper = 1;
+				lower = object.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
+				upper = ValueUtil.UNLIMITED_ONE_VALUE;
 			}
 			MultiplicityCS csMultiplicity = createMultiplicityCS(lower, upper, isNullFree);
 			csTypeRef.setOwnedMultiplicity(csMultiplicity);

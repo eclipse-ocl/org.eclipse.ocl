@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal;
 
-import java.math.BigDecimal;
+import java.lang.Class;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -130,9 +130,13 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -317,22 +321,26 @@ implements PivotFactory {
 			case 140:
 				return createBooleanFromString(eDataType, initialValue);
 			case 141:
-				return createEcoreObjectFromString(eDataType, initialValue);
+				return createEBooleanFromString(eDataType, initialValue);
 			case 142:
-				return createIntegerFromString(eDataType, initialValue);
+				return createEIntFromString(eDataType, initialValue);
 			case 143:
-				return createJavaClassFromString(eDataType, initialValue);
+				return createEcoreObjectFromString(eDataType, initialValue);
 			case 144:
-				return createLibraryFeatureFromString(eDataType, initialValue);
+				return createIntegerFromString(eDataType, initialValue);
 			case 145:
-				return createObjectFromString(eDataType, initialValue);
+				return createJavaClassFromString(eDataType, initialValue);
 			case 146:
-				return createRealFromString(eDataType, initialValue);
+				return createLibraryFeatureFromString(eDataType, initialValue);
 			case 147:
-				return createStringFromString(eDataType, initialValue);
+				return createObjectFromString(eDataType, initialValue);
 			case 148:
-				return createThrowableFromString(eDataType, initialValue);
+				return createRealFromString(eDataType, initialValue);
 			case 149:
+				return createStringFromString(eDataType, initialValue);
+			case 150:
+				return createThrowableFromString(eDataType, initialValue);
+			case 151:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -359,22 +367,26 @@ implements PivotFactory {
 			case 140:
 				return convertBooleanToString(eDataType, instanceValue);
 			case 141:
-				return convertEcoreObjectToString(eDataType, instanceValue);
+				return convertEBooleanToString(eDataType, instanceValue);
 			case 142:
-				return convertIntegerToString(eDataType, instanceValue);
+				return convertEIntToString(eDataType, instanceValue);
 			case 143:
-				return convertJavaClassToString(eDataType, instanceValue);
+				return convertEcoreObjectToString(eDataType, instanceValue);
 			case 144:
-				return convertLibraryFeatureToString(eDataType, instanceValue);
+				return convertIntegerToString(eDataType, instanceValue);
 			case 145:
-				return convertObjectToString(eDataType, instanceValue);
+				return convertJavaClassToString(eDataType, instanceValue);
 			case 146:
-				return convertRealToString(eDataType, instanceValue);
+				return convertLibraryFeatureToString(eDataType, instanceValue);
 			case 147:
-				return convertStringToString(eDataType, instanceValue);
+				return convertObjectToString(eDataType, instanceValue);
 			case 148:
-				return convertThrowableToString(eDataType, instanceValue);
+				return convertRealToString(eDataType, instanceValue);
 			case 149:
+				return convertStringToString(eDataType, instanceValue);
+			case 150:
+				return convertThrowableToString(eDataType, instanceValue);
+			case 151:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1062,7 +1074,7 @@ implements PivotFactory {
 	 * @generated
 	 */
 	@Override
-	public JavaType createJavaType()
+	public @NonNull JavaType createJavaType()
 	{
 		JavaTypeImpl javaType = new JavaTypeImpl();
 		return javaType;
@@ -1721,6 +1733,46 @@ implements PivotFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Boolean createEBooleanFromString(EDataType eDataType, String initialValue)
+	{
+		return (Boolean)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertEBooleanToString(EDataType eDataType, Object instanceValue)
+	{
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer createEIntFromString(EDataType eDataType, String initialValue)
+	{
+		return (Integer)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertEIntToString(EDataType eDataType, Object instanceValue)
+	{
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EObject createEcoreObjectFromString(EDataType eDataType, String initialValue)
 	{
 		return (EObject)super.createFromString(eDataType, initialValue);
@@ -1761,15 +1813,15 @@ implements PivotFactory {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Number createIntegerFromString(EDataType eDataType, String aValue) {
+	public Object createIntegerFromString(EDataType eDataType, String aValue) {
 		try {
 			assert aValue != null;
-			return StringUtil.createNumberFromString(aValue);
+			return ValueUtil.integerValueOf(aValue);
 		}
 		catch (NumberFormatException e) {
 			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
-		return (Number)super.createFromString(eDataType, aValue);
+		return super.createFromString(eDataType, aValue);
 	}
 
 	/**
@@ -1847,17 +1899,18 @@ implements PivotFactory {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Number createRealFromString(EDataType eDataType, String aValue) {
+	public Object createRealFromString(EDataType eDataType, String aValue) {
 		if ("*".equals(aValue)) {
-			return Unlimited.INSTANCE;
+			return ValueUtil.UNLIMITED_VALUE;
 		}
 		try {
-			return new BigDecimal(aValue);
+			assert aValue != null;
+			return ValueUtil.realValueOf(aValue);
 		}
 		catch (NumberFormatException e) {
 			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
-		return (Number)super.createFromString(eDataType, aValue);
+		return super.createFromString(eDataType, aValue);
 	}
 
 	/**
@@ -1914,15 +1967,15 @@ implements PivotFactory {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Number createUnlimitedNaturalFromString(EDataType eDataType, String aValue) {
+	public Object createUnlimitedNaturalFromString(EDataType eDataType, String aValue) {
 		try {
 			assert aValue != null;
-			return StringUtil.createNumberFromString(aValue);
+			return ValueUtil.unlimitedNaturalValueOf(aValue);
 		}
 		catch (NumberFormatException e) {
 			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
-		return (Number)super.createFromString(eDataType, aValue);
+		return super.createFromString(eDataType, aValue);
 	}
 
 	/**

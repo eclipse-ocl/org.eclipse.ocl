@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +50,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
@@ -342,7 +342,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				}
 			}
 		}
-		pivotElement.setBehavioralClass(behavioralClass);
+		standardLibrary.setBehavioralClass(pivotElement, behavioralClass);
 		org.eclipse.ocl.pivot.Class asSuperClass = behavioralClass != null ? behavioralClass : context.getStandardLibrary().getOclElementType();
 		helper.refreshList(pivotElement.getSuperClasses(), Collections.singletonList(asSuperClass));
 		return null;
@@ -389,7 +389,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.ENUMERATION_LITERAL;
 		EnumerationLiteral pivotElement = refreshNamedElement(EnumerationLiteral.class, eClass, csElement);
 		pivotElement.setLiteral(csElement.getLiteral());
-		pivotElement.setValue(BigInteger.valueOf(csElement.getValue()));
+		pivotElement.setValue(ValueUtil.integerValueOf(csElement.getValue()));
 		return null;
 	}
 

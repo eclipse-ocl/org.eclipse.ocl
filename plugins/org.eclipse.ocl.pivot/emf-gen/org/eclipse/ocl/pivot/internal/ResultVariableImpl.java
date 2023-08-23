@@ -130,7 +130,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							else {
 								assert ownedInit != null;
 								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-								safe_isRequired_source = isRequired_0;
+								final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
+								safe_isRequired_source = BOXED_isRequired_0;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;
 						}
@@ -163,12 +164,13 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					}
 					else {
 						final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
+						final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired_1 = isRequired_1;
 						final /*@NonInvalid*/ @Nullable Boolean not_0;
-						if (!isRequired_1) {
+						if (!BOXED_isRequired_1) {
 							not_0 = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (isRequired_1) {
+							if (BOXED_isRequired_1) {
 								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {

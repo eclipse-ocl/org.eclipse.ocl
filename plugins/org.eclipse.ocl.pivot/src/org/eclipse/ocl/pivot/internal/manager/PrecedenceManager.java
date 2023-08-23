@@ -76,6 +76,10 @@ public class PrecedenceManager
 
 	private Map<@NonNull Precedence, @NonNull Integer> precedence2order = null;
 
+	public @Nullable Integer basicGetOrder(@NonNull Precedence precedence) {
+		return precedence2order.get(precedence);
+	}
+
 	/**
 	 * Interleave the ownedPrecedences of the rootPackages to establish a merged
 	 * ordering and assign the index in that ordering to each

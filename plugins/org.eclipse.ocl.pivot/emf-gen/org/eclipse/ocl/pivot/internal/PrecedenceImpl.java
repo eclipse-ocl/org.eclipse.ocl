@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -116,7 +117,7 @@ public class PrecedenceImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number ORDER_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0");
+	protected static final IntegerValue ORDER_EDEFAULT = (IntegerValue)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0");
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -169,7 +170,7 @@ public class PrecedenceImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected Number order = ORDER_EDEFAULT; // FIXME a) use int, b) get not volatile to work from UML.
+	protected IntegerValue order = ORDER_EDEFAULT; // FIXME a) use int, b) get not volatile to work from UML.
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -177,7 +178,7 @@ public class PrecedenceImpl
 	 * @generated
 	 */
 	@Override
-	public Number getOrder() {
+	public IntegerValue getOrder() {
 		return order;
 	}
 
@@ -187,9 +188,9 @@ public class PrecedenceImpl
 	 * @generated
 	 */
 	@Override
-	public void setOrder(Number newOrder)
+	public void setOrder(IntegerValue newOrder)
 	{
-		Number oldOrder = order;
+		IntegerValue oldOrder = order;
 		order = newOrder;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldOrder, order));
@@ -255,7 +256,7 @@ public class PrecedenceImpl
 				setAssociativity((AssociativityKind)newValue);
 				return;
 			case 6:
-				setOrder((Number)newValue);
+				setOrder((IntegerValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);

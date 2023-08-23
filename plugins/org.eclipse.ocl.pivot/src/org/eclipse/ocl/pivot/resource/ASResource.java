@@ -43,15 +43,23 @@ public interface ASResource extends XMIResource
 	 * More pragmatically UUIDs may be specified to assist in debugging the correct generation of stable
 	 * xmi:ids for externally referenceable elements: no @'s should remain.
 	 */
-	String OPTION_INTERNAL_UUIDS = "INTERNAL_UUIDS";
+	@NonNull String OPTION_INTERNAL_UUIDS = "INTERNAL_UUIDS";
 
 	/**
 	 * {@link Resource#save(Map)} option.
 	 * <p>
 	 * Rearrange the contents to enforce alphabetic ordering and so ensure stable contents after
-	 * regeneration.
+	 * regeneration. Defaults to FALSE, preserving the prevailing order.
 	 */
-	String OPTION_NORMALIZE_CONTENTS = "NORMALIZE_CONTENTS";
+	@NonNull String OPTION_NORMALIZE_CONTENTS = "NORMALIZE_CONTENTS";
+
+	/**
+	 * {@link Resource#save(Map)} option.
+	 * <p>
+	 * Ensure that all orphans are referenced from a local orphanage package. Defaults to TRUE.
+	 * May be set FALSE if orphans are already localized.
+	 */
+	@NonNull String OPTION_LOCALIZE_ORPHANS = "LOCALIZE_ORPHANS";
 
 	/**
 	 * The file extension for OCL Abstract Syntax resources.

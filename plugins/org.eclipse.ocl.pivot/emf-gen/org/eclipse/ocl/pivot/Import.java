@@ -65,21 +65,20 @@ public interface Import extends NamedElement
 	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Xmiid Version</em>' attribute.
-	 * @see #setXmiidVersion(Number)
+	 * @see #setXmiidVersion(int)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getImport_XmiidVersion()
 	 * @generated
 	 */
-	Number getXmiidVersion();
+	int getXmiidVersion();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Import#getXmiidVersion <em>Xmiid Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Xmiid Version</em>' attribute.
 	 * @see #getXmiidVersion()
 	 * @generated
 	 */
-	void setXmiidVersion(Number value);
+	void setXmiidVersion(int value);
 
 } // Import

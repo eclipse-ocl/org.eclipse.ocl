@@ -882,7 +882,8 @@ implements Operation {
 						try {
 							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
-							CAUGHT_CompatibleBody = CompatibleBody;
+							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
+							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
 						}
 						catch (Exception e) {
 							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);

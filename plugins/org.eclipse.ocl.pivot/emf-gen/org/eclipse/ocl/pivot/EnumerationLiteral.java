@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 
 
@@ -103,11 +104,11 @@ public interface EnumerationLiteral extends InstanceSpecification {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(Number)
+	 * @see #setValue(IntegerValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getEnumerationLiteral_Value()
 	 * @generated
 	 */
-	Number getValue();
+	IntegerValue getValue();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.EnumerationLiteral#getValue <em>Value</em>}' attribute.
@@ -117,7 +118,7 @@ public interface EnumerationLiteral extends InstanceSpecification {
 	 * @see #getValue()
 	 * @generated
 	 */
-	void setValue(Number value);
+	void setValue(IntegerValue value);
 
 	@NonNull EnumerationLiteralId getEnumerationLiteralId();
 	@NonNull Enumerator getEnumerator();

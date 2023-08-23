@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.ocl.pivot.values.IntegerValue;
+
 
 
 /**
@@ -71,24 +73,21 @@ extends NamedElement {
 	 * @deprecated - no longer used - use PrecedenceManager$OrderedPrecedence
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Order</em>' attribute.
-	 * @see #setOrder(Number)
+	 * @see #setOrder(IntegerValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getPrecedence_Order()
 	 * @generated
 	 */
 	@Deprecated
-	Number getOrder();
+	IntegerValue getOrder();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Precedence#getOrder <em>Order</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * </p>
-	 * @deprecated - no longer used - use PrecedenceManager$OrderedPrecedence
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Order</em>' attribute.
 	 * @see #getOrder()
 	 * @generated
 	 */
-	@Deprecated
-	void setOrder(Number value);
+	void setOrder(IntegerValue value);
 
 } // Precedence

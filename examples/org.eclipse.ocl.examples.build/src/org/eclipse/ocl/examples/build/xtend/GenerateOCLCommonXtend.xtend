@@ -70,6 +70,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
+	protected def String declareDataType_name(/*@NonNull*/ DataType type) {
+		'''
+		private DataType «type.getPrefixedSymbolName("_"+type.partialName())»;
+		'''
+	}
+
 	protected def String declareEnumeration_name(/*@NonNull*/ Enumeration enumeration) {
 		'''
 		private Enumeration «enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»;
@@ -153,6 +159,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				PrimitiveType: return declarePrimitiveType_name(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
 				TupleType: return declareTupleType_name(element)
+				DataType: return declareDataType_name(element)
 				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
 				Operation: return declareOperation_name(element)
 				Parameter: return ""
@@ -267,10 +274,23 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF type.getOwnedSignature() !== null»
 		«type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 		«ELSE»
-		«type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.toString()», «IF type.upper.isUnlimited()»-1«ELSE»«type.upper.intValue()»«ENDIF»);
 		«ENDIF»
 		'''
 	}
+	protected def String defineDataType_name(org.eclipse.ocl.pivot./*@NonNull*/ DataType type) {
+		'''
+		«IF excludedEClassifierNames.contains(type.name)»
+		«type.getSymbolName()» = createDataType(«type.getOwningPackage().getSymbolName()», "«type.name»");
+		«ELSE»
+		«type.getSymbolName()» = createDataType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
+		«ENDIF»
+		«IF type.getBehavioralClass() !== null»
+		«type.getSymbolName()».setBehavioralClass(«type.getBehavioralClass().getSymbolName()»);
+		«ENDIF»
+		'''
+	}
+
 
 	protected def String defineElement_comments(/*@NonNull*/ Element element) {
 		'''
@@ -560,6 +580,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Property: return ""
 				TemplateParameter: return defineTemplateParameter_name(element)
 				TupleType: return defineTupleType_name(element)
+				DataType: return defineDataType_name(element)
 				org.eclipse.ocl.pivot.Class: return defineClass_name(element)
 				Operation: return defineOperation_name(element)
 			}

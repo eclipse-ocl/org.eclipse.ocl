@@ -35,9 +35,11 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -45,6 +47,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * <!-- begin-user-doc -->
@@ -344,7 +347,11 @@ implements IfExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = self.ownedCondition.type = Boolean
+			 *       let
+			 *         result : Boolean[?] = let type : Type[?] = self.ownedCondition.type
+			 *         in type <> null and
+			 *           type.conformsTo(Boolean) and
+			 *           not type.conformsTo(OclVoid)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -358,12 +365,109 @@ implements IfExp {
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean_0 = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
-				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition = this.getOwnedCondition();
-				final /*@NonInvalid*/ @Nullable Type type = ownedCondition.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				/*@Caught*/ @Nullable Object CAUGHT_and_0;
+				try {
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition = this.getOwnedCondition();
+					final /*@NonInvalid*/ @Nullable Type type = ownedCondition.getType();
+					/*@Caught*/ @Nullable Object CAUGHT_and;
+					try {
+						final /*@NonInvalid*/ boolean ne = type != null;
+						final /*@Thrown*/ @Nullable Boolean and;
+						if (!ne) {
+							and = ValueUtil.FALSE_VALUE;
+						}
+						else {
+							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+							try {
+								final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean_0 = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
+								if (type == null) {
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+								}
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, TYP_Boolean_0).booleanValue();
+								CAUGHT_conformsTo = conformsTo;
+							}
+							catch (Exception e) {
+								CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+							}
+							if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {
+								and = ValueUtil.FALSE_VALUE;
+							}
+							else {
+								if (CAUGHT_conformsTo instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_conformsTo;
+								}
+								and = ValueUtil.TRUE_VALUE;
+							}
+						}
+						CAUGHT_and = and;
+					}
+					catch (Exception e) {
+						CAUGHT_and = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ @Nullable Boolean and_0;
+					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
+						and_0 = ValueUtil.FALSE_VALUE;
+					}
+					else {
+						/*@Caught*/ @Nullable Object CAUGHT_not;
+						try {
+							/*@Caught*/ @NonNull Object CAUGHT_conformsTo_0;
+							try {
+								final /*@NonInvalid*/ @NonNull VoidType TYP_OclVoid_0 = (@NonNull VoidType)idResolver.getClass(TypeId.OCL_VOID, null);
+								if (type == null) {
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+								}
+								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, TYP_OclVoid_0).booleanValue();
+								CAUGHT_conformsTo_0 = conformsTo_0;
+							}
+							catch (Exception e) {
+								CAUGHT_conformsTo_0 = ValueUtil.createInvalidValue(e);
+							}
+							if (CAUGHT_conformsTo_0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_conformsTo_0;
+							}
+							final /*@Thrown*/ @Nullable Boolean not;
+							if (CAUGHT_conformsTo_0 == ValueUtil.FALSE_VALUE) {
+								not = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								if (CAUGHT_conformsTo_0 == ValueUtil.TRUE_VALUE) {
+									not = ValueUtil.FALSE_VALUE;
+								}
+								else {
+									not = null;
+								}
+							}
+							CAUGHT_not = not;
+						}
+						catch (Exception e) {
+							CAUGHT_not = ValueUtil.createInvalidValue(e);
+						}
+						if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+							and_0 = ValueUtil.FALSE_VALUE;
+						}
+						else {
+							if (CAUGHT_and instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_and;
+							}
+							if (CAUGHT_not instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_not;
+							}
+							if ((CAUGHT_and == null) || (CAUGHT_not == null)) {
+								and_0 = null;
+							}
+							else {
+								and_0 = ValueUtil.TRUE_VALUE;
+							}
+						}
+					}
+					CAUGHT_and_0 = and_0;
+				}
+				catch (Exception e) {
+					CAUGHT_and_0 = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_and_0, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

@@ -192,19 +192,25 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
+	public int hashCode() {
+		return 0x22222222;
+	}
+
+	@Override
 	public int intValue() {
 		toInvalidValue();		// throws rather than returns
 		return 0;
 	}
 
 	@Override
-	public int hashCode() {
-		return 0x22222222;
+	public boolean isInvalid() {
+		return true;
 	}
 
 	@Override
-	public boolean isInvalid() {
-		return true;
+	public long longValue() {
+		toInvalidValue();		// throws rather than returns
+		return 0;
 	}
 
 	@Override

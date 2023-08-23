@@ -62,7 +62,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -696,8 +696,8 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp object) {
-		Number symbol = object.getUnlimitedNaturalSymbol();
-		if (symbol == Unlimited.INSTANCE){
+		UnlimitedNaturalValue symbol = object.getUnlimitedNaturalSymbol();
+		if (symbol.isUnlimited()){
 			context.append("*");
 		}
 		else {

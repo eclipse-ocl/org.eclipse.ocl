@@ -76,6 +76,11 @@ public interface IntegerValue extends RealValue
 	/**
 	 * @generated NOT
 	 */
+	long longValue();
+
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	@NonNull IntegerValue maxInteger(@NonNull IntegerValue right);
 

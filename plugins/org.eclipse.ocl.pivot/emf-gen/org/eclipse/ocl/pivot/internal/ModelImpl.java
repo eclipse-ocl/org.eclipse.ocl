@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -118,7 +119,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number XMIID_VERSION_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	protected static final IntegerValue XMIID_VERSION_EDEFAULT = (IntegerValue)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
 	/**
 	 * The cached value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -128,7 +129,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected Number xmiidVersion = XMIID_VERSION_EDEFAULT;
+	protected IntegerValue xmiidVersion = XMIID_VERSION_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -183,21 +184,20 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @generated
 	 */
 	@Override
-	public Number getXmiidVersion()
+	public IntegerValue getXmiidVersion()
 	{
 		return xmiidVersion;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public void setXmiidVersion(Number newXmiidVersion)
+	public void setXmiidVersion(IntegerValue newXmiidVersion)
 	{
-		Number oldXmiidVersion = xmiidVersion;
+		IntegerValue oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldXmiidVersion, xmiidVersion));
@@ -335,7 +335,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
 			case 9:
-				setXmiidVersion((Number)newValue);
+				setXmiidVersion((IntegerValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);

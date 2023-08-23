@@ -76,7 +76,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number XMIID_VERSION_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	protected static final int XMIID_VERSION_EDEFAULT = 0; //$NON-NLS-1$
 	/**
 	 * The cached value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,7 +86,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @generated
 	 * @ordered
 	 */
-	protected Number xmiidVersion = XMIID_VERSION_EDEFAULT;
+	protected int xmiidVersion = XMIID_VERSION_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -160,21 +160,20 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @generated
 	 */
 	@Override
-	public Number getXmiidVersion()
+	public int getXmiidVersion()
 	{
 		return xmiidVersion;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public void setXmiidVersion(Number newXmiidVersion)
+	public void setXmiidVersion(int newXmiidVersion)
 	{
-		Number oldXmiidVersion = xmiidVersion;
+		int oldXmiidVersion = xmiidVersion;
 		xmiidVersion = newXmiidVersion;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldXmiidVersion, xmiidVersion));
@@ -243,7 +242,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 				setImportedNamespace((Namespace)newValue);
 				return;
 			case 6:
-				setXmiidVersion((Number)newValue);
+				setXmiidVersion((Integer)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -307,7 +306,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case 5:
 				return importedNamespace != null;
 			case 6:
-				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
+				return xmiidVersion != XMIID_VERSION_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
 	}

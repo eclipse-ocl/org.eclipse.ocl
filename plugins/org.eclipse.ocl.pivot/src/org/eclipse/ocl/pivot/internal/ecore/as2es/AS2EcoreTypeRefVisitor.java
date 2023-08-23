@@ -46,7 +46,8 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @NonNull AS2Ecore>
 {
@@ -222,9 +223,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 		eGenericType.setEClassifier((EClassifier) eClassifier2);
 		safeVisitAll(eGenericType.getETypeArguments(), pivotType.getOwnedBindings().get(0).getOwnedSubstitutions());
 		// FIXME supers
-		Number lower = pivotType.getLower();
-		Number upper = pivotType.getUpper();
-		if ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited))) {
+		IntegerValue lower = pivotType.getLower();
+		UnlimitedNaturalValue upper = pivotType.getUpper();
+		if ((lower != null) && (upper != null) && ((lower.signum() != 0) || !upper.isUnlimited())) {
 			// FIXME Ecore does not support nested multiplicities
 			//			eGenericType.setLower(lower.longValue());
 			//			eGenericType.setUpper(upper instanceof Unlimited) ? -1 : upper.longValue());

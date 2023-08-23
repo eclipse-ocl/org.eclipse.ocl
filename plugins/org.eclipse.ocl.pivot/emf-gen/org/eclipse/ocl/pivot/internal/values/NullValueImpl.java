@@ -15,10 +15,10 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
@@ -113,6 +113,12 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	@Override
 	public boolean isInvalid() {
 		return false;
+	}
+
+	@Override
+	public long longValue() {
+    	toInvalidValue();		// throws rather than returns
+    	return 0;
 	}
 
 	@Override

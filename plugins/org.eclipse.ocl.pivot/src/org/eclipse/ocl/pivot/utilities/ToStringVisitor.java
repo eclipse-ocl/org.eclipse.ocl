@@ -105,7 +105,10 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * Converts an OCL expression to a string for debugging. This is not intended to
@@ -385,10 +388,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 			if (collectionType != null) {
 				if (SHOW_ALL_MULTIPLICITIES || !PivotUtil.hasDefaultCollectionValueBindings(collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue())) {
-					Number lower = collectionType.getLower();
-					Number upper = collectionType.getUpper();
+					IntegerValue lower = collectionType.getLower();
+					UnlimitedNaturalValue upper = collectionType.getUpper();
 					long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
-					long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
+					long upperValue = (upper != null) && !upper.isUnlimited() ? upper.longValue() : -1l;
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
@@ -774,7 +777,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitIntegerLiteralExp(@NonNull IntegerLiteralExp il) {
-		append(il.getIntegerSymbol());
+		IntegerValue integerSymbol = il.getIntegerSymbol();
+		if (integerSymbol != null) {
+			append(integerSymbol.intValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 
@@ -1186,7 +1195,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitRealLiteralExp(@NonNull RealLiteralExp rl) {
-		append(rl.getRealSymbol());
+		RealValue realSymbol = rl.getRealSymbol();
+		if (realSymbol != null) {
+			append(realSymbol.doubleValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 
@@ -1358,7 +1373,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp unl) {
-		append(unl.getUnlimitedNaturalSymbol());
+		UnlimitedNaturalValue unlimitedNaturalSymbol = unl.getUnlimitedNaturalSymbol();
+		if (unlimitedNaturalSymbol != null) {
+			append(unlimitedNaturalSymbol.intValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 

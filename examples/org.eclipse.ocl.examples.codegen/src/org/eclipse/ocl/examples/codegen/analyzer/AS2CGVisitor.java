@@ -186,7 +186,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
 import com.google.common.collect.Iterables;
@@ -288,7 +289,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public AS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
 		codeGenerator = context.getCodeGenerator();
-		environmentFactory = (EnvironmentFactoryInternal) codeGenerator.getEnvironmentFactory();
+		environmentFactory = codeGenerator.getEnvironmentFactory();
 		metamodelManager = environmentFactory.getMetamodelManager();
 		genModelHelper = codeGenerator.getGenModelHelper();
 	}
@@ -1388,8 +1389,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitIntegerLiteralExp(@NonNull IntegerLiteralExp element) {
-		Number integerSymbol = element.getIntegerSymbol();
-		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol : 0);
+		IntegerValue integerSymbol = element.getIntegerSymbol();
+		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol.asNumber() : 0);
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		setAst(cgLiteralExp, element);
 		return cgLiteralExp;
@@ -1477,15 +1478,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgOperation == null) {
 			cgOperation = createFinalCGOperationWithoutBody(asOperation);
 		}
-		LanguageExpression specification = asOperation.getBodyExpression();
-		if (specification != null) {
-			try {
-				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-				createParameters(cgOperation, query);
-				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String implementationClass = asOperation.getImplementationClass();
+		if (implementationClass == null) {
+			LanguageExpression specification = asOperation.getBodyExpression();
+			if (specification != null) {
+				try {
+					ExpressionInOCL query = environmentFactory.parseSpecification(specification);
+					createParameters(cgOperation, query);
+					cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return cgOperation;
@@ -1593,7 +1597,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitRealLiteralExp(@NonNull RealLiteralExp element) {
-		Number realSymbol = element.getRealSymbol();
+		Number realSymbol = (Number)element.getRealSymbol();
 		@SuppressWarnings("null")
 		CGReal cgReal = context.getReal(realSymbol != null ? realSymbol : Double.valueOf(0.0));
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, cgReal);
@@ -1739,16 +1743,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp element) {
-		Number unlimitedNaturalSymbol = element.getUnlimitedNaturalSymbol();
+		UnlimitedNaturalValue unlimitedNaturalSymbol = element.getUnlimitedNaturalSymbol();
 		CGConstantExp cgLiteralExp;
 		if (unlimitedNaturalSymbol instanceof UnlimitedValue) {
 			cgLiteralExp = context.createCGConstantExp(element, context.getUnlimited());
 		}
-		else if (unlimitedNaturalSymbol instanceof Unlimited) {
-			cgLiteralExp = context.createCGConstantExp(element, context.getUnlimited());
-		}
 		else if (unlimitedNaturalSymbol != null) {
-			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(unlimitedNaturalSymbol));
+			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(unlimitedNaturalSymbol.intValue()));
 		}
 		else {
 			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(0));

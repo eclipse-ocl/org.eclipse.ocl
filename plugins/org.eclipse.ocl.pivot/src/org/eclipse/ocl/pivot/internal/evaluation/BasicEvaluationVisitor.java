@@ -97,8 +97,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
-import org.eclipse.ocl.pivot.values.Unlimited;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * An evaluation visitor implementation for OCL expressions.
@@ -349,8 +347,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitIntegerLiteralExp(@NonNull IntegerLiteralExp integerLiteralExp) {
-		Number integerSymbol = integerLiteralExp.getIntegerSymbol();
-		return integerSymbol != null ? ValueUtil.integerValueOf(integerSymbol) : null;
+		return integerLiteralExp.getIntegerSymbol();
 	}
 
 	@Override
@@ -789,8 +786,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
-		Number realSymbol = realLiteralExp.getRealSymbol();
-		return realSymbol != null ? ValueUtil.realValueOf(realSymbol) : null;
+		return realLiteralExp.getRealSymbol();
 	}
 
 	@Override
@@ -856,23 +852,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp unlimitedNaturalLiteralExp) {
-		Number unlimitedNaturalSymbol = unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol();
-		if (unlimitedNaturalSymbol == null) {
-			return null;
-		}
-		if (unlimitedNaturalSymbol instanceof Unlimited) {
-			return ValueUtil.UNLIMITED_VALUE;
-		}
-		if (unlimitedNaturalSymbol instanceof UnlimitedNaturalValue) {
-			return unlimitedNaturalSymbol;
-		}
-		IntegerValue integerValue = ValueUtil.integerValueOf(unlimitedNaturalSymbol);
-		if (integerValue.signum() < 0) {
-			if (integerValue == ValueUtil.integerValueOf(-1)) {
-				return ValueUtil.UNLIMITED_VALUE;
-			}
-		}
-		return integerValue.asUnlimitedNaturalValue();
+		return unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol();
 	}
 
 	/**

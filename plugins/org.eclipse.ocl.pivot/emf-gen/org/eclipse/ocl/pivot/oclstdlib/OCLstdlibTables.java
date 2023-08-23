@@ -356,16 +356,16 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR Sequence.T
 	// CTOR Set.T
 	// CTOR UniqueCollection.T
-	// CTOR Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T)
-	// CTOR Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
-	// CTOR Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V)
-	// CTOR Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
-	// CTOR Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
-	// CTOR Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T)
+	// CTOR Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T[*|1])
+	// CTOR Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V[*|1])
+	// CTOR Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V[*|1])
+	// CTOR Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T[*|1])
+	// CTOR Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T[*|1])
+	// CTOR Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T[*|1])
 	// CTOR Collection(T).any(Collection.T[1] | Lambda T() : Boolean[1]) : Collection.T[?]
 	// CTOR Collection(T).collectBy(V)(Collection.T[?] | Lambda T() : V[?]) : Map(Collection.T[?],collectBy.V[?])[1]
-	// CTOR Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V)
-	// CTOR Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V)
+	// CTOR Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V[*|1])
+	// CTOR Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V[*|1])
 	// CTOR Collection(T).exists(Collection.T[?], Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
 	// CTOR Collection(T).exists(Collection.T[?], Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
 	// CTOR Collection(T).exists(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
@@ -375,13 +375,13 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR Collection(T).isUnique(Collection.T[?] | Lambda T() : OclAny[?]) : Boolean[1]
 	// CTOR Collection(T).iterate(Tacc)(Collection.T[?]; iterate.Tacc[?] | Lambda T() : Tacc[?]) : iterate.Tacc[?]
 	// CTOR Collection(T).one(Collection.T[?] | Lambda T() : Boolean[1]) : Boolean[1]
-	// CTOR Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
-	// CTOR Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
-	// CTOR Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T)
+	// CTOR Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T[*|1])
+	// CTOR Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T[*|1])
+	// CTOR Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T[*|1])
 	// CTOR Map(K,V).any(Map.K[1] | Lambda K() : Boolean[1]) : Map.K[?]
 	// CTOR Map(K,V).collectBy(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectBy.V2[?])[1]
 	// CTOR Map(K,V).collectNested(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectNested.V2[?])[1]
-	// CTOR Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2)
+	// CTOR Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2[*|1])
 	// CTOR Map(K,V).exists(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
 	// CTOR Map(K,V).exists(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
 	// CTOR Map(K,V).exists(Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
@@ -393,28 +393,28 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR Map(K,V).one(Map.K[?] | Lambda K() : Boolean[1]) : Boolean[1]
 	// CTOR Map(K,V).reject(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
 	// CTOR Map(K,V).select(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
-	// CTOR OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
-	// CTOR OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
-	// CTOR OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T)
-	// CTOR Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T)
-	// CTOR Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
-	// CTOR Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
-	// CTOR Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
-	// CTOR Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
-	// CTOR Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T)
-	// CTOR Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T)
-	// CTOR Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
-	// CTOR Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V)
-	// CTOR Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
-	// CTOR Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
-	// CTOR Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T)
-	// CTOR UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T)
+	// CTOR OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V[*|1])
+	// CTOR OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V[*|1])
+	// CTOR OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T[*|1])
+	// CTOR Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V[*|1])
+	// CTOR Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V[*|1])
+	// CTOR Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T[*|1])
+	// CTOR Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V[*|1])
+	// CTOR Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V[*|1])
+	// CTOR Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T[*|1])
+	// CTOR Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T[*|1])
+	// CTOR Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T[*|1])
+	// CTOR UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T[*|1])
 	// CTOR Boolean::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Boolean::=(OclSelf[?]) : Boolean[1]
-	// CTOR Boolean::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR Boolean::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// CTOR Boolean::and(Boolean[?]) : Boolean[?]
 	// CTOR Boolean::and2(Boolean[1]) : Boolean[1]
 	// CTOR Boolean::implies(Boolean[?]) : Boolean[?]
@@ -459,7 +459,7 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR String::>(OclSelf[1]) : Boolean[1]
 	// CTOR String::>=(OclSelf[1]) : Boolean[1]
 	// CTOR String::at(Integer[1]) : String[1]
-	// CTOR String::characters() : Sequence(String)
+	// CTOR String::characters() : Sequence(String[*|1])
 	// CTOR String::compareTo(OclSelf[1]) : Integer[1]
 	// CTOR String::concat(String[?]) : String[1]
 	// CTOR String::endsWith(String[1]) : Boolean[1]
@@ -482,9 +482,9 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR String::toString() : String[1]
 	// CTOR String::toUpper() : String[1]
 	// CTOR String::toUpperCase() : String[1]
-	// CTOR String::tokenize() : Sequence(String)
-	// CTOR String::tokenize(String[1]) : Sequence(String)
-	// CTOR String::tokenize(String[1],Boolean[1]) : Sequence(String)
+	// CTOR String::tokenize() : Sequence(String[*|1])
+	// CTOR String::tokenize(String[1]) : Sequence(String[*|1])
+	// CTOR String::tokenize(String[1],Boolean[1]) : Sequence(String[*|1])
 	// CTOR String::trim() : String[1]
 	// CTOR UnlimitedNatural::max(OclSelf[1]) : UnlimitedNatural[1]
 	// CTOR UnlimitedNatural::min(OclSelf[1]) : UnlimitedNatural[1]
@@ -492,72 +492,72 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR UnlimitedNatural::toInteger() : Integer[?]
 	// CTOR Bag(T)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Bag(T)::=(OclSelf[?]) : Boolean[1]
-	// CTOR Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T)
-	// CTOR Bag(T)::excludingAll(Collection(Bag.T)) : Bag(Bag.T)
-	// CTOR Bag(T)::flatten(T2)() : Bag(flatten.T2)
-	// CTOR Bag(T)::including(Bag.T[?]) : Bag(Bag.T)
-	// CTOR Bag(T)::includingAll(Collection(Bag.T)) : Bag(Bag.T)
-	// CTOR Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT)
-	// CTOR Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT)
-	// CTOR BooleanType::allInstances() : Set(OclSelf)
-	// CTOR Class::allInstances() : Set(OclSelf)
+	// CTOR Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T[*|1])
+	// CTOR Bag(T)::excludingAll(Collection(Bag.T[*|1])) : Bag(Bag.T[*|1])
+	// CTOR Bag(T)::flatten(T2)() : Bag(flatten.T2[*|1])
+	// CTOR Bag(T)::including(Bag.T[?]) : Bag(Bag.T[*|1])
+	// CTOR Bag(T)::includingAll(Collection(Bag.T[*|1])) : Bag(Bag.T[*|1])
+	// CTOR Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT[*|1])
+	// CTOR Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT[*|1])
+	// CTOR BooleanType::allInstances() : Set(OclSelf[*|1])
+	// CTOR Class::allInstances() : Set(OclSelf[*|1])
 	// CTOR Collection(T)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Collection(T)::=(OclSelf[?]) : Boolean[1]
-	// CTOR Collection(T)::asBag() : Bag(Collection.T)
-	// CTOR Collection(T)::asOrderedSet() : OrderedSet(Collection.T)
-	// CTOR Collection(T)::asSequence() : Sequence(Collection.T)
-	// CTOR Collection(T)::asSet() : Set(Collection.T)
+	// CTOR Collection(T)::asBag() : Bag(Collection.T[*|1])
+	// CTOR Collection(T)::asOrderedSet() : OrderedSet(Collection.T[*|1])
+	// CTOR Collection(T)::asSequence() : Sequence(Collection.T[*|1])
+	// CTOR Collection(T)::asSet() : Set(Collection.T[*|1])
 	// CTOR Collection(T)::count(Collection.T[?]) : Integer[1]
 	// CTOR Collection(T)::excludes(Collection.T[?]) : Boolean[1]
-	// CTOR Collection(T)::excludesAll(T2)(Collection(excludesAll.T2)) : Boolean[1]
-	// CTOR Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T)
-	// CTOR Collection(T)::excludingAll(Collection(Collection.T)) : Collection(Collection.T)
-	// CTOR Collection(T)::flatten(T2)() : Collection(flatten.T2)
+	// CTOR Collection(T)::excludesAll(T2)(Collection(excludesAll.T2[*|1])) : Boolean[1]
+	// CTOR Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T[*|1])
+	// CTOR Collection(T)::excludingAll(Collection(Collection.T[*|1])) : Collection(Collection.T[*|1])
+	// CTOR Collection(T)::flatten(T2)() : Collection(flatten.T2[*|1])
 	// CTOR Collection(T)::includes(Collection.T[?]) : Boolean[1]
-	// CTOR Collection(T)::includesAll(T2)(Collection(includesAll.T2)) : Boolean[1]
-	// CTOR Collection(T)::including(Collection.T[?]) : Collection(Collection.T)
-	// CTOR Collection(T)::includingAll(Collection(Collection.T)) : Collection(Collection.T)
-	// CTOR Collection(T)::intersection(Collection(Collection.T)) : Bag(Collection.T)
-	// CTOR Collection(T)::intersection(UniqueCollection(Collection.T)) : Set(Collection.T)
+	// CTOR Collection(T)::includesAll(T2)(Collection(includesAll.T2[*|1])) : Boolean[1]
+	// CTOR Collection(T)::including(Collection.T[?]) : Collection(Collection.T[*|1])
+	// CTOR Collection(T)::includingAll(Collection(Collection.T[*|1])) : Collection(Collection.T[*|1])
+	// CTOR Collection(T)::intersection(Collection(Collection.T[*|1])) : Bag(Collection.T[*|1])
+	// CTOR Collection(T)::intersection(UniqueCollection(Collection.T[*|1])) : Set(Collection.T[*|1])
 	// CTOR Collection(T)::isEmpty() : Boolean[1]
 	// CTOR Collection(T)::max() : Collection.T[1]
 	// CTOR Collection(T)::min() : Collection.T[1]
 	// CTOR Collection(T)::notEmpty() : Boolean[1]
-	// CTOR Collection(T)::product(T2)(Collection(product.T2)) : Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// CTOR Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT)
-	// CTOR Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT)
+	// CTOR Collection(T)::product(T2)(Collection(product.T2[*|1])) : Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// CTOR Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT[*|1])
+	// CTOR Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT[*|1])
 	// CTOR Collection(T)::size() : Integer[1]
 	// CTOR Collection(T)::sum() : Collection.T[1]
-	// CTOR Collection(T)::union(Collection(Collection.T)) : Bag(Collection.T)
-	// CTOR Enumeration::allInstances() : Set(OclSelf)
-	// CTOR InvalidType::allInstances() : Set(OclSelf)
+	// CTOR Collection(T)::union(Collection(Collection.T[*|1])) : Bag(Collection.T[*|1])
+	// CTOR Enumeration::allInstances() : Set(OclSelf[*|1])
+	// CTOR InvalidType::allInstances() : Set(OclSelf[*|1])
 	// CTOR Map(K,V)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Map(K,V)::=(OclSelf[?]) : Boolean[1]
 	// CTOR Map(K,V)::at(Map.K[?]) : Map.V[?]
 	// CTOR Map(K,V)::excludes(Map.K[?]) : Boolean[1]
 	// CTOR Map(K,V)::excludes(Map.K[?],Map.V[?]) : Boolean[1]
-	// CTOR Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2)) : Boolean[1]
+	// CTOR Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2[*|1])) : Boolean[1]
 	// CTOR Map(K,V)::excludesMap(K2,V2)(Map(excludesMap.K2,excludesMap.V2)[1]) : Boolean[1]
 	// CTOR Map(K,V)::excludesValue(Map.V[?]) : Boolean[1]
 	// CTOR Map(K,V)::excluding(Map.K[?]) : Map(Map.K,Map.V)[1]
 	// CTOR Map(K,V)::excluding(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
-	// CTOR Map(K,V)::excludingAll(Collection(Map.K)) : Map(Map.K,Map.V)[1]
+	// CTOR Map(K,V)::excludingAll(Collection(Map.K[*|1])) : Map(Map.K,Map.V)[1]
 	// CTOR Map(K,V)::excludingMap(K2,V2)(Map(excludingMap.K2,excludingMap.V2)[1]) : Map(Map.K,Map.V)[1]
 	// CTOR Map(K,V)::includes(Map.K[?]) : Boolean[1]
 	// CTOR Map(K,V)::includes(Map.K[?],Map.V[?]) : Boolean[1]
-	// CTOR Map(K,V)::includesAll(K2)(Collection(includesAll.K2)) : Boolean[1]
+	// CTOR Map(K,V)::includesAll(K2)(Collection(includesAll.K2[*|1])) : Boolean[1]
 	// CTOR Map(K,V)::includesMap(K2,V2)(Map(includesMap.K2,includesMap.V2)[1]) : Boolean[1]
 	// CTOR Map(K,V)::includesValue(Map.V[?]) : Boolean[1]
 	// CTOR Map(K,V)::including(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
 	// CTOR Map(K,V)::includingMap(K2,V2)(Map(includingMap.K2,includingMap.V2)[1]) : Map(Map.K,Map.V)[1]
 	// CTOR Map(K,V)::isEmpty() : Boolean[1]
-	// CTOR Map(K,V)::keys() : Set(Map.K)
+	// CTOR Map(K,V)::keys() : Set(Map.K[*|1])
 	// CTOR Map(K,V)::notEmpty() : Boolean[1]
 	// CTOR Map(K,V)::size() : Integer[1]
-	// CTOR Map(K,V)::values() : Bag(Map.V)
+	// CTOR Map(K,V)::values() : Bag(Map.V[*|1])
 	// CTOR OclAny::<>(OclSelf[?]) : Boolean[1]
 	// CTOR OclAny::=(OclSelf[?]) : Boolean[1]
-	// CTOR OclAny::oclAsSet() : Set(OclSelf)
+	// CTOR OclAny::oclAsSet() : Set(OclSelf[*|1])
 	// CTOR OclAny::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
 	// CTOR OclAny::oclIsInState(OclState[?]) : Boolean[1]
 	// CTOR OclAny::oclIsInvalid() : Boolean[1]
@@ -568,32 +568,32 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR OclAny::oclLog() : OclSelf[1]
 	// CTOR OclAny::oclLog(String[1]) : OclSelf[1]
 	// CTOR OclAny::oclType() : OclSelf[1]
-	// CTOR OclAny::oclTypes() : Set(OclSelf)
+	// CTOR OclAny::oclTypes() : Set(OclSelf[*|1])
 	// CTOR OclAny::toString() : String[1]
 	// CTOR OclComparable::<(OclSelf[1]) : Boolean[1]
 	// CTOR OclComparable::<=(OclSelf[1]) : Boolean[1]
 	// CTOR OclComparable::>(OclSelf[1]) : Boolean[1]
 	// CTOR OclComparable::>=(OclSelf[1]) : Boolean[1]
 	// CTOR OclComparable::compareTo(OclSelf[1]) : Integer[1]
-	// CTOR OclElement::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclElement::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// CTOR OclElement::oclAsModelType(TT)(oclAsModelType.TT[1]) : oclAsModelType.TT[1]
 	// CTOR OclElement::oclBase() : OclType[?]
 	// CTOR OclElement::oclBase(OclType[1]) : OclType[?]
 	// CTOR OclElement::oclContainer() : OclElement[?]
-	// CTOR OclElement::oclContents() : Set(OclElement)
+	// CTOR OclElement::oclContents() : Set(OclElement[*|1])
 	// CTOR OclElement::oclExtension(OclStereotype[1]) : OclElement[?]
-	// CTOR OclElement::oclExtensions() : Set(OclElement)
-	// CTOR OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement)
+	// CTOR OclElement::oclExtensions() : Set(OclElement[*|1])
+	// CTOR OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement[*|1])
 	// CTOR OclElement::oclIsModelKindOf(OclType[1]) : Boolean[1]
 	// CTOR OclElement::oclModelType() : OclSelf[1]
-	// CTOR OclElement::oclModelTypes() : Set(OclSelf)
-	// CTOR OclEnumeration::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclElement::oclModelTypes() : Set(OclSelf[*|1])
+	// CTOR OclEnumeration::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// CTOR OclInvalid::<>(OclSelf[?]) : Boolean[1]
 	// CTOR OclInvalid::=(OclSelf[?]) : Boolean[1]
-	// CTOR OclInvalid::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclInvalid::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// CTOR OclInvalid::and(Boolean[?]) : Boolean[?]
 	// CTOR OclInvalid::implies(Boolean[?]) : Boolean[?]
-	// CTOR OclInvalid::oclAsSet() : Set(OclSelf)
+	// CTOR OclInvalid::oclAsSet() : Set(OclSelf[*|1])
 	// CTOR OclInvalid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
 	// CTOR OclInvalid::oclBadOperation() : OclAny[?]
 	// CTOR OclInvalid::oclIsInvalid() : Boolean[1]
@@ -607,7 +607,7 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR OclMessage::isOperationCall() : Boolean[1]
 	// CTOR OclMessage::isSignalSent() : Boolean[1]
 	// CTOR OclMessage::result() : OclAny[?]
-	// CTOR OclStereotype::allInstances(Integer[1]) : Set(OclSelf)
+	// CTOR OclStereotype::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// CTOR OclSummable::sum(OclSelf[1]) : OclSelf[1]
 	// CTOR OclSummable::zero() : OclSelf[1]
 	// CTOR OclTuple::<>(OclSelf[?]) : Boolean[1]
@@ -621,14 +621,14 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR OclVoid::concat(String[?]) : String[1]
 	// CTOR OclVoid::implies(Boolean[?]) : Boolean[?]
 	// CTOR OclVoid::not() : Boolean[?]
-	// CTOR OclVoid::oclAsSet() : Set(OclSelf)
+	// CTOR OclVoid::oclAsSet() : Set(OclSelf[*|1])
 	// CTOR OclVoid::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[?]
 	// CTOR OclVoid::oclIsInvalid() : Boolean[1]
 	// CTOR OclVoid::oclIsKindOf(OclType[1]) : Boolean[1]
 	// CTOR OclVoid::oclIsTypeOf(OclType[1]) : Boolean[1]
 	// CTOR OclVoid::oclIsUndefined() : Boolean[1]
 	// CTOR OclVoid::oclType() : OclSelf[1]
-	// CTOR OclVoid::oclTypes() : Set(OclSelf)
+	// CTOR OclVoid::oclTypes() : Set(OclSelf[*|1])
 	// CTOR OclVoid::or(Boolean[?]) : Boolean[?]
 	// CTOR OclVoid::toString() : String[1]
 	// CTOR OclVoid::xor(Boolean[?]) : Boolean[?]
@@ -636,55 +636,55 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR OrderedCollection(T)::first() : OrderedCollection.T[?]
 	// CTOR OrderedCollection(T)::indexOf(OrderedCollection.T[?]) : Integer[?]
 	// CTOR OrderedCollection(T)::last() : OrderedCollection.T[?]
-	// CTOR OrderedSet(T)::-(UniqueCollection(OclAny)) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::-(UniqueCollection(OclAny[*|1])) : OrderedSet(OrderedSet.T[*|1])
 	// CTOR OrderedSet(T)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR OrderedSet(T)::=(OclSelf[?]) : Boolean[1]
-	// CTOR OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::excludingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2)
-	// CTOR OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::includingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT)
-	// CTOR OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT)
-	// CTOR OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T)
+	// CTOR OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::excludingAll(Collection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2[*|1])
+	// CTOR OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::includingAll(Collection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT[*|1])
+	// CTOR OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT[*|1])
+	// CTOR OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T[*|1])
 	// CTOR Sequence(T)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Sequence(T)::=(OclSelf[?]) : Boolean[1]
-	// CTOR Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::appendAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::excludingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::flatten(T2)() : Sequence(flatten.T2)
-	// CTOR Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::includingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::prependAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
-	// CTOR Sequence(T)::reverse() : Sequence(Sequence.T)
-	// CTOR Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT)
-	// CTOR Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT)
-	// CTOR Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T)
-	// CTOR Set(T)::-(UniqueCollection(OclAny)) : Set(Set.T)
+	// CTOR Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::appendAll(OrderedCollection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::excludingAll(Collection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::flatten(T2)() : Sequence(flatten.T2[*|1])
+	// CTOR Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::includingAll(Collection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::prependAll(OrderedCollection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::reverse() : Sequence(Sequence.T[*|1])
+	// CTOR Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT[*|1])
+	// CTOR Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT[*|1])
+	// CTOR Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T[*|1])
+	// CTOR Set(T)::-(UniqueCollection(OclAny[*|1])) : Set(Set.T[*|1])
 	// CTOR Set(T)::<>(OclSelf[?]) : Boolean[1]
 	// CTOR Set(T)::=(OclSelf[?]) : Boolean[1]
-	// CTOR Set(T)::excluding(Set.T[?]) : Set(Set.T)
-	// CTOR Set(T)::excludingAll(Collection(Set.T)) : Set(Set.T)
-	// CTOR Set(T)::flatten(T2)() : Set(flatten.T2)
-	// CTOR Set(T)::including(Set.T[?]) : Set(Set.T)
-	// CTOR Set(T)::includingAll(Collection(Set.T)) : Set(Set.T)
-	// CTOR Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT)
-	// CTOR Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT)
-	// CTOR Stereotype::allInstances() : Set(OclSelf)
+	// CTOR Set(T)::excluding(Set.T[?]) : Set(Set.T[*|1])
+	// CTOR Set(T)::excludingAll(Collection(Set.T[*|1])) : Set(Set.T[*|1])
+	// CTOR Set(T)::flatten(T2)() : Set(flatten.T2[*|1])
+	// CTOR Set(T)::including(Set.T[?]) : Set(Set.T[*|1])
+	// CTOR Set(T)::includingAll(Collection(Set.T[*|1])) : Set(Set.T[*|1])
+	// CTOR Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT[*|1])
+	// CTOR Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT[*|1])
+	// CTOR Stereotype::allInstances() : Set(OclSelf[*|1])
 	// CTOR Type::conformsTo(Type[?]) : Boolean[1]
-	// CTOR UniqueCollection(T)::-(UniqueCollection(OclAny)) : UniqueCollection(UniqueCollection.T)
-	// CTOR UniqueCollection(T)::intersection(Collection(UniqueCollection.T)) : Set(UniqueCollection.T)
-	// CTOR UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny)) : Set(UniqueCollection.T)
-	// CTOR UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// CTOR UniqueCollection(T)::-(UniqueCollection(OclAny[*|1])) : UniqueCollection(UniqueCollection.T[*|1])
+	// CTOR UniqueCollection(T)::intersection(Collection(UniqueCollection.T[*|1])) : Set(UniqueCollection.T[*|1])
+	// CTOR UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny[*|1])) : Set(UniqueCollection.T[*|1])
+	// CTOR UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T[*|1])) : Set(UniqueCollection.T[*|1])
 	// CTOR VoidType::allInstances() : Set(OclSelf[*|?])
 	// OPERATIONS CollectionType
 	// OPERATIONS EnumerationLiteral
@@ -804,23 +804,23 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR flatten.T2
 	// CTOR selectByKind.TT
 	// CTOR selectByType.TT
-	// CTOR Collection(Integer)
-	// CTOR Collection(String)
-	// CTOR Collection(Bag.T)
-	// CTOR Collection(CollectionType)
-	// CTOR Collection(Collection.T)
-	// CTOR Collection(MapType)
-	// CTOR Collection(Map.K)
-	// CTOR Collection(Map.V)
-	// CTOR Collection(OclAny)
-	// CTOR Collection(OclElement)
-	// CTOR Collection(OclInvalid)
-	// CTOR Collection(OclSelf)
-	// CTOR Collection(OrderedCollection.T)
-	// CTOR Collection(OrderedSet.T)
-	// CTOR Collection(Sequence.T)
-	// CTOR Collection(Set.T)
-	// CTOR Collection(UniqueCollection.T)
+	// CTOR Collection(Integer[*|1])
+	// CTOR Collection(String[*|1])
+	// CTOR Collection(Bag.T[*|1])
+	// CTOR Collection(CollectionType[*|1])
+	// CTOR Collection(Collection.T[*|1])
+	// CTOR Collection(MapType[*|1])
+	// CTOR Collection(Map.K[*|1])
+	// CTOR Collection(Map.V[*|1])
+	// CTOR Collection(OclAny[*|1])
+	// CTOR Collection(OclElement[*|1])
+	// CTOR Collection(OclInvalid[*|1])
+	// CTOR Collection(OclSelf[*|1])
+	// CTOR Collection(OrderedCollection.T[*|1])
+	// CTOR Collection(OrderedSet.T[*|1])
+	// CTOR Collection(Sequence.T[*|1])
+	// CTOR Collection(Set.T[*|1])
+	// CTOR Collection(UniqueCollection.T[*|1])
 	// CTOR Map(Map.K,Map.V)
 	// CTOR Map(Map.K[?],Map.V[?])
 	// CTOR Lambda T() : Boolean
@@ -1096,37 +1096,37 @@ public class OCLstdlibTables extends AbstractTables
 	// TYPE Set(T)::=(OclSelf[?]) : Boolean[1]
 	// TYPE Type::conformsTo(Type[?]) : Boolean[1]
 
-	// CTOR Collection(collectNested.V)
-	// CTOR Collection(collect.V)
-	// CTOR Collection(flatten.T2)
-	// CTOR Collection(selectByKind.TT)
-	// CTOR Collection(selectByType.TT)
-	// CTOR Collection(collectNested.V)
-	// CTOR Collection(collect.V)
-	// CTOR Collection(excludesAll.T2)
-	// CTOR Collection(flatten.T2)
-	// CTOR Collection(includesAll.T2)
-	// CTOR Collection(product.T2)
-	// CTOR Collection(selectByKind.TT)
-	// CTOR Collection(selectByType.TT)
-	// CTOR Collection(collect.V2)
-	// CTOR Collection(excludesAll.K2)
-	// CTOR Collection(includesAll.K2)
-	// CTOR Collection(collectNested.V)
-	// CTOR Collection(collect.V)
-	// CTOR Collection(flatten.T2)
-	// CTOR Collection(selectByKind.TT)
-	// CTOR Collection(selectByType.TT)
-	// CTOR Collection(collectNested.V)
-	// CTOR Collection(collect.V)
-	// CTOR Collection(flatten.T2)
-	// CTOR Collection(selectByKind.TT)
-	// CTOR Collection(selectByType.TT)
-	// CTOR Collection(collectNested.V)
-	// CTOR Collection(collect.V)
-	// CTOR Collection(flatten.T2)
-	// CTOR Collection(selectByKind.TT)
-	// CTOR Collection(selectByType.TT)
+	// CTOR Collection(collectNested.V[*|1])
+	// CTOR Collection(collect.V[*|1])
+	// CTOR Collection(flatten.T2[*|1])
+	// CTOR Collection(selectByKind.TT[*|1])
+	// CTOR Collection(selectByType.TT[*|1])
+	// CTOR Collection(collectNested.V[*|1])
+	// CTOR Collection(collect.V[*|1])
+	// CTOR Collection(excludesAll.T2[*|1])
+	// CTOR Collection(flatten.T2[*|1])
+	// CTOR Collection(includesAll.T2[*|1])
+	// CTOR Collection(product.T2[*|1])
+	// CTOR Collection(selectByKind.TT[*|1])
+	// CTOR Collection(selectByType.TT[*|1])
+	// CTOR Collection(collect.V2[*|1])
+	// CTOR Collection(excludesAll.K2[*|1])
+	// CTOR Collection(includesAll.K2[*|1])
+	// CTOR Collection(collectNested.V[*|1])
+	// CTOR Collection(collect.V[*|1])
+	// CTOR Collection(flatten.T2[*|1])
+	// CTOR Collection(selectByKind.TT[*|1])
+	// CTOR Collection(selectByType.TT[*|1])
+	// CTOR Collection(collectNested.V[*|1])
+	// CTOR Collection(collect.V[*|1])
+	// CTOR Collection(flatten.T2[*|1])
+	// CTOR Collection(selectByKind.TT[*|1])
+	// CTOR Collection(selectByType.TT[*|1])
+	// CTOR Collection(collectNested.V[*|1])
+	// CTOR Collection(collect.V[*|1])
+	// CTOR Collection(flatten.T2[*|1])
+	// CTOR Collection(selectByKind.TT[*|1])
+	// CTOR Collection(selectByType.TT[*|1])
 	// CTOR Map(Collection.T[?],collectBy.V[?])
 	// CTOR Map(excludesMap.K2,excludesMap.V2)
 	// CTOR Map(excludingMap.K2,excludingMap.V2)
@@ -1151,23 +1151,23 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR Lambda T() : V
 	// CTOR Lambda T() : V
 	// CTOR Lambda T() : V
-	// OPERATIONS Collection(Integer)
-	// OPERATIONS Collection(String)
-	// OPERATIONS Collection(Bag.T)
-	// OPERATIONS Collection(CollectionType)
-	// OPERATIONS Collection(Collection.T)
-	// OPERATIONS Collection(MapType)
-	// OPERATIONS Collection(Map.K)
-	// OPERATIONS Collection(Map.V)
-	// OPERATIONS Collection(OclAny)
-	// OPERATIONS Collection(OclElement)
-	// OPERATIONS Collection(OclInvalid)
-	// OPERATIONS Collection(OclSelf)
-	// OPERATIONS Collection(OrderedCollection.T)
-	// OPERATIONS Collection(OrderedSet.T)
-	// OPERATIONS Collection(Sequence.T)
-	// OPERATIONS Collection(Set.T)
-	// OPERATIONS Collection(UniqueCollection.T)
+	// OPERATIONS Collection(Integer[*|1])
+	// OPERATIONS Collection(String[*|1])
+	// OPERATIONS Collection(Bag.T[*|1])
+	// OPERATIONS Collection(CollectionType[*|1])
+	// OPERATIONS Collection(Collection.T[*|1])
+	// OPERATIONS Collection(MapType[*|1])
+	// OPERATIONS Collection(Map.K[*|1])
+	// OPERATIONS Collection(Map.V[*|1])
+	// OPERATIONS Collection(OclAny[*|1])
+	// OPERATIONS Collection(OclElement[*|1])
+	// OPERATIONS Collection(OclInvalid[*|1])
+	// OPERATIONS Collection(OclSelf[*|1])
+	// OPERATIONS Collection(OrderedCollection.T[*|1])
+	// OPERATIONS Collection(OrderedSet.T[*|1])
+	// OPERATIONS Collection(Sequence.T[*|1])
+	// OPERATIONS Collection(Set.T[*|1])
+	// OPERATIONS Collection(UniqueCollection.T[*|1])
 	// OPERATIONS Map(Map.K,Map.V)
 	// OPERATIONS Map(Map.K[?],Map.V[?])
 	// OPERATIONS Lambda T() : Boolean
@@ -1183,23 +1183,23 @@ public class OCLstdlibTables extends AbstractTables
 	// OPERATIONS Lambda T() : Boolean
 	// OPERATIONS Lambda T() : OclAny
 	// OPERATIONS Lambda T() : OclAny
-	// PROPERTIES Collection(Integer)
-	// PROPERTIES Collection(String)
-	// PROPERTIES Collection(Bag.T)
-	// PROPERTIES Collection(CollectionType)
-	// PROPERTIES Collection(Collection.T)
-	// PROPERTIES Collection(MapType)
-	// PROPERTIES Collection(Map.K)
-	// PROPERTIES Collection(Map.V)
-	// PROPERTIES Collection(OclAny)
-	// PROPERTIES Collection(OclElement)
-	// PROPERTIES Collection(OclInvalid)
-	// PROPERTIES Collection(OclSelf)
-	// PROPERTIES Collection(OrderedCollection.T)
-	// PROPERTIES Collection(OrderedSet.T)
-	// PROPERTIES Collection(Sequence.T)
-	// PROPERTIES Collection(Set.T)
-	// PROPERTIES Collection(UniqueCollection.T)
+	// PROPERTIES Collection(Integer[*|1])
+	// PROPERTIES Collection(String[*|1])
+	// PROPERTIES Collection(Bag.T[*|1])
+	// PROPERTIES Collection(CollectionType[*|1])
+	// PROPERTIES Collection(Collection.T[*|1])
+	// PROPERTIES Collection(MapType[*|1])
+	// PROPERTIES Collection(Map.K[*|1])
+	// PROPERTIES Collection(Map.V[*|1])
+	// PROPERTIES Collection(OclAny[*|1])
+	// PROPERTIES Collection(OclElement[*|1])
+	// PROPERTIES Collection(OclInvalid[*|1])
+	// PROPERTIES Collection(OclSelf[*|1])
+	// PROPERTIES Collection(OrderedCollection.T[*|1])
+	// PROPERTIES Collection(OrderedSet.T[*|1])
+	// PROPERTIES Collection(Sequence.T[*|1])
+	// PROPERTIES Collection(Set.T[*|1])
+	// PROPERTIES Collection(UniqueCollection.T[*|1])
 	// PROPERTIES Map(Map.K,Map.V)
 	// PROPERTIES Map(Map.K[?],Map.V[?])
 	// PROPERTIES Lambda T() : Boolean
@@ -1215,23 +1215,23 @@ public class OCLstdlibTables extends AbstractTables
 	// PROPERTIES Lambda T() : Boolean
 	// PROPERTIES Lambda T() : OclAny
 	// PROPERTIES Lambda T() : OclAny
-	// SUPER_CLASSES Collection(Integer)
-	// SUPER_CLASSES Collection(String)
-	// SUPER_CLASSES Collection(Bag.T)
-	// SUPER_CLASSES Collection(CollectionType)
-	// SUPER_CLASSES Collection(Collection.T)
-	// SUPER_CLASSES Collection(MapType)
-	// SUPER_CLASSES Collection(Map.K)
-	// SUPER_CLASSES Collection(Map.V)
-	// SUPER_CLASSES Collection(OclAny)
-	// SUPER_CLASSES Collection(OclElement)
-	// SUPER_CLASSES Collection(OclInvalid)
-	// SUPER_CLASSES Collection(OclSelf)
-	// SUPER_CLASSES Collection(OrderedCollection.T)
-	// SUPER_CLASSES Collection(OrderedSet.T)
-	// SUPER_CLASSES Collection(Sequence.T)
-	// SUPER_CLASSES Collection(Set.T)
-	// SUPER_CLASSES Collection(UniqueCollection.T)
+	// SUPER_CLASSES Collection(Integer[*|1])
+	// SUPER_CLASSES Collection(String[*|1])
+	// SUPER_CLASSES Collection(Bag.T[*|1])
+	// SUPER_CLASSES Collection(CollectionType[*|1])
+	// SUPER_CLASSES Collection(Collection.T[*|1])
+	// SUPER_CLASSES Collection(MapType[*|1])
+	// SUPER_CLASSES Collection(Map.K[*|1])
+	// SUPER_CLASSES Collection(Map.V[*|1])
+	// SUPER_CLASSES Collection(OclAny[*|1])
+	// SUPER_CLASSES Collection(OclElement[*|1])
+	// SUPER_CLASSES Collection(OclInvalid[*|1])
+	// SUPER_CLASSES Collection(OclSelf[*|1])
+	// SUPER_CLASSES Collection(OrderedCollection.T[*|1])
+	// SUPER_CLASSES Collection(OrderedSet.T[*|1])
+	// SUPER_CLASSES Collection(Sequence.T[*|1])
+	// SUPER_CLASSES Collection(Set.T[*|1])
+	// SUPER_CLASSES Collection(UniqueCollection.T[*|1])
 	// SUPER_CLASSES OrderedCollection(T)
 	// SUPER_CLASSES UniqueCollection(T)
 	// SUPER_CLASSES Map(Map.K,Map.V)
@@ -1259,8 +1259,8 @@ public class OCLstdlibTables extends AbstractTables
 	// TYPE Collection(T).forAll(Collection.T[?] | Lambda T() : Boolean[?]) : Boolean[?]
 	// TYPE Collection(T).isUnique(Collection.T[?] | Lambda T() : OclAny[?]) : Boolean[1]
 	// TYPE Collection(T).one(Collection.T[?] | Lambda T() : Boolean[1]) : Boolean[1]
-	// TYPE Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
-	// TYPE Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T)
+	// TYPE Collection(T).reject(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T[*|1])
+	// TYPE Collection(T).select(Collection.T[?] | Lambda T() : Boolean[1]) : Collection(Collection.T[*|1])
 	// TYPE Map(K,V).any(Map.K[1] | Lambda K() : Boolean[1]) : Map.K[?]
 	// TYPE Map(K,V).exists(Map.K[?], Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
 	// TYPE Map(K,V).exists(Map.K[?], Map.K[?] | Lambda K() : Boolean[?]) : Boolean[?]
@@ -1273,13 +1273,13 @@ public class OCLstdlibTables extends AbstractTables
 	// TYPE Map(K,V).reject(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
 	// TYPE Map(K,V).select(Map.K[?] | Lambda K() : Boolean[1]) : Map(Map.K[?],Map.V[?])[1]
 	// TYPE UnlimitedNatural::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
-	// TYPE Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T)
-	// TYPE Collection(T)::excludingAll(Collection(Collection.T)) : Collection(Collection.T)
-	// TYPE Collection(T)::including(Collection.T[?]) : Collection(Collection.T)
-	// TYPE Collection(T)::includingAll(Collection(Collection.T)) : Collection(Collection.T)
+	// TYPE Collection(T)::excluding(Collection.T[?]) : Collection(Collection.T[*|1])
+	// TYPE Collection(T)::excludingAll(Collection(Collection.T[*|1])) : Collection(Collection.T[*|1])
+	// TYPE Collection(T)::including(Collection.T[?]) : Collection(Collection.T[*|1])
+	// TYPE Collection(T)::includingAll(Collection(Collection.T[*|1])) : Collection(Collection.T[*|1])
 	// TYPE Map(K,V)::excluding(Map.K[?]) : Map(Map.K,Map.V)[1]
 	// TYPE Map(K,V)::excluding(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
-	// TYPE Map(K,V)::excludingAll(Collection(Map.K)) : Map(Map.K,Map.V)[1]
+	// TYPE Map(K,V)::excludingAll(Collection(Map.K[*|1])) : Map(Map.K,Map.V)[1]
 	// TYPE Map(K,V)::including(Map.K[?],Map.V[?]) : Map(Map.K,Map.V)[1]
 	// TYPE OclAny::oclAsType(TT)(oclAsType.TT[1]) : oclAsType.TT[1]
 	// TYPE OclElement::oclAsModelType(TT)(oclAsModelType.TT[1]) : oclAsModelType.TT[1]
@@ -2242,88 +2242,88 @@ public class OCLstdlibTables extends AbstractTables
 	}
 	// CTOR $$::Tuple::first
 	// CTOR $$::Tuple::second
-	// CTOR Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// CTOR OrderedCollection(Integer)
-	// CTOR OrderedCollection(String)
-	// CTOR OrderedCollection(Bag.T)
-	// CTOR OrderedCollection(Collection.T)
-	// CTOR OrderedCollection(collectNested.V)
-	// CTOR OrderedCollection(collect.V)
-	// CTOR OrderedCollection(flatten.T2)
-	// CTOR OrderedCollection(selectByKind.TT)
-	// CTOR OrderedCollection(selectByType.TT)
-	// CTOR OrderedCollection(OrderedSet.T)
-	// CTOR OrderedCollection(collectNested.V)
-	// CTOR OrderedCollection(collect.V)
-	// CTOR OrderedCollection(flatten.T2)
-	// CTOR OrderedCollection(selectByKind.TT)
-	// CTOR OrderedCollection(selectByType.TT)
-	// CTOR OrderedCollection(Sequence.T)
-	// CTOR OrderedCollection(Set.T)
-	// CTOR OrderedCollection(UniqueCollection.T)
-	// CTOR UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// CTOR UniqueCollection(Bag.T)
-	// CTOR UniqueCollection(Collection.T)
-	// CTOR UniqueCollection(Map.K)
-	// CTOR UniqueCollection(OclAny)
-	// CTOR UniqueCollection(OclElement)
-	// CTOR UniqueCollection(OclSelf)
-	// CTOR UniqueCollection(flatten.T2)
-	// CTOR UniqueCollection(selectByKind.TT)
-	// CTOR UniqueCollection(selectByType.TT)
-	// CTOR UniqueCollection(OrderedSet.T)
-	// CTOR UniqueCollection(Sequence.T)
-	// CTOR UniqueCollection(flatten.T2)
-	// CTOR UniqueCollection(selectByKind.TT)
-	// CTOR UniqueCollection(selectByType.TT)
-	// CTOR UniqueCollection(Set.T)
-	// CTOR UniqueCollection(UniqueCollection.T)
-	// CTOR Bag(collectNested.V)
-	// CTOR Bag(collect.V)
-	// CTOR Bag(flatten.T2)
-	// CTOR Bag(selectByKind.TT)
-	// CTOR Bag(selectByType.TT)
-	// CTOR Bag(Bag.T)
-	// CTOR Bag(CollectionType)
-	// CTOR Bag(Collection.T)
-	// CTOR Bag(MapType)
-	// CTOR Bag(collect.V2)
-	// CTOR Bag(Map.V)
-	// CTOR Bag(OclElement)
-	// CTOR Bag(OclInvalid)
-	// CTOR Bag(collectNested.V)
-	// CTOR Bag(collect.V)
-	// OPERATIONS Collection(collectNested.V)
-	// OPERATIONS Collection(collect.V)
-	// OPERATIONS Collection(flatten.T2)
-	// OPERATIONS Collection(selectByKind.TT)
-	// OPERATIONS Collection(selectByType.TT)
-	// OPERATIONS Collection(collectNested.V)
-	// OPERATIONS Collection(collect.V)
-	// OPERATIONS Collection(excludesAll.T2)
-	// OPERATIONS Collection(flatten.T2)
-	// OPERATIONS Collection(includesAll.T2)
-	// OPERATIONS Collection(product.T2)
-	// OPERATIONS Collection(selectByKind.TT)
-	// OPERATIONS Collection(selectByType.TT)
-	// OPERATIONS Collection(collect.V2)
-	// OPERATIONS Collection(excludesAll.K2)
-	// OPERATIONS Collection(includesAll.K2)
-	// OPERATIONS Collection(collectNested.V)
-	// OPERATIONS Collection(collect.V)
-	// OPERATIONS Collection(flatten.T2)
-	// OPERATIONS Collection(selectByKind.TT)
-	// OPERATIONS Collection(selectByType.TT)
-	// OPERATIONS Collection(collectNested.V)
-	// OPERATIONS Collection(collect.V)
-	// OPERATIONS Collection(flatten.T2)
-	// OPERATIONS Collection(selectByKind.TT)
-	// OPERATIONS Collection(selectByType.TT)
-	// OPERATIONS Collection(collectNested.V)
-	// OPERATIONS Collection(collect.V)
-	// OPERATIONS Collection(flatten.T2)
-	// OPERATIONS Collection(selectByKind.TT)
-	// OPERATIONS Collection(selectByType.TT)
+	// CTOR Collection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// CTOR OrderedCollection(Integer[*|1])
+	// CTOR OrderedCollection(String[*|1])
+	// CTOR OrderedCollection(Bag.T[*|1])
+	// CTOR OrderedCollection(Collection.T[*|1])
+	// CTOR OrderedCollection(collectNested.V[*|1])
+	// CTOR OrderedCollection(collect.V[*|1])
+	// CTOR OrderedCollection(flatten.T2[*|1])
+	// CTOR OrderedCollection(selectByKind.TT[*|1])
+	// CTOR OrderedCollection(selectByType.TT[*|1])
+	// CTOR OrderedCollection(OrderedSet.T[*|1])
+	// CTOR OrderedCollection(collectNested.V[*|1])
+	// CTOR OrderedCollection(collect.V[*|1])
+	// CTOR OrderedCollection(flatten.T2[*|1])
+	// CTOR OrderedCollection(selectByKind.TT[*|1])
+	// CTOR OrderedCollection(selectByType.TT[*|1])
+	// CTOR OrderedCollection(Sequence.T[*|1])
+	// CTOR OrderedCollection(Set.T[*|1])
+	// CTOR OrderedCollection(UniqueCollection.T[*|1])
+	// CTOR UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// CTOR UniqueCollection(Bag.T[*|1])
+	// CTOR UniqueCollection(Collection.T[*|1])
+	// CTOR UniqueCollection(Map.K[*|1])
+	// CTOR UniqueCollection(OclAny[*|1])
+	// CTOR UniqueCollection(OclElement[*|1])
+	// CTOR UniqueCollection(OclSelf[*|1])
+	// CTOR UniqueCollection(flatten.T2[*|1])
+	// CTOR UniqueCollection(selectByKind.TT[*|1])
+	// CTOR UniqueCollection(selectByType.TT[*|1])
+	// CTOR UniqueCollection(OrderedSet.T[*|1])
+	// CTOR UniqueCollection(Sequence.T[*|1])
+	// CTOR UniqueCollection(flatten.T2[*|1])
+	// CTOR UniqueCollection(selectByKind.TT[*|1])
+	// CTOR UniqueCollection(selectByType.TT[*|1])
+	// CTOR UniqueCollection(Set.T[*|1])
+	// CTOR UniqueCollection(UniqueCollection.T[*|1])
+	// CTOR Bag(collectNested.V[*|1])
+	// CTOR Bag(collect.V[*|1])
+	// CTOR Bag(flatten.T2[*|1])
+	// CTOR Bag(selectByKind.TT[*|1])
+	// CTOR Bag(selectByType.TT[*|1])
+	// CTOR Bag(Bag.T[*|1])
+	// CTOR Bag(CollectionType[*|1])
+	// CTOR Bag(Collection.T[*|1])
+	// CTOR Bag(MapType[*|1])
+	// CTOR Bag(collect.V2[*|1])
+	// CTOR Bag(Map.V[*|1])
+	// CTOR Bag(OclElement[*|1])
+	// CTOR Bag(OclInvalid[*|1])
+	// CTOR Bag(collectNested.V[*|1])
+	// CTOR Bag(collect.V[*|1])
+	// OPERATIONS Collection(collectNested.V[*|1])
+	// OPERATIONS Collection(collect.V[*|1])
+	// OPERATIONS Collection(flatten.T2[*|1])
+	// OPERATIONS Collection(selectByKind.TT[*|1])
+	// OPERATIONS Collection(selectByType.TT[*|1])
+	// OPERATIONS Collection(collectNested.V[*|1])
+	// OPERATIONS Collection(collect.V[*|1])
+	// OPERATIONS Collection(excludesAll.T2[*|1])
+	// OPERATIONS Collection(flatten.T2[*|1])
+	// OPERATIONS Collection(includesAll.T2[*|1])
+	// OPERATIONS Collection(product.T2[*|1])
+	// OPERATIONS Collection(selectByKind.TT[*|1])
+	// OPERATIONS Collection(selectByType.TT[*|1])
+	// OPERATIONS Collection(collect.V2[*|1])
+	// OPERATIONS Collection(excludesAll.K2[*|1])
+	// OPERATIONS Collection(includesAll.K2[*|1])
+	// OPERATIONS Collection(collectNested.V[*|1])
+	// OPERATIONS Collection(collect.V[*|1])
+	// OPERATIONS Collection(flatten.T2[*|1])
+	// OPERATIONS Collection(selectByKind.TT[*|1])
+	// OPERATIONS Collection(selectByType.TT[*|1])
+	// OPERATIONS Collection(collectNested.V[*|1])
+	// OPERATIONS Collection(collect.V[*|1])
+	// OPERATIONS Collection(flatten.T2[*|1])
+	// OPERATIONS Collection(selectByKind.TT[*|1])
+	// OPERATIONS Collection(selectByType.TT[*|1])
+	// OPERATIONS Collection(collectNested.V[*|1])
+	// OPERATIONS Collection(collect.V[*|1])
+	// OPERATIONS Collection(flatten.T2[*|1])
+	// OPERATIONS Collection(selectByKind.TT[*|1])
+	// OPERATIONS Collection(selectByType.TT[*|1])
 	// OPERATIONS Map(Collection.T[?],collectBy.V[?])
 	// OPERATIONS Map(excludesMap.K2,excludesMap.V2)
 	// OPERATIONS Map(excludingMap.K2,excludingMap.V2)
@@ -2347,37 +2347,37 @@ public class OCLstdlibTables extends AbstractTables
 	// OPERATIONS Lambda T() : V
 	// OPERATIONS Lambda T() : V
 	// OPERATIONS Lambda T() : V
-	// PROPERTIES Collection(collectNested.V)
-	// PROPERTIES Collection(collect.V)
-	// PROPERTIES Collection(flatten.T2)
-	// PROPERTIES Collection(selectByKind.TT)
-	// PROPERTIES Collection(selectByType.TT)
-	// PROPERTIES Collection(collectNested.V)
-	// PROPERTIES Collection(collect.V)
-	// PROPERTIES Collection(excludesAll.T2)
-	// PROPERTIES Collection(flatten.T2)
-	// PROPERTIES Collection(includesAll.T2)
-	// PROPERTIES Collection(product.T2)
-	// PROPERTIES Collection(selectByKind.TT)
-	// PROPERTIES Collection(selectByType.TT)
-	// PROPERTIES Collection(collect.V2)
-	// PROPERTIES Collection(excludesAll.K2)
-	// PROPERTIES Collection(includesAll.K2)
-	// PROPERTIES Collection(collectNested.V)
-	// PROPERTIES Collection(collect.V)
-	// PROPERTIES Collection(flatten.T2)
-	// PROPERTIES Collection(selectByKind.TT)
-	// PROPERTIES Collection(selectByType.TT)
-	// PROPERTIES Collection(collectNested.V)
-	// PROPERTIES Collection(collect.V)
-	// PROPERTIES Collection(flatten.T2)
-	// PROPERTIES Collection(selectByKind.TT)
-	// PROPERTIES Collection(selectByType.TT)
-	// PROPERTIES Collection(collectNested.V)
-	// PROPERTIES Collection(collect.V)
-	// PROPERTIES Collection(flatten.T2)
-	// PROPERTIES Collection(selectByKind.TT)
-	// PROPERTIES Collection(selectByType.TT)
+	// PROPERTIES Collection(collectNested.V[*|1])
+	// PROPERTIES Collection(collect.V[*|1])
+	// PROPERTIES Collection(flatten.T2[*|1])
+	// PROPERTIES Collection(selectByKind.TT[*|1])
+	// PROPERTIES Collection(selectByType.TT[*|1])
+	// PROPERTIES Collection(collectNested.V[*|1])
+	// PROPERTIES Collection(collect.V[*|1])
+	// PROPERTIES Collection(excludesAll.T2[*|1])
+	// PROPERTIES Collection(flatten.T2[*|1])
+	// PROPERTIES Collection(includesAll.T2[*|1])
+	// PROPERTIES Collection(product.T2[*|1])
+	// PROPERTIES Collection(selectByKind.TT[*|1])
+	// PROPERTIES Collection(selectByType.TT[*|1])
+	// PROPERTIES Collection(collect.V2[*|1])
+	// PROPERTIES Collection(excludesAll.K2[*|1])
+	// PROPERTIES Collection(includesAll.K2[*|1])
+	// PROPERTIES Collection(collectNested.V[*|1])
+	// PROPERTIES Collection(collect.V[*|1])
+	// PROPERTIES Collection(flatten.T2[*|1])
+	// PROPERTIES Collection(selectByKind.TT[*|1])
+	// PROPERTIES Collection(selectByType.TT[*|1])
+	// PROPERTIES Collection(collectNested.V[*|1])
+	// PROPERTIES Collection(collect.V[*|1])
+	// PROPERTIES Collection(flatten.T2[*|1])
+	// PROPERTIES Collection(selectByKind.TT[*|1])
+	// PROPERTIES Collection(selectByType.TT[*|1])
+	// PROPERTIES Collection(collectNested.V[*|1])
+	// PROPERTIES Collection(collect.V[*|1])
+	// PROPERTIES Collection(flatten.T2[*|1])
+	// PROPERTIES Collection(selectByKind.TT[*|1])
+	// PROPERTIES Collection(selectByType.TT[*|1])
 	// PROPERTIES Map(Collection.T[?],collectBy.V[?])
 	// PROPERTIES Map(excludesMap.K2,excludesMap.V2)
 	// PROPERTIES Map(excludingMap.K2,excludingMap.V2)
@@ -2401,37 +2401,37 @@ public class OCLstdlibTables extends AbstractTables
 	// PROPERTIES Lambda T() : V
 	// PROPERTIES Lambda T() : V
 	// PROPERTIES Lambda T() : V
-	// SUPER_CLASSES Collection(collectNested.V)
-	// SUPER_CLASSES Collection(collect.V)
-	// SUPER_CLASSES Collection(flatten.T2)
-	// SUPER_CLASSES Collection(selectByKind.TT)
-	// SUPER_CLASSES Collection(selectByType.TT)
-	// SUPER_CLASSES Collection(collectNested.V)
-	// SUPER_CLASSES Collection(collect.V)
-	// SUPER_CLASSES Collection(excludesAll.T2)
-	// SUPER_CLASSES Collection(flatten.T2)
-	// SUPER_CLASSES Collection(includesAll.T2)
-	// SUPER_CLASSES Collection(product.T2)
-	// SUPER_CLASSES Collection(selectByKind.TT)
-	// SUPER_CLASSES Collection(selectByType.TT)
-	// SUPER_CLASSES Collection(collect.V2)
-	// SUPER_CLASSES Collection(excludesAll.K2)
-	// SUPER_CLASSES Collection(includesAll.K2)
-	// SUPER_CLASSES Collection(collectNested.V)
-	// SUPER_CLASSES Collection(collect.V)
-	// SUPER_CLASSES Collection(flatten.T2)
-	// SUPER_CLASSES Collection(selectByKind.TT)
-	// SUPER_CLASSES Collection(selectByType.TT)
-	// SUPER_CLASSES Collection(collectNested.V)
-	// SUPER_CLASSES Collection(collect.V)
-	// SUPER_CLASSES Collection(flatten.T2)
-	// SUPER_CLASSES Collection(selectByKind.TT)
-	// SUPER_CLASSES Collection(selectByType.TT)
-	// SUPER_CLASSES Collection(collectNested.V)
-	// SUPER_CLASSES Collection(collect.V)
-	// SUPER_CLASSES Collection(flatten.T2)
-	// SUPER_CLASSES Collection(selectByKind.TT)
-	// SUPER_CLASSES Collection(selectByType.TT)
+	// SUPER_CLASSES Collection(collectNested.V[*|1])
+	// SUPER_CLASSES Collection(collect.V[*|1])
+	// SUPER_CLASSES Collection(flatten.T2[*|1])
+	// SUPER_CLASSES Collection(selectByKind.TT[*|1])
+	// SUPER_CLASSES Collection(selectByType.TT[*|1])
+	// SUPER_CLASSES Collection(collectNested.V[*|1])
+	// SUPER_CLASSES Collection(collect.V[*|1])
+	// SUPER_CLASSES Collection(excludesAll.T2[*|1])
+	// SUPER_CLASSES Collection(flatten.T2[*|1])
+	// SUPER_CLASSES Collection(includesAll.T2[*|1])
+	// SUPER_CLASSES Collection(product.T2[*|1])
+	// SUPER_CLASSES Collection(selectByKind.TT[*|1])
+	// SUPER_CLASSES Collection(selectByType.TT[*|1])
+	// SUPER_CLASSES Collection(collect.V2[*|1])
+	// SUPER_CLASSES Collection(excludesAll.K2[*|1])
+	// SUPER_CLASSES Collection(includesAll.K2[*|1])
+	// SUPER_CLASSES Collection(collectNested.V[*|1])
+	// SUPER_CLASSES Collection(collect.V[*|1])
+	// SUPER_CLASSES Collection(flatten.T2[*|1])
+	// SUPER_CLASSES Collection(selectByKind.TT[*|1])
+	// SUPER_CLASSES Collection(selectByType.TT[*|1])
+	// SUPER_CLASSES Collection(collectNested.V[*|1])
+	// SUPER_CLASSES Collection(collect.V[*|1])
+	// SUPER_CLASSES Collection(flatten.T2[*|1])
+	// SUPER_CLASSES Collection(selectByKind.TT[*|1])
+	// SUPER_CLASSES Collection(selectByType.TT[*|1])
+	// SUPER_CLASSES Collection(collectNested.V[*|1])
+	// SUPER_CLASSES Collection(collect.V[*|1])
+	// SUPER_CLASSES Collection(flatten.T2[*|1])
+	// SUPER_CLASSES Collection(selectByKind.TT[*|1])
+	// SUPER_CLASSES Collection(selectByType.TT[*|1])
 	// SUPER_CLASSES Map(Collection.T[?],collectBy.V[?])
 	// SUPER_CLASSES Map(excludesMap.K2,excludesMap.V2)
 	// SUPER_CLASSES Map(excludingMap.K2,excludingMap.V2)
@@ -2457,21 +2457,21 @@ public class OCLstdlibTables extends AbstractTables
 	// SUPER_CLASSES Lambda T() : V
 	// SUPER_CLASSES Lambda T() : V
 	// TYPE Collection(T).collectBy(V)(Collection.T[?] | Lambda T() : V[?]) : Map(Collection.T[?],collectBy.V[?])[1]
-	// TYPE Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V)
-	// TYPE Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V)
+	// TYPE Collection(T).collectNested(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collectNested.V[*|1])
+	// TYPE Collection(T).collect(V)(Collection.T[?] | Lambda T() : V[?]) : Collection(collect.V[*|1])
 	// TYPE Collection(T).iterate(Tacc)(Collection.T[?]; iterate.Tacc[?] | Lambda T() : Tacc[?]) : iterate.Tacc[?]
 	// TYPE Map(K,V).collectBy(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectBy.V2[?])[1]
 	// TYPE Map(K,V).collectNested(V2)(Map.K[?] | Lambda K() : V2[?]) : Map(Map.K[?],collectNested.V2[?])[1]
 	// TYPE Map(K,V).iterate(Tacc)(Map.K[?]; iterate.Tacc[?] | Lambda K() : Tacc[?]) : iterate.Tacc[?]
-	// TYPE Collection(T)::excludesAll(T2)(Collection(excludesAll.T2)) : Boolean[1]
-	// TYPE Collection(T)::flatten(T2)() : Collection(flatten.T2)
-	// TYPE Collection(T)::includesAll(T2)(Collection(includesAll.T2)) : Boolean[1]
-	// TYPE Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT)
-	// TYPE Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT)
-	// TYPE Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2)) : Boolean[1]
+	// TYPE Collection(T)::excludesAll(T2)(Collection(excludesAll.T2[*|1])) : Boolean[1]
+	// TYPE Collection(T)::flatten(T2)() : Collection(flatten.T2[*|1])
+	// TYPE Collection(T)::includesAll(T2)(Collection(includesAll.T2[*|1])) : Boolean[1]
+	// TYPE Collection(T)::selectByKind(TT)(selectByKind.TT[1]) : Collection(selectByKind.TT[*|1])
+	// TYPE Collection(T)::selectByType(TT)(selectByType.TT[1]) : Collection(selectByType.TT[*|1])
+	// TYPE Map(K,V)::excludesAll(K2)(Collection(excludesAll.K2[*|1])) : Boolean[1]
 	// TYPE Map(K,V)::excludesMap(K2,V2)(Map(excludesMap.K2,excludesMap.V2)[1]) : Boolean[1]
 	// TYPE Map(K,V)::excludingMap(K2,V2)(Map(excludingMap.K2,excludingMap.V2)[1]) : Map(Map.K,Map.V)[1]
-	// TYPE Map(K,V)::includesAll(K2)(Collection(includesAll.K2)) : Boolean[1]
+	// TYPE Map(K,V)::includesAll(K2)(Collection(includesAll.K2[*|1])) : Boolean[1]
 	// TYPE Map(K,V)::includesMap(K2,V2)(Map(includesMap.K2,includesMap.V2)[1]) : Boolean[1]
 	// TYPE Map(K,V)::includingMap(K2,V2)(Map(includingMap.K2,includingMap.V2)[1]) : Map(Map.K,Map.V)[1]
 
@@ -2519,214 +2519,214 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR OclElement::oclContainer
 	// CTOR OclElement::oclContents
 	// CTOR OclInvalid::oclBadProperty
-	// OPERATIONS Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// OPERATIONS OrderedCollection(Integer)
-	// OPERATIONS OrderedCollection(String)
-	// OPERATIONS OrderedCollection(Bag.T)
-	// OPERATIONS OrderedCollection(Collection.T)
-	// OPERATIONS OrderedCollection(collectNested.V)
-	// OPERATIONS OrderedCollection(collect.V)
-	// OPERATIONS OrderedCollection(flatten.T2)
-	// OPERATIONS OrderedCollection(selectByKind.TT)
-	// OPERATIONS OrderedCollection(selectByType.TT)
-	// OPERATIONS OrderedCollection(OrderedSet.T)
-	// OPERATIONS OrderedCollection(collectNested.V)
-	// OPERATIONS OrderedCollection(collect.V)
-	// OPERATIONS OrderedCollection(flatten.T2)
-	// OPERATIONS OrderedCollection(selectByKind.TT)
-	// OPERATIONS OrderedCollection(selectByType.TT)
-	// OPERATIONS OrderedCollection(Sequence.T)
-	// OPERATIONS OrderedCollection(Set.T)
-	// OPERATIONS OrderedCollection(UniqueCollection.T)
-	// OPERATIONS UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// OPERATIONS UniqueCollection(Bag.T)
-	// OPERATIONS UniqueCollection(Collection.T)
-	// OPERATIONS UniqueCollection(Map.K)
-	// OPERATIONS UniqueCollection(OclAny)
-	// OPERATIONS UniqueCollection(OclElement)
-	// OPERATIONS UniqueCollection(OclSelf)
-	// OPERATIONS UniqueCollection(flatten.T2)
-	// OPERATIONS UniqueCollection(selectByKind.TT)
-	// OPERATIONS UniqueCollection(selectByType.TT)
-	// OPERATIONS UniqueCollection(OrderedSet.T)
-	// OPERATIONS UniqueCollection(Sequence.T)
-	// OPERATIONS UniqueCollection(flatten.T2)
-	// OPERATIONS UniqueCollection(selectByKind.TT)
-	// OPERATIONS UniqueCollection(selectByType.TT)
-	// OPERATIONS UniqueCollection(Set.T)
-	// OPERATIONS UniqueCollection(UniqueCollection.T)
-	// OPERATIONS Bag(collectNested.V)
-	// OPERATIONS Bag(collect.V)
-	// OPERATIONS Bag(flatten.T2)
-	// OPERATIONS Bag(selectByKind.TT)
-	// OPERATIONS Bag(selectByType.TT)
-	// OPERATIONS Bag(Bag.T)
-	// OPERATIONS Bag(CollectionType)
-	// OPERATIONS Bag(Collection.T)
-	// OPERATIONS Bag(MapType)
-	// OPERATIONS Bag(collect.V2)
-	// OPERATIONS Bag(Map.V)
-	// OPERATIONS Bag(OclElement)
-	// OPERATIONS Bag(OclInvalid)
-	// OPERATIONS Bag(collectNested.V)
-	// OPERATIONS Bag(collect.V)
-	// PROPERTIES Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// PROPERTIES OrderedCollection(Integer)
-	// PROPERTIES OrderedCollection(String)
-	// PROPERTIES OrderedCollection(Bag.T)
-	// PROPERTIES OrderedCollection(Collection.T)
-	// PROPERTIES OrderedCollection(collectNested.V)
-	// PROPERTIES OrderedCollection(collect.V)
-	// PROPERTIES OrderedCollection(flatten.T2)
-	// PROPERTIES OrderedCollection(selectByKind.TT)
-	// PROPERTIES OrderedCollection(selectByType.TT)
-	// PROPERTIES OrderedCollection(OrderedSet.T)
-	// PROPERTIES OrderedCollection(collectNested.V)
-	// PROPERTIES OrderedCollection(collect.V)
-	// PROPERTIES OrderedCollection(flatten.T2)
-	// PROPERTIES OrderedCollection(selectByKind.TT)
-	// PROPERTIES OrderedCollection(selectByType.TT)
-	// PROPERTIES OrderedCollection(Sequence.T)
-	// PROPERTIES OrderedCollection(Set.T)
-	// PROPERTIES OrderedCollection(UniqueCollection.T)
-	// PROPERTIES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// PROPERTIES UniqueCollection(Bag.T)
-	// PROPERTIES UniqueCollection(Collection.T)
-	// PROPERTIES UniqueCollection(Map.K)
-	// PROPERTIES UniqueCollection(OclAny)
-	// PROPERTIES UniqueCollection(OclElement)
-	// PROPERTIES UniqueCollection(OclSelf)
-	// PROPERTIES UniqueCollection(flatten.T2)
-	// PROPERTIES UniqueCollection(selectByKind.TT)
-	// PROPERTIES UniqueCollection(selectByType.TT)
-	// PROPERTIES UniqueCollection(OrderedSet.T)
-	// PROPERTIES UniqueCollection(Sequence.T)
-	// PROPERTIES UniqueCollection(flatten.T2)
-	// PROPERTIES UniqueCollection(selectByKind.TT)
-	// PROPERTIES UniqueCollection(selectByType.TT)
-	// PROPERTIES UniqueCollection(Set.T)
-	// PROPERTIES UniqueCollection(UniqueCollection.T)
-	// PROPERTIES Bag(collectNested.V)
-	// PROPERTIES Bag(collect.V)
-	// PROPERTIES Bag(flatten.T2)
-	// PROPERTIES Bag(selectByKind.TT)
-	// PROPERTIES Bag(selectByType.TT)
-	// PROPERTIES Bag(Bag.T)
-	// PROPERTIES Bag(CollectionType)
-	// PROPERTIES Bag(Collection.T)
-	// PROPERTIES Bag(MapType)
-	// PROPERTIES Bag(collect.V2)
-	// PROPERTIES Bag(Map.V)
-	// PROPERTIES Bag(OclElement)
-	// PROPERTIES Bag(OclInvalid)
-	// PROPERTIES Bag(collectNested.V)
-	// PROPERTIES Bag(collect.V)
-	// SUPER_CLASSES Collection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// SUPER_CLASSES OrderedCollection(Integer)
-	// SUPER_CLASSES OrderedCollection(String)
-	// SUPER_CLASSES OrderedCollection(Bag.T)
-	// SUPER_CLASSES OrderedCollection(Collection.T)
-	// SUPER_CLASSES OrderedCollection(collectNested.V)
-	// SUPER_CLASSES OrderedCollection(collect.V)
-	// SUPER_CLASSES OrderedCollection(flatten.T2)
-	// SUPER_CLASSES OrderedCollection(selectByKind.TT)
-	// SUPER_CLASSES OrderedCollection(selectByType.TT)
-	// SUPER_CLASSES OrderedCollection(OrderedSet.T)
-	// SUPER_CLASSES OrderedCollection(collectNested.V)
-	// SUPER_CLASSES OrderedCollection(collect.V)
-	// SUPER_CLASSES OrderedCollection(flatten.T2)
-	// SUPER_CLASSES OrderedCollection(selectByKind.TT)
-	// SUPER_CLASSES OrderedCollection(selectByType.TT)
-	// SUPER_CLASSES OrderedCollection(Sequence.T)
-	// SUPER_CLASSES OrderedCollection(Set.T)
-	// SUPER_CLASSES OrderedCollection(UniqueCollection.T)
-	// SUPER_CLASSES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// SUPER_CLASSES UniqueCollection(Bag.T)
-	// SUPER_CLASSES UniqueCollection(Collection.T)
-	// SUPER_CLASSES UniqueCollection(Map.K)
-	// SUPER_CLASSES UniqueCollection(OclAny)
-	// SUPER_CLASSES UniqueCollection(OclElement)
-	// SUPER_CLASSES UniqueCollection(OclSelf)
-	// SUPER_CLASSES UniqueCollection(flatten.T2)
-	// SUPER_CLASSES UniqueCollection(selectByKind.TT)
-	// SUPER_CLASSES UniqueCollection(selectByType.TT)
-	// SUPER_CLASSES UniqueCollection(OrderedSet.T)
-	// SUPER_CLASSES UniqueCollection(Sequence.T)
-	// SUPER_CLASSES UniqueCollection(flatten.T2)
-	// SUPER_CLASSES UniqueCollection(selectByKind.TT)
-	// SUPER_CLASSES UniqueCollection(selectByType.TT)
-	// SUPER_CLASSES UniqueCollection(Set.T)
-	// SUPER_CLASSES UniqueCollection(UniqueCollection.T)
-	// SUPER_CLASSES Bag(collectNested.V)
-	// SUPER_CLASSES Bag(collect.V)
-	// SUPER_CLASSES Bag(flatten.T2)
-	// SUPER_CLASSES Bag(selectByKind.TT)
-	// SUPER_CLASSES Bag(selectByType.TT)
-	// SUPER_CLASSES Bag(Bag.T)
-	// SUPER_CLASSES Bag(CollectionType)
-	// SUPER_CLASSES Bag(Collection.T)
-	// SUPER_CLASSES Bag(MapType)
-	// SUPER_CLASSES Bag(collect.V2)
-	// SUPER_CLASSES Bag(Map.V)
-	// SUPER_CLASSES Bag(OclElement)
-	// SUPER_CLASSES Bag(OclInvalid)
-	// SUPER_CLASSES Bag(collectNested.V)
-	// SUPER_CLASSES Bag(collect.V)
+	// OPERATIONS Collection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// OPERATIONS OrderedCollection(Integer[*|1])
+	// OPERATIONS OrderedCollection(String[*|1])
+	// OPERATIONS OrderedCollection(Bag.T[*|1])
+	// OPERATIONS OrderedCollection(Collection.T[*|1])
+	// OPERATIONS OrderedCollection(collectNested.V[*|1])
+	// OPERATIONS OrderedCollection(collect.V[*|1])
+	// OPERATIONS OrderedCollection(flatten.T2[*|1])
+	// OPERATIONS OrderedCollection(selectByKind.TT[*|1])
+	// OPERATIONS OrderedCollection(selectByType.TT[*|1])
+	// OPERATIONS OrderedCollection(OrderedSet.T[*|1])
+	// OPERATIONS OrderedCollection(collectNested.V[*|1])
+	// OPERATIONS OrderedCollection(collect.V[*|1])
+	// OPERATIONS OrderedCollection(flatten.T2[*|1])
+	// OPERATIONS OrderedCollection(selectByKind.TT[*|1])
+	// OPERATIONS OrderedCollection(selectByType.TT[*|1])
+	// OPERATIONS OrderedCollection(Sequence.T[*|1])
+	// OPERATIONS OrderedCollection(Set.T[*|1])
+	// OPERATIONS OrderedCollection(UniqueCollection.T[*|1])
+	// OPERATIONS UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// OPERATIONS UniqueCollection(Bag.T[*|1])
+	// OPERATIONS UniqueCollection(Collection.T[*|1])
+	// OPERATIONS UniqueCollection(Map.K[*|1])
+	// OPERATIONS UniqueCollection(OclAny[*|1])
+	// OPERATIONS UniqueCollection(OclElement[*|1])
+	// OPERATIONS UniqueCollection(OclSelf[*|1])
+	// OPERATIONS UniqueCollection(flatten.T2[*|1])
+	// OPERATIONS UniqueCollection(selectByKind.TT[*|1])
+	// OPERATIONS UniqueCollection(selectByType.TT[*|1])
+	// OPERATIONS UniqueCollection(OrderedSet.T[*|1])
+	// OPERATIONS UniqueCollection(Sequence.T[*|1])
+	// OPERATIONS UniqueCollection(flatten.T2[*|1])
+	// OPERATIONS UniqueCollection(selectByKind.TT[*|1])
+	// OPERATIONS UniqueCollection(selectByType.TT[*|1])
+	// OPERATIONS UniqueCollection(Set.T[*|1])
+	// OPERATIONS UniqueCollection(UniqueCollection.T[*|1])
+	// OPERATIONS Bag(collectNested.V[*|1])
+	// OPERATIONS Bag(collect.V[*|1])
+	// OPERATIONS Bag(flatten.T2[*|1])
+	// OPERATIONS Bag(selectByKind.TT[*|1])
+	// OPERATIONS Bag(selectByType.TT[*|1])
+	// OPERATIONS Bag(Bag.T[*|1])
+	// OPERATIONS Bag(CollectionType[*|1])
+	// OPERATIONS Bag(Collection.T[*|1])
+	// OPERATIONS Bag(MapType[*|1])
+	// OPERATIONS Bag(collect.V2[*|1])
+	// OPERATIONS Bag(Map.V[*|1])
+	// OPERATIONS Bag(OclElement[*|1])
+	// OPERATIONS Bag(OclInvalid[*|1])
+	// OPERATIONS Bag(collectNested.V[*|1])
+	// OPERATIONS Bag(collect.V[*|1])
+	// PROPERTIES Collection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// PROPERTIES OrderedCollection(Integer[*|1])
+	// PROPERTIES OrderedCollection(String[*|1])
+	// PROPERTIES OrderedCollection(Bag.T[*|1])
+	// PROPERTIES OrderedCollection(Collection.T[*|1])
+	// PROPERTIES OrderedCollection(collectNested.V[*|1])
+	// PROPERTIES OrderedCollection(collect.V[*|1])
+	// PROPERTIES OrderedCollection(flatten.T2[*|1])
+	// PROPERTIES OrderedCollection(selectByKind.TT[*|1])
+	// PROPERTIES OrderedCollection(selectByType.TT[*|1])
+	// PROPERTIES OrderedCollection(OrderedSet.T[*|1])
+	// PROPERTIES OrderedCollection(collectNested.V[*|1])
+	// PROPERTIES OrderedCollection(collect.V[*|1])
+	// PROPERTIES OrderedCollection(flatten.T2[*|1])
+	// PROPERTIES OrderedCollection(selectByKind.TT[*|1])
+	// PROPERTIES OrderedCollection(selectByType.TT[*|1])
+	// PROPERTIES OrderedCollection(Sequence.T[*|1])
+	// PROPERTIES OrderedCollection(Set.T[*|1])
+	// PROPERTIES OrderedCollection(UniqueCollection.T[*|1])
+	// PROPERTIES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// PROPERTIES UniqueCollection(Bag.T[*|1])
+	// PROPERTIES UniqueCollection(Collection.T[*|1])
+	// PROPERTIES UniqueCollection(Map.K[*|1])
+	// PROPERTIES UniqueCollection(OclAny[*|1])
+	// PROPERTIES UniqueCollection(OclElement[*|1])
+	// PROPERTIES UniqueCollection(OclSelf[*|1])
+	// PROPERTIES UniqueCollection(flatten.T2[*|1])
+	// PROPERTIES UniqueCollection(selectByKind.TT[*|1])
+	// PROPERTIES UniqueCollection(selectByType.TT[*|1])
+	// PROPERTIES UniqueCollection(OrderedSet.T[*|1])
+	// PROPERTIES UniqueCollection(Sequence.T[*|1])
+	// PROPERTIES UniqueCollection(flatten.T2[*|1])
+	// PROPERTIES UniqueCollection(selectByKind.TT[*|1])
+	// PROPERTIES UniqueCollection(selectByType.TT[*|1])
+	// PROPERTIES UniqueCollection(Set.T[*|1])
+	// PROPERTIES UniqueCollection(UniqueCollection.T[*|1])
+	// PROPERTIES Bag(collectNested.V[*|1])
+	// PROPERTIES Bag(collect.V[*|1])
+	// PROPERTIES Bag(flatten.T2[*|1])
+	// PROPERTIES Bag(selectByKind.TT[*|1])
+	// PROPERTIES Bag(selectByType.TT[*|1])
+	// PROPERTIES Bag(Bag.T[*|1])
+	// PROPERTIES Bag(CollectionType[*|1])
+	// PROPERTIES Bag(Collection.T[*|1])
+	// PROPERTIES Bag(MapType[*|1])
+	// PROPERTIES Bag(collect.V2[*|1])
+	// PROPERTIES Bag(Map.V[*|1])
+	// PROPERTIES Bag(OclElement[*|1])
+	// PROPERTIES Bag(OclInvalid[*|1])
+	// PROPERTIES Bag(collectNested.V[*|1])
+	// PROPERTIES Bag(collect.V[*|1])
+	// SUPER_CLASSES Collection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// SUPER_CLASSES OrderedCollection(Integer[*|1])
+	// SUPER_CLASSES OrderedCollection(String[*|1])
+	// SUPER_CLASSES OrderedCollection(Bag.T[*|1])
+	// SUPER_CLASSES OrderedCollection(Collection.T[*|1])
+	// SUPER_CLASSES OrderedCollection(collectNested.V[*|1])
+	// SUPER_CLASSES OrderedCollection(collect.V[*|1])
+	// SUPER_CLASSES OrderedCollection(flatten.T2[*|1])
+	// SUPER_CLASSES OrderedCollection(selectByKind.TT[*|1])
+	// SUPER_CLASSES OrderedCollection(selectByType.TT[*|1])
+	// SUPER_CLASSES OrderedCollection(OrderedSet.T[*|1])
+	// SUPER_CLASSES OrderedCollection(collectNested.V[*|1])
+	// SUPER_CLASSES OrderedCollection(collect.V[*|1])
+	// SUPER_CLASSES OrderedCollection(flatten.T2[*|1])
+	// SUPER_CLASSES OrderedCollection(selectByKind.TT[*|1])
+	// SUPER_CLASSES OrderedCollection(selectByType.TT[*|1])
+	// SUPER_CLASSES OrderedCollection(Sequence.T[*|1])
+	// SUPER_CLASSES OrderedCollection(Set.T[*|1])
+	// SUPER_CLASSES OrderedCollection(UniqueCollection.T[*|1])
+	// SUPER_CLASSES UniqueCollection(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// SUPER_CLASSES UniqueCollection(Bag.T[*|1])
+	// SUPER_CLASSES UniqueCollection(Collection.T[*|1])
+	// SUPER_CLASSES UniqueCollection(Map.K[*|1])
+	// SUPER_CLASSES UniqueCollection(OclAny[*|1])
+	// SUPER_CLASSES UniqueCollection(OclElement[*|1])
+	// SUPER_CLASSES UniqueCollection(OclSelf[*|1])
+	// SUPER_CLASSES UniqueCollection(flatten.T2[*|1])
+	// SUPER_CLASSES UniqueCollection(selectByKind.TT[*|1])
+	// SUPER_CLASSES UniqueCollection(selectByType.TT[*|1])
+	// SUPER_CLASSES UniqueCollection(OrderedSet.T[*|1])
+	// SUPER_CLASSES UniqueCollection(Sequence.T[*|1])
+	// SUPER_CLASSES UniqueCollection(flatten.T2[*|1])
+	// SUPER_CLASSES UniqueCollection(selectByKind.TT[*|1])
+	// SUPER_CLASSES UniqueCollection(selectByType.TT[*|1])
+	// SUPER_CLASSES UniqueCollection(Set.T[*|1])
+	// SUPER_CLASSES UniqueCollection(UniqueCollection.T[*|1])
+	// SUPER_CLASSES Bag(collectNested.V[*|1])
+	// SUPER_CLASSES Bag(collect.V[*|1])
+	// SUPER_CLASSES Bag(flatten.T2[*|1])
+	// SUPER_CLASSES Bag(selectByKind.TT[*|1])
+	// SUPER_CLASSES Bag(selectByType.TT[*|1])
+	// SUPER_CLASSES Bag(Bag.T[*|1])
+	// SUPER_CLASSES Bag(CollectionType[*|1])
+	// SUPER_CLASSES Bag(Collection.T[*|1])
+	// SUPER_CLASSES Bag(MapType[*|1])
+	// SUPER_CLASSES Bag(collect.V2[*|1])
+	// SUPER_CLASSES Bag(Map.V[*|1])
+	// SUPER_CLASSES Bag(OclElement[*|1])
+	// SUPER_CLASSES Bag(OclInvalid[*|1])
+	// SUPER_CLASSES Bag(collectNested.V[*|1])
+	// SUPER_CLASSES Bag(collect.V[*|1])
 	// SUPER_CLASSES OrderedSet(T)
 	// SUPER_CLASSES Sequence(T)
 	// SUPER_CLASSES Set(T)
-	// TYPE Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
-	// TYPE Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V)
-	// TYPE Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
-	// TYPE Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T)
-	// TYPE Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2)
-	// TYPE Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V)
-	// TYPE Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V)
-	// TYPE Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T)
-	// TYPE Bag(T)::excludingAll(Collection(Bag.T)) : Bag(Bag.T)
-	// TYPE Bag(T)::flatten(T2)() : Bag(flatten.T2)
-	// TYPE Bag(T)::including(Bag.T[?]) : Bag(Bag.T)
-	// TYPE Bag(T)::includingAll(Collection(Bag.T)) : Bag(Bag.T)
-	// TYPE Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT)
-	// TYPE Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT)
-	// TYPE Collection(T)::asBag() : Bag(Collection.T)
-	// TYPE Collection(T)::intersection(Collection(Collection.T)) : Bag(Collection.T)
-	// TYPE Collection(T)::union(Collection(Collection.T)) : Bag(Collection.T)
-	// TYPE Map(K,V)::values() : Bag(Map.V)
-	// TYPE UniqueCollection(T)::-(UniqueCollection(OclAny)) : UniqueCollection(UniqueCollection.T)
+	// TYPE Bag(T).collectNested(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collectNested.V[*|1])
+	// TYPE Bag(T).collect(V)(Bag.T[?] | Lambda T() : V[?]) : Bag(collect.V[*|1])
+	// TYPE Bag(T).reject(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T[*|1])
+	// TYPE Bag(T).select(Bag.T[?] | Lambda T() : Boolean[1]) : Bag(Bag.T[*|1])
+	// TYPE Map(K,V).collect(V2)(Map.K[?] | Lambda K() : V2[?]) : Bag(collect.V2[*|1])
+	// TYPE Set(T).collectNested(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collectNested.V[*|1])
+	// TYPE Set(T).collect(V)(Set.T[?] | Lambda T() : V[?]) : Bag(collect.V[*|1])
+	// TYPE Bag(T)::excluding(Bag.T[?]) : Bag(Bag.T[*|1])
+	// TYPE Bag(T)::excludingAll(Collection(Bag.T[*|1])) : Bag(Bag.T[*|1])
+	// TYPE Bag(T)::flatten(T2)() : Bag(flatten.T2[*|1])
+	// TYPE Bag(T)::including(Bag.T[?]) : Bag(Bag.T[*|1])
+	// TYPE Bag(T)::includingAll(Collection(Bag.T[*|1])) : Bag(Bag.T[*|1])
+	// TYPE Bag(T)::selectByKind(TT)(selectByKind.TT[1]) : Bag(selectByKind.TT[*|1])
+	// TYPE Bag(T)::selectByType(TT)(selectByType.TT[1]) : Bag(selectByType.TT[*|1])
+	// TYPE Collection(T)::asBag() : Bag(Collection.T[*|1])
+	// TYPE Collection(T)::intersection(Collection(Collection.T[*|1])) : Bag(Collection.T[*|1])
+	// TYPE Collection(T)::union(Collection(Collection.T[*|1])) : Bag(Collection.T[*|1])
+	// TYPE Map(K,V)::values() : Bag(Map.V[*|1])
+	// TYPE UniqueCollection(T)::-(UniqueCollection(OclAny[*|1])) : UniqueCollection(UniqueCollection.T[*|1])
 
-	// CTOR OrderedSet(Collection.T)
-	// CTOR OrderedSet(flatten.T2)
-	// CTOR OrderedSet(selectByKind.TT)
-	// CTOR OrderedSet(selectByType.TT)
-	// CTOR OrderedSet(OrderedSet.T)
-	// CTOR OrderedSet(Sequence.T)
-	// CTOR OrderedSet(Set.T)
-	// CTOR OrderedSet(UniqueCollection.T)
-	// CTOR Sequence(Integer)
-	// CTOR Sequence(String)
-	// CTOR Sequence(Bag.T)
-	// CTOR Sequence(Collection.T)
-	// CTOR Sequence(collectNested.V)
-	// CTOR Sequence(collect.V)
-	// CTOR Sequence(collectNested.V)
-	// CTOR Sequence(collect.V)
-	// CTOR Sequence(flatten.T2)
-	// CTOR Sequence(selectByKind.TT)
-	// CTOR Sequence(selectByType.TT)
-	// CTOR Sequence(Sequence.T)
-	// CTOR Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// CTOR Set(Bag.T)
-	// CTOR Set(Collection.T)
-	// CTOR Set(Map.K)
-	// CTOR Set(OclElement)
-	// CTOR Set(OclSelf)
+	// CTOR OrderedSet(Collection.T[*|1])
+	// CTOR OrderedSet(flatten.T2[*|1])
+	// CTOR OrderedSet(selectByKind.TT[*|1])
+	// CTOR OrderedSet(selectByType.TT[*|1])
+	// CTOR OrderedSet(OrderedSet.T[*|1])
+	// CTOR OrderedSet(Sequence.T[*|1])
+	// CTOR OrderedSet(Set.T[*|1])
+	// CTOR OrderedSet(UniqueCollection.T[*|1])
+	// CTOR Sequence(Integer[*|1])
+	// CTOR Sequence(String[*|1])
+	// CTOR Sequence(Bag.T[*|1])
+	// CTOR Sequence(Collection.T[*|1])
+	// CTOR Sequence(collectNested.V[*|1])
+	// CTOR Sequence(collect.V[*|1])
+	// CTOR Sequence(collectNested.V[*|1])
+	// CTOR Sequence(collect.V[*|1])
+	// CTOR Sequence(flatten.T2[*|1])
+	// CTOR Sequence(selectByKind.TT[*|1])
+	// CTOR Sequence(selectByType.TT[*|1])
+	// CTOR Sequence(Sequence.T[*|1])
+	// CTOR Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// CTOR Set(Bag.T[*|1])
+	// CTOR Set(Collection.T[*|1])
+	// CTOR Set(Map.K[*|1])
+	// CTOR Set(OclElement[*|1])
+	// CTOR Set(OclSelf[*|1])
 	// CTOR Set(OclSelf[*|?])
-	// CTOR Set(flatten.T2)
-	// CTOR Set(selectByKind.TT)
-	// CTOR Set(selectByType.TT)
-	// CTOR Set(Set.T)
-	// CTOR Set(UniqueCollection.T)
+	// CTOR Set(flatten.T2[*|1])
+	// CTOR Set(selectByKind.TT[*|1])
+	// CTOR Set(selectByType.TT[*|1])
+	// CTOR Set(Set.T[*|1])
+	// CTOR Set(UniqueCollection.T[*|1])
 	/**
 	 *	The lists of local operations or local operation overrides for each fragment of each type.
 	 */
@@ -2739,14 +2739,14 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _Bag__Bag = {
 			OCLstdlibTables.Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Bag__closure /* closure(T[1]|Lambda T() : Set(T)[?]) */,
+			OCLstdlibTables.Operations._Bag__closure /* closure(T[1]|Lambda T() : Set(T[*|1])[?]) */,
 			OCLstdlibTables.Operations._Bag__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Bag__flatten /* flatten(T2)() */,
 			OCLstdlibTables.Operations._Bag__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Bag__includingAll /* includingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Bag__includingAll /* includingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Bag__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -2766,9 +2766,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -2777,11 +2777,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Bag__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Bag__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Bag__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -2789,7 +2789,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Bag__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -2797,7 +2797,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _Bag__OclAny = {
 			OCLstdlibTables.Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -2864,9 +2864,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -2875,11 +2875,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -2887,7 +2887,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -2895,7 +2895,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _Collection__OclAny = {
 			OCLstdlibTables.Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -2983,12 +2983,12 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Map__collectNested /* collectNested(V2)(K[?]|Lambda K() : V2[?]) */,
 			OCLstdlibTables.Operations._Map__0_excludes /* excludes(K[?]) */,
 			OCLstdlibTables.Operations._Map__1_excludes /* excludes(K[?],V[?]) */,
-			OCLstdlibTables.Operations._Map__excludesAll /* excludesAll(K2)(Collection(K2)) */,
+			OCLstdlibTables.Operations._Map__excludesAll /* excludesAll(K2)(Collection(K2[*|1])) */,
 			OCLstdlibTables.Operations._Map__excludesMap /* excludesMap(K2, V2)(Map(K2[1],V2[1])[1]) */,
 			OCLstdlibTables.Operations._Map__excludesValue /* excludesValue(V[?]) */,
 			OCLstdlibTables.Operations._Map__0_excluding /* excluding(K[?]) */,
 			OCLstdlibTables.Operations._Map__1_excluding /* excluding(K[?],V[?]) */,
-			OCLstdlibTables.Operations._Map__excludingAll /* excludingAll(Collection(K)) */,
+			OCLstdlibTables.Operations._Map__excludingAll /* excludingAll(Collection(K[*|1])) */,
 			OCLstdlibTables.Operations._Map__excludingMap /* excludingMap(K2, V2)(Map(K2[1],V2[1])[1]) */,
 			OCLstdlibTables.Operations._Map__2_exists /* exists(K[?],K[?],K[?]|Lambda K() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Map__1_exists /* exists(K[?],K[?]|Lambda K() : Boolean[?]) */,
@@ -2998,7 +2998,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Map__0_forAll /* forAll(K[?]|Lambda K() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Map__0_includes /* includes(K[?]) */,
 			OCLstdlibTables.Operations._Map__1_includes /* includes(K[?],V[?]) */,
-			OCLstdlibTables.Operations._Map__includesAll /* includesAll(K2)(Collection(K2)) */,
+			OCLstdlibTables.Operations._Map__includesAll /* includesAll(K2)(Collection(K2[*|1])) */,
 			OCLstdlibTables.Operations._Map__includesMap /* includesMap(K2, V2)(Map(K2[1],V2[1])[1]) */,
 			OCLstdlibTables.Operations._Map__includesValue /* includesValue(V[?]) */,
 			OCLstdlibTables.Operations._Map__including /* including(K[?],V[?]) */,
@@ -3457,9 +3457,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -3468,11 +3468,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -3480,7 +3480,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3488,7 +3488,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedCollection__OclAny = {
 			OCLstdlibTables.Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -3509,22 +3509,22 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _OrderedSet__OrderedSet = {
-			OCLstdlibTables.Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny)) */,
+			OCLstdlibTables.Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__append /* append(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__appendAll /* appendAll(OrderedCollection(T)) */,
-			OCLstdlibTables.Operations._OrderedSet__closure /* closure(T[1]|Lambda T() : OrderedSet(T)[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__appendAll /* appendAll(OrderedCollection(T[*|1])) */,
+			OCLstdlibTables.Operations._OrderedSet__closure /* closure(T[1]|Lambda T() : OrderedSet(T[*|1])[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__flatten /* flatten(T2)() */,
 			OCLstdlibTables.Operations._OrderedSet__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__includingAll /* includingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet__includingAll /* includingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__insertAt /* insertAt(Integer[1],T[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__prepend /* prepend(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__prependAll /* prependAll(OrderedCollection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet__prependAll /* prependAll(OrderedCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__reverse /* reverse() */,
 			OCLstdlibTables.Operations._OrderedSet__select /* select(T[?]|Lambda T() : Boolean[1]) */,
@@ -3546,9 +3546,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -3557,11 +3557,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -3569,7 +3569,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3577,7 +3577,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedSet__OclAny = {
 			OCLstdlibTables.Operations._OrderedSet___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -3603,11 +3603,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedCollection__last /* last() */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedSet__UniqueCollection = {
-			OCLstdlibTables.Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
+			OCLstdlibTables.Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
-			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T)) */
+			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T[*|1])) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Real__Real = {
@@ -3658,18 +3658,18 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Sequence__append /* append(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__appendAll /* appendAll(OrderedCollection(T)) */,
-			OCLstdlibTables.Operations._Sequence__closure /* closure(T[1]|Lambda T() : OrderedSet(T)[?]) */,
+			OCLstdlibTables.Operations._Sequence__appendAll /* appendAll(OrderedCollection(T[*|1])) */,
+			OCLstdlibTables.Operations._Sequence__closure /* closure(T[1]|Lambda T() : OrderedSet(T[*|1])[?]) */,
 			OCLstdlibTables.Operations._Sequence__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__flatten /* flatten(T2)() */,
 			OCLstdlibTables.Operations._Sequence__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__includingAll /* includingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Sequence__includingAll /* includingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__insertAt /* insertAt(Integer[1],T[?]) */,
 			OCLstdlibTables.Operations._Sequence__prepend /* prepend(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__prependAll /* prependAll(OrderedCollection(T)) */,
+			OCLstdlibTables.Operations._Sequence__prependAll /* prependAll(OrderedCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Sequence__reverse /* reverse() */,
 			OCLstdlibTables.Operations._Sequence__select /* select(T[?]|Lambda T() : Boolean[1]) */,
@@ -3691,9 +3691,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -3702,11 +3702,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Sequence__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Sequence__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -3714,7 +3714,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Sequence__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Sequence__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Sequence__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3722,7 +3722,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _Sequence__OclAny = {
 			OCLstdlibTables.Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -3749,17 +3749,17 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Set__Set = {
-			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
+			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny[*|1])) */,
 			OCLstdlibTables.Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Set___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Set__closure /* closure(T[1]|Lambda T() : Set(T)[?]) */,
+			OCLstdlibTables.Operations._Set__closure /* closure(T[1]|Lambda T() : Set(T[*|1])[?]) */,
 			OCLstdlibTables.Operations._Set__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Set__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Set__flatten /* flatten(T2)() */,
 			OCLstdlibTables.Operations._Set__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Set__includingAll /* includingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Set__includingAll /* includingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Set__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3779,9 +3779,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Set__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -3790,11 +3790,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Set__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Set__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Set__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -3802,7 +3802,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Set__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3810,7 +3810,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _Set__OclAny = {
 			OCLstdlibTables.Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -3830,11 +3830,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull Operation @NonNull [] _Set__UniqueCollection = {
-			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
+			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
-			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T)) */
+			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T[*|1])) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _String__String = {
@@ -3904,11 +3904,11 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _UniqueCollection__UniqueCollection = {
-			OCLstdlibTables.Operations._UniqueCollection___sub_ /* _'-'(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
+			OCLstdlibTables.Operations._UniqueCollection___sub_ /* _'-'(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
-			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
-			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T)) */
+			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _UniqueCollection__Collection = {
 			OCLstdlibTables.Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -3923,9 +3923,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
-			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
+			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
@@ -3934,11 +3934,11 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
-			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T)) */,
-			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T)) */,
-			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T)) */,
+			OCLstdlibTables.Operations._Collection__includingAll /* includingAll(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection(T[*|1])) */,
+			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection(T[*|1])) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
 			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda T() : Tacc[?]) */,
@@ -3946,7 +3946,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Collection__one /* one(T[?]|Lambda T() : Boolean[1]) */,
-			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2)) */,
+			OCLstdlibTables.Operations._Collection__product /* product(T2)(Collection(T2[*|1])) */,
 			OCLstdlibTables.Operations._Collection__reject /* reject(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__select /* select(T[?]|Lambda T() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
@@ -3954,7 +3954,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__size /* size() */,
 			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda T() : OclAny[?]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
-			OCLstdlibTables.Operations._Collection__union /* union(Collection(T)) */
+			OCLstdlibTables.Operations._Collection__union /* union(Collection(T[*|1])) */
 		};
 		private static final @NonNull Operation @NonNull [] _UniqueCollection__OclAny = {
 			OCLstdlibTables.Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -4131,188 +4131,188 @@ public class OCLstdlibTables extends AbstractTables
 	// CTOR Lambda T() : OrderedSet(OrderedSet.T)
 	// CTOR Lambda T() : OrderedSet(Sequence.T)
 	// CTOR Lambda T() : Set(Set.T)
-	// OPERATIONS OrderedSet(Collection.T)
-	// OPERATIONS OrderedSet(flatten.T2)
-	// OPERATIONS OrderedSet(selectByKind.TT)
-	// OPERATIONS OrderedSet(selectByType.TT)
-	// OPERATIONS OrderedSet(OrderedSet.T)
-	// OPERATIONS OrderedSet(Sequence.T)
-	// OPERATIONS OrderedSet(Set.T)
-	// OPERATIONS OrderedSet(UniqueCollection.T)
-	// OPERATIONS Sequence(Integer)
-	// OPERATIONS Sequence(String)
-	// OPERATIONS Sequence(Bag.T)
-	// OPERATIONS Sequence(Collection.T)
-	// OPERATIONS Sequence(collectNested.V)
-	// OPERATIONS Sequence(collect.V)
-	// OPERATIONS Sequence(collectNested.V)
-	// OPERATIONS Sequence(collect.V)
-	// OPERATIONS Sequence(flatten.T2)
-	// OPERATIONS Sequence(selectByKind.TT)
-	// OPERATIONS Sequence(selectByType.TT)
-	// OPERATIONS Sequence(Sequence.T)
-	// OPERATIONS Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// OPERATIONS Set(Bag.T)
-	// OPERATIONS Set(Collection.T)
-	// OPERATIONS Set(Map.K)
-	// OPERATIONS Set(OclElement)
-	// OPERATIONS Set(OclSelf)
+	// OPERATIONS OrderedSet(Collection.T[*|1])
+	// OPERATIONS OrderedSet(flatten.T2[*|1])
+	// OPERATIONS OrderedSet(selectByKind.TT[*|1])
+	// OPERATIONS OrderedSet(selectByType.TT[*|1])
+	// OPERATIONS OrderedSet(OrderedSet.T[*|1])
+	// OPERATIONS OrderedSet(Sequence.T[*|1])
+	// OPERATIONS OrderedSet(Set.T[*|1])
+	// OPERATIONS OrderedSet(UniqueCollection.T[*|1])
+	// OPERATIONS Sequence(Integer[*|1])
+	// OPERATIONS Sequence(String[*|1])
+	// OPERATIONS Sequence(Bag.T[*|1])
+	// OPERATIONS Sequence(Collection.T[*|1])
+	// OPERATIONS Sequence(collectNested.V[*|1])
+	// OPERATIONS Sequence(collect.V[*|1])
+	// OPERATIONS Sequence(collectNested.V[*|1])
+	// OPERATIONS Sequence(collect.V[*|1])
+	// OPERATIONS Sequence(flatten.T2[*|1])
+	// OPERATIONS Sequence(selectByKind.TT[*|1])
+	// OPERATIONS Sequence(selectByType.TT[*|1])
+	// OPERATIONS Sequence(Sequence.T[*|1])
+	// OPERATIONS Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// OPERATIONS Set(Bag.T[*|1])
+	// OPERATIONS Set(Collection.T[*|1])
+	// OPERATIONS Set(Map.K[*|1])
+	// OPERATIONS Set(OclElement[*|1])
+	// OPERATIONS Set(OclSelf[*|1])
 	// OPERATIONS Set(OclSelf[*|?])
-	// OPERATIONS Set(flatten.T2)
-	// OPERATIONS Set(selectByKind.TT)
-	// OPERATIONS Set(selectByType.TT)
-	// OPERATIONS Set(Set.T)
-	// OPERATIONS Set(UniqueCollection.T)
-	// PROPERTIES OrderedSet(Collection.T)
-	// PROPERTIES OrderedSet(flatten.T2)
-	// PROPERTIES OrderedSet(selectByKind.TT)
-	// PROPERTIES OrderedSet(selectByType.TT)
-	// PROPERTIES OrderedSet(OrderedSet.T)
-	// PROPERTIES OrderedSet(Sequence.T)
-	// PROPERTIES OrderedSet(Set.T)
-	// PROPERTIES OrderedSet(UniqueCollection.T)
-	// PROPERTIES Sequence(Integer)
-	// PROPERTIES Sequence(String)
-	// PROPERTIES Sequence(Bag.T)
-	// PROPERTIES Sequence(Collection.T)
-	// PROPERTIES Sequence(collectNested.V)
-	// PROPERTIES Sequence(collect.V)
-	// PROPERTIES Sequence(collectNested.V)
-	// PROPERTIES Sequence(collect.V)
-	// PROPERTIES Sequence(flatten.T2)
-	// PROPERTIES Sequence(selectByKind.TT)
-	// PROPERTIES Sequence(selectByType.TT)
-	// PROPERTIES Sequence(Sequence.T)
-	// PROPERTIES Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// PROPERTIES Set(Bag.T)
-	// PROPERTIES Set(Collection.T)
-	// PROPERTIES Set(Map.K)
-	// PROPERTIES Set(OclElement)
-	// PROPERTIES Set(OclSelf)
+	// OPERATIONS Set(flatten.T2[*|1])
+	// OPERATIONS Set(selectByKind.TT[*|1])
+	// OPERATIONS Set(selectByType.TT[*|1])
+	// OPERATIONS Set(Set.T[*|1])
+	// OPERATIONS Set(UniqueCollection.T[*|1])
+	// PROPERTIES OrderedSet(Collection.T[*|1])
+	// PROPERTIES OrderedSet(flatten.T2[*|1])
+	// PROPERTIES OrderedSet(selectByKind.TT[*|1])
+	// PROPERTIES OrderedSet(selectByType.TT[*|1])
+	// PROPERTIES OrderedSet(OrderedSet.T[*|1])
+	// PROPERTIES OrderedSet(Sequence.T[*|1])
+	// PROPERTIES OrderedSet(Set.T[*|1])
+	// PROPERTIES OrderedSet(UniqueCollection.T[*|1])
+	// PROPERTIES Sequence(Integer[*|1])
+	// PROPERTIES Sequence(String[*|1])
+	// PROPERTIES Sequence(Bag.T[*|1])
+	// PROPERTIES Sequence(Collection.T[*|1])
+	// PROPERTIES Sequence(collectNested.V[*|1])
+	// PROPERTIES Sequence(collect.V[*|1])
+	// PROPERTIES Sequence(collectNested.V[*|1])
+	// PROPERTIES Sequence(collect.V[*|1])
+	// PROPERTIES Sequence(flatten.T2[*|1])
+	// PROPERTIES Sequence(selectByKind.TT[*|1])
+	// PROPERTIES Sequence(selectByType.TT[*|1])
+	// PROPERTIES Sequence(Sequence.T[*|1])
+	// PROPERTIES Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// PROPERTIES Set(Bag.T[*|1])
+	// PROPERTIES Set(Collection.T[*|1])
+	// PROPERTIES Set(Map.K[*|1])
+	// PROPERTIES Set(OclElement[*|1])
+	// PROPERTIES Set(OclSelf[*|1])
 	// PROPERTIES Set(OclSelf[*|?])
-	// PROPERTIES Set(flatten.T2)
-	// PROPERTIES Set(selectByKind.TT)
-	// PROPERTIES Set(selectByType.TT)
-	// PROPERTIES Set(Set.T)
-	// PROPERTIES Set(UniqueCollection.T)
-	// SUPER_CLASSES OrderedSet(Collection.T)
-	// SUPER_CLASSES OrderedSet(flatten.T2)
-	// SUPER_CLASSES OrderedSet(selectByKind.TT)
-	// SUPER_CLASSES OrderedSet(selectByType.TT)
-	// SUPER_CLASSES OrderedSet(OrderedSet.T)
-	// SUPER_CLASSES OrderedSet(Sequence.T)
-	// SUPER_CLASSES OrderedSet(Set.T)
-	// SUPER_CLASSES OrderedSet(UniqueCollection.T)
-	// SUPER_CLASSES Sequence(Integer)
-	// SUPER_CLASSES Sequence(String)
-	// SUPER_CLASSES Sequence(Bag.T)
-	// SUPER_CLASSES Sequence(Collection.T)
-	// SUPER_CLASSES Sequence(collectNested.V)
-	// SUPER_CLASSES Sequence(collect.V)
-	// SUPER_CLASSES Sequence(collectNested.V)
-	// SUPER_CLASSES Sequence(collect.V)
-	// SUPER_CLASSES Sequence(flatten.T2)
-	// SUPER_CLASSES Sequence(selectByKind.TT)
-	// SUPER_CLASSES Sequence(selectByType.TT)
-	// SUPER_CLASSES Sequence(Sequence.T)
-	// SUPER_CLASSES Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// SUPER_CLASSES Set(Bag.T)
-	// SUPER_CLASSES Set(Collection.T)
-	// SUPER_CLASSES Set(Map.K)
-	// SUPER_CLASSES Set(OclElement)
-	// SUPER_CLASSES Set(OclSelf)
+	// PROPERTIES Set(flatten.T2[*|1])
+	// PROPERTIES Set(selectByKind.TT[*|1])
+	// PROPERTIES Set(selectByType.TT[*|1])
+	// PROPERTIES Set(Set.T[*|1])
+	// PROPERTIES Set(UniqueCollection.T[*|1])
+	// SUPER_CLASSES OrderedSet(Collection.T[*|1])
+	// SUPER_CLASSES OrderedSet(flatten.T2[*|1])
+	// SUPER_CLASSES OrderedSet(selectByKind.TT[*|1])
+	// SUPER_CLASSES OrderedSet(selectByType.TT[*|1])
+	// SUPER_CLASSES OrderedSet(OrderedSet.T[*|1])
+	// SUPER_CLASSES OrderedSet(Sequence.T[*|1])
+	// SUPER_CLASSES OrderedSet(Set.T[*|1])
+	// SUPER_CLASSES OrderedSet(UniqueCollection.T[*|1])
+	// SUPER_CLASSES Sequence(Integer[*|1])
+	// SUPER_CLASSES Sequence(String[*|1])
+	// SUPER_CLASSES Sequence(Bag.T[*|1])
+	// SUPER_CLASSES Sequence(Collection.T[*|1])
+	// SUPER_CLASSES Sequence(collectNested.V[*|1])
+	// SUPER_CLASSES Sequence(collect.V[*|1])
+	// SUPER_CLASSES Sequence(collectNested.V[*|1])
+	// SUPER_CLASSES Sequence(collect.V[*|1])
+	// SUPER_CLASSES Sequence(flatten.T2[*|1])
+	// SUPER_CLASSES Sequence(selectByKind.TT[*|1])
+	// SUPER_CLASSES Sequence(selectByType.TT[*|1])
+	// SUPER_CLASSES Sequence(Sequence.T[*|1])
+	// SUPER_CLASSES Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// SUPER_CLASSES Set(Bag.T[*|1])
+	// SUPER_CLASSES Set(Collection.T[*|1])
+	// SUPER_CLASSES Set(Map.K[*|1])
+	// SUPER_CLASSES Set(OclElement[*|1])
+	// SUPER_CLASSES Set(OclSelf[*|1])
 	// SUPER_CLASSES Set(OclSelf[*|?])
-	// SUPER_CLASSES Set(flatten.T2)
-	// SUPER_CLASSES Set(selectByKind.TT)
-	// SUPER_CLASSES Set(selectByType.TT)
-	// SUPER_CLASSES Set(Set.T)
-	// SUPER_CLASSES Set(UniqueCollection.T)
-	// TYPE Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T)
-	// TYPE Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T)
-	// TYPE OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
-	// TYPE OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
-	// TYPE OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T)
-	// TYPE Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V)
-	// TYPE Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V)
-	// TYPE Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
-	// TYPE Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T)
-	// TYPE Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T)
-	// TYPE Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
-	// TYPE Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)
-	// TYPE Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T)
-	// TYPE UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T)
-	// TYPE Boolean::allInstances(Integer[1]) : Set(OclSelf)
-	// TYPE String::characters() : Sequence(String)
-	// TYPE String::tokenize() : Sequence(String)
-	// TYPE String::tokenize(String[1]) : Sequence(String)
-	// TYPE String::tokenize(String[1],Boolean[1]) : Sequence(String)
-	// TYPE BooleanType::allInstances() : Set(OclSelf)
-	// TYPE Class::allInstances() : Set(OclSelf)
-	// TYPE Collection(T)::asOrderedSet() : OrderedSet(Collection.T)
-	// TYPE Collection(T)::asSequence() : Sequence(Collection.T)
-	// TYPE Collection(T)::asSet() : Set(Collection.T)
-	// TYPE Collection(T)::intersection(UniqueCollection(Collection.T)) : Set(Collection.T)
-	// TYPE Collection(T)::product(T2)(Collection(product.T2)) : Set(Tuple(first:Collection.T[1],second:product.T2[1]))
-	// TYPE Enumeration::allInstances() : Set(OclSelf)
-	// TYPE InvalidType::allInstances() : Set(OclSelf)
-	// TYPE Map(K,V)::keys() : Set(Map.K)
-	// TYPE OclAny::oclAsSet() : Set(OclSelf)
-	// TYPE OclAny::oclTypes() : Set(OclSelf)
-	// TYPE OclElement::allInstances(Integer[1]) : Set(OclSelf)
-	// TYPE OclElement::oclContents() : Set(OclElement)
-	// TYPE OclElement::oclExtensions() : Set(OclElement)
-	// TYPE OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement)
-	// TYPE OclElement::oclModelTypes() : Set(OclSelf)
-	// TYPE OclEnumeration::allInstances(Integer[1]) : Set(OclSelf)
-	// TYPE OclInvalid::allInstances(Integer[1]) : Set(OclSelf)
-	// TYPE OclInvalid::oclAsSet() : Set(OclSelf)
-	// TYPE OclStereotype::allInstances(Integer[1]) : Set(OclSelf)
+	// SUPER_CLASSES Set(flatten.T2[*|1])
+	// SUPER_CLASSES Set(selectByKind.TT[*|1])
+	// SUPER_CLASSES Set(selectByType.TT[*|1])
+	// SUPER_CLASSES Set(Set.T[*|1])
+	// SUPER_CLASSES Set(UniqueCollection.T[*|1])
+	// TYPE Bag(T).sortedBy(Bag.T[?] | Lambda T() : OclAny[?]) : Sequence(Bag.T[*|1])
+	// TYPE Collection(T).sortedBy(Collection.T[?] | Lambda T() : OclAny[?]) : Sequence(Collection.T[*|1])
+	// TYPE OrderedSet(T).collectNested(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V[*|1])
+	// TYPE OrderedSet(T).collect(V)(OrderedSet.T[?] | Lambda T() : V[?]) : Sequence(collect.V[*|1])
+	// TYPE OrderedSet(T).reject(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T).select(OrderedSet.T[?] | Lambda T() : Boolean[1]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T).sortedBy(OrderedSet.T[?] | Lambda T() : OclAny[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE Sequence(T).collectNested(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collectNested.V[*|1])
+	// TYPE Sequence(T).collect(V)(Sequence.T[?] | Lambda T() : V[?]) : Sequence(collect.V[*|1])
+	// TYPE Sequence(T).reject(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T).select(Sequence.T[?] | Lambda T() : Boolean[1]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T).sortedBy(Sequence.T[?] | Lambda T() : OclAny[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T[*|1])
+	// TYPE Set(T).select(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T[*|1])
+	// TYPE Set(T).sortedBy(Set.T[?] | Lambda T() : OclAny[?]) : OrderedSet(Set.T[*|1])
+	// TYPE UniqueCollection(T).sortedBy(UniqueCollection.T[?] | Lambda T() : OclAny[?]) : OrderedSet(UniqueCollection.T[*|1])
+	// TYPE Boolean::allInstances(Integer[1]) : Set(OclSelf[*|1])
+	// TYPE String::characters() : Sequence(String[*|1])
+	// TYPE String::tokenize() : Sequence(String[*|1])
+	// TYPE String::tokenize(String[1]) : Sequence(String[*|1])
+	// TYPE String::tokenize(String[1],Boolean[1]) : Sequence(String[*|1])
+	// TYPE BooleanType::allInstances() : Set(OclSelf[*|1])
+	// TYPE Class::allInstances() : Set(OclSelf[*|1])
+	// TYPE Collection(T)::asOrderedSet() : OrderedSet(Collection.T[*|1])
+	// TYPE Collection(T)::asSequence() : Sequence(Collection.T[*|1])
+	// TYPE Collection(T)::asSet() : Set(Collection.T[*|1])
+	// TYPE Collection(T)::intersection(UniqueCollection(Collection.T[*|1])) : Set(Collection.T[*|1])
+	// TYPE Collection(T)::product(T2)(Collection(product.T2[*|1])) : Set(Tuple(first:Collection.T[1],second:product.T2[1])[*|1])
+	// TYPE Enumeration::allInstances() : Set(OclSelf[*|1])
+	// TYPE InvalidType::allInstances() : Set(OclSelf[*|1])
+	// TYPE Map(K,V)::keys() : Set(Map.K[*|1])
+	// TYPE OclAny::oclAsSet() : Set(OclSelf[*|1])
+	// TYPE OclAny::oclTypes() : Set(OclSelf[*|1])
+	// TYPE OclElement::allInstances(Integer[1]) : Set(OclSelf[*|1])
+	// TYPE OclElement::oclContents() : Set(OclElement[*|1])
+	// TYPE OclElement::oclExtensions() : Set(OclElement[*|1])
+	// TYPE OclElement::oclExtensions(OclStereotype[1]) : Set(OclElement[*|1])
+	// TYPE OclElement::oclModelTypes() : Set(OclSelf[*|1])
+	// TYPE OclEnumeration::allInstances(Integer[1]) : Set(OclSelf[*|1])
+	// TYPE OclInvalid::allInstances(Integer[1]) : Set(OclSelf[*|1])
+	// TYPE OclInvalid::oclAsSet() : Set(OclSelf[*|1])
+	// TYPE OclStereotype::allInstances(Integer[1]) : Set(OclSelf[*|1])
 	// TYPE OclVoid::allInstances(Integer[1]) : Set(OclSelf[*|?])
-	// TYPE OclVoid::oclAsSet() : Set(OclSelf)
-	// TYPE OclVoid::oclTypes() : Set(OclSelf)
-	// TYPE OrderedSet(T)::-(UniqueCollection(OclAny)) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::excludingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2)
-	// TYPE OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::includingAll(Collection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T)) : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T)
-	// TYPE OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT)
-	// TYPE OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT)
-	// TYPE OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T)
-	// TYPE Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::appendAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::excludingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::flatten(T2)() : Sequence(flatten.T2)
-	// TYPE Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::includingAll(Collection(Sequence.T)) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::prependAll(OrderedCollection(Sequence.T)) : Sequence(Sequence.T)
-	// TYPE Sequence(T)::reverse() : Sequence(Sequence.T)
-	// TYPE Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT)
-	// TYPE Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT)
-	// TYPE Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T)
-	// TYPE Set(T)::-(UniqueCollection(OclAny)) : Set(Set.T)
-	// TYPE Set(T)::excluding(Set.T[?]) : Set(Set.T)
-	// TYPE Set(T)::excludingAll(Collection(Set.T)) : Set(Set.T)
-	// TYPE Set(T)::flatten(T2)() : Set(flatten.T2)
-	// TYPE Set(T)::including(Set.T[?]) : Set(Set.T)
-	// TYPE Set(T)::includingAll(Collection(Set.T)) : Set(Set.T)
-	// TYPE Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT)
-	// TYPE Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT)
-	// TYPE Stereotype::allInstances() : Set(OclSelf)
-	// TYPE UniqueCollection(T)::intersection(Collection(UniqueCollection.T)) : Set(UniqueCollection.T)
-	// TYPE UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny)) : Set(UniqueCollection.T)
-	// TYPE UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T)) : Set(UniqueCollection.T)
+	// TYPE OclVoid::oclAsSet() : Set(OclSelf[*|1])
+	// TYPE OclVoid::oclTypes() : Set(OclSelf[*|1])
+	// TYPE OrderedSet(T)::-(UniqueCollection(OclAny[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::append(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::appendAll(OrderedCollection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::excluding(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::excludingAll(Collection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::flatten(T2)() : OrderedSet(flatten.T2[*|1])
+	// TYPE OrderedSet(T)::including(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::includingAll(Collection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::insertAt(Integer[1],OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::prepend(OrderedSet.T[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::prependAll(OrderedCollection(OrderedSet.T[*|1])) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::reverse() : OrderedSet(OrderedSet.T[*|1])
+	// TYPE OrderedSet(T)::selectByKind(TT)(selectByKind.TT[1]) : OrderedSet(selectByKind.TT[*|1])
+	// TYPE OrderedSet(T)::selectByType(TT)(selectByType.TT[1]) : OrderedSet(selectByType.TT[*|1])
+	// TYPE OrderedSet(T)::subOrderedSet(Integer[1],Integer[1]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE Sequence(T)::append(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::appendAll(OrderedCollection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::excluding(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::excludingAll(Collection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::flatten(T2)() : Sequence(flatten.T2[*|1])
+	// TYPE Sequence(T)::including(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::includingAll(Collection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::insertAt(Integer[1],Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::prepend(Sequence.T[?]) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::prependAll(OrderedCollection(Sequence.T[*|1])) : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::reverse() : Sequence(Sequence.T[*|1])
+	// TYPE Sequence(T)::selectByKind(TT)(selectByKind.TT[1]) : Sequence(selectByKind.TT[*|1])
+	// TYPE Sequence(T)::selectByType(TT)(selectByType.TT[1]) : Sequence(selectByType.TT[*|1])
+	// TYPE Sequence(T)::subSequence(Integer[1],Integer[1]) : Sequence(Sequence.T[*|1])
+	// TYPE Set(T)::-(UniqueCollection(OclAny[*|1])) : Set(Set.T[*|1])
+	// TYPE Set(T)::excluding(Set.T[?]) : Set(Set.T[*|1])
+	// TYPE Set(T)::excludingAll(Collection(Set.T[*|1])) : Set(Set.T[*|1])
+	// TYPE Set(T)::flatten(T2)() : Set(flatten.T2[*|1])
+	// TYPE Set(T)::including(Set.T[?]) : Set(Set.T[*|1])
+	// TYPE Set(T)::includingAll(Collection(Set.T[*|1])) : Set(Set.T[*|1])
+	// TYPE Set(T)::selectByKind(TT)(selectByKind.TT[1]) : Set(selectByKind.TT[*|1])
+	// TYPE Set(T)::selectByType(TT)(selectByType.TT[1]) : Set(selectByType.TT[*|1])
+	// TYPE Stereotype::allInstances() : Set(OclSelf[*|1])
+	// TYPE UniqueCollection(T)::intersection(Collection(UniqueCollection.T[*|1])) : Set(UniqueCollection.T[*|1])
+	// TYPE UniqueCollection(T)::symmetricDifference(UniqueCollection(OclAny[*|1])) : Set(UniqueCollection.T[*|1])
+	// TYPE UniqueCollection(T)::union(UniqueCollection(UniqueCollection.T[*|1])) : Set(UniqueCollection.T[*|1])
 	// TYPE VoidType::allInstances() : Set(OclSelf[*|?])
 
 	// OPERATIONS Lambda T() : Set(Bag.T)
@@ -4328,10 +4328,10 @@ public class OCLstdlibTables extends AbstractTables
 	// SUPER_CLASSES Lambda T() : OrderedSet(OrderedSet.T)
 	// SUPER_CLASSES Lambda T() : OrderedSet(Sequence.T)
 	// SUPER_CLASSES Lambda T() : Set(Set.T)
-	// TYPE Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T)
-	// TYPE OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T)
-	// TYPE Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T)
-	// TYPE Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T)
+	// TYPE Bag(T).closure(Bag.T[1] | Lambda T() : Set(Bag.T)[?]) : Set(Bag.T[*|1])
+	// TYPE OrderedSet(T).closure(OrderedSet.T[1] | Lambda T() : OrderedSet(OrderedSet.T)[?]) : OrderedSet(OrderedSet.T[*|1])
+	// TYPE Sequence(T).closure(Sequence.T[1] | Lambda T() : OrderedSet(Sequence.T)[?]) : OrderedSet(Sequence.T[*|1])
+	// TYPE Set(T).closure(Set.T[1] | Lambda T() : Set(Set.T)[?]) : Set(Set.T[*|1])
 
 	/**
 	 *	The lists of local properties for the local fragment of each type.

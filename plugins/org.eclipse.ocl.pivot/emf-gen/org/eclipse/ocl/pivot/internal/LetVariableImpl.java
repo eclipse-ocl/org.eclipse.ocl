@@ -126,10 +126,12 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 					else {
 						assert ownedInit != null;
 						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired_0;
+						final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
+						safe_isRequired_source = BOXED_isRequired_0;
 					}
 					final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
-					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_1;
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired_1 = isRequired_1;
+					final /*@Thrown*/ boolean result = BOXED_isRequired_1.equals(safe_isRequired_source);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {

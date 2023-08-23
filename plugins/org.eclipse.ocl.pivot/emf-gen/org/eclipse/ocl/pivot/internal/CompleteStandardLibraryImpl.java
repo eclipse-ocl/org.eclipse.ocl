@@ -37,11 +37,13 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Orphanage;
@@ -1264,6 +1266,24 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
 		assert specializedClass.getSuperClasses().size() == unspecializedClass.getSuperClasses().size();
+	}
+
+	@Override
+	public @Nullable PrimitiveType setBehavioralClass(@NonNull DataType asDataType, @Nullable PrimitiveType behavioralClass) {
+		if (behavioralClass != null) {
+			Model asModel = PivotUtil.getContainingModel(asDataType);
+			CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(behavioralClass);
+			for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+				if (asClass instanceof PrimitiveType) {
+					if (PivotUtil.getContainingModel(asClass) == asModel) {
+						behavioralClass = (PrimitiveType) asClass;
+						break;
+					}
+				}
+			}
+		}
+		asDataType.setBehavioralClass(behavioralClass);
+		return behavioralClass;
 	}
 
 	@Override

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -38,11 +40,11 @@ public interface UnlimitedNaturalLiteralExp
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Unlimited Natural Symbol</em>' attribute.
-	 * @see #setUnlimitedNaturalSymbol(Number)
+	 * @see #setUnlimitedNaturalSymbol(UnlimitedNaturalValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getUnlimitedNaturalLiteralExp_UnlimitedNaturalSymbol()
 	 * @generated
 	 */
-	Number getUnlimitedNaturalSymbol();
+	UnlimitedNaturalValue getUnlimitedNaturalSymbol();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp#getUnlimitedNaturalSymbol <em>Unlimited Natural Symbol</em>}' attribute.
@@ -52,5 +54,5 @@ public interface UnlimitedNaturalLiteralExp
 	 * @see #getUnlimitedNaturalSymbol()
 	 * @generated
 	 */
-	void setUnlimitedNaturalSymbol(Number value);
+	void setUnlimitedNaturalSymbol(UnlimitedNaturalValue value);
 } // UnlimitedNaturalLiteralExp

@@ -165,6 +165,9 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -1357,23 +1360,27 @@ extends EObjectValidator {
 			case 140:
 				return validateBoolean((Boolean)value, diagnostics, context);
 			case 141:
-				return validateEcoreObject((EObject)value, diagnostics, context);
+				return validateEBoolean((Boolean)value, diagnostics, context);
 			case 142:
-				return validateInteger((Number)value, diagnostics, context);
+				return validateEInt((Integer)value, diagnostics, context);
 			case 143:
-				return validateJavaClass((Class)value, diagnostics, context);
+				return validateEcoreObject((EObject)value, diagnostics, context);
 			case 144:
-				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
+				return validateInteger((IntegerValue)value, diagnostics, context);
 			case 145:
-				return validateObject(value, diagnostics, context);
+				return validateJavaClass((Class)value, diagnostics, context);
 			case 146:
-				return validateReal((Number)value, diagnostics, context);
+				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
 			case 147:
-				return validateString((String)value, diagnostics, context);
+				return validateObject(value, diagnostics, context);
 			case 148:
-				return validateThrowable((Throwable)value, diagnostics, context);
+				return validateReal((RealValue)value, diagnostics, context);
 			case 149:
-				return validateUnlimitedNatural((Number)value, diagnostics, context);
+				return validateString((String)value, diagnostics, context);
+			case 150:
+				return validateThrowable((Throwable)value, diagnostics, context);
+			case 151:
+				return validateUnlimitedNatural((UnlimitedNaturalValue)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -5007,8 +5014,28 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateBoolean(boolean boolean_,
-			DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateBoolean(Boolean boolean_, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateEBoolean(boolean eBoolean, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateEInt(int eInt, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
 		return true;
 	}
 
@@ -5027,7 +5054,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateInteger(Number integer, DiagnosticChain diagnostics, Map<Object, Object> context)
+	public boolean validateInteger(IntegerValue integer, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return true;
 	}
@@ -5067,7 +5094,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateReal(Number real, DiagnosticChain diagnostics, Map<Object, Object> context)
+	public boolean validateReal(RealValue real, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return true;
 	}
@@ -5097,7 +5124,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateUnlimitedNatural(Number unlimitedNatural, DiagnosticChain diagnostics, Map<Object, Object> context)
+	public boolean validateUnlimitedNatural(UnlimitedNaturalValue unlimitedNatural, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return true;
 	}
