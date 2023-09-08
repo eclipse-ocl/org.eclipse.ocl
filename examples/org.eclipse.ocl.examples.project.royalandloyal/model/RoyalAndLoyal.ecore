@@ -45,7 +45,7 @@
       <eParameters name="i" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     </eOperations>
     <eOperations name="getCustomerName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eOperations name="isEmpty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eOperations name="isEmpty" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalPointsEarned" lowerBound="1"
@@ -63,8 +63,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Earning" eSuperTypes="#//Transaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProgramPartner">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numberOfCustomers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numberOfCustomers" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="deliveredServices" ordered="false"
         upperBound="-1" eType="#//Service" eOpposite="#//Service/partner"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="programs" ordered="false"
@@ -98,14 +99,15 @@
       <eParameters name="until" eType="#//Date"/>
       <eParameters name="from" eType="#//Date"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="#//RandLColor"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="printedName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="goodThru" eType="#//Date"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="validFrom" eType="#//Date"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valid" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" lowerBound="1" eType="#//RandLColor"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="printedName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
+        volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goodThru" lowerBound="1"
+        eType="#//Date" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="validFrom" lowerBound="1"
+        eType="#//Date" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="myLevel" eType="#//ServiceLevel"
         changeable="false" volatile="true" transient="true" derived="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" lowerBound="1" eType="#//Customer"
@@ -116,23 +118,23 @@
         upperBound="-1" eType="#//Transaction" eOpposite="#//Transaction/card"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Date">
-    <eOperations name="isBefore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
-      <eParameters name="t" eType="#//Date"/>
+    <eOperations name="isBefore" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eParameters name="t" lowerBound="1" eType="#//Date"/>
     </eOperations>
-    <eOperations name="isEqual" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
-      <eParameters name="t" eType="#//Date"/>
+    <eOperations name="isEqual" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eParameters name="t" lowerBound="1" eType="#//Date"/>
     </eOperations>
-    <eOperations name="fromYMD" eType="#//Date">
-      <eParameters name="m" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-      <eParameters name="k" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-      <eParameters name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eOperations name="fromYMD" lowerBound="1" eType="#//Date">
+      <eParameters name="m" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+      <eParameters name="k" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+      <eParameters name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     </eOperations>
-    <eOperations name="isAfter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
-      <eParameters name="t" eType="#//Date"/>
+    <eOperations name="isAfter" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eParameters name="t" lowerBound="1" eType="#//Date"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="year" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="month" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="day" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="year" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="month" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="day" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Membership">
     <eStructuralFeatures xsi:type="ecore:EReference" name="currentLevel" lowerBound="1"
@@ -141,10 +143,8 @@
         eOpposite="#//CustomerCard/Membership"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="account" eType="#//LoyaltyAccount"
         eOpposite="#//LoyaltyAccount/Membership"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="programs" lowerBound="1"
-        eType="#//LoyaltyProgram"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" lowerBound="1"
-        eType="#//Customer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="programs" eType="#//LoyaltyProgram"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" eType="#//Customer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Container_RandL">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Customer" upperBound="-1"
@@ -200,7 +200,8 @@
     <eOperations name="age" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="gender" lowerBound="1"
         eType="#//Gender"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMale" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMale" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="age" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
@@ -214,10 +215,12 @@
         eType="#//Membership"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransactionReportLine">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partnerName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceDesc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partnerName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
+        volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceDesc" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
+        volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"
         changeable="false" volatile="true" transient="true" derived="true"/>
@@ -236,19 +239,19 @@
       <eParameters name="d" lowerBound="1" eType="#//Date"/>
     </eOperations>
     <eOperations name="addService">
-      <eParameters name="s" eType="#//Service"/>
-      <eParameters name="l" eType="#//ServiceLevel"/>
-      <eParameters name="p" eType="#//ProgramPartner"/>
+      <eParameters name="s" lowerBound="1" eType="#//Service"/>
+      <eParameters name="l" lowerBound="1" eType="#//ServiceLevel"/>
+      <eParameters name="p" lowerBound="1" eType="#//ProgramPartner"/>
     </eOperations>
     <eOperations name="getServices" ordered="false" upperBound="-1" eType="#//Service">
-      <eParameters name="pp" eType="#//ProgramPartner"/>
+      <eParameters name="pp" lowerBound="1" eType="#//ProgramPartner"/>
     </eOperations>
     <eOperations name="enrollAndCreateCustomer" lowerBound="1" eType="#//Customer">
       <eParameters name="n" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="d" lowerBound="1" eType="#//Date"/>
     </eOperations>
     <eOperations name="enroll">
-      <eParameters name="c" eType="#//Customer"/>
+      <eParameters name="c" lowerBound="1" eType="#//Customer"/>
     </eOperations>
     <eOperations name="addTransaction">
       <eParameters name="d" eType="#//Date"/>
@@ -258,7 +261,7 @@
       <eParameters name="accNr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     </eOperations>
     <eOperations name="getServices" ordered="false" upperBound="-1" eType="#//Service"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partners" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//ProgramPartner" eOpposite="#//ProgramPartner/programs"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="levels" lowerBound="1"
