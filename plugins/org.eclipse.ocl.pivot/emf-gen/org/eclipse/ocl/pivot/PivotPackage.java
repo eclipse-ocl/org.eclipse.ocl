@@ -4583,14 +4583,14 @@ extends EPackage
 	EReference getTypedElement_Type();
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TypedElement#CompatibleBody(org.eclipse.ocl.pivot.ValueSpecification) <em>Compatible Body</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TypedElement#CompatibleBody(org.eclipse.ocl.pivot.ExpressionInOCL) <em>Compatible Body</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Compatible Body</em>' operation.
-	 * @see org.eclipse.ocl.pivot.TypedElement#CompatibleBody(org.eclipse.ocl.pivot.ValueSpecification)
+	 * @see org.eclipse.ocl.pivot.TypedElement#CompatibleBody(org.eclipse.ocl.pivot.ExpressionInOCL)
 	 * @generated
 	 */
-	EOperation getTypedElement__CompatibleBody__ValueSpecification();
+	EOperation getTypedElement__CompatibleBody__ExpressionInOCL();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}'.
@@ -9621,7 +9621,7 @@ extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION = eINSTANCE.getTypedElement__CompatibleBody__ValueSpecification();
+		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__EXPRESSIONINOCL = eINSTANCE.getTypedElement__CompatibleBody__ExpressionInOCL();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.

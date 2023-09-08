@@ -819,9 +819,10 @@ implements Operation {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = bodyExpression <> null and
+			 *       let result : Boolean[1] = bodyExpression <> null and
 			 *         bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies
-			 *         CompatibleBody(bodyExpression)
+			 *         CompatibleBody(
+			 *           bodyExpression.oclAsType(ExpressionInOCL))
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -880,8 +881,11 @@ implements Operation {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
+							@SuppressWarnings("null")
+							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType_0 = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_1, TYP_ExpressionInOCL_0);
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(oclAsType_0);
 							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
 							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
 						}
@@ -953,7 +957,7 @@ implements Operation {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedPreconditions->isUnique(name)
+			 *       let result : Boolean[?] = ownedPreconditions->isUnique(name)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -1027,7 +1031,7 @@ implements Operation {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedPostconditions->isUnique(name)
+			 *       let result : Boolean[?] = ownedPostconditions->isUnique(name)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -1577,7 +1581,7 @@ implements Operation {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 4:

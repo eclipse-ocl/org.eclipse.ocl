@@ -680,7 +680,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedInvariants->isUnique(name)
+			 *       let result : Boolean[?] = ownedInvariants->isUnique(name)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif

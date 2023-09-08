@@ -308,9 +308,9 @@
     </ownedClasses>
     <ownedClasses xmi:id="Aaj,v" name="EnumLiteralExp" superClasses="#fKWWp">
       <ownedInvariants xmi:id="13IpA" isCallable="true" name="TypeIsEnumerationType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.type = referredLiteral?.owningEnumeration&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.type = referredLiteral.owningEnumeration&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="2xm3e" isRequired="false" name="referredLiteral" opposite="#OLQg1" type="#ZQKYa"/>
+      <ownedProperties xmi:id="2xm3e" name="referredLiteral" opposite="#OLQg1" type="#ZQKYa"/>
     </ownedClasses>
     <ownedClasses xmi:id="4m7zY" name="Enumeration" superClasses="#1mHCJ">
       <ownedComments body="An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals."/>
@@ -568,7 +568,7 @@
       <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" opposite="#fLwep" type="#BFtK4"/>
       <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" opposite="#sbNVd" type="#qjyQj"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" opposite="#qs4sI" type="#Rl6IP"/>
-      <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" opposite="#7bx+Q" type="#OZhAb"/>
+      <ownedProperties xmi:id="G2e3S" name="referredIteration" opposite="#7bx+Q" type="#OZhAb"/>
     </ownedClasses>
     <ownedClasses xmi:id="bTDI1" name="MapLiteralExp" superClasses="#fKWWp">
       <ownedProperties xmi:id="C1zzW" isComposite="true" name="ownedParts" opposite="#aqXmL" type="#LaAZc"/>
@@ -671,7 +671,7 @@
     <ownedClasses xmi:id="Yz,F1" name="Operation" superClasses="#nphZD #MzHoc #5r5y9">
       <ownedComments body="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
       <ownedInvariants xmi:id="UTFpw" isCallable="true" name="CompatibleReturn">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="bodyExpression &lt;> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(bodyExpression)&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="bodyExpression &lt;> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(bodyExpression.oclAsType(ExpressionInOCL))&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="Cb2s1" isCallable="true" name="LoadableImplementation">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;true&#xA;"/>
@@ -718,10 +718,10 @@
     </ownedClasses>
     <ownedClasses xmi:id="p84zd" name="OperationCallExp" superClasses="#6KunE #dXAFV">
       <ownedInvariants xmi:id="Pjeni" isCallable="true" name="ArgumentCount">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedArguments->size() = referredOperation?.ownedParameters?->size()&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedArguments->size() = referredOperation.ownedParameters->size()&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="f2r2V" isCallable="true" name="ArgumentTypeIsConformant">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation.ownedParameters in&#xA;&#x9;let selfType : Type = operation.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="v+X3T" isCallable="true" name="SafeSourceCanBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
@@ -734,7 +734,7 @@
       </ownedOperations>
       <ownedProperties xmi:id="eWL7K" defaultValueString="true" name="isVirtual" type="#0OCUB"/>
       <ownedProperties xmi:id="O9xIX" isComposite="true" name="ownedArguments" opposite="#EHyAZ" type="#Ftslp"/>
-      <ownedProperties xmi:id="ztMvO" isRequired="false" name="referredOperation" opposite="#CAbHc" type="#Yz,F1"/>
+      <ownedProperties xmi:id="ztMvO" name="referredOperation" opposite="#CAbHc" type="#Yz,F1"/>
     </ownedClasses>
     <ownedClasses xmi:id="Uj1fg" name="OppositePropertyCallExp" superClasses="#cmSzw">
       <ownedInvariants xmi:id="u6M9K" isCallable="true" name="SafeSourceCanBeNull">
@@ -743,7 +743,7 @@
       <ownedInvariants xmi:id="qLGNt" isCallable="true" name="UnsafeSourceCanNotBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="is7rW" isRequired="false" name="referredProperty" opposite="#zB7r3" type="#Gm0Mj"/>
+      <ownedProperties xmi:id="is7rW" name="referredProperty" opposite="#zB7r3" type="#Gm0Mj"/>
     </ownedClasses>
     <ownedClasses xmi:id="A10J5" name="OrderedSetType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="WaoLl" name="OrphanCompletePackage" superClasses="#+gDEJ">
@@ -826,7 +826,7 @@
     <ownedClasses xmi:id="Gm0Mj" name="Property" superClasses="#nphZD">
       <ownedComments body="A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
       <ownedInvariants xmi:id="rSkQY" isCallable="true" name="CompatibleDefaultExpression">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression.oclAsType(ExpressionInOCL))&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="nycUW" name="isAttribute" type="#0OCUB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;"/>
@@ -881,7 +881,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type = getSpecializedReferredPropertyType()&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="CmNpq" isCallable="true" name="NonStaticSourceTypeIsConformant">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="not referredProperty?.isStatic implies &#xA;&#x9;ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="not referredProperty.isStatic implies &#xA;&#x9;ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="5zKAd" isCallable="true" name="SafeSourceCanBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
@@ -890,12 +890,12 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="TKf1y" name="getSpecializedReferredPropertyOwningType" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.owningClass "/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty.owningClass "/>
       </ownedOperations>
-      <ownedOperations xmi:id="XCWxk" name="getSpecializedReferredPropertyType" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.type.oclAsType(Class) "/>
+      <ownedOperations xmi:id="XCWxk" isRequired="false" name="getSpecializedReferredPropertyType" type="#rrwsa">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty.type.oclAsType(Class) "/>
       </ownedOperations>
-      <ownedProperties xmi:id="tl5uo" isRequired="false" name="referredProperty" opposite="#ap542" type="#Gm0Mj"/>
+      <ownedProperties xmi:id="tl5uo" name="referredProperty" opposite="#ap542" type="#Gm0Mj"/>
     </ownedClasses>
     <ownedClasses xmi:id="EkdzF" name="Pseudostate" superClasses="#VVKEz">
       <ownedComments body="A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step."/>
@@ -1083,7 +1083,7 @@
       <ownedInvariants xmi:id="JS1kF" isCallable="true" name="TypeIsNotInvalid">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="h0hFN" isRequired="false" name="referredState" opposite="#+VIi2" type="#CwtUf"/>
+      <ownedProperties xmi:id="h0hFN" name="referredState" opposite="#+VIi2" type="#CwtUf"/>
     </ownedClasses>
     <ownedClasses xmi:id="n412f" name="StateMachine" superClasses="#D4Bd4">
       <ownedComments body="StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine."/>
@@ -1259,13 +1259,13 @@
       <ownedProperties xmi:id="21n2W" isImplicit="true" name="VariableDeclaration" opposite="#CyT1w" type="#2aHbg"/>
     </ownedClasses>
     <ownedClasses xmi:id="0,h6K" name="TypeExp" superClasses="#BFtK4 #dXAFV">
-      <ownedProperties xmi:id="nedD3" isRequired="false" name="referredType" opposite="#nSmLq" type="#rrwsa"/>
+      <ownedProperties xmi:id="nedD3" name="referredType" opposite="#nSmLq" type="#rrwsa"/>
     </ownedClasses>
     <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz #MN2od">
       <ownedComments body="A TypedElement is a NamedElement that may have a Type specified for it."/>
-      <ownedOperations xmi:id="71tyJ" name="CompatibleBody" type="#0OCUB">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;&#xA;"/>
-        <ownedParameters xmi:id="7IiBg" name="bodySpecification" type="#DLUxI"/>
+      <ownedOperations xmi:id="G53Is" name="CompatibleBody" type="#0OCUB">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let bodyType = bodySpecification.type in&#xA;&#x9;let ownedBody = bodySpecification.ownedBody in&#xA;&#x9;(bodyType &lt;> null) and (ownedBody &lt;> null) and&#xA;&#x9;bodyType.conformsTo(self.type) and&#xA;&#x9;(self.isRequired implies ownedBody.isRequired)&#xA;&#xA;"/>
+        <ownedParameters xmi:id="av2fb" name="bodySpecification" type="#sFfJa"/>
       </ownedOperations>
       <ownedProperties xmi:id="YqNZL" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="isMany" type="#0OCUB"/>
       <ownedProperties xmi:id="Yr8BL" defaultValueString="true" name="isRequired" type="#0OCUB"/>

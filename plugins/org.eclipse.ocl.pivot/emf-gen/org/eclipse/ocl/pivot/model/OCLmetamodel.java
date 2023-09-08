@@ -1254,7 +1254,7 @@ public class OCLmetamodel extends ASResourceImpl
 			op_Type_isClass = createOperation(_Type, PivotPackage.Literals.TYPE___IS_CLASS, null, null);
 			op_Type_isTemplateParameter = createOperation(_Type, PivotPackage.Literals.TYPE___IS_TEMPLATE_PARAMETER, null, null);
 			op_Type_specializeIn = createOperation(_Type, PivotPackage.Literals.TYPE___SPECIALIZE_IN__CALLEXP_TYPE, null, null);
-			op_TypedElement_CompatibleBody = createOperation(_TypedElement, PivotPackage.Literals.TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION, null, null);
+			op_TypedElement_CompatibleBody = createOperation(_TypedElement, PivotPackage.Literals.TYPED_ELEMENT___COMPATIBLE_BODY__EXPRESSIONINOCL, null, null);
 			op_ValueSpecification_booleanValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___BOOLEAN_VALUE, null, null);
 			op_ValueSpecification_integerValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___INTEGER_VALUE, null, null);
 			op_ValueSpecification_isComputable = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_COMPUTABLE, null, null);
@@ -1734,9 +1734,10 @@ public class OCLmetamodel extends ASResourceImpl
 			createBodyExpression(op_Property_isAttribute, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _EBoolean);
 			createParameter(op_Property_isAttribute, "p", _Property, true);
 			op_PropertyCallExp_getSpecializedReferredPropertyOwningType.setType(_Type);
-			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyOwningType, _PropertyCallExp, "referredProperty?.owningClass", _Type);
+			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyOwningType, _PropertyCallExp, "referredProperty.owningClass", _Type);
 			op_PropertyCallExp_getSpecializedReferredPropertyType.setType(_Type);
-			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyType, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
+			op_PropertyCallExp_getSpecializedReferredPropertyType.setIsRequired(false);
+			createBodyExpression(op_PropertyCallExp_getSpecializedReferredPropertyType, _PropertyCallExp, "referredProperty.type.oclAsType(Class)", _Type);
 			op_ReferringElement_getReferredElement.setType(_Element);
 			op_SelfType_specializeIn.setType(_Type);
 			createBodyExpression(op_SelfType_specializeIn, _SelfType, "selfType", _Type);
@@ -1754,8 +1755,8 @@ public class OCLmetamodel extends ASResourceImpl
 			createParameter(op_Type_specializeIn, "expr", _CallExp, true);
 			createParameter(op_Type_specializeIn, "selfType", _Type, true);
 			op_TypedElement_CompatibleBody.setType(_EBoolean);
-			createBodyExpression(op_TypedElement_CompatibleBody, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _EBoolean);
-			createParameter(op_TypedElement_CompatibleBody, "bodySpecification", _ValueSpecification, true);
+			createBodyExpression(op_TypedElement_CompatibleBody, _TypedElement, "let bodyType = bodySpecification.type in\n\tlet ownedBody = bodySpecification.ownedBody in\n\t(bodyType <> null) and (ownedBody <> null) and\n\tbodyType.conformsTo(self.type) and\n\t(self.isRequired implies ownedBody.isRequired)", _EBoolean);
+			createParameter(op_TypedElement_CompatibleBody, "bodySpecification", _ExpressionInOCL, true);
 			op_ValueSpecification_booleanValue.setType(_EBoolean);
 			op_ValueSpecification_integerValue.setType(_Integer);
 			op_ValueSpecification_integerValue.setIsRequired(false);
@@ -2495,7 +2496,6 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _EnumLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_EnumLiteralExp_referredLiteral = createProperty(PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, _EnumerationLiteral));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _Enumeration.getOwnedProperties();
@@ -2687,7 +2687,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_LoopExp_referredIteration = createProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, _Iteration));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _MapLiteralExp.getOwnedProperties();
@@ -2942,12 +2941,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_OperationCallExp_referredOperation = createProperty(PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION, _Operation));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _OppositePropertyCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_OppositePropertyCallExp_referredProperty = createProperty(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, _Property));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _OrphanCompletePackage.getOwnedProperties();
@@ -3155,7 +3152,6 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _PropertyCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_PropertyCallExp_referredProperty = createProperty(PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY, _Property));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _Pseudostate.getOwnedProperties();
@@ -3336,7 +3332,6 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _StateExp.getOwnedProperties();
 			ownedProperties.add(property = pr_StateExp_referredState = createProperty(PivotPackage.Literals.STATE_EXP__REFERRED_STATE, _State));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _StateMachine.getOwnedProperties();
@@ -3546,7 +3541,6 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _TypeExp.getOwnedProperties();
 			ownedProperties.add(property = pr_TypeExp_referredType = createProperty(PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, _Type));
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _TypedElement.getOwnedProperties();

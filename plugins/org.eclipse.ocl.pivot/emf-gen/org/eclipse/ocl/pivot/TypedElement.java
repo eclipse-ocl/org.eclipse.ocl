@@ -99,7 +99,7 @@ public interface TypedElement extends NamedElement, TuplePart {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	boolean CompatibleBody(ValueSpecification bodySpecification);
+	boolean CompatibleBody(ExpressionInOCL bodySpecification);
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}' attribute.

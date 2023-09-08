@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -348,7 +349,7 @@ implements IfExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = let type : Type[?] = self.ownedCondition.type
+			 *         result : Boolean[1] = let type : Type[?] = self.ownedCondition.type
 			 *         in type <> null and
 			 *           type.conformsTo(Boolean) and
 			 *           not type.conformsTo(OclVoid)
@@ -748,7 +749,7 @@ implements IfExp {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

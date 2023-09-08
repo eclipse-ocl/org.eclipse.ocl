@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -352,7 +353,7 @@ public class IntegerLiteralExpImpl
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

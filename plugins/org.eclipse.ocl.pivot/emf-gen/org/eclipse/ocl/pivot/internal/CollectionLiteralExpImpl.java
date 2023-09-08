@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
@@ -266,7 +267,7 @@ implements CollectionLiteralExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = kind = CollectionKind::Set implies
+			 *       let result : Boolean[1] = kind = CollectionKind::Set implies
 			 *         type.oclIsKindOf(SetType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -345,7 +346,7 @@ implements CollectionLiteralExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = kind = CollectionKind::OrderedSet implies
+			 *       let result : Boolean[1] = kind = CollectionKind::OrderedSet implies
 			 *         type.oclIsKindOf(OrderedSetType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -424,7 +425,7 @@ implements CollectionLiteralExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = kind = CollectionKind::Sequence implies
+			 *       let result : Boolean[1] = kind = CollectionKind::Sequence implies
 			 *         type.oclIsKindOf(SequenceType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -503,7 +504,7 @@ implements CollectionLiteralExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = kind = CollectionKind::Bag implies
+			 *       let result : Boolean[1] = kind = CollectionKind::Bag implies
 			 *         type.oclIsKindOf(BagType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -767,7 +768,7 @@ implements CollectionLiteralExp {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

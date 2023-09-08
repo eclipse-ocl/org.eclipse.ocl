@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -299,7 +300,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = ownedSource?.type.oclIsKindOf(MapType) implies
+			 *         result : Boolean[1] = ownedSource?.type.oclIsKindOf(MapType) implies
 			 *         self.ownedCoIterators->size() = 0 or
 			 *         self.ownedCoIterators->size() =
 			 *         self.ownedIterators->size()
@@ -414,7 +415,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = ownedSource?.type.oclIsKindOf(OrderedSetType) or
+			 *         result : Boolean[1] = ownedSource?.type.oclIsKindOf(OrderedSetType) or
 			 *         ownedSource?.type.oclIsKindOf(SequenceType) implies
 			 *         self.ownedCoIterators->size() = 0 or
 			 *         self.ownedCoIterators->size() =
@@ -575,7 +576,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = self.ownedCoIterators?->forAll(
+			 *         result : Boolean[1] = self.ownedCoIterators?->forAll(
 			 *           ownedInit->isEmpty())
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -590,19 +591,19 @@ implements LoopExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators);
 					final /*@Thrown*/ @NonNull OrderedSetValue safe_forAll_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedCoIterators, (Object)null);
-					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+					/*@Thrown*/ @NonNull Object accumulator = ValueUtil.TRUE_VALUE;
 					@NonNull Iterator<Object> ITERATOR__1 = safe_forAll_sources.iterator();
-					/*@Thrown*/ @Nullable Boolean result;
+					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							if (accumulator == ValueUtil.TRUE_VALUE) {
-								result = ValueUtil.TRUE_VALUE;
+								result = true;
 							}
 							else {
 								throw (InvalidValueException)accumulator;
@@ -626,7 +627,7 @@ implements LoopExp {
 						}
 						//
 						if (CAUGHT_isEmpty == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 							break;														// Stop immediately
 						}
 						else if (CAUGHT_isEmpty == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
@@ -750,7 +751,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = self.ownedIterators->forAll(
+			 *         result : Boolean[1] = self.ownedIterators->forAll(
 			 *           ownedInit->isEmpty())
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -765,18 +766,18 @@ implements LoopExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+					/*@Thrown*/ @NonNull Object accumulator = ValueUtil.TRUE_VALUE;
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-					/*@Thrown*/ @Nullable Boolean result;
+					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							if (accumulator == ValueUtil.TRUE_VALUE) {
-								result = ValueUtil.TRUE_VALUE;
+								result = true;
 							}
 							else {
 								throw (InvalidValueException)accumulator;
@@ -800,7 +801,7 @@ implements LoopExp {
 						}
 						//
 						if (CAUGHT_isEmpty == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 							break;														// Stop immediately
 						}
 						else if (CAUGHT_isEmpty == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
@@ -847,7 +848,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = ownedSource?.type.oclIsKindOf(BagType) or
+			 *         result : Boolean[1] = ownedSource?.type.oclIsKindOf(BagType) or
 			 *         ownedSource?.type.oclIsKindOf(SetType) implies
 			 *         self.ownedCoIterators->isEmpty()
 			 *       in
@@ -1230,7 +1231,7 @@ implements LoopExp {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

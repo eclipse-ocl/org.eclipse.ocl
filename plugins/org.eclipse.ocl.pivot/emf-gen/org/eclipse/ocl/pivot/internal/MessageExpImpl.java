@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.CallOperationAction;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -393,7 +394,7 @@ public class MessageExpImpl
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
+			 *         result : Boolean[1] = not ownedTarget.type.oclIsKindOf(CollectionType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -680,7 +681,7 @@ public class MessageExpImpl
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:
