@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -169,7 +170,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
+			 *       let result : Boolean[1] = ownedSource <> null and isSafe implies
 			 *         not ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -288,7 +289,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedSource <> null and not isSafe implies
+			 *       let result : Boolean[1] = ownedSource <> null and not isSafe implies
 			 *         ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -649,7 +650,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

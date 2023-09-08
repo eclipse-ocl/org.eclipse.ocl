@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -240,7 +241,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = type.oclIsKindOf(DataType) implies
+			 *         result : Boolean[1] = type.oclIsKindOf(DataType) implies
 			 *         ownedParts->size() = 1
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -1139,7 +1140,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

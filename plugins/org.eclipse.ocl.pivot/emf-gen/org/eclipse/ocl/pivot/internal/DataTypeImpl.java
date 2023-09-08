@@ -623,7 +623,7 @@ implements DataType {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = behavioralClass <> null implies
+			 *       let result : Boolean[1] = behavioralClass <> null implies
 			 *         superClasses->closure(superClasses)
 			 *         ->forAll(b | b.name <> name)
 			 *       in
@@ -649,7 +649,7 @@ implements DataType {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_forAll;
+						/*@Caught*/ @NonNull Object CAUGHT_forAll;
 						try {
 							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
 							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
@@ -678,13 +678,13 @@ implements DataType {
 							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, BOXED_superClasses, ACC_closure_0);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
-							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+							/*@Thrown*/ @NonNull Object accumulator = ValueUtil.TRUE_VALUE;
 							@NonNull Iterator<Object> ITERATOR_b = closure.iterator();
-							/*@Thrown*/ @Nullable Boolean forAll;
+							/*@Thrown*/ boolean forAll;
 							while (true) {
 								if (!ITERATOR_b.hasNext()) {
 									if (accumulator == ValueUtil.TRUE_VALUE) {
-										forAll = ValueUtil.TRUE_VALUE;
+										forAll = true;
 									}
 									else {
 										throw (InvalidValueException)accumulator;
@@ -701,7 +701,7 @@ implements DataType {
 								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
 								//
 								if (!ne_0) {					// Normal unsuccessful body evaluation result
-									forAll = ValueUtil.FALSE_VALUE;
+									forAll = false;
 									break;														// Stop immediately
 								}
 								else if (ne_0) {				// Normal successful body evaluation result
@@ -723,12 +723,7 @@ implements DataType {
 							if (CAUGHT_forAll instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_forAll;
 							}
-							if (CAUGHT_forAll == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -764,7 +759,7 @@ implements DataType {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = behavioralClass <> null implies
+			 *       let result : Boolean[1] = behavioralClass <> null implies
 			 *         behavioralClass.oclIsKindOf(PrimitiveType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -840,7 +835,7 @@ implements DataType {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = behavioralClass <> null implies
+			 *       let result : Boolean[1] = behavioralClass <> null implies
 			 *         superClasses->includes(behavioralClass)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)

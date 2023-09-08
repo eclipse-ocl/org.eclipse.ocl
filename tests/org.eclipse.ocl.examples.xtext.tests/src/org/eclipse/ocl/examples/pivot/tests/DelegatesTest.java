@@ -490,7 +490,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		assertEquals(5, amyAllReports.size());
 
 		for (EObject next : amyAllReports) {
-			assertTrue(this.<Boolean> invoke(next, employeeReportsTo, amy));
+			assertTrue((Boolean)invoke(next, employeeReportsTo, amy));
 		}
 	}
 
@@ -1794,13 +1794,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	<T> T invoke(EObject target, EOperation operation, Object... arguments) throws InvocationTargetException {
+	Object invoke(EObject target, EOperation operation, Object... arguments) throws InvocationTargetException {
 		//		try {
-		return (T) target.eInvoke(operation, (arguments.length == 0)
-			? ECollections.<Object> emptyEList()
-				: new BasicEList.UnmodifiableEList<Object>(arguments.length,
-						arguments));
+		return target.eInvoke(operation, (arguments.length == 0)
+			? ECollections.emptyEList()
+				: new BasicEList.UnmodifiableEList<Object>(arguments.length, arguments));
 		//		} catch (InvocationTargetException ite) {
 		//			fail("Failed to invoke operation: " + ite.getLocalizedMessage());
 		//			return null;

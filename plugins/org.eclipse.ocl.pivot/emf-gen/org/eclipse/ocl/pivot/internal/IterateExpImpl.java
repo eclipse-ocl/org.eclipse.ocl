@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
@@ -473,7 +474,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:
@@ -564,7 +565,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = not isSafe and
+			 *       let result : Boolean[1] = not isSafe and
 			 *         ownedIterators->exists(isRequired) implies
 			 *         let sourceType : Type[?] = ownedSource?.type
 			 *         in
@@ -611,13 +612,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							@SuppressWarnings("null")
 							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
+							/*@Thrown*/ @NonNull Object accumulator = ValueUtil.FALSE_VALUE;
 							@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-							/*@NonInvalid*/ @Nullable Boolean exists;
+							/*@NonInvalid*/ boolean exists;
 							while (true) {
 								if (!ITERATOR__1.hasNext()) {
 									if (accumulator == ValueUtil.FALSE_VALUE) {
-										exists = ValueUtil.FALSE_VALUE;
+										exists = false;
 									}
 									else {
 										throw (InvalidValueException)accumulator;
@@ -633,7 +634,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
 								//
 								if (BOXED_isRequired) {					// Normal successful body evaluation result
-									exists = ValueUtil.TRUE_VALUE;
+									exists = true;
 									break;														// Stop immediately
 								}
 								else if (!BOXED_isRequired) {				// Normal unsuccessful body evaluation result
@@ -643,11 +644,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
 								}
 							}
-							if (exists == ValueUtil.FALSE_VALUE) {
+							if (!exists) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if ((not == null) || (exists == null)) {
+								if (not == null) {
 									and = null;
 								}
 								else {
@@ -779,7 +780,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = isSafe implies
+			 *       let result : Boolean[1] = isSafe implies
 			 *         ownedIterators->forAll(isRequired)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -794,68 +795,56 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
-					final /*@Thrown*/ @Nullable Boolean result;
-					if (!BOXED_isSafe) {
+				final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+				final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
+				final /*@NonInvalid*/ @Nullable Boolean result;
+				if (!BOXED_isSafe) {
+					result = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+					/*@Thrown*/ @NonNull Object accumulator = ValueUtil.TRUE_VALUE;
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+					/*@NonInvalid*/ boolean forAll;
+					while (true) {
+						if (!ITERATOR__1.hasNext()) {
+							if (accumulator == ValueUtil.TRUE_VALUE) {
+								forAll = true;
+							}
+							else {
+								throw (InvalidValueException)accumulator;
+							}
+							break;
+						}
+						@SuppressWarnings("null")
+						/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
+						/**
+						 * isRequired
+						 */
+						final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+						final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
+						//
+						if (!BOXED_isRequired) {					// Normal unsuccessful body evaluation result
+							forAll = false;
+							break;														// Stop immediately
+						}
+						else if (BOXED_isRequired) {				// Normal successful body evaluation result
+							;															// Carry on
+						}
+						else {															// Impossible badly typed result
+							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+						}
+					}
+					if (forAll) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						@SuppressWarnings("null")
-						final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-						/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-						/*@NonInvalid*/ @Nullable Boolean forAll;
-						while (true) {
-							if (!ITERATOR__1.hasNext()) {
-								if (accumulator == ValueUtil.TRUE_VALUE) {
-									forAll = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									throw (InvalidValueException)accumulator;
-								}
-								break;
-							}
-							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
-							/**
-							 * isRequired
-							 */
-							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-							final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
-							//
-							if (!BOXED_isRequired) {					// Normal unsuccessful body evaluation result
-								forAll = ValueUtil.FALSE_VALUE;
-								break;														// Stop immediately
-							}
-							else if (BOXED_isRequired) {				// Normal successful body evaluation result
-								;															// Carry on
-							}
-							else {															// Impossible badly typed result
-								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-							}
-						}
-						if (forAll == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
-						}
-						else {
-							if (forAll == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
-						}
+						result = ValueUtil.FALSE_VALUE;
 					}
-					CAUGHT_result = result;
 				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -883,7 +872,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = isSafe implies
+			 *       let result : Boolean[1] = isSafe implies
 			 *         not let sourceType : Type[?] = ownedSource?.type
 			 *         in
 			 *           if sourceType.oclIsKindOf(MapType)

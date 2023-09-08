@@ -2614,14 +2614,14 @@ public class PivotTables extends AbstractTables
 	// CTOR pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
 	// CTOR pivot::Property::isAttribute(Property[1]) : EBoolean[1]
 	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
-	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
+	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[?]
 	// CTOR pivot::ReferringElement::getReferredElement() : Element[1]
 	// CTOR pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
 	// CTOR pivot::Type::flattenedType() : Type[?]
 	// CTOR pivot::Type::isClass() : Class[?]
 	// CTOR pivot::Type::isTemplateParameter() : TemplateParameter[?]
 	// CTOR pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// CTOR pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : EBoolean[1]
+	// CTOR pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]
 	// CTOR pivot::ValueSpecification::booleanValue() : EBoolean[1]
 	// CTOR pivot::ValueSpecification::integerValue() : Integer[?]
 	// CTOR pivot::ValueSpecification::isComputable() : EBoolean[1]
@@ -2979,11 +2979,11 @@ public class PivotTables extends AbstractTables
 			Fragments.init();
 		}
 		public static final @NonNull Object[] _CallExp___Type = new @NonNull Object[] {PivotTables.Types._CallExp, PivotTables.Types._Type};
+		public static final @NonNull Object[] _ExpressionInOCL = new @NonNull Object[] {PivotTables.Types._ExpressionInOCL};
 		public static final @NonNull Object[] _Property = new @NonNull Object[] {PivotTables.Types._Property};
 		public static final @NonNull Object[] _String = new @NonNull Object[] {OCLstdlibTables.Types._String};
 		public static final @NonNull Object[] _Type = new @NonNull Object[] {PivotTables.Types._Type};
 		public static final @NonNull Object[] _Type___String = new @NonNull Object[] {PivotTables.Types._Type, OCLstdlibTables.Types._String};
-		public static final @NonNull Object[] _ValueSpecification = new @NonNull Object[] {PivotTables.Types._ValueSpecification};
 
 		static {
 			Init.initEnd();
@@ -3107,14 +3107,14 @@ public class PivotTables extends AbstractTables
 	// TYPE pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
 	// TYPE pivot::Property::isAttribute(Property[1]) : EBoolean[1]
 	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
-	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[1]
+	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[?]
 	// TYPE pivot::ReferringElement::getReferredElement() : Element[1]
 	// TYPE pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
 	// TYPE pivot::Type::flattenedType() : Type[?]
 	// TYPE pivot::Type::isClass() : Class[?]
 	// TYPE pivot::Type::isTemplateParameter() : TemplateParameter[?]
 	// TYPE pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// TYPE pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : EBoolean[1]
+	// TYPE pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]
 	// TYPE pivot::ValueSpecification::booleanValue() : EBoolean[1]
 	// TYPE pivot::ValueSpecification::integerValue() : Integer[?]
 	// TYPE pivot::ValueSpecification::isComputable() : EBoolean[1]
@@ -5204,7 +5204,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _Type__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._Type,
 			4, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation("CompatibleBody", Parameters._ValueSpecification, Types._TypedElement,
+		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation("CompatibleBody", Parameters._ExpressionInOCL, Types._TypedElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
@@ -5952,7 +5952,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _AssociationClassCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _AssociationClassCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _AssociativityKind__AssociativityKind = {};
@@ -6148,7 +6148,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _BooleanLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _BooleanLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _BooleanLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _BooleanType__BooleanType = {
@@ -6251,7 +6251,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _CallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _CallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _CallOperationAction__CallOperationAction = {};
@@ -6384,7 +6384,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _CollectionItem__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _CollectionItem__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _CollectionKind__CollectionKind = {};
@@ -6470,7 +6470,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _CollectionLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _CollectionLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _CollectionLiteralPart__CollectionLiteralPart = {};
@@ -6512,7 +6512,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _CollectionLiteralPart__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _CollectionLiteralPart__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _CollectionRange__CollectionRange = {};
@@ -6555,7 +6555,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _CollectionRange__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _CollectionRange__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _CollectionType__CollectionType = {};
@@ -7234,7 +7234,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _DynamicValueSpecification__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _DynamicValueSpecification__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _DynamicValueSpecification__ValueSpecification = {
 			PivotTables.Operations._ValueSpecification__booleanValue /* booleanValue() */,
@@ -7491,7 +7491,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ElementLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ElementLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _EnumLiteralExp__EnumLiteralExp = {};
@@ -7538,7 +7538,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _EnumLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _EnumLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Enumeration__Enumeration = {
@@ -7676,7 +7676,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ExpressionInOCL__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ExpressionInOCL__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _ExpressionInOCL__ValueSpecification = {
 			PivotTables.Operations._ValueSpecification__booleanValue /* booleanValue() */,
@@ -7726,7 +7726,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Feature__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Feature__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _FeatureCallExp__FeatureCallExp = {};
@@ -7773,7 +7773,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _FeatureCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _FeatureCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _FinalState__FinalState = {};
@@ -7861,7 +7861,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _IfExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _IfExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Import__Import = {};
@@ -7986,7 +7986,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _IntegerLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _IntegerLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _IntegerLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _InvalidLiteralExp__InvalidLiteralExp = {};
@@ -8033,7 +8033,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _InvalidLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _InvalidLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _InvalidType__InvalidType = {
@@ -8193,7 +8193,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _IterateExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _IterateExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Iteration__Iteration = {};
@@ -8239,7 +8239,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _Iteration__TemplateableElement = {};
 		private static final @NonNull Operation @NonNull [] _Iteration__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Iteration__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _IteratorExp__IteratorExp = {};
@@ -8290,7 +8290,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _IteratorExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _IteratorExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _IteratorVariable__IteratorVariable = {};
@@ -8332,7 +8332,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _IteratorVariable__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _IteratorVariable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _IteratorVariable__Variable = {};
 		private static final @NonNull Operation @NonNull [] _IteratorVariable__VariableDeclaration = {};
@@ -8502,7 +8502,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _LanguageExpression__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _LanguageExpression__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _LanguageExpression__ValueSpecification = {
 			PivotTables.Operations._ValueSpecification__booleanValue /* booleanValue() */,
@@ -8556,7 +8556,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _LetExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _LetExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _LetVariable__LetVariable = {};
@@ -8598,7 +8598,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _LetVariable__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _LetVariable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _LetVariable__Variable = {};
 		private static final @NonNull Operation @NonNull [] _LetVariable__VariableDeclaration = {};
@@ -8705,7 +8705,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _LiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _LiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _LoopExp__LoopExp = {};
@@ -8752,7 +8752,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _LoopExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _LoopExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _MapLiteralExp__MapLiteralExp = {};
@@ -8799,7 +8799,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _MapLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _MapLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _MapLiteralPart__MapLiteralPart = {};
@@ -8937,7 +8937,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _MessageExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _MessageExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _MessageType__MessageType = {};
@@ -9218,7 +9218,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _NavigationCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _NavigationCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__NullLiteralExp = {};
@@ -9266,7 +9266,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _NumericLiteralExp__NumericLiteralExp = {};
@@ -9314,7 +9314,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _NumericLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _NumericLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _NumericLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _OCLExpression__OCLExpression = {
@@ -9359,7 +9359,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _OCLExpression__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _OCLExpression__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Object__Object = {};
@@ -9423,7 +9423,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _Operation__TemplateableElement = {};
 		private static final @NonNull Operation @NonNull [] _Operation__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Operation__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _OperationCallExp__OperationCallExp = {
@@ -9476,7 +9476,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _OperationCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _OperationCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _OppositePropertyCallExp__OppositePropertyCallExp = {};
@@ -9525,7 +9525,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _OppositePropertyCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _OppositePropertyCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _OrderedSetType__OrderedSetType = {};
@@ -9743,7 +9743,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Parameter__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Parameter__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Parameter__VariableDeclaration = {};
 
@@ -9786,7 +9786,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ParameterVariable__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ParameterVariable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _ParameterVariable__Variable = {};
 		private static final @NonNull Operation @NonNull [] _ParameterVariable__VariableDeclaration = {};
@@ -9947,7 +9947,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _PrimitiveLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _PrimitiveLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _PrimitiveType__PrimitiveType = {};
@@ -10123,7 +10123,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Property__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Property__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _PropertyCallExp__PropertyCallExp = {
@@ -10178,7 +10178,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _PropertyCallExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _PropertyCallExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Pseudostate__Pseudostate = {};
@@ -10305,7 +10305,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _RealLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _RealLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _RealLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _ReferringElement__ReferringElement = {
@@ -10421,7 +10421,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ResultVariable__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ResultVariable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _ResultVariable__Variable = {};
 		private static final @NonNull Operation @NonNull [] _ResultVariable__VariableDeclaration = {};
@@ -10674,7 +10674,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ShadowExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ShadowExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _ShadowPart__ShadowPart = {};
@@ -10716,7 +10716,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ShadowPart__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ShadowPart__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Signal__Signal = {};
@@ -10930,7 +10930,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _StateExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _StateExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _StateMachine__StateMachine = {};
@@ -11127,7 +11127,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _StringLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _StringLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _StringLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _TemplateBinding__TemplateBinding = {};
@@ -12617,7 +12617,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _TupleLiteralPart__TupleLiteralPart = {};
@@ -12659,7 +12659,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralPart__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralPart__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralPart__VariableDeclaration = {};
 
@@ -12843,11 +12843,11 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _TypeExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _TypeExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _TypedElement__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _TypedElement__Element = {
 			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
@@ -12933,7 +12933,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__PrimitiveLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _UnspecifiedValueExp__UnspecifiedValueExp = {};
@@ -12979,7 +12979,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _UnspecifiedValueExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _UnspecifiedValueExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _ValueSpecification__ValueSpecification = {
@@ -13028,7 +13028,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _ValueSpecification__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _ValueSpecification__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Variable__Variable = {};
@@ -13070,7 +13070,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Variable__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _Variable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Variable__VariableDeclaration = {};
 
@@ -13113,7 +13113,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _VariableDeclaration__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _VariableDeclaration__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _VariableExp__VariableExp = {};
@@ -13162,7 +13162,7 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _VariableExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _VariableExp__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ExpressionInOCL[1]) */
 		};
 
 		private static final @NonNull Operation @NonNull [] _Vertex__Vertex = {};

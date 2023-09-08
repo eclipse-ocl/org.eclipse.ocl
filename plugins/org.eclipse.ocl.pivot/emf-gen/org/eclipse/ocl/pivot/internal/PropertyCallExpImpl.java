@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -412,7 +413,7 @@ implements PropertyCallExp {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:
@@ -528,7 +529,7 @@ implements PropertyCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = not referredProperty?.isStatic implies
+			 *       let result : Boolean[?] = not referredProperty.isStatic implies
 			 *         ownedSource?.type?.conformsTo(
 			 *           getSpecializedReferredPropertyOwningType())
 			 *       in
@@ -545,49 +546,24 @@ implements PropertyCallExp {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_not;
-					try {
-						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
-						try {
-							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
-							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic == Boolean.TRUE) {
-								safe_isStatic_source = null;
-							}
-							else {
-								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
-								final /*@Thrown*/ @NonNull Boolean BOXED_isStatic_0 = isStatic_0;
-								safe_isStatic_source = BOXED_isStatic_0;
-							}
-							CAUGHT_safe_isStatic_source = safe_isStatic_source;
-						}
-						catch (Exception e) {
-							CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
-						}
-						if (CAUGHT_safe_isStatic_source instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_safe_isStatic_source;
-						}
-						final /*@Thrown*/ @Nullable Boolean not;
-						if (CAUGHT_safe_isStatic_source == ValueUtil.FALSE_VALUE) {
-							not = ValueUtil.TRUE_VALUE;
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull Property referredProperty = this.getReferredProperty();
+					final /*@NonInvalid*/ boolean isStatic = referredProperty.isIsStatic();
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isStatic = isStatic;
+					final /*@NonInvalid*/ @Nullable Boolean not;
+					if (!BOXED_isStatic) {
+						not = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						if (BOXED_isStatic) {
+							not = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							if (CAUGHT_safe_isStatic_source == ValueUtil.TRUE_VALUE) {
-								not = ValueUtil.FALSE_VALUE;
-							}
-							else {
-								not = null;
-							}
+							not = null;
 						}
-						CAUGHT_not = not;
-					}
-					catch (Exception e) {
-						CAUGHT_not = ValueUtil.createInvalidValue(e);
 					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+					if (not == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -634,13 +610,10 @@ implements PropertyCallExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_not instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_not;
-							}
 							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
 							}
-							if ((CAUGHT_not == null) || (CAUGHT_safe_conformsTo_source == null)) {
+							if ((not == null) || (CAUGHT_safe_conformsTo_source == null)) {
 								result = null;
 							}
 							else {
@@ -681,7 +654,7 @@ implements PropertyCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
+			 *       let result : Boolean[1] = ownedSource <> null and isSafe implies
 			 *         not ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -800,7 +773,7 @@ implements PropertyCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedSource <> null and not isSafe implies
+			 *       let result : Boolean[1] = ownedSource <> null and not isSafe implies
 			 *         ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)

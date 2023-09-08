@@ -21,7 +21,7 @@ inv BehavioralClassHasDistinctName: behavioralClass <> null implies superClasses
  */
 inv BehavioralClassIsPrimitiveType: behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)
 /**
- * The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionaality., specifically Integer or Real.
+ * The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionality., specifically Integer or Real.
  */
 inv BehavioralClassIsSuperClass: behavioralClass <> null implies superClasses->includes(behavioralClass)
 
@@ -73,13 +73,13 @@ let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class)
 
 --inv CompatibleInitializer: isDerived implies defaultExpression <> null
 
-inv CompatibleDefaultExpression: ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)
+inv CompatibleDefaultExpression: ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression.oclAsType(ExpressionInOCL))
 
 context OCLExpression
 inv TypeIsNotNull : type <> null
 
 context Operation
-inv CompatibleReturn: bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)
+inv CompatibleReturn: bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression.oclAsType(ExpressionInOCL))
 inv LoadableImplementation:
 	true
 inv UniquePreconditionName: ownedPreconditions->isUnique(name)
@@ -117,8 +117,12 @@ inv SortedByIteratorTypeIsComparable:
 	true
 
 context TypedElement
-def: CompatibleBody(bodySpecification : ValueSpecification[1]) : Boolean[1] =
-	bodySpecification.type?.conformsTo(self.type)
+def: CompatibleBody(bodySpecification : ExpressionInOCL[1]) : Boolean[1] =
+	let bodyType = bodySpecification.type in
+	let ownedBody = bodySpecification.ownedBody in
+	(bodyType <> null) and (ownedBody <> null) and
+	bodyType.conformsTo(self.type) and
+	(self.isRequired implies ownedBody.isRequired)
 
 --def: makeParameter() : Parameter = Parameter{name='name'}
 
@@ -170,7 +174,7 @@ inv TypeIsItemType: type = ownedItem.type
 
 context EnumLiteralExp
 /** The type of an enum Literal expression is the type of the referred literal. */
-inv TypeIsEnumerationType: self.type = referredLiteral?.owningEnumeration
+inv TypeIsEnumerationType: self.type = referredLiteral.owningEnumeration
 
 context IfExp
 /** The type of the condition of an if expression must be Boolean. */
@@ -371,11 +375,11 @@ context OperationCallExp
 /** All the arguments must conform to the parameters of the referred operation. */
 inv ArgumentTypeIsConformant:
 	let operation : Operation = self.referredOperation in
-	let parameters : OrderedSet(Parameter) = operation?.ownedParameters in
-	let selfType : Type = operation?.owningClass in
+	let parameters : OrderedSet(Parameter) = operation.ownedParameters in
+	let selfType : Type = operation.owningClass in
 	Sequence{1..ownedArguments->size()}->forAll (i | 
 		let argument : OCLExpression = ownedArguments->at(i) in
-		let parameter : Parameter = parameters?->at(i) in
+		let parameter : Parameter = parameters->at(i) in
 		let parameterType : Type = parameter.type in
 		let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in
 		argument.type?.conformsTo(requiredType))
@@ -384,7 +388,7 @@ inv ArgumentTypeIsConformant:
 context OperationCallExp
 def: hasOclVoidOverload() : Boolean[1] = false -- extended in Java code
 /** There must be exactly as many arguments as the referred operation has parameters. */
-inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters?->size()
+inv ArgumentCount: ownedArguments->size() = referredOperation.ownedParameters->size()
 /** Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
@@ -413,10 +417,10 @@ context ParameterVariable
 inv HasNoInitializer: ownedInit = null
 
 context PropertyCallExp
-def: getSpecializedReferredPropertyOwningType() : Class = referredProperty?.owningClass -- extended in Java code
-def: getSpecializedReferredPropertyType() : Class = referredProperty?.type.oclAsType(Class) -- extended in Java code
+def: getSpecializedReferredPropertyOwningType() : Class[?] = referredProperty.owningClass -- extended in Java code
+def: getSpecializedReferredPropertyType() : Class[?] = referredProperty.type.oclAsType(Class) -- extended in Java code
 /** The type of the source conforms to the owning type of the property. */
-inv NonStaticSourceTypeIsConformant: not referredProperty?.isStatic implies 
+inv NonStaticSourceTypeIsConformant: not referredProperty.isStatic implies 
 	ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())
 /** The type of the call expression is the type of the referred property. */
 inv CompatibleResultType: type = getSpecializedReferredPropertyType()

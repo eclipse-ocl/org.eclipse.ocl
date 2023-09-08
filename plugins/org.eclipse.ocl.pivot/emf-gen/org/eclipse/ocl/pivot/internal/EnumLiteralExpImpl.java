@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
@@ -164,7 +165,7 @@ public class EnumLiteralExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = self.type = referredLiteral?.owningEnumeration
+			 *       let result : Boolean[1] = self.type = referredLiteral.owningEnumeration
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -177,28 +178,13 @@ public class EnumLiteralExpImpl
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
-					/*@Thrown*/ @Nullable Enumeration safe_owningEnumeration_source;
-					if (owningEnumeration == Boolean.TRUE) {
-						safe_owningEnumeration_source = null;
-					}
-					else {
-						assert referredLiteral != null;
-						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
-						safe_owningEnumeration_source = owningEnumeration_0;
-					}
-					final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull EnumerationLiteral referredLiteral = this.getReferredLiteral();
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == owningEnumeration.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -377,7 +363,7 @@ public class EnumLiteralExpImpl
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

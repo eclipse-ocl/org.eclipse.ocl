@@ -517,7 +517,7 @@ public class EditTests extends XtextTestCase
 						"		}\n" +
 						"		operation nameLabel(name : String[?]) : String[1]\n" +
 						"		{\n" +
-						"			body: if name = null then 'null' else name endif;\n" +
+						"			body: if name = null then 'null' else name.oclAsType(String) endif;\n" +	// FIXME remove cast once guard analysis propagates
 						"		}\n" +
 						"		operation operationLabels(operations : uml::Operation[*] { ordered }) : String[1]\n" +
 						"		{\n" +

@@ -260,6 +260,35 @@ public class ValidateTests extends AbstractValidateTests
 		ocl.dispose();
 	}
 
+	public void testValidate_Bug582381_oclinecore() throws IOException, InterruptedException {
+		String testDocument =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
+						"\n" +
+						"package temp : Test = 'http://www.eclipse.org/ocl/Bug582381'\n" +
+						"{\n" +
+						"	class Tester\n" +
+						"	{\n" +
+						"		operation f() : Boolean[1] { derived}\n" +
+						"		{\n" +
+						"			body: let t : Tester = null in t?.f();\n" +
+						"		}\n" +
+						"	}\n" +
+						"}\n";
+		createFile("Bug582381.oclinecore", testDocument);
+		OCL ocl1 = createOCL();
+		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug582381", getMessages(
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", "temp::Tester::f() : Boolean[1]")));
+		Object operation = diagnostics.get(0).getData().get(0);
+		assert operation != null;
+		assertEquals(PivotPackage.Literals.OPERATION, ((EObject)operation).eClass());
+		ModelElementCS csElement = ElementUtil.getCsElement((Element) operation);
+		ICompositeNode node = NodeModelUtils.getNode(csElement);
+		assert node != null;
+		assertEquals(7, node.getStartLine());
+		assertEquals(10, node.getEndLine());
+		ocl1.dispose();
+	}
+
 	// See Bug 574324
 	public void testValidate_IsPrimeNumber_completeocl() throws IOException, InterruptedException, InvocationTargetException {
 		TestOCL ocl = createTestOCL();

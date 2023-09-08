@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -225,7 +226,7 @@ public abstract class CallExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = isSafe implies
+			 *       let result : Boolean[1] = isSafe implies
 			 *         not ownedSource?.type.oclAsType(CollectionType).isNullFree
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -342,7 +343,7 @@ public abstract class CallExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = isSafe implies
+			 *       let result : Boolean[1] = isSafe implies
 			 *         let sourceType : Type[?] = ownedSource?.type
 			 *         in sourceType <> null implies
 			 *           not sourceType.oclIsKindOf(MapType)
@@ -787,7 +788,7 @@ public abstract class CallExpImpl
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:

@@ -458,7 +458,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnumLiteralExp" eSuperTypes="#//LiteralExp">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredLiteral" eType="#//EnumerationLiteral"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredLiteral" lowerBound="1"
+        eType="#//EnumerationLiteral"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Enumeration" eSuperTypes="#//DataType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -649,7 +650,8 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredIteration" eType="#//Iteration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredIteration" lowerBound="1"
+        eType="#//Iteration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
@@ -825,10 +827,12 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredOperation" eType="#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredOperation" lowerBound="1"
+        eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OppositePropertyCallExp" eSuperTypes="#//NavigationCallExp">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" lowerBound="1"
+        eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSetType" eSuperTypes="#//CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrphanCompletePackage" eSuperTypes="#//CompletePackage"/>
@@ -1022,8 +1026,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyCallExp" eSuperTypes="#//NavigationCallExp #//ReferringElement">
     <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#//Type"/>
-    <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="#//Property"/>
+    <eOperations name="getSpecializedReferredPropertyType" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" lowerBound="1"
+        eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pseudostate" eSuperTypes="#//Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1236,7 +1241,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateExp" eSuperTypes="#//OCLExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredState" eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredState" lowerBound="1"
+        eType="#//State"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Behavior">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1477,14 +1483,15 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeExp" eSuperTypes="#//OCLExpression #//ReferringElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referredType" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredType" lowerBound="1"
+        eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement #//TuplePart">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
     </eAnnotations>
     <eOperations name="CompatibleBody" lowerBound="1" eType="#//EBoolean">
-      <eParameters name="bodySpecification" lowerBound="1" eType="#//ValueSpecification"/>
+      <eParameters name="bodySpecification" lowerBound="1" eType="#//ExpressionInOCL"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMany" lowerBound="1"
         eType="#//EBoolean" changeable="false" volatile="true" transient="true" derived="true"/>

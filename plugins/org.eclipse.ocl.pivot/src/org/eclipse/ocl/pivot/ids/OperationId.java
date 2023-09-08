@@ -24,26 +24,31 @@ public interface OperationId extends TemplateableId
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId BOOLEAN_AND = TypeId.BOOLEAN.getOperationId(0, "and", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_AND2 = TypeId.BOOLEAN.getOperationId(0, "and2", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId BOOLEAN_IMPLIES = TypeId.BOOLEAN.getOperationId(0, "implies", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_IMPLIES2 = TypeId.BOOLEAN.getOperationId(0, "implies2", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId BOOLEAN_NOT = TypeId.BOOLEAN.getOperationId(0, "not", ParametersId.EMPTY);
+	public static final @NonNull OperationId BOOLEAN_NOT2 = TypeId.BOOLEAN.getOperationId(0, "not2", ParametersId.EMPTY);
 
 	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId BOOLEAN_OR = TypeId.BOOLEAN.getOperationId(0, "or", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_OR2 = TypeId.BOOLEAN.getOperationId(0, "or2", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId BOOLEAN_XOR = TypeId.BOOLEAN.getOperationId(0, "xor", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_XOR2 = TypeId.BOOLEAN.getOperationId(0, "xor2", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3

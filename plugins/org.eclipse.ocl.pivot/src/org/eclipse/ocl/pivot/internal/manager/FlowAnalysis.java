@@ -656,7 +656,7 @@ public class FlowAnalysis
 			else if (eContainer instanceof OperationCallExp) {
 				OperationCallExp operationCallExp = (OperationCallExp)eContainer;
 				OperationId operationId = PivotUtil.getReferredOperation(operationCallExp).getOperationId();
-				if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)) {
+				if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND) || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND2)) {
 					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
 						addTrueExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
 					}
@@ -664,12 +664,20 @@ public class FlowAnalysis
 						addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
 					}
 				}
-				else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)) {
+				else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES) || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES2)) {
 					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
 						addFalseExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
 					}
 					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
 						addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
+					}
+				}
+				else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR) || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR2)) {
+					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
+						addFalseExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
+					}
+					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
+						addFalseExpression(PivotUtil.getOwnedSource(operationCallExp));
 					}
 				}
 			}

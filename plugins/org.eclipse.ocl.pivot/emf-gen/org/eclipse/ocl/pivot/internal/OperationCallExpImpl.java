@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -529,7 +530,7 @@ implements OperationCallExp {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return isNonNull();
 			case 4:
@@ -602,18 +603,18 @@ implements OperationCallExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = let operation : Operation[?] = self.referredOperation
+			 *         result : Boolean[?] = let operation : Operation[1] = self.referredOperation
 			 *         in
-			 *           let parameters : OrderedSet(Parameter)[?] = operation?.ownedParameters
+			 *           let parameters : OrderedSet(Parameter) = operation.ownedParameters
 			 *           in
-			 *             let selfType : Type[?] = operation?.owningClass
+			 *             let selfType : Type[?] = operation.owningClass
 			 *             in
 			 *               Sequence{1..ownedArguments->size()
 			 *               }
 			 *               ->forAll(i |
 			 *                 let argument : OCLExpression[1] = ownedArguments->at(i)
 			 *                 in
-			 *                   let parameter : Parameter[1] = parameters?->at(i)
+			 *                   let parameter : Parameter[1] = parameters->at(i)
 			 *                   in
 			 *                     let parameterType : Type[?] = parameter.type
 			 *                     in
@@ -638,28 +639,10 @@ implements OperationCallExp {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_forAll;
 				try {
-					final /*@NonInvalid*/ @Nullable Operation operation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = operation == null;
-					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
-						safe_ownedParameters_source = null;
-					}
-					else {
-						assert operation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = operation.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
-						safe_ownedParameters_source = BOXED_ownedParameters_0;
-					}
-					final /*@NonInvalid*/ @NonNull Object owningClass = operation == null;
-					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
-					if (owningClass == Boolean.TRUE) {
-						safe_owningClass_source = null;
-					}
-					else {
-						assert operation != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass_0 = operation.getOwningClass();
-						safe_owningClass_source = owningClass_0;
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull Operation operation = this.getReferredOperation();
+					final /*@NonInvalid*/ @NonNull List<Parameter> parameters = operation.getOwnedParameters();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class selfType = operation.getOwningClass();
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
 					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
@@ -687,7 +670,7 @@ implements OperationCallExp {
 						 *
 						 * let argument : OCLExpression[1] = ownedArguments->at(i)
 						 * in
-						 *   let parameter : Parameter[1] = parameters?->at(i)
+						 *   let parameter : Parameter[1] = parameters->at(i)
 						 *   in
 						 *     let parameterType : Type[?] = parameter.type
 						 *     in
@@ -701,11 +684,8 @@ implements OperationCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							final /*@Thrown*/ @Nullable OCLExpression argument = (@Nullable OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
-							if (safe_ownedParameters_source == null) {
-								throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
-							}
-							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
-							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
+							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_parameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, parameters);
+							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_parameters, i);
 							if (parameter == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
@@ -732,7 +712,7 @@ implements OperationCallExp {
 								else {
 									assert parameterType != null;
 									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull Type specializeIn_0 = parameterType.specializeIn(this, safe_owningClass_source);
+									final /*@Thrown*/ @NonNull Type specializeIn_0 = parameterType.specializeIn(this, selfType);
 									safe_specializeIn_source = specializeIn_0;
 								}
 								requiredType = safe_specializeIn_source;
@@ -818,7 +798,7 @@ implements OperationCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
+			 *       let result : Boolean[1] = ownedSource <> null and isSafe implies
 			 *         not ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -938,7 +918,7 @@ implements OperationCallExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = not hasOclVoidOverload() implies ownedSource <> null and not isSafe implies
+			 *         result : Boolean[1] = not hasOclVoidOverload() implies ownedSource <> null and not isSafe implies
 			 *         ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -1105,7 +1085,7 @@ implements OperationCallExp {
 			 *     else
 			 *       let
 			 *         result : Boolean[1] = ownedArguments->size() =
-			 *         referredOperation?.ownedParameters?->size()
+			 *         referredOperation.ownedParameters->size()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -1119,35 +1099,16 @@ implements OperationCallExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
-					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-					final /*@NonInvalid*/ @Nullable Operation referredOperation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = referredOperation == null;
-					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
-						safe_ownedParameters_source = null;
-					}
-					else {
-						assert referredOperation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = referredOperation.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
-						safe_ownedParameters_source = BOXED_ownedParameters_0;
-					}
-					if (safe_ownedParameters_source == null) {
-						throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					final /*@Thrown*/ @NonNull OrderedSetValue safe_size_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
-					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(safe_size_sources);
-					final /*@Thrown*/ boolean result = size.equals(size_0);
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
+				final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+				final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull Operation referredOperation = this.getReferredOperation();
+				final /*@NonInvalid*/ @NonNull List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
+				final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
+				final /*@NonInvalid*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParameters);
+				final /*@NonInvalid*/ boolean result = size.equals(size_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

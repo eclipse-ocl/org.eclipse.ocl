@@ -1083,9 +1083,10 @@ implements Property {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = ownedExpression <> null and
+			 *       let result : Boolean[1] = ownedExpression <> null and
 			 *         ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies
-			 *         CompatibleBody(ownedExpression)
+			 *         CompatibleBody(
+			 *           ownedExpression.oclAsType(ExpressionInOCL))
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -1144,8 +1145,11 @@ implements Property {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_1 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
+							@SuppressWarnings("null")
+							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType_0 = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_1, TYP_ExpressionInOCL_1);
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(oclAsType_0);
 							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
 							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
 						}
@@ -1632,7 +1636,7 @@ implements Property {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 			case 3:
 				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 4:

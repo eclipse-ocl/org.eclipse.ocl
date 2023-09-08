@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -35,6 +37,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -214,30 +217,137 @@ implements TypedElement {
 	 * @generated
 	 */
 	@Override
-	public boolean CompatibleBody(final ValueSpecification bodySpecification)
+	public boolean CompatibleBody(final ExpressionInOCL bodySpecification)
 	{
 		/**
-		 * bodySpecification.type?.conformsTo(self.type)
+		 *
+		 * let bodyType : Type[?] = bodySpecification.type
+		 * in
+		 *   let ownedBody : OCLExpression[?] = bodySpecification.ownedBody
+		 *   in bodyType <> null and ownedBody <> null and
+		 *     bodyType.conformsTo(self.type) and
+		 *     (self.isRequired implies ownedBody.isRequired
+		 *     )
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
-		/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-		if (conformsTo == Boolean.TRUE) {
-			safe_conformsTo_source = null;
+		final /*@NonInvalid*/ @Nullable Type bodyType = bodySpecification.getType();
+		final /*@NonInvalid*/ @Nullable OCLExpression ownedBody = bodySpecification.getOwnedBody();
+		/*@Caught*/ @Nullable Object CAUGHT_and_0;
+		try {
+			final /*@NonInvalid*/ boolean ne = bodyType != null;
+			final /*@NonInvalid*/ @Nullable Boolean and;
+			if (!ne) {
+				and = ValueUtil.FALSE_VALUE;
+			}
+			else {
+				final /*@NonInvalid*/ boolean ne_0 = ownedBody != null;
+				if (!ne_0) {
+					and = ValueUtil.FALSE_VALUE;
+				}
+				else {
+					and = ValueUtil.TRUE_VALUE;
+				}
+			}
+			final /*@Thrown*/ @Nullable Boolean and_0;
+			if (and == ValueUtil.FALSE_VALUE) {
+				and_0 = ValueUtil.FALSE_VALUE;
+			}
+			else {
+				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+				try {
+					if (bodyType == null) {
+						throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+					}
+					final /*@NonInvalid*/ @Nullable Type type = this.getType();
+					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, bodyType, type).booleanValue();
+					CAUGHT_conformsTo = conformsTo;
+				}
+				catch (Exception e) {
+					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+				}
+				if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {
+					and_0 = ValueUtil.FALSE_VALUE;
+				}
+				else {
+					if (CAUGHT_conformsTo instanceof InvalidValueException) {
+						throw (InvalidValueException)CAUGHT_conformsTo;
+					}
+					if (and == null) {
+						and_0 = null;
+					}
+					else {
+						and_0 = ValueUtil.TRUE_VALUE;
+					}
+				}
+			}
+			CAUGHT_and_0 = and_0;
+		}
+		catch (Exception e) {
+			CAUGHT_and_0 = ValueUtil.createInvalidValue(e);
+		}
+		final /*@Thrown*/ @Nullable Boolean and_1;
+		if (CAUGHT_and_0 == ValueUtil.FALSE_VALUE) {
+			and_1 = ValueUtil.FALSE_VALUE;
 		}
 		else {
-			if (type == null) {
-				throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+			/*@Caught*/ @Nullable Object CAUGHT_implies;
+			try {
+				final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+				final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
+				final /*@Thrown*/ @Nullable Boolean implies;
+				if (!BOXED_isRequired) {
+					implies = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
+					try {
+						if (ownedBody == null) {
+							throw new InvalidValueException("Null source for \'TypedElement::isRequired\'");
+						}
+						final /*@Thrown*/ boolean isRequired_0 = ownedBody.isIsRequired();
+						final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
+						CAUGHT_isRequired_0 = BOXED_isRequired_0;
+					}
+					catch (Exception e) {
+						CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
+					}
+					if (CAUGHT_isRequired_0 == ValueUtil.TRUE_VALUE) {
+						implies = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						if (CAUGHT_isRequired_0 instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_isRequired_0;
+						}
+						implies = ValueUtil.FALSE_VALUE;
+					}
+				}
+				CAUGHT_implies = implies;
 			}
-			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-			final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-			safe_conformsTo_source = conformsTo_0;
+			catch (Exception e) {
+				CAUGHT_implies = ValueUtil.createInvalidValue(e);
+			}
+			if (CAUGHT_implies == ValueUtil.FALSE_VALUE) {
+				and_1 = ValueUtil.FALSE_VALUE;
+			}
+			else {
+				if (CAUGHT_and_0 instanceof InvalidValueException) {
+					throw (InvalidValueException)CAUGHT_and_0;
+				}
+				if (CAUGHT_implies instanceof InvalidValueException) {
+					throw (InvalidValueException)CAUGHT_implies;
+				}
+				if ((CAUGHT_and_0 == null) || (CAUGHT_implies == null)) {
+					and_1 = null;
+				}
+				else {
+					and_1 = ValueUtil.TRUE_VALUE;
+				}
+			}
 		}
-		if (safe_conformsTo_source == null) {
-			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : EBoolean[1]\'");
+		if (and_1 == null) {
+			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]\'");
 		}
-		return safe_conformsTo_source;
+		return and_1;
 	}
 
 	/**
@@ -401,7 +511,7 @@ implements TypedElement {
 			case 1:
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
-				return CompatibleBody((ValueSpecification)arguments.get(0));
+				return CompatibleBody((ExpressionInOCL)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);
 	}
