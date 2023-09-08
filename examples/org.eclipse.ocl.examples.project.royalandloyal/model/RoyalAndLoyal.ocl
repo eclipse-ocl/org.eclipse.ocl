@@ -141,7 +141,8 @@ inv invariant_cycle :
 
 context TransactionReport::balance : Integer
 derive balance:
-	self.card.Membership.account?.points
+	let account = self.card.Membership.account in
+        if account <> null then account.points else 0 endif
 
 context TransactionReport::totalEarned : Integer
 derive totalEarned:
@@ -151,7 +152,7 @@ context TransactionReport::totalBurned : Integer
 derive totalBurned:
 	self.lines->collect( i_TransactionReportLine : TransactionReportLine | i_TransactionReportLine.transaction )->select( i_Transaction : Transaction | i_Transaction.oclIsTypeOf(Burning) )->collect( i_Transaction : Transaction | i_Transaction.points )->sum()
 
-context TransactionReport::number : Integer
+context TransactionReport::number : Integer[?]
 derive number:
 	self.card.Membership.account?.number
 
@@ -169,7 +170,7 @@ inv invariant_ofAge :
 inv invariant_CustomerCard3 :
 	self.owner.programs->size() > 0
 inv invariant_checkDates :
-	self.validFrom?.isBefore(self.goodThru)
+	self.validFrom.isBefore(self.goodThru)
 --inv invariant_CustomerCard2 :
 --	self.owner.dateOfBirth.isBefore(Date::now)
 --inv invariant_CustomerCard1 :
