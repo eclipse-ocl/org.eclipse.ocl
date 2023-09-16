@@ -21,6 +21,9 @@
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="javax.annotation" version="0.0.0"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
   </location>
 </locations>

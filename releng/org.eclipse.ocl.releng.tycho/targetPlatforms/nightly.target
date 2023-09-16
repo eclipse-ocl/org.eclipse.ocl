@@ -13,8 +13,7 @@
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.validation" version="0.0.0"/>
-    <!--repository location="https://download.eclipse.org/modeling/emf/validation/updates/interim"/-->
-    <repository location="https://download.eclipse.org/modeling/emf/validation/updates/releases/R201706061352"/>
+    <repository location="https://download.eclipse.org/modeling/emf/validation/updates/releases/R202305230712"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
@@ -24,20 +23,8 @@
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.draw2d" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/tools/gef/updates/legacy/releases/4.0.0_gef-master_1952"/>
+    <repository location="https://download.eclipse.org/tools/gef/classic/releases/latest"/>
   </location>
-  <!--location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-    <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/emft/mwe/updates/nightly"/>
-    <! - -repository location="https://download.eclipse.org/modeling/emft/mwe/updates/milestones"/- ->
-    <repository location="https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.1"/>
-  </location-->
-  <!--location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-    <unit id="org.eclipse.xtend" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/m2t/xpand/updates/nightly"/>
-    <! - -repository location="https://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/- ->
-    <repository location="https://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201605260315"/>
-  </location-->
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
@@ -58,6 +45,9 @@
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="javax.annotation" version="0.0.0"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
   </location>
 </locations>
