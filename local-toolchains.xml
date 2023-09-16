@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toolchains>
-  <!-- JDK toolchains for Jenkins on Linux -->
-  <!-- referenced using <dash><dash>global-toolchains toolchains.xml on maven command line -->
+  <!-- JDK toolchains for local usage -->
+  <!-- referenced using <dash><dash>global-toolchains ../../local-toolchains.xml on maven command line -->
   <toolchain>
     <type>jdk</type>
     <provides>
@@ -9,7 +9,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-     <jdkHome>/opt/tools/java/oracle/jdk-5/latest/bin/java</jdkHome>
+	 <jdkHome>E:/Tools/Java/jdk1.5.0_22/bin</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -19,7 +19,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/opt/tools/java/oracle/jdk-8/latest/bin/java</jdkHome>
+	  <jdkHome>E:/Tools/Java/jdk-1.8.0_371/bin</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -29,7 +29,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/opt/tools/java/openjdk/jdk-11/latest/bin/java</jdkHome>
+	  <jdkHome>E:/Tools/Java/jdk-11.0.19/bin</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -39,7 +39,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/opt/tools/java/openjdk/jdk-17/latest/bin/java</jdkHome>
-    </configuration>
+ 	  <jdkHome>E:/Tools/Java/jdk-17.0.8/bin</jdkHome>
+   </configuration>
   </toolchain>
 </toolchains>
