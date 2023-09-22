@@ -157,7 +157,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_any() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		org.eclipse.ocl.pivot.Class pkg1Type = environmentFactory.getASClass("Package");
 		// complete form
@@ -239,7 +239,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	// pkg1::pkg3::pkg5::george
 	@Test public void test_closure() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
@@ -273,7 +273,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_closure_cycles() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
@@ -362,7 +362,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_closure_body_393509() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Property"));
@@ -450,7 +450,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_collect() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
@@ -516,7 +516,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_collect_implicit_unknownAttribute_232669() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
 			environmentFactory.getASClass("Package"), "ownedPackages.unknownAttribute",
 			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Package", "unknownAttribute");
@@ -530,7 +530,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_collect_implicit_unknownOperation_232669() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
 			environmentFactory.getASClass("Package"), "ownedPackages.unknownOperation(self)",
 			PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Package", "unknownOperation", PivotConstants.SELF_NAME);
@@ -595,7 +595,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_collectNested() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
@@ -652,8 +652,6 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_exists() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key1, key2 with value2 | key1 <> value2)");
-// XXX
 		ocl.assertQueryFalse(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
 		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
 		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{true}}->exists(e | e->first())");
@@ -995,7 +993,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_reject() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
@@ -1041,7 +1039,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_select() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
@@ -1089,7 +1087,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_sortedBy() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
@@ -1132,7 +1130,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_sortedByRequiresComparability_192729() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class context = environmentFactory.getASClass("Package");
 		org.eclipse.ocl.pivot.Class type = environmentFactory.getASClass("Class");
 		ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",

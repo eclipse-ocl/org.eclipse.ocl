@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -317,7 +316,7 @@ implements LoopExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
@@ -343,15 +342,15 @@ implements LoopExp {
 					catch (Exception e) {
 						CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						final /*@NonInvalid*/ boolean eq = size_0.equals(PivotTables.INT_0);
-						final /*@NonInvalid*/ @Nullable Boolean or;
+						final /*@NonInvalid*/ boolean or;
 						if (eq) {
-							or = ValueUtil.TRUE_VALUE;
+							or = true;
 						}
 						else {
 							@SuppressWarnings("null")
@@ -360,25 +359,20 @@ implements LoopExp {
 							final /*@NonInvalid*/ @NonNull IntegerValue size_1 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedIterators);
 							final /*@NonInvalid*/ boolean eq_0 = size_0.equals(size_1);
 							if (eq_0) {
-								or = ValueUtil.TRUE_VALUE;
+								or = true;
 							}
 							else {
-								or = ValueUtil.FALSE_VALUE;
+								or = false;
 							}
 						}
-						if (or == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+						if (or) {
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (or == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -433,13 +427,13 @@ implements LoopExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators_0);
 					final /*@NonInvalid*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedCoIterators_0);
-					/*@Caught*/ @Nullable Object CAUGHT_or;
+					/*@Caught*/ @NonNull Object CAUGHT_or;
 					try {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
@@ -461,9 +455,9 @@ implements LoopExp {
 						catch (Exception e) {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
-						final /*@Thrown*/ @Nullable Boolean or;
+						final /*@Thrown*/ boolean or;
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							or = ValueUtil.TRUE_VALUE;
+							or = true;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf_0;
@@ -487,7 +481,7 @@ implements LoopExp {
 								CAUGHT_oclIsKindOf_0 = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_oclIsKindOf_0 == ValueUtil.TRUE_VALUE) {
-								or = ValueUtil.TRUE_VALUE;
+								or = true;
 							}
 							else {
 								if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
@@ -496,7 +490,7 @@ implements LoopExp {
 								if (CAUGHT_oclIsKindOf_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_oclIsKindOf_0;
 								}
-								or = ValueUtil.FALSE_VALUE;
+								or = false;
 							}
 						}
 						CAUGHT_or = or;
@@ -504,15 +498,15 @@ implements LoopExp {
 					catch (Exception e) {
 						CAUGHT_or = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_or == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						final /*@NonInvalid*/ boolean eq = size_0.equals(PivotTables.INT_0);
-						final /*@NonInvalid*/ @Nullable Boolean or_0;
+						final /*@NonInvalid*/ boolean or_0;
 						if (eq) {
-							or_0 = ValueUtil.TRUE_VALUE;
+							or_0 = true;
 						}
 						else {
 							@SuppressWarnings("null")
@@ -521,25 +515,20 @@ implements LoopExp {
 							final /*@NonInvalid*/ @NonNull IntegerValue size_1 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedIterators);
 							final /*@NonInvalid*/ boolean eq_0 = size_0.equals(size_1);
 							if (eq_0) {
-								or_0 = ValueUtil.TRUE_VALUE;
+								or_0 = true;
 							}
 							else {
-								or_0 = ValueUtil.FALSE_VALUE;
+								or_0 = false;
 							}
 						}
-						if (or_0 == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+						if (or_0) {
+							result = true;
 						}
 						else {
 							if (CAUGHT_or instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_or;
 							}
-							if ((CAUGHT_or == null) || (or_0 == null)) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -864,9 +853,9 @@ implements LoopExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_or;
+					/*@Caught*/ @NonNull Object CAUGHT_or;
 					try {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
@@ -888,9 +877,9 @@ implements LoopExp {
 						catch (Exception e) {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
-						final /*@Thrown*/ @Nullable Boolean or;
+						final /*@Thrown*/ boolean or;
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							or = ValueUtil.TRUE_VALUE;
+							or = true;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf_0;
@@ -914,7 +903,7 @@ implements LoopExp {
 								CAUGHT_oclIsKindOf_0 = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_oclIsKindOf_0 == ValueUtil.TRUE_VALUE) {
-								or = ValueUtil.TRUE_VALUE;
+								or = true;
 							}
 							else {
 								if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
@@ -923,7 +912,7 @@ implements LoopExp {
 								if (CAUGHT_oclIsKindOf_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_oclIsKindOf_0;
 								}
-								or = ValueUtil.FALSE_VALUE;
+								or = false;
 							}
 						}
 						CAUGHT_or = or;
@@ -931,9 +920,9 @@ implements LoopExp {
 					catch (Exception e) {
 						CAUGHT_or = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_or == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						@SuppressWarnings("null")
@@ -941,18 +930,13 @@ implements LoopExp {
 						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators);
 						final /*@NonInvalid*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(BOXED_ownedCoIterators).booleanValue();
 						if (isEmpty) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_or instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_or;
 							}
-							if (CAUGHT_or == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;

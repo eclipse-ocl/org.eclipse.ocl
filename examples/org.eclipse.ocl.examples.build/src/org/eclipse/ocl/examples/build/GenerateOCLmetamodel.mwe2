@@ -39,6 +39,7 @@ Workflow {
     	javaFolder = "emf-gen"
     	javaPackageName = "${projectName}.model"
     	javaClassName = "OCLmetamodel"
+    	scheduleLogFile = "/org.eclipse.ocl.pivot/model-gen/OCLmetamodel.txt"
     }
 }
 

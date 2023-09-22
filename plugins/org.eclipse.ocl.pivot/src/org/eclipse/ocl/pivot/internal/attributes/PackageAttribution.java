@@ -25,6 +25,9 @@ public class PackageAttribution extends AbstractAttribution
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
+		if ("ocl".equals(environmentView.getName())) {
+			getClass();			// XXX
+		}
 		org.eclipse.ocl.pivot.Package targetPackage = (org.eclipse.ocl.pivot.Package)target;
 		if ((targetPackage.getImportedPackages().size() > 0) && !environmentView.isQualified()) {
 			Set<org.eclipse.ocl.pivot.@NonNull Package> importedPackageClosure = PivotUtil.getImportedPackageClosure(environmentView.getEnvironmentFactory().getCompleteModel(), targetPackage);

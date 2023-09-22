@@ -1,4 +1,4 @@
-import 'Pivot.ecore'
+import 'PivotStructural.ecore'
 
 include 'Types.ocl'
 
@@ -418,7 +418,7 @@ inv HasNoInitializer: ownedInit = null
 
 context PropertyCallExp
 def: getSpecializedReferredPropertyOwningType() : Class[?] = referredProperty.owningClass -- extended in Java code
-def: getSpecializedReferredPropertyType() : Class[?] = referredProperty.type.oclAsType(Class) -- extended in Java code
+def: getSpecializedReferredPropertyType() : Type[?] = referredProperty.type -- extended in Java code
 /** The type of the source conforms to the owning type of the property. */
 inv NonStaticSourceTypeIsConformant: not referredProperty.isStatic implies 
 	ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())

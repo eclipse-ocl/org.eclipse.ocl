@@ -1,0 +1,63 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *   E.D.Willink (CEA LIST) - Bug 424034
+ *
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module GenerateASModels2
+
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+var sourceName = "org.eclipse.ocl.pivot"
+
+/**
+ *	Generate the OCLstdlib Model, by converting oclstdlib.oclstdlib to OCLstdlib.java.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = ProjectMapSetup { resourceSet = resourceSet }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
+ 	component = OCLInstanceSetup : oclInstanceSetup { resourceSet = resourceSet }
+
+    component = FileCopy { skipOnErrors = true
+		sourceFile = "../../plugins/${sourceName}/model/PivotMerged.genmodel"
+	    targetFile = "../../plugins/${sourceName}/model-gen/PivotMerged.genmodel"
+    }
+
+ //	bean = ResourceSetImpl : pivotGenerateResourceSet {}
+ //   bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
+//    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+    bean = OCLStandaloneSetup {}
+   // bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
+     component = GenmodelReloader { resourceSet = resourceSet skipOnErrors = true
+    	projectName = "${sourceName}"
+    	genModel = "/${sourceName}/model-gen/PivotMerged.genmodel"
+    	ecoreFile = "/${sourceName}/model-gen/PivotMerged.ecore"
+    	outputGenModel = "/${sourceName}/model-gen/PivotMerged2.genmodel"
+  	 	outputEcoreFile = "/${sourceName}/model-gen/PivotMerged2.ecore"
+     }
+
+    component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
+    	genModel = "/${sourceName}/model-gen/PivotMerged2.genmodel"
+    }
+/*    component = Model2tablesGenerator { oclInstanceSetup = oclInstanceSetup
+   		library = "http://www.eclipse.org/ocl/2023/Library"
+    	genModelFile = "/${sourceName}/model/oclas.genmodel"
+    	genOCLstdlib = true
+    } */
+	component = OCLInstanceDispose { oclInstanceSetup = oclInstanceSetup }
+	component = ConvertToUnixLineEndings {
+		directory = "../../plugins/${sourceName}/emf-gen"
+	}
+}
+

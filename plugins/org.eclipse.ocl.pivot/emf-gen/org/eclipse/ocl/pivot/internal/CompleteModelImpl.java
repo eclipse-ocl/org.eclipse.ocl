@@ -752,7 +752,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 							superTemplateArgumentList.add(actual);
 						}
 					}
-					org.eclipse.ocl.pivot.Class specializedSuperType = superCompleteClass.getSpecializedType(superTemplateArgumentList);
+					org.eclipse.ocl.pivot.Class superGenericClass = superCompleteClass.getPrimaryClass();
+					org.eclipse.ocl.pivot.Class specializedSuperType = getStandardLibrary().getOrphanage().getClassType(superGenericClass, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
 			}

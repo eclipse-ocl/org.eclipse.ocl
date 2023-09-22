@@ -20,6 +20,9 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
 var sourceName = "org.eclipse.ocl.pivot"
+var pivotProjectName = "org.eclipse.ocl.pivot"
+var internalProjectName = "org.eclipse.ocl.pivot"
+var basePivotProject = "../../plugins/${pivotProjectName}"
 
 /**
  *	Generate the OCLstdlib Model, by converting oclstdlib.oclstdlib to OCLstdlib.java.
@@ -33,13 +36,14 @@ Workflow {
  	component = OCLInstanceSetup : oclInstanceSetup { resourceSet = resourceSet }
     component = GenerateASModelsXtend { oclInstanceSetup = oclInstanceSetup
     	projectName = "${sourceName}"
-    	stdlibFile = "model/OCL-2.5as.oclstdlib"
-     	modelFile = "model/Pivotas.ecore"
-    	uri = "http://www.eclipse.org/ocl/2023/AS"
-    	ecoreFile = "/org.eclipse.ocl.pivot/model-gen/oclas.ecore"
+    	stdlibFile = "model/OCL-2.5.oclstdlib"
+     	modelFile = "model/PivotStructural.ecore"
+     	oclURI = "/org.eclipse.ocl.pivot/model/Pivot.ocl"
+    	uri = "http://www.eclipse.org/ocl/2015/Library"
+    	ecoreFile = "/org.eclipse.ocl.pivot/model-gen/PivotMerged.ecore"
     	javaFolder = "/org.eclipse.ocl.pivot/emf-gen"
     	javaPackageName = "org.eclipse.ocl.pivot"
-    	javaClassName = "OCLAS"
+    	javaClassName = "Pivot"
     //	libraryName = "oclas"
     //	libraryNsPrefix = "oclas"
     /* 	excludedEClassifierName = "BooleanType"
@@ -53,10 +57,36 @@ Workflow {
     	excludedEClassifierName = "Stereotype"
     	excludedEClassifierName = "Type"
     	excludedEClassifierName = "VoidType" */
+    	invariantPrefix = "validate"
     }
-    component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
-    	genModel = "/${sourceName}/model/oclas.genmodel"
+ 	bean = ResourceSetImpl : pivotGenerateResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
+//    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
+     component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	ecoreFile = "/${internalProjectName}/model-gen/PivotMerged.ecore"
+    	outputGenModel = "/${internalProjectName}/model-gen/Pivot.genmodel"
+  	 	outputEcoreFile = "/${internalProjectName}/model-gen/Pivot.ecore"
+     }
+    
+ /*    component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+//    	projectName = "${internalProjectName}"
+    	genModel = "/${internalProjectName}/model-gen/Pivot.genmodel"
+//    	clearResourceSet = false
+//    	modelSlot = "${ecoreSlot}"
     }
+    
+
+    component = GenerateASVisitors { resourceSet = pivotGenerateResourceSet
+    	projectName = "${internalProjectName}"
+    	genModelFile = "model-gen/Pivot.genmodel"
+    } */
+    
+    
+    
 /*    component = Model2tablesGenerator { oclInstanceSetup = oclInstanceSetup
    		library = "http://www.eclipse.org/ocl/2023/Library"
     	genModelFile = "/${sourceName}/model/oclas.genmodel"

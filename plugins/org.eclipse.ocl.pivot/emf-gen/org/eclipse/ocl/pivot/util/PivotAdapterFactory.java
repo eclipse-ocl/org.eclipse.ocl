@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.BooleanType;
+import org.eclipse.ocl.pivot.Boolean_Class;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CallOperationAction;
 import org.eclipse.ocl.pivot.CollectionItem;
@@ -59,6 +60,7 @@ import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.Integer_Class;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterableType;
@@ -105,6 +107,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.Real_Class;
 import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.ResultVariable;
@@ -123,6 +126,7 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.String_Class;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -137,6 +141,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
+import org.eclipse.ocl.pivot.UnlimitedNatural_Class;
 import org.eclipse.ocl.pivot.UnspecifiedValueExp;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.Variable;
@@ -250,6 +255,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseBooleanType(BooleanType object)
 			{
 				return createBooleanTypeAdapter();
+			}
+			@Override
+			public Adapter caseBoolean_Class(Boolean_Class object)
+			{
+				return createBoolean_ClassAdapter();
 			}
 			@Override
 			public Adapter caseCallExp(CallExp object)
@@ -435,6 +445,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseIntegerLiteralExp(IntegerLiteralExp object)
 			{
 				return createIntegerLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseInteger_Class(Integer_Class object)
+			{
+				return createInteger_ClassAdapter();
 			}
 			@Override
 			public Adapter caseInvalidLiteralExp(InvalidLiteralExp object)
@@ -682,6 +697,11 @@ extends AdapterFactoryImpl {
 				return createRealLiteralExpAdapter();
 			}
 			@Override
+			public Adapter caseReal_Class(Real_Class object)
+			{
+				return createReal_ClassAdapter();
+			}
+			@Override
 			public Adapter caseReferringElement(ReferringElement object)
 			{
 				return createReferringElementAdapter();
@@ -772,6 +792,11 @@ extends AdapterFactoryImpl {
 				return createStringLiteralExpAdapter();
 			}
 			@Override
+			public Adapter caseString_Class(String_Class object)
+			{
+				return createString_ClassAdapter();
+			}
+			@Override
 			public Adapter caseTemplateBinding(TemplateBinding object)
 			{
 				return createTemplateBindingAdapter();
@@ -845,6 +870,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp object)
 			{
 				return createUnlimitedNaturalLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseUnlimitedNatural_Class(UnlimitedNatural_Class object)
+			{
+				return createUnlimitedNatural_ClassAdapter();
 			}
 			@Override
 			public Adapter caseUnspecifiedValueExp(UnspecifiedValueExp object)
@@ -1065,6 +1095,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBooleanTypeAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Boolean_Class <em>Boolean Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.Boolean_Class
+	 * @generated
+	 */
+	public Adapter createBoolean_ClassAdapter()
 	{
 		return null;
 	}
@@ -1307,6 +1352,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIntegerLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Integer_Class <em>Integer Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.Integer_Class
+	 * @generated
+	 */
+	public Adapter createInteger_ClassAdapter()
+	{
 		return null;
 	}
 
@@ -1868,6 +1928,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Real_Class <em>Real Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.Real_Class
+	 * @generated
+	 */
+	public Adapter createReal_ClassAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.ReferringElement <em>Referring Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2074,6 +2149,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.String_Class <em>String Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.String_Class
+	 * @generated
+	 */
+	public Adapter createString_ClassAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TupleLiteralExp <em>Tuple Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2155,6 +2245,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUnlimitedNaturalLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.UnlimitedNatural_Class
+	 * @generated
+	 */
+	public Adapter createUnlimitedNatural_ClassAdapter()
+	{
 		return null;
 	}
 

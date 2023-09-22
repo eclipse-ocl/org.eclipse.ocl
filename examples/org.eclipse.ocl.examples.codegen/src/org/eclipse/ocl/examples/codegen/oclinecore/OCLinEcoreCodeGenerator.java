@@ -239,7 +239,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		//
-		// An OperationCallExp propagates a Tuple status if it is an implies guard for a Tyuple status
+		// An OperationCallExp propagates a Tuple status if it is an implies guard for a Tuple status
 		//
 		@Override
 		public @Nullable Boolean visitOperationCallExp(@NonNull OperationCallExp object) {

@@ -479,53 +479,41 @@ implements Constraint {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean_0 = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
-					final /*@NonInvalid*/ @NonNull VoidType TYP_OclVoid = (@NonNull VoidType)idResolver.getClass(TypeId.OCL_VOID, null);
-					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
-					final /*@NonInvalid*/ @Nullable Type type_0 = ownedSpecification_0.getType();
-					final /*@NonInvalid*/ @Nullable Boolean and;
-					final /*@NonInvalid*/ boolean ne = type_0 != null;
-					and = ne;
-					final /*@Thrown*/ @Nullable Boolean result;
-					if (and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+				final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean_0 = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
+				final /*@NonInvalid*/ @NonNull VoidType TYP_OclVoid = (@NonNull VoidType)idResolver.getClass(TypeId.OCL_VOID, null);
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
+				final /*@NonInvalid*/ @Nullable Type type_0 = ownedSpecification_0.getType();
+				final /*@NonInvalid*/ boolean and;
+				final /*@NonInvalid*/ boolean ne = type_0 != null;
+				and = ne;
+				final /*@NonInvalid*/ boolean result;
+				if (!and) {
+					result = true;
+				}
+				else {
+					final /*@NonInvalid*/ boolean eq = (type_0 != null) ? (type_0.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
+					final /*@NonInvalid*/ boolean or;
+					if (eq) {
+						or = true;
 					}
 					else {
-						final /*@NonInvalid*/ boolean eq = (type_0 != null) ? (type_0.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
-						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq) {
-							or = ValueUtil.TRUE_VALUE;
+						final /*@NonInvalid*/ boolean eq_0 = (type_0 != null) ? (type_0.getTypeId() == TYP_OclVoid.getTypeId()) : false;
+						if (eq_0) {
+							or = true;
 						}
 						else {
-							final /*@NonInvalid*/ boolean eq_0 = (type_0 != null) ? (type_0.getTypeId() == TYP_OclVoid.getTypeId()) : false;
-							if (eq_0) {
-								or = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								or = ValueUtil.FALSE_VALUE;
-							}
-						}
-						if (or == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
-						}
-						else {
-							if ((and == null) || (or == null)) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							or = false;
 						}
 					}
-					CAUGHT_result = result;
+					if (or) {
+						result = true;
+					}
+					else {
+						result = false;
+					}
 				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

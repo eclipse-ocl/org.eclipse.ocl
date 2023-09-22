@@ -187,7 +187,7 @@ public class TemplateSpecialisation extends SimpleTemplateParameterSubstitutions
 	}
 
 	@Override
-	public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+	public @Nullable Type putType(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 		throw new UnsupportedOperationException();
 	}
 }

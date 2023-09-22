@@ -2,6 +2,7 @@
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib" name="OCL-2.5.oclstdlib" xmiidVersion="1">
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
       <ownedDetails name="PackageRole">
         <values>StandardLibrary</values>
@@ -13,7 +14,6 @@
         <values>The primitive types defined in the OCL standard library are UnlimitedNatural, Integer, Real, String, and Boolean. They are all instances of the metaclass Primitive from the UML core package.</values>
       </ownedDetails>
     </ownedAnnotations>
-    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="yEcHF" instanceClassName="org.eclipse.ocl.pivot.values.Bag" name="Bag" superClasses="#Z+X23">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
@@ -119,7 +119,12 @@
         <ownedParameters xmi:id="k2OA6" name="T"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BooleanType" xmi:id="XEMMs" instanceClassName="java.lang.Boolean" name="Boolean" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:BooleanType" xmi:id="XEMMs" instanceClassName="boolean" name="Boolean" superClasses="#jbMkR">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-DataType">
+        <ownedDetails name="EClassName">
+          <values>Boolean_Class</values>
+        </ownedDetails>
+      </ownedAnnotations>
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>
@@ -203,11 +208,6 @@
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="jXcmC" isRequired="false" name="b" representedParameter="#Z7lXU"
               type="#XEMMs"/>
         </bodyExpression>
-        <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
-          <ownedDetails name="ClassGroup">
-            <values>Primitive</values>
-          </ownedDetails>
-        </ownedAnnotations>
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="Z7lXU" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
@@ -742,7 +742,7 @@
         <ownedParameters xmi:id="GVfAW" name="lambda" type="#9VTck"/>
       </ownedOperations>
       <ownedOperations xmi:id="WVvJn" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionProductOperation" name="product"
-          type="#AVIYn">
+          type="#RpLOJ">
         <ownedComments body="The cartesian product operation of oclText[self] and c2.&#xA;"/>
         <ownedParameters xmi:id="YR+9v" name="c2" type="#3GM3z"/>
         <ownedSignature>
@@ -827,7 +827,7 @@
         <ownedComments body="Evaluates to the lower bound on the number of collection elements.&#xA;"/>
       </ownedProperties>
       <ownedProperties xmi:id="FjBtS" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty" name="upper"
-          type="#tYtCd">
+          type="#3kMFL">
         <ownedComments body="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
       </ownedProperties>
     </ownedClasses>
@@ -853,6 +853,11 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="tYtCd" coercions="#RRcEo" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"
         name="Integer" superClasses="#Nr4QF">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-DataType">
+        <ownedDetails name="EClassName">
+          <values>Integer_Class</values>
+        </ownedDetails>
+      </ownedAnnotations>
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>
@@ -1208,7 +1213,7 @@
         <ownedPostconditions xmi:id="MrNhR">
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = not (self = object2)" type="#XEMMs">
             <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2dcxV" type="#XEMMs">
-              <ownedArguments xsi:type="pivot:OperationCallExp" isRequired="false" name="not" referredOperation="#DH5kA" type="#XEMMs">
+              <ownedArguments xsi:type="pivot:OperationCallExp" name="not" referredOperation="#DH5kA" type="#XEMMs">
                 <ownedSource xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SYOvl" type="#XEMMs">
                   <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object2" referredVariable="#oqZCH" type="#jbMkR"/>
                   <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#cohTe" type="#jbMkR"/>
@@ -1844,7 +1849,7 @@
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result->at(1) = object" type="#XEMMs">
             <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SYOvl" type="#XEMMs">
               <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object" referredVariable="#xCT1a" type="#53+C2"/>
-              <ownedSource xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#ArMlL" type="#53+C2">
+              <ownedSource xsi:type="pivot:OperationCallExp" name="at" referredOperation="#ArMlL" type="#53+C2">
                 <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#tYtCd"/>
                 <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#xD+HB" type="#9cc2s"/>
               </ownedSource>
@@ -1857,17 +1862,17 @@
         </ownedPostconditions>
         <ownedPostconditions xmi:id="iw4n5" name="IsShiftedAlong">
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="Sequence{1..self->size()}->forAll(index : Integer[1] | self->at(index) = result->at(index + 1))"
-              isRequired="false" type="#XEMMs">
-            <ownedBody xsi:type="pivot:IteratorExp" isRequired="false" name="forAll" referredIteration="#WqmML" type="#XEMMs">
+              type="#XEMMs">
+            <ownedBody xsi:type="pivot:IteratorExp" name="forAll" referredIteration="#WqmML" type="#XEMMs">
               <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SYOvl" type="#XEMMs">
-                <ownedArguments xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#ArMlL" type="#53+C2">
+                <ownedArguments xsi:type="pivot:OperationCallExp" name="at" referredOperation="#ArMlL" type="#53+C2">
                   <ownedArguments xsi:type="pivot:OperationCallExp" name="+" referredOperation="#iA+ir" type="#tYtCd">
                     <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#tYtCd"/>
                     <ownedSource xsi:type="pivot:VariableExp" name="index" referredVariable="#ZZk,E" type="#tYtCd"/>
                   </ownedArguments>
                   <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#aVV8Q" type="#9cc2s"/>
                 </ownedArguments>
-                <ownedSource xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#ArMlL" type="#53+C2">
+                <ownedSource xsi:type="pivot:OperationCallExp" name="at" referredOperation="#ArMlL" type="#53+C2">
                   <ownedArguments xsi:type="pivot:VariableExp" name="index" referredVariable="#ZZk,E" type="#tYtCd"/>
                   <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#9cc2s"/>
                 </ownedSource>
@@ -1943,6 +1948,11 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="Nr4QF" instanceClassName="org.eclipse.ocl.pivot.values.RealValue" name="Real"
         superClasses="#BEwMu #D4eXY">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-DataType">
+        <ownedDetails name="EClassName">
+          <values>Real_Class</values>
+        </ownedDetails>
+      </ownedAnnotations>
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>
@@ -2271,6 +2281,11 @@
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="AlwVZ" instanceClassName="java.lang.String" name="String" superClasses="#BEwMu #D4eXY">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-DataType">
+        <ownedDetails name="EClassName">
+          <values>String_Class</values>
+        </ownedDetails>
+      </ownedAnnotations>
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>
@@ -2498,6 +2513,11 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="3kMFL" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"
         name="UnlimitedNatural" superClasses="#BEwMu">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-DataType">
+        <ownedDetails name="EClassName">
+          <values>UnlimitedNatural_Class</values>
+        </ownedDetails>
+      </ownedAnnotations>
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>
@@ -2801,9 +2821,9 @@
         <ownedSubstitutions actual="#jdfjE" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8usZ2" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="NDwPY" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#,5eVD" formal="#qs59R"/>
+        <ownedSubstitutions actual="#3ZVjA" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uLP2W" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
@@ -3198,14 +3218,14 @@
         <ownedSubstitutions actual="#jdfjE" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#tpcVm">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="RpLOJ" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#+9fLI">
       <ownedBindings>
-        <ownedSubstitutions actual="#,5eVD" formal="#ODsm5"/>
+        <ownedSubstitutions actual="#3ZVjA" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:TupleType" xmi:id=",5eVD" name="Tuple" superClasses="#,qHxF">
-      <ownedProperties xmi:id="Lv1aA" name="first" type="#qs59R"/>
-      <ownedProperties xmi:id="P28lE" name="second" type="#yzGsR"/>
+    <ownedClasses xsi:type="pivot:TupleType" xmi:id="3ZVjA" name="Tuple" superClasses="#,qHxF">
+      <ownedProperties xmi:id="jPQZm" name="first" type="#qs59R"/>
+      <ownedProperties xmi:id="nWXkq" name="second" type="#yzGsR"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ipHcs" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#xuXg8">
       <ownedBindings>
@@ -3287,9 +3307,9 @@
         <ownedSubstitutions actual="#jdfjE" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tpcVm" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#8usZ2">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+9fLI" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#NDwPY">
       <ownedBindings>
-        <ownedSubstitutions actual="#,5eVD" formal="#jdfjE"/>
+        <ownedSubstitutions actual="#3ZVjA" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
   </ownedPackages>

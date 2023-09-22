@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.xtend;
 
 import java.io.File;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,9 +55,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
@@ -65,6 +63,8 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	protected String libraryName;
 	protected String libraryNsPrefix;
 	protected boolean isASLibrary = true;
+	protected String scheduleLogFile = null;
+
 	protected boolean useOCLstdlib = false;
 	protected @NonNull List<@NonNull String> excludedEClassifierNames = new ArrayList<>();
 
@@ -93,6 +93,10 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			}
 		}
 		return null;
+	}
+
+	public String getScheduleLogFile() {
+		return scheduleLogFile;
 	}
 
 	@Override
@@ -152,10 +156,21 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
-		//	SynthesisSchedule.SYNTHESIS.setState(true);
 			initModel1(pivotModel);
+			StringBuilder scheduleLogBuilder = null;
+			if (scheduleLogFile != null) {
+				scheduleLogBuilder = new StringBuilder();
+				contentAnalysis.setScheduleLog(scheduleLogBuilder);
+			}
 			initModel2(saver);
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
+			if (scheduleLogFile != null) {
+				assert scheduleLogBuilder != null;
+				URI scheduleLogURI = URI.createPlatformResourceURI(scheduleLogFile, true);
+				OutputStreamWriter w = new OutputStreamWriter(resourceSet.getURIConverter().createOutputStream(scheduleLogURI));
+				w.append(scheduleLogBuilder.toString());
+				w.close();
+			}
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();
@@ -191,19 +206,19 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				// FIXME EClass instanceClassNames are correct because they were loaded correct.
 				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
 				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
-				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
+			//	setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
 				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
-				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
 				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
 				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
 				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
 				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
-				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
 				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
 				//				setInstanceClassName(ePackage, "Set", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
+			//	setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
 				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
 				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
 				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
@@ -215,7 +230,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 						eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
 					}
-					eClassifier.getEAnnotations().clear();
+			//		eClassifier.getEAnnotations().clear();
 					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 					//				if (eAnnotation != null) {
 					//					eClassifier.getEAnnotations().remove(eAnnotation);
@@ -225,13 +240,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					//					eClassifier.getEAnnotations().remove(eAnnotation);
 					//				}
 					String name = eClassifier.getName();
-					if ("OclAny".equals(name)) {
+				/*	if ("OclAny".equals(name)) {
 						String comment = "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTrue functionality is only available once converted to a Pivot model.";
 						EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 						eAnnotation.setSource(GenModelPackage.eNS_URI);
 						eAnnotation.getDetails().put("documentation", comment);
 						eClassifier.getEAnnotations().add(eAnnotation);
-					}
+					} */
 					//
 					//	Non-library classes are removed from the Ecore model and so do not appear as generated Java classes.
 					//
@@ -382,6 +397,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	 */
 	public void setLibraryNsPrefix(String libraryNsPrefix) {
 		this.libraryNsPrefix = libraryNsPrefix;
+	}
+
+	/**
+	 * Specify a file in which a log of the schedule is saved.
+	 */
+	public void setScheduleLogFile(String scheduleLogFile) {
+		this.scheduleLogFile = scheduleLogFile;
 	}
 
 	/**

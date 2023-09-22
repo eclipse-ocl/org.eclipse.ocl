@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -131,8 +130,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							else {
 								assert ownedInit != null;
 								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-								final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
-								safe_isRequired_source = BOXED_isRequired_0;
+								safe_isRequired_source = isRequired_0;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;
 						}
@@ -165,27 +163,21 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					}
 					else {
 						final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
-						final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired_1 = isRequired_1;
-						final /*@NonInvalid*/ @Nullable Boolean not_0;
-						if (!BOXED_isRequired_1) {
-							not_0 = ValueUtil.TRUE_VALUE;
+						final /*@NonInvalid*/ boolean not_0;
+						if (!isRequired_1) {
+							not_0 = true;
 						}
 						else {
-							if (BOXED_isRequired_1) {
-								not_0 = ValueUtil.FALSE_VALUE;
-							}
-							else {
-								not_0 = null;
-							}
+							not_0 = false;
 						}
-						if (not_0 == ValueUtil.TRUE_VALUE) {
+						if (not_0) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if ((CAUGHT_not == null) || (not_0 == null)) {
+							if (CAUGHT_not == null) {
 								result = null;
 							}
 							else {
@@ -272,7 +264,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0);
 								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;

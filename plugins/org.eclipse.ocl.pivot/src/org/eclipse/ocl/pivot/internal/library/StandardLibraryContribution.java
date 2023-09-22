@@ -11,9 +11,12 @@
 package org.eclipse.ocl.pivot.internal.library;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -46,6 +49,19 @@ public interface StandardLibraryContribution extends RegisteredContribution<@Non
 
 	};
 
+	public static final @NonNull StandardLibraryContribution NULL_CONTRIBUTION = new StandardLibraryContribution()
+	{
+		@Override
+		public @NonNull StandardLibraryContribution getContribution() {
+			return this;
+		}
+
+		@Override
+		public @NonNull ASResource getResource() {
+			return new ASResourceImpl(URI.createURI("$NullConytribution$"), OCLASResourceFactory.getInstance());
+		}
+	};
+
 	static class Descriptor extends AbstractDescriptor<@NonNull StandardLibraryContribution> implements StandardLibraryContribution
 	{
 		protected StandardLibraryContribution contribution;
@@ -62,7 +78,7 @@ public interface StandardLibraryContribution extends RegisteredContribution<@Non
 		}
 
 		@Override
-		public @NonNull Resource getResource() {
+		public @NonNull ASResource getResource() {
 			return getContribution().getResource();
 		}
 	}
@@ -89,5 +105,5 @@ public interface StandardLibraryContribution extends RegisteredContribution<@Non
 	 *
 	 * @return the contributing resource.
 	 */
-	@NonNull Resource getResource();
+	@NonNull ASResource getResource();
 }

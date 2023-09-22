@@ -704,6 +704,7 @@ public class EnvironmentView
 				return;
 			}
 		}
+		//**** do not use element.toString() here to avoid obscure premature cache population ****//
 		Object value = contentsByName.get(elementName);
 		if (value == element) {
 			;	// Already present

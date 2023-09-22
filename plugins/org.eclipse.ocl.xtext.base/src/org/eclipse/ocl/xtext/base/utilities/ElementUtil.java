@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -69,11 +68,8 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
-import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
-import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
-import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
 import org.eclipse.xtext.nodemodel.BidiIterator;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
@@ -380,16 +376,6 @@ public class ElementUtil
 		return rawText != null ? rawText : "";
 	}
 
-	/**
-	 * Return the raw text associated with a csElement. This preserves leading/trailing whitespace, which is necessary when propagating
-	 * the original user formatting through an Ecore EAnnotation.
-	 */
-	@Deprecated	/* @deprecated use the clearer getRawText() unless getTrimmedText() was actually the intent. */
-	public static @Nullable String getText(@NonNull ElementCS csElement) {
-		ICompositeNode node = NodeModelUtils.getNode(csElement);
-		return node != null ? NodeModelUtils.getTokenText(node) : null;
-	}
-
 	// FIXME is this fallback iregularity just for ShadowPartCSImpl ever really used / necessary ?
 	public static @Nullable String getText(@NonNull ElementCS csElement, /*@NonNull*/ EReference feature) {
 		@SuppressWarnings("null")@NonNull List<INode> nodes = NodeModelUtils.findNodesForFeature(csElement, feature);
@@ -413,7 +399,7 @@ public class ElementUtil
 	 * Return the logical text associated with a csElement. (Escaped identifers are unescaped.)
 	 */
 	public static @Nullable String getTextName(@NonNull ElementCS csElement) {
-		String text = getText(csElement);
+		String text = getTrimmedText(csElement);
 		if (text == null) {
 			return null;
 		}
@@ -457,7 +443,7 @@ public class ElementUtil
 			else if (diagnostic instanceof ImportDiagnostic) {
 				return true;
 			}
-			else if (diagnostic.getClass().getName().equals("org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource$RenamedDiagnostic")) {		// FIXME Intyroduce an interface
+			else if (diagnostic.getClass().getName().equals("org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource$RenamedDiagnostic")) {		// FIXME Introduce an interface
 				return true;
 			}
 		}
@@ -498,45 +484,6 @@ public class ElementUtil
 		Class<?> instanceClass = esObject.getInstanceClass();
 		return (instanceClass == boolean.class) || (instanceClass == byte.class) || (instanceClass == char.class) || (instanceClass == double.class)
 				|| (instanceClass == float.class) || (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class);
-	}
-
-	/**
-	 * @deprecated  Use CS2AS.isRequired to handle [?]/[1]/blank
-	 */
-	@Deprecated
-	public static boolean isRequired(@Nullable TypedRefCS csTypeRef) {
-		if (csTypeRef != null) {
-			MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
-			if (csMultiplicity != null) {
-				int lower = csMultiplicity.getLower();
-				if (lower > 0) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public static boolean isSpecialization(@NonNull TemplateBindingCS csTemplateBinding) {
-		TypedTypeRefCS csTypedTypeRef = csTemplateBinding.getOwningElement();
-		Element type = csTypedTypeRef.getPivot();
-		for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
-			TypeRefCS ownedActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-			if (ownedActualParameter instanceof WildcardTypeRefCS) {
-				return true;
-			}
-			Type actualParameterClass = (Type) ownedActualParameter.getPivot();
-			TemplateParameter templateParameter = actualParameterClass.isTemplateParameter();
-			if (templateParameter == null) {
-				return true;
-			}
-			TemplateSignature signature = templateParameter.getOwningSignature();
-			TemplateableElement template = signature.getOwningElement();
-			if (template != type) {
-				return true;
-			}
-		}
-		return false;		// XXX 582115 redundant ?? always true
 	}
 
 	public static boolean isUnique(@NonNull TypedElementCS csTypedElement) {

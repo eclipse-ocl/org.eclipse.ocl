@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -301,6 +302,11 @@ public class NameManager
 		@Override
 		public @NonNull String visitOperationId(@NonNull OperationId id) {
 			return "OPid_" + id.getName();
+		}
+
+		@Override
+		public @NonNull String visitOverloadId(@NonNull OverloadId id) {
+			return "OVPid_" + id.getName();				// Never used
 		}
 
 		@Override

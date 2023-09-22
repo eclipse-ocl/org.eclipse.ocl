@@ -15,7 +15,6 @@ module GeneratePivotModel
 import org.eclipse.ocl.examples.build.utilities.*
 import org.eclipse.ocl.examples.build.xtend.*
 import org.eclipse.emf.mwe.utils.*
-import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 //import org.eclipse.uml2.uml.resource.XMI2UMLResource
 
@@ -279,6 +278,7 @@ Workflow {
     	javaFolder = "emf-gen"
     	javaPackageName = "${pivotProjectName}.model"
     	javaClassName = "OCLmetamodel"
+     	scheduleLogFile = "/org.eclipse.ocl.pivot/model-gen/OCLmetamodel.txt"
     }
 	component = ConvertToUnixLineEndings {
 		directory = "${basePivotProject}/emf-gen"

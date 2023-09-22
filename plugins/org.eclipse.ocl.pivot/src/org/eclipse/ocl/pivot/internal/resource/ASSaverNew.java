@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -69,13 +72,13 @@ public class ASSaverNew extends AbstractASSaver
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
 		/**
-		 * Mapping from local or shared/remote to local original/copy. Local original/copy arte required since
-		 * localization of a bidirectional may get the opposite local from the outset so we don't need tol re-localize.
+		 * Mapping from local or shared/remote to local original/copy. Local original/copy are required since
+		 * localization of a bidirectional may get the opposite local from the outset so we don't need to re-localize.
 		 */
 		private final @NonNull Map<@NonNull Type, @NonNull Type> oldType2localType = new HashMap<>();
 		/**
-		 * Mapping from the typeid of an original local to the local original/copy. THis ensures that the
-		 * various partial types of a complete type all map to the local without requirinmg access to a CompleteModel.
+		 * Mapping from the typeid of an original local to the local original/copy. This ensures that the
+		 * various partial types of a complete type all map to the local without requiring access to a CompleteModel.
 		 */
 		private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2localType = new HashMap<>();
 
@@ -114,7 +117,7 @@ public class ASSaverNew extends AbstractASSaver
 			if (eReference.isMany() && (eReference.getEOpposite() == null)) {
 				@SuppressWarnings("unchecked")
 				List<EObject> copyValues = (List<EObject>)copyEObject.eGet(eReference);
-				copyValues.clear();						// Avoid dupicate superclasses when reloading
+				copyValues.clear();						// Avoid duplicate superclasses when reloading
 			}
 			super.copyReference(eReference, eObject, copyEObject);
 		}
@@ -282,64 +285,88 @@ public class ASSaverNew extends AbstractASSaver
 		if ((localOrphanage != null) && (sharedOrphanage != null)) {
 			loadOrphanage(localOrphanage, sharedOrphanage);
 		}
+		Resource orphanResource = sharedOrphanage != null ? sharedOrphanage.eResource() : null;
 		Collection<@NonNull EObject> moreObjects = resource.getContents();
-		while (moreObjects != null) {
+		while (true) {
 			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreObjects);
 			moreObjects = null;
+			StringBuilder s = LOCALIZE_REWRITES.isActive() ? new StringBuilder() : null;
 			for (EObject eObject : references.keySet()) {
+				Resource eResource = eObject.eResource();
 				assert eObject != null;
+				Collection<Setting> settings = references.get(eObject);
+				assert settings != null;
 				EObject localEObject = eObject;
-				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
-					//
-					// If eObject needs localizing, create local copy
-					//
-					// XXX also localize references that are completed elsewhere but partialled locally
-					if (eContainer == sharedOrphanage) {
-						if (localOrphanage == null) {
-							localOrphanage = OrphanageImpl.createLocalOrphanage(asModel);
-						}
-						if (eObject.toString().startsWith("Bag(Map")) {
-							getClass();			// XXX
-						}
-						EObject eSource = eObject;
-						if (eObject instanceof Property) {				// If Tuple Property referenced (before Tuple)
-							eSource = eSource.eContainer();				//  copy the whole Tuple.
-						}
-						localEObject = copier.get(eSource);
-						if (localEObject == null) {
-							assert eSource != null;
-							localEObject = copier.copy(eSource);
-						//	System.out.println(NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+			/*	if (s != null) {
+					s.append("\n  target: " + NameUtil.debugSimpleName(localEObject) + " " + localEObject); // + " ." + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
+					for (Setting setting : settings) {
+						EStructuralFeature settingReference = setting.getEStructuralFeature();
+						EObject sourceEObject = setting.getEObject();
+						s.append("\n    reference: " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " source: " + NameUtil.debugSimpleName(sourceEObject) + " " + sourceEObject);
+					}
+				} */
+				//
+				// If eObject needs localizing, create local copy
+				//
+				if (eResource == orphanResource) {
+					if (localOrphanage == null) {
+						localOrphanage = OrphanageImpl.createLocalOrphanage(asModel);
+					}
+					EObject eSource = eObject;
+					if (eObject instanceof Property) {				// If Tuple Property referenced (before Tuple)
+						eSource = eSource.eContainer();				//  copy the whole Tuple.
+					}
+					localEObject = copier.get(eSource);
+					if (localEObject == null) {
+						assert eSource != null;
+						localEObject = copier.copy(eSource);
+					//	System.out.println(NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 							if (moreObjects == null) {
 								moreObjects = new ArrayList<>();
 							}
 							moreObjects.add(eSource);
-							if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-								localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
-							}
-							else if (eSource instanceof Operation) {
-								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
-					//			resolveOperation((Operation)eObject);
-							}
+						if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
+							localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
 						}
-						if (eObject instanceof Property) {			// If Tuple Property referenced (before Tuple)
-							localEObject = copier.get(eObject);		//  set resolution to property
+						else if (eSource instanceof Operation) {
+							throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
+				//			resolveOperation((Operation)eObject);
 						}
-						break;
 					}
-					else if (eContainer == localOrphanage) {
-						break;
+					if (eObject instanceof Property) {			// If Tuple Property referenced (before Tuple)
+						localEObject = copier.get(eObject);		//  set resolution to property
 					}
+				}
+				else if (eResource != resource) {
+					//  also localize references that are completed elsewhere but partialled locally
+					if (s != null) {
+						s.append("\n  from " + eObject.eResource().getURI());
+					}
+					localEObject = copier.get(eObject);
+				//	if (localEObject == null) {
+				//		assert eSource != null;
+				//		localEObject = copier.copy(eSource);
+					//	copier.copyReferences();
+					//	System.out.println(NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 				}
 				//
 				// If eObject was localized, redirect all references
 				//
-				if (localEObject != eObject) {
-					Collection<Setting> settings = references.get(eObject);
-					assert settings != null;
+				if ((localEObject != null) && (localEObject != eObject)) {
+					if (s != null) {
+						s.append("\n  old: " + NameUtil.debugSimpleName(eObject) + " " + eObject);
+						s.append("\n  new: " + NameUtil.debugSimpleName(localEObject) + " " + localEObject);
+					}
+					if (moreObjects == null) {
+						moreObjects = new ArrayList<>();
+					}
+					moreObjects.add(localEObject);
 					for (Setting setting : settings) {
 						EObject eSource = setting.getEObject();
 						EStructuralFeature eReference = setting.getEStructuralFeature();
+						if (s != null) {
+							s.append("\n    <= " + NameUtil.debugSimpleName(eSource) + " " + eSource + " . " + eReference.getEContainingClass().getName() + "::" + eReference.getName());
+						}
 						if (!eReference.isDerived() && !eReference.isTransient()) {
 							if (eReference.isMany()) {
 								final EObject finalOldEObject = eObject;
@@ -359,24 +386,35 @@ public class ASSaverNew extends AbstractASSaver
 					}
 				}
 			}
+			if (s != null) {
+				LOCALIZE_REWRITES.println(s.toString());
+			}
+			if (moreObjects == null) {
+				break;
+			}
+			copier.copyReferences();
 		}
-		copier.copyReferences();
 		if (localOrphanage != null) {
 			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
 		}
-	/*	Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
-		for (EObject eObject : references2.keySet()) {
-			Collection<Setting> settings = references2.get(eObject);
-			assert settings != null;
-			EObject eRoot = EcoreUtil.getRootContainer(eObject);
-			if (eRoot != asModel) {
-				for (Setting setting : settings) {
-					EObject settingSource = setting.getEObject();
-					EStructuralFeature settingReference = setting.getEStructuralFeature();
-					System.out.println("Not-localized: " + NameUtil.debugSimpleName(settingSource) + " " + settingSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
+		if (LOCALIZE_FAILURES.isActive()) {
+			StringBuilder s = new StringBuilder();
+			Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
+			for (EObject eObject : references2.keySet()) {
+				Collection<Setting> settings = references2.get(eObject);
+				assert settings != null;
+				EObject eRoot = EcoreUtil.getRootContainer(eObject);
+				if (eRoot != asModel) {
+					s.append("\n  " + NameUtil.debugSimpleName(eObject) + " : " + eObject + " " + eObject.eResource());
+					for (Setting setting : settings) {
+						EObject settingSource = setting.getEObject();
+						EStructuralFeature settingReference = setting.getEStructuralFeature();
+						s.append("\n    <= " + NameUtil.debugSimpleName(settingSource) + " " + settingSource + " . " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName());
+					}
 				}
 			}
-		} */
+			LOCALIZE_FAILURES.println(s.toString());
+		}
 	}
 
 	/**

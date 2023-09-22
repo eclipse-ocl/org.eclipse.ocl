@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -51,6 +50,8 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	protected AbstractExternal2AS(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 	}
+
+//	public abstract void addDataTypeValue(@NonNull EDataType eDataType, @NonNull EClass eClass);
 
 	public abstract void addGenericType(@NonNull EGenericType eObject);
 
@@ -92,7 +93,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	/**
 	 * @since 1.3
-	 */
+	 *
 	public boolean cannotBeOptional(@NonNull ETypedElement eTypedElement) {	// Fixes Bug 510180, Ecore does not prohibit optional primitive types
 		EClassifier eType = eTypedElement.getEType();
 		if (eType != null) {
@@ -100,11 +101,11 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			if ((instanceClass != null) && ((instanceClass == boolean.class) || (instanceClass == byte.class)
 					|| (instanceClass == double.class) || (instanceClass == float.class)
 					|| (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class))) {
-				return true;
+			//	return true;
 			}
 		}
 		return false;
-	}
+	} */
 
 	public void createComments(@NonNull Element asContainer, @Nullable String text) {
 		List<Comment> asComments = asContainer.getOwnedComments();

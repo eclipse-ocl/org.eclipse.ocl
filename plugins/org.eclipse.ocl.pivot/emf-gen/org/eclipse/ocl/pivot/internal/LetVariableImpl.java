@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -127,12 +126,10 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 					else {
 						assert ownedInit != null;
 						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-						final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
-						safe_isRequired_source = BOXED_isRequired_0;
+						safe_isRequired_source = isRequired_0;
 					}
 					final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
-					final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired_1 = isRequired_1;
-					final /*@Thrown*/ boolean result = BOXED_isRequired_1.equals(safe_isRequired_source);
+					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_1;
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -212,7 +209,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0);
 								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;

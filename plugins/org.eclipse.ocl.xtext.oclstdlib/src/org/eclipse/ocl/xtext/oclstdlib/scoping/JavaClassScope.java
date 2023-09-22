@@ -134,6 +134,14 @@ public class JavaClassScope extends AbstractJavaClassScope
 
 	private void doFullScan() {
 		Set<@NonNull String> classNames = new HashSet<@NonNull String>(65536);
+		classNames.add(boolean.class.getName());
+		classNames.add(byte.class.getName());
+		classNames.add(char.class.getName());
+		classNames.add(double.class.getName());
+		classNames.add(float.class.getName());
+		classNames.add(int.class.getName());
+		classNames.add(long.class.getName());
+		classNames.add(short.class.getName());
 		for (@NonNull ClassLoader classLoader : classLoaders) {
 			if (classLoader instanceof BundleReference) {
 				Bundle bundle = ((BundleReference)classLoader).getBundle();
@@ -261,6 +269,17 @@ public class JavaClassScope extends AbstractJavaClassScope
 		String name = qualifiedName.toString();
 		if (name == null) {
 			return null;
+		}
+		if (!name.contains(".") && (
+			name.equals(boolean.class.getName()) ||
+			name.equals(byte.class.getName()) ||
+			name.equals(char.class.getName()) ||
+			name.equals(double.class.getName()) ||
+			name.equals(float.class.getName()) ||
+			name.equals(int.class.getName()) ||
+			name.equals(long.class.getName()) ||
+			name.equals(short.class.getName()))) {
+			return getEObjectDescription(name);
 		}
 		JavaClassCS csJavaClass = name2class.get(name);
 		if (csJavaClass == null) {

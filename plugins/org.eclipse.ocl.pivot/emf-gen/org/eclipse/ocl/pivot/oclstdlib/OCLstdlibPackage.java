@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -93,7 +94,21 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass boolean_ClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass collectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass integer_ClassEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -219,6 +234,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass real_ClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass sequenceEClass = null;
 
 	/**
@@ -233,7 +255,21 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass string_ClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass uniqueCollectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass unlimitedNatural_ClassEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -607,30 +643,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Boolean <em>Boolean</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Boolean</em>'.
-	 * @see java.lang.Boolean
-	 * @generated
-	 */
-	public EDataType getBoolean() {
-		return booleanEDataType;
-	}
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Integer</em>'.
-	 * @see org.eclipse.ocl.pivot.values.IntegerValue
-	 * @generated
-	 */
-	public EDataType getInteger() {
-		return integerEDataType;
-	}
-
-	/**
 	 * Returns the meta object for class '{@link java.util.Map <em>Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -672,42 +684,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Real</em>'.
-	 * @see org.eclipse.ocl.pivot.values.RealValue
-	 * @generated
-	 */
-	public EDataType getReal() {
-		return realEDataType;
-	}
-
-	/**
-	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>String</em>'.
-	 * @see java.lang.String
-	 * @generated
-	 */
-	public EDataType getString() {
-		return stringEDataType;
-	}
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
-	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
-	 * @generated
-	 */
-	public EDataType getUnlimitedNatural() {
-		return unlimitedNaturalEDataType;
-	}
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -718,6 +694,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public EClass getBag() {
 		return bagEClass;
 	}
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.Boolean_Class <em>Boolean Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Boolean Class</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Boolean_Class
+	 * @generated
+	 */
+	public EClass getBoolean_Class() {
+		return boolean_ClassEClass;
+	}
+
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Collection <em>Collection</em>}'.
@@ -774,6 +763,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.Integer_Class <em>Integer Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Integer Class</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Integer_Class
+	 * @generated
+	 */
+	public EClass getInteger_Class() {
+		return integer_ClassEClass;
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -784,6 +786,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public EClass getOrderedSet() {
 		return orderedSetEClass;
 	}
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.Real_Class <em>Real Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Real Class</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Real_Class
+	 * @generated
+	 */
+	public EClass getReal_Class() {
+		return real_ClassEClass;
+	}
+
 
 	/**
 	 * Returns the meta object for class '{@link java.util.List <em>Sequence</em>}'.
@@ -810,6 +825,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.String_Class <em>String Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String Class</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.String_Class
+	 * @generated
+	 */
+	public EClass getString_Class() {
+		return string_ClassEClass;
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Collection <em>Unique Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -820,6 +848,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public EClass getUniqueCollection() {
 		return uniqueCollectionEClass;
 	}
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unlimited Natural Class</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class
+	 * @generated
+	 */
+	public EClass getUnlimitedNatural_Class() {
+		return unlimitedNatural_ClassEClass;
+	}
+
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Entry 1</em>}'.
@@ -971,6 +1012,70 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for data type '<em>Boolean</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Boolean</em>'.
+	 * @generated
+	 */
+	public EDataType getBoolean() {
+		return booleanEDataType;
+	}
+
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Integer</em>'.
+	 * @see org.eclipse.ocl.pivot.values.IntegerValue
+	 * @generated
+	 */
+	public EDataType getInteger() {
+		return integerEDataType;
+	}
+
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Real</em>'.
+	 * @see org.eclipse.ocl.pivot.values.RealValue
+	 * @generated
+	 */
+	public EDataType getReal() {
+		return realEDataType;
+	}
+
+
+	/**
+	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>String</em>'.
+	 * @see java.lang.String
+	 * @generated
+	 */
+	public EDataType getString() {
+		return stringEDataType;
+	}
+
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
+	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
+	 * @generated
+	 */
+	public EDataType getUnlimitedNatural() {
+		return unlimitedNaturalEDataType;
+	}
+
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1002,78 +1107,88 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create classes and their features
 		bagEClass = createEClass(0);
 
-		collectionEClass = createEClass(1);
+		boolean_ClassEClass = createEClass(1);
+
+		collectionEClass = createEClass(2);
 		createEReference(collectionEClass, 0);
 		createEAttribute(collectionEClass, 1);
 		createEAttribute(collectionEClass, 2);
 
-		mapEClass = createEClass(2);
+		integer_ClassEClass = createEClass(3);
+
+		mapEClass = createEClass(4);
 		createEReference(mapEClass, 0);
 		createEReference(mapEClass, 1);
 
-		oclAnyEClass = createEClass(3);
+		oclAnyEClass = createEClass(5);
 
-		oclComparableEClass = createEClass(4);
+		oclComparableEClass = createEClass(6);
 
-		oclElementEClass = createEClass(5);
+		oclElementEClass = createEClass(7);
 		createEReference(oclElementEClass, 0);
 		createEReference(oclElementEClass, 1);
 
-		oclEnumerationEClass = createEClass(6);
+		oclEnumerationEClass = createEClass(8);
 
-		oclInvalidEClass = createEClass(7);
+		oclInvalidEClass = createEClass(9);
 		createEReference(oclInvalidEClass, 0);
 
-		oclLambdaEClass = createEClass(8);
+		oclLambdaEClass = createEClass(10);
 
-		oclMessageEClass = createEClass(9);
+		oclMessageEClass = createEClass(11);
 
-		oclSelfEClass = createEClass(10);
+		oclSelfEClass = createEClass(12);
 
-		oclStateEClass = createEClass(11);
+		oclStateEClass = createEClass(13);
 
-		oclStereotypeEClass = createEClass(12);
+		oclStereotypeEClass = createEClass(14);
 
-		oclSummableEClass = createEClass(13);
+		oclSummableEClass = createEClass(15);
 
-		oclTupleEClass = createEClass(14);
+		oclTupleEClass = createEClass(16);
 
-		oclTypeEClass = createEClass(15);
+		oclTypeEClass = createEClass(17);
 
-		oclVoidEClass = createEClass(16);
+		oclVoidEClass = createEClass(18);
 
-		orderedCollectionEClass = createEClass(17);
+		orderedCollectionEClass = createEClass(19);
 
-		orderedSetEClass = createEClass(18);
+		orderedSetEClass = createEClass(20);
 
-		sequenceEClass = createEClass(19);
+		real_ClassEClass = createEClass(21);
 
-		setEClass = createEClass(20);
+		sequenceEClass = createEClass(22);
 
-		uniqueCollectionEClass = createEClass(21);
+		setEClass = createEClass(23);
 
-		_Entry_1EClass = createEClass(22);
+		string_ClassEClass = createEClass(24);
+
+		uniqueCollectionEClass = createEClass(25);
+
+		unlimitedNatural_ClassEClass = createEClass(26);
+
+		_Entry_1EClass = createEClass(27);
 		createEReference(_Entry_1EClass, 0);
 		createEReference(_Entry_1EClass, 1);
 
-		_Entry_2EClass = createEClass(23);
+		_Entry_2EClass = createEClass(28);
 		createEReference(_Entry_2EClass, 0);
 		createEReference(_Entry_2EClass, 1);
 
-		_Lambda_1EClass = createEClass(24);
+		_Lambda_1EClass = createEClass(29);
 
-		_Lambda_2EClass = createEClass(25);
+		_Lambda_2EClass = createEClass(30);
 
-		_Tuple_1EClass = createEClass(26);
+		_Tuple_1EClass = createEClass(31);
 		createEReference(_Tuple_1EClass, 0);
 		createEReference(_Tuple_1EClass, 1);
 
 		// Create data types
-		booleanEDataType = createEDataType(27);
-		integerEDataType = createEDataType(28);
-		realEDataType = createEDataType(29);
-		stringEDataType = createEDataType(30);
-		unlimitedNaturalEDataType = createEDataType(31);
+		booleanEDataType = createEDataType(32);
+		integerEDataType = createEDataType(33);
+		realEDataType = createEDataType(34);
+		stringEDataType = createEDataType(35);
+		unlimitedNaturalEDataType = createEDataType(36);
 	}
 
 	/**
@@ -1127,9 +1242,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 		EGenericType g2 = createEGenericType(bagEClass_T);
 		g1.getETypeArguments().add(g2);
 		bagEClass.getEGenericSuperTypes().add(g1);
+		boolean_ClassEClass.getESuperTypes().add(this.getOclAny());
+		collectionEClass.getESuperTypes().add(this.getOclAny());
+		integer_ClassEClass.getESuperTypes().add(this.getReal_Class());
+		mapEClass.getESuperTypes().add(this.getOclAny());
 		oclComparableEClass.getESuperTypes().add(this.getOclAny());
 		oclElementEClass.getESuperTypes().add(this.getOclAny());
-		oclEnumerationEClass.getESuperTypes().add(this.getOclAny());
+		oclEnumerationEClass.getESuperTypes().add(this.getOclType());
 		oclInvalidEClass.getESuperTypes().add(this.getOclVoid());
 		oclLambdaEClass.getESuperTypes().add(this.getOclAny());
 		oclMessageEClass.getESuperTypes().add(this.getOclAny());
@@ -1152,6 +1271,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g2 = createEGenericType(orderedSetEClass_T);
 		g1.getETypeArguments().add(g2);
 		orderedSetEClass.getEGenericSuperTypes().add(g1);
+		real_ClassEClass.getESuperTypes().add(this.getOclComparable());
+		real_ClassEClass.getESuperTypes().add(this.getOclSummable());
 		g1 = createEGenericType(this.getOrderedCollection());
 		g2 = createEGenericType(sequenceEClass_T);
 		g1.getETypeArguments().add(g2);
@@ -1160,19 +1281,26 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g2 = createEGenericType(setEClass_T);
 		g1.getETypeArguments().add(g2);
 		setEClass.getEGenericSuperTypes().add(g1);
+		string_ClassEClass.getESuperTypes().add(this.getOclComparable());
+		string_ClassEClass.getESuperTypes().add(this.getOclSummable());
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(uniqueCollectionEClass_T);
 		g1.getETypeArguments().add(g2);
 		uniqueCollectionEClass.getEGenericSuperTypes().add(g1);
+		unlimitedNatural_ClassEClass.getESuperTypes().add(this.getOclComparable());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(bagEClass, Bag.class, "Bag", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(boolean_ClassEClass, Boolean_Class.class, "Boolean_Class", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(collectionEClass, Collection.class, "Collection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(collectionEClass_T);
 		initEReference(getCollection_ElementType(), g1, null, "elementType", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getCollection_Lower(), this.getInteger(), "lower", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getCollection_Upper(), this.getInteger(), "upper", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(integer_ClassEClass, Integer_Class.class, "Integer_Class", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(mapEClass, Map.class, "Map", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(mapEClass_K);
@@ -1215,11 +1343,17 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(orderedSetEClass, OrderedSet.class, "OrderedSet", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+		initEClass(real_ClassEClass, Real_Class.class, "Real_Class", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(sequenceEClass, List.class, "Sequence", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(setEClass, Set.class, "Set", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+		initEClass(string_ClassEClass, String_Class.class, "String_Class", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(uniqueCollectionEClass, Collection.class, "UniqueCollection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(unlimitedNatural_ClassEClass, UnlimitedNatural_Class.class, "UnlimitedNatural_Class", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(_Entry_1EClass, Map.Entry.class, "_Entry_1", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(_Entry_1EClass_K);
@@ -1244,7 +1378,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEReference(get_Tuple_1_Second(), g1, null, "second", null, 1, 1, _Tuple_1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize data types
-		initEDataType(booleanEDataType, Boolean.class, "Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(booleanEDataType, boolean.class, "Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(integerEDataType, IntegerValue.class, "Integer", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(realEDataType, RealValue.class, "Real", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(stringEDataType, String.class, "String", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1256,8 +1390,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASLibrary
 		createASLibraryAnnotations();
-		// http://www.eclipse.org/OCL/Property
-		createPropertyAnnotations();
+		// http://www.omg.org/ocl
+		createOclAnnotations();
+		// http://www.eclipse.org/OCL-EClassifier
+		createOCLEClassifierAnnotations();
+		// http://www.eclipse.org/uml2/2.0.0/UML
+		createUMLAnnotations();
+		// http://www.eclipse.org/OCL-EStructuralFeature
+		createOCLEStructuralFeatureAnnotations();
 	}
 
 	/**
@@ -1276,13 +1416,186 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Property</b>.
+	 * Initializes the annotations for <b>http://www.omg.org/ocl</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createPropertyAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Property"; //$NON-NLS-1$
+	protected void createOclAnnotations() {
+		String source = "http://www.omg.org/ocl"; //$NON-NLS-1$
+		addAnnotation
+		  (bagEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (boolean_ClassEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Primitive" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (collectionEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (integer_ClassEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Primitive" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (mapEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclAnyEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclComparableEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclElementEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclEnumerationEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "UML" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclInvalidEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclLambdaEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclMessageEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "UML" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclSelfEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclStateEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "UML" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclStereotypeEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclSummableEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclTupleEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclTypeEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (oclVoidEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "OCL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (orderedCollectionEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (orderedSetEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (real_ClassEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Primitive" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (sequenceEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (setEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (string_ClassEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Primitive" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (uniqueCollectionEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Collection" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (unlimitedNatural_ClassEClass,
+		   source,
+		   new String[] {
+			   "ClassGroup", "Primitive" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL-EStructuralFeature</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOCLEStructuralFeatureAnnotations() {
+		String source = "http://www.eclipse.org/OCL-EStructuralFeature"; //$NON-NLS-1$
 		addAnnotation
 		  (getCollection_ElementType(),
 		   source,
@@ -1331,6 +1644,179 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "implementation", "org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
+
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL-EClassifier</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOCLEClassifierAnnotations() {
+		String source = "http://www.eclipse.org/OCL-EClassifier"; //$NON-NLS-1$
+		addAnnotation
+		  (boolean_ClassEClass,
+		   source,
+		   new String[] {
+			   "role", "DataType" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Boolean") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (integer_ClassEClass,
+		   source,
+		   new String[] {
+			   "role", "DataType" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Integer") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (real_ClassEClass,
+		   source,
+		   new String[] {
+			   "role", "DataType" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Real") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (string_ClassEClass,
+		   source,
+		   new String[] {
+			   "role", "DataType" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//String") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (unlimitedNatural_ClassEClass,
+		   source,
+		   new String[] {
+			   "role", "DataType" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//UnlimitedNatural") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (booleanEDataType,
+		   source,
+		   new String[] {
+			   "role", "DataTypeValue" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Boolean_Class") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (integerEDataType,
+		   source,
+		   new String[] {
+			   "role", "DataTypeValue" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Integer_Class") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (realEDataType,
+		   source,
+		   new String[] {
+			   "role", "DataTypeValue" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//Real_Class") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (stringEDataType,
+		   source,
+		   new String[] {
+			   "role", "DataTypeValue" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//String_Class") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (unlimitedNaturalEDataType,
+		   source,
+		   new String[] {
+			   "role", "DataTypeValue" //$NON-NLS-1$ //$NON-NLS-2$
+		   },
+		   new URI[] {
+			 URI.createURI(eNS_URI).appendFragment("//UnlimitedNatural_Class") //$NON-NLS-1$
+		   });
+		addAnnotation
+		  (_Entry_1EClass,
+		   source,
+		   new String[] {
+			   "role", "Entry" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (_Entry_2EClass,
+		   source,
+		   new String[] {
+			   "role", "Entry" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (_Lambda_1EClass,
+		   source,
+		   new String[] {
+			   "role", "Lambda" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (_Lambda_2EClass,
+		   source,
+		   new String[] {
+			   "role", "Lambda" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (_Tuple_1EClass,
+		   source,
+		   new String[] {
+			   "role", "Tuple" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/uml2/2.0.0/UML</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createUMLAnnotations() {
+		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
+		addAnnotation
+		  (boolean_ClassEClass,
+		   source,
+		   new String[] {
+			   "originalName", "Boolean" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (integer_ClassEClass,
+		   source,
+		   new String[] {
+			   "originalName", "Integer" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (real_ClassEClass,
+		   source,
+		   new String[] {
+			   "originalName", "Real" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (string_ClassEClass,
+		   source,
+		   new String[] {
+			   "originalName", "String" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (unlimitedNatural_ClassEClass,
+		   source,
+		   new String[] {
+			   "originalName", "UnlimitedNatural" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1524,26 +2010,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass ORDERED_COLLECTION = eINSTANCE.getOrderedCollection();
 
 		/**
-		 * The meta object literal for the '<em>Boolean</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see java.lang.Boolean
-		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getBoolean()
-		 * @generated
-		 */
-		public static final EDataType BOOLEAN = eINSTANCE.getBoolean();
-
-		/**
-		 * The meta object literal for the '<em>Integer</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.IntegerValue
-		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInteger()
-		 * @generated
-		 */
-		public static final EDataType INTEGER = eINSTANCE.getInteger();
-
-		/**
 		 * The meta object literal for the '{@link java.util.Map <em>Map</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1570,36 +2036,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EReference MAP__VALUE_TYPE = eINSTANCE.getMap_ValueType();
 
 		/**
-		 * The meta object literal for the '<em>Real</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.RealValue
-		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getReal()
-		 * @generated
-		 */
-		public static final EDataType REAL = eINSTANCE.getReal();
-
-		/**
-		 * The meta object literal for the '<em>String</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see java.lang.String
-		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getString()
-		 * @generated
-		 */
-		public static final EDataType STRING = eINSTANCE.getString();
-
-		/**
-		 * The meta object literal for the '<em>Unlimited Natural</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
-		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getUnlimitedNatural()
-		 * @generated
-		 */
-		public static final EDataType UNLIMITED_NATURAL = eINSTANCE.getUnlimitedNatural();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1608,6 +2044,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass BAG = eINSTANCE.getBag();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Boolean_Class <em>Boolean Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Boolean_Class
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getBoolean_Class()
+		 * @generated
+		 */
+		public static final EClass BOOLEAN_CLASS = eINSTANCE.getBoolean_Class();
 
 		/**
 		 * The meta object literal for the '{@link java.util.Collection <em>Collection</em>}' class.
@@ -1644,6 +2090,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EAttribute COLLECTION__UPPER = eINSTANCE.getCollection_Upper();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Integer_Class <em>Integer Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Integer_Class
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInteger_Class()
+		 * @generated
+		 */
+		public static final EClass INTEGER_CLASS = eINSTANCE.getInteger_Class();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1652,6 +2108,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass ORDERED_SET = eINSTANCE.getOrderedSet();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Real_Class <em>Real Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Real_Class
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getReal_Class()
+		 * @generated
+		 */
+		public static final EClass REAL_CLASS = eINSTANCE.getReal_Class();
 
 		/**
 		 * The meta object literal for the '{@link java.util.List <em>Sequence</em>}' class.
@@ -1674,6 +2140,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass SET = eINSTANCE.getSet();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.String_Class <em>String Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.String_Class
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getString_Class()
+		 * @generated
+		 */
+		public static final EClass STRING_CLASS = eINSTANCE.getString_Class();
+
+		/**
 		 * The meta object literal for the '{@link java.util.Collection <em>Unique Collection</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1682,6 +2158,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass UNIQUE_COLLECTION = eINSTANCE.getUniqueCollection();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getUnlimitedNatural_Class()
+		 * @generated
+		 */
+		public static final EClass UNLIMITED_NATURAL_CLASS = eINSTANCE.getUnlimitedNatural_Class();
 
 		/**
 		 * The meta object literal for the '{@link java.util.Map.Entry <em>Entry 1</em>}' class.
@@ -1780,6 +2266,55 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EReference _TUPLE_1__SECOND = eINSTANCE.get_Tuple_1_Second();
+
+		/**
+		 * The meta object literal for the '<em>Boolean</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getBoolean()
+		 * @generated
+		 */
+		public static final EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '<em>Integer</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.IntegerValue
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInteger()
+		 * @generated
+		 */
+		public static final EDataType INTEGER = eINSTANCE.getInteger();
+
+		/**
+		 * The meta object literal for the '<em>Real</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.RealValue
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getReal()
+		 * @generated
+		 */
+		public static final EDataType REAL = eINSTANCE.getReal();
+
+		/**
+		 * The meta object literal for the '<em>String</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.String
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getString()
+		 * @generated
+		 */
+		public static final EDataType STRING = eINSTANCE.getString();
+
+		/**
+		 * The meta object literal for the '<em>Unlimited Natural</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getUnlimitedNatural()
+		 * @generated
+		 */
+		public static final EDataType UNLIMITED_NATURAL = eINSTANCE.getUnlimitedNatural();
 
 	}
 

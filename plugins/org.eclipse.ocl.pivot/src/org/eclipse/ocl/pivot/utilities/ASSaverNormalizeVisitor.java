@@ -11,14 +11,19 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Comparator;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
@@ -28,6 +33,36 @@ import org.eclipse.ocl.pivot.util.Visitable;
  */
 public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AbstractASSaver>
 {
+	protected static final class AnnotationComparator implements Comparator<@NonNull Element>
+	{
+		protected final @NonNull List<@NonNull Element> annotationsList;
+
+		public AnnotationComparator(@NonNull List<@NonNull Element> annotationsList) {
+			this.annotationsList = annotationsList;
+		}
+
+		@Override
+		public int compare(@NonNull Element o1, @NonNull Element o2) {
+			if ((o1 instanceof Annotation) && (o2 instanceof Annotation)) {
+				String n1 = ((Annotation)o1).getName();
+				String n2 = ((Annotation)o2).getName();
+				if (n1 == null) n1 = "";
+				if (n2 == null) n2 = "";
+				int diff = n1.compareTo(n2);
+				if (diff != 0) {
+					return diff;
+				}
+			}
+			int x1 = annotationsList.indexOf(o1);
+			int x2 = annotationsList.indexOf(o2);
+			if (x1 == x2) {					// Never happens
+				x1 = System.identityHashCode(o1);
+				x2 = System.identityHashCode(o2);
+			}
+			return x2 - x1;
+		}
+	}
+
 	/**
 	 * @since 1.4
 	 */
@@ -133,9 +168,19 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 
 	@Override
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		ClassUtil.sort(ClassUtil.nullFree(object.getOwnedOperations()), OperationComparator.INSTANCE);
-		ClassUtil.sort(ClassUtil.nullFree(object.getOwnedProperties()), PropertyComparator.INSTANCE);
-		return null;
+		ClassUtil.sort(PivotUtilInternal.getOwnedOperationsList(object), OperationComparator.INSTANCE);
+		ClassUtil.sort(PivotUtilInternal.getOwnedPropertiesList(object), PropertyComparator.INSTANCE);
+		return super.visitClass(object);
+	}
+
+	@Override
+	public Object visitNamedElement(@NonNull NamedElement object) {
+		List<@NonNull Element> ownedAnnotationsList = PivotUtilInternal.getOwnedAnnotationsList(object);
+		if (ownedAnnotationsList.size() > 1) {
+			Comparator<@NonNull Element> comparator = new AnnotationComparator(ownedAnnotationsList);
+			ClassUtil.sort(ownedAnnotationsList, comparator);
+		}
+		return super.visitNamedElement(object);
 	}
 
 	@Override
@@ -143,7 +188,7 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 		if (!(object instanceof OrphanageImpl)) {			// The Orphanage is not assignable/sortable
 			ClassUtil.sort(ClassUtil.nullFree(object.getOwnedClasses()), TypeComparator.INSTANCE);
 		}
-		return null;
+		return super.visitPackage(object);
 	}
 
 	@Override

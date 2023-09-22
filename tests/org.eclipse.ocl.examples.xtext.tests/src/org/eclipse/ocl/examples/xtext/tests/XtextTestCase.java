@@ -154,6 +154,29 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
+	public static class EAnnotationSourceNormalizer implements Normalizer
+	{
+		protected final @NonNull EAnnotation eAnnotation;
+		protected final String oldSource;
+		protected final @NonNull String newSource;
+
+		public EAnnotationSourceNormalizer(@NonNull EAnnotation eAnnotation, @NonNull String newSource) {
+			this.eAnnotation = eAnnotation;
+			this.oldSource = eAnnotation.getSource();
+			this.newSource = newSource;
+		}
+
+		@Override
+		public void denormalize() {
+			eAnnotation.setSource(oldSource);
+		}
+
+		@Override
+		public void normalize() {
+			eAnnotation.setSource(newSource);
+		}
+	}
+
 	public static class EClassifiersNormalizer implements Normalizer
 	{
 		protected final @NonNull EPackage ePackage;
@@ -526,7 +549,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	public @NonNull String createEcoreString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
-		createOCLinEcoreFile(inputName, fileContent);
+		createFile(inputName, fileContent);
 		URI inputURI = getTestFileURI(inputName);
 		URI ecoreURI = getTestFileURI(fileName + ".ecore");
 		BaseCSResource xtextResource = null;

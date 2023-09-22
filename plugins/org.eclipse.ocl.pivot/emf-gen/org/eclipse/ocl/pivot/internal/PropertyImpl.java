@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -1028,9 +1027,9 @@ implements Property {
 		catch (Exception e) {
 			CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 		}
-		final /*@Thrown*/ @Nullable Boolean and;
+		final /*@Thrown*/ boolean and;
 		if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
-			and = ValueUtil.FALSE_VALUE;
+			and = false;
 		}
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
@@ -1047,7 +1046,7 @@ implements Property {
 				CAUGHT_includes = ValueUtil.createInvalidValue(e);
 			}
 			if (CAUGHT_includes == ValueUtil.FALSE_VALUE) {
-				and = ValueUtil.FALSE_VALUE;
+				and = false;
 			}
 			else {
 				if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
@@ -1056,11 +1055,8 @@ implements Property {
 				if (CAUGHT_includes instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_includes;
 				}
-				and = ValueUtil.TRUE_VALUE;
+				and = true;
 			}
-		}
-		if (and == null) {
-			throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : EBoolean[1]\'");
 		}
 		return and;
 	}
@@ -1100,15 +1096,15 @@ implements Property {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_and;
+					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
 						final /*@NonInvalid*/ boolean ne = ownedExpression != null;
-						final /*@Thrown*/ @Nullable Boolean and;
+						final /*@Thrown*/ boolean and;
 						if (!ne) {
-							and = ValueUtil.FALSE_VALUE;
+							and = false;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
@@ -1124,13 +1120,13 @@ implements Property {
 								CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								if (CAUGHT_ne_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_ne_0;
 								}
-								and = ValueUtil.TRUE_VALUE;
+								and = true;
 							}
 						}
 						CAUGHT_and = and;
@@ -1138,9 +1134,9 @@ implements Property {
 					catch (Exception e) {
 						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
@@ -1150,14 +1146,13 @@ implements Property {
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType_0 = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_1, TYP_ExpressionInOCL_1);
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(oclAsType_0);
-							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
-							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
+							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception e) {
 							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_CompatibleBody == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -1166,12 +1161,7 @@ implements Property {
 							if (CAUGHT_CompatibleBody instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_CompatibleBody;
 							}
-							if (CAUGHT_and == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;

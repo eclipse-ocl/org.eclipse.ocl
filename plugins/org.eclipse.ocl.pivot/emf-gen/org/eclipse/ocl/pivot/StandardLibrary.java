@@ -87,6 +87,11 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getClassType();
 
 	/**
+	 * Return the templateArguments specialization of genericClass, which should not be a built-in generic such as Collection/Lambda/Map.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getClassType(org.eclipse.ocl.pivot.@NonNull Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments);
+
+	/**
 	 * Obtains the generic instance of the CollectionType metatype, named
 	 * <tt>Collection(T)</tt>.
 	 *
@@ -172,11 +177,9 @@ public interface StandardLibrary extends Element
 	@NonNull LambdaType getLambdaType(@NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 
-	org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments);
+	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 
 	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
-
-	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 
 	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull TemplateParameter asTemplateParameter);
 	org.eclipse.ocl.pivot.@NonNull Class getLowerBound(@NonNull WildcardType asWildcard);
@@ -455,4 +458,15 @@ public interface StandardLibrary extends Element
 	@NonNull Type resolveLowerBoundSpecialization(@NonNull Type asType);
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
+
+	/**
+	 * Ensure asPackage has a CompletePackage if CompleteClasses in use.
+	 */
+	void resolvePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
+
+	/**
+	 * Return the unique variant of asType for use by the ophan elements. This is asType unless CompleteClasses are
+	 * still in use in which case it is the primary partial class.
+	 */
+	<T extends Type> @NonNull T resolveType(@NonNull T asType);
 } // AbstractStandardLibrary

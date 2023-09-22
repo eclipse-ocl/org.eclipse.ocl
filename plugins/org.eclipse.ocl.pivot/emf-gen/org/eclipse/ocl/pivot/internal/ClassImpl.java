@@ -1258,6 +1258,21 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 					if (classListeners != null) {
 						classListeners.didAddSuperClass(partialClass);
 					}
+					int count = 0;				// XXX debugging
+					try {
+						for (org.eclipse.ocl.pivot.Class asClass : superClasses) {
+							if (partialClass == asClass) {
+								count++;
+							}
+							else if (partialClass.getName().equals(asClass.getName())) {
+								count++;
+							}
+						}
+					}
+					catch (Throwable e) {
+						e.printStackTrace();
+					}
+					assert count == 1;
 				}
 
 				@Override
@@ -1517,6 +1532,9 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public void setName(String newName) {
+		if ("OclElement".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {

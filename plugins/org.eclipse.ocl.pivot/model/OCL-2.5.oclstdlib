@@ -174,8 +174,9 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 The standard type Boolean represents the common true/false values.
 Boolean is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
+type Boolean : BooleanType conformsTo OclAny => 'boolean' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+	annotation 'http://www.eclipse.org/OCL-DataType'(EClassName='Boolean_Class');
 	/**
 	Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.
 	*/
@@ -209,7 +210,6 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	**/
 	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation'
 	{
-	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 		body: if self.oclIsInvalid() then
 				if b.oclIsInvalid() then self
 				elseif b = false then false
@@ -612,6 +612,7 @@ Integer is itself an instance of the metatype PrimitiveType (from UML).
 **/
 type Integer : PrimitiveType conformsTo Real => 'org.eclipse.ocl.pivot.values.IntegerValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+	annotation 'http://www.eclipse.org/OCL-DataType'(EClassName='Integer_Class');
 	/**
 	The negative value of oclText[self].
 	**/
@@ -1443,6 +1444,7 @@ Real is itself an instance of the metatype PrimitiveType (from UML).
 **/
 type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.ocl.pivot.values.RealValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+	annotation 'http://www.eclipse.org/OCL-DataType'(EClassName='Real_Class');
 	/**
 	Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.
 	*/
@@ -1689,6 +1691,7 @@ String is itself an instance of the metatype PrimitiveType (from UML).
 **/
 type String : PrimitiveType conformsTo OclComparable, OclSummable => 'java.lang.String' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+	annotation 'http://www.eclipse.org/OCL-DataType'(EClassName='String_Class');
 	operation "="(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation';
 	operation "<>"(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
 	/**
@@ -1886,6 +1889,7 @@ Note that UnlimitedNatural is not a subclass of Integer.
 **/
 type UnlimitedNatural : PrimitiveType conformsTo OclComparable => 'org.eclipse.ocl.pivot.values.UnlimitedNaturalValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+	annotation 'http://www.eclipse.org/OCL-DataType'(EClassName='UnlimitedNatural_Class');
 	/**
 	The maximum of oclText[self] an i.
 	**/
@@ -1969,7 +1973,7 @@ type CollectionType {
 	/**
 	Evaluates to the upper bound on the number of collection elements.
 	**/
-	property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
+	property upper : UnlimitedNatural[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
 }
 
 type MapType {

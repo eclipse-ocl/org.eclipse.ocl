@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.SendSignalAction;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -408,7 +407,7 @@ public class MessageExpImpl
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
@@ -425,17 +424,12 @@ public class MessageExpImpl
 					if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 						throw (InvalidValueException)CAUGHT_oclIsKindOf;
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
-						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.FALSE_VALUE;
-						}
-						else {
-							result = null;
-						}
+						result = false;
 					}
 					CAUGHT_result = result;
 				}

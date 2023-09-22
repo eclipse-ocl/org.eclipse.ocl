@@ -212,6 +212,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				asSpecification = PivotFactory.eINSTANCE.createExpressionInOCL();
 			}
 			asConstraint.setOwnedSpecification(asSpecification);
+		//	asConstraint.setIsCallable(true);
 		}
 		else {
 			Map<@NonNull String, @NonNull Type> tupleParts = new HashMap<>();
@@ -228,6 +229,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			else {
 				asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 				asConstraint.setOwnedSpecification(asExpressionInOCL);
+		//		asConstraint.setIsCallable(true);
 			}
 			OCLExpression asExpression = asExpressionInOCL.getOwnedBody();
 			//

@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.DataType;
@@ -35,7 +36,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
@@ -258,6 +258,14 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			if (!super.canExecute()) {
 				return false;
 			}
+			for (EObject eContainer = csElement; (eContainer = eContainer.eContainer()) != null; ) {
+				if (eContainer instanceof StructuredClassCS) {
+					if ("UniqueCollection".equals((((StructuredClassCS)eContainer).getName()))) {
+						getClass();			// XXX
+						break;
+					}
+				}
+			}
 			if (context.isInReturnTypeWithUnresolvedParameters(csElement)) {
 				return false;
 			}
@@ -287,7 +295,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			Type pivotType = csElement.getReferredType();
 			if (pivotType != null) {
 				TemplateBindingCS csTemplateBinding = csElement.getOwnedBinding();
-				if ((csTemplateBinding != null) && ElementUtil.isSpecialization(csTemplateBinding)) {
+				if (csTemplateBinding != null) {
 					pivotType = (Type) context.specializeTemplates(csElement);
 					//					TemplateBinding pivotTemplateBinding = PivotUtil.getPivot(TemplateBinding.class, csTemplateBinding);
 					//					pivotType = pivotTemplateBinding.getBoundElement();

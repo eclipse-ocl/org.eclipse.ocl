@@ -96,6 +96,17 @@ import com.google.common.collect.Lists;
  */
 public class PivotHelper
 {
+	/**
+	 * Return the asOperation implementation as determined by Feature.implementation/implementationClass or null otherwise.
+	 */
+	public static @Nullable LibraryIterationOrOperation basicGetImplementation(@NonNull PivotMetamodelManager metamodelManager, @NonNull Operation asOperation) {
+		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)asOperation.getImplementation();
+		if ((implementation == null) && (asOperation.getImplementationClass() != null)) {
+			implementation = (LibraryIterationOrOperation)metamodelManager.getImplementation(asOperation);
+		}
+		return implementation;
+	}
+
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull PivotMetamodelManager metamodelManager;
@@ -761,14 +772,14 @@ public class PivotHelper
 		//	Other library operations have subtle non-null/size computations.
 		//	Therefore allow an operation-specific overrides to adjust the regular functionality above.
 		//
-		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)asOperation.getImplementation();
-		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+		LibraryIterationOrOperation implementation = basicGetImplementation(metamodelManager, asOperation);
+		if (implementation != null) {		// Library classes may have implementations with resolveReturnXXX overloads
 			returnType = implementation.resolveReturnType(environmentFactory, asCallExp, returnType);
 			returnIsRequired = implementation.resolveReturnNullity(environmentFactory, asCallExp, returnIsRequired);
 			returnValue = implementation.resolveReturnValue(environmentFactory, asCallExp);
 		//	assert (returnValue == null) || ((returnType != null) && returnType.getName().equals(((EObject)returnValue).eClass().getName()));	// Not valid once AnyType/VoidType get involved
 		}
-		else {
+		else {								// Complete OCL classes may be recursive and so not-yet-defined, but without overloads
 			assert !asOperation.isIsTypeof();			// typeof return declaration must now be realized by an operation override
 		}
 		assert !TemplateSpecialisation.needsCompletion(returnType);

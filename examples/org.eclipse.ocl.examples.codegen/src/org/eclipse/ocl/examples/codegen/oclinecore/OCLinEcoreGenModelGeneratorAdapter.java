@@ -430,13 +430,14 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
-				removeEAnnotation(ecorePackage.getEAnnotation(AnnotationUtil.IMPORT_ANNOTATION_SOURCE));
+				removeEAnnotation(ecorePackage.getEAnnotation(AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE));
+				removeEAnnotation(ecorePackage.getEAnnotation(AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE));
 				Resource ecoreResource = ecorePackage.eResource();
 				if (ecoreResource != null) {
 					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
 					for (GenClass genClass : genPackage.getGenClasses()) {
 						EClass eClass = genClass.getEcoreClass();
-						if (eClass != null) {
+						if ((eClass != null) && !AnnotationUtil.hasSyntheticRole(eClass)) {
 							List<EAnnotation> obsoleteAnnotations = null;
 							for (EAnnotation eAnnotation : new ArrayList<>(eClass.getEAnnotations())) {
 								String source = eAnnotation.getSource();
@@ -525,7 +526,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
 					for (GenClass genClass : genPackage.getGenClasses()) {
 						EClass eClass = genClass.getEcoreClass();
-						if (eClass != null) {
+						if ((eClass != null) && !AnnotationUtil.hasSyntheticRole(eClass)) {
 							for (@SuppressWarnings("null")@NonNull EOperation eOperation : eClass.getEOperations()) {
 								installOperation(ecore2as, eOperation, results);
 							}
@@ -550,7 +551,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 			String body = fragmentURI != null ? results.get(fragmentURI) : null;
 			if ((body == null) || ((body = body.trim()).length() == 0)) {
-				String javaBody = AnnotationUtil.getEAnnotationValue(eOperation, GenModelPackage.eNS_URI, "body");
+				String javaBody = AnnotationUtil.basicGetEAnnotationValue(eOperation, GenModelPackage.eNS_URI, "body");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
@@ -568,7 +569,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			String fragmentURI = String.valueOf(EcoreUtil.getURI(pProperty).fragment());
 			String body = results.get(fragmentURI);
 			if (body == null) {
-				String javaBody = AnnotationUtil.getEAnnotationValue(eFeature, GenModelPackage.eNS_URI, "get");
+				String javaBody = AnnotationUtil.basicGetEAnnotationValue(eFeature, GenModelPackage.eNS_URI, "get");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
@@ -703,7 +704,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					throw new NullPointerException("No ResourceSet for genmodel");
 				}
 				MetamodelManagerInternal metamodelManager = stateAdapter.getMetamodelManager();
-				metamodelManager.getStandardLibrary().getOclAnyType();
+			//	metamodelManager.getStandardLibrary().getOclAnyType();			// ?? conditionalize on AS_LIBRARY annotation
 				for (GenPackage genPackage : genModel.getGenPackages()) {
 					EPackage ecorePackage = genPackage.getEcorePackage();
 					org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);

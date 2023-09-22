@@ -23,12 +23,12 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.CodeGenConstants;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -48,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.collect.Iterables;
 
@@ -57,8 +57,6 @@ import com.google.common.collect.Iterables;
  */
 public class SynthesisSchedule
 {
-	public static final @NonNull TracingOption SYNTHESIS = new TracingOption(CodeGenConstants.PLUGIN_ID, "synthesis");
-
 	private static final @NonNull Set<@NonNull Slot> CYCLIC_GUARD = new HashSet<>();
 
 	/**
@@ -68,26 +66,27 @@ public class SynthesisSchedule
 	public static class Slot //implements Nameable
 	{
 		public static final @NonNull String ROLE_ALL_FRAGMENTS = "ALL_FRAGMENTS";
-		public static final @NonNull String ROLE_ALL_OPERATIONS = "ALL_OPERATIONS";
 		public static final @NonNull String ROLE_ALL_PROPERTIES = "ALL_PROPERTIES";
 		public static final @NonNull String ROLE_ALL_TYPES = "ALL_TYPES";
+		public static final @NonNull String ROLE_CLASS_OPERATIONS_END = "CLASS_OPERATIONS_END";
+		public static final @NonNull String ROLE_CLASS_OPERATIONS_START = "CLASS_OPERATIONS_START";
 		public static final @NonNull String ROLE_COMMENTS = "COMMENTS";
 		public static final @NonNull String ROLE_CTOR = "CTOR";
 		public static final @NonNull String ROLE_ENUMERATION_LITERALS = "ENUMERATION_LITERALS";
 		public static final @NonNull String ROLE_EXTERNAL = "EXTERNAL";
 		public static final @NonNull String ROLE_FRAGMENT_OPERATIONS = "FRAGMENT_OPERATIONS";
 		public static final @NonNull String ROLE_FRAGMENT_PROPERTIES = "FRAGMENT_PROPERTIES";
-		public static final @NonNull String ROLE_OPERATIONS = "OPERATIONS";
+		public static final @NonNull String ROLE_INSTALL = "INSTALL";
+		public static final @NonNull String ROLE_MODEL_OPERATIONS_END = "MODEL_OPERATIONS_END";
+		public static final @NonNull String ROLE_MODEL_OPERATIONS_START = "MODEL_OPERATIONS_START";
 		public static final @NonNull String ROLE_PARAMETER_LISTS = "PARAMETER_LISTS";
 		public static final @NonNull String ROLE_PROPERTIES = "PROPERTIES";
 		public static final @NonNull String ROLE_SUPER_CLASSES = "SUPER_CLASSES";
 		public static final @NonNull String ROLE_TYPE = "TYPE";
 		public static final @NonNull String ROLE_TYPE_FRAGMENTS = "TYPE_FRAGMENTS";
 		public static final @NonNull String ROLE_TYPE_PARAMETERS = "TYPE_PARAMETERS";
-	//	protected final @NonNull String name;
 		protected final @NonNull Element element;
 		protected final @NonNull String role;
-	//	private boolean isExternal = false;
 		protected final @NonNull List<@NonNull Slot> successors = new ArrayList<>();
 		private final @NonNull List<@NonNull Slot> predecessors = new ArrayList<>();
 		private int stage = -1;
@@ -95,20 +94,11 @@ public class SynthesisSchedule
 		public Slot(/*@NonNull String name,*/ @NonNull EObject eInstance, @NonNull String role) {
 			this.element = (Element)eInstance;
 			this.role = role;
-	//		this.name = name;
-			if ((role == ROLE_CTOR) && (eInstance instanceof BooleanType)) {
-				getClass();		// XXX
-			}
 		}
 
 		public @NonNull Element getElement() {
 			return element;
 		}
-
-		//	@Override
-		//	public @NonNull String getName() {
-		//		return name;
-		//	}
 
 		public @NonNull List<@NonNull Slot> getPredecessors() {
 			return predecessors;
@@ -121,10 +111,6 @@ public class SynthesisSchedule
 		public @NonNull List<@NonNull Slot> getSuccessors() {
 			return successors;
 		}
-
-	//	public void setExternal() {
-	//		this.isExternal  = true;
-	//	}
 
 		@Override
 		public @NonNull String toString() {
@@ -241,13 +227,11 @@ public class SynthesisSchedule
 	private final @NonNull EnvironmentFactoryInternal environmentFactory;
 	private /*@LazyNonNull*/ Model model = null;
 	private final @NonNull Map<@NonNull EObject, @NonNull Map<@NonNull String, @NonNull Slot>> eInstance2role2slot = new HashMap<>();
-//	private final @NonNull Map<@NonNull ElementId, @NonNull EObject> elementId2eInstance = new HashMap<>();
 	private final @NonNull Map<@NonNull ElementId, @NonNull Slot> externalElementId2slot = new HashMap<>();
 	private /*@LazyNonNull*/ List<@NonNull Stage> stages = null;
 	private /*@LazyNonNull*/ List<@NonNull Slot> slots = null;
 	private final @NonNull SlotComparator slotComparator = new SlotComparator();
 	private int maxSlotsPerStage = 100;
-//	private final @NonNull Set<@NonNull NamedElement> externals = new HashSet<>();
 
 	public @NonNull Slot addDependency(@NonNull Slot successorSlot, /*@NonNull*/ EObject predecessor) {
 		assert predecessor != null;
@@ -310,12 +294,11 @@ public class SynthesisSchedule
 		return typeSlot;
 	}
 
-	public void analyze() {
+	public void analyze(@Nullable StringBuilder s) {
 		Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> directSlotPredecessors = computeDirectSlotPredecessors();
 		Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> transitiveSlotPredecessors = computeTransitiveSlotPredecessors(directSlotPredecessors);
 		stages = computeStagedSlots(transitiveSlotPredecessors);
 		slots = new ArrayList<>();
-		StringBuilder s = SYNTHESIS.isActive() ? new StringBuilder() : null;
 		for (@NonNull Stage stage : stages) {
 			if (s != null) {
 				s.append("\nStage " + stage.getName());
@@ -330,16 +313,12 @@ public class SynthesisSchedule
 				slots.add(slot);
 			}
 		}
-		if (s != null) {
-			SYNTHESIS.println(s.toString());
-		}
 		Collections.sort(slots, slotComparator);
 	}
 
 	private @NonNull Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> computeDirectSlotPredecessors() {
 		Map<@NonNull Slot, @NonNull Set<@NonNull Slot>> slot2predecessors = new HashMap<>();
 		for (Map.Entry<@NonNull EObject, @NonNull Map<@NonNull String, @NonNull Slot>> entry1 : eInstance2role2slot.entrySet()) {
-		//	EObject eInstnace = entry1.getKey();
 			for (Map.Entry<@NonNull String, @NonNull Slot> entry2 : entry1.getValue().entrySet()) {
 				Slot slot = entry2.getValue();
 				Set<@NonNull Slot> predecessors = slot2predecessors.get(slot);
@@ -428,36 +407,66 @@ public class SynthesisSchedule
 		return transitivePredecessors;
 	}
 
+	public void doInstall(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		Slot modelInstallSlot = getSlot(PivotUtil.getContainingModel(asClass), Slot.ROLE_INSTALL);
+		Slot slot = getSlot(asClass);
+		if (asClass.getOwnedBindings().isEmpty() && !(asClass instanceof LambdaType)) {
+			addDependency(modelInstallSlot, slot);
+		}
+		else {
+			addDependency(slot, modelInstallSlot);
+		}
+	}
+
+	public void doInstall(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		if (!OrphanageImpl.isOrphanage(asPackage)) {
+			Slot modelInstallSlot = getSlot(PivotUtil.getContainingModel(asPackage), Slot.ROLE_INSTALL);
+			Slot slot = getSlot(asPackage, Slot.ROLE_INSTALL);
+			addDependency(modelInstallSlot, slot);
+		}
+	}
+
 	public void doModel(@NonNull Model asModel) {
 		Slot allFragmentsSlot = getSlot(asModel, Slot.ROLE_ALL_FRAGMENTS);
-		Slot allOperationsSlot = getSlot(asModel, Slot.ROLE_ALL_OPERATIONS);
 		Slot allPropertiesSlot = getSlot(asModel, Slot.ROLE_ALL_PROPERTIES);
 		Slot allTypesSlot = getSlot(asModel, Slot.ROLE_ALL_TYPES);
 		Slot enumerationLiteralsSlot = getSlot(asModel, Slot.ROLE_ENUMERATION_LITERALS);
 		Slot fragmentOperationsSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_OPERATIONS);
 		Slot fragmentPropertiesSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_PROPERTIES);
+		Slot installSlot = getSlot(asModel, Slot.ROLE_INSTALL);
+		Slot modelOperationsEndSlot = getSlot(asModel, Slot.ROLE_MODEL_OPERATIONS_END);
+		Slot modelOperationsStartSlot = getSlot(asModel, Slot.ROLE_MODEL_OPERATIONS_START);
 		Slot parameterListsSlot = getSlot(asModel, Slot.ROLE_PARAMETER_LISTS);
 		Slot typeFragmentsSlot = getSlot(asModel, Slot.ROLE_TYPE_FRAGMENTS);
 		Slot typeParametersSlot = getSlot(asModel, Slot.ROLE_TYPE_PARAMETERS);
 	//	addDependency(typeParametersSlot, ??);
 		addDependency(allTypesSlot, typeParametersSlot);
-		addDependency(allFragmentsSlot, allTypesSlot);
+		addDependency(installSlot, allTypesSlot);
+		addDependency(allFragmentsSlot, installSlot);
 		addDependency(parameterListsSlot, allFragmentsSlot);
 		addDependency(typeFragmentsSlot, parameterListsSlot);
-		addDependency(allOperationsSlot, typeFragmentsSlot);
-		addDependency(allPropertiesSlot, allOperationsSlot);
+		addDependency(modelOperationsStartSlot, typeFragmentsSlot);
+		addDependency(modelOperationsEndSlot, modelOperationsStartSlot);
+		addDependency(allPropertiesSlot, modelOperationsEndSlot);
 		addDependency(fragmentOperationsSlot, allPropertiesSlot);
 		addDependency(fragmentPropertiesSlot, fragmentOperationsSlot);
 		addDependency(enumerationLiteralsSlot, fragmentPropertiesSlot);
 	}
 
 	public void doOperations(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		Iterable<@NonNull Operation> asOperations = PivotUtil.getOwnedOperations(asClass);
-		Slot slot = getSlot(asClass, Slot.ROLE_OPERATIONS);
-		Slot fragmentOperationsSlot = getSlot(PivotUtil.getContainingModel(asClass), Slot.ROLE_FRAGMENT_OPERATIONS);
-		for (Operation asOperation : asOperations) {
-			addDependency(slot, asOperation);
-			addDependency(fragmentOperationsSlot, slot);
+		Model asModel = PivotUtil.getContainingModel(asClass);
+		Slot modelOperationsEndSlot = getSlot(asModel, Slot.ROLE_MODEL_OPERATIONS_END);
+		Slot modelOperationsStartSlot = getSlot(asModel, Slot.ROLE_MODEL_OPERATIONS_START);
+		Slot fragmentOperationsSlot = getSlot(asModel, Slot.ROLE_FRAGMENT_OPERATIONS);
+		Slot classOperationsEndSlot = getSlot(asClass, Slot.ROLE_CLASS_OPERATIONS_END);
+		Slot classOperationsStartSlot = getSlot(asClass, Slot.ROLE_CLASS_OPERATIONS_START);
+		addDependency(classOperationsStartSlot, modelOperationsStartSlot);
+		addDependency(modelOperationsEndSlot, classOperationsEndSlot);
+		addDependency(fragmentOperationsSlot, classOperationsStartSlot);
+		for (Operation asOperation : PivotUtil.getOwnedOperations(asClass)) {
+			Slot slot = getSlot(asOperation);
+			addDependency(slot, classOperationsStartSlot);
+			addDependency(classOperationsEndSlot, slot);
 		}
 	}
 
@@ -472,11 +481,13 @@ public class SynthesisSchedule
 	}
 
 	public void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		Iterable<@NonNull Class> asSuperClasses = PivotUtil.getSuperClasses(asClass);
-		if (!Iterables.isEmpty(asSuperClasses)) {
-			Slot slot = getSlot(asClass, Slot.ROLE_SUPER_CLASSES);
-			for (org.eclipse.ocl.pivot.Class superClass : asSuperClasses) {
-				addDependency(slot, superClass);
+		if (!(asClass instanceof LambdaType) && !(asClass instanceof TupleType)) {
+			Iterable<@NonNull Class> asSuperClasses = PivotUtil.getSuperClasses(asClass);
+			if (!Iterables.isEmpty(asSuperClasses) && asClass.getOwnedBindings().isEmpty()) {
+				Slot slot = getSlot(asClass, Slot.ROLE_SUPER_CLASSES);
+				for (org.eclipse.ocl.pivot.Class superClass : asSuperClasses) {
+					addDependency(slot, superClass);
+				}
 			}
 		}
 	}
@@ -484,7 +495,7 @@ public class SynthesisSchedule
 	public void doTemplateableElement(@NonNull TemplateableElement asTemplateableElement) {
 		Slot slot = getSlot(asTemplateableElement);
 		TemplateableElement generic = asTemplateableElement.getGeneric();
-		if (generic instanceof NamedElement) {
+		if ((generic instanceof NamedElement) && !(generic instanceof LambdaType) && !(generic instanceof TupleType)) {
 			Slot superSlot = getSlot(generic, Slot.ROLE_SUPER_CLASSES);
 			addDependency(slot, superSlot);
 			for (TemplateParameter asTemplateParameter : generic.getOwnedSignature().getOwnedParameters()) {
@@ -582,17 +593,6 @@ public class SynthesisSchedule
 		assert stages != null;
 		return stages;
 	}
-
-/*	public void setExternalDeclarations(@NonNull Iterable<@NonNull NamedElement> asNamedElements) {
-		for (@NonNull NamedElement asNamedElement : asNamedElements) {
-			externals.add(asNamedElement);
-		//	Map<@NonNull String, @NonNull Slot> role2slot = eInstance2role2slot.get(asNamedElement);
-		//	assert role2slot != null;
-		//	for (@NonNull Slot slot : role2slot.values()) {
-		//		slot.setExternal();
-		//	}
-		}
-	} */
 
 	public void setMaxSlotsPerStage(int maxSlotsPerStage) {
 		this.maxSlotsPerStage = maxSlotsPerStage;

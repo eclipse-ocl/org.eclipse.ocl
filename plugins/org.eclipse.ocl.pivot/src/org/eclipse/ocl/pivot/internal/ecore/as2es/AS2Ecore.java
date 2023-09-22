@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EcoreNormalizer;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -174,7 +175,7 @@ public class AS2Ecore extends AbstractConversion
 	public static final @NonNull String OPTION_BOOLEAN_INVARIANTS = DelegateInstaller.OPTION_BOOLEAN_INVARIANTS;
 
 	/**
-	 * True to apply a prefix to invariant names.
+	 * The optional prefix to apply when converting a Constraint name to an invariant operation name.
 	 */
 	public static final @NonNull String OPTION_INVARIANT_PREFIX = "invariantPrefix";
 
@@ -182,7 +183,12 @@ public class AS2Ecore extends AbstractConversion
 	 * True to preserve operations and so to generate an EClass rather than EDataType for a DataType with operations.
 	 * False/default strips all operations (and iterations).
 	 */
-	public static final @NonNull String OPTION_KEEP_OPERATIONS = "keepOperations";
+//	public static final @NonNull String OPTION_KEEP_OPERATIONS = "keepOperations";
+
+	/**
+	 * IMpose a standard alphabetic ordering and content on the generated Ecore.
+	 */
+	public static final @NonNull String OPTION_NORMALIZE = "normalize";
 
 	/**
 	 * True to suppress the UML2Ecore duplicates EAnnotation. This is an experimental internal option used during
@@ -458,6 +464,8 @@ public class AS2Ecore extends AbstractConversion
 	 */
 	private /*@LazyNonNull*/ Map<@NonNull EGenericType, @NonNull Type> eGenericType2originalASType = null;
 
+	private @Nullable List<@NonNull EDataType> extraEDataTypes = null;
+
 	/**
 	 * The namespaces that need an OCL Import EAnnotation.
 	 */
@@ -473,6 +481,15 @@ public class AS2Ecore extends AbstractConversion
 		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
 	}
 
+	public void addExtraEDataType(@NonNull EDataType eDataType) {
+		List<@NonNull EDataType> extraEDataTypes2 = extraEDataTypes;
+		if (extraEDataTypes2 == null) {
+			extraEDataTypes2 = extraEDataTypes = new ArrayList<>();
+		}
+		assert !extraEDataTypes2.contains(eDataType);
+		extraEDataTypes2.add(eDataType);
+	}
+
 /*	public void addImportedNamespace(@NonNull NamedElement importedElement) {
 		for (EObject eObject = importedElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Namespace) {
@@ -484,6 +501,12 @@ public class AS2Ecore extends AbstractConversion
 			}
 		}
 	} */
+
+	public @Nullable List<@NonNull EDataType> consumeExtraEDataTypes() {
+		List<@NonNull EDataType> extraEDataTypes2 = extraEDataTypes;
+		extraEDataTypes = null;
+		return extraEDataTypes2;
+	}
 
 	/** @deprecated not used */
 	@Deprecated
@@ -502,9 +525,9 @@ public class AS2Ecore extends AbstractConversion
 			XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
 			List<EObject> contents = ecoreResource.getContents();
 			//			contents.clear();						// FIXME workaround for BUG 465326
-			for (EObject eContent : asResource.getContents()) {
-				if (eContent instanceof Model) {
-					Object results = pass1.safeVisit((Model)eContent);
+			for (EObject asContent : asResource.getContents()) {
+				if (asContent instanceof Model) {
+					Object results = pass1.safeVisit((Model)asContent);
 					if (results instanceof List<?>) {
 						@SuppressWarnings("unchecked")
 						List<EObject> results2 = (List<EObject>)results;
@@ -550,6 +573,9 @@ public class AS2Ecore extends AbstractConversion
 						}
 					}
 				}
+			}
+			if (Boolean.valueOf(String.valueOf(options.get(OPTION_NORMALIZE)))) {
+				new EcoreNormalizer().normalize(ecoreResource);
 			}
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
 				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
@@ -659,7 +685,7 @@ public class AS2Ecore extends AbstractConversion
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
-		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_ENTRY);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.ECLASSIFIER_ROLE, AnnotationUtil.ECLASSIFIER_ROLE_ENTRY);
 		syntheticClasses.add(eClass);
 		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
 		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
@@ -758,7 +784,7 @@ public class AS2Ecore extends AbstractConversion
 		eClass.setName(lambdaName);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
-		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.ECLASSIFIER_ROLE, AnnotationUtil.ECLASSIFIER_ROLE_LAMBDA);
 		syntheticClasses.add(eClass);
 		//
 		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
@@ -818,7 +844,7 @@ public class AS2Ecore extends AbstractConversion
 		eClass.setName(tupleName);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
-		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_TUPLE);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.ECLASSIFIER_ROLE, AnnotationUtil.ECLASSIFIER_ROLE_TUPLE);
 		syntheticClasses.add(eClass);
 		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
 		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
@@ -861,24 +887,7 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
-	 * REturn true if asDataType can be realized by an Ecore EDayaType.
-	 */
-	public boolean isEcoreDataType(@NonNull DataType asDataType) {
-		if (asDataType.getOwnedOperations().size() > 0) {
-			if (isKeepOperations()) {
-				return false;
-			}
-		}
-		if (asDataType.getOwnedProperties().size() > 0) {
-		//	if (isKeepOperations()) {
-				return false;
-		//	}
-		}
-		return true;
-	}
-
-	/**
-	 * Return tre if asPackage is a Pivot Metamodel.
+	 * Return true if asPackage is a Pivot Metamodel.
 	 */
 	public boolean isPivot(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		List<org.eclipse.ocl.pivot.Class> asTypes = asPackage.getOwnedClasses();
@@ -897,10 +906,10 @@ public class AS2Ecore extends AbstractConversion
 		return true;
 	}
 
-	public boolean isKeepOperations() {
+//	public boolean isKeepOperations() {
 	//	return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
-		return Boolean.TRUE == options.get(OPTION_KEEP_OPERATIONS);
-	}
+//		return Boolean.TRUE == options.get(OPTION_KEEP_OPERATIONS);
+//	}
 
 	public boolean isSuppressDuplicates() {
 	//	return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
@@ -959,7 +968,7 @@ public class AS2Ecore extends AbstractConversion
 					List<@NonNull EGenericType> eGenerics = asType2eGenerics.get(asType);
 					assert eGenerics != null;
 					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-" + asType.getName());
+					eAnnotation.setSource(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + asType.getName());
 					if (eGenerics.size() > 1) {
 						Collections.sort(eGenerics, new NameUtil.URIComparator());
 					}

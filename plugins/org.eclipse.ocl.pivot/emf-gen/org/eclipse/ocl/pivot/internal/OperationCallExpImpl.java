@@ -41,13 +41,11 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
-import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -683,12 +681,11 @@ implements OperationCallExp {
 						 */
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
-							final /*@Thrown*/ @Nullable OCLExpression argument = (@Nullable OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
+							@SuppressWarnings("null")
+							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_parameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, parameters);
-							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_parameters, i);
-							if (parameter == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
+							@SuppressWarnings("null")
+							final /*@Thrown*/ @NonNull Parameter parameter = (@NonNull Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_parameters, i);
 							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 							/*@Thrown*/ @Nullable Type requiredType;
@@ -717,9 +714,6 @@ implements OperationCallExp {
 								}
 								requiredType = safe_specializeIn_source;
 							}
-							if (argument == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
 							final /*@Thrown*/ @Nullable Type type = argument.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
@@ -737,7 +731,7 @@ implements OperationCallExp {
 								if (type == null) {
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
+								final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType);
 								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
@@ -798,7 +792,7 @@ implements OperationCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedSource <> null and isSafe implies
+			 *       let result : Boolean[?] = ownedSource <> null and isSafe implies
 			 *         not ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -814,37 +808,48 @@ implements OperationCallExp {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-					final /*@NonInvalid*/ boolean ne = ownedSource != null;
-					final /*@NonInvalid*/ @Nullable Boolean and;
-					if (!ne) {
-						and = ValueUtil.FALSE_VALUE;
-					}
-					else {
-						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-						final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
-						if (!BOXED_isSafe) {
+					/*@Caught*/ @Nullable Object CAUGHT_and;
+					try {
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@Thrown*/ @Nullable Boolean and;
+						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							and = ValueUtil.TRUE_VALUE;
+							final /*@NonInvalid*/ @Nullable Boolean isSafe = this.isIsSafe();
+							if (isSafe == ValueUtil.FALSE_VALUE) {
+								and = ValueUtil.FALSE_VALUE;
+							}
+							else {
+								if (isSafe == null) {
+									and = null;
+								}
+								else {
+									and = ValueUtil.TRUE_VALUE;
+								}
+							}
 						}
+						CAUGHT_and = and;
+					}
+					catch (Exception e) {
+						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (and == ValueUtil.FALSE_VALUE) {
+					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_not;
+						/*@Caught*/ @NonNull Object CAUGHT_not;
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 							try {
-								if (ownedSource == null) {
-									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : EBoolean[1]\'");
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+								if (ownedSource_0 == null) {
+									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 								}
-								final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
-								final /*@Thrown*/ @NonNull Boolean BOXED_isNonNull = isNonNull;
-								CAUGHT_isNonNull = BOXED_isNonNull;
+								final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+								CAUGHT_isNonNull = isNonNull;
 							}
 							catch (Exception e) {
 								CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
@@ -852,17 +857,12 @@ implements OperationCallExp {
 							if (CAUGHT_isNonNull instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_isNonNull;
 							}
-							final /*@Thrown*/ @Nullable Boolean not;
+							final /*@Thrown*/ boolean not;
 							if (CAUGHT_isNonNull == ValueUtil.FALSE_VALUE) {
-								not = ValueUtil.TRUE_VALUE;
+								not = true;
 							}
 							else {
-								if (CAUGHT_isNonNull == ValueUtil.TRUE_VALUE) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
+								not = false;
 							}
 							CAUGHT_not = not;
 						}
@@ -873,10 +873,13 @@ implements OperationCallExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
+							if (CAUGHT_and instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_and;
+							}
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if ((and == null) || (CAUGHT_not == null)) {
+							if (CAUGHT_and == null) {
 								result = null;
 							}
 							else {
@@ -918,7 +921,7 @@ implements OperationCallExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[1] = not hasOclVoidOverload() implies ownedSource <> null and not isSafe implies
+			 *         result : Boolean[?] = not hasOclVoidOverload() implies ownedSource <> null and not isSafe implies
 			 *         ownedSource.isNonNull()
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -935,20 +938,15 @@ implements OperationCallExp {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ boolean hasOclVoidOverload = this.hasOclVoidOverload();
-					final /*@NonInvalid*/ @Nullable Boolean not;
+					final /*@NonInvalid*/ boolean not;
 					if (!hasOclVoidOverload) {
-						not = ValueUtil.TRUE_VALUE;
+						not = true;
 					}
 					else {
-						if (hasOclVoidOverload) {
-							not = ValueUtil.FALSE_VALUE;
-						}
-						else {
-							not = null;
-						}
+						not = false;
 					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (not == ValueUtil.FALSE_VALUE) {
+					if (!not) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -963,25 +961,34 @@ implements OperationCallExp {
 									and = ValueUtil.FALSE_VALUE;
 								}
 								else {
-									final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-									final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
-									final /*@NonInvalid*/ @Nullable Boolean not_0;
-									if (!BOXED_isSafe) {
-										not_0 = ValueUtil.TRUE_VALUE;
-									}
-									else {
-										if (BOXED_isSafe) {
-											not_0 = ValueUtil.FALSE_VALUE;
+									/*@Caught*/ @Nullable Object CAUGHT_not_0;
+									try {
+										final /*@NonInvalid*/ @Nullable Boolean isSafe = this.isIsSafe();
+										final /*@Thrown*/ @Nullable Boolean not_0;
+										if (isSafe == ValueUtil.FALSE_VALUE) {
+											not_0 = ValueUtil.TRUE_VALUE;
 										}
 										else {
-											not_0 = null;
+											if (isSafe == ValueUtil.TRUE_VALUE) {
+												not_0 = ValueUtil.FALSE_VALUE;
+											}
+											else {
+												not_0 = null;
+											}
 										}
+										CAUGHT_not_0 = not_0;
 									}
-									if (not_0 == ValueUtil.FALSE_VALUE) {
+									catch (Exception e) {
+										CAUGHT_not_0 = ValueUtil.createInvalidValue(e);
+									}
+									if (CAUGHT_not_0 == ValueUtil.FALSE_VALUE) {
 										and = ValueUtil.FALSE_VALUE;
 									}
 									else {
-										if (not_0 == null) {
+										if (CAUGHT_not_0 instanceof InvalidValueException) {
+											throw (InvalidValueException)CAUGHT_not_0;
+										}
+										if (CAUGHT_not_0 == null) {
 											and = null;
 										}
 										else {
@@ -1003,11 +1010,10 @@ implements OperationCallExp {
 								try {
 									final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
 									if (ownedSource_0 == null) {
-										throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : EBoolean[1]\'");
+										throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 									}
 									final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
-									final /*@Thrown*/ @NonNull Boolean BOXED_isNonNull = isNonNull;
-									CAUGHT_isNonNull = BOXED_isNonNull;
+									CAUGHT_isNonNull = isNonNull;
 								}
 								catch (Exception e) {
 									CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
@@ -1042,7 +1048,7 @@ implements OperationCallExp {
 							if (CAUGHT_implies instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_implies;
 							}
-							if ((not == null) || (CAUGHT_implies == null)) {
+							if (CAUGHT_implies == null) {
 								result = null;
 							}
 							else {
@@ -1124,7 +1130,7 @@ implements OperationCallExp {
 	 * @generated NOT
 	 */
 	@Override
-	public Boolean hasOclVoidOverload()
+	public boolean hasOclVoidOverload()
 	{
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, null);
 		Operation referredOperation = getReferredOperation();

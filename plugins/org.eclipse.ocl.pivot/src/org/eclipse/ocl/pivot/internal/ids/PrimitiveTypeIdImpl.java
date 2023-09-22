@@ -84,7 +84,7 @@ public class PrimitiveTypeIdImpl extends UnscopedId implements PrimitiveTypeId
 		else if (this == TypeId.INTEGER_RANGE) {
 			return "INTEGER_RANGE";
 		}
-		else if (this == TypeId.OCL_ANY) {
+		else if (this == TypeId.OCL_ANY) {		// XXX migrate to OclAnyTypeIdImpl
 			return "OCL_ANY";
 		}
 		else if (this == TypeId.OCL_COMPARABLE) {

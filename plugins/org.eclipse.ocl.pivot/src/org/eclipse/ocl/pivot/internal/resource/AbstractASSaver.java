@@ -22,8 +22,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * ASSaver ensures that all references to synthesized types are terminated
@@ -33,6 +35,9 @@ import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
  */
 public abstract class AbstractASSaver
 {
+	public static final @NonNull TracingOption LOCALIZE_FAILURES = new TracingOption(PivotPlugin.PLUGIN_ID, "localize/failures");
+	public static final @NonNull TracingOption LOCALIZE_REWRITES = new TracingOption(PivotPlugin.PLUGIN_ID, "localize/rewrites");
+
 	protected final @NonNull Resource resource;
 
 	/**

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Orphanage;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -79,6 +77,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -373,7 +372,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
-	private static final @NonNull List<TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST2 = Collections.emptyList();
 
 	/**
 	 * The URI used by default for the OCL Standard Library. NB. This
@@ -417,9 +415,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 
 		@Override
-		public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+		public @Nullable Type putType(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 			templateParameters.put(formalTemplateParameter.getTemplateParameterId().getIndex(), formalTemplateParameter);
-			return super.put(formalTemplateParameter, actualType);
+			return super.putType(formalTemplateParameter, actualType);
 		}
 	}
 
@@ -560,9 +558,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class pivotType : pivotTypes) {
 			String name = pivotType.getName();
-			org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
-			if ((oldType != null) && (oldType != pivotType)) {
-				if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
+			org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.get(name);
+			if (oldType == null) {
+				nameToLibraryTypeMap2.put(name, pivotType);
+			}
+			else if (oldType != pivotType) {			// See Bug 510503 and Bug 365447
+				if (oldType.eClass() != pivotType.eClass()) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
 					logger.warn("Conflicting pivot type '" + name + "'");
 				}
 			}
@@ -664,52 +665,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			loadDefaultLibrary(defaultStandardLibraryURI);
 		}
 		return nameToLibraryTypeMap2.get(typeName);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		org.eclipse.ocl.pivot.Class libraryType = getRequiredLibraryType(string);
-		return getLibraryType(libraryType, templateArguments);
-	}
-
-	@Override
-	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		//		assert !(libraryType instanceof CollectionType);
-		assert libraryType == PivotUtil.getUnspecializedTemplateableElement(libraryType);
-		TemplateSignature templateSignature = libraryType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature != null ? templateSignature.getOwnedParameters() : EMPTY_TEMPLATE_PARAMETER_LIST2;
-		if (templateParameters.isEmpty()) {
-			return libraryType;
-		}
-		if (templateArguments.size() != templateParameters.size()) {
-			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
-		}
-	//	boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
-	//	if (isUnspecialized) {
-	//		return libraryType;
-	//	}
-		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(libraryType);
-		org.eclipse.ocl.pivot.Class pivotClass = libraryCompleteClass.getPrimaryClass();
-		if (pivotClass instanceof CollectionType) {
-			assert pivotClass instanceof CollectionType;
-			assert templateArguments.size() == 1;
-			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType((CollectionType)libraryType, templateArgument, null, null, null);
-			return specializedType;
-		}
-		else if (pivotClass instanceof MapType) {
-			assert pivotClass instanceof MapType;
-			assert templateArguments.size() == 2;
-			@NonNull Type keyTemplateArgument = templateArguments.get(0);
-			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType((MapType)libraryType, keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
-			return specializedType;
-		}
-		else {
-			@SuppressWarnings("unchecked")
-			T specializedType = (T) libraryCompleteClass.getSpecializedType(templateArguments);
-			return specializedType;
-		}
 	}
 
 	@Override
@@ -961,7 +916,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
-		Package rootPackage = completeModel.getRootPackage(completeURIorName);
+		org.eclipse.ocl.pivot.Package rootPackage = completeModel.getRootPackage(completeURIorName);
 		if (rootPackage == null) {
 			if (PivotConstants.METAMODEL_NAME.equals(completeURIorName)) {
 				environmentFactory.getMetamodelManager().getASmetamodel();
@@ -1225,11 +1180,28 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		CompleteModelInternal completeModel = getCompleteModel();
 		CompleteClass completeClass = completeModel.getCompleteClass(asType);
 		Type behavioralClass = completeClass.getBehavioralClass();
-		if (behavioralClass != asType) {
+		if ((behavioralClass != null) && (behavioralClass != asType)) {
 			completeClass = completeModel.getCompleteClass(behavioralClass);		// See Bug 574431 for discussion of this dodgy downcast
 			asType = behavioralClass;
 		}
 		return asType;
+	}
+
+	@Override
+	public void resolvePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		Model asModel = PivotUtil.getContainingModel(asPackage);
+		assert asModel != null;
+		Resource asResource = asModel.eResource();
+		assert asResource != null;
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		if (AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) == null) {
+			metamodelManager.getASResourceSet().getResources().add(asResource);
+		}
+		if (AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null) {
+			metamodelManager.setASmetamodel(asPackage);		// Standard meta-model
+		}
+		//		asResourceSet.getResources().add(asResource);
+		metamodelManager.installResource(asResource);
 	}
 
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<T> requiredClassType, @NonNull String name) {
@@ -1265,7 +1237,23 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
+		if (specializedClass.getSuperClasses().size() != unspecializedClass.getSuperClasses().size()) {			// XXX
+			getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
+		}
 		assert specializedClass.getSuperClasses().size() == unspecializedClass.getSuperClasses().size();
+	}
+
+	@Override
+	public <T extends Type> @NonNull T resolveType(@NonNull T asType) {
+		if (asType instanceof TemplateParameter) {
+			return asType;
+		}
+		CompleteClassInternal completeClass = completeModel.getCompleteClass(asType);
+		if (completeClass == null) {
+			return asType;
+		}
+		assert completeClass.getPartialClasses().contains(asType);
+		return (@NonNull T) completeClass.getPrimaryClass();
 	}
 
 	@Override

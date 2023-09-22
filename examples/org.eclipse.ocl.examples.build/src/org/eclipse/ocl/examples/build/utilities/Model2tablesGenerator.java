@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -98,19 +97,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 		log.info("Loading Gen Model '" + genModelURI);
 		StandardLibraryContribution savedContribution = null;
 		if (genOCLstdlib) {
-			savedContribution = StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, new StandardLibraryContribution()
-			{
-
-				@Override
-				public @NonNull StandardLibraryContribution getContribution() {
-					return this;
-				}
-
-				@Override
-				public @NonNull Resource getResource() {
-					return new ResourceImpl(URI.createURI("dummy-library"));
-				}
-			});
+			savedContribution = StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, StandardLibraryContribution.NULL_CONTRIBUTION);
 		}
 
 		try {

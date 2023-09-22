@@ -39,10 +39,9 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
  */
 public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValidator2
 {
-
-	public static final @NonNull OCL_Import_AnnotationValidator INSTANCE = new OCL_Import_AnnotationValidator();
+	public static final @NonNull OCL_Import_AnnotationValidator zzINSTANCE = new OCL_Import_AnnotationValidator();
 	public static final @NonNull String ANNOTATION_NAME = "OCL_Import";
-	public static final @NonNull String ANNOTATION_SOURCE = AnnotationUtil.IMPORT_ANNOTATION_SOURCE;
+	public static final @NonNull String ANNOTATION_SOURCE = AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
 	public OCL_Import_AnnotationValidator() {

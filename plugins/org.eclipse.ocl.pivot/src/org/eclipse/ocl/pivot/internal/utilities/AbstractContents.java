@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
@@ -76,13 +77,11 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {
-		asClass.getSuperClasses().add(asSuperClass);
-	}
-
-	protected void checkSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {
-		List<Class> asSuperClasses = asClass.getSuperClasses();
-		if (!asSuperClasses.contains(asSuperClass) && (asClass.getOwnedBindings().size() > 0)) {
-			asSuperClasses.add(asSuperClass);
+		if ((asClass instanceof LambdaType) || (asClass instanceof TupleType)) {
+			System.out.println("Redundant addSuperClass for " + asClass + " suppressed");
+		}
+		else {
+			asClass.getSuperClasses().add(asSuperClass);
 		}
 	}
 
@@ -90,6 +89,13 @@ public abstract class AbstractContents extends PivotUtil
 		Parameter asParameter = createParameter(name, asType, isRequired);
 		asIteration.getOwnedAccumulators().add(asParameter);
 		return asParameter;
+	}
+
+	protected @NonNull Annotation createAnnotation(@NonNull NamedElement asNamedElement, @NonNull String annotationSource) {
+		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
+		asAnnotation.setName(annotationSource);
+		asNamedElement.getOwnedAnnotations().add(asAnnotation);
+		return asAnnotation;
 	}
 
 	protected @NonNull ExpressionInOCL createBodyExpression(/*@NonNull*/ Operation operation, /*@NonNull*/ Type selfType, @NonNull String exprString, /*@NonNull*/ Type resultType) {
@@ -183,7 +189,7 @@ public abstract class AbstractContents extends PivotUtil
 		return asType;
 	}
 
-	protected @NonNull EnumerationLiteral createEnumerationLiteral(@NonNull Enumeration asEnumeration, /*@NonNull*/ EEnumLiteral eEnumLiteral) {
+	protected @NonNull EnumerationLiteral createEnumerationLiteral(/*@NonNull*/ Enumeration asEnumeration, /*@NonNull*/ EEnumLiteral eEnumLiteral) {
 		EnumerationLiteral asEnumerationLiteral = PivotFactory.eINSTANCE.createEnumerationLiteral();
 		asEnumerationLiteral.setName(eEnumLiteral.getName());
 		((PivotObjectImpl)asEnumerationLiteral).setESObject(eEnumLiteral);
@@ -357,7 +363,7 @@ public abstract class AbstractContents extends PivotUtil
 		return ClassUtil.nonNullState(NameUtil.getNameable(asClass.getOwnedProperties(), name));
 	}
 
-	protected @NonNull TemplateParameter getTemplateParameter(@NonNull TemplateableElement templateableElement, int index) {
+	protected @NonNull TemplateParameter getTemplateParameter(/*@NonNull*/ TemplateableElement templateableElement, int index) {
 		return ClassUtil.nonNullState(templateableElement.getOwnedSignature().getOwnedParameters().get(index));
 	}
 

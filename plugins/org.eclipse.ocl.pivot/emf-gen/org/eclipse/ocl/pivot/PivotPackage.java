@@ -491,6 +491,16 @@ extends EPackage
 	EClass getBooleanType();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Boolean_Class <em>Boolean Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Boolean Class</em>'.
+	 * @see org.eclipse.ocl.pivot.Boolean_Class
+	 * @generated
+	 */
+	EClass getBoolean_Class();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.PrimitiveLiteralExp <em>Primitive Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1163,6 +1173,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getIntegerLiteralExp__ValidateTypeIsInteger__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Integer_Class <em>Integer Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Integer Class</em>'.
+	 * @see org.eclipse.ocl.pivot.Integer_Class
+	 * @generated
+	 */
+	EClass getInteger_Class();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.NumericLiteralExp <em>Numeric Literal Exp</em>}'.
@@ -2692,6 +2712,16 @@ extends EPackage
 	EAttribute getRealLiteralExp_RealSymbol();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Real_Class <em>Real Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Real Class</em>'.
+	 * @see org.eclipse.ocl.pivot.Real_Class
+	 * @generated
+	 */
+	EClass getReal_Class();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.ReferringElement <em>Referring Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3346,6 +3376,16 @@ extends EPackage
 	EAttribute getStringLiteralExp_StringSymbol();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.String_Class <em>String Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String Class</em>'.
+	 * @see org.eclipse.ocl.pivot.String_Class
+	 * @generated
+	 */
+	EClass getString_Class();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TupleLiteralExp <em>Tuple Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3468,6 +3508,16 @@ extends EPackage
 	 * @generated
 	 */
 	EAttribute getUnlimitedNaturalLiteralExp_UnlimitedNaturalSymbol();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unlimited Natural Class</em>'.
+	 * @see org.eclipse.ocl.pivot.UnlimitedNatural_Class
+	 * @generated
+	 */
+	EClass getUnlimitedNatural_Class();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.UnspecifiedValueExp <em>Unspecified Value Exp</em>}'.
@@ -5805,29 +5855,13 @@ extends EPackage
 	EEnum getTransitionKind();
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Boolean <em>Boolean</em>}'.
+	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Boolean is used for logical expressions, consisting of the predefined values true and false.
-     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
-	 * @see java.lang.Boolean
 	 * @generated
 	 */
 	EDataType getBoolean();
-
-	/**
-	 * Returns the meta object for data type '<em>EBoolean</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * EBoolean is used within the Pivot AS to support precisely non-null true/false values.
-     * <!-- end-model-doc -->
-	 * @return the meta object for data type '<em>EBoolean</em>'.
-	 * @generated
-	 */
-	EDataType getEBoolean();
 
 	/**
 	 * Returns the meta object for data type '<em>EInt</em>'.
@@ -5855,9 +5889,6 @@ extends EPackage
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Integer is a primitive type representing integer values.
-     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see org.eclipse.ocl.pivot.values.IntegerValue
 	 * @generated
@@ -5898,9 +5929,6 @@ extends EPackage
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Real is a primitive type representing the mathematical concept of real.
-     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see org.eclipse.ocl.pivot.values.RealValue
 	 * @generated
@@ -5911,9 +5939,6 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
-     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -5934,9 +5959,6 @@ extends EPackage
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * UnlimitedNatural is a primitive type representing unlimited natural values.
-     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
 	 * @generated
@@ -6344,6 +6366,16 @@ extends EPackage
 		 * @generated
 		 */
 		EClass BOOLEAN_TYPE = eINSTANCE.getBooleanType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.Boolean_Class <em>Boolean Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.Boolean_Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getBoolean_Class()
+		 * @generated
+		 */
+		EClass BOOLEAN_CLASS = eINSTANCE.getBoolean_Class();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveLiteralExpImpl <em>Primitive Literal Exp</em>}' class.
@@ -6892,6 +6924,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIntegerLiteralExp__ValidateTypeIsInteger__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.Integer_Class <em>Integer Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.Integer_Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getInteger_Class()
+		 * @generated
+		 */
+		EClass INTEGER_CLASS = eINSTANCE.getInteger_Class();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.NumericLiteralExpImpl <em>Numeric Literal Exp</em>}' class.
@@ -8107,6 +8149,16 @@ extends EPackage
 		EAttribute REAL_LITERAL_EXP__REAL_SYMBOL = eINSTANCE.getRealLiteralExp_RealSymbol();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.Real_Class <em>Real Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.Real_Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getReal_Class()
+		 * @generated
+		 */
+		EClass REAL_CLASS = eINSTANCE.getReal_Class();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.ReferringElement <em>Referring Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8632,6 +8684,16 @@ extends EPackage
 		EAttribute STRING_LITERAL_EXP__STRING_SYMBOL = eINSTANCE.getStringLiteralExp_StringSymbol();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.String_Class <em>String Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.String_Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getString_Class()
+		 * @generated
+		 */
+		EClass STRING_CLASS = eINSTANCE.getString_Class();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TupleLiteralExpImpl <em>Tuple Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8738,6 +8800,16 @@ extends EPackage
 		 * @generated
 		 */
 		EAttribute UNLIMITED_NATURAL_LITERAL_EXP__UNLIMITED_NATURAL_SYMBOL = eINSTANCE.getUnlimitedNaturalLiteralExp_UnlimitedNaturalSymbol();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.UnlimitedNatural_Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUnlimitedNatural_Class()
+		 * @generated
+		 */
+		EClass UNLIMITED_NATURAL_CLASS = eINSTANCE.getUnlimitedNatural_Class();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.UnspecifiedValueExpImpl <em>Unspecified Value Exp</em>}' class.
@@ -10613,20 +10685,10 @@ extends EPackage
 		 * The meta object literal for the '<em>Boolean</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.lang.Boolean
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getBoolean()
 		 * @generated
 		 */
 		EDataType BOOLEAN = eINSTANCE.getBoolean();
-
-		/**
-		 * The meta object literal for the '<em>EBoolean</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getEBoolean()
-		 * @generated
-		 */
-		EDataType EBOOLEAN = eINSTANCE.getEBoolean();
 
 		/**
 		 * The meta object literal for the '<em>EInt</em>' data type.

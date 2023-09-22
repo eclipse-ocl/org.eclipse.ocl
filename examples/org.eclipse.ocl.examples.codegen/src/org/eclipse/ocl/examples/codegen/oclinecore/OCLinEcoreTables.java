@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot;
@@ -70,10 +72,13 @@ import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
+	public static final @NonNull TracingOption SYNTHESIS = new TracingOption(CodeGenConstants.PLUGIN_ID, "synthesis");
+
 	/**
 	 * Process a nested <%...%> to return its equivalent string and request any necessary imports.
 	 */
@@ -156,10 +161,20 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
 		this.importManager = new ImportManager(getTablesPackageName());
 		SynthesisAnalysis synthesisAnalysis = new SynthesisAnalysis(environmentFactory);
+		StringBuilder s = null;
+		if (SYNTHESIS.isActive()) {
+			s = new StringBuilder();
+			synthesisAnalysis.setScheduleLog(s);
+		}
 		this.synthesisSchedule = synthesisAnalysis.getSynthesisSchedule();
 		synthesisSchedule.setMaxSlotsPerStage(Integer.MAX_VALUE);
 		synthesisAnalysis.analyzeContents(ClassUtil.nonNullState(PivotUtil.getContainingModel(asPackage)));
 		synthesisAnalysis.analyzeDependencies();
+		if (SYNTHESIS.isActive()) {
+			assert s  != null;
+			SYNTHESIS.println(s.toString());;
+		}
+
 	}
 
 	public void analyzeExpressions() {
@@ -840,6 +855,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareProperties() {
+		s.append("\n");
 		s.append("	/**\n");
 		s.append("	 *	The property descriptors for each property of each type.\n");
 		s.append("	 *\n");
@@ -916,11 +932,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private void declareSchedule(@NonNull List<@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations,
 			@NonNull List<@NonNull Map<@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
 		for (@NonNull Stage stage : synthesisSchedule.getStages()) {
-			s.append("\n");
+		//	s.append("\n");
 			for (@NonNull Slot slot : stage.getSlots()) {
 				String role = slot.getRole();
 				Element element = slot.getElement();
-				if (role == Slot.ROLE_CTOR) {
+				/* if (role == Slot.ROLE_CTOR) {
 				//	if (element instanceof EnumerationLiteral) {
 				//		declareEnumerationLiteral((EnumerationLiteral)element);
 				//	}
@@ -931,37 +947,56 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("\t// " + role + " " + element + "\n");
 				//	}
 				}
-				else if (role == Slot.ROLE_TYPE_PARAMETERS) {
+				else */ if (role == Slot.ROLE_TYPE_PARAMETERS) {
+					s.append("\n");
 					declareTypeParameters();
 				}
 				else if (role == Slot.ROLE_ALL_TYPES) {
+					s.append("\n");
 					declareTypes(paginatedFragmentOperations, paginatedFragmentProperties);
 				}
 				else if (role == Slot.ROLE_ALL_FRAGMENTS) {
+					s.append("\n");
 					declareFragments();
 				}
 				else if (role == Slot.ROLE_PARAMETER_LISTS) {
+					s.append("\n");
 					declareParameterLists();
 				}
-				else if (role == Slot.ROLE_ALL_OPERATIONS) {
+				else if (role == Slot.ROLE_MODEL_OPERATIONS_START) {
+					s.append("\n");
 					declareOperations();
+				}
+				else if (role == Slot.ROLE_MODEL_OPERATIONS_END) {
 				}
 				else if (role == Slot.ROLE_ALL_PROPERTIES) {
 					declareProperties();
 				}
 				else if (role == Slot.ROLE_TYPE_FRAGMENTS) {
+					s.append("\n");
 					declareTypeFragments();
 				}
 				else if (role == Slot.ROLE_FRAGMENT_OPERATIONS) {
+					s.append("\n");
 					declareFragmentOperations(paginatedFragmentOperations);
 				}
 				else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
+					s.append("\n");
 					declareFragmentProperties(paginatedFragmentProperties);
 				}
 				else if (role == Slot.ROLE_ENUMERATION_LITERALS) {
+					s.append("\n");
 					declareEnumerationLiterals();
 				}
+				else if (role == Slot.ROLE_CLASS_OPERATIONS_END) {}
+				else if (role == Slot.ROLE_CLASS_OPERATIONS_START) {}
 				else if (role == Slot.ROLE_COMMENTS) {}
+				else if (role == Slot.ROLE_CTOR) {}
+				else if (role == Slot.ROLE_EXTERNAL) {}
+				else if (role == Slot.ROLE_INSTALL) {}
+				else if (role == Slot.ROLE_PROPERTIES) {}
+				else if (role == Slot.ROLE_SUPER_CLASSES) {}
+				else if (role == Slot.ROLE_TYPE) {}
 				else {
 					s.append("\t// " + role + " " + element + "\n");
 				}
@@ -1034,7 +1069,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
 				s.append(".");
-				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+			//	if (asClass instanceof PrimitiveType) {
+				    String typeIdName = CodeGenUtil.upperName(asClass.getName());
+			//	    String typeIdName2 = CodeGenUtil.format(eClassifier.getName(), '_', "", false, false).toUpperCase();
+					s.append(typeIdName);
+			//	}
+			//	else {
+			//		s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+			//	}
 				s.append(", ");
 			}
 			else {
@@ -1374,7 +1416,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	//	declareFragmentProperties(paginatedFragmentProperties);
 		//		s.append("\n");
 	//	declareEnumerationLiterals();
-		s.append("\n");
+	//	s.append("\n");
 		declareSchedule(paginatedFragmentOperations, paginatedFragmentProperties);
 		s.append("\n");
 		declareInit();

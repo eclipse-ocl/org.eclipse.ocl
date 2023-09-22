@@ -1767,7 +1767,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return false;";
 			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return referredOperation != null ? referredOperation.isIsRequired() : isRequired();";
+		//		return "return referredOperation != null ? referredOperation.isIsRequired() : isRequired();";
+				return "return ast instanceof CallExp ? ((CallExp)ast).isIsRequired() : isRequired();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";

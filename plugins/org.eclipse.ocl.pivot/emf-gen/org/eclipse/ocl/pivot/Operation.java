@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
 /**
@@ -372,6 +373,8 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	@Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull OperationId getOperationId();
+
+	@NonNull OverloadId getOverloadId();
 
 	/**
 	 * Return the unique identity of the ordered list of parameters of this operation.

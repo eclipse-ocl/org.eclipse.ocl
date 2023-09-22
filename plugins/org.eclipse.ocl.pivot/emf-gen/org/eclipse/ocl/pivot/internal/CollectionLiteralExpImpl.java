@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -282,15 +281,15 @@ implements CollectionLiteralExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
 					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!eq) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
@@ -304,13 +303,13 @@ implements CollectionLiteralExp {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -361,15 +360,15 @@ implements CollectionLiteralExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
 					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!eq) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
@@ -383,13 +382,13 @@ implements CollectionLiteralExp {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -440,15 +439,15 @@ implements CollectionLiteralExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
 					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!eq) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
@@ -462,13 +461,13 @@ implements CollectionLiteralExp {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -519,15 +518,15 @@ implements CollectionLiteralExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
 					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!eq) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
@@ -541,13 +540,13 @@ implements CollectionLiteralExp {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;

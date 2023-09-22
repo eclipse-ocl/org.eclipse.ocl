@@ -326,7 +326,7 @@ public class DelegateInstaller
 			@NonNull EClassifier eClassifier = (EClassifier)eTarget;
 			removeDelegateAnnotations(eClassifier, null);
 			for (Constraint constraint : metamodelManager.getLocalInvariants(pivotType)) {
-				if (constraint.isIsCallable()) {
+			//	if (constraint.isIsCallable()) {
 					EOperation eContext = null;
 					@NonNull String name = PivotUtil.getName(constraint);
 					for (EOperation candidate : ((EClass) eClassifier).getEOperations()) {
@@ -346,7 +346,7 @@ public class DelegateInstaller
 					}
 					eContext.getEAnnotations().add(oclAnnotation);
 					hasDelegates = true;
-				}
+			/*	}
 				else {
 					EAnnotation oclAnnotation = createConstraintDelegate(eClassifier, constraint, null);
 					if (oclAnnotation == null) {
@@ -354,7 +354,7 @@ public class DelegateInstaller
 					}
 					eClassifier.getEAnnotations().add(oclAnnotation);
 					hasDelegates = true;
-				}
+				} */
 			}
 			for (Operation anOperation : metamodelManager.getMemberOperations(pivotType, false)) {
 				EOperation eOperation = (EOperation)anOperation.getESObject();

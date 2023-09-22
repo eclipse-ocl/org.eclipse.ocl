@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
@@ -92,20 +93,21 @@ public class EAnnotationConverter
 		add(OCLConstants.OCL_DELEGATE_URI_PIVOT, DelegateURIEAnnotationConverter.INSTANCE);
 		add(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE, ASLibraryEAnnotationConverter.INSTANCE);
 		add(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE, ASMetamodelEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, ClassifierEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, ClassifierEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EOPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
 		//	add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-Boolean", OriginalTypeEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-Integer", OriginalTypeEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-Real", OriginalTypeEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-String", OriginalTypeEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE + "-UnlimitedNatural", OriginalTypeEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE, PrecedenceEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, PropertyEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.TYPED_ELEMENT_ANNOTATION_SOURCE, TypedElementEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "Boolean", OriginalTypeEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "Integer", OriginalTypeEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "Real", OriginalTypeEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "String", OriginalTypeEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "UnlimitedNatural", OriginalTypeEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_PRECEDENCE_ANNOTATION_SOURCE, PrecedenceEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.ESTRUCTURAL_FEATURE_ANNOTATION_SOURCE, PropertyEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.ETYPED_ELEMENT_ANNOTATION_SOURCE, TypedElementEAnnotationConverter.INSTANCE);
 	}
 
 	private static void add(@NonNull String source, @NonNull EAnnotationConverter eAnnotationConverter) {
@@ -162,7 +164,7 @@ public class EAnnotationConverter
 				UNKNOWN_EANNOTATIONS.println("\"" + eAnnotation.getSource() + "\" EAnnotation contents");
 			}
 			if (asAnnotation == null) {
-				asAnnotation = createAnnotation(external2as, eAnnotation);
+				asAnnotation = createAnnotation(external2as, eAnnotation.getSource(), eAnnotation);
 			}
 		}
 		return asAnnotation;
@@ -176,7 +178,7 @@ public class EAnnotationConverter
 		if (traceUnknownEAnnotations()) {
 			UNKNOWN_EANNOTATIONS.println("\"" + eAnnotation.getSource() + "\" " + key + " : " + value);
 		}
-		return createDetail(external2AS, asAnnotation, eAnnotation, key, value);
+		return createDetail(external2AS, asAnnotation, eAnnotation.getSource(), eAnnotation, key, value);
 	}
 
 	/**
@@ -203,7 +205,7 @@ public class EAnnotationConverter
 				UNKNOWN_EANNOTATIONS.println("\"" + eAnnotation.getSource() + "\" EAnnotation references");
 			}
 			if (asAnnotation == null) {
-				asAnnotation = createAnnotation(external2as, eAnnotation);
+				asAnnotation = createAnnotation(external2as, eAnnotation.getSource(), eAnnotation);
 			}
 			external2as.queueReference(eAnnotation);
 		}
@@ -214,16 +216,16 @@ public class EAnnotationConverter
 	 * Create and return the Annotation for eAnnotation. May be overridden to return null for an eAnnotation that
 	 * should be fully represented by regular AS elements.
 	 */
-	protected final @NonNull Annotation createAnnotation(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+	protected final @NonNull Annotation createAnnotation(@NonNull AbstractExternal2AS external2AS, @Nullable String source, @NonNull EAnnotation eAnnotation) {
 		AnnotationImpl asAnnotation = (AnnotationImpl)PivotFactory.eINSTANCE.createAnnotation();
-		asAnnotation.setName(eAnnotation.getSource());
+		asAnnotation.setName(source);
 		external2AS.addMapping(eAnnotation, asAnnotation);
 		return asAnnotation;
 	}
 
-	protected final @NonNull Annotation createDetail(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
+	protected final @NonNull Annotation createDetail(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @Nullable String source, @NonNull EAnnotation eAnnotation, String key, String value) {
 		if (asAnnotation == null) {
-			asAnnotation = createAnnotation(external2as, eAnnotation);
+			asAnnotation = createAnnotation(external2as, source, eAnnotation);
 		}
 		Detail asDetail = PivotFactory.eINSTANCE.createDetail();
 		asDetail.setName(key);
@@ -250,7 +252,7 @@ public class EAnnotationConverter
 
 		@Override
 		protected Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
-			Annotation asAnnotation = createAnnotation(external2AS, eAnnotation);
+			Annotation asAnnotation = null; // createAnnotation(external2AS, eAnnotation);
 			return super.convertAll(external2AS, asAnnotation, eAnnotation);
 		}
 	}
@@ -258,6 +260,12 @@ public class EAnnotationConverter
 	private static class ASMetamodelEAnnotationConverter extends EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new ASMetamodelEAnnotationConverter();
+
+		@Override
+		protected Annotation convertAll(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+			Annotation asAnnotation = null; // createAnnotation(external2AS, eAnnotation);
+			return super.convertAll(external2AS, asAnnotation, eAnnotation);
+		}
 	}
 
 	private static class CDOEAnnotationConverter extends EAnnotationConverter
@@ -267,7 +275,7 @@ public class EAnnotationConverter
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
 			if ("filter".equals(key) || "persistent".equals(key)) {
-				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation, key, value);
+				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation.getSource(), eAnnotation, key, value);
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
@@ -282,11 +290,21 @@ public class EAnnotationConverter
 
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (AnnotationUtil.CLASSIFIER_ROLE.equals(key)) {
+			if (AnnotationUtil.ECLASSIFIER_ROLE.equals(key)) {
 				// Suppress redundant annotation
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
+			}
+			return asAnnotation;
+		}
+
+		@Override
+		protected @Nullable Annotation convertReferences(@NonNull AbstractExternal2AS external2as, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation) {
+			String role = eAnnotation.getDetails().get(AnnotationUtil.ECLASSIFIER_ROLE);
+			if (AnnotationUtil.ECLASSIFIER_ROLE_DATA_TYPE.equals(role) && (eAnnotation.getReferences().size() == 1)) {
+				EClass eClass = (EClass)eAnnotation.eContainer();
+				asAnnotation = createDetail(external2as, asAnnotation, AnnotationUtil.DATA_TYPE_ANNOTATION_SOURCE, eAnnotation, AnnotationUtil.DATA_TYPE_ECLASS_NAME, eClass.getName());
 			}
 			return asAnnotation;
 		}
@@ -329,7 +347,7 @@ public class EAnnotationConverter
 			if (traceUnknownEAnnotations()) {
 				UNKNOWN_EANNOTATIONS.println("\"" + eAnnotation.getSource() + "\"");
 			}
-			Annotation asAnnotation = createAnnotation(external2AS, eAnnotation);
+			Annotation asAnnotation = createAnnotation(external2AS, eAnnotation.getSource(), eAnnotation);
 			return super.convertAll(external2AS, asAnnotation, eAnnotation);
 		}
 	}
@@ -369,6 +387,7 @@ public class EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new EMOFExtendedMetaDataEAnnotationConverter();
 
+		@SuppressWarnings("null")
 		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet("Property.oppositeRoleName");
 
 		@Override
@@ -387,6 +406,7 @@ public class EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new EMOFExtendedMetaData2EAnnotationConverter();
 
+		@SuppressWarnings("null")
 		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet(OppositePropertyDetails.BODY_KEY, OppositePropertyDetails.LOWER_KEY, OppositePropertyDetails.ORDERED_KEY, OppositePropertyDetails.UNIQUE_KEY, OppositePropertyDetails.UPPER_KEY);
 
 		@Override
@@ -424,12 +444,13 @@ public class EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new ExtendedMetaDataEAnnotationConverter();
 
+		@SuppressWarnings("null")
 		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet("baseType", "enumeration", "group", "itemType", "kind", "maxInclusive", "memberTypes", "minInclusive", "minLength", "name", "namespace", "pattern", "processing", "whiteSpace", "wildcards");
 
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
 			if (knownKeys.contains(key)) {
-				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation, key, value);
+				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation.getSource(), eAnnotation, key, value);
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
@@ -442,6 +463,7 @@ public class EAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new GenModelEAnnotationConverter();
 
+		@SuppressWarnings("null")
 		private static final @NonNull Set<@NonNull String> knownKeys = Sets.newHashSet("body", "suppressedGetVisibility", "suppressedIsSetVisibility", "suppressedSetVisibility", "suppressedUnsetVisibility", "suppressedVisibility");
 
 		@Override
@@ -452,7 +474,7 @@ public class EAnnotationConverter
 				// Suppress processed annotation
 			}
 			else if (knownKeys.contains(key)) {
-				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation, key, value);
+				asAnnotation = createDetail(external2AS, asAnnotation, eAnnotation.getSource(), eAnnotation, key, value);
 			}
 			else {
 				asAnnotation = super.convertDetail(external2AS, asAnnotation, eAnnotation, key, value);
@@ -482,34 +504,34 @@ public class EAnnotationConverter
 			assert eContainer != null;
 			Operation asOperation = external2AS.getCreated(Operation.class, eContainer);
 			assert asOperation != null;
-			if (AnnotationUtil.OPERATION_IMPLEMENTATION.equals(key)) {
+			if (AnnotationUtil.EOPERATION_IMPLEMENTATION.equals(key)) {
 				asOperation.setImplementationClass(value);
 			}
-			else if (AnnotationUtil.OPERATION_ACCUMULATORS.equals(key) || AnnotationUtil.OPERATION_ITERATORS.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_ACCUMULATORS.equals(key) || AnnotationUtil.EOPERATION_ITERATORS.equals(key)) {
 				// XXX	assert asOperation instanceof Iteration;
 			}
-			else if (AnnotationUtil.OPERATION_IS_COERCION.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_COERCION.equals(key)) {
 				org.eclipse.ocl.pivot.Class owningClass = asOperation.getOwningClass();
 				if ((owningClass instanceof PrimitiveType) && Boolean.parseBoolean(value)) {
 					((PrimitiveType)owningClass).getCoercions().add(asOperation);
 				}
 			}
-			else if (AnnotationUtil.OPERATION_IS_INVALIDATING.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_INVALIDATING.equals(key)) {
 				asOperation.setIsInvalidating((value != null) && Boolean.parseBoolean(value));
 			}
-			else if (AnnotationUtil.OPERATION_IS_STATIC.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_STATIC.equals(key)) {
 				asOperation.setIsStatic((value != null) && Boolean.parseBoolean(value));
 			}
-			else if (AnnotationUtil.OPERATION_IS_TRANSIENT.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_TRANSIENT.equals(key)) {
 				asOperation.setIsTransient((value != null) && Boolean.parseBoolean(value));
 			}
-			else if (AnnotationUtil.OPERATION_IS_TYPE_OF.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_TYPE_OF.equals(key)) {
 				asOperation.setIsTypeof(Boolean.valueOf(value));
 			}
-			else if (AnnotationUtil.OPERATION_IS_VALIDATING.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_IS_VALIDATING.equals(key)) {
 				asOperation.setIsValidating((value != null) && Boolean.parseBoolean(value));
 			}
-			else if (AnnotationUtil.OPERATION_PRECEDENCE.equals(key)) {
+			else if (AnnotationUtil.EOPERATION_PRECEDENCE.equals(key)) {
 				Library asLibrary = (Library) asOperation.getOwningClass().getOwningPackage();
 				asOperation.setPrecedence(NameUtil.getNameable(asLibrary.getOwnedPrecedences(), value));
 			}
@@ -550,7 +572,7 @@ public class EAnnotationConverter
 			assert eContainer != null;
 			Parameter asParameter = external2AS.getCreated(Parameter.class, eContainer);
 			assert asParameter != null;
-			if (AnnotationUtil.PARAMETER_IS_TYPE_OF.equals(key)) {
+			if (AnnotationUtil.EPARAMETER_IS_TYPE_OF.equals(key)) {
 				asParameter.setIsTypeof(Boolean.valueOf(value));
 			}
 			else {
@@ -587,13 +609,13 @@ public class EAnnotationConverter
 			assert eContainer != null;
 			Property asProperty = external2AS.getCreated(Property.class, eContainer);
 			assert asProperty != null;
-			if (AnnotationUtil.PROPERTY_IMPLEMENTATION.equals(key)) {
+			if (AnnotationUtil.ESTRUCTURAL_FEATURE_IMPLEMENTATION.equals(key)) {
 				asProperty.setImplementationClass(value);
 			}
-			else if (AnnotationUtil.PROPERTY_IS_STATIC.equals(key)) {
+			else if (AnnotationUtil.ESTRUCTURAL_FEATURE_IS_STATIC.equals(key)) {
 				asProperty.setIsStatic((value != null) && Boolean.parseBoolean(value));
 			}
-			else if (AnnotationUtil.PROPERTY_SELF.equals(key)) {
+			else if (AnnotationUtil.ESTRUCTURAL_FEATURE_SELF.equals(key)) {
 				//	Suppress redundant annotation detail
 			}
 			else {
@@ -631,7 +653,7 @@ public class EAnnotationConverter
 
 		@Override
 		protected @Nullable Annotation convertDetail(@NonNull AbstractExternal2AS external2AS, @Nullable Annotation asAnnotation, @NonNull EAnnotation eAnnotation, String key, String value) {
-			if (AnnotationUtil.TYPED_ELEMENT_ORIGINAL_TYPE.equals(key)) {
+			if (AnnotationUtil.ETYPED_ELEMENT_ORIGINAL_TYPE.equals(key)) {
 				//	Suppress redundant annotation detail
 			}
 			else {

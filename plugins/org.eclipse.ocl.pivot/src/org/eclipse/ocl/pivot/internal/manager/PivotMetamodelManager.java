@@ -114,10 +114,10 @@ import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -1095,33 +1095,39 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 			if (implementation == null) {
-				EObject eTarget = operation.getESObject();
-				if (eTarget != null) {
-					EOperation eOperation = null;
-					if (eTarget instanceof EOperation) {
-						eOperation = (EOperation) eTarget;
-						while (eOperation.eContainer() instanceof EAnnotation) {
-							EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-							if (redefines != null) {
-								List<EObject> references = redefines.getReferences();
-								if (references.size() > 0) {
-									EObject eReference = references.get(0);
-									if (eReference instanceof EOperation) {
-										eOperation = (EOperation)eReference;
+				try {
+					implementation = getImplementationManager().loadImplementation(operation);
+				} catch (ClassNotFoundException | SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+				}
+				if (implementation == null) {
+					EObject eTarget = operation.getESObject();
+					if (eTarget != null) {
+						EOperation eOperation = null;
+						if (eTarget instanceof EOperation) {
+							eOperation = (EOperation) eTarget;
+							while (eOperation.eContainer() instanceof EAnnotation) {
+								EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+								if (redefines != null) {
+									List<EObject> references = redefines.getReferences();
+									if (references.size() > 0) {
+										EObject eReference = references.get(0);
+										if (eReference instanceof EOperation) {
+											eOperation = (EOperation)eReference;
+										}
 									}
 								}
 							}
 						}
-					}
-					else {
-						Resource resource = operation.eResource();
-						if (resource instanceof ASResource) {
-							ASResource asResource = (ASResource)resource;
-							eOperation = asResource.getASResourceFactory().getEOperation(asResource, eTarget);
+						else {
+							Resource resource = operation.eResource();
+							if (resource instanceof ASResource) {
+								ASResource asResource = (ASResource)resource;
+								eOperation = asResource.getASResourceFactory().getEOperation(asResource, eTarget);
+							}
 						}
-					}
-					if ((eOperation != null) && (eOperation.getEType() != null)) {
-						implementation = new EInvokeOperation(eOperation);
+						if ((eOperation != null) && (eOperation.getEType() != null)) {
+							implementation = new EInvokeOperation(eOperation);
+						}
 					}
 				}
 			}
@@ -1253,7 +1259,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@SuppressWarnings("null")
 	public @NonNull PrecedenceManager getPrecedenceManager() {
 		if (precedenceManager == null) {
-			standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
+		//	standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
 			synchronized (this) {
 				if (precedenceManager == null) {
 					synchronized (this) {
@@ -1518,12 +1524,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 			asLibraries.add(asLibrary);
-			for (Element element : asLibrary.getOwnedAnnotations()) {
-				if ((element instanceof Nameable) && PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(((Nameable)element).getName())) {
-					asLibraryResource = asLibrary.eResource();
-					standardLibrary.defineLibraryTypes(asLibrary.getOwnedClasses());
-					return;
-				}
+			if (AnnotationUtil.basicGetAnnotation(asLibrary, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+				asLibraryResource = asLibrary.eResource();
+				standardLibrary.defineLibraryTypes(PivotUtil.getOwnedClasses(asLibrary));
+				return;
 			}
 			if (asLibraryResource != null) {
 				installLibraryContents(asLibrary);
@@ -1717,19 +1721,26 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 			if (asPackage == null) {
 				asPackage = asModel.getOwnedPackages().get(0);
+				assert asPackage != null;
 			}
+			Resource asResource = asModel.eResource();
+			assert asResource != null;
+			asResourceSet.getResources().add(asResource);
+			setASmetamodel(asPackage);		// Standard meta-model
+			//		asResourceSet.getResources().add(asResource);
+			installResource(asResource);
 		}
 		else {
 			String name = ClassUtil.nonNullState(asLibrary.getName());
 			asPackage = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 			asModel = (Model)asPackage.eContainer();
 		}
-		Resource asResource = asModel.eResource();
-		assert asResource != null;
-		asResourceSet.getResources().add(asResource);
-		setASmetamodel(asPackage);		// Standard meta-model
+//		Resource asResource = asModel.eResource();
+//		assert asResource != null;
+//		asResourceSet.getResources().add(asResource);
+//		setASmetamodel(asPackage);		// Standard meta-model
 		//		asResourceSet.getResources().add(asResource);
-		installResource(asResource);
+//		installResource(asResource);
 	}
 
 	/**
@@ -1747,6 +1758,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			return asLibraryResource2;
 		}
 		boolean savedLibraryLoadInProgress = libraryLoadInProgress;
+	//	if (savedLibraryLoadInProgress) {
+	//		return null;
+	//	}
 		libraryLoadInProgress = true;
 		try {
 			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uri);
@@ -1979,7 +1993,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		oclExpression2flowAnalysis = null;
 	}
 
-	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {
+	public void setASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		assert AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null;
 		asMetamodel = asPackage;
 		String uri = asMetamodel.getURI();
 		if (uri != null) {

@@ -155,7 +155,7 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 		if (csElement == null) {
 			return null;
 		}
-		return ElementUtil.getText(csElement);
+		return ElementUtil.getTrimmedText(csElement);
 	}
 
 	@Override

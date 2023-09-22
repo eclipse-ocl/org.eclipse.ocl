@@ -13,15 +13,23 @@ package org.eclipse.ocl.examples.build.xtend
 import java.util.ArrayList
 import java.util.Collection
 import java.util.Collections
+import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.ocl.pivot.AnyType
+import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot
+import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.CollectionType
 import org.eclipse.ocl.pivot.Comment
+import org.eclipse.ocl.pivot.DataType
+import org.eclipse.ocl.pivot.Element
+import org.eclipse.ocl.pivot.Enumeration
 import org.eclipse.ocl.pivot.EnumerationLiteral
+import org.eclipse.ocl.pivot.Iteration
 import org.eclipse.ocl.pivot.LambdaType
 import org.eclipse.ocl.pivot.MapType
 import org.eclipse.ocl.pivot.Model
+import org.eclipse.ocl.pivot.NamedElement
 import org.eclipse.ocl.pivot.Operation
+import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.Parameter
 import org.eclipse.ocl.pivot.Precedence
 import org.eclipse.ocl.pivot.PrimitiveType
@@ -30,31 +38,12 @@ import org.eclipse.ocl.pivot.TemplateBinding
 import org.eclipse.ocl.pivot.TemplateParameter
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
-import org.eclipse.ocl.pivot.utilities.ClassUtil
-import org.eclipse.ocl.pivot.values.Unlimited
-import org.eclipse.ocl.pivot.utilities.PivotConstants
-import org.eclipse.ocl.pivot.ids.TypeId
-import org.eclipse.ocl.pivot.utilities.NameUtil
-import org.eclipse.ocl.pivot.Library
 import org.eclipse.ocl.pivot.TupleType
-import org.eclipse.ocl.pivot.DataType
-import org.eclipse.ocl.pivot.InvalidType
-import org.eclipse.ocl.pivot.SelfType
-import org.eclipse.ocl.pivot.VoidType
-import org.eclipse.ocl.pivot.PivotPackage
-import org.eclipse.ocl.pivot.Iteration
-import org.eclipse.ocl.pivot.Element
-import org.eclipse.ocl.pivot.Type
-import org.eclipse.ocl.pivot.Enumeration
-import java.util.List
-import org.eclipse.ocl.examples.codegen.oclinecore.SynthesisSchedule.Slot
-import org.eclipse.ocl.pivot.Class
-import org.eclipse.jdt.annotation.NonNull
-import org.eclipse.ocl.pivot.NamedElement
+import org.eclipse.ocl.pivot.utilities.NameUtil
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
-	protected def String declareClass_name(org.eclipse.ocl.pivot./*@NonNull*/ Class type) {
+	protected def String declareClass_name(Class type) {
 		'''
 		«IF !excludedEClassifierNames.contains(type.name)»
 		private Class «type.getPrefixedSymbolName("_"+type.partialName())»;
@@ -107,7 +96,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String declareMapType_name(/*@NonNull*/ MapType type) {
 		'''
-		private MapType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
+		private MapType «type.getPrefixedSymbolName("_" + type.partialName())»;
 		'''
 	}
 
@@ -140,10 +129,10 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (role == Slot.ROLE_EXTERNAL) {
 			switch element {
 				CollectionType: return declareCollectionType_name(element)
-				org.eclipse.ocl.pivot.Package: return ""
+				Package: return ""
 				PrimitiveType: return declarePrimitiveType_external(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
-				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
+				Class: return declareClass_name(element)
 			}
 		}			
 		else if (role == Slot.ROLE_CTOR) {
@@ -155,12 +144,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				LambdaType: return declareLambdaType_name(element)
 				MapType: return declareMapType_name(element)
 				Model: return ""
-				org.eclipse.ocl.pivot.Package: return ""
+				Package: return ""
 				PrimitiveType: return declarePrimitiveType_name(element)
 				TemplateParameter: return declareTemplateParameter_name(element)
 				TupleType: return declareTupleType_name(element)
 				DataType: return declareDataType_name(element)
-				org.eclipse.ocl.pivot.Class: return declareClass_name(element)
+				Class: return declareClass_name(element)
 				Operation: return declareOperation_name(element)
 				Parameter: return ""
 				Property: return ""
@@ -177,13 +166,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		else if (role == Slot.ROLE_ALL_FRAGMENTS) {
 			return ""
 		}
-		else if (role == Slot.ROLE_ALL_OPERATIONS) {
-			return ""
-		}
 		else if (role == Slot.ROLE_ALL_PROPERTIES) {
 			return ""
 		}
 		else if (role == Slot.ROLE_ALL_TYPES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_CLASS_OPERATIONS_END) {
+			return ""
+		}
+		else if (role == Slot.ROLE_CLASS_OPERATIONS_START) {
 			return ""
 		}
 		else if (role == Slot.ROLE_COMMENTS) {
@@ -198,7 +190,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
 			return ""
 		}
-		else if (role == Slot.ROLE_OPERATIONS) {
+		else if (role == Slot.ROLE_INSTALL) {
+			return ""
+		}
+		else if (role == Slot.ROLE_MODEL_OPERATIONS_END) {
+			return ""
+		}
+		else if (role == Slot.ROLE_MODEL_OPERATIONS_START) {
 			return ""
 		}
 		else if (role == Slot.ROLE_PARAMETER_LISTS) {
@@ -242,7 +240,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 	
-	protected def String defineClass_name(org.eclipse.ocl.pivot./*@NonNull*/ Class type) {
+	protected def String defineClass_name(Class type) {
 		'''
 		«IF excludedEClassifierNames.contains(type.name)»
 		«type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», "«type.name»");
@@ -255,13 +253,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineClass_superClasses(List<Slot> superClassSlots, org.eclipse.ocl.pivot.Class asClass) {
+	protected def String defineClass_superClasses(List<Slot> superClassSlots, Class asClass) {
 		'''
-		«IF asClass.getOwnedBindings().size() > 0»
-		«FOR slot : superClassSlots»
-		checkSuperClass(«asClass.getSymbolName()», «slot.getElement().getSymbolName()»);
-		«ENDFOR»
-		«ELSE»
+		«IF asClass.getOwnedBindings().size() <= 0»
 		«FOR slot : superClassSlots»
 		addSuperClass(«asClass.getSymbolName()», «slot.getElement().getSymbolName()»);
 		«ENDFOR»
@@ -278,7 +272,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«ENDIF»
 		'''
 	}
-	protected def String defineDataType_name(org.eclipse.ocl.pivot./*@NonNull*/ DataType type) {
+	protected def String defineDataType_name(DataType type) {
 		'''
 		«IF excludedEClassifierNames.contains(type.name)»
 		«type.getSymbolName()» = createDataType(«type.getOwningPackage().getSymbolName()», "«type.name»");
@@ -288,9 +282,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF type.getBehavioralClass() !== null»
 		«type.getSymbolName()».setBehavioralClass(«type.getBehavioralClass().getSymbolName()»);
 		«ENDIF»
+		«IF type.getInstanceClassName() !== null»
+		«type.getSymbolName()».setInstanceClassName("«type.getInstanceClassName()»");
+		«ENDIF»
 		'''
 	}
-
 
 	protected def String defineElement_comments(/*@NonNull*/ Element element) {
 		'''
@@ -364,7 +360,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF type.getOwnedSignature() !== null»
 		«type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 		«ELSE»
-		«type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		«type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.isKeysAreNullFree()»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.isValuesAreNullFree()»true«ELSE»false«ENDIF»);
 		«ENDIF»
 		'''
 	}
@@ -384,7 +380,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineOperation_type(/*@NonNull*/ Operation operation) {
-		var org.eclipse.ocl.pivot.Class asClass = operation.getOwningClass();
+		var Class asClass = operation.getOwningClass();
 		'''
 		«operation.getSymbolName()».setType(«operation.type.getSymbolName()»);
 		«IF operation.isInvalidating»
@@ -416,11 +412,17 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«ENDIF»
 		'''
 	}
+	
+	protected def String definePackage_install(Package asPackage) {
+		'''
+		orphanage.getStandardLibrary().resolvePackage(«asPackage.getSymbolName()»);
+		'''
+	}
 
 	protected def String definePackages(/*@NonNull*/ Model root) {
 		var allPackages = root.getSortedPackages();
 		var import2alias = root.getSortedImports();
-		var importKeys = new ArrayList<org.eclipse.ocl.pivot.Package>(import2alias.keySet());
+		var importKeys = new ArrayList<Package>(import2alias.keySet());
 		Collections.sort(importKeys, NameUtil.NAMEABLE_COMPARATOR);
 		if (allPackages.isEmpty()) return "";
 		'''
@@ -480,13 +482,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String definePrimitiveType_name(/*@NonNull*/ PrimitiveType primitiveType) {
 		'''
 		«primitiveType.getSymbolName()» = createPrimitiveType(«primitiveType.getOwningPackage().getSymbolName()», «getEcoreLiteral(primitiveType)»);
+		«IF primitiveType.getInstanceClassName() !== null»
+		«primitiveType.getSymbolName()».setInstanceClassName("«primitiveType.getInstanceClassName()»");
+		«ENDIF»
 		'''
 	}
 
 	protected def String defineProperties(/*@NonNull*/ Model root) {
 		var properties = root.getSortedProperties();
 		if (properties.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Class oldType  = null;
+		var Class oldType  = null;
 		'''
 
 			private void installProperties() {
@@ -575,13 +580,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				LambdaType: return defineLambdaType_name(element)
 				MapType: return defineMapType_name(element)
 				Model: return ""
-				org.eclipse.ocl.pivot.Package: return ""
+				Package: return ""
 				PrimitiveType: return definePrimitiveType_name(element)
 				Property: return ""
 				TemplateParameter: return defineTemplateParameter_name(element)
 				TupleType: return defineTupleType_name(element)
 				DataType: return defineDataType_name(element)
-				org.eclipse.ocl.pivot.Class: return defineClass_name(element)
+				Class: return defineClass_name(element)
 				Operation: return defineOperation_name(element)
 			}
 		}			
@@ -595,7 +600,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		}
 		else if (role == Slot.ROLE_SUPER_CLASSES) {
 			switch element {
-				org.eclipse.ocl.pivot.Class: return defineClass_superClasses(slot.getPredecessors().subList(1, slot.getPredecessors().size()), element)
+				Class: return defineClass_superClasses(slot.getPredecessors().subList(1, slot.getPredecessors().size()), element)
 			}
 		}
 		else if (role == Slot.ROLE_COMMENTS) {
@@ -608,13 +613,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		else if (role == Slot.ROLE_ALL_FRAGMENTS) {
 			return ""
 		}
-		else if (role == Slot.ROLE_ALL_OPERATIONS) {
-			return ""
-		}
 		else if (role == Slot.ROLE_ALL_PROPERTIES) {
 			return ""
 		}
 		else if (role == Slot.ROLE_ALL_TYPES) {
+			return ""
+		}
+		else if (role == Slot.ROLE_CLASS_OPERATIONS_END) {
+			return ""
+		}
+		else if (role == Slot.ROLE_CLASS_OPERATIONS_START) {
 			return ""
 		}
 		else if (role == Slot.ROLE_ENUMERATION_LITERALS) {
@@ -626,7 +634,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		else if (role == Slot.ROLE_FRAGMENT_PROPERTIES) {
 			return ""
 		}
-		else if (role == Slot.ROLE_OPERATIONS) {
+		else if (role == Slot.ROLE_INSTALL) {
+			switch element {
+				Package: return definePackage_install(element)
+			}
+			return ""
+		}
+		else if (role == Slot.ROLE_MODEL_OPERATIONS_END) {
+			return ""
+		}
+		else if (role == Slot.ROLE_MODEL_OPERATIONS_START) {
 			return ""
 		}
 		else if (role == Slot.ROLE_PARAMETER_LISTS) {
@@ -703,7 +720,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		return "createProperty(" + property.name + ", " + property.type.getSymbolName() + ")";
 	}
 
-	protected def String emitPackage(org.eclipse.ocl.pivot.Package pkg) {
+	protected def String emitPackage(Package pkg) {
 		'''
 			«FOR nestedPackage : pkg.getSortedPackages()»
 				«IF nestedPackage.getOwnedPackages().size() > 0»
@@ -777,15 +794,15 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			MapType case element.keyType === null: return element.javaName()
 			MapType case element.valueType === null: return element.javaName()
 			MapType: return element.javaName()
-			org.eclipse.ocl.pivot.Class case element.ownedBindings.size() > 0: return '''«element.javaName()»«FOR TemplateParameterSubstitution tps : element.getTemplateParameterSubstitutions()»_«tps.actual.simpleName()»«ENDFOR»'''
-			org.eclipse.ocl.pivot.Class: return element.javaName()
+			Class case element.ownedBindings.size() > 0: return '''«element.javaName()»«FOR TemplateParameterSubstitution tps : element.getTemplateParameterSubstitutions()»_«tps.actual.simpleName()»«ENDFOR»'''
+			Class: return element.javaName()
 			Comment case element.body === null: return "null"
 			Comment: return element.javaName(element.body.substring(0, Math.min(11, element.body.length() - 1)))
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
 			EnumerationLiteral: return element.owningEnumeration.partialName() + "_" + element.javaName()
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.partialName() + "_" + element.javaName()
-			org.eclipse.ocl.pivot.Package: return element.javaName()
+			Package: return element.javaName()
 			Parameter case element.eContainer() === null: return "null_" + element.javaName()
 			Parameter: return element.eContainer().partialName() + "_" + element.javaName()
 			Precedence: return element.javaName()
@@ -810,7 +827,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			TemplateParameterSubstitution case element.owningBinding === null: return "null"
 			TemplateParameterSubstitution case element.owningBinding.owningElement === null: return "null"
 			TemplateParameterSubstitution: return element.owningBinding.owningElement.simpleName()
-			org.eclipse.ocl.pivot.Class: return element.javaName()
+			Class: return element.javaName()
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.simpleName() + "_" + element.javaName()
 			default: return "xyzzy" + element.eClass().name

@@ -390,11 +390,17 @@ public class XMIUtil
 	 * NB These preferences must not be used when saving a standard resource such as a *.ecore
 	 * to avoid incompatibilities between rival savers. See Bug 573923.
 	 *
-	 * @deprecated supply resurce argument so that custom resources use their cu
-	 * +stom save options.
+	 * @deprecated supply resurce argument so that custom resources use their custom save options.
 	 */
 	@Deprecated
 	public static @NonNull Map<Object, Object> createSaveOptions() {
+		Map<Object, Object> saveOptions = new HashMap<>();
+		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
+		saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
+		saveOptions.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
+		return saveOptions;
+	}
+	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull Resource aResource) {
 		Map<Object, Object> saveOptions = new HashMap<>();
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
@@ -415,7 +421,17 @@ public class XMIUtil
 			return createSaveOptions();
 		}
 		else {
-			return new HashMap<>(aResource.getDefaultSaveOptions());
+			HashMap<Object, Object> saveOptions = new HashMap<>(aResource.getDefaultSaveOptions());
+			if (!saveOptions.containsKey(XMLResource.OPTION_ENCODING)) {
+				saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
+			}
+			if (!saveOptions.containsKey(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER)) {
+				saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
+			}
+			if (!saveOptions.containsKey(XMLResource.OPTION_LINE_WIDTH)) {
+				saveOptions.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
+			}
+			return saveOptions;
 		}
 	}
 

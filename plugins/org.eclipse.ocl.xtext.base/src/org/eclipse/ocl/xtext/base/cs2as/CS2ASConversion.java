@@ -1371,6 +1371,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				visitContainment((ElementCS)eObject, continuations);
 			}
 		}
+		boolean hasNoErrors = checkForNoErrors(csResource);
+		if (!hasNoErrors) {
+			return false;
+		}
 		//
 		//	Put all orphan root pivot elements in their resources.
 		//
@@ -1381,7 +1385,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		while (continuations.size() > 0) {
 			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
-				boolean hasNoErrors = checkForNoErrors(csResource);
+				hasNoErrors = checkForNoErrors(csResource);
 				if (!hasNoErrors) {
 					return false;
 				}
@@ -1405,7 +1409,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		while (continuations.size() > 0) {
 			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
-				boolean hasNoErrors = checkForNoErrors(csResource);
+				hasNoErrors = checkForNoErrors(csResource);
 				if (!hasNoErrors) {
 					return false;
 				}
@@ -1428,7 +1432,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				visitInPostOrder((ElementCS)eObject, continuations);
 			}
 		}
-		boolean hasNoErrors = checkForNoErrors(csResource);
+		hasNoErrors = checkForNoErrors(csResource);
 		if (!hasNoErrors) {
 			return false;
 		}
@@ -1500,8 +1504,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				continuation.addTo(continuations);
 			}
 		} catch (IllegalLibraryException e) {
-			@SuppressWarnings("null")@NonNull String message = e.getMessage();
-			addError(csElement, message);
+			csElement.eResource().getErrors().add(new LibraryDiagnostic(e));
 		} catch (Throwable e) {
 			if (!hasFailed) {
 				hasFailed = true;

@@ -35,11 +35,14 @@ public class ESuperClassHelper
 
 	public ESuperClassHelper() {}
 
-	public <E extends Element> @NonNull EClass getCommonEClass(@NonNull Iterable<@NonNull E> elements) {
+	/**
+	 * Return the most-derived EClass common to all elements.
+	 */
+	public @NonNull EClass getCommonEClass(@NonNull Iterable<@NonNull ? extends Element> elements) {
 		EClass smallestEClass = null;
 	//	Integer bestDepth = null;
 		Set<@NonNull EClass> smallestESuperClasses = null;
-		for (@NonNull E element : elements) {
+		for (@NonNull Element element : elements) {
 			EClass eClass = element.eClass();
 			assert eClass != null;
 			Set<@NonNull EClass> eSuperClasses = getESuperClasses(eClass);
@@ -88,6 +91,41 @@ public class ESuperClassHelper
 		return largestEClass;
 	}
 
+	/**
+	 * Return the most-derived EClass that is a subtype of all elements.
+	 */
+	public @NonNull EClass getCompatibleEClass(@NonNull Iterable<@NonNull ? extends Element> elements) {
+		EClass compatibleEClass = null;
+		Set<@NonNull EClass> compatibleESuperClasses = null;
+		for (@NonNull Element element : elements) {
+			EClass eClass = element.eClass();
+			assert eClass != null;
+		//	Set<@NonNull EClass> eSuperClasses = getESuperClasses(eClass);
+			if (compatibleEClass == null) {
+				compatibleEClass = eClass;
+				compatibleESuperClasses = getESuperClasses(eClass);
+			}
+			else {
+				assert compatibleESuperClasses != null;
+				if ((compatibleEClass == eClass) || compatibleESuperClasses.contains(eClass)){
+					;
+				}
+				else {
+					Set<@NonNull EClass> eSuperClasses = getESuperClasses(eClass);
+					if ((compatibleEClass == eClass) || eSuperClasses.contains(compatibleEClass)){
+						compatibleEClass = eClass;
+						compatibleESuperClasses = eSuperClasses;
+					}
+					else {
+						throw new IllegalStateException("No common EClass for " + compatibleEClass.getName() + " and " + eClass.getName());
+					}
+				}
+			}
+		}
+		assert compatibleEClass != null;
+		return compatibleEClass;
+	}
+
 	private @NonNull Set<@NonNull EClass> getESuperClasses(@NonNull EClass eClass) {
 		Set<@NonNull EClass> eSuperClasses = eClass2eSuperClasses.get(eClass);
 		if (eSuperClasses == null) {
@@ -111,6 +149,16 @@ public class ESuperClassHelper
 			throw new IllegalStateException("Cyclic superEClasses for " + eClass);
 		}
 		return eSuperClasses;
+	}
+
+	/**
+	 * Return true if subEclass and its superEClasses includes superEClass.
+	 */
+	public boolean isSubEClass(@NonNull EClass subEClass, @NonNull EClass superEClass) {
+		if (subEClass == superEClass) {
+			return true;
+		}
+		return getESuperClasses(subEClass).contains(superEClass);
 	}
 
 	@Override

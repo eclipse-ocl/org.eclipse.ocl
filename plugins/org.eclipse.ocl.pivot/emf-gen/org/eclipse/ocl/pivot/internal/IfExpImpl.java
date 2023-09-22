@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -366,17 +365,17 @@ implements IfExp {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_and_0;
+				/*@Caught*/ @NonNull Object CAUGHT_and_0;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition = this.getOwnedCondition();
 					final /*@NonInvalid*/ @Nullable Type type = ownedCondition.getType();
-					/*@Caught*/ @Nullable Object CAUGHT_and;
+					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ boolean ne = type != null;
-						final /*@Thrown*/ @Nullable Boolean and;
+						final /*@Thrown*/ boolean and;
 						if (!ne) {
-							and = ValueUtil.FALSE_VALUE;
+							and = false;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
@@ -392,13 +391,13 @@ implements IfExp {
 								CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								if (CAUGHT_conformsTo instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_conformsTo;
 								}
-								and = ValueUtil.TRUE_VALUE;
+								and = true;
 							}
 						}
 						CAUGHT_and = and;
@@ -406,12 +405,12 @@ implements IfExp {
 					catch (Exception e) {
 						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean and_0;
+					final /*@Thrown*/ boolean and_0;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						and_0 = ValueUtil.FALSE_VALUE;
+						and_0 = false;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_not;
+						/*@Caught*/ @NonNull Object CAUGHT_not;
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo_0;
 							try {
@@ -428,17 +427,12 @@ implements IfExp {
 							if (CAUGHT_conformsTo_0 instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_conformsTo_0;
 							}
-							final /*@Thrown*/ @Nullable Boolean not;
+							final /*@Thrown*/ boolean not;
 							if (CAUGHT_conformsTo_0 == ValueUtil.FALSE_VALUE) {
-								not = ValueUtil.TRUE_VALUE;
+								not = true;
 							}
 							else {
-								if (CAUGHT_conformsTo_0 == ValueUtil.TRUE_VALUE) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
+								not = false;
 							}
 							CAUGHT_not = not;
 						}
@@ -446,7 +440,7 @@ implements IfExp {
 							CAUGHT_not = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
-							and_0 = ValueUtil.FALSE_VALUE;
+							and_0 = false;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -455,12 +449,7 @@ implements IfExp {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if ((CAUGHT_and == null) || (CAUGHT_not == null)) {
-								and_0 = null;
-							}
-							else {
-								and_0 = ValueUtil.TRUE_VALUE;
-							}
+							and_0 = true;
 						}
 					}
 					CAUGHT_and_0 = and_0;

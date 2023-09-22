@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.xtend;
 
 import java.io.File;
+import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,6 +82,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		}
 	};
 
+	protected String scheduleLogFile = null;
+
 //	protected void addExternalReference2(@Nullable NamedElement reference, @NonNull Model root) {
 //		addExternalReference(reference, root);
 //		contentAnalysis.getSynthesisSchedule().getSlot(reference, Slot.ROLE_EXTERNAL);
@@ -141,6 +144,10 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return nameQueries.getEcoreLiteral(property);
 	}
 
+	public String getScheduleLogFile() {
+		return scheduleLogFile;
+	}
+
 /*	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> pkge2primitiveTypes = new HashMap<>();
@@ -196,9 +203,13 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			String fileName = outputFolder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
-		//	SynthesisSchedule.SYNTHESIS.setState(true);
+			StringBuilder scheduleLogBuilder = null;
 			Model asModel = (Model)asRoot;
 			initModel1(asModel);
+			if (scheduleLogFile != null) {
+				scheduleLogBuilder = new StringBuilder();
+				contentAnalysis.setScheduleLog(scheduleLogBuilder);
+			}
 			StandardLibrary standardLibrary = ocl.getStandardLibrary();
 			addExternalReference(standardLibrary.getBooleanType(), asModel);
 			addExternalReference(standardLibrary.getIntegerType(), asModel);
@@ -209,6 +220,13 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getStringType(), asModel);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
 			initModel2(saver);
+			if (scheduleLogFile != null) {
+				assert scheduleLogBuilder != null;
+				URI scheduleLogURI = URI.createPlatformResourceURI(scheduleLogFile, true);
+				OutputStreamWriter w = new OutputStreamWriter(resourceSet.getURIConverter().createOutputStream(scheduleLogURI));
+				w.append(scheduleLogBuilder.toString());
+				w.close();
+			}
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {
@@ -260,5 +278,12 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	 */
 	public void setJavaFolder(String javaFolder) {
 		this.javaFolder = javaFolder;
+	}
+
+	/**
+	 * Specify a file in which a log of the schedule is saved.
+	 */
+	public void setScheduleLogFile(String scheduleLogFile) {
+		this.scheduleLogFile = scheduleLogFile;
 	}
 }

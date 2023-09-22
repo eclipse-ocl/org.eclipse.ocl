@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
 import org.eclipse.ocl.examples.codegen.genmodel.ModelSpec;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -55,7 +56,17 @@ public class CGTypedElementModelSpec extends ModelSpec
 	}
 
 	public static final @NonNull Ati ATI_ROOT = new Ati() { @Override public @NonNull String generate() {
-		return "return ast instanceof " + classRef(TypedElement.class) + " ? ((" + classRef(TypedElement.class) + ") ast).getTypeId() : null;";
+		return "if (ast instanceof TypedElement) {\n" +
+			   "			" + classRef(Type.class) + " type = ((" + classRef(TypedElement.class) + ")ast).getType();\n" +
+			   "			if (type instanceof " + classRef(DataType.class) + ") {\n" +
+			   "				" + classRef(Type.class) + " behavioralType = ((" + classRef(DataType.class) + ")type).getBehavioralClass();\n" +
+			   "				if (behavioralType != null) {\n" +
+			   "					type = behavioralType;\n" +
+			   "				}\n" +
+			   "			}\n" +
+			   "			return type.getTypeId();\n" +
+			   "		}\n" +
+			   "		return null;";
 	}};
 	public static final @NonNull Ati ATI_TEXT = new Ati() { @Override public @NonNull String generate() {
 		return "return (" + classRef(TypeId.class) + ") getTypeId().getElementId();		// FIXME Why irregular?";

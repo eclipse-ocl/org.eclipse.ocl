@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -226,7 +225,7 @@ public abstract class CallExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = isSafe implies
+			 *       let result : Boolean[?] = isSafe implies
 			 *         not ownedSource?.type.oclAsType(CollectionType).isNullFree
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -243,14 +242,13 @@ public abstract class CallExpImpl
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
+					final /*@NonInvalid*/ @Nullable Boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!BOXED_isSafe) {
+					if (isSafe == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_not;
+						/*@Caught*/ @NonNull Object CAUGHT_not;
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 							try {
@@ -269,8 +267,7 @@ public abstract class CallExpImpl
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
 								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-								final /*@Thrown*/ @NonNull Boolean BOXED_isNullFree = isNullFree;
-								CAUGHT_isNullFree = BOXED_isNullFree;
+								CAUGHT_isNullFree = isNullFree;
 							}
 							catch (Exception e) {
 								CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
@@ -278,17 +275,12 @@ public abstract class CallExpImpl
 							if (CAUGHT_isNullFree instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_isNullFree;
 							}
-							final /*@Thrown*/ @Nullable Boolean not;
+							final /*@Thrown*/ boolean not;
 							if (CAUGHT_isNullFree == ValueUtil.FALSE_VALUE) {
-								not = ValueUtil.TRUE_VALUE;
+								not = true;
 							}
 							else {
-								if (CAUGHT_isNullFree == ValueUtil.TRUE_VALUE) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
+								not = false;
 							}
 							CAUGHT_not = not;
 						}
@@ -302,7 +294,7 @@ public abstract class CallExpImpl
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if (CAUGHT_not == null) {
+							if (isSafe == null) {
 								result = null;
 							}
 							else {
@@ -343,7 +335,7 @@ public abstract class CallExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = isSafe implies
+			 *       let result : Boolean[?] = isSafe implies
 			 *         let sourceType : Type[?] = ownedSource?.type
 			 *         in sourceType <> null implies
 			 *           not sourceType.oclIsKindOf(MapType)
@@ -362,14 +354,13 @@ public abstract class CallExpImpl
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
+					final /*@NonInvalid*/ @Nullable Boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!BOXED_isSafe) {
+					if (isSafe == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_implies;
+						/*@Caught*/ @NonNull Object CAUGHT_implies;
 						try {
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
@@ -400,12 +391,12 @@ public abstract class CallExpImpl
 							catch (Exception e) {
 								CAUGHT_ne = ValueUtil.createInvalidValue(e);
 							}
-							final /*@Thrown*/ @Nullable Boolean implies;
+							final /*@Thrown*/ boolean implies;
 							if (CAUGHT_ne == ValueUtil.FALSE_VALUE) {
-								implies = ValueUtil.TRUE_VALUE;
+								implies = true;
 							}
 							else {
-								/*@Caught*/ @Nullable Object CAUGHT_not;
+								/*@Caught*/ @NonNull Object CAUGHT_not;
 								try {
 									/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 									try {
@@ -422,17 +413,12 @@ public abstract class CallExpImpl
 									if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_oclIsKindOf;
 									}
-									final /*@Thrown*/ @Nullable Boolean not;
+									final /*@Thrown*/ boolean not;
 									if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
-										not = ValueUtil.TRUE_VALUE;
+										not = true;
 									}
 									else {
-										if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-											not = ValueUtil.FALSE_VALUE;
-										}
-										else {
-											not = null;
-										}
+										not = false;
 									}
 									CAUGHT_not = not;
 								}
@@ -440,7 +426,7 @@ public abstract class CallExpImpl
 									CAUGHT_not = ValueUtil.createInvalidValue(e);
 								}
 								if (CAUGHT_not == ValueUtil.TRUE_VALUE) {
-									implies = ValueUtil.TRUE_VALUE;
+									implies = true;
 								}
 								else {
 									if (CAUGHT_ne instanceof InvalidValueException) {
@@ -449,12 +435,7 @@ public abstract class CallExpImpl
 									if (CAUGHT_not instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_not;
 									}
-									if (CAUGHT_not == null) {
-										implies = null;
-									}
-									else {
-										implies = ValueUtil.FALSE_VALUE;
-									}
+									implies = false;
 								}
 							}
 							CAUGHT_implies = implies;
@@ -469,7 +450,7 @@ public abstract class CallExpImpl
 							if (CAUGHT_implies instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_implies;
 							}
-							if (CAUGHT_implies == null) {
+							if (isSafe == null) {
 								result = null;
 							}
 							else {

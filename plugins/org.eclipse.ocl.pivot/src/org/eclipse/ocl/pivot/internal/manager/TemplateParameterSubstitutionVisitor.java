@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -176,6 +177,11 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		}
 	}
 
+	@Override
+	public @NonNull TemplateParameterSubstitutionVisitor clone() {
+		return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType);
+	}
+
 	/**
 	 * Exclude the current typed element which may have a stale type.
 	 */
@@ -185,7 +191,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
-	public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+	public @Nullable Type getType(@Nullable TemplateParameter templateParameter) {
 		if (templateParameter == null) {
 			return null;
 		}
@@ -247,7 +253,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
-	public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+	public @Nullable Type putType(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 		TemplateParameterId elementId = formalTemplateParameter.getTemplateParameterId();
 		int index = elementId.getIndex();
 		Type oldType = context.get(index);
@@ -337,7 +343,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					}
 				}
 			//	if (hasActual) {
-					return standardLibrary.getLibraryType(unspecializedType, templateArguments);
+					return standardLibrary.getClassType(unspecializedType, templateArguments);
 			//	}
 			//	else {
 			//		return unspecializedType;
@@ -350,7 +356,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					Type actualType = specializeType(ownedTemplateParameter);
 					templateArguments.add(actualType);
 				}
-				return standardLibrary.getLibraryType(unspecializedType, templateArguments);
+				return standardLibrary.getClassType(unspecializedType, templateArguments);
 			}
 		}
 		return type;
@@ -422,7 +428,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();
 			Type actualType = actualElement.getType();
-			LibraryIterationOrOperation implementation = (LibraryIterationOrOperation) referredIteration.getImplementation();
+			LibraryIterationOrOperation implementation = PivotHelper.basicGetImplementation(environmentFactory.getMetamodelManager(), referredIteration);
 			if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
 				actualType = implementation.resolveBodyType(environmentFactory, object, actualType);
 			}
@@ -531,7 +537,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	@Override
 	public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter object) {
 		if (actual instanceof Type) {
-			put(object, (Type)actual);
+			putType(object, (Type)actual);
 		}
 		return null;
 	}

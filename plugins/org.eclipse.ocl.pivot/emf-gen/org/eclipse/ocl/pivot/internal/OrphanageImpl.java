@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
@@ -55,6 +57,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedNestedTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -87,7 +90,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * <br>
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
- * use a regular Package to avod the need for Orphange support in XMI.
+ * use a regular Package to avod the need for Orphanage support in XMI.
  *
  * <!-- end-user-doc -->
  *
@@ -116,11 +119,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected OrphanageImpl()
 	{
-		super();
+		throw new UnsupportedOperationException();		// ?? use Thread executor or PackageImpl
 	}
 
 	/**
@@ -288,8 +291,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	public static @NonNull Orphanage createOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
-		orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
+		OrphanageImpl orphanage = new OrphanageImpl(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -320,8 +322,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
-		orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
+		OrphanageImpl orphanage = new OrphanageImpl(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -360,8 +361,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private static @NonNull Orphanage getOrphanage(@NonNull StandardLibrary standardLibrary, @Nullable ResourceSet resourceSet) {
 		if (resourceSet == null) {
 			assert false : "Use of the global Orphanage is deprecated";
-			OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
-			orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
+			OrphanageImpl orphanage = new OrphanageImpl(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 			return orphanage;
 		}
 		for (Resource aResource : resourceSet.getResources()) {
@@ -499,7 +499,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	private @Nullable StandardLibrary standardLibrary = null;
+	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
 	 * Shared cache of the lazily created, lazily deleted, specializations of each type.
@@ -512,6 +512,13 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
 
 	private int wildcardCount = 0;
+
+	private OrphanageImpl(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
+		this.standardLibrary = standardLibrary;
+		setName(orphanageName);
+		setURI(orphanageUri);
+		setNsPrefix(orphanagePrefix);
+	}
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 		TypeId typeId = orphanClass.getTypeId();
@@ -677,8 +684,53 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getClassType(org.eclipse.ocl.pivot.@NonNull Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
+		genericClass = standardLibrary.resolveType(genericClass);
+		BindingsId bindingsId = IdManager.getBindingsId(templateArguments.toArray(new @NonNull Type[templateArguments.size()]));
+		GeneralizedNestedTypeIdImpl classId = (GeneralizedNestedTypeIdImpl) genericClass.getTypeId();
+		TypeId specializedId = classId.getSpecializedId(bindingsId);
+		TemplateSignature templateSignature = genericClass.getOwnedSignature();
+		List<TemplateParameter> templateSignatureParameters = templateSignature.getOwnedParameters();
+		int iMax = templateSignatureParameters.size();
+		if (templateArguments.size() != iMax) {
+			throw new IllegalArgumentException("Incompatible template argument count");
+		}
+		synchronized (typeId2type) {
+			org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class)typeId2type.get(specializedId);
+			if (specializedType == null) {
+				String typeName = genericClass.getName();
+				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+				EClass eClass = genericClass.eClass();
+				EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+				specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
+				specializedType.setName(typeName);
+				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+				for (int i = 0; i < templateParameters.size(); i++) {
+					TemplateParameter formalParameter = templateParameters.get(i);
+					if (formalParameter != null) {
+						Element templateArgument = templateArguments.get(i);
+						if (templateArgument instanceof Type) {
+							Type actualType = standardLibrary.resolveType((Type)templateArgument);
+							TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, actualType);
+							templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
+						}
+					}
+				}
+				specializedType.getOwnedBindings().add(templateBinding);
+				standardLibrary.resolveSuperClasses(specializedType, genericClass);
+				specializedType.setGeneric(genericClass);
+				typeId2type.put(specializedId, specializedType);
+				addOrphanClass(specializedType);
+			}
+			return specializedType;
+		}
+	}
+
+	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		genericType = standardLibrary.resolveType(genericType);
+		elementType = standardLibrary.resolveType(elementType);
 		if (isNullFree == null) {
 			isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 		}
@@ -691,7 +743,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		CollectionTypeId genericTypeId = genericType.getTypeId();
 		TypeId elementTypeId = elementType.getTypeId();
 		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
-		if ("Bag<$0:MapType,$1:true,$2:0,$3:*>".equals(specializedTypeId.toString())) {
+		String string = specializedTypeId.toString();
+		if (string.startsWith("Bag") && string.contains("CollectionType")) {
+			getClass();		// XXX
+		}
+		if ("Bag<$0:MapType,$1:true,$2:0,$3:*>".equals(string)) {
 			getClass();		// XXX
 		}
 		synchronized (typeId2type) {
@@ -704,6 +760,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				assert (elementType != null) && (elementType.eResource() != null);
 				if (genericTypeId == TypeId.BAG) {
 					collectionType = PivotFactory.eINSTANCE.createBagType();
+				//	System.out.println("getCollectionType " + NameUtil.debugSimpleName(collectionType) + " " + NameUtil.debugSimpleName(genericType) + " " + NameUtil.debugSimpleName(elementType) + " " + genericType + "<" + elementType + ">");
+					if (elementType.toString().contains("CollectionType")) {
+						getClass();			// XXX
+					}
 				}
 				else if (genericTypeId == TypeId.ORDERED_SET) {
 					collectionType = PivotFactory.eINSTANCE.createOrderedSetType();
@@ -727,7 +787,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				collectionType.getOwnedBindings().add(templateBinding);
 				assert genericType.getSuperClasses().size() > 0;
-				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
+				standardLibrary.resolveSuperClasses(collectionType, genericType);
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);
 				try {
@@ -757,12 +817,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @NonNull LambdaType getLambdaType(org.eclipse.ocl.pivot.@NonNull Class oclLambdaType, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+	//	oclLambdaType = standardLibrary.resolveType(oclLambdaType);
+		contextType = standardLibrary.resolveType(contextType);
+		resultType = standardLibrary.resolveType(resultType);
 		String name = TypeId.LAMBDA_NAME;
 		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
 		typeIds[0] = contextType.getTypeId();
 		typeIds[1] = resultType.getTypeId();
 		for (int i = 0; i < parameterTypes.size(); i++) {
-			typeIds[2+i] = parameterTypes.get(i).getTypeId();
+			Type parameterType = parameterTypes.get(i);
+			parameterType = standardLibrary.resolveType(parameterType);
+			typeIds[2+i] = parameterType.getTypeId();
 		}
 		LambdaTypeId lambdaTypeId = IdManager.getLambdaTypeId(name, typeIds);
 		synchronized (typeId2type) {
@@ -839,6 +904,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+	//	genericType = standardLibrary.resolveType(genericType);
+		keyType = standardLibrary.resolveType(keyType);
+		valueType = standardLibrary.resolveType(valueType);
 		TypeId keyTypeId = keyType.getTypeId();
 		TypeId valueTypeId = valueType.getTypeId();
 		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
@@ -883,7 +951,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @NonNull StandardLibrary getStandardLibrary() {
-		return ClassUtil.nonNullState(standardLibrary);
+		return standardLibrary;
 	}
 
 	@Override
@@ -904,6 +972,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 						String partName = NameUtil.getName(part);
 						Type partType = part.getType();
 						assert partType != null;
+						partType = standardLibrary.resolveType(partType);
 						Property asPart = PivotFactory.eINSTANCE.createProperty();
 						ownedAttributes.add(asPart);
 						asPart.setName(partName);
@@ -946,13 +1015,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return wildcardType;
 	}
 
-	public void init(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
-		assert this.standardLibrary == null;
-		this.standardLibrary = standardLibrary;
-		setName(orphanageName);
-		setURI(orphanageUri);
-		setNsPrefix(orphanagePrefix);
-	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 	//	System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);

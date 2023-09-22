@@ -9,15 +9,9 @@
     <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Boolean" name="Boolean"
-      instanceClassName="java.lang.Boolean">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-EBoolean" name="EBoolean"
       instanceClassName="boolean">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="EBoolean is used within the Pivot AS to support precisely non-null true/false values."/>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Boolean_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-EInt" name="EInt" instanceClassName="int">
@@ -29,8 +23,8 @@
       instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Integer" name="Integer"
       instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Integer is a primitive type representing integer values."/>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Integer_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-JavaClass" name="JavaClass"
@@ -39,21 +33,21 @@
       instanceClassName="org.eclipse.ocl.pivot.library.LibraryFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Object" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Real" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Real is a primitive type representing the mathematical concept of real."/>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Real_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-String" name="String" instanceClassName="java.lang.String">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-String_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Throwable" name="Throwable"
       instanceClassName="java.lang.Throwable"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-UnlimitedNatural" name="UnlimitedNatural"
       instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="UnlimitedNatural is a primitive type representing unlimited natural values."/>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-UnlimitedNatural_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" xmi:id="T-pivot-AssociativityKind" name="AssociativityKind">
@@ -125,7 +119,7 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-AssociationClassCallExp" name="AssociationClassCallExp"
       eSuperTypes="#T-pivot-NavigationCallExp">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-AssociationClassCallExp-referredAssociationClass"
-        name="referredAssociationClass" eType="#T-pivot-AssociationClass"/>
+        name="referredAssociationClass" lowerBound="1" eType="#T-pivot-AssociationClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-BagType" name="BagType" eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Behavior" name="Behavior"
@@ -154,10 +148,22 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-BooleanLiteralExp-booleanSymbol"
-        name="booleanSymbol" lowerBound="1" eType="#T-pivot-EBoolean" unsettable="true"/>
+        name="booleanSymbol" lowerBound="1" eType="#T-pivot-Boolean" unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-BooleanType" name="BooleanType"
       eSuperTypes="#T-pivot-PrimitiveType"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Boolean_Class" name="Boolean_Class"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Boolean">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Boolean"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CallExp" name="CallExp" abstract="true"
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -206,9 +212,9 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isImplicit"
-        name="isImplicit" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isSafe"
-        name="isSafe" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isSafe" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSource"
         name="ownedSource" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
@@ -257,19 +263,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-instanceClassName"
         name="instanceClassName" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-isAbstract"
-        name="isAbstract" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isAbstract" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="If true, the Class does not provide a complete declaration and cannot be instantiated. An abstract Class is typically used as a target of Associations or Generalizations.&#xA;&#xA;If true, the Classifier can only be instantiated by instantiating one of its specializations. An abstract Classifier is intended to be used by other Classifiers e.g., as the target of Associations or Generalizations."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-isActive"
-        name="isActive" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isActive" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Determines whether an object specified by this Class is active or not. If true, then the owning Class is referred to as an active Class. If false, then such a Class is referred to as a passive Class."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-isInterface"
-        name="isInterface" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isInterface" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-ownedBehaviors"
         name="ownedBehaviors" ordered="false" upperBound="-1" eType="#T-pivot-Behavior"
         containment="true">
@@ -432,7 +438,7 @@
         name="elementType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-isNullFree"
-        name="isNullFree" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-lower"
         name="lower" lowerBound="1" eType="#T-pivot-Integer" defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-upper"
@@ -585,7 +591,7 @@
         name="context" eType="#T-pivot-Namespace" changeable="false" volatile="true"
         transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Constraint-isCallable"
-        name="isCallable" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isCallable" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Constraint-ownedSpecification"
         name="ownedSpecification" lowerBound="1" eType="#T-pivot-LanguageExpression"
         containment="true" eOpposite="#F-pivot-LanguageExpression-owningConstraint">
@@ -661,7 +667,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-isSerializable"
-        name="isSerializable" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="isSerializable" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-value"
         name="value" lowerBound="1" eType="#T-pivot-String" changeable="false" volatile="true"
         transient="true" defaultValueLiteral="" derived="true">
@@ -740,9 +746,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ElementExtension-base"
         name="base" lowerBound="1" eType="#T-pivot-Element" eOpposite="#F-pivot-Element-ownedExtensions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-ElementExtension-isApplied"
-        name="isApplied" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isApplied" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-ElementExtension-isRequired"
-        name="isRequired" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ElementExtension-stereotype"
         name="stereotype" lowerBound="1" eType="#T-pivot-Stereotype"/>
   </eClassifiers>
@@ -870,7 +876,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Feature-implementationClass"
         name="implementationClass" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Feature-isStatic"
-        name="isStatic" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isStatic" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies whether this Feature characterizes individual instances classified by the Classifier (false) or the Classifier itself (true)."/>
       </eAnnotations>
@@ -879,7 +885,7 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-FeatureCallExp" name="FeatureCallExp"
       abstract="true" eSuperTypes="#T-pivot-CallExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-FeatureCallExp-isPre"
-        name="isPre" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isPre" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-FinalState" name="FinalState"
       eSuperTypes="#T-pivot-State">
@@ -919,7 +925,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-IfExp-isElseIf"
-        name="isElseIf" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isElseIf" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="True if this IfExp corresponds to an 'elseif' in the OCL source, false if it corresponds to an 'if'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer."/>
       </eAnnotations>
@@ -983,6 +989,18 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-IntegerLiteralExp-integerSymbol"
         name="integerSymbol" lowerBound="1" eType="#T-pivot-Integer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Integer_Class" name="Integer_Class"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Integer">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Integer is a primitive type representing integer values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Integer"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidLiteralExp" name="InvalidLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp"/>
@@ -1689,12 +1707,12 @@
         name="keyType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-MapType-keysAreNullFree"
-        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-valueType"
         name="valueType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-MapType-valuesAreNullFree"
-        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MessageExp" name="MessageExp"
       eSuperTypes="#T-pivot-OCLExpression">
@@ -1802,8 +1820,8 @@
       abstract="true" eSuperTypes="#T-pivot-PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OCLExpression" name="OCLExpression"
       abstract="true" eSuperTypes="#T-pivot-TypedElement">
-    <eOperations name="isNonNull" lowerBound="1" eType="#T-pivot-EBoolean"/>
-    <eOperations name="isNull" lowerBound="1" eType="#T-pivot-EBoolean"/>
+    <eOperations name="isNonNull" lowerBound="1" eType="#T-pivot-Boolean"/>
+    <eOperations name="isNull" lowerBound="1" eType="#T-pivot-Boolean"/>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="type &lt;> null&#xA;&#xA;"/>
@@ -1894,17 +1912,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-bodyExpression"
         name="bodyExpression" eType="#T-pivot-LanguageExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isInvalidating"
-        name="isInvalidating" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isInvalidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTransient"
-        name="isTransient" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isTransient" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTypeof"
-        name="isTypeof" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isTypeof" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isValidating"
-        name="isValidating" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isValidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Whether this operation may return a non-invalid result for invalid inputs."/>
       </eAnnotations>
@@ -2019,7 +2037,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-OperationCallExp-isVirtual"
-        name="isVirtual" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="isVirtual" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OperationCallExp-ownedArguments"
         name="ownedArguments" upperBound="-1" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OperationCallExp-referredOperation"
@@ -2121,7 +2139,7 @@
       <details key="documentation" value="A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Parameter-isTypeof"
-        name="isTypeof" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isTypeof" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Parameter-owningOperation"
         name="owningOperation" eType="#T-pivot-Operation" eOpposite="#F-pivot-Operation-ownedParameters">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2189,7 +2207,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-ProfileApplication-isStrict"
-        name="isStrict" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isStrict" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies that the Profile filtering rules for the metaclasses of the referenced metamodel shall be strictly applied."/>
       </eAnnotations>
@@ -2206,7 +2224,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
     </eAnnotations>
-    <eOperations name="isAttribute" lowerBound="1" eType="#T-pivot-EBoolean">
+    <eOperations name="isAttribute" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;"/>
       </eAnnotations>
@@ -2234,40 +2252,40 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-defaultValueString"
         name="defaultValueString" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isComposite"
-        name="isComposite" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isComposite" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isDerived"
-        name="isDerived" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isDerived" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies whether the Property is derived, i.e., whether its value or values can be computed from other information."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isID"
-        name="isID" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isID" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="True indicates this property can be used to uniquely identify an instance of the containing Class."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isImplicit"
-        name="isImplicit" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isReadOnly"
-        name="isReadOnly" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false">
+        name="isReadOnly" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="If isReadOnly is true, the StructuralFeature may not be written to after initialization."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isResolveProxies"
-        name="isResolveProxies" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="isResolveProxies" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isTransient"
-        name="isTransient" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isTransient" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isUnsettable"
-        name="isUnsettable" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isUnsettable" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isVolatile"
-        name="isVolatile" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isVolatile" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-keys"
         name="keys" ordered="false" upperBound="-1" eType="#T-pivot-Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-opposite"
         name="opposite" eType="#T-pivot-Property">
-      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+      <eAnnotations source="http://www.eclipse.org/OCL-EStructuralFeature">
         <details key="self" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2299,14 +2317,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PropertyCallExp" name="PropertyCallExp"
       eSuperTypes="#T-pivot-NavigationCallExp #T-pivot-ReferringElement">
-    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#T-pivot-Type">
+    <eOperations name="getSpecializedReferredPropertyOwningType" eType="#T-pivot-Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="referredProperty.owningClass "/>
       </eAnnotations>
     </eOperations>
     <eOperations name="getSpecializedReferredPropertyType" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="referredProperty.type.oclAsType(Class) "/>
+        <details key="body" value="referredProperty.type "/>
       </eAnnotations>
     </eOperations>
     <eOperations name="validateCompatibleResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -2400,6 +2418,18 @@
       eSuperTypes="#T-pivot-NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-RealLiteralExp-realSymbol"
         name="realSymbol" lowerBound="1" eType="#T-pivot-Real"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Real_Class" name="Real_Class"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-Real">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Real is a primitive type representing the mathematical concept of real."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Real"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ReferringElement" name="ReferringElement"
       abstract="true" interface="true">
@@ -2693,28 +2723,28 @@
       <details key="documentation" value="A State models a situation during which some (usually implicit) invariant condition holds."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-State-isComposite"
-        name="isComposite" lowerBound="1" eType="#T-pivot-EBoolean" changeable="false"
+        name="isComposite" lowerBound="1" eType="#T-pivot-Boolean" changeable="false"
         volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A state with isComposite=true is said to be a composite State. A composite State is a State that contains at least one Region."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-State-isOrthogonal"
-        name="isOrthogonal" lowerBound="1" eType="#T-pivot-EBoolean" changeable="false"
+        name="isOrthogonal" lowerBound="1" eType="#T-pivot-Boolean" changeable="false"
         volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A State with isOrthogonal=true is said to be an orthogonal composite State An orthogonal composite State contains two or more Regions."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-State-isSimple"
-        name="isSimple" lowerBound="1" eType="#T-pivot-EBoolean" changeable="false"
+        name="isSimple" lowerBound="1" eType="#T-pivot-Boolean" changeable="false"
         volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A State with isSimple=true is said to be a simple State A simple State does not have any Regions and it does not refer to any submachine StateMachine."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-State-isSubmachineState"
-        name="isSubmachineState" lowerBound="1" eType="#T-pivot-EBoolean" changeable="false"
+        name="isSubmachineState" lowerBound="1" eType="#T-pivot-Boolean" changeable="false"
         volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A State with isSubmachineState=true is said to be a submachine State Such a State refers to another StateMachine(submachine)."/>
@@ -2853,7 +2883,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StereotypeExtender-class"
         name="class" lowerBound="1" eType="#T-pivot-Class" eOpposite="#F-pivot-Class-extenders"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-StereotypeExtender-isRequired"
-        name="isRequired" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StereotypeExtender-owningStereotype"
         name="owningStereotype" lowerBound="1" eType="#T-pivot-Stereotype" eOpposite="#F-pivot-Stereotype-ownedExtenders"/>
   </eClassifiers>
@@ -2861,6 +2891,18 @@
       eSuperTypes="#T-pivot-PrimitiveLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-StringLiteralExp-stringSymbol"
         name="stringSymbol" lowerBound="1" eType="#T-pivot-String"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-String_Class" name="String_Class"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-String">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="String"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateBinding" name="TemplateBinding"
       eSuperTypes="#T-pivot-Element">
@@ -3103,17 +3145,17 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
     </eAnnotations>
-    <eOperations name="CompatibleBody" lowerBound="1" eType="#T-pivot-EBoolean">
+    <eOperations name="CompatibleBody" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="&#xA;&#x9;let bodyType = bodySpecification.type in&#xA;&#x9;let ownedBody = bodySpecification.ownedBody in&#xA;&#x9;(bodyType &lt;> null) and (ownedBody &lt;> null) and&#xA;&#x9;bodyType.conformsTo(self.type) and&#xA;&#x9;(self.isRequired implies ownedBody.isRequired)&#xA;&#xA;"/>
       </eAnnotations>
       <eParameters name="bodySpecification" lowerBound="1" eType="#T-pivot-ExpressionInOCL"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypedElement-isMany"
-        name="isMany" lowerBound="1" eType="#T-pivot-EBoolean" changeable="false"
-        volatile="true" transient="true" derived="true"/>
+        name="isMany" lowerBound="1" eType="#T-pivot-Boolean" changeable="false" volatile="true"
+        transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypedElement-isRequired"
-        name="isRequired" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="true"/>
+        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TypedElement-type"
         name="type" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3126,6 +3168,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"
         name="unlimitedNaturalSymbol" lowerBound="1" eType="#T-pivot-UnlimitedNatural"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnlimitedNatural_Class" name="UnlimitedNatural_Class"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#T-pivot-UnlimitedNatural">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="UnlimitedNatural is a primitive type representing unlimited natural values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="UnlimitedNatural"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnspecifiedValueExp" name="UnspecifiedValueExp"
       eSuperTypes="#T-pivot-OCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ValueSpecification" name="ValueSpecification"
@@ -3133,7 +3187,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template."/>
     </eAnnotations>
-    <eOperations name="booleanValue" lowerBound="1" eType="#T-pivot-EBoolean">
+    <eOperations name="booleanValue" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The query booleanValue() gives a single Boolean value when one can be computed."/>
       </eAnnotations>
@@ -3143,12 +3197,12 @@
         <details key="documentation" value="The query integerValue() gives a single Integer value when one can be computed."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="isComputable" lowerBound="1" eType="#T-pivot-EBoolean">
+    <eOperations name="isComputable" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="isNull" lowerBound="1" eType="#T-pivot-EBoolean">
+    <eOperations name="isNull" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The query isNull() returns true when it can be computed that the value is null."/>
       </eAnnotations>
@@ -3182,7 +3236,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Variable-isImplicit"
-        name="isImplicit" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Variable-ownedInit"
         name="ownedInit" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Variable-representedParameter"
@@ -3256,9 +3310,9 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-VariableExp-isImplicit"
-        name="isImplicit" lowerBound="1" eType="#T-pivot-EBoolean" defaultValueLiteral="false"/>
+        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-VariableExp-referredVariable"
-        name="referredVariable" eType="#T-pivot-VariableDeclaration"/>
+        name="referredVariable" lowerBound="1" eType="#T-pivot-VariableDeclaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Vertex" name="Vertex" abstract="true"
       eSuperTypes="#T-pivot-NamedElement">

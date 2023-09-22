@@ -640,13 +640,13 @@ implements DataType {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
 					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!ne) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_forAll;
@@ -717,13 +717,13 @@ implements DataType {
 							CAUGHT_forAll = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_forAll == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_forAll instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_forAll;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -774,13 +774,13 @@ implements DataType {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
 					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!ne) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
@@ -793,13 +793,13 @@ implements DataType {
 							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -850,13 +850,13 @@ implements DataType {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
 					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (!ne) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_includes;
@@ -870,13 +870,13 @@ implements DataType {
 							CAUGHT_includes = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_includes == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_includes instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_includes;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;

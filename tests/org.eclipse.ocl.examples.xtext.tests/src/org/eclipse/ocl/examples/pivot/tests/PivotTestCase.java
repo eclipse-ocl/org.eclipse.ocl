@@ -108,7 +108,7 @@ public class PivotTestCase extends TestCase
 	/*
 	 * The following may be tweaked to assist debugging.
 	 */
-	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
+	public static boolean DEBUG_GC = false;			// True performs an enthusiastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
 	//	PivotUtilInternal.noDebug = false;

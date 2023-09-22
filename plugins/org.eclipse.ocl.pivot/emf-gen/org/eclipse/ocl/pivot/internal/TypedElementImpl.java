@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -232,25 +231,25 @@ implements TypedElement {
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @Nullable Type bodyType = bodySpecification.getType();
 		final /*@NonInvalid*/ @Nullable OCLExpression ownedBody = bodySpecification.getOwnedBody();
-		/*@Caught*/ @Nullable Object CAUGHT_and_0;
+		/*@Caught*/ @NonNull Object CAUGHT_and_0;
 		try {
 			final /*@NonInvalid*/ boolean ne = bodyType != null;
-			final /*@NonInvalid*/ @Nullable Boolean and;
+			final /*@NonInvalid*/ boolean and;
 			if (!ne) {
-				and = ValueUtil.FALSE_VALUE;
+				and = false;
 			}
 			else {
 				final /*@NonInvalid*/ boolean ne_0 = ownedBody != null;
 				if (!ne_0) {
-					and = ValueUtil.FALSE_VALUE;
+					and = false;
 				}
 				else {
-					and = ValueUtil.TRUE_VALUE;
+					and = true;
 				}
 			}
-			final /*@Thrown*/ @Nullable Boolean and_0;
-			if (and == ValueUtil.FALSE_VALUE) {
-				and_0 = ValueUtil.FALSE_VALUE;
+			final /*@Thrown*/ boolean and_0;
+			if (!and) {
+				and_0 = false;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
@@ -266,18 +265,13 @@ implements TypedElement {
 					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 				}
 				if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {
-					and_0 = ValueUtil.FALSE_VALUE;
+					and_0 = false;
 				}
 				else {
 					if (CAUGHT_conformsTo instanceof InvalidValueException) {
 						throw (InvalidValueException)CAUGHT_conformsTo;
 					}
-					if (and == null) {
-						and_0 = null;
-					}
-					else {
-						and_0 = ValueUtil.TRUE_VALUE;
-					}
+					and_0 = true;
 				}
 			}
 			CAUGHT_and_0 = and_0;
@@ -285,18 +279,17 @@ implements TypedElement {
 		catch (Exception e) {
 			CAUGHT_and_0 = ValueUtil.createInvalidValue(e);
 		}
-		final /*@Thrown*/ @Nullable Boolean and_1;
+		final /*@Thrown*/ boolean and_1;
 		if (CAUGHT_and_0 == ValueUtil.FALSE_VALUE) {
-			and_1 = ValueUtil.FALSE_VALUE;
+			and_1 = false;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_implies;
+			/*@Caught*/ @NonNull Object CAUGHT_implies;
 			try {
 				final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
-				final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
-				final /*@Thrown*/ @Nullable Boolean implies;
-				if (!BOXED_isRequired) {
-					implies = ValueUtil.TRUE_VALUE;
+				final /*@Thrown*/ boolean implies;
+				if (!isRequired) {
+					implies = true;
 				}
 				else {
 					/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
@@ -305,20 +298,19 @@ implements TypedElement {
 							throw new InvalidValueException("Null source for \'TypedElement::isRequired\'");
 						}
 						final /*@Thrown*/ boolean isRequired_0 = ownedBody.isIsRequired();
-						final /*@Thrown*/ @NonNull Boolean BOXED_isRequired_0 = isRequired_0;
-						CAUGHT_isRequired_0 = BOXED_isRequired_0;
+						CAUGHT_isRequired_0 = isRequired_0;
 					}
 					catch (Exception e) {
 						CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
 					}
 					if (CAUGHT_isRequired_0 == ValueUtil.TRUE_VALUE) {
-						implies = ValueUtil.TRUE_VALUE;
+						implies = true;
 					}
 					else {
 						if (CAUGHT_isRequired_0 instanceof InvalidValueException) {
 							throw (InvalidValueException)CAUGHT_isRequired_0;
 						}
-						implies = ValueUtil.FALSE_VALUE;
+						implies = false;
 					}
 				}
 				CAUGHT_implies = implies;
@@ -327,7 +319,7 @@ implements TypedElement {
 				CAUGHT_implies = ValueUtil.createInvalidValue(e);
 			}
 			if (CAUGHT_implies == ValueUtil.FALSE_VALUE) {
-				and_1 = ValueUtil.FALSE_VALUE;
+				and_1 = false;
 			}
 			else {
 				if (CAUGHT_and_0 instanceof InvalidValueException) {
@@ -336,16 +328,8 @@ implements TypedElement {
 				if (CAUGHT_implies instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_implies;
 				}
-				if ((CAUGHT_and_0 == null) || (CAUGHT_implies == null)) {
-					and_1 = null;
-				}
-				else {
-					and_1 = ValueUtil.TRUE_VALUE;
-				}
+				and_1 = true;
 			}
-		}
-		if (and_1 == null) {
-			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]\'");
 		}
 		return and_1;
 	}

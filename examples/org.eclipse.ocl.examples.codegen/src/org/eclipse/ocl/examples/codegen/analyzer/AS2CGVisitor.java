@@ -1006,6 +1006,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgParameter = CGModelFactory.eINSTANCE.createCGIterator();
 			setAst(cgParameter, asVariable);
 			cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
+			if (asVariable.isIsRequired()) {
+				cgParameter.setRequired(true);
+			}
 			variablesStack.putVariable(asVariable, cgParameter);
 		}
 		return (CGIterator) cgParameter;

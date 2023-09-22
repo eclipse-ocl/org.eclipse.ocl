@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -256,7 +255,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
@@ -268,9 +267,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					catch (Exception e) {
 						CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
@@ -278,13 +277,13 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
 						final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
 						if (eq) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							result = ValueUtil.FALSE_VALUE;
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -513,34 +512,46 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							/*@Caught*/ @Nullable Object CAUGHT_or_0;
 							try {
-								final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
-								final /*@NonInvalid*/ @NonNull Boolean BOXED_isDerived = isDerived;
-								final /*@NonInvalid*/ @Nullable Boolean or;
-								if (BOXED_isDerived) {
-									or = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
-									final /*@NonInvalid*/ @NonNull Boolean BOXED_isImplicit = isImplicit;
-									if (BOXED_isImplicit) {
+								/*@Caught*/ @Nullable Object CAUGHT_or;
+								try {
+									final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
+									final /*@Thrown*/ @Nullable Boolean or;
+									if (isDerived) {
 										or = ValueUtil.TRUE_VALUE;
 									}
 									else {
-										or = ValueUtil.FALSE_VALUE;
+										final /*@NonInvalid*/ @Nullable Boolean isImplicit = _1_2.isIsImplicit();
+										if (isImplicit == ValueUtil.TRUE_VALUE) {
+											or = ValueUtil.TRUE_VALUE;
+										}
+										else {
+											if (isImplicit == null) {
+												or = null;
+											}
+											else {
+												or = ValueUtil.FALSE_VALUE;
+											}
+										}
 									}
+									CAUGHT_or = or;
+								}
+								catch (Exception e) {
+									CAUGHT_or = ValueUtil.createInvalidValue(e);
 								}
 								final /*@Thrown*/ @Nullable Boolean or_0;
-								if (or == ValueUtil.TRUE_VALUE) {
+								if (CAUGHT_or == ValueUtil.TRUE_VALUE) {
 									or_0 = ValueUtil.TRUE_VALUE;
 								}
 								else {
 									final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
-									final /*@NonInvalid*/ @NonNull Boolean BOXED_isStatic = isStatic;
-									if (BOXED_isStatic) {
+									if (isStatic) {
 										or_0 = ValueUtil.TRUE_VALUE;
 									}
 									else {
-										if (or == null) {
+										if (CAUGHT_or instanceof InvalidValueException) {
+											throw (InvalidValueException)CAUGHT_or;
+										}
+										if (CAUGHT_or == null) {
 											or_0 = null;
 										}
 										else {
@@ -559,8 +570,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							}
 							else {
 								final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
-								final /*@NonInvalid*/ @NonNull Boolean BOXED_isTransient = isTransient;
-								if (BOXED_isTransient) {
+								if (isTransient) {
 									or_1 = ValueUtil.TRUE_VALUE;
 								}
 								else {
@@ -606,7 +616,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								if (name == null) {
 									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
+								final /*@Thrown*/ @Nullable Boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl);
 								safe_startsWith_source = startsWith_0;
 							}
 							if (safe_startsWith_source == null) {
@@ -651,43 +661,28 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * isVolatile or not isRequired
 							 */
 							final /*@NonInvalid*/ boolean isVolatile = _1_5.isIsVolatile();
-							final /*@NonInvalid*/ @NonNull Boolean BOXED_isVolatile = isVolatile;
-							final /*@Thrown*/ @Nullable Boolean or_2;
-							if (BOXED_isVolatile) {
-								or_2 = ValueUtil.TRUE_VALUE;
+							final /*@NonInvalid*/ boolean or_2;
+							if (isVolatile) {
+								or_2 = true;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isRequired = _1_5.isIsRequired();
-								final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
-								final /*@NonInvalid*/ @Nullable Boolean not;
-								if (!BOXED_isRequired) {
-									not = ValueUtil.TRUE_VALUE;
+								final /*@NonInvalid*/ boolean not;
+								if (!isRequired) {
+									not = true;
 								}
 								else {
-									if (BOXED_isRequired) {
-										not = ValueUtil.FALSE_VALUE;
-									}
-									else {
-										not = null;
-									}
+									not = false;
 								}
-								if (not == ValueUtil.TRUE_VALUE) {
-									or_2 = ValueUtil.TRUE_VALUE;
+								if (not) {
+									or_2 = true;
 								}
 								else {
-									if (not == null) {
-										or_2 = null;
-									}
-									else {
-										or_2 = ValueUtil.FALSE_VALUE;
-									}
+									or_2 = false;
 								}
-							}
-							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)\'");
 							}
 							//
-							if (or_2 == ValueUtil.FALSE_VALUE) {
+							if (!or_2) {
 								accumulator_4.add(_1_5);
 							}
 						}
@@ -727,9 +722,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							final /*@NonInvalid*/ @Nullable Property opposite = _1_7.getOpposite();
 							final /*@NonInvalid*/ boolean ne_0 = opposite != null;
-							final /*@Thrown*/ @Nullable Boolean and;
+							final /*@Thrown*/ boolean and;
 							if (!ne_0) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
@@ -738,24 +733,20 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										throw new InvalidValueException("Null source for \'Property::isComposite\'");
 									}
 									final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
-									final /*@Thrown*/ @NonNull Boolean BOXED_isComposite = isComposite;
-									CAUGHT_isComposite = BOXED_isComposite;
+									CAUGHT_isComposite = isComposite;
 								}
 								catch (Exception e) {
 									CAUGHT_isComposite = ValueUtil.createInvalidValue(e);
 								}
 								if (CAUGHT_isComposite == ValueUtil.FALSE_VALUE) {
-									and = ValueUtil.FALSE_VALUE;
+									and = false;
 								}
 								else {
 									if (CAUGHT_isComposite instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_isComposite;
 									}
-									and = ValueUtil.TRUE_VALUE;
+									and = true;
 								}
-							}
-							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(Set.T)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {

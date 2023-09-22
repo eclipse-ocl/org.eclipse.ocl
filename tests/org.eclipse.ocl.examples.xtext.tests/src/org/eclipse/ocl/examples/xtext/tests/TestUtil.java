@@ -53,6 +53,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
+import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationSourceNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EClassifiersNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
@@ -66,6 +67,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -282,6 +284,9 @@ public class TestUtil
 				}
 				if (EcorePackage.eNS_URI.equals(eAnnotation.getSource()) && eDetails.containsKey("constraints")) {
 					normalizers.add(new EAnnotationConstraintsNormalizer(eAnnotation));
+				}
+				if (AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
+					normalizers.add(new EAnnotationSourceNormalizer(eAnnotation, AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE));
 				}
 			}
 		}

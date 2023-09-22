@@ -332,6 +332,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 			root.addCreated(umlElement, pivotElement);
 		}
 
+//		@Override
+//		public void addDataTypeValue(@NonNull EDataType eDataType, @NonNull EClass eClass) {
+//			root.addDataTypeValue(eDataType, eClass);
+//		}
+
 		@Override
 		public void addGenericType(@NonNull EGenericType eObject) {
 			root.addGenericType(eObject);
@@ -465,6 +470,16 @@ public abstract class UML2AS extends AbstractExternal2AS
 		private List<@NonNull EAnnotation> eAnnotations = null;
 
 		/**
+		 * The EDataType/EClass pairs for DataTypes with features.
+		 */
+//		private @Nullable Map<@NonNull EDataType, @NonNull EClass> eDataType2eClass = null;
+
+		/**
+		 * The EDataType/EClass pairs for DataTypes with features.
+		 */
+//		private @Nullable Map<@NonNull EClass, @NonNull EDataType> eClass2eDataType = null;
+
+		/**
 		 * Set of all converters used during session.
 		 */
 		private @NonNull Set<@NonNull UML2AS> allConverters = new HashSet<>();
@@ -515,6 +530,22 @@ public abstract class UML2AS extends AbstractExternal2AS
 				}
 			}
 		}
+
+/*		@Override
+		public void addDataTypeValue(@NonNull EDataType eDataType, @NonNull EClass eClass) {
+			Map<@NonNull EDataType, @NonNull EClass> eDataType2eClass2 = eDataType2eClass;
+			if (eDataType2eClass2 == null) {
+				eDataType2eClass2 = eDataType2eClass = new HashMap<>();
+			}
+			EClass oldEClass = eDataType2eClass2.put(eDataType, eClass);
+			assert oldEClass == null;
+			Map<@NonNull EClass, @NonNull EDataType> eClass2eDataType2 = eClass2eDataType;
+			if (eClass2eDataType2 == null) {
+				eClass2eDataType2 = eClass2eDataType = new HashMap<>();
+			}
+			EDataType oldEDataType = eClass2eDataType2.put(eClass, eDataType);
+			assert oldEDataType == null;
+		} */
 
 		@Override
 		public void addGenericType(@NonNull EGenericType eObject) {
@@ -1317,6 +1348,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtilInternal.refreshList(pivotModel2.getOwnedPackages(), rootPackages);
+		metamodelManager.installResource(asResource);
 		return pivotModel2;
 	}
 

@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -383,6 +384,11 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	@Override
 	public @NonNull BoxedDescriptor visitOperationId(@NonNull OperationId id) {
 		return new SimpleValueDescriptor(id, Operation.class);
+	}
+
+	@Override
+	public @NonNull BoxedDescriptor visitOverloadId(@NonNull OverloadId id) {
+		return visiting(id);
 	}
 
 	@Override

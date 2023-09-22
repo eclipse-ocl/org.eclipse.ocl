@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -195,15 +194,15 @@ implements TupleLiteralPart {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_and;
+					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
 						final /*@NonInvalid*/ boolean ne = ownedInit != null;
-						final /*@Thrown*/ @Nullable Boolean and;
+						final /*@Thrown*/ boolean and;
 						if (!ne) {
-							and = ValueUtil.FALSE_VALUE;
+							and = false;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
@@ -219,13 +218,13 @@ implements TupleLiteralPart {
 								CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								if (CAUGHT_ne_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_ne_0;
 								}
-								and = ValueUtil.TRUE_VALUE;
+								and = true;
 							}
 						}
 						CAUGHT_and = and;
@@ -233,9 +232,9 @@ implements TupleLiteralPart {
 					catch (Exception e) {
 						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
@@ -256,7 +255,7 @@ implements TupleLiteralPart {
 							CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_conformsTo == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -265,12 +264,7 @@ implements TupleLiteralPart {
 							if (CAUGHT_conformsTo instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_conformsTo;
 							}
-							if (CAUGHT_and == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;

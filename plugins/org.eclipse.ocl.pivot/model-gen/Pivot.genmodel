@@ -60,7 +60,6 @@
       <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#L-pivot-TransitionKind-external"/>
     </genEnums>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Boolean"/>
-    <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EBoolean"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EInt"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EcoreObject"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Integer"/>
@@ -95,6 +94,7 @@
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-BooleanType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Boolean_Class"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-CallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CallExp-isImplicit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CallExp-isSafe"/>
@@ -368,6 +368,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//IntegerLiteralExp/validateTypeIsInteger/context"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Integer_Class"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidLiteralExp"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidType"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-IterableType"/>
@@ -793,6 +794,7 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-RealLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-RealLiteralExp-realSymbol"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Real_Class"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-ReferringElement">
       <genOperations ecoreOperation="Pivot.ecore#//ReferringElement/getReferredElement"/>
     </genClasses>
@@ -919,6 +921,7 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-StringLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-StringLiteralExp-stringSymbol"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-String_Class"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-TemplateBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateBinding-ownedSubstitutions"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateBinding-owningElement"/>
@@ -995,6 +998,7 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-UnlimitedNatural_Class"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnspecifiedValueExp"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-ValueSpecification">
       <genOperations ecoreOperation="Pivot.ecore#//ValueSpecification/booleanValue"/>

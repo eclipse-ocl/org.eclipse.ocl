@@ -7,7 +7,10 @@
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="boolean">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
+      <details key="documentation" value="Boolean is the operation-free variant of the primitive type used for logical expressions, consisting of the predefined values true and false."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Boolean_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="EInt" instanceClassName="int">
@@ -18,7 +21,10 @@
   <eClassifiers xsi:type="ecore:EDataType" name="EcoreObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Integer is a primitive type representing integer values."/>
+      <details key="documentation" value="Integer is the operation-free variant of the primitive type representing integer values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Integer_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="JavaClass" instanceClassName="java.lang.Class"/>
@@ -26,18 +32,27 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Real is a primitive type representing the mathematical concept of real."/>
+      <details key="documentation" value="Real is the operation-free variant of the  primitive type representing the mathematical concept of real."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Real_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
+      <details key="documentation" value="String is the operation-free variant if the primitive type for a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//String_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Throwable" instanceClassName="java.lang.Throwable"/>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="UnlimitedNatural is a primitive type representing unlimited natural values."/>
+      <details key="documentation" value="UnlimitedNatural is the operation-free variant of the primitive type representing unlimited natural values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//UnlimitedNatural_Class">
+      <details key="role" value="DataTypeValue"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AssociativityKind">
@@ -117,6 +132,17 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningTransition" eType="#//Transition"
         eOpposite="#//Transition/ownedEffect"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Boolean_Class" instanceClassName="java.lang.Boolean">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Boolean">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Boolean"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanLiteralExp" eSuperTypes="#//PrimitiveLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="booleanSymbol" lowerBound="1"
@@ -564,6 +590,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningPackage" eType="#//Package"
         eOpposite="#//Package/ownedInstances"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Integer_Class" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Integer is a primitive type representing integer values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Integer">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Integer"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IntegerLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="integerSymbol" lowerBound="1"
         eType="#//Integer"/>
@@ -993,7 +1030,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="In the case where the Property is one end of a binary association this gives the other end."/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+      <eAnnotations source="http://www.eclipse.org/OCL-EStructuralFeature">
         <details key="self" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -1020,7 +1057,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyCallExp" eSuperTypes="#//NavigationCallExp #//ReferringElement">
-    <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#//Type"/>
+    <eOperations name="getSpecializedReferredPropertyOwningType" eType="#//Class"/>
     <eOperations name="getSpecializedReferredPropertyType" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" lowerBound="1"
         eType="#//Property"/>
@@ -1047,6 +1084,17 @@
         <details key="documentation" value="The StateMachine in which this Pseudostate is defined. This only applies to Pseudostates of the kind entryPoint or exitPoint."/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Real_Class" instanceClassName="org.eclipse.ocl.pivot.values.RealValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Real is a primitive type representing the mathematical concept of real."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//Real">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="Real"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RealLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realSymbol" lowerBound="1"
@@ -1284,6 +1332,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningStereotype" lowerBound="1"
         eType="#//Stereotype" eOpposite="#//Stereotype/ownedExtenders"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="String_Class" instanceClassName="java.lang.String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//String">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="String"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringLiteralExp" eSuperTypes="#//PrimitiveLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringSymbol" lowerBound="1"
         eType="#//String"/>
@@ -1497,6 +1556,17 @@
         <details key="documentation" value="The type of the TypedElement."/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNatural_Class" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="UnlimitedNatural is a primitive type representing unlimited natural values."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/OCL-EClassifier" references="#//UnlimitedNatural">
+      <details key="role" value="DataType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="UnlimitedNatural"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNaturalLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unlimitedNaturalSymbol"

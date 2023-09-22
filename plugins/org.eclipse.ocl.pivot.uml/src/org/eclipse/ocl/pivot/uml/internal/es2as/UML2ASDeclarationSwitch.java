@@ -384,22 +384,10 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		if (asPrimitiveType == null) {
 			asPrimitiveType = converter.getPrimitiveTypeByOCLStereotype(umlPrimitiveType);
 		}
+		EClass eClass;
 		org.eclipse.uml2.uml.Stereotype ecoreStereotype = null;
-		DataType pivotElement;
-		if (asPrimitiveType == standardLibrary.getBooleanType()) {
-			pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
-		}
-		else if (asPrimitiveType == standardLibrary.getIntegerType()) {
-			pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
-		}
-		else if (asPrimitiveType == standardLibrary.getRealType()) {
-			pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
-		}
-		else if (asPrimitiveType == standardLibrary.getStringType()) {
-			pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
-		}
-		else if (asPrimitiveType == standardLibrary.getUnlimitedNaturalType()) {
-			pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
+		if (asPrimitiveType != null) {
+			eClass = asPrimitiveType.eClass();
 		}
 		else {
 			ecoreStereotype = umlPrimitiveType.getAppliedStereotype("Ecore::EDataType");
@@ -407,12 +395,13 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				ecoreStereotype = umlPrimitiveType.getAppliedStereotype("Ecore::EClassifier");
 			}
 			if (ecoreStereotype != null) {
-				pivotElement = converter.refreshNamedElement(DataType.class, PivotPackage.Literals.DATA_TYPE, umlPrimitiveType);
+				eClass = PivotPackage.Literals.DATA_TYPE;
 			}
 			else {
-				pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
+				eClass = PivotPackage.Literals.PRIMITIVE_TYPE;
 			}
 		}
+		DataType pivotElement = converter.refreshNamedElement(DataType.class, eClass, umlPrimitiveType);
 		copyClassifier(pivotElement, umlPrimitiveType);
 		String instanceClassName = null;
 		if (ecoreStereotype != null) {
@@ -422,7 +411,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			}
 		}
 		pivotElement.setInstanceClassName(instanceClassName);
-		converter.queueReference(umlPrimitiveType);				// behavioralClss /  superClasses
+		converter.queueReference(umlPrimitiveType);				// behavioralClass /  superClasses
 		return pivotElement;
 	}
 
@@ -559,7 +548,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 
 	protected void copyAnnotatedElement(@NonNull NamedElement pivotElement,
 			@NonNull EModelElement umlElement, @Nullable List<EAnnotation> excludedAnnotations) {
-		List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
+	//	List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
 		for (EAnnotation eAnnotation : umlElement.getEAnnotations()) {
 			if ((excludedAnnotations == null) || !excludedAnnotations.contains(eAnnotation)) {
 				doSwitch(eAnnotation);

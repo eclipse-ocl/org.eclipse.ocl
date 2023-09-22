@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -442,6 +443,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		}
 
 		@Override
+		public @Nullable Object visitOverloadId(@NonNull OverloadId id) {
+			return visiting(id);
+		}
+
+		@Override
 		public @Nullable Object visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 			return null;
 		}
@@ -459,7 +465,6 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 		@Override
 		public @Nullable Object visitTemplateBinding(@NonNull TemplateBinding id) {
-			// TODO Auto-generated method stub
 			return visiting(id);
 		}
 

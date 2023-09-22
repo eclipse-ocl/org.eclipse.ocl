@@ -72,6 +72,8 @@ public abstract class LUSSIDs
 	protected static final int SIBLING_INDEX_MULTIPLIER = 1;
 	protected static final int TEMPLATE_BINDING_MULTIPLIER = 89;
 	protected static final int TEMPLATE_PARAMETER_INDEX_MULTIPLIER = 97;
+	protected static final int TUPLE_TYPE_NAME_MULTIPLIER = 11;
+	protected static final int TUPLE_TYPE_TYPE_MULTIPLIER = 13;
 
 	/**
 	 * Base 64 lookup table for encoding xmi:id.

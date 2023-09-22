@@ -188,7 +188,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Vertex = PivotTables.PACKid_$metamodel$.getClassId("Vertex", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_VoidType = PivotTables.PACKid_$metamodel$.getClassId("VoidType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_WildcardType = PivotTables.PACKid_$metamodel$.getClassId("WildcardType", 0);
-	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EBoolean = PivotTables.PACKid_$metamodel$.getDataTypeId("EBoolean", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EInt = PivotTables.PACKid_$metamodel$.getDataTypeId("EInt", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EcoreObject = PivotTables.PACKid_$metamodel$.getDataTypeId("EcoreObject", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_JavaClass = PivotTables.PACKid_$metamodel$.getDataTypeId("JavaClass", 0);
@@ -319,27 +318,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid__0, PivotTables.PARTid_);
 
-
-	// CTOR http://www.eclipse.org/ocl/2015/Orphanage
-	// CTOR platform:/resource/org.eclipse.ocl.pivot/model-gen/Pivot.ecore
-	// EXTERNAL OclAny
-	// EXTERNAL OclElement
-	// EXTERNAL OclEnumeration
-	// EXTERNAL Collection(T)
-	// EXTERNAL OrderedCollection(T)
-	// EXTERNAL UniqueCollection(T)
-	// EXTERNAL Bag(T)
-	// EXTERNAL OrderedSet(T)
-	// EXTERNAL Sequence(T)
-	// EXTERNAL Set(T)
-
-	// CTOR $$
-	// CTOR pivot
-	// EXTERNAL Boolean
-	// EXTERNAL Integer
-	// EXTERNAL Real
-	// EXTERNAL String
-	// EXTERNAL UnlimitedNatural
 	/**
 	 *	The type parameters for templated types and operations.
 	 */
@@ -401,7 +379,6 @@ public class PivotTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicProperty = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_PROPERTY, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicType = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_TYPE, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicValueSpecification = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION, PACKAGE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _EBoolean = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.EBOOLEAN, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _EInt = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.EINT, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _EcoreObject = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.ECORE_OBJECT, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Element = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.ELEMENT, PACKAGE, null, 0 | FlatClass.ABSTRACT);
@@ -550,7 +527,6 @@ public class PivotTables extends AbstractTables
 			_DynamicProperty,
 			_DynamicType,
 			_DynamicValueSpecification,
-			_EBoolean,
 			_EInt,
 			_EcoreObject,
 			_Element,
@@ -680,247 +656,6 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-	// CTOR EBoolean
-	// CTOR EInt
-	// CTOR EcoreObject
-	// CTOR JavaClass
-	// CTOR LibraryFeature
-	// CTOR Object
-	// CTOR Throwable
-	// CTOR AssociativityKind
-	// CTOR CollectionKind
-	// CTOR PseudostateKind
-	// CTOR TransitionKind
-	// CTOR Annotation
-	// CTOR AnyType
-	// CTOR AssociationClass
-	// CTOR AssociationClassCallExp
-	// CTOR BagType
-	// CTOR Behavior
-	// CTOR BooleanLiteralExp
-	// CTOR BooleanType
-	// CTOR CallExp
-	// CTOR CallOperationAction
-	// CTOR Class
-	// CTOR CollectionItem
-	// CTOR CollectionLiteralExp
-	// CTOR CollectionLiteralPart
-	// CTOR CollectionRange
-	// CTOR CollectionType
-	// CTOR Comment
-	// CTOR CompleteClass
-	// CTOR CompleteEnvironment
-	// CTOR CompleteModel
-	// CTOR CompletePackage
-	// CTOR CompleteStandardLibrary
-	// CTOR ConnectionPointReference
-	// CTOR Constraint
-	// CTOR DataType
-	// CTOR Detail
-	// CTOR DynamicBehavior
-	// CTOR DynamicElement
-	// CTOR DynamicProperty
-	// CTOR DynamicType
-	// CTOR DynamicValueSpecification
-	// CTOR Element
-	// CTOR ElementExtension
-	// CTOR ElementLiteralExp
-	// CTOR EnumLiteralExp
-	// CTOR Enumeration
-	// CTOR EnumerationLiteral
-	// CTOR ExpressionInOCL
-	// CTOR Feature
-	// CTOR FeatureCallExp
-	// CTOR FinalState
-	// CTOR IfExp
-	// CTOR Import
-	// CTOR InstanceSpecification
-	// CTOR IntegerLiteralExp
-	// CTOR InvalidLiteralExp
-	// CTOR InvalidType
-	// CTOR IterableType
-	// CTOR IterateExp
-	// CTOR Iteration
-	// CTOR IteratorExp
-	// CTOR IteratorVariable
-	// CTOR JavaType
-	// CTOR LambdaType
-	// CTOR LanguageExpression
-	// CTOR LetExp
-	// CTOR LetVariable
-	// CTOR Library
-	// CTOR LiteralExp
-	// CTOR LoopExp
-	// CTOR MapLiteralExp
-	// CTOR MapLiteralPart
-	// CTOR MapType
-	// CTOR MessageExp
-	// CTOR MessageType
-	// CTOR Model
-	// CTOR MorePivotable
-	// CTOR Nameable
-	// CTOR NamedElement
-	// CTOR Namespace
-	// CTOR NavigationCallExp
-	// CTOR NullLiteralExp
-	// CTOR NumericLiteralExp
-	// CTOR OCLExpression
-	// CTOR Operation
-	// CTOR OperationCallExp
-	// CTOR OppositePropertyCallExp
-	// CTOR OrderedSetType
-	// CTOR OrphanCompletePackage
-	// CTOR Orphanage
-	// CTOR Package
-	// CTOR Parameter
-	// CTOR ParameterVariable
-	// CTOR Pivotable
-	// CTOR Precedence
-	// CTOR PrimitiveCompletePackage
-	// CTOR PrimitiveLiteralExp
-	// CTOR PrimitiveType
-	// CTOR Profile
-	// CTOR ProfileApplication
-	// CTOR Property
-	// CTOR PropertyCallExp
-	// CTOR Pseudostate
-	// CTOR RealLiteralExp
-	// CTOR ReferringElement
-	// CTOR Region
-	// CTOR ResultVariable
-	// CTOR SelfType
-	// CTOR SendSignalAction
-	// CTOR SequenceType
-	// CTOR SetType
-	// CTOR ShadowExp
-	// CTOR ShadowPart
-	// CTOR Signal
-	// CTOR Slot
-	// CTOR StandardLibrary
-	// CTOR State
-	// CTOR StateExp
-	// CTOR StateMachine
-	// CTOR Stereotype
-	// CTOR StereotypeExtender
-	// CTOR StringLiteralExp
-	// CTOR TemplateBinding
-	// CTOR TemplateParameter
-	// CTOR TemplateParameterSubstitution
-	// CTOR TemplateSignature
-	// CTOR TemplateableElement
-	// CTOR Transition
-	// CTOR Trigger
-	// CTOR TupleLiteralExp
-	// CTOR TupleLiteralPart
-	// CTOR TuplePart
-	// CTOR TupleType
-	// CTOR Type
-	// CTOR TypeExp
-	// CTOR TypedElement
-	// CTOR UnlimitedNaturalLiteralExp
-	// CTOR UnspecifiedValueExp
-	// CTOR ValueSpecification
-	// CTOR Variable
-	// CTOR VariableDeclaration
-	// CTOR VariableExp
-	// CTOR Vertex
-	// CTOR Visitable
-	// CTOR VoidType
-	// CTOR WildcardType
-	// CTOR Bag(CollectionType)
-	// CTOR Bag(MapType)
-	// CTOR Bag(Annotation)
-	// CTOR Bag(AssociationClassCallExp)
-	// CTOR Bag(CallOperationAction)
-	// CTOR Bag(Class)
-	// CTOR Bag(CompleteClass)
-	// CTOR Bag(CompleteModel)
-	// CTOR Bag(CompletePackage)
-	// CTOR Bag(ConnectionPointReference)
-	// CTOR Bag(Constraint)
-	// CTOR Bag(DataType)
-	// CTOR Bag(DynamicElement)
-	// CTOR Bag(DynamicProperty)
-	// CTOR Bag(ElementExtension)
-	// CTOR Bag(EnumLiteralExp)
-	// CTOR Bag(Import)
-	// CTOR Bag(InstanceSpecification)
-	// CTOR Bag(LambdaType)
-	// CTOR Bag(LoopExp)
-	// CTOR Bag(MessageType)
-	// CTOR Bag(NavigationCallExp)
-	// CTOR Bag(OCLExpression)
-	// CTOR Bag(OperationCallExp)
-	// CTOR Bag(Operation)
-	// CTOR Bag(OppositePropertyCallExp)
-	// CTOR Bag(Package)
-	// CTOR Bag(PrimitiveType)
-	// CTOR Bag(PropertyCallExp)
-	// CTOR Bag(Property)
-	// CTOR Bag(Region)
-	// CTOR Bag(SendSignalAction)
-	// CTOR Bag(ShadowPart)
-	// CTOR Bag(Slot)
-	// CTOR Bag(StateExp)
-	// CTOR Bag(StateMachine)
-	// CTOR Bag(State)
-	// CTOR Bag(TemplateBinding)
-	// CTOR Bag(TemplateParameterSubstitution)
-	// CTOR Bag(TemplateParameter)
-	// CTOR Bag(TemplateableElement)
-	// CTOR Bag(TypeExp)
-	// CTOR Bag(TypedElement)
-	// CTOR Bag(VariableDeclaration)
-	// CTOR Bag(VariableExp)
-	// CTOR Bag(Variable)
-	// CTOR Bag(WildcardType)
-	// CTOR OrderedSet(CollectionLiteralPart)
-	// CTOR OrderedSet(Detail)
-	// CTOR OrderedSet(Element)
-	// CTOR OrderedSet(EnumerationLiteral)
-	// CTOR OrderedSet(Import)
-	// CTOR OrderedSet(IteratorVariable[*|?])
-	// CTOR OrderedSet(MapLiteralPart)
-	// CTOR OrderedSet(OCLExpression)
-	// CTOR OrderedSet(Operation)
-	// CTOR OrderedSet(Parameter)
-	// CTOR OrderedSet(Precedence)
-	// CTOR OrderedSet(Property)
-	// CTOR OrderedSet(ShadowPart)
-	// CTOR OrderedSet(TemplateParameter[+|1])
-	// CTOR OrderedSet(TupleLiteralPart)
-	// CTOR OrderedSet(ValueSpecification)
-	// CTOR OrderedSet(Variable)
-	// CTOR Sequence(Type)
-	// CTOR Set(Behavior)
-	// CTOR Set(Class)
-	// CTOR Set(Comment)
-	// CTOR Set(CompleteClass)
-	// CTOR Set(CompletePackage)
-	// CTOR Set(ConnectionPointReference)
-	// CTOR Set(Constraint)
-	// CTOR Set(DynamicProperty)
-	// CTOR Set(ElementExtension)
-	// CTOR Set(Element)
-	// CTOR Set(InstanceSpecification)
-	// CTOR Set(Model)
-	// CTOR Set(Operation)
-	// CTOR Set(Package)
-	// CTOR Set(ProfileApplication)
-	// CTOR Set(Property)
-	// CTOR Set(Pseudostate)
-	// CTOR Set(Region)
-	// CTOR Set(Region[+|1])
-	// CTOR Set(Slot)
-	// CTOR Set(StateMachine)
-	// CTOR Set(State)
-	// CTOR Set(StereotypeExtender)
-	// CTOR Set(TemplateBinding)
-	// CTOR Set(TemplateParameterSubstitution[+|1])
-	// CTOR Set(Transition)
-	// CTOR Set(Trigger)
-	// CTOR Set(Type)
-	// CTOR Set(Vertex)
 
 	/**
 	 *	The fragment descriptors for the local elements of each type and its supertypes.
@@ -1215,14 +950,11 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull FlatFragment _DynamicValueSpecification__TypedElement = LIBRARY.createFragment(Types._DynamicValueSpecification, PivotTables.Types._TypedElement);
 		private static final @NonNull FlatFragment _DynamicValueSpecification__ValueSpecification = LIBRARY.createFragment(Types._DynamicValueSpecification, PivotTables.Types._ValueSpecification);
 
-		private static final @NonNull FlatFragment _EBoolean__Boolean = LIBRARY.createFragment(Types._EBoolean, OCLstdlibTables.Types._Boolean);
-		private static final @NonNull FlatFragment _EBoolean__EBoolean = LIBRARY.createFragment(Types._EBoolean, PivotTables.Types._EBoolean);
-		private static final @NonNull FlatFragment _EBoolean__OclAny = LIBRARY.createFragment(Types._EBoolean, OCLstdlibTables.Types._OclAny);
-
 		private static final @NonNull FlatFragment _EInt__EInt = LIBRARY.createFragment(Types._EInt, PivotTables.Types._EInt);
 		private static final @NonNull FlatFragment _EInt__Integer = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._Integer);
 		private static final @NonNull FlatFragment _EInt__OclAny = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull FlatFragment _EInt__OclComparable = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclComparable);
+		private static final @NonNull FlatFragment _EInt__OclElement = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclElement);
 		private static final @NonNull FlatFragment _EInt__OclSummable = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclSummable);
 		private static final @NonNull FlatFragment _EInt__Real = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._Real);
 
@@ -2192,780 +1924,7 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-	// CTOR pivot::AssociativityKind::left
-	// CTOR pivot::AssociativityKind::right
-	// CTOR pivot::CollectionKind::Bag
-	// CTOR pivot::CollectionKind::Collection
-	// CTOR pivot::CollectionKind::OrderedSet
-	// CTOR pivot::CollectionKind::Sequence
-	// CTOR pivot::CollectionKind::Set
-	// CTOR pivot::PseudostateKind::choice
-	// CTOR pivot::PseudostateKind::deepHistory
-	// CTOR pivot::PseudostateKind::entryPoint
-	// CTOR pivot::PseudostateKind::exitPoint
-	// CTOR pivot::PseudostateKind::fork
-	// CTOR pivot::PseudostateKind::initial
-	// CTOR pivot::PseudostateKind::join
-	// CTOR pivot::PseudostateKind::junction
-	// CTOR pivot::PseudostateKind::shallowHistory
-	// CTOR pivot::PseudostateKind::terminate
-	// CTOR pivot::TransitionKind::external
-	// CTOR pivot::TransitionKind::internal
-	// CTOR pivot::TransitionKind::local
-	// CTOR pivot::Annotation::ownedContents
-	// CTOR pivot::Annotation::ownedDetails
-	// CTOR pivot::Annotation::references
-	// CTOR pivot::AssociationClass::AssociationClassCallExp
-	// CTOR pivot::AssociationClass::unownedAttributes
-	// CTOR pivot::AssociationClassCallExp::referredAssociationClass
-	// CTOR pivot::Behavior::Class
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::State
-	// CTOR pivot::Behavior::owningTransition
-	// CTOR pivot::BooleanLiteralExp::booleanSymbol
-	// CTOR pivot::CallExp::isImplicit
-	// CTOR pivot::CallExp::isSafe
-	// CTOR pivot::CallExp::ownedSource
-	// CTOR pivot::CallOperationAction::MessageExp
-	// CTOR pivot::CallOperationAction::operation
-	// CTOR pivot::Class::Class
-	// CTOR pivot::Class::CompleteClass
-	// CTOR pivot::Class::DataType
-	// CTOR pivot::Class::InstanceSpecification
-	// CTOR pivot::Class::MapType
-	// CTOR pivot::Class::TemplateParameter
-	// CTOR pivot::Class::WildcardType
-	// CTOR pivot::Class::extenders
-	// CTOR pivot::Class::instanceClassName
-	// CTOR pivot::Class::isAbstract
-	// CTOR pivot::Class::isActive
-	// CTOR pivot::Class::isInterface
-	// CTOR pivot::Class::ownedBehaviors
-	// CTOR pivot::Class::ownedInvariants
-	// CTOR pivot::Class::ownedOperations
-	// CTOR pivot::Class::ownedProperties
-	// CTOR pivot::Class::owningPackage
-	// CTOR pivot::Class::superClasses
-	// CTOR pivot::CollectionItem::ownedItem
-	// CTOR pivot::CollectionLiteralExp::kind
-	// CTOR pivot::CollectionLiteralExp::ownedParts
-	// CTOR pivot::CollectionLiteralPart::CollectionLiteralExp
-	// CTOR pivot::CollectionRange::ownedFirst
-	// CTOR pivot::CollectionRange::ownedLast
-	// CTOR pivot::CollectionType::elementType
-	// CTOR pivot::CollectionType::isNullFree
-	// CTOR pivot::CollectionType::lower
-	// CTOR pivot::CollectionType::upper
-	// CTOR pivot::Comment::annotatedElements
-	// CTOR pivot::Comment::body
-	// CTOR pivot::Comment::owningElement
-	// CTOR pivot::CompleteClass::owningCompletePackage
-	// CTOR pivot::CompleteClass::partialClasses
-	// CTOR pivot::CompleteEnvironment::ownedCompleteModel
-	// CTOR pivot::CompleteEnvironment::ownedStandardLibrary
-	// CTOR pivot::CompleteModel::orphanCompletePackage
-	// CTOR pivot::CompleteModel::ownedCompletePackages
-	// CTOR pivot::CompleteModel::owningCompleteEnvironment
-	// CTOR pivot::CompleteModel::partialModels
-	// CTOR pivot::CompleteModel::primitiveCompletePackage
-	// CTOR pivot::CompletePackage::ownedCompleteClasses
-	// CTOR pivot::CompletePackage::ownedCompletePackages
-	// CTOR pivot::CompletePackage::owningCompleteModel
-	// CTOR pivot::CompletePackage::owningCompletePackage
-	// CTOR pivot::CompletePackage::partialPackages
-	// CTOR pivot::CompleteStandardLibrary::owningCompleteEnvironment
-	// CTOR pivot::ConnectionPointReference::entries
-	// CTOR pivot::ConnectionPointReference::exits
-	// CTOR pivot::ConnectionPointReference::owningState
-	// CTOR pivot::Constraint::Class
-	// CTOR pivot::Constraint::Constraint
-	// CTOR pivot::Constraint::Namespace
-	// CTOR pivot::Constraint::constrainedElements
-	// CTOR pivot::Constraint::context
-	// CTOR pivot::Constraint::isCallable
-	// CTOR pivot::Constraint::ownedSpecification
-	// CTOR pivot::Constraint::owningPostContext
-	// CTOR pivot::Constraint::owningPreContext
-	// CTOR pivot::Constraint::owningState
-	// CTOR pivot::Constraint::owningTransition
-	// CTOR pivot::Constraint::redefinedConstraints
-	// CTOR pivot::DataType::behavioralClass
-	// CTOR pivot::DataType::isSerializable
-	// CTOR pivot::DataType::value
-	// CTOR pivot::Detail::Annotation
-	// CTOR pivot::Detail::values
-	// CTOR pivot::DynamicElement::metaType
-	// CTOR pivot::DynamicProperty::DynamicType
-	// CTOR pivot::DynamicProperty::default
-	// CTOR pivot::DynamicProperty::referredProperty
-	// CTOR pivot::DynamicType::ownedDynamicProperties
-	// CTOR pivot::Element::Annotation
-	// CTOR pivot::Element::Annotation
-	// CTOR pivot::Element::Constraint
-	// CTOR pivot::Element::Element
-	// CTOR pivot::Element::annotatingComments
-	// CTOR pivot::Element::ownedAnnotations
-	// CTOR pivot::Element::ownedComments
-	// CTOR pivot::Element::ownedExtensions
-	// CTOR pivot::ElementExtension::base
-	// CTOR pivot::ElementExtension::isApplied
-	// CTOR pivot::ElementExtension::isRequired
-	// CTOR pivot::ElementExtension::stereotype
-	// CTOR pivot::ElementLiteralExp::referredElement
-	// CTOR pivot::EnumLiteralExp::referredLiteral
-	// CTOR pivot::Enumeration::ownedLiterals
-	// CTOR pivot::EnumerationLiteral::EnumLiteralExp
-	// CTOR pivot::EnumerationLiteral::literal
-	// CTOR pivot::EnumerationLiteral::owningEnumeration
-	// CTOR pivot::EnumerationLiteral::value
-	// CTOR pivot::ExpressionInOCL::ownedBody
-	// CTOR pivot::ExpressionInOCL::ownedContext
-	// CTOR pivot::ExpressionInOCL::ownedParameters
-	// CTOR pivot::ExpressionInOCL::ownedResult
-	// CTOR pivot::Feature::implementation
-	// CTOR pivot::Feature::implementationClass
-	// CTOR pivot::Feature::isStatic
-	// CTOR pivot::FeatureCallExp::isPre
-	// CTOR pivot::IfExp::isElseIf
-	// CTOR pivot::IfExp::ownedCondition
-	// CTOR pivot::IfExp::ownedElse
-	// CTOR pivot::IfExp::ownedThen
-	// CTOR pivot::Import::Model
-	// CTOR pivot::Import::importedNamespace
-	// CTOR pivot::Import::xmiidVersion
-	// CTOR pivot::InstanceSpecification::classes
-	// CTOR pivot::InstanceSpecification::ownedSlots
-	// CTOR pivot::InstanceSpecification::ownedSpecification
-	// CTOR pivot::InstanceSpecification::owningPackage
-	// CTOR pivot::IntegerLiteralExp::integerSymbol
-	// CTOR pivot::IterateExp::ownedResult
-	// CTOR pivot::Iteration::LoopExp
-	// CTOR pivot::Iteration::ownedAccumulators
-	// CTOR pivot::Iteration::ownedIterators
-	// CTOR pivot::IteratorVariable::LoopExp
-	// CTOR pivot::JavaType::javaClass
-	// CTOR pivot::LambdaType::contextType
-	// CTOR pivot::LambdaType::parameterType
-	// CTOR pivot::LambdaType::resultType
-	// CTOR pivot::LanguageExpression::InstanceSpecification
-	// CTOR pivot::LanguageExpression::Operation
-	// CTOR pivot::LanguageExpression::Property
-	// CTOR pivot::LanguageExpression::body
-	// CTOR pivot::LanguageExpression::language
-	// CTOR pivot::LanguageExpression::owningConstraint
-	// CTOR pivot::LetExp::ownedIn
-	// CTOR pivot::LetExp::ownedVariable
-	// CTOR pivot::Library::ownedPrecedences
-	// CTOR pivot::LoopExp::ownedBody
-	// CTOR pivot::LoopExp::ownedCoIterators
-	// CTOR pivot::LoopExp::ownedIterators
-	// CTOR pivot::LoopExp::referredIteration
-	// CTOR pivot::MapLiteralExp::ownedParts
-	// CTOR pivot::MapLiteralPart::MapLiteralExp
-	// CTOR pivot::MapLiteralPart::ownedKey
-	// CTOR pivot::MapLiteralPart::ownedValue
-	// CTOR pivot::MapType::entryClass
-	// CTOR pivot::MapType::keyType
-	// CTOR pivot::MapType::keysAreNullFree
-	// CTOR pivot::MapType::valueType
-	// CTOR pivot::MapType::valuesAreNullFree
-	// CTOR pivot::MessageExp::ownedArguments
-	// CTOR pivot::MessageExp::ownedCalledOperation
-	// CTOR pivot::MessageExp::ownedSentSignal
-	// CTOR pivot::MessageExp::ownedTarget
-	// CTOR pivot::MessageType::referredOperation
-	// CTOR pivot::MessageType::referredSignal
-	// CTOR pivot::Model::CompleteModel
-	// CTOR pivot::Model::externalURI
-	// CTOR pivot::Model::ownedImports
-	// CTOR pivot::Model::ownedPackages
-	// CTOR pivot::Model::xmiidVersion
-	// CTOR pivot::NamedElement::name
-	// CTOR pivot::Namespace::Constraint
-	// CTOR pivot::Namespace::Import
-	// CTOR pivot::Namespace::ownedConstraints
-	// CTOR pivot::NavigationCallExp::navigationSource
-	// CTOR pivot::NavigationCallExp::qualifiers
-	// CTOR pivot::OCLExpression::CallExp
-	// CTOR pivot::OCLExpression::CollectionItem
-	// CTOR pivot::OCLExpression::CollectionRange
-	// CTOR pivot::OCLExpression::CollectionRange
-	// CTOR pivot::OCLExpression::ExpressionInOCL
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::IfExp
-	// CTOR pivot::OCLExpression::LetExp
-	// CTOR pivot::OCLExpression::LoopExp
-	// CTOR pivot::OCLExpression::MapLiteralPart
-	// CTOR pivot::OCLExpression::MapLiteralPart
-	// CTOR pivot::OCLExpression::MessageExp
-	// CTOR pivot::OCLExpression::MessageExp
-	// CTOR pivot::OCLExpression::NavigationCallExp
-	// CTOR pivot::OCLExpression::OperationCallExp
-	// CTOR pivot::OCLExpression::ShadowPart
-	// CTOR pivot::OCLExpression::TupleLiteralPart
-	// CTOR pivot::OCLExpression::Variable
-	// CTOR pivot::OCLExpression::typeValue
-	// CTOR pivot::Operation::CallOperationAction
-	// CTOR pivot::Operation::MessageType
-	// CTOR pivot::Operation::Operation
-	// CTOR pivot::Operation::OperationCallExp
-	// CTOR pivot::Operation::PrimitiveType
-	// CTOR pivot::Operation::bodyExpression
-	// CTOR pivot::Operation::isInvalidating
-	// CTOR pivot::Operation::isTransient
-	// CTOR pivot::Operation::isTypeof
-	// CTOR pivot::Operation::isValidating
-	// CTOR pivot::Operation::ownedParameters
-	// CTOR pivot::Operation::ownedPostconditions
-	// CTOR pivot::Operation::ownedPreconditions
-	// CTOR pivot::Operation::owningClass
-	// CTOR pivot::Operation::precedence
-	// CTOR pivot::Operation::raisedExceptions
-	// CTOR pivot::Operation::redefinedOperations
-	// CTOR pivot::OperationCallExp::isVirtual
-	// CTOR pivot::OperationCallExp::ownedArguments
-	// CTOR pivot::OperationCallExp::referredOperation
-	// CTOR pivot::OppositePropertyCallExp::referredProperty
-	// CTOR pivot::OrphanCompletePackage::CompleteModel
-	// CTOR pivot::Package::CompletePackage
-	// CTOR pivot::Package::Model
-	// CTOR pivot::Package::Package
-	// CTOR pivot::Package::URI
-	// CTOR pivot::Package::importedPackages
-	// CTOR pivot::Package::nsPrefix
-	// CTOR pivot::Package::ownedClasses
-	// CTOR pivot::Package::ownedInstances
-	// CTOR pivot::Package::ownedPackages
-	// CTOR pivot::Package::ownedProfileApplications
-	// CTOR pivot::Package::owningPackage
-	// CTOR pivot::Parameter::Iteration
-	// CTOR pivot::Parameter::Iteration
-	// CTOR pivot::Parameter::Variable
-	// CTOR pivot::Parameter::isTypeof
-	// CTOR pivot::Parameter::owningOperation
-	// CTOR pivot::Precedence::Library
-	// CTOR pivot::Precedence::Operation
-	// CTOR pivot::Precedence::associativity
-	// CTOR pivot::Precedence::order
-	// CTOR pivot::PrimitiveCompletePackage::CompleteModel
-	// CTOR pivot::PrimitiveType::coercions
-	// CTOR pivot::Profile::profileApplications
-	// CTOR pivot::ProfileApplication::appliedProfile
-	// CTOR pivot::ProfileApplication::isStrict
-	// CTOR pivot::ProfileApplication::owningPackage
-	// CTOR pivot::Property::DynamicProperty
-	// CTOR pivot::Property::NavigationCallExp
-	// CTOR pivot::Property::OppositePropertyCallExp
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::Property
-	// CTOR pivot::Property::PropertyCallExp
-	// CTOR pivot::Property::ShadowPart
-	// CTOR pivot::Property::Slot
-	// CTOR pivot::Property::associationClass
-	// CTOR pivot::Property::defaultValue
-	// CTOR pivot::Property::defaultValueString
-	// CTOR pivot::Property::isComposite
-	// CTOR pivot::Property::isDerived
-	// CTOR pivot::Property::isID
-	// CTOR pivot::Property::isImplicit
-	// CTOR pivot::Property::isReadOnly
-	// CTOR pivot::Property::isResolveProxies
-	// CTOR pivot::Property::isTransient
-	// CTOR pivot::Property::isUnsettable
-	// CTOR pivot::Property::isVolatile
-	// CTOR pivot::Property::keys
-	// CTOR pivot::Property::opposite
-	// CTOR pivot::Property::ownedExpression
-	// CTOR pivot::Property::owningClass
-	// CTOR pivot::Property::redefinedProperties
-	// CTOR pivot::Property::referredProperty
-	// CTOR pivot::Property::subsettedProperty
-	// CTOR pivot::PropertyCallExp::referredProperty
-	// CTOR pivot::Pseudostate::ConnectionPointReference
-	// CTOR pivot::Pseudostate::ConnectionPointReference
-	// CTOR pivot::Pseudostate::kind
-	// CTOR pivot::Pseudostate::owningState
-	// CTOR pivot::Pseudostate::owningStateMachine
-	// CTOR pivot::RealLiteralExp::realSymbol
-	// CTOR pivot::Region::Region
-	// CTOR pivot::Region::extendedRegion
-	// CTOR pivot::Region::ownedSubvertexes
-	// CTOR pivot::Region::ownedTransitions
-	// CTOR pivot::Region::owningState
-	// CTOR pivot::Region::owningStateMachine
-	// CTOR pivot::SendSignalAction::MessageExp
-	// CTOR pivot::SendSignalAction::signal
-	// CTOR pivot::ShadowExp::ownedParts
-	// CTOR pivot::ShadowExp::value
-	// CTOR pivot::ShadowPart::ShadowExp
-	// CTOR pivot::ShadowPart::ownedInit
-	// CTOR pivot::ShadowPart::referredProperty
-	// CTOR pivot::Signal::MessageType
-	// CTOR pivot::Signal::SendSignalAction
-	// CTOR pivot::Slot::definingProperty
-	// CTOR pivot::Slot::ownedValues
-	// CTOR pivot::Slot::owningInstance
-	// CTOR pivot::State::State
-	// CTOR pivot::State::StateExp
-	// CTOR pivot::State::isComposite
-	// CTOR pivot::State::isOrthogonal
-	// CTOR pivot::State::isSimple
-	// CTOR pivot::State::isSubmachineState
-	// CTOR pivot::State::ownedConnectionPoints
-	// CTOR pivot::State::ownedConnections
-	// CTOR pivot::State::ownedDeferrableTriggers
-	// CTOR pivot::State::ownedDoActivity
-	// CTOR pivot::State::ownedEntry
-	// CTOR pivot::State::ownedExit
-	// CTOR pivot::State::ownedRegions
-	// CTOR pivot::State::ownedStateInvariant
-	// CTOR pivot::State::redefinedState
-	// CTOR pivot::State::submachines
-	// CTOR pivot::StateExp::referredState
-	// CTOR pivot::StateMachine::StateMachine
-	// CTOR pivot::StateMachine::extendedStateMachines
-	// CTOR pivot::StateMachine::ownedConnectionPoints
-	// CTOR pivot::StateMachine::ownedRegions
-	// CTOR pivot::StateMachine::submachineStates
-	// CTOR pivot::Stereotype::ElementExtension
-	// CTOR pivot::Stereotype::ownedExtenders
-	// CTOR pivot::StereotypeExtender::class
-	// CTOR pivot::StereotypeExtender::isRequired
-	// CTOR pivot::StereotypeExtender::owningStereotype
-	// CTOR pivot::StringLiteralExp::stringSymbol
-	// CTOR pivot::TemplateBinding::ownedSubstitutions
-	// CTOR pivot::TemplateBinding::owningElement
-	// CTOR pivot::TemplateBinding::templateSignature
-	// CTOR pivot::TemplateParameter::TemplateParameterSubstitution
-	// CTOR pivot::TemplateParameter::WildcardType
-	// CTOR pivot::TemplateParameter::constrainingClasses
-	// CTOR pivot::TemplateParameter::owningSignature
-	// CTOR pivot::TemplateParameterSubstitution::actual
-	// CTOR pivot::TemplateParameterSubstitution::formal
-	// CTOR pivot::TemplateParameterSubstitution::ownedWildcard
-	// CTOR pivot::TemplateParameterSubstitution::owningBinding
-	// CTOR pivot::TemplateSignature::TemplateBinding
-	// CTOR pivot::TemplateSignature::ownedParameters
-	// CTOR pivot::TemplateSignature::owningElement
-	// CTOR pivot::TemplateableElement::TemplateableElement
-	// CTOR pivot::TemplateableElement::generic
-	// CTOR pivot::TemplateableElement::ownedBindings
-	// CTOR pivot::TemplateableElement::ownedSignature
-	// CTOR pivot::Transition::kind
-	// CTOR pivot::Transition::ownedEffect
-	// CTOR pivot::Transition::ownedGuard
-	// CTOR pivot::Transition::ownedTriggers
-	// CTOR pivot::Transition::owningRegion
-	// CTOR pivot::Transition::source
-	// CTOR pivot::Transition::target
-	// CTOR pivot::Trigger::owningState
-	// CTOR pivot::Trigger::owningTransition
-	// CTOR pivot::TupleLiteralExp::ownedParts
-	// CTOR pivot::TupleLiteralPart::TupleLiteralExp
-	// CTOR pivot::TupleLiteralPart::ownedInit
-	// CTOR pivot::Type::CollectionType
-	// CTOR pivot::Type::DynamicElement
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::LambdaType
-	// CTOR pivot::Type::MapType
-	// CTOR pivot::Type::MapType
-	// CTOR pivot::Type::OCLExpression
-	// CTOR pivot::Type::Operation
-	// CTOR pivot::Type::TemplateParameterSubstitution
-	// CTOR pivot::Type::TypeExp
-	// CTOR pivot::Type::TypedElement
-	// CTOR pivot::Type::VariableDeclaration
-	// CTOR pivot::TypeExp::referredType
-	// CTOR pivot::TypedElement::isMany
-	// CTOR pivot::TypedElement::isRequired
-	// CTOR pivot::TypedElement::type
-	// CTOR pivot::UnlimitedNaturalLiteralExp::unlimitedNaturalSymbol
-	// CTOR pivot::ValueSpecification::Slot
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::ExpressionInOCL
-	// CTOR pivot::Variable::IterateExp
-	// CTOR pivot::Variable::LetExp
-	// CTOR pivot::Variable::LoopExp
-	// CTOR pivot::Variable::isImplicit
-	// CTOR pivot::Variable::ownedInit
-	// CTOR pivot::Variable::representedParameter
-	// CTOR pivot::VariableDeclaration::VariableExp
-	// CTOR pivot::VariableDeclaration::typeValue
-	// CTOR pivot::VariableExp::isImplicit
-	// CTOR pivot::VariableExp::referredVariable
-	// CTOR pivot::Vertex::incomingTransitions
-	// CTOR pivot::Vertex::outgoingTransitions
-	// CTOR pivot::Vertex::owningRegion
-	// CTOR pivot::WildcardType::TemplateParameterSubstitution
-	// CTOR pivot::WildcardType::constrainingClasses
-	// CTOR pivot::WildcardType::templateParameter
-	// CTOR pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
-	// CTOR pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
-	// CTOR pivot::Element::allOwnedElements() : Set(Element)
-	// CTOR pivot::Element::getValue(Type[1],String[1]) : Element[?]
-	// CTOR pivot::OCLExpression::isNonNull() : EBoolean[1]
-	// CTOR pivot::OCLExpression::isNull() : EBoolean[1]
-	// CTOR pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
-	// CTOR pivot::Property::isAttribute(Property[1]) : EBoolean[1]
-	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
-	// CTOR pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[?]
-	// CTOR pivot::ReferringElement::getReferredElement() : Element[1]
-	// CTOR pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// CTOR pivot::Type::flattenedType() : Type[?]
-	// CTOR pivot::Type::isClass() : Class[?]
-	// CTOR pivot::Type::isTemplateParameter() : TemplateParameter[?]
-	// CTOR pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// CTOR pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]
-	// CTOR pivot::ValueSpecification::booleanValue() : EBoolean[1]
-	// CTOR pivot::ValueSpecification::integerValue() : Integer[?]
-	// CTOR pivot::ValueSpecification::isComputable() : EBoolean[1]
-	// CTOR pivot::ValueSpecification::isNull() : EBoolean[1]
-	// CTOR pivot::ValueSpecification::stringValue() : String[?]
-	// CTOR pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
-	// OPERATIONS EBoolean
-	// OPERATIONS EInt
-	// OPERATIONS EcoreObject
-	// OPERATIONS JavaClass
-	// OPERATIONS LibraryFeature
-	// OPERATIONS Object
-	// OPERATIONS Throwable
-	// OPERATIONS AssociativityKind
-	// OPERATIONS CollectionKind
-	// OPERATIONS PseudostateKind
-	// OPERATIONS TransitionKind
-	// OPERATIONS Annotation
-	// OPERATIONS AnyType
-	// OPERATIONS AssociationClass
-	// OPERATIONS AssociationClassCallExp
-	// OPERATIONS BagType
-	// OPERATIONS Behavior
-	// OPERATIONS BooleanLiteralExp
-	// OPERATIONS BooleanType
-	// OPERATIONS CallExp
-	// OPERATIONS CallOperationAction
-	// OPERATIONS Class
-	// OPERATIONS CollectionItem
-	// OPERATIONS CollectionLiteralExp
-	// OPERATIONS CollectionLiteralPart
-	// OPERATIONS CollectionRange
-	// OPERATIONS CollectionType
-	// OPERATIONS Comment
-	// OPERATIONS CompleteClass
-	// OPERATIONS CompleteEnvironment
-	// OPERATIONS CompleteStandardLibrary
-	// OPERATIONS ConnectionPointReference
-	// OPERATIONS Constraint
-	// OPERATIONS DataType
-	// OPERATIONS Detail
-	// OPERATIONS DynamicBehavior
-	// OPERATIONS DynamicElement
-	// OPERATIONS DynamicProperty
-	// OPERATIONS DynamicType
-	// OPERATIONS DynamicValueSpecification
-	// OPERATIONS ElementExtension
-	// OPERATIONS ElementLiteralExp
-	// OPERATIONS EnumLiteralExp
-	// OPERATIONS Enumeration
-	// OPERATIONS EnumerationLiteral
-	// OPERATIONS ExpressionInOCL
-	// OPERATIONS Feature
-	// OPERATIONS FeatureCallExp
-	// OPERATIONS FinalState
-	// OPERATIONS IfExp
-	// OPERATIONS Import
-	// OPERATIONS InstanceSpecification
-	// OPERATIONS IntegerLiteralExp
-	// OPERATIONS InvalidLiteralExp
-	// OPERATIONS InvalidType
-	// OPERATIONS IterableType
-	// OPERATIONS IterateExp
-	// OPERATIONS Iteration
-	// OPERATIONS IteratorExp
-	// OPERATIONS IteratorVariable
-	// OPERATIONS JavaType
-	// OPERATIONS LambdaType
-	// OPERATIONS LanguageExpression
-	// OPERATIONS LetExp
-	// OPERATIONS LetVariable
-	// OPERATIONS Library
-	// OPERATIONS LiteralExp
-	// OPERATIONS LoopExp
-	// OPERATIONS MapLiteralExp
-	// OPERATIONS MapLiteralPart
-	// OPERATIONS MapType
-	// OPERATIONS MessageExp
-	// OPERATIONS MessageType
-	// OPERATIONS Model
-	// OPERATIONS MorePivotable
-	// OPERATIONS Nameable
-	// OPERATIONS NamedElement
-	// OPERATIONS Namespace
-	// OPERATIONS NavigationCallExp
-	// OPERATIONS NullLiteralExp
-	// OPERATIONS NumericLiteralExp
-	// OPERATIONS Operation
-	// OPERATIONS OppositePropertyCallExp
-	// OPERATIONS OrderedSetType
-	// OPERATIONS OrphanCompletePackage
-	// OPERATIONS Orphanage
-	// OPERATIONS Package
-	// OPERATIONS Parameter
-	// OPERATIONS ParameterVariable
-	// OPERATIONS Pivotable
-	// OPERATIONS Precedence
-	// OPERATIONS PrimitiveCompletePackage
-	// OPERATIONS PrimitiveLiteralExp
-	// OPERATIONS PrimitiveType
-	// OPERATIONS Profile
-	// OPERATIONS ProfileApplication
-	// OPERATIONS Pseudostate
-	// OPERATIONS RealLiteralExp
-	// OPERATIONS Region
-	// OPERATIONS ResultVariable
-	// OPERATIONS SendSignalAction
-	// OPERATIONS SequenceType
-	// OPERATIONS SetType
-	// OPERATIONS ShadowExp
-	// OPERATIONS ShadowPart
-	// OPERATIONS Signal
-	// OPERATIONS Slot
-	// OPERATIONS StandardLibrary
-	// OPERATIONS State
-	// OPERATIONS StateExp
-	// OPERATIONS StateMachine
-	// OPERATIONS Stereotype
-	// OPERATIONS StereotypeExtender
-	// OPERATIONS StringLiteralExp
-	// OPERATIONS TemplateBinding
-	// OPERATIONS TemplateParameter
-	// OPERATIONS TemplateParameterSubstitution
-	// OPERATIONS TemplateSignature
-	// OPERATIONS TemplateableElement
-	// OPERATIONS Transition
-	// OPERATIONS Trigger
-	// OPERATIONS TupleLiteralExp
-	// OPERATIONS TupleLiteralPart
-	// OPERATIONS TuplePart
-	// OPERATIONS TupleType
-	// OPERATIONS TypeExp
-	// OPERATIONS UnlimitedNaturalLiteralExp
-	// OPERATIONS UnspecifiedValueExp
-	// OPERATIONS Variable
-	// OPERATIONS VariableDeclaration
-	// OPERATIONS VariableExp
-	// OPERATIONS Vertex
-	// OPERATIONS Visitable
-	// OPERATIONS VoidType
-	// OPERATIONS WildcardType
-	// PROPERTIES EBoolean
-	// PROPERTIES EInt
-	// PROPERTIES EcoreObject
-	// PROPERTIES JavaClass
-	// PROPERTIES LibraryFeature
-	// PROPERTIES Object
-	// PROPERTIES Throwable
-	// PROPERTIES AssociativityKind
-	// PROPERTIES CollectionKind
-	// PROPERTIES PseudostateKind
-	// PROPERTIES TransitionKind
-	// PROPERTIES AnyType
-	// PROPERTIES BagType
-	// PROPERTIES BooleanType
-	// PROPERTIES DynamicBehavior
-	// PROPERTIES DynamicValueSpecification
-	// PROPERTIES FinalState
-	// PROPERTIES InvalidLiteralExp
-	// PROPERTIES InvalidType
-	// PROPERTIES IterableType
-	// PROPERTIES IteratorExp
-	// PROPERTIES LetVariable
-	// PROPERTIES LiteralExp
-	// PROPERTIES MorePivotable
-	// PROPERTIES Nameable
-	// PROPERTIES NullLiteralExp
-	// PROPERTIES NumericLiteralExp
-	// PROPERTIES OrderedSetType
-	// PROPERTIES Orphanage
-	// PROPERTIES ParameterVariable
-	// PROPERTIES Pivotable
-	// PROPERTIES PrimitiveLiteralExp
-	// PROPERTIES ReferringElement
-	// PROPERTIES ResultVariable
-	// PROPERTIES SelfType
-	// PROPERTIES SequenceType
-	// PROPERTIES SetType
-	// PROPERTIES StandardLibrary
-	// PROPERTIES TuplePart
-	// PROPERTIES TupleType
-	// PROPERTIES UnspecifiedValueExp
-	// PROPERTIES Visitable
-	// PROPERTIES VoidType
-	// SUPER_CLASSES EBoolean
-	// SUPER_CLASSES EInt
-	// SUPER_CLASSES EcoreObject
-	// SUPER_CLASSES JavaClass
-	// SUPER_CLASSES LibraryFeature
-	// SUPER_CLASSES Object
-	// SUPER_CLASSES Throwable
-	// SUPER_CLASSES AssociativityKind
-	// SUPER_CLASSES CollectionKind
-	// SUPER_CLASSES PseudostateKind
-	// SUPER_CLASSES TransitionKind
-	// SUPER_CLASSES Annotation
-	// SUPER_CLASSES AnyType
-	// SUPER_CLASSES AssociationClass
-	// SUPER_CLASSES AssociationClassCallExp
-	// SUPER_CLASSES BagType
-	// SUPER_CLASSES Behavior
-	// SUPER_CLASSES BooleanLiteralExp
-	// SUPER_CLASSES BooleanType
-	// SUPER_CLASSES CallExp
-	// SUPER_CLASSES CallOperationAction
-	// SUPER_CLASSES Class
-	// SUPER_CLASSES CollectionItem
-	// SUPER_CLASSES CollectionLiteralExp
-	// SUPER_CLASSES CollectionLiteralPart
-	// SUPER_CLASSES CollectionRange
-	// SUPER_CLASSES CollectionType
-	// SUPER_CLASSES Comment
-	// SUPER_CLASSES CompleteClass
-	// SUPER_CLASSES CompleteEnvironment
-	// SUPER_CLASSES CompleteModel
-	// SUPER_CLASSES CompletePackage
-	// SUPER_CLASSES CompleteStandardLibrary
-	// SUPER_CLASSES ConnectionPointReference
-	// SUPER_CLASSES Constraint
-	// SUPER_CLASSES DataType
-	// SUPER_CLASSES Detail
-	// SUPER_CLASSES DynamicBehavior
-	// SUPER_CLASSES DynamicElement
-	// SUPER_CLASSES DynamicProperty
-	// SUPER_CLASSES DynamicType
-	// SUPER_CLASSES DynamicValueSpecification
-	// SUPER_CLASSES Element
-	// SUPER_CLASSES ElementExtension
-	// SUPER_CLASSES ElementLiteralExp
-	// SUPER_CLASSES EnumLiteralExp
-	// SUPER_CLASSES Enumeration
-	// SUPER_CLASSES EnumerationLiteral
-	// SUPER_CLASSES ExpressionInOCL
-	// SUPER_CLASSES Feature
-	// SUPER_CLASSES FeatureCallExp
-	// SUPER_CLASSES FinalState
-	// SUPER_CLASSES IfExp
-	// SUPER_CLASSES Import
-	// SUPER_CLASSES InstanceSpecification
-	// SUPER_CLASSES IntegerLiteralExp
-	// SUPER_CLASSES InvalidLiteralExp
-	// SUPER_CLASSES InvalidType
-	// SUPER_CLASSES IterableType
-	// SUPER_CLASSES IterateExp
-	// SUPER_CLASSES Iteration
-	// SUPER_CLASSES IteratorExp
-	// SUPER_CLASSES IteratorVariable
-	// SUPER_CLASSES JavaType
-	// SUPER_CLASSES LambdaType
-	// SUPER_CLASSES LanguageExpression
-	// SUPER_CLASSES LetExp
-	// SUPER_CLASSES LetVariable
-	// SUPER_CLASSES Library
-	// SUPER_CLASSES LiteralExp
-	// SUPER_CLASSES LoopExp
-	// SUPER_CLASSES MapLiteralExp
-	// SUPER_CLASSES MapLiteralPart
-	// SUPER_CLASSES MapType
-	// SUPER_CLASSES MessageExp
-	// SUPER_CLASSES MessageType
-	// SUPER_CLASSES Model
-	// SUPER_CLASSES MorePivotable
-	// SUPER_CLASSES Nameable
-	// SUPER_CLASSES NamedElement
-	// SUPER_CLASSES Namespace
-	// SUPER_CLASSES NavigationCallExp
-	// SUPER_CLASSES NullLiteralExp
-	// SUPER_CLASSES NumericLiteralExp
-	// SUPER_CLASSES OCLExpression
-	// SUPER_CLASSES Operation
-	// SUPER_CLASSES OperationCallExp
-	// SUPER_CLASSES OppositePropertyCallExp
-	// SUPER_CLASSES OrderedSetType
-	// SUPER_CLASSES OrphanCompletePackage
-	// SUPER_CLASSES Orphanage
-	// SUPER_CLASSES Package
-	// SUPER_CLASSES Parameter
-	// SUPER_CLASSES ParameterVariable
-	// SUPER_CLASSES Pivotable
-	// SUPER_CLASSES Precedence
-	// SUPER_CLASSES PrimitiveCompletePackage
-	// SUPER_CLASSES PrimitiveLiteralExp
-	// SUPER_CLASSES PrimitiveType
-	// SUPER_CLASSES Profile
-	// SUPER_CLASSES ProfileApplication
-	// SUPER_CLASSES Property
-	// SUPER_CLASSES PropertyCallExp
-	// SUPER_CLASSES Pseudostate
-	// SUPER_CLASSES RealLiteralExp
-	// SUPER_CLASSES ReferringElement
-	// SUPER_CLASSES Region
-	// SUPER_CLASSES ResultVariable
-	// SUPER_CLASSES SelfType
-	// SUPER_CLASSES SendSignalAction
-	// SUPER_CLASSES SequenceType
-	// SUPER_CLASSES SetType
-	// SUPER_CLASSES ShadowExp
-	// SUPER_CLASSES ShadowPart
-	// SUPER_CLASSES Signal
-	// SUPER_CLASSES Slot
-	// SUPER_CLASSES StandardLibrary
-	// SUPER_CLASSES State
-	// SUPER_CLASSES StateExp
-	// SUPER_CLASSES StateMachine
-	// SUPER_CLASSES Stereotype
-	// SUPER_CLASSES StereotypeExtender
-	// SUPER_CLASSES StringLiteralExp
-	// SUPER_CLASSES TemplateBinding
-	// SUPER_CLASSES TemplateParameter
-	// SUPER_CLASSES TemplateParameterSubstitution
-	// SUPER_CLASSES TemplateSignature
-	// SUPER_CLASSES TemplateableElement
-	// SUPER_CLASSES Transition
-	// SUPER_CLASSES Trigger
-	// SUPER_CLASSES TupleLiteralExp
-	// SUPER_CLASSES TupleLiteralPart
-	// SUPER_CLASSES TuplePart
-	// SUPER_CLASSES TupleType
-	// SUPER_CLASSES Type
-	// SUPER_CLASSES TypeExp
-	// SUPER_CLASSES TypedElement
-	// SUPER_CLASSES UnlimitedNaturalLiteralExp
-	// SUPER_CLASSES UnspecifiedValueExp
-	// SUPER_CLASSES ValueSpecification
-	// SUPER_CLASSES Variable
-	// SUPER_CLASSES VariableDeclaration
-	// SUPER_CLASSES VariableExp
-	// SUPER_CLASSES Vertex
-	// SUPER_CLASSES Visitable
-	// SUPER_CLASSES VoidType
-	// SUPER_CLASSES WildcardType
 
-	// OPERATIONS CompleteModel
-	// OPERATIONS CompletePackage
-	// OPERATIONS Element
-	// OPERATIONS OCLExpression
-	// OPERATIONS OperationCallExp
-	// OPERATIONS Property
-	// OPERATIONS PropertyCallExp
-	// OPERATIONS ReferringElement
-	// OPERATIONS SelfType
-	// OPERATIONS Type
-	// OPERATIONS TypedElement
-	// OPERATIONS ValueSpecification
 	/**
 	 *	The parameter type lists shared by operations.
 	 *
@@ -2994,133 +1953,6 @@ public class PivotTables extends AbstractTables
 		 */
 		public static void init() {}
 	}
-	// PROPERTIES Annotation
-	// PROPERTIES AssociationClass
-	// PROPERTIES AssociationClassCallExp
-	// PROPERTIES Behavior
-	// PROPERTIES BooleanLiteralExp
-	// PROPERTIES CallExp
-	// PROPERTIES CallOperationAction
-	// PROPERTIES Class
-	// PROPERTIES CollectionItem
-	// PROPERTIES CollectionLiteralExp
-	// PROPERTIES CollectionLiteralPart
-	// PROPERTIES CollectionRange
-	// PROPERTIES CollectionType
-	// PROPERTIES Comment
-	// PROPERTIES CompleteClass
-	// PROPERTIES CompleteEnvironment
-	// PROPERTIES CompleteModel
-	// PROPERTIES CompletePackage
-	// PROPERTIES CompleteStandardLibrary
-	// PROPERTIES ConnectionPointReference
-	// PROPERTIES Constraint
-	// PROPERTIES DataType
-	// PROPERTIES Detail
-	// PROPERTIES DynamicElement
-	// PROPERTIES DynamicProperty
-	// PROPERTIES DynamicType
-	// PROPERTIES Element
-	// PROPERTIES ElementExtension
-	// PROPERTIES ElementLiteralExp
-	// PROPERTIES EnumLiteralExp
-	// PROPERTIES Enumeration
-	// PROPERTIES EnumerationLiteral
-	// PROPERTIES ExpressionInOCL
-	// PROPERTIES Feature
-	// PROPERTIES FeatureCallExp
-	// PROPERTIES IfExp
-	// PROPERTIES Import
-	// PROPERTIES InstanceSpecification
-	// PROPERTIES IntegerLiteralExp
-	// PROPERTIES IterateExp
-	// PROPERTIES Iteration
-	// PROPERTIES IteratorVariable
-	// PROPERTIES JavaType
-	// PROPERTIES LambdaType
-	// PROPERTIES LanguageExpression
-	// PROPERTIES LetExp
-	// PROPERTIES Library
-	// PROPERTIES LoopExp
-	// PROPERTIES MapLiteralExp
-	// PROPERTIES MapLiteralPart
-	// PROPERTIES MapType
-	// PROPERTIES MessageExp
-	// PROPERTIES MessageType
-	// PROPERTIES Model
-	// PROPERTIES NamedElement
-	// PROPERTIES Namespace
-	// PROPERTIES NavigationCallExp
-	// PROPERTIES OCLExpression
-	// PROPERTIES Operation
-	// PROPERTIES OperationCallExp
-	// PROPERTIES OppositePropertyCallExp
-	// PROPERTIES OrphanCompletePackage
-	// PROPERTIES Package
-	// PROPERTIES Parameter
-	// PROPERTIES Precedence
-	// PROPERTIES PrimitiveCompletePackage
-	// PROPERTIES PrimitiveType
-	// PROPERTIES Profile
-	// PROPERTIES ProfileApplication
-	// PROPERTIES Property
-	// PROPERTIES PropertyCallExp
-	// PROPERTIES Pseudostate
-	// PROPERTIES RealLiteralExp
-	// PROPERTIES Region
-	// PROPERTIES SendSignalAction
-	// PROPERTIES ShadowExp
-	// PROPERTIES ShadowPart
-	// PROPERTIES Signal
-	// PROPERTIES Slot
-	// PROPERTIES State
-	// PROPERTIES StateExp
-	// PROPERTIES StateMachine
-	// PROPERTIES Stereotype
-	// PROPERTIES StereotypeExtender
-	// PROPERTIES StringLiteralExp
-	// PROPERTIES TemplateBinding
-	// PROPERTIES TemplateParameter
-	// PROPERTIES TemplateParameterSubstitution
-	// PROPERTIES TemplateSignature
-	// PROPERTIES TemplateableElement
-	// PROPERTIES Transition
-	// PROPERTIES Trigger
-	// PROPERTIES TupleLiteralExp
-	// PROPERTIES TupleLiteralPart
-	// PROPERTIES Type
-	// PROPERTIES TypeExp
-	// PROPERTIES TypedElement
-	// PROPERTIES UnlimitedNaturalLiteralExp
-	// PROPERTIES ValueSpecification
-	// PROPERTIES Variable
-	// PROPERTIES VariableDeclaration
-	// PROPERTIES VariableExp
-	// PROPERTIES Vertex
-	// PROPERTIES WildcardType
-	// TYPE pivot::CompleteModel::getOwnedCompletePackage(String[?]) : CompletePackage[?]
-	// TYPE pivot::CompletePackage::getOwnedCompleteClass(String[?]) : CompleteClass[?]
-	// TYPE pivot::Element::allOwnedElements() : Set(Element)
-	// TYPE pivot::Element::getValue(Type[1],String[1]) : Element[?]
-	// TYPE pivot::OCLExpression::isNonNull() : EBoolean[1]
-	// TYPE pivot::OCLExpression::isNull() : EBoolean[1]
-	// TYPE pivot::OperationCallExp::hasOclVoidOverload() : Boolean[1]
-	// TYPE pivot::Property::isAttribute(Property[1]) : EBoolean[1]
-	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyOwningType() : Type[1]
-	// TYPE pivot::PropertyCallExp::getSpecializedReferredPropertyType() : Type[?]
-	// TYPE pivot::ReferringElement::getReferredElement() : Element[1]
-	// TYPE pivot::SelfType::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// TYPE pivot::Type::flattenedType() : Type[?]
-	// TYPE pivot::Type::isClass() : Class[?]
-	// TYPE pivot::Type::isTemplateParameter() : TemplateParameter[?]
-	// TYPE pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]
-	// TYPE pivot::TypedElement::CompatibleBody(ExpressionInOCL[1]) : EBoolean[1]
-	// TYPE pivot::ValueSpecification::booleanValue() : EBoolean[1]
-	// TYPE pivot::ValueSpecification::integerValue() : Integer[?]
-	// TYPE pivot::ValueSpecification::isComputable() : EBoolean[1]
-	// TYPE pivot::ValueSpecification::isNull() : EBoolean[1]
-	// TYPE pivot::ValueSpecification::stringValue() : String[?]
-	// TYPE pivot::ValueSpecification::unlimitedValue() : UnlimitedNatural[?]
 
 	/**
 	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.
@@ -3547,24 +2379,17 @@ public class PivotTables extends AbstractTables
 		};
 		private static final int @NonNull [] __DynamicValueSpecification = { 1,1,2,1,1,1,1 };
 
-		private static final @NonNull FlatFragment @NonNull [] _EBoolean =
-		{
-			Fragments._EBoolean__OclAny /* 0 */,
-			Fragments._EBoolean__Boolean /* 1 */,
-			Fragments._EBoolean__EBoolean /* 2 */
-		};
-		private static final int @NonNull [] __EBoolean = { 1,1,1 };
-
 		private static final @NonNull FlatFragment @NonNull [] _EInt =
 		{
 			Fragments._EInt__OclAny /* 0 */,
 			Fragments._EInt__OclComparable /* 1 */,
+			Fragments._EInt__OclElement /* 1 */,
 			Fragments._EInt__OclSummable /* 1 */,
 			Fragments._EInt__Real /* 2 */,
 			Fragments._EInt__Integer /* 3 */,
 			Fragments._EInt__EInt /* 4 */
 		};
-		private static final int @NonNull [] __EInt = { 1,2,1,1,1 };
+		private static final int @NonNull [] __EInt = { 1,3,1,1,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _EcoreObject =
 		{
@@ -5008,7 +3833,6 @@ public class PivotTables extends AbstractTables
 			Types._DynamicProperty.initFragments(_DynamicProperty, __DynamicProperty);
 			Types._DynamicType.initFragments(_DynamicType, __DynamicType);
 			Types._DynamicValueSpecification.initFragments(_DynamicValueSpecification, __DynamicValueSpecification);
-			Types._EBoolean.initFragments(_EBoolean, __EBoolean);
 			Types._EInt.initFragments(_EInt, __EInt);
 			Types._EcoreObject.initFragments(_EcoreObject, __EcoreObject);
 			Types._Element.initFragments(_Element, __Element);
@@ -7245,41 +6069,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Operations._ValueSpecification__unlimitedValue /* unlimitedValue() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _EBoolean__EBoolean = {};
-		private static final @NonNull Operation @NonNull [] _EBoolean__Boolean = {
-			OCLstdlibTables.Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Boolean__and /* _'and'(Boolean[?]) */,
-			OCLstdlibTables.Operations._Boolean__implies /* _'implies'(Boolean[?]) */,
-			OCLstdlibTables.Operations._Boolean__not /* _'not'() */,
-			OCLstdlibTables.Operations._Boolean__or /* _'or'(Boolean[?]) */,
-			OCLstdlibTables.Operations._Boolean__xor /* _'xor'(Boolean[?]) */,
-			OCLstdlibTables.Operations._Boolean__allInstances /* allInstances(Integer[1]) */,
-			OCLstdlibTables.Operations._Boolean__and2 /* and2(Boolean[1]) */,
-			OCLstdlibTables.Operations._Boolean__implies2 /* implies2(Boolean[1]) */,
-			OCLstdlibTables.Operations._Boolean__not2 /* not2() */,
-			OCLstdlibTables.Operations._Boolean__or2 /* or2(Boolean[1]) */,
-			OCLstdlibTables.Operations._Boolean__toString /* toString() */,
-			OCLstdlibTables.Operations._Boolean__xor2 /* xor2(Boolean[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _EBoolean__OclAny = {
-			OCLstdlibTables.Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._Boolean__toString /* toString() */
-		};
-
 		private static final @NonNull Operation @NonNull [] _EInt__EInt = {};
 		private static final @NonNull Operation @NonNull [] _EInt__Integer = {
 			OCLstdlibTables.Operations._Integer___mul_ /* _'*'(OclSelf[1]) */,
@@ -7318,6 +6107,20 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _EInt__OclElement = {
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull Operation @NonNull [] _EInt__OclSummable = {
 			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[1]) */,
@@ -11384,6 +10187,45 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
+		private static final @NonNull Operation @NonNull [] _TransitionKind__TransitionKind = {};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclElement = {
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclEnumeration = {
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclType = {
+			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
+		};
+
 		/*
 		 *	Install the operation descriptors in the fragment descriptors.
 		 */
@@ -11672,14 +10514,11 @@ public class PivotTables extends AbstractTables
 			Fragments._DynamicValueSpecification__TypedElement.initOperations(_DynamicValueSpecification__TypedElement);
 			Fragments._DynamicValueSpecification__ValueSpecification.initOperations(_DynamicValueSpecification__ValueSpecification);
 
-			Fragments._EBoolean__Boolean.initOperations(_EBoolean__Boolean);
-			Fragments._EBoolean__EBoolean.initOperations(_EBoolean__EBoolean);
-			Fragments._EBoolean__OclAny.initOperations(_EBoolean__OclAny);
-
 			Fragments._EInt__EInt.initOperations(_EInt__EInt);
 			Fragments._EInt__Integer.initOperations(_EInt__Integer);
 			Fragments._EInt__OclAny.initOperations(_EInt__OclAny);
 			Fragments._EInt__OclComparable.initOperations(_EInt__OclComparable);
+			Fragments._EInt__OclElement.initOperations(_EInt__OclElement);
 			Fragments._EInt__OclSummable.initOperations(_EInt__OclSummable);
 			Fragments._EInt__Real.initOperations(_EInt__Real);
 
@@ -12481,6 +11320,12 @@ public class PivotTables extends AbstractTables
 			Fragments._Transition__OclElement.initOperations(_Transition__OclElement);
 			Fragments._Transition__Transition.initOperations(_Transition__Transition);
 
+			Fragments._TransitionKind__OclAny.initOperations(_TransitionKind__OclAny);
+			Fragments._TransitionKind__OclElement.initOperations(_TransitionKind__OclElement);
+			Fragments._TransitionKind__OclEnumeration.initOperations(_TransitionKind__OclEnumeration);
+			Fragments._TransitionKind__OclType.initOperations(_TransitionKind__OclType);
+			Fragments._TransitionKind__TransitionKind.initOperations(_TransitionKind__TransitionKind);
+
 			Init.initEnd();
 		}
 
@@ -12495,45 +11340,6 @@ public class PivotTables extends AbstractTables
 			Init.initStart();
 			FragmentOperations1.init();
 		}
-
-		private static final @NonNull Operation @NonNull [] _TransitionKind__TransitionKind = {};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclElement = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclEnumeration = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclType = {
-			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
-		};
 
 		private static final @NonNull Operation @NonNull [] _Trigger__Trigger = {};
 		private static final @NonNull Operation @NonNull [] _Trigger__Element = {
@@ -13348,12 +12154,6 @@ public class PivotTables extends AbstractTables
 		 *	Install the operation descriptors in the fragment descriptors.
 		 */
 		static {
-			Fragments._TransitionKind__OclAny.initOperations(_TransitionKind__OclAny);
-			Fragments._TransitionKind__OclElement.initOperations(_TransitionKind__OclElement);
-			Fragments._TransitionKind__OclEnumeration.initOperations(_TransitionKind__OclEnumeration);
-			Fragments._TransitionKind__OclType.initOperations(_TransitionKind__OclType);
-			Fragments._TransitionKind__TransitionKind.initOperations(_TransitionKind__TransitionKind);
-
 			Fragments._Trigger__Element.initOperations(_Trigger__Element);
 			Fragments._Trigger__NamedElement.initOperations(_Trigger__NamedElement);
 			Fragments._Trigger__OclAny.initOperations(_Trigger__OclAny);
@@ -14104,9 +12904,10 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TypedElement__type
 		};
 
-		private static final @NonNull Property @NonNull [] _EBoolean = {};
-
-		private static final @NonNull Property @NonNull [] _EInt = {};
+		private static final @NonNull Property @NonNull [] _EInt = {
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
+		};
 
 		private static final @NonNull Property @NonNull [] _EcoreObject = {};
 
@@ -16031,7 +14832,6 @@ public class PivotTables extends AbstractTables
 			Fragments._DynamicProperty__DynamicProperty.initProperties(_DynamicProperty);
 			Fragments._DynamicType__DynamicType.initProperties(_DynamicType);
 			Fragments._DynamicValueSpecification__DynamicValueSpecification.initProperties(_DynamicValueSpecification);
-			Fragments._EBoolean__EBoolean.initProperties(_EBoolean);
 			Fragments._EInt__EInt.initProperties(_EInt);
 			Fragments._EcoreObject__EcoreObject.initProperties(_EcoreObject);
 			Fragments._Element__Element.initProperties(_Element);

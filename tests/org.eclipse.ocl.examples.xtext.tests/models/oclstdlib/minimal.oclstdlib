@@ -21,10 +21,10 @@ library lib : lib = 'http://minimal.oclstdlib'
 	abstract type OclType conformsTo OclElement {}
 	type OclVoid : VoidType conformsTo OclAny {}
 	type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}
-	type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}
+	type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T) {}
 	type Real : PrimitiveType conformsTo OclAny {}
-	type Sequence(T) : SequenceType conformsTo Collection(T) {}
-	type Set(T) : SetType conformsTo Collection(T) {}
+	type Sequence(T) : SequenceType conformsTo OrderedCollection(T),UniqueCollection(T){}
+	type Set(T) : SetType conformsTo UniqueCollection(T){}
 	type String : PrimitiveType conformsTo OclAny {}
 	type Tuple : TupleType conformsTo OclAny {}
 	type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}

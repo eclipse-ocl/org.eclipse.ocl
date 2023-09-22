@@ -539,16 +539,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	public @Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		throw new UnsupportedOperationException();			// XXX do this
-	}
-
-	@Override
-	public <T extends Class> @NonNull T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		throw new UnsupportedOperationException();			// XXX do this
-	}
-
-	@Override
 	public @NonNull MapType getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		throw new UnsupportedOperationException();				// Only happens for Entry classes
 	/*	MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
@@ -812,7 +802,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	private void initClass(@NonNull ClassImpl asClass, @NonNull EClassifier eClassifier, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable... typeParameters) {
 		asClass.setESObject(eClassifier);
-		asClass.setName(eClassifier.getName());
+		asClass.setName(NameUtil.getOriginalName(eClassifier));
 		if (typeId != null) {
 			asClass.setTypeId(typeId);
 			asClass.setNormalizedTypeId(typeId);

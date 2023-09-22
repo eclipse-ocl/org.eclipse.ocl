@@ -1,4 +1,4 @@
-import 'Pivot.ecore'
+import 'PivotStructural.ecore'
 
 package ocl
 /*

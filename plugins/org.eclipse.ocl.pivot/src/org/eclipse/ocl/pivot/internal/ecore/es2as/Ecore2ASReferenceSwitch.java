@@ -232,7 +232,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
-		else if (Boolean.valueOf(AnnotationUtil.getEAnnotationValue(eReference, AnnotationUtil.PROPERTY_ANNOTATION_SOURCE, AnnotationUtil.PROPERTY_SELF))) {
+		else if (Boolean.valueOf(AnnotationUtil.basicGetEAnnotationValue(eReference, AnnotationUtil.ESTRUCTURAL_FEATURE_ANNOTATION_SOURCE, AnnotationUtil.ESTRUCTURAL_FEATURE_SELF))) {
 			asProperty.setOpposite(asProperty);
 		}
 		else {
@@ -478,6 +478,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	protected boolean doEGenericType(@NonNull TypedElement asTypedElement, @NonNull EGenericType eGenericType, @Nullable Map<@NonNull ETypeParameter, @NonNull EGenericType> parameter2argument) {
+	//	System.out.println("doEGenericType " + NameUtil.debugSimpleName(eGenericType) + " .. " + NameUtil.debugSimpleName(eGenericType.getEClassifier()));
 		// Null eGenericType for Operation returning void handled by caller;
 		ETypedElement eTypedElement = (ETypedElement)eGenericType.eContainer();
 		assert eTypedElement != null;
@@ -527,10 +528,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		}
 		int lower = eTypedElement.getLowerBound();
 		int upper = eTypedElement.getUpperBound();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
-		boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
-		boolean isTuple = AnnotationUtil.CLASSIFIER_ROLE_TUPLE.equals(role);
+		String role = AnnotationUtil.basicGetEAnnotationValue(eClassifier, AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.ECLASSIFIER_ROLE);
+		boolean isEntry = AnnotationUtil.ECLASSIFIER_ROLE_ENTRY.equals(role);
+		boolean isLambda = AnnotationUtil.ECLASSIFIER_ROLE_LAMBDA.equals(role);
+		boolean isTuple = AnnotationUtil.ECLASSIFIER_ROLE_TUPLE.equals(role);
 		if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map
 			Type asType = doImplicitEntryClassMapType(eGenericType);
 			asTypedElement.setType(asType);
@@ -570,6 +571,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		else {
 		//	assert eGenericType.getETypeArguments().isEmpty();
 			Type asElementType = converter.getASType(eGenericType);
+		//	if (asElementType == null) {
+		//		asElementType = converter.getASType(eClassifier);
+		//	}
+		//	System.out.println("doEGenericType " + NameUtil.debugSimpleName(eGenericType) + " .. " + NameUtil.debugSimpleName(eGenericType.getEClassifier()) + " => " + NameUtil.debugSimpleName(asElementType));
 			assert asElementType != null;
 			setTypeAndMultiplicity(asTypedElement, asElementType, eTypedElement);
 		}
@@ -606,10 +611,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		assert iSize == eTypeParameters.size();
 	//	int lower = eTypedElement.getLowerBound();
 	//	int upper = eTypedElement.getUpperBound();
-		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
-		boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
-		boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
-		boolean isTuple = AnnotationUtil.CLASSIFIER_ROLE_TUPLE.equals(role);
+		String role = AnnotationUtil.basicGetEAnnotationValue(eClassifier, AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.ECLASSIFIER_ROLE);
+		boolean isEntry = AnnotationUtil.ECLASSIFIER_ROLE_ENTRY.equals(role);
+		boolean isLambda = AnnotationUtil.ECLASSIFIER_ROLE_LAMBDA.equals(role);
+		boolean isTuple = AnnotationUtil.ECLASSIFIER_ROLE_TUPLE.equals(role);
 		if (/*(lower == 0) && (upper == -1) &&*/ isEntry) {		// Collection of Entry is a Map
 			Type asType = doImplicitEntryClassMapType(eGenericType);
 			return asType;
@@ -658,7 +663,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					Type asActualType = (Type)doInPackageSwitch(eTypeArgument);
 					assert asActualType != null;
 					TemplateParameter asFormalParameter = asFormalParameters.get(i);
-					bindings.put(asFormalParameter, asActualType);
+					bindings.putType(asFormalParameter, asActualType);
 				}
 				asType = standardLibrary.getSpecializedType(asType, bindings);
 			}
@@ -818,12 +823,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		int lower = eTypedElement.getLowerBound();
 		int upper = eTypedElement.getUpperBound();
 		if (upper == 1) {
-			if (lower == 0) {
+		/*	if (lower == 0) {
 				if (converter.cannotBeOptional(eTypedElement)) {
 					lower = 1;
 					Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
 				}
-			}
+			} */
 			asTypedElement.setType(asElementType);
 			asTypedElement.setIsRequired(lower == 1);
 			return asElementType;
@@ -834,7 +839,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			boolean isUnique = eTypedElement.isUnique();
 			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-			String kind = AnnotationUtil.getEAnnotationValue(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+			String kind = AnnotationUtil.basicGetEAnnotationValue(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
 			CollectionType genericCollectionType = null;
 			if (kind != null) {
 				if ("Collection".equals(kind)) {

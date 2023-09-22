@@ -175,6 +175,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 			}
 			Map<Object, Object> genModelSaveOptions = getGenModelSaveOptions();
 			for (Resource resource : resources) {
+				log.info("Saving '" + resource.getURI() + "'");
 				XMIUtil.retainLineWidth(genModelSaveOptions, resource);
 				resource.save(genModelSaveOptions);
 			}
@@ -246,7 +247,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 	protected Map<Object, Object> getGenModelSaveOptions() {
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-		//		result.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
+		result.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(80));
 		result.put(XMLResource.OPTION_LINE_DELIMITER, "\n");
 		return result;
 	}

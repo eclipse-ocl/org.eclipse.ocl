@@ -74,7 +74,7 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 		if (eNamedElement == null) {
 			return "";
 		}
-		String name = AnnotationUtil.getEAnnotationValue(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
+		String name = AnnotationUtil.basicGetEAnnotationValue(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
 		if (name == null) {
 			name = eNamedElement.getName();
 		}

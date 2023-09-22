@@ -76,6 +76,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+			import org.eclipse.ocl.pivot.resource.ASResource;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
@@ -187,7 +188,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				public static void uninstall() {
 					StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 					OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
-				//	INSTANCE = null;
 				}
 			
 				/**
@@ -203,7 +203,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 			
 					@Override
-					public @NonNull Resource getResource() {
+					public @NonNull ASResource getResource() {
 						return getDefault();
 					}
 				}
@@ -281,6 +281,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						createAnnotation(«pkge.getSymbolName()», PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 						«FOR comment : pkge.ownedComments»
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»

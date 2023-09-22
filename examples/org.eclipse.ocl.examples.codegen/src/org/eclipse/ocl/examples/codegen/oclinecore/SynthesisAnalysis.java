@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object, @NonNull EnvironmentFactoryInternal>
 {
 	private final @NonNull SynthesisSchedule synthesisSchedule; // = new SynthesisSchedule();
+	private @Nullable StringBuilder scheduleLog = null;
 
 	protected SynthesisAnalysis(@NonNull EnvironmentFactoryInternal context) {
 		super(context);
@@ -67,7 +68,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 	}
 
 	protected void analyzeDependencies() {
-		synthesisSchedule.analyze();
+		synthesisSchedule.analyze(scheduleLog);
 	}
 
 	protected @NonNull Slot doNamedElement(@NonNull NamedElement asNamedElement) {
@@ -98,8 +99,16 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 		synthesisSchedule.doTypedElement(asTypedElement);
 	}
 
+	public @Nullable StringBuilder getScheduleLog() {
+		return scheduleLog;
+	}
+
 	public @NonNull SynthesisSchedule getSynthesisSchedule() {
 		return synthesisSchedule;
+	}
+
+	public void setScheduleLog(@Nullable StringBuilder scheduleLog) {
+		this.scheduleLog = scheduleLog;
 	}
 
 	@Override
@@ -110,6 +119,7 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 	@Override
 	public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		doNamedElement(asClass);
+		synthesisSchedule.doInstall(asClass);
 		doSuperClasses(asClass);
 		doTemplateableElement(asClass);
 		synthesisSchedule.doOperations(asClass);
@@ -222,6 +232,8 @@ public class SynthesisAnalysis extends AbstractExtendingVisitor<@Nullable Object
 
 	@Override
 	public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		doNamedElement(asPackage);
+		synthesisSchedule.doInstall(asPackage);
 		return null;
 	}
 

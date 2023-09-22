@@ -22,10 +22,15 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.oclstdlib.*;
+import org.eclipse.ocl.pivot.oclstdlib.Boolean_Class;
+import org.eclipse.ocl.pivot.oclstdlib.Integer_Class;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.oclstdlib._Lambda_CC;
-import org.eclipse.ocl.pivot.oclstdlib._Lambda_CD;
+import org.eclipse.ocl.pivot.oclstdlib.Real_Class;
+import org.eclipse.ocl.pivot.oclstdlib.String_Class;
+import org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_1;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_2;
+import org.eclipse.ocl.pivot.oclstdlib._Tuple_1;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
@@ -90,8 +95,16 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createBagAdapter();
 			}
 			@Override
+			public Adapter caseBoolean_Class(Boolean_Class object) {
+				return createBoolean_ClassAdapter();
+			}
+			@Override
 			public <T> Adapter caseCollection(Collection<T> object) {
 				return createCollectionAdapter();
+			}
+			@Override
+			public Adapter caseInteger_Class(Integer_Class object) {
+				return createInteger_ClassAdapter();
 			}
 			@Override
 			public <K, V> Adapter caseMap(Map<K, V> object) {
@@ -162,6 +175,10 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createOrderedSetAdapter();
 			}
 			@Override
+			public Adapter caseReal_Class(Real_Class object) {
+				return createReal_ClassAdapter();
+			}
+			@Override
 			public <T> Adapter caseSequence(List<T> object) {
 				return createSequenceAdapter();
 			}
@@ -170,8 +187,16 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createSetAdapter();
 			}
 			@Override
+			public Adapter caseString_Class(String_Class object) {
+				return createString_ClassAdapter();
+			}
+			@Override
 			public <T> Adapter caseUniqueCollection(Collection<T> object) {
 				return createUniqueCollectionAdapter();
+			}
+			@Override
+			public Adapter caseUnlimitedNatural_Class(UnlimitedNatural_Class object) {
+				return createUnlimitedNatural_ClassAdapter();
 			}
 			@Override
 			public <K, V> Adapter case_Entry_1(Map.Entry<K, V> object) {
@@ -228,6 +253,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.Boolean_Class <em>Boolean Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Boolean_Class
+	 * @generated
+	 */
+	public Adapter createBoolean_ClassAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Collection <em>Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -238,6 +277,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.Integer_Class <em>Integer Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Integer_Class
+	 * @generated
+	 */
+	public Adapter createInteger_ClassAdapter() {
 		return null;
 	}
 
@@ -480,6 +533,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.Real_Class <em>Real Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Real_Class
+	 * @generated
+	 */
+	public Adapter createReal_ClassAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.List <em>Sequence</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -508,6 +575,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.String_Class <em>String Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.String_Class
+	 * @generated
+	 */
+	public Adapter createString_ClassAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Collection <em>Unique Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -518,6 +599,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUniqueCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class <em>Unlimited Natural Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.UnlimitedNatural_Class
+	 * @generated
+	 */
+	public Adapter createUnlimitedNatural_ClassAdapter() {
 		return null;
 	}
 

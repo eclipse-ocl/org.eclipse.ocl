@@ -141,7 +141,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 			}
 			EcoreUtil.resolveAll(resourceSet);
 			ResourceUtils.checkResourceSet(resourceSet);
-			Set<@NonNull Resource> primaryASResources = Sets.newHashSet(ClassUtil.nullFree(asResourceSet.getResources()));
+			Set<@NonNull Resource> primaryASResources = Sets.newHashSet(ClassUtil.nullFree(asResourceSet.getResources()));		// AS of Ecores and their imports
 			//
 			for (@NonNull String oclURI : oclURIs) {
 				URI uri = projectDescriptor.getPlatformResourceURI(oclURI);
@@ -162,7 +162,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 						if (eObject instanceof Library) {
 							tit.prune();
 						}
-						else if (eObject instanceof OrphanageImpl) {
+						else if ((eObject instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eObject)) {
 							tit.prune();
 						}
 						else if (eObject instanceof org.eclipse.ocl.pivot.Class) {
@@ -184,9 +184,11 @@ public class ConstraintMerger extends AbstractProjectComponent
 				assert mergeTypes != null;
 				boolean merged = false;
 				for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-					Resource primaryASResource = PivotUtil.getResource(partialClass);
+					ASResource primaryASResource = (ASResource) PivotUtil.getResource(partialClass);
 					if (primaryASResources.contains(primaryASResource)) {
-						modifiedPrimaryASResources.add(primaryASResource);
+						if (!modifiedPrimaryASResources.contains(primaryASResource)) {
+							modifiedPrimaryASResources.add(primaryASResource);
+						}
 						for (org.eclipse.ocl.pivot.@NonNull Class mergeType : mergeTypes) {
 							mergeType(metamodelManager, partialClass, mergeType);
 						}

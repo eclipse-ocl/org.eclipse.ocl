@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -35,10 +36,12 @@ import org.eclipse.ocl.pivot.Type;
  */
 public interface TemplateParameterSubstitutions
 {
+	@NonNull TemplateParameterSubstitutions clone();
+
 	/**
 	 * Return the highest common actual type of the formal templateParameter, returning null if unknown.
 	 */
-	@Nullable Type get(@Nullable TemplateParameter templateParameter);
+	@Nullable Type getType(@Nullable TemplateParameter templateParameter);
 
 	/**
 	 * Return the feature value associated with the templateParameter. Returns null if not known..
@@ -63,7 +66,7 @@ public interface TemplateParameterSubstitutions
 	 * Install actualType as the resolutions of formalTemplateParameter, returning the highest common type of actualType
 	 * and any pre-existing resolution.
 	 */
-	@Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
+	@Nullable Type putType(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
 
 	/**
 	 * Associate value with the feature for a templatePatameter.
@@ -79,7 +82,12 @@ public interface TemplateParameterSubstitutions
 	public static class Empty implements TemplateParameterSubstitutions
 	{
 		@Override
-		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+		public @NonNull Empty clone() {
+			return this;
+		}
+
+		@Override
+		public @Nullable Type getType(@Nullable TemplateParameter templateParameter) {
 			return null;
 		}
 
@@ -89,7 +97,7 @@ public interface TemplateParameterSubstitutions
 		}
 
 		@Override
-		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+		public @NonNull Type putType(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 			return actualType;
 		}
 
@@ -105,7 +113,23 @@ public interface TemplateParameterSubstitutions
 		protected /*@LazyNonNull*/ Map<@NonNull TemplateParameter, @NonNull Map<@NonNull EStructuralFeature, Object>> formal2feature2value = new HashMap<>();
 
 		@Override
-		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+		public @NonNull SimpleTemplateParameterSubstitutions clone() {
+			SimpleTemplateParameterSubstitutions clone = new SimpleTemplateParameterSubstitutions();
+			for (Entry<@NonNull TemplateParameter, @NonNull Type> entry : formal2actual.entrySet()) {
+				clone.formal2actual.put(entry.getKey(), entry.getValue());
+			}
+			for (Entry<@NonNull TemplateParameter, @NonNull Map<@NonNull EStructuralFeature, Object>> entry1 : formal2feature2value.entrySet()) {
+				Map<@NonNull EStructuralFeature, Object> clonedFeature2value = new HashMap<>();
+				for (Entry<@NonNull EStructuralFeature, Object> entry2 : entry1.getValue().entrySet()) {
+					clonedFeature2value.put(entry2.getKey(), entry2.getValue());
+				}
+				clone.formal2feature2value.put(entry1.getKey(), clonedFeature2value);
+			}
+			return clone;
+		}
+
+		@Override
+		public @Nullable Type getType(@Nullable TemplateParameter templateParameter) {
 			return formal2actual.get(templateParameter);
 		}
 
@@ -130,7 +154,7 @@ public interface TemplateParameterSubstitutions
 		}
 
 		@Override
-		public @Nullable Type put(@NonNull TemplateParameter templateParameter, @NonNull Type actualType) {
+		public @Nullable Type putType(@NonNull TemplateParameter templateParameter, @NonNull Type actualType) {
 			return formal2actual.put(templateParameter, actualType);
 		}
 

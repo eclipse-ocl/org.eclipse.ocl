@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -180,6 +181,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 		@Override
 		public @Nullable Object visitOperationId(@NonNull OperationId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @Nullable Object visitOverloadId(@NonNull OverloadId id) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1850,6 +1856,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			throw new UnsupportedOperationException();
 		}
 		return memberOperation;
+	}
+
+	@Override
+	public @NonNull Operation visitOverloadId(@NonNull OverloadId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

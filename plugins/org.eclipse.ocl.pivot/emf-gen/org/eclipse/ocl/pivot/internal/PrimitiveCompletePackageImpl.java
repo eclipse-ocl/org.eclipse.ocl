@@ -78,6 +78,9 @@ public class PrimitiveCompletePackageImpl extends CompletePackageImpl implements
 			completeClass.getPartialClasses().add(primitiveType);
 //			didAddClass(completeClass, primitiveType);
 		}
+		else if (!completeClass.getPartialClasses().contains(primitiveType)) {
+			completeClass.getPartialClasses().add(primitiveType);
+		}
 		return completeClass;
 	}
 } //PrimitiveCompletePackageImpl

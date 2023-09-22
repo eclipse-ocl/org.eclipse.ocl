@@ -51,12 +51,12 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.OverloadId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -836,15 +837,15 @@ implements Operation {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_and;
+					/*@Caught*/ @NonNull Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
 						final /*@NonInvalid*/ boolean ne = bodyExpression != null;
-						final /*@Thrown*/ @Nullable Boolean and;
+						final /*@Thrown*/ boolean and;
 						if (!ne) {
-							and = ValueUtil.FALSE_VALUE;
+							and = false;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
@@ -860,13 +861,13 @@ implements Operation {
 								CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
 							}
 							if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								if (CAUGHT_ne_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_ne_0;
 								}
-								and = ValueUtil.TRUE_VALUE;
+								and = true;
 							}
 						}
 						CAUGHT_and = and;
@@ -874,9 +875,9 @@ implements Operation {
 					catch (Exception e) {
 						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ boolean result;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						result = true;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
@@ -886,14 +887,13 @@ implements Operation {
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType_0 = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_1, TYP_ExpressionInOCL_0);
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(oclAsType_0);
-							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
-							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
+							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception e) {
 							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
 						}
 						if (CAUGHT_CompatibleBody == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							result = true;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -902,12 +902,7 @@ implements Operation {
 							if (CAUGHT_CompatibleBody instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_CompatibleBody;
 							}
-							if (CAUGHT_and == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = false;
 						}
 					}
 					CAUGHT_result = result;
@@ -1617,6 +1612,7 @@ implements Operation {
 
 	@Override
 	public int getIndex() {
+		assert assertConsistent();
 		return -1;		// WIP
 	}
 
@@ -1628,11 +1624,13 @@ implements Operation {
 
 	@Override
 	public @NonNull ParametersId getParametersId() {
+		assert assertConsistent();
 		return getOperationId().getParametersId();
 	}
 
 	@Override
 	public @NonNull ParameterTypes getParameterTypes() {
+		assert assertConsistent();
 		List<Parameter> ownedParameter = getOwnedParameters();
 		int iMax = ownedParameter.size();
 		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
@@ -1646,6 +1644,7 @@ implements Operation {
 
 	@Override
 	public @NonNull TemplateParameters getTypeParameters() {
+		assert assertConsistent();
 		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
 	}
 
@@ -1653,6 +1652,7 @@ implements Operation {
 
 	@Override
 	public final @NonNull OperationId getOperationId() {
+		assert assertConsistent();
 		OperationId operationId2 = operationId;
 		if (operationId2 == null) {
 			synchronized (this) {
@@ -1665,8 +1665,41 @@ implements Operation {
 		return operationId2;
 	}
 
+	private OverloadId overloadId = null;
+
+	@Override
+	public final @NonNull OverloadId getOverloadId() {
+		assert assertConsistent();
+		OverloadId overloadId2 = overloadId;
+		if (overloadId2 == null) {
+			synchronized (this) {
+				overloadId2 = overloadId;
+				if (overloadId2 == null) {
+					overloadId = overloadId2 = IdManager.getOverloadId(this);
+				}
+			}
+		}
+		return overloadId2;
+	}
+
+	private boolean assertConsistent() {
+		int aSize = getOwnedBindings().size();
+		if (generic != null) {
+			int gSize = generic.getOwnedSignature().getOwnedParameters().size();
+			if (gSize != aSize) {
+				System.out.println("assertConsistent " + NameUtil.debugSimpleName(this) + " " + this + " : " + aSize + "/" + gSize);
+			}
+			assert gSize == aSize;
+		}
+		else {
+			assert aSize == 0;
+		}
+		return true;
+	}
+
 	@Override
 	public boolean isWellContained() {
+		assert assertConsistent();
 		Type type = getType();
 		if ((type == null) || !type.isWellContained()) {
 			return false;

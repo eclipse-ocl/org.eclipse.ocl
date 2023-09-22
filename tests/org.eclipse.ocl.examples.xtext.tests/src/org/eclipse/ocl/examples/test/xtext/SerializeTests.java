@@ -104,7 +104,8 @@ public class SerializeTests extends XtextTestCase
 			for (EObject eObject : new TreeIterable(actualResource)) {
 				if (eObject instanceof EAnnotation) {
 					EAnnotation eAnnotation = (EAnnotation)eObject;
-					if (AnnotationUtil.IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
+					if (AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource()) ||
+						AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
 						if (EcorePackage.eNS_URI.equals(eAnnotation.getDetails().get(EcorePackage.eNS_PREFIX))) {
 							eAnnotations.add(eAnnotation);
 						}

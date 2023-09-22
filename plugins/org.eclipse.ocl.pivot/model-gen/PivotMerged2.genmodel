@@ -1,0 +1,1679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010, 2022 Willink Transformations and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v2.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v20.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;  E.D.Willink - Initial API and implementation"
+    modelDirectory="/org.eclipse.ocl.pivot/emf-gen" creationIcons="false" creationSubmenus="true"
+    editDirectory="/org.eclipse.ocl.pivot.edit/src" editorDirectory="/org.eclipse.ocl.pivot.editor/src"
+    modelPluginID="org.eclipse.ocl.pivot" templateDirectory="/org.eclipse.ocl.examples.codegen/templates"
+    forceOverwrite="true" modelName="Pivot" modelPluginClass="org.eclipse.ocl.pivot.util.PivotPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"
+    suppressEMFTypes="true" suppressEMFModelTags="true" codeFormatting="true" booleanFlagsField="eFlags"
+    booleanFlagsReservedBits="8" importerID="org.eclipse.emf.importer.ecore" bundleManifest="false"
+    minimalReflectiveMethods="false" complianceLevel="8.0" copyrightFields="false"
+    editPluginID="org.eclipse.ocl.pivot.edit" editorPluginID="org.eclipse.ocl.pivot.editor"
+    colorProviders="true" fontProviders="true" runtimeVersion="2.7" packedEnums="true"
+    interfaceNamePattern="" operationReflection="true" importOrganizing="true">
+  <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
+    <details key="Use Delegates" value="false"/>
+    <details key="Use Null Annotations" value="true"/>
+  </genAnnotations>
+  <genAnnotations source="http://www.eclipse.org/OCL/GenModel/Split">
+    <details key="Interface Model Directory" value="/org.eclipse.ocl.pivot/emf-gen"/>
+  </genAnnotations>
+  <genAnnotations source="http://www.eclipse.org/OCL/GenModel/Visitor">
+    <details key="Root Visitor Class" value="org.eclipse.ocl.pivot.util.Visitor"/>
+    <details key="Derived Visitor Class" value="org.eclipse.ocl.pivot.util.Visitor"/>
+    <details key="Visitable Classes" value="org.eclipse.ocl.pivot.Element"/>
+    <details key="Visitable Interface" value="org.eclipse.ocl.pivot.util.Visitable"/>
+  </genAnnotations>
+  <foreignModel>PivotMerged.ecore</foreignModel>
+  <genPackages prefix="Pivot" basePackage="org.eclipse.ocl" disposableProviderFactory="true"
+      classPackageSuffix="internal" providerPackageSuffix="edit.provider" presentationPackageSuffix="editor.presentation"
+      generateExampleClass="false" multipleEditorPages="false" extensibleProviderFactory="true"
+      childCreationExtenders="true" contentTypeIdentifier="org.eclipse.ocl.oclas"
+      fileExtensions="oclas" ecorePackage="PivotMerged2.ecore#P-pivot">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="PivotMerged2.ecore#T-pivot-AssociativityKind">
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-AssociativityKind-left"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-AssociativityKind-right"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="PivotMerged2.ecore#T-pivot-CollectionKind">
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-CollectionKind-Bag"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-CollectionKind-Collection"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-CollectionKind-OrderedSet"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-CollectionKind-Sequence"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-CollectionKind-Set"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="PivotMerged2.ecore#T-pivot-PseudostateKind">
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-choice"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-deepHistory"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-entryPoint"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-exitPoint"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-fork"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-initial"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-join"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-junction"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-shallowHistory"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-PseudostateKind-terminate"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="PivotMerged2.ecore#T-pivot-TransitionKind">
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-TransitionKind-external"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-TransitionKind-internal"/>
+      <genEnumLiterals ecoreEnumLiteral="PivotMerged2.ecore#L-pivot-TransitionKind-local"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-Boolean"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-EInt"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-EcoreObject"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-Integer"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-JavaClass"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-LibraryFeature"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-Object"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-Real"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-String"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-Throwable"/>
+    <genDataTypes ecoreDataType="PivotMerged2.ecore#T-pivot-UnlimitedNatural"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Annotation-ownedContents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Annotation-ownedDetails"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Annotation-references"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-AnyType"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-AssociationClass">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-AssociationClass-unownedAttributes"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-AssociationClassCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-AssociationClassCallExp-referredAssociationClass"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Bag">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/closure">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/closure/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/closure/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/collect/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/collect/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/collectNested/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/collectNested/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/excluding/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/excludingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/flatten">
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/flatten/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/including/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/includingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/includingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/selectByKind">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/selectByKind/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/selectByKind/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/selectByType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/selectByType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Bag/selectByType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Bag/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Bag/sortedBy/lambda"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-BagType"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Behavior">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Behavior-owningTransition"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-BooleanLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-BooleanLiteralExp-booleanSymbol"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-BooleanType">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//BooleanType/allInstances"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Boolean_Class">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/allInstances/dummy"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/and">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/and/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/and2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/and2/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/implies">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/implies/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/implies2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/implies2/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/not"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/not2"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/or">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/or/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/or2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/or2/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/toString"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/xor">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/xor/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Boolean_Class/xor2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Boolean_Class/xor2/b"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-CallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CallExp-isImplicit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CallExp-isSafe"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CallExp-ownedSource"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CallOperationAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CallOperationAction-operation"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Class">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Class-instanceClassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Class-isAbstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Class-isActive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Class-isInterface"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-extenders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-ownedBehaviors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-ownedInvariants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-ownedOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-ownedProperties"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-owningPackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Class-superClasses"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Class/allInstances"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Collection">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/T"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Collection-lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Collection-upper"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Collection-elementType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/any">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/any/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/any/body"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/asBag"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/asOrderedSet"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/asSequence"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/asSet"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collect/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/collect/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/collectBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collectBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collectBy/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/collectBy/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collectNested/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/collectNested/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/count">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/count/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/excludes">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/excludes/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/excludesAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/excludesAll/c2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/excludesAll/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/excluding/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/excludingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/exists">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/exists.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.1/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.1/j"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.1/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/exists.2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.2/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.2/j"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.2/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/exists.2/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/flatten">
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/flatten/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/forAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/forAll.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.1/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.1/j"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.1/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/forAll.2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.2/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.2/j"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.2/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/forAll.2/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/includes">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/includes/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/includesAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/includesAll/c2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/includesAll/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/including/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/includingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/includingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/intersection_0">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/intersection_0/c"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/intersection_1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/intersection_1/u"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/isEmpty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/isUnique">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/isUnique/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/isUnique/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/iterate">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/iterate/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/iterate/acc"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/iterate/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/iterate/Tacc"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/max"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/min"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/notEmpty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/one">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/one/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/one/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/product">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/product/c2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/product/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/selectByKind">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/selectByKind/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/selectByKind/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/selectByType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/selectByType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Collection/selectByType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/size"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/sortedBy/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/sum"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Collection/union">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Collection/union/c"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CollectionItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CollectionItem-ownedItem"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CollectionLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CollectionLiteralExp-kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CollectionLiteralExp-ownedParts"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-CollectionLiteralPart"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CollectionRange">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CollectionRange-ownedFirst"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CollectionRange-ownedLast"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CollectionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CollectionType-isNullFree"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CollectionType-lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-CollectionType-upper"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CollectionType-elementType"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Comment-body"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Comment-annotatedElements"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Comment-owningElement"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CompleteClass">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteClass-owningCompletePackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteClass-partialClasses"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CompleteEnvironment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteEnvironment-ownedCompleteModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CompleteModel">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteModel-orphanCompletePackage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteModel-ownedCompletePackages"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteModel-owningCompleteEnvironment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteModel-partialModels"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteModel-primitiveCompletePackage"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//CompleteModel/getOwnedCompletePackage">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//CompleteModel/getOwnedCompletePackage/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CompletePackage">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompletePackage-ownedCompleteClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompletePackage-ownedCompletePackages"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompletePackage-owningCompleteModel"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompletePackage-owningCompletePackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompletePackage-partialPackages"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//CompletePackage/getOwnedCompleteClass">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//CompletePackage/getOwnedCompleteClass/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-CompleteStandardLibrary">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ConnectionPointReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ConnectionPointReference-entries"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ConnectionPointReference-exits"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ConnectionPointReference-owningState"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Constraint-isCallable"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-constrainedElements"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-ownedSpecification"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-owningPostContext"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-owningPreContext"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-owningTransition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Constraint-redefinedConstraints"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DataType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-DataType-isSerializable"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-DataType-value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-DataType-behavioralClass"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Detail">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Detail-values"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DynamicBehavior"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DynamicElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-DynamicElement-metaType"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DynamicProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-DynamicProperty-default"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-DynamicProperty-referredProperty"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DynamicType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-DynamicType-ownedDynamicProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-DynamicValueSpecification"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Element">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Element-annotatingComments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Element-ownedAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Element-ownedComments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Element-ownedExtensions"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Element/allOwnedElements"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Element/getValue">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Element/getValue/stereotype"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Element/getValue/propertyName"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ElementExtension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-ElementExtension-isApplied"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-ElementExtension-isRequired"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ElementExtension-base"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ElementExtension-stereotype"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ElementLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-ElementLiteralExp-referredElement"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-EnumLiteralExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-EnumLiteralExp-referredLiteral"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Enumeration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Enumeration-ownedLiterals"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Enumeration/allInstances"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-EnumerationLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-EnumerationLiteral-literal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-EnumerationLiteral-value"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-EnumerationLiteral-owningEnumeration"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ExpressionInOCL">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ExpressionInOCL-ownedBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ExpressionInOCL-ownedContext"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ExpressionInOCL-ownedParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ExpressionInOCL-ownedResult"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Feature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Feature-implementation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Feature-implementationClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Feature-isStatic"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-FeatureCallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-FeatureCallExp-isPre"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-FinalState"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-IfExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-IfExp-isElseIf"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-IfExp-ownedCondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-IfExp-ownedElse"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-IfExp-ownedThen"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Import-xmiidVersion"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Import-importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-InstanceSpecification">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-InstanceSpecification-classes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-InstanceSpecification-ownedSlots"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-InstanceSpecification-ownedSpecification"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-InstanceSpecification-owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-IntegerLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-IntegerLiteralExp-integerSymbol"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Integer_Class">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/abs"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/diff">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/diff/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/div">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/div/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/max">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/max/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/min">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/min/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/mod">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/mod/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/neg"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/prod">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/prod/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/quot">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/quot/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/sum">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Integer_Class/sum/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/toString"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Integer_Class/toUnlimitedNatural"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-InvalidLiteralExp"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-InvalidType">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//InvalidType/allInstances"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-IterableType"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-IterateExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-IterateExp-ownedResult"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Iteration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Iteration-ownedAccumulators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Iteration-ownedIterators"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-IteratorExp"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-IteratorVariable"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-JavaType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-JavaType-javaClass"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-LambdaType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LambdaType-contextType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LambdaType-parameterType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LambdaType-resultType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-LanguageExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-LanguageExpression-body"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-LanguageExpression-language"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LanguageExpression-owningConstraint"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-LetExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LetExp-ownedIn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LetExp-ownedVariable"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-LetVariable"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Library">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Library-ownedPrecedences"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-LiteralExp"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-LoopExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LoopExp-ownedBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LoopExp-ownedCoIterators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LoopExp-ownedIterators"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-LoopExp-referredIteration"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Map">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/K"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Map-keyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Map-valueType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/any">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/any/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/any/body"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/at">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/at/key"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collect/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/collect/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/collectBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collectBy/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collectBy/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/collectBy/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collectNested/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/collectNested/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludes">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludes/key"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludes.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludes.1/key"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludes.1/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludesAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludesAll/coll"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/excludesAll/K2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludesMap">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludesMap/map"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/excludesMap/K2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/excludesMap/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludesValue">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludesValue/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excluding/key"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excluding.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excluding.1/key"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excluding.1/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludingAll/keys"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/excludingMap">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/excludingMap/map"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/excludingMap/K2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/excludingMap/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/exists">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/exists.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.1/k1"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.1/k2"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.1/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/exists.2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.2/k1"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.2/k2"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.2/k3"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/exists.2/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/forAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll/k"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/forAll.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.1/k1"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.1/k2"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.1/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/forAll.2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.2/k1"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.2/k2"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.2/k3"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/forAll.2/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includes">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includes/key"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includes.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includes.1/key"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includes.1/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includesAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includesAll/coll"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/includesAll/K2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includesMap">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includesMap/map"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/includesMap/K2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/includesMap/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includesValue">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includesValue/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/including/key"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/including/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/includingMap">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/includingMap/map"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/includingMap/K2"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/includingMap/V2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/isEmpty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/isUnique">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/isUnique/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/isUnique/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/iterate">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/iterate/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/iterate/acc"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/iterate/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Map/iterate/Tacc"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/keys"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/notEmpty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/one">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/one/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/one/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Map/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/size"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Map/values"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-MapLiteralExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapLiteralExp-ownedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-MapLiteralPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapLiteralPart-ownedKey"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapLiteralPart-ownedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-MapType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-MapType-keysAreNullFree"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-MapType-valuesAreNullFree"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapType-entryClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapType-keyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MapType-valueType"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-MessageExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageExp-ownedArguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageExp-ownedCalledOperation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageExp-ownedSentSignal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageExp-ownedTarget"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-MessageType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageType-referredOperation"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-MessageType-referredSignal"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Model">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Model-externalURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Model-xmiidVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Model-ownedImports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Model-ownedPackages"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-MorePivotable"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Nameable"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-NamedElement-name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Namespace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Namespace-ownedConstraints"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-NavigationCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-NavigationCallExp-navigationSource"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-NavigationCallExp-qualifiers"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-NullLiteralExp"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-NumericLiteralExp"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OCLExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OCLExpression-typeValue"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OCLExpression/isNonNull"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OCLExpression/isNull"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclAny">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclAsSet"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclAsType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/oclAsType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OclAny/oclAsType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsInState">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/oclIsInState/statespec"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsInvalid"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsKindOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/oclIsKindOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsNew"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsTypeOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/oclIsTypeOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclIsUndefined"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclLog"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclLog.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclAny/oclLog.1/message"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/oclTypes"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclAny/toString"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclComparable">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclComparable/compareTo">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclComparable/compareTo/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclComparable/ge">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclComparable/ge/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclComparable/gt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclComparable/gt/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclComparable/le">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclComparable/le/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclComparable/lt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclComparable/lt/that"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OclElement-oclContainer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OclElement-oclContents"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/allInstances/dummy"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclAsModelType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/oclAsModelType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OclElement/oclAsModelType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclBase"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclBase.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/oclBase.1/base"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclContainer"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclContents"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclExtension">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/oclExtension/stereotype"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclExtensions">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/oclExtensions/stereotype"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclExtensions.1"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclIsModelKindOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclElement/oclIsModelKindOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclModelType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclElement/oclModelTypes"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclEnumeration">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclEnumeration/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclEnumeration/allInstances/dummy"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclInvalid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OclInvalid-oclBadProperty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/allInstances/dummy"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/and">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/and/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/implies">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/implies/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclAsSet"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclAsType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/oclAsType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OclInvalid/oclAsType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclBadOperation"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclIsInvalid"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclIsKindOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/oclIsKindOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclIsTypeOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/oclIsTypeOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclIsUndefined"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/oclType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/or">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclInvalid/or/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclInvalid/toString"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclLambda"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclMessage">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclMessage/hasReturned"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclMessage/isOperationCall"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclMessage/isSignalSent"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclMessage/result"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclSelf"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclState"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclStereotype">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclStereotype/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclStereotype/allInstances/dummy"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclSummable">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclSummable/sum">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclSummable/sum/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclSummable/zero"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclTuple">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclTuple/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclTuple/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclTuple/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclTuple/ne/object2"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclType">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclType/conformsTo">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclType/conformsTo/type2"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OclVoid">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/allInstances">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/allInstances/dummy"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/and">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/and/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/concat">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/concat/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/implies">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/implies/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/not"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclAsSet"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclAsType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/oclAsType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OclVoid/oclAsType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclIsInvalid"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclIsKindOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/oclIsKindOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclIsTypeOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/oclIsTypeOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclIsUndefined"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/oclTypes"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/or">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/or/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/sum">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/sum/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/toString"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OclVoid/xor">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OclVoid/xor/b"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Operation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Operation-isInvalidating"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Operation-isTransient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Operation-isTypeof"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Operation-isValidating"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-bodyExpression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-ownedParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-ownedPostconditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-ownedPreconditions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-owningClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-precedence"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-raisedExceptions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Operation-redefinedOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-OperationCallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-OperationCallExp-isVirtual"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OperationCallExp-ownedArguments"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OperationCallExp-referredOperation"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OperationCallExp/hasOclVoidOverload"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-OppositePropertyCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-OppositePropertyCallExp-referredProperty"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-OrderedCollection">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedCollection/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedCollection/at">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedCollection/at/index"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedCollection/first"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedCollection/indexOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedCollection/indexOf/obj"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedCollection/last"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-OrderedSet">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/append">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/append/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/appendAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/appendAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/closure">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/closure/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/closure/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/collect/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/collect/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/collectNested/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/collectNested/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/diff">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/diff/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/excluding/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/excludingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/flatten">
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/flatten/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/including/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/includingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/includingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/insertAt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/insertAt/index"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/insertAt/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/prepend">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/prepend/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/prependAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/prependAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/reverse"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/selectByKind">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/selectByKind/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/selectByKind/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/selectByType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/selectByType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//OrderedSet/selectByType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/sortedBy/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//OrderedSet/subOrderedSet">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/subOrderedSet/lower"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//OrderedSet/subOrderedSet/upper"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-OrderedSetType"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-OrphanCompletePackage"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Orphanage"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Package">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Package-URI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Package-nsPrefix"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-importedPackages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-ownedClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-ownedInstances"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-ownedPackages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-ownedProfileApplications"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Package-owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Parameter-isTypeof"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Parameter-owningOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ParameterVariable"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Pivotable"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Precedence">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Precedence-associativity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Precedence-order"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-PrimitiveCompletePackage"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-PrimitiveLiteralExp"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-PrimitiveType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-PrimitiveType-coercions"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Profile">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Profile-profileApplications"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ProfileApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-ProfileApplication-isStrict"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ProfileApplication-appliedProfile"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ProfileApplication-owningPackage"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-defaultValueString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isComposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isDerived"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isImplicit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isReadOnly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isResolveProxies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isTransient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isUnsettable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Property-isVolatile"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-associationClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-keys"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-opposite"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-ownedExpression"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-owningClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-redefinedProperties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-referredProperty"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Property-subsettedProperty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Property/isAttribute">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Property/isAttribute/p"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-PropertyCallExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-PropertyCallExp-referredProperty"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//PropertyCallExp/getSpecializedReferredPropertyOwningType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//PropertyCallExp/getSpecializedReferredPropertyType"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Pseudostate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Pseudostate-kind"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Pseudostate-owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Pseudostate-owningStateMachine"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-RealLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-RealLiteralExp-realSymbol"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Real_Class">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/abs"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/diff">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/diff/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/floor"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/max">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/max/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/min">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/min/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/neg"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/prod">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/prod/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/quot">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/quot/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/round"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/sum">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Real_Class/sum/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Real_Class/toString"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-ReferringElement">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ReferringElement/getReferredElement"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Region">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Region-extendedRegion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Region-ownedSubvertexes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Region-ownedTransitions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Region-owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Region-owningStateMachine"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ResultVariable"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-SelfType">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//SelfType/specializeIn">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//SelfType/specializeIn/expr"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//SelfType/specializeIn/selfType"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-SendSignalAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-SendSignalAction-signal"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Sequence">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/append">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/append/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/appendAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/appendAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/closure">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/closure/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/closure/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/collect/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/collect/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/collectNested/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/collectNested/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/excluding/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/excludingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/flatten">
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/flatten/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/including/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/includingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/includingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/insertAt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/insertAt/index"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/insertAt/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/prepend">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/prepend/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/prependAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/prependAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/reverse"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/selectByKind">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/selectByKind/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/selectByKind/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/selectByType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/selectByType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Sequence/selectByType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/sortedBy/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Sequence/subSequence">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/subSequence/lower"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Sequence/subSequence/upper"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-SequenceType"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Set">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/closure">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/closure/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/closure/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/collect">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/collect/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/collect/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/collectNested">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/collectNested/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/collectNested/V"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/diff">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/diff/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/excluding">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/excluding/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/excludingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/excludingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/flatten">
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/flatten/T2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/including">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/including/object"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/includingAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/includingAll/objects"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/reject">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/reject/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/reject/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/select">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/select/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/select/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/selectByKind">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/selectByKind/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/selectByKind/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/selectByType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/selectByType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//Set/selectByType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Set/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Set/sortedBy/lambda"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-SetType"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ShadowExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-ShadowExp-value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ShadowExp-ownedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-ShadowPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ShadowPart-ownedInit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-ShadowPart-referredProperty"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Signal"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Slot">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Slot-definingProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Slot-ownedValues"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Slot-owningInstance"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-StandardLibrary"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-State">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-State-isComposite"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-State-isOrthogonal"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-State-isSimple"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-State-isSubmachineState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedConnectionPoints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedConnections"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedDeferrableTriggers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedDoActivity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedEntry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedExit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedRegions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-ownedStateInvariant"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-redefinedState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-State-submachines"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-StateExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StateExp-referredState"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-StateMachine">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StateMachine-extendedStateMachines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StateMachine-ownedConnectionPoints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StateMachine-ownedRegions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StateMachine-submachineStates"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Stereotype">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Stereotype-ownedExtenders"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Stereotype/allInstances"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-StereotypeExtender">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-StereotypeExtender-isRequired"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StereotypeExtender-class"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-StereotypeExtender-owningStereotype"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-StringLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-StringLiteralExp-stringSymbol"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-String_Class">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/at">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/at/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/characters"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/compareTo">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/compareTo/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/concat">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/concat/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/endsWith">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/endsWith/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/eq">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/eq/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/equalsIgnoreCase">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/equalsIgnoreCase/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/ge">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/ge/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/gt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/gt/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/indexOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/indexOf/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/lastIndexOf">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/lastIndexOf/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/le">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/le/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/lt">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/lt/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/matches">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/matches/regex"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/ne">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/ne/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/replaceAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/replaceAll/regex"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/replaceAll/replacement"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/replaceFirst">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/replaceFirst/regex"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/replaceFirst/replacement"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/size"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/startsWith">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/startsWith/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/substituteAll">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substituteAll/oldSubstring"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substituteAll/newSubstring"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/substituteFirst">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substituteFirst/oldSubstring"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substituteFirst/newSubstring"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/substring">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substring/lower"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/substring/upper"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/sum">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/sum/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toBoolean"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toInteger"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toLower"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toLowerCase"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toReal"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toString"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toUpper"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/toUpperCase"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/tokenize"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/tokenize.1">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/tokenize.1/delimiters"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/tokenize.2">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/tokenize.2/delimiters"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//String_Class/tokenize.2/returnDelimiters"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//String_Class/trim"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TemplateBinding">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateBinding-ownedSubstitutions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateBinding-owningElement"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateBinding-templateSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TemplateParameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameter-constrainingClasses"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameter-owningSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TemplateParameterSubstitution">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameterSubstitution-actual"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameterSubstitution-formal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameterSubstitution-ownedWildcard"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateParameterSubstitution-owningBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TemplateSignature">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateSignature-ownedParameters"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateSignature-owningElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-TemplateableElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateableElement-generic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateableElement-ownedBindings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TemplateableElement-ownedSignature"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Transition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Transition-kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-ownedEffect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-ownedGuard"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-ownedTriggers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-owningRegion"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Transition-target"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Trigger">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Trigger-owningState"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Trigger-owningTransition"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TupleLiteralExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TupleLiteralExp-ownedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TupleLiteralPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TupleLiteralPart-ownedInit"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-TuplePart"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TupleType"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Type">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Type/conformsTo">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Type/conformsTo/type2"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Type/flattenedType"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Type/isClass"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Type/isTemplateParameter"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//Type/specializeIn">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Type/specializeIn/expr"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//Type/specializeIn/selfType"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-TypeExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TypeExp-referredType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-TypedElement">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-TypedElement-isMany"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-TypedElement-isRequired"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-TypedElement-type"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//TypedElement/CompatibleBody">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-UniqueCollection">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//UniqueCollection/T"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UniqueCollection/diff">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/diff/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UniqueCollection/intersection">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/intersection/c"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UniqueCollection/sortedBy">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/sortedBy/i"/>
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/sortedBy/lambda"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UniqueCollection/symmetricDifference">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/symmetricDifference/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UniqueCollection/union">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UniqueCollection/union/s"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-UnlimitedNaturalLiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-UnlimitedNatural_Class">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UnlimitedNatural_Class/max">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UnlimitedNatural_Class/max/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UnlimitedNatural_Class/min">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UnlimitedNatural_Class/min/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UnlimitedNatural_Class/oclAsType">
+        <genParameters ecoreParameter="PivotMerged2.ecore#//UnlimitedNatural_Class/oclAsType/type"/>
+        <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//UnlimitedNatural_Class/oclAsType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//UnlimitedNatural_Class/toInteger"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-UnspecifiedValueExp"/>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-ValueSpecification">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/booleanValue"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/integerValue"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/isComputable"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/isNull"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/stringValue"/>
+      <genOperations ecoreOperation="PivotMerged2.ecore#//ValueSpecification/unlimitedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-Variable-isImplicit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Variable-ownedInit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Variable-representedParameter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-VariableDeclaration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-VariableDeclaration-typeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-VariableExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotMerged2.ecore#F-pivot-VariableExp-isImplicit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-VariableExp-referredVariable"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Vertex">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Vertex-incomingTransitions"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Vertex-outgoingTransitions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-Vertex-owningRegion"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-Visitable"/>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-VoidType">
+      <genOperations ecoreOperation="PivotMerged2.ecore#//VoidType/allInstances"/>
+    </genClasses>
+    <genClasses ecoreClass="PivotMerged2.ecore#T-pivot-WildcardType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-WildcardType-constrainingClasses"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-WildcardType-templateParameter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-_Entry_1">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Entry_1/K"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Entry_1/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Entry_1-key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Entry_1-value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-_Entry_2">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Entry_2/K"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Entry_2/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Entry_2-key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Entry_2-value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-_Lambda_1">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Lambda_1/C"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Lambda_1/R"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-_Lambda_2">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Lambda_2/C"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Lambda_2/R"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PivotMerged2.ecore#T-pivot-_Tuple_1">
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Tuple_1/T"/>
+      <genTypeParameters ecoreTypeParameter="PivotMerged2.ecore#//_Tuple_1/T2"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Tuple_1-first"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PivotMerged2.ecore#F-pivot-_Tuple_1-second"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaType
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl.TupleTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.NsURIPackageIdImpl.NsURIPackageIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.OverloadIdImpl.OverloadIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl.ParametersIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.PrimitiveTypeIdImpl.PrimitiveTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.RootPackageIdImpl.RootPackageIdSingletonScope;
@@ -123,6 +124,11 @@ public final class IdManager
 	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
 	 */
 	private static final @NonNull TupleTypeIdSingletonScope tupleTypes = new TupleTypeIdSingletonScope();
+
+	/**
+	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
+	 */
+	private static final @NonNull OverloadIdSingletonScope overloads = new OverloadIdSingletonScope();
 
 	/**
 	 * Map from the ParametersId hashCode to the parametersId with the same hash.
@@ -510,6 +516,15 @@ public final class IdManager
 	 */
 	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
 		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, parts);
+	}
+
+	/**
+	 * Return the OverloadId for anOperation.
+	 */
+	public static @NonNull OverloadId getOverloadId(@NonNull Operation anOperation) {
+		String name = NameUtil.getSafeName(anOperation);
+		ParametersId parametersId = anOperation.getParametersId();
+		return overloads.getSingleton(PRIVATE_INSTANCE, name, parametersId);
 	}
 
 	/**

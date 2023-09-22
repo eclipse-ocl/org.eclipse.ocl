@@ -107,7 +107,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -614,7 +613,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitComment(@NonNull Comment comment) {
 		append("/* ");
-		append(comment.getBody().trim().replace("\n", " "));
+		append(String.valueOf(comment.getBody()).trim().replace("\n", " "));
 		append(" */");
 		return null;
 	}
@@ -736,7 +735,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			return safeVisit(bodyExpression);
 		}
 		else {
-			append(expression.getBody().trim().replace("\n"," "));
+			String body = expression.getBody();
+			if (body != null) {
+				append(body.trim().replace("\n"," "));
+			}
+			else {
+				append(NULL_PLACEHOLDER);
+			}
 			return null;
 		}
 	}
@@ -1141,12 +1146,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		if (asResource != null) {
 			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
-				try {
-					append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
-				}
-				catch(Throwable e) {
-					append("(?)");
-				}
+				append("(" + metamodelManager.getPrecedenceManager().basicGetOrder(precedence) + ")");
 			}
 		}
 		return null;

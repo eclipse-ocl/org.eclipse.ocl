@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -157,7 +158,6 @@ public class OCLstdlib extends ASResourceImpl
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
 		OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
-	//	INSTANCE = null;
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		@Override
-		public @NonNull Resource getResource() {
+		public @NonNull ASResource getResource() {
 			return getDefault();
 		}
 	}
@@ -248,6 +248,7 @@ public class OCLstdlib extends ASResourceImpl
 			model = createModel(asURI);
 			resource.getContents().add(model);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
+			createAnnotation(ocl, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 			installComment(ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
 			installPackages();
 			installPrecedences();
@@ -256,28 +257,34 @@ public class OCLstdlib extends ASResourceImpl
 			installSlots2();
 			installSlots3a();
 			installSlots3b();
-			installSlots3c();
-			installSlots3d();
-			installSlots3e();
-			installSlots4a();
-			installSlots4b();
-			installSlots4c();
-			installSlots4d();
-			installSlots4e();
-			installSlots4f();
-			installSlots5a();
-			installSlots5b();
-			installSlots6a();
-			installSlots6b();
-			installSlots6c();
-			installSlots7a();
-			installSlots7b();
-			installSlots8();
+			installSlots4();
+			installSlots5();
+			installSlots6();
+			installSlots7();
+			installSlots8a();
+			installSlots8b();
 			installSlots9a();
 			installSlots9b();
-			installSlots10();
+			installSlots9c();
+			installSlots9d();
+			installSlots10a();
+			installSlots10b();
+			installSlots10c();
+			installSlots10d();
+			installSlots10e();
+			installSlots10f();
+			installSlots10g();
 			installSlots11();
-			installSlots12();
+			installSlots12a();
+			installSlots12b();
+			installSlots12c();
+			installSlots12d();
+			installSlots13();
+			installSlots14();
+			installSlots15();
+			installSlots16();
+			installSlots17();
+			installSlots18();
 			installProperties();
 		}
 
@@ -500,7 +507,7 @@ public class OCLstdlib extends ASResourceImpl
 		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
 		private MapType _Map_Map_K_T_Map_V_T;
 		private MapType _Map_Map_K_F_Map_V_F;
-		private MapType _Map_Map_K_Map_V;
+		private MapType _Map;
 		private CollectionType _Bag_Bag_collectNested_V_T_L0;
 		private CollectionType _Bag_Bag_collect_V_T_L0;
 		private CollectionType _Bag_Bag_flatten_T2_T_L0;
@@ -924,11 +931,17 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installSlots2() {
+			installComment(ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
 			_Boolean = createPrimitiveType(ocl, OCLstdlibPackage.Literals.BOOLEAN);
+			_Boolean.setInstanceClassName("boolean");
 			_Integer = createPrimitiveType(ocl, OCLstdlibPackage.Literals.INTEGER);
+			_Integer.setInstanceClassName("org.eclipse.ocl.pivot.values.IntegerValue");
 			_Real = createPrimitiveType(ocl, OCLstdlibPackage.Literals.REAL);
+			_Real.setInstanceClassName("org.eclipse.ocl.pivot.values.RealValue");
 			_String = createPrimitiveType(ocl, OCLstdlibPackage.Literals.STRING);
+			_String.setInstanceClassName("java.lang.String");
 			_UnlimitedNatural = createPrimitiveType(ocl, OCLstdlibPackage.Literals.UNLIMITED_NATURAL);
+			_UnlimitedNatural.setInstanceClassName("org.eclipse.ocl.pivot.values.UnlimitedNaturalValue");
 			_OclAny = createClass(ocl, OCLstdlibPackage.Literals.OCL_ANY);
 			_OclAny.setIsAbstract(true);
 			_BooleanType = createClass(ocl, "BooleanType");
@@ -971,11 +984,12 @@ public class OCLstdlib extends ASResourceImpl
 			_Collection = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION);
 			_OrderedCollection = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION);
 			_UniqueCollection = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION);
-			_Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP);
+			_Map = createMapType(ocl, OCLstdlibPackage.Literals.MAP);
 			_Bag = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG);
 			_OrderedSet = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET);
 			_Sequence = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE);
 			_Set = createCollectionType(ocl, OCLstdlibPackage.Literals.SET);
+			orphanage.getStandardLibrary().resolvePackage(ocl);
 		}
 
 		private void installSlots3a() {
@@ -1004,19 +1018,162 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_Collection, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
 			installComment(_OrderedCollection, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
 			installComment(_UniqueCollection, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
-			installComment(_Map_Map_K_Map_V, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
+			installComment(_Map, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
 			installComment(_Bag, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
 			installComment(_OrderedSet, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
 			installComment(_Sequence, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
 			_Bag_T = createTemplateParameter(_Bag, "T");
 			_Collection_T = createTemplateParameter(_Collection, "T");
-			_Map_K = createTemplateParameter(_Map_Map_K_Map_V, "K");
-			_Map_V = createTemplateParameter(_Map_Map_K_Map_V, "V");
+			_Map_K = createTemplateParameter(_Map, "K");
+			_Map_V = createTemplateParameter(_Map, "V");
 			_OrderedCollection_T = createTemplateParameter(_OrderedCollection, "T");
 			_OrderedSet_T = createTemplateParameter(_OrderedSet, "T");
 			_Sequence_T = createTemplateParameter(_Sequence, "T");
 			_Set_T = createTemplateParameter(_Set, "T");
 			_UniqueCollection_T = createTemplateParameter(_UniqueCollection, "T");
+			addSuperClass(_Boolean, _OclAny);
+			addSuperClass(_Integer, _Real);
+			addSuperClass(_Real, _OclComparable);
+			addSuperClass(_Real, _OclSummable);
+			addSuperClass(_String, _OclComparable);
+			addSuperClass(_String, _OclSummable);
+			addSuperClass(_UnlimitedNatural, _OclComparable);
+			addSuperClass(_BooleanType, _OclElement);
+			addSuperClass(_Class, _OclElement);
+			addSuperClass(_CollectionType, _OclElement);
+			addSuperClass(_Enumeration, _OclType);
+			addSuperClass(_EnumerationLiteral, _OclAny);
+			addSuperClass(_InvalidType, _OclElement);
+			addSuperClass(_MapType, _OclElement);
+		}
+
+		private void installSlots3b() {
+			addSuperClass(_OclComparable, _OclAny);
+			addSuperClass(_OclElement, _OclAny);
+			addSuperClass(_OclEnumeration, _OclType);
+			addSuperClass(_OclLambda, _OclAny);
+			addSuperClass(_OclMessage, _OclAny);
+			addSuperClass(_OclState, _OclAny);
+			addSuperClass(_OclStereotype, _OclType);
+			addSuperClass(_OclSummable, _OclAny);
+			addSuperClass(_OclTuple, _OclAny);
+			addSuperClass(_OclType, _OclElement);
+			addSuperClass(_State, _OclState);
+			addSuperClass(_Stereotype, _OclStereotype);
+			addSuperClass(_Type, _OclType);
+			addSuperClass(_VoidType, _OclElement);
+			addSuperClass(_OclInvalid, _OclVoid);
+			addSuperClass(_OclSelf, _OclAny);
+			addSuperClass(_OclVoid, _OclAny);
+			addSuperClass(_Collection, _OclAny);
+			addSuperClass(_Map, _OclAny);
+		}
+
+		private void installSlots4() {
+			_Collection_Integer_T_L0 = getCollectionType(_Collection, _Integer, true, 0, -1);
+			_Collection_String_T_L0 = getCollectionType(_Collection, _String, true, 0, -1);
+			_Collection_Bag_T_T_L0 = getCollectionType(_Collection, _Bag_T, true, 0, -1);
+			_Collection_CollectionType_T_L0 = getCollectionType(_Collection, _CollectionType, true, 0, -1);
+			_Collection_Collection_T_T_L0 = getCollectionType(_Collection, _Collection_T, true, 0, -1);
+			_Collection_MapType_T_L0 = getCollectionType(_Collection, _MapType, true, 0, -1);
+			_Collection_Map_K_T_L0 = getCollectionType(_Collection, _Map_K, true, 0, -1);
+			_Collection_Map_V_T_L0 = getCollectionType(_Collection, _Map_V, true, 0, -1);
+			_Collection_OclAny_T_L0 = getCollectionType(_Collection, _OclAny, true, 0, -1);
+			_Collection_OclElement_T_L0 = getCollectionType(_Collection, _OclElement, true, 0, -1);
+			_Collection_OclInvalid_T_L0 = getCollectionType(_Collection, _OclInvalid, true, 0, -1);
+			_Collection_OclSelf_T_L0 = getCollectionType(_Collection, _OclSelf, true, 0, -1);
+			_Collection_OrderedCollection_T_T_L0 = getCollectionType(_Collection, _OrderedCollection_T, true, 0, -1);
+			_Collection_OrderedSet_T_T_L0 = getCollectionType(_Collection, _OrderedSet_T, true, 0, -1);
+			_Collection_Sequence_T_T_L0 = getCollectionType(_Collection, _Sequence_T, true, 0, -1);
+			_Collection_Set_T_T_L0 = getCollectionType(_Collection, _Set_T, true, 0, -1);
+			_Collection_UniqueCollection_T_T_L0 = getCollectionType(_Collection, _UniqueCollection_T, true, 0, -1);
+			_Map_Map_K_T_Map_V_T = getMapType(_Map, _Map_K, true, _Map_V, true);
+			_Map_Map_K_F_Map_V_F = getMapType(_Map, _Map_K, false, _Map_V, false);
+			_Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, _Bag_T, _Boolean);
+			_Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, _Bag_T, _OclAny);
+			_Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, _Collection_T, _Boolean);
+			_Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, _Collection_T, _OclAny);
+			_Lambda_Map_K_Boolean = getLambdaType(_OclLambda, _Map_K, _Boolean);
+			_Lambda_Map_K_OclAny = getLambdaType(_OclLambda, _Map_K, _OclAny);
+			_Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, _OrderedSet_T, _Boolean);
+			_Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, _OrderedSet_T, _OclAny);
+			_Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, _Sequence_T, _Boolean);
+			_Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, _Sequence_T, _OclAny);
+			_Lambda_Set_T_Boolean = getLambdaType(_OclLambda, _Set_T, _Boolean);
+			_Lambda_Set_T_OclAny = getLambdaType(_OclLambda, _Set_T, _OclAny);
+			_Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, _UniqueCollection_T, _OclAny);
+		}
+
+		private void installSlots5() {
+			addSuperClass(_OrderedCollection, _Collection_OrderedCollection_T_T_L0);
+			addSuperClass(_UniqueCollection, _Collection_UniqueCollection_T_T_L0);
+			addSuperClass(_Bag, _Collection_Bag_T_T_L0);
+		}
+
+		private void installSlots6() {
+			_OrderedCollection_Integer_T_L0 = getCollectionType(_OrderedCollection, _Integer, true, 0, -1);
+			_OrderedCollection_String_T_L0 = getCollectionType(_OrderedCollection, _String, true, 0, -1);
+			_OrderedCollection_Bag_T_T_L0 = getCollectionType(_OrderedCollection, _Bag_T, true, 0, -1);
+			_OrderedCollection_Collection_T_T_L0 = getCollectionType(_OrderedCollection, _Collection_T, true, 0, -1);
+			_OrderedCollection_OrderedSet_T_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_T, true, 0, -1);
+			_OrderedCollection_Sequence_T_T_L0 = getCollectionType(_OrderedCollection, _Sequence_T, true, 0, -1);
+			_OrderedCollection_Set_T_T_L0 = getCollectionType(_OrderedCollection, _Set_T, true, 0, -1);
+			_OrderedCollection_UniqueCollection_T_T_L0 = getCollectionType(_OrderedCollection, _UniqueCollection_T, true, 0, -1);
+			_UniqueCollection_Bag_T_T_L0 = getCollectionType(_UniqueCollection, _Bag_T, true, 0, -1);
+			_UniqueCollection_Collection_T_T_L0 = getCollectionType(_UniqueCollection, _Collection_T, true, 0, -1);
+			_UniqueCollection_Map_K_T_L0 = getCollectionType(_UniqueCollection, _Map_K, true, 0, -1);
+			_UniqueCollection_OclAny_T_L0 = getCollectionType(_UniqueCollection, _OclAny, true, 0, -1);
+			_UniqueCollection_OclElement_T_L0 = getCollectionType(_UniqueCollection, _OclElement, true, 0, -1);
+			_UniqueCollection_OclSelf_T_L0 = getCollectionType(_UniqueCollection, _OclSelf, true, 0, -1);
+			_UniqueCollection_OrderedSet_T_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_T, true, 0, -1);
+			_UniqueCollection_Sequence_T_T_L0 = getCollectionType(_UniqueCollection, _Sequence_T, true, 0, -1);
+			_UniqueCollection_Set_T_T_L0 = getCollectionType(_UniqueCollection, _Set_T, true, 0, -1);
+			_UniqueCollection_UniqueCollection_T_T_L0 = getCollectionType(_UniqueCollection, _UniqueCollection_T, true, 0, -1);
+			_Bag_Bag_T_T_L0 = getCollectionType(_Bag, _Bag_T, true, 0, -1);
+			_Bag_CollectionType_T_L0 = getCollectionType(_Bag, _CollectionType, true, 0, -1);
+			_Bag_Collection_T_T_L0 = getCollectionType(_Bag, _Collection_T, true, 0, -1);
+			_Bag_MapType_T_L0 = getCollectionType(_Bag, _MapType, true, 0, -1);
+			_Bag_Map_V_T_L0 = getCollectionType(_Bag, _Map_V, true, 0, -1);
+			_Bag_OclElement_T_L0 = getCollectionType(_Bag, _OclElement, true, 0, -1);
+			_Bag_OclInvalid_T_L0 = getCollectionType(_Bag, _OclInvalid, true, 0, -1);
+		}
+
+		private void installSlots7() {
+			addSuperClass(_OrderedSet, _OrderedCollection_OrderedSet_T_T_L0);
+			addSuperClass(_OrderedSet, _UniqueCollection_OrderedSet_T_T_L0);
+			addSuperClass(_Sequence, _OrderedCollection_Sequence_T_T_L0);
+			addSuperClass(_Set, _UniqueCollection_Set_T_T_L0);
+		}
+
+		private void installSlots8a() {
+		}
+
+		private void installSlots8b() {
+			_OrderedSet_Collection_T_T_L0 = getCollectionType(_OrderedSet, _Collection_T, true, 0, -1);
+			_OrderedSet_OrderedSet_T_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_T, true, 0, -1);
+			_OrderedSet_Sequence_T_T_L0 = getCollectionType(_OrderedSet, _Sequence_T, true, 0, -1);
+			_OrderedSet_Set_T_T_L0 = getCollectionType(_OrderedSet, _Set_T, true, 0, -1);
+			_OrderedSet_UniqueCollection_T_T_L0 = getCollectionType(_OrderedSet, _UniqueCollection_T, true, 0, -1);
+			_Sequence_Integer_T_L0 = getCollectionType(_Sequence, _Integer, true, 0, -1);
+			_Sequence_String_T_L0 = getCollectionType(_Sequence, _String, true, 0, -1);
+			_Sequence_Bag_T_T_L0 = getCollectionType(_Sequence, _Bag_T, true, 0, -1);
+			_Sequence_Collection_T_T_L0 = getCollectionType(_Sequence, _Collection_T, true, 0, -1);
+			_Sequence_Sequence_T_T_L0 = getCollectionType(_Sequence, _Sequence_T, true, 0, -1);
+			_Set_Bag_T_T_L0 = getCollectionType(_Set, _Bag_T, true, 0, -1);
+			_Set_Collection_T_T_L0 = getCollectionType(_Set, _Collection_T, true, 0, -1);
+			_Set_Map_K_T_L0 = getCollectionType(_Set, _Map_K, true, 0, -1);
+			_Set_OclElement_T_L0 = getCollectionType(_Set, _OclElement, true, 0, -1);
+			_Set_OclSelf_T_L0 = getCollectionType(_Set, _OclSelf, true, 0, -1);
+			_Set_OclSelf_F_L0 = getCollectionType(_Set, _OclSelf, false, 0, -1);
+			_Set_Set_T_T_L0 = getCollectionType(_Set, _Set_T, true, 0, -1);
+			_Set_UniqueCollection_T_T_L0 = getCollectionType(_Set, _UniqueCollection_T, true, 0, -1);
+		}
+
+		private void installSlots9a() {
+			_Lambda_Bag_T_Set = getLambdaType(_OclLambda, _Bag_T, _Set_Bag_T_T_L0);
+			_Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, _OrderedSet_T, _OrderedSet_OrderedSet_T_T_L0);
+			_Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, _Sequence_T, _OrderedSet_Sequence_T_T_L0);
+			_Lambda_Set_T_Set = getLambdaType(_OclLambda, _Set_T, _Set_Set_T_T_L0);
 			it_Bag_closure = createIteration(_Bag, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 			it_Bag_collectNested = createIteration(_Bag, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 			it_Bag_collect = createIteration(_Bag, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -1039,21 +1196,21 @@ public class OCLstdlib extends ASResourceImpl
 			it_Collection_reject = createIteration(_Collection, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 			it_Collection_select = createIteration(_Collection, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 			it_Collection_sortedBy = createIteration(_Collection, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-			it_Map_any = createIteration(_Map_Map_K_Map_V, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-			it_Map_collectBy = createIteration(_Map_Map_K_Map_V, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-			it_Map_collectNested = createIteration(_Map_Map_K_Map_V, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-			it_Map_collect = createIteration(_Map_Map_K_Map_V, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-			it_Map_exists = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_exists_1 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_exists_2 = createIteration(_Map_Map_K_Map_V, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-			it_Map_forAll = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_forAll_1 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_forAll_2 = createIteration(_Map_Map_K_Map_V, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-			it_Map_isUnique = createIteration(_Map_Map_K_Map_V, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-			it_Map_iterate = createIteration(_Map_Map_K_Map_V, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-			it_Map_one = createIteration(_Map_Map_K_Map_V, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-			it_Map_reject = createIteration(_Map_Map_K_Map_V, "reject", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
-			it_Map_select = createIteration(_Map_Map_K_Map_V, "select", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
+			it_Map_any = createIteration(_Map, "any", "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+			it_Map_collectBy = createIteration(_Map, "collectBy", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			it_Map_collectNested = createIteration(_Map, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			it_Map_collect = createIteration(_Map, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			it_Map_exists = createIteration(_Map, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_exists_1 = createIteration(_Map, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_exists_2 = createIteration(_Map, "exists", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			it_Map_forAll = createIteration(_Map, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_forAll_1 = createIteration(_Map, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_forAll_2 = createIteration(_Map, "forAll", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			it_Map_isUnique = createIteration(_Map, "isUnique", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			it_Map_iterate = createIteration(_Map, "iterate", "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+			it_Map_one = createIteration(_Map, "one", "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			it_Map_reject = createIteration(_Map, "reject", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
+			it_Map_select = createIteration(_Map, "select", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
 			it_OrderedSet_closure = createIteration(_OrderedSet, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 			it_OrderedSet_collectNested = createIteration(_OrderedSet, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 			it_OrderedSet_collect = createIteration(_OrderedSet, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -1066,9 +1223,6 @@ public class OCLstdlib extends ASResourceImpl
 			it_Sequence_reject = createIteration(_Sequence, "reject", "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 			it_Sequence_select = createIteration(_Sequence, "select", "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 			it_Sequence_sortedBy = createIteration(_Sequence, "sortedBy", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		}
-
-		private void installSlots3b() {
 			it_Set_closure = createIteration(_Set, "closure", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 			it_Set_collectNested = createIteration(_Set, "collectNested", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 			it_Set_collect = createIteration(_Set, "collect", "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -1079,6 +1233,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_Boolean__lt__gt_ = createOperation(_Boolean, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_Boolean__eq_ = createOperation(_Boolean, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Boolean_allInstances = createOperation(_Boolean, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		}
+
+		private void installSlots9b() {
 			op_Boolean_and = createOperation(_Boolean, "and", "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 			op_Boolean_and2 = createOperation(_Boolean, "and2", "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 			op_Boolean_implies = createOperation(_Boolean, "implies", "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
@@ -1169,9 +1326,6 @@ public class OCLstdlib extends ASResourceImpl
 			op_Collection__eq_ = createOperation(_Collection, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_Collection_asBag = createOperation(_Collection, "asBag", "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
 			op_Collection_asOrderedSet = createOperation(_Collection, "asOrderedSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
-		}
-
-		private void installSlots3c() {
 			op_Collection_asSequence = createOperation(_Collection, "asSequence", "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 			op_Collection_asSet = createOperation(_Collection, "asSet", "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 			op_Collection_count = createOperation(_Collection, "count", "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
@@ -1182,6 +1336,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_Collection_flatten = createOperation(_Collection, "flatten", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 			op_Collection_includes = createOperation(_Collection, "includes", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
 			op_Collection_includesAll = createOperation(_Collection, "includesAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
+		}
+
+		private void installSlots9c() {
 			op_Collection_including = createOperation(_Collection, "including", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 			op_Collection_includingAll = createOperation(_Collection, "includingAll", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 			op_Collection_intersection = createOperation(_Collection, "intersection", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
@@ -1198,30 +1355,30 @@ public class OCLstdlib extends ASResourceImpl
 			op_Collection_union = createOperation(_Collection, "union", "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 			op_Enumeration_allInstances = createOperation(_Enumeration, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 			op_InvalidType_allInstances = createOperation(_InvalidType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-			op_Map__lt__gt_ = createOperation(_Map_Map_K_Map_V, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-			op_Map__eq_ = createOperation(_Map_Map_K_Map_V, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-			op_Map_at = createOperation(_Map_Map_K_Map_V, "at", "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
-			op_Map_excludes = createOperation(_Map_Map_K_Map_V, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesOperation", org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
-			op_Map_excludes_1 = createOperation(_Map_Map_K_Map_V, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
-			op_Map_excludesAll = createOperation(_Map_Map_K_Map_V, "excludesAll", "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
-			op_Map_excludesMap = createOperation(_Map_Map_K_Map_V, "excludesMap", "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
-			op_Map_excludesValue = createOperation(_Map_Map_K_Map_V, "excludesValue", "org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation", org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
-			op_Map_excluding = createOperation(_Map_Map_K_Map_V, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
-			op_Map_excluding_1 = createOperation(_Map_Map_K_Map_V, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
-			op_Map_excludingAll = createOperation(_Map_Map_K_Map_V, "excludingAll", "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
-			op_Map_excludingMap = createOperation(_Map_Map_K_Map_V, "excludingMap", "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
-			op_Map_includes = createOperation(_Map_Map_K_Map_V, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesOperation", org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
-			op_Map_includes_1 = createOperation(_Map_Map_K_Map_V, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
-			op_Map_includesAll = createOperation(_Map_Map_K_Map_V, "includesAll", "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
-			op_Map_includesMap = createOperation(_Map_Map_K_Map_V, "includesMap", "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
-			op_Map_includesValue = createOperation(_Map_Map_K_Map_V, "includesValue", "org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation", org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
-			op_Map_including = createOperation(_Map_Map_K_Map_V, "including", "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
-			op_Map_includingMap = createOperation(_Map_Map_K_Map_V, "includingMap", "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
-			op_Map_isEmpty = createOperation(_Map_Map_K_Map_V, "isEmpty", "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation", org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
-			op_Map_keys = createOperation(_Map_Map_K_Map_V, "keys", "org.eclipse.ocl.pivot.library.map.MapKeysOperation", org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
-			op_Map_notEmpty = createOperation(_Map_Map_K_Map_V, "notEmpty", "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
-			op_Map_size = createOperation(_Map_Map_K_Map_V, "size", "org.eclipse.ocl.pivot.library.map.MapSizeOperation", org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
-			op_Map_values = createOperation(_Map_Map_K_Map_V, "values", "org.eclipse.ocl.pivot.library.map.MapValuesOperation", org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
+			op_Map__lt__gt_ = createOperation(_Map, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			op_Map__eq_ = createOperation(_Map, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			op_Map_at = createOperation(_Map, "at", "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
+			op_Map_excludes = createOperation(_Map, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesOperation", org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
+			op_Map_excludes_1 = createOperation(_Map, "excludes", "org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
+			op_Map_excludesAll = createOperation(_Map, "excludesAll", "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
+			op_Map_excludesMap = createOperation(_Map, "excludesMap", "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
+			op_Map_excludesValue = createOperation(_Map, "excludesValue", "org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation", org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
+			op_Map_excluding = createOperation(_Map, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
+			op_Map_excluding_1 = createOperation(_Map, "excluding", "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
+			op_Map_excludingAll = createOperation(_Map, "excludingAll", "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
+			op_Map_excludingMap = createOperation(_Map, "excludingMap", "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
+			op_Map_includes = createOperation(_Map, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesOperation", org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
+			op_Map_includes_1 = createOperation(_Map, "includes", "org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
+			op_Map_includesAll = createOperation(_Map, "includesAll", "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
+			op_Map_includesMap = createOperation(_Map, "includesMap", "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
+			op_Map_includesValue = createOperation(_Map, "includesValue", "org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation", org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
+			op_Map_including = createOperation(_Map, "including", "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
+			op_Map_includingMap = createOperation(_Map, "includingMap", "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
+			op_Map_isEmpty = createOperation(_Map, "isEmpty", "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation", org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
+			op_Map_keys = createOperation(_Map, "keys", "org.eclipse.ocl.pivot.library.map.MapKeysOperation", org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
+			op_Map_notEmpty = createOperation(_Map, "notEmpty", "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
+			op_Map_size = createOperation(_Map, "size", "org.eclipse.ocl.pivot.library.map.MapSizeOperation", org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
+			op_Map_values = createOperation(_Map, "values", "org.eclipse.ocl.pivot.library.map.MapValuesOperation", org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 			op_OclAny__lt__gt_ = createOperation(_OclAny, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 			op_OclAny__eq_ = createOperation(_OclAny, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_OclAny_oclAsSet = createOperation(_OclAny, "oclAsSet", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
@@ -1272,9 +1429,6 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclInvalid_toString = createOperation(_OclInvalid, "toString", "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 			op_OclMessage_hasReturned = createOperation(_OclMessage, "hasReturned", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclMessage_isOperationCall = createOperation(_OclMessage, "isOperationCall", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		}
-
-		private void installSlots3d() {
 			op_OclMessage_isSignalSent = createOperation(_OclMessage, "isSignalSent", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclMessage_result = createOperation(_OclMessage, "result", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclStereotype_allInstances = createOperation(_OclStereotype, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -1285,6 +1439,9 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclType_conformsTo = createOperation(_OclType, "conformsTo", "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 			op_OclVoid__add_ = createOperation(_OclVoid, "+", "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 			op_OclVoid__lt__gt_ = createOperation(_OclVoid, "<>", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		}
+
+		private void installSlots9d() {
 			op_OclVoid__eq_ = createOperation(_OclVoid, "=", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 			op_OclVoid_allInstances = createOperation(_OclVoid, "allInstances", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			op_OclVoid_and = createOperation(_OclVoid, "and", "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
@@ -1358,43 +1515,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_VoidType_allInstances = createOperation(_VoidType, "allInstances", "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		}
 
-		private void installSlots3e() {
-			addSuperClass(_Boolean, _OclAny);
-			addSuperClass(_Integer, _Real);
-			addSuperClass(_Real, _OclComparable);
-			addSuperClass(_Real, _OclSummable);
-			addSuperClass(_String, _OclComparable);
-			addSuperClass(_String, _OclSummable);
-			addSuperClass(_UnlimitedNatural, _OclComparable);
-			addSuperClass(_BooleanType, _OclElement);
-			addSuperClass(_Class, _OclElement);
-			addSuperClass(_CollectionType, _OclElement);
-			addSuperClass(_Enumeration, _OclType);
-			addSuperClass(_EnumerationLiteral, _OclAny);
-			addSuperClass(_InvalidType, _OclElement);
-			addSuperClass(_MapType, _OclElement);
-			addSuperClass(_OclComparable, _OclAny);
-			addSuperClass(_OclElement, _OclAny);
-			addSuperClass(_OclEnumeration, _OclType);
-			addSuperClass(_OclLambda, _OclAny);
-			addSuperClass(_OclMessage, _OclAny);
-			addSuperClass(_OclState, _OclAny);
-			addSuperClass(_OclStereotype, _OclType);
-			addSuperClass(_OclSummable, _OclAny);
-			addSuperClass(_OclTuple, _OclAny);
-			addSuperClass(_OclType, _OclElement);
-			addSuperClass(_State, _OclState);
-			addSuperClass(_Stereotype, _OclStereotype);
-			addSuperClass(_Type, _OclType);
-			addSuperClass(_VoidType, _OclElement);
-			addSuperClass(_OclInvalid, _OclVoid);
-			addSuperClass(_OclSelf, _OclAny);
-			addSuperClass(_OclVoid, _OclAny);
-			addSuperClass(_Collection, _OclAny);
-			addSuperClass(_Map_Map_K_Map_V, _OclAny);
-		}
-
-		private void installSlots4a() {
+		private void installSlots10a() {
 			installComment(it_Bag_closure, "The closure of applying body transitively to every distinct element of the source collection.");
 			installComment(it_Bag_collectNested, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
 			installComment(it_Bag_reject, "The sub-bag of the source bag for which body is oclText[false].\n\noclCode[self->reject(iterator | body) = self->select(iterator | not body)].");
@@ -1457,6 +1578,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Boolean_and, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[true].");
 			installComment(op_Boolean_and2, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[true].");
 			installComment(op_Boolean_implies, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
+		}
+
+		private void installSlots10b() {
 			installComment(op_Boolean_implies2, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[false].");
 			installComment(op_Boolean_not, "oclText[true] if oclText[self] is oclText[false].\noclText[false] if oclText[self] is oclText[true].\noclText[null] if oclText[self] is oclText[null].\nOtherwise oclText[invalid].");
 			installComment(op_Boolean_not2, "oclText[true] if oclText[self] is oclText[false].\nOtherwise oclText[false].");
@@ -1489,9 +1613,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Real_max, "The maximum of oclText[self] and r.");
 			installComment(op_Real_min, "The minimum of oclText[self] and r.");
 			installComment(op_Real_round, "The integer that is closest to oclText[self]. When there are two such integers, the largest one.");
-		}
-
-		private void installSlots4b() {
 			installComment(op_Real_toString, "Converts oclText[self] to a string value.");
 			installComment(op_String__add_, "The concatenation of oclText[self] and s.");
 			installComment(op_String__lt_, "True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.");
@@ -1560,6 +1681,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Collection_intersection, "The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.");
 			installComment(op_Collection_intersection_1, "The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.");
 			installComment(op_Collection_isEmpty, "Is oclText[self] the empty collection?\n\nNote: oclText[null->isEmpty()] returns oclText[true] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
+		}
+
+		private void installSlots10c() {
 			installComment(op_Collection_max, "The element with the maximum value of all elements in oclText[self].\nElements must be of a type supporting the max operation.\nThe max operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
 			installComment(op_Collection_min, "The element with the minimum value of all elements in oclText[self].\nElements must be of a type supporting the min operation.\nThe min operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
 			installComment(op_Collection_notEmpty, "Is oclText[self] not the empty collection?\n\noclText[null->notEmpty()] returns oclText[false] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
@@ -1592,9 +1716,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Map_includingMap, "The map containing all of the key-value pairs of oclText[self] and oclText[map].\nThe values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.");
 			installComment(op_Map_isEmpty, "True if oclText[self] is the empty map, oclText[false] otherwise.");
 			installComment(op_Map_keys, "A Set comprising all the keys of the key-value pairs in oclText[self].");
-		}
-
-		private void installSlots4c() {
 			installComment(op_Map_notEmpty, "True if oclText[self] not the empty map, oclText[false] otherwise.");
 			installComment(op_Map_size, "The number of key-value pairs in oclText[self].");
 			installComment(op_Map_values, "The Bag comprising all the values of the key-value pairs in oclText[self].");
@@ -1663,6 +1784,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OrderedSet_including, "The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.");
 			installComment(op_OrderedSet_includingAll, "The ordered set containing all elements of oclText[self] plus objects added as the last elements.");
 			installComment(op_OrderedSet_insertAt, "The ordered set consisting of oclText[self] with object present at position index.");
+		}
+
+		private void installSlots10d() {
 			installComment(op_OrderedSet_prepend, "The sequence consisting of object, followed by all elements in oclText[self].");
 			installComment(op_OrderedSet_prependAll, "The sequence consisting of objects, followed by all elements in oclText[self].");
 			installComment(op_OrderedSet_reverse, "The ordered set of elements with same elements but with the opposite order.");
@@ -1695,9 +1819,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Set_includingAll, "The set containing all elements of oclText[self] and objects.");
 			installComment(op_Set_selectByKind, "The set containing all elements of oclText[self] whose type conforms to oclText[type].");
 			installComment(op_Set_selectByType, "The set containing all elements of oclText[self] whose type is oclText[type].");
-		}
-
-		private void installSlots4d() {
 			installComment(op_Stereotype_allInstances, "Return a set of all instances of the stereotype and derived types of self.");
 			installComment(op_Type_conformsTo, "Returns true if type2 conforms to self.");
 			installComment(op_UniqueCollection__neg_, "The elements of oclText[self], which are not in s.");
@@ -1754,47 +1875,187 @@ public class OCLstdlib extends ASResourceImpl
 			_Set_flatten_T2 = createTemplateParameter(op_Set_flatten, "T2");
 			_Set_selectByKind_TT = createTemplateParameter(op_Set_selectByKind, "TT");
 			_Set_selectByType_TT = createTemplateParameter(op_Set_selectByType, "TT");
-			_Collection_Integer_T_L0 = getCollectionType(_Collection, _Integer, true, 0, -1);
-			_Collection_String_T_L0 = getCollectionType(_Collection, _String, true, 0, -1);
-			_Collection_Bag_T_T_L0 = getCollectionType(_Collection, _Bag_T, true, 0, -1);
-			_Collection_CollectionType_T_L0 = getCollectionType(_Collection, _CollectionType, true, 0, -1);
-			_Collection_Collection_T_T_L0 = getCollectionType(_Collection, _Collection_T, true, 0, -1);
-			_Collection_MapType_T_L0 = getCollectionType(_Collection, _MapType, true, 0, -1);
-			_Collection_Map_K_T_L0 = getCollectionType(_Collection, _Map_K, true, 0, -1);
-			_Collection_Map_V_T_L0 = getCollectionType(_Collection, _Map_V, true, 0, -1);
-			_Collection_OclAny_T_L0 = getCollectionType(_Collection, _OclAny, true, 0, -1);
-			_Collection_OclElement_T_L0 = getCollectionType(_Collection, _OclElement, true, 0, -1);
-			_Collection_OclInvalid_T_L0 = getCollectionType(_Collection, _OclInvalid, true, 0, -1);
-			_Collection_OclSelf_T_L0 = getCollectionType(_Collection, _OclSelf, true, 0, -1);
-			_Collection_OrderedCollection_T_T_L0 = getCollectionType(_Collection, _OrderedCollection_T, true, 0, -1);
-			_Collection_OrderedSet_T_T_L0 = getCollectionType(_Collection, _OrderedSet_T, true, 0, -1);
-			_Collection_Sequence_T_T_L0 = getCollectionType(_Collection, _Sequence_T, true, 0, -1);
-			_Collection_Set_T_T_L0 = getCollectionType(_Collection, _Set_T, true, 0, -1);
-			_Collection_UniqueCollection_T_T_L0 = getCollectionType(_Collection, _UniqueCollection_T, true, 0, -1);
-			_Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, _Map_K, true, _Map_V, true);
-			_Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_V, false);
-			_Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, _Bag_T, _Boolean);
-			_Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, _Bag_T, _OclAny);
-			_Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, _Collection_T, _Boolean);
-			_Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, _Collection_T, _OclAny);
-			_Lambda_Map_K_Boolean = getLambdaType(_OclLambda, _Map_K, _Boolean);
-			_Lambda_Map_K_OclAny = getLambdaType(_OclLambda, _Map_K, _OclAny);
-			_Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, _OrderedSet_T, _Boolean);
-			_Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, _OrderedSet_T, _OclAny);
-			_Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, _Sequence_T, _Boolean);
-			_Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, _Sequence_T, _OclAny);
-			_Lambda_Set_T_Boolean = getLambdaType(_OclLambda, _Set_T, _Boolean);
-			_Lambda_Set_T_OclAny = getLambdaType(_OclLambda, _Set_T, _OclAny);
-			_Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, _UniqueCollection_T, _OclAny);
+			it_Bag_closure.setType(_Set_Bag_T_T_L0);
+			createIterator(it_Bag_closure, "i", _Bag_T, true);
+			createParameter(it_Bag_closure, "lambda", _Lambda_Bag_T_Set, false);
+			it_Bag_reject.setType(_Bag_Bag_T_T_L0);
+			createIterator(it_Bag_reject, "i", _Bag_T, false);
+			createParameter(it_Bag_reject, "lambda", _Lambda_Bag_T_Boolean, true);
+			it_Bag_select.setType(_Bag_Bag_T_T_L0);
+			createIterator(it_Bag_select, "i", _Bag_T, false);
+			createParameter(it_Bag_select, "lambda", _Lambda_Bag_T_Boolean, true);
+			it_Bag_sortedBy.setType(_Sequence_Bag_T_T_L0);
+			createIterator(it_Bag_sortedBy, "i", _Bag_T, false);
+			createParameter(it_Bag_sortedBy, "lambda", _Lambda_Bag_T_OclAny, false);
+			it_Collection_any.setType(_Collection_T);
+			it_Collection_any.setIsRequired(false);
+			createIterator(it_Collection_any, "i", _Collection_T, true);
+			createParameter(it_Collection_any, "body", _Lambda_Collection_T_Boolean, true);
+			it_Collection_exists.setType(_Boolean);
+			it_Collection_exists.setIsInvalidating(true);
+			it_Collection_exists.setIsRequired(false);
+			it_Collection_exists.setIsValidating(true);
+			createIterator(it_Collection_exists, "i", _Collection_T, false);
+			createIterator(it_Collection_exists, "j", _Collection_T, false);
+			createIterator(it_Collection_exists, "k", _Collection_T, false);
+			createParameter(it_Collection_exists, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_exists_1.setType(_Boolean);
+			it_Collection_exists_1.setIsInvalidating(true);
+			it_Collection_exists_1.setIsRequired(false);
+			it_Collection_exists_1.setIsValidating(true);
+			createIterator(it_Collection_exists_1, "i", _Collection_T, false);
+			createIterator(it_Collection_exists_1, "j", _Collection_T, false);
+			createParameter(it_Collection_exists_1, "lambda", _Lambda_Collection_T_Boolean, false);
 		}
 
-		private void installSlots4e() {
+		private void installSlots10e() {
+			it_Collection_exists_2.setType(_Boolean);
+			it_Collection_exists_2.setIsInvalidating(true);
+			it_Collection_exists_2.setIsRequired(false);
+			it_Collection_exists_2.setIsValidating(true);
+			createIterator(it_Collection_exists_2, "i", _Collection_T, false);
+			createParameter(it_Collection_exists_2, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll.setType(_Boolean);
+			it_Collection_forAll.setIsInvalidating(true);
+			it_Collection_forAll.setIsRequired(false);
+			it_Collection_forAll.setIsValidating(true);
+			createIterator(it_Collection_forAll, "i", _Collection_T, false);
+			createIterator(it_Collection_forAll, "j", _Collection_T, false);
+			createIterator(it_Collection_forAll, "k", _Collection_T, false);
+			createParameter(it_Collection_forAll, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll_1.setType(_Boolean);
+			it_Collection_forAll_1.setIsInvalidating(true);
+			it_Collection_forAll_1.setIsRequired(false);
+			it_Collection_forAll_1.setIsValidating(true);
+			createIterator(it_Collection_forAll_1, "i", _Collection_T, false);
+			createIterator(it_Collection_forAll_1, "j", _Collection_T, false);
+			createParameter(it_Collection_forAll_1, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_forAll_2.setType(_Boolean);
+			it_Collection_forAll_2.setIsInvalidating(true);
+			it_Collection_forAll_2.setIsRequired(false);
+			it_Collection_forAll_2.setIsValidating(true);
+			createIterator(it_Collection_forAll_2, "i", _Collection_T, false);
+			createParameter(it_Collection_forAll_2, "lambda", _Lambda_Collection_T_Boolean, false);
+			it_Collection_isUnique.setType(_Boolean);
+			createIterator(it_Collection_isUnique, "i", _Collection_T, false);
+			createParameter(it_Collection_isUnique, "lambda", _Lambda_Collection_T_OclAny, false);
+			it_Collection_one.setType(_Boolean);
+			createIterator(it_Collection_one, "i", _Collection_T, false);
+			createParameter(it_Collection_one, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Collection_reject.setType(_Collection_Collection_T_T_L0);
+			createIterator(it_Collection_reject, "i", _Collection_T, false);
+			createParameter(it_Collection_reject, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Collection_select.setType(_Collection_Collection_T_T_L0);
+			createIterator(it_Collection_select, "i", _Collection_T, false);
+			createParameter(it_Collection_select, "lambda", _Lambda_Collection_T_Boolean, true);
+			it_Collection_sortedBy.setType(_Sequence_Collection_T_T_L0);
+			createIterator(it_Collection_sortedBy, "i", _Collection_T, false);
+			createParameter(it_Collection_sortedBy, "lambda", _Lambda_Collection_T_OclAny, false);
+			it_Map_any.setType(_Map_K);
+			it_Map_any.setIsRequired(false);
+			createIterator(it_Map_any, "k", _Map_K, true);
+			createParameter(it_Map_any, "body", _Lambda_Map_K_Boolean, true);
+			it_Map_exists.setType(_Boolean);
+			it_Map_exists.setIsInvalidating(true);
+			it_Map_exists.setIsRequired(false);
+			it_Map_exists.setIsValidating(true);
+			createIterator(it_Map_exists, "k1", _Map_K, false);
+			createIterator(it_Map_exists, "k2", _Map_K, false);
+			createIterator(it_Map_exists, "k3", _Map_K, false);
+			createParameter(it_Map_exists, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_exists_1.setType(_Boolean);
+			it_Map_exists_1.setIsInvalidating(true);
+			it_Map_exists_1.setIsRequired(false);
+			it_Map_exists_1.setIsValidating(true);
+			createIterator(it_Map_exists_1, "k1", _Map_K, false);
+			createIterator(it_Map_exists_1, "k2", _Map_K, false);
+			createParameter(it_Map_exists_1, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_exists_2.setType(_Boolean);
+			it_Map_exists_2.setIsInvalidating(true);
+			it_Map_exists_2.setIsRequired(false);
+			it_Map_exists_2.setIsValidating(true);
+			createIterator(it_Map_exists_2, "k", _Map_K, false);
+			createParameter(it_Map_exists_2, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll.setType(_Boolean);
+			it_Map_forAll.setIsInvalidating(true);
+			it_Map_forAll.setIsRequired(false);
+			it_Map_forAll.setIsValidating(true);
+			createIterator(it_Map_forAll, "k1", _Map_K, false);
+			createIterator(it_Map_forAll, "k2", _Map_K, false);
+			createIterator(it_Map_forAll, "k3", _Map_K, false);
+			createParameter(it_Map_forAll, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll_1.setType(_Boolean);
+			it_Map_forAll_1.setIsInvalidating(true);
+			it_Map_forAll_1.setIsRequired(false);
+			it_Map_forAll_1.setIsValidating(true);
+			createIterator(it_Map_forAll_1, "k1", _Map_K, false);
+			createIterator(it_Map_forAll_1, "k2", _Map_K, false);
+			createParameter(it_Map_forAll_1, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_forAll_2.setType(_Boolean);
+			it_Map_forAll_2.setIsInvalidating(true);
+			it_Map_forAll_2.setIsRequired(false);
+			it_Map_forAll_2.setIsValidating(true);
+			createIterator(it_Map_forAll_2, "k", _Map_K, false);
+			createParameter(it_Map_forAll_2, "lambda", _Lambda_Map_K_Boolean, false);
+			it_Map_isUnique.setType(_Boolean);
+			createIterator(it_Map_isUnique, "i", _Map_K, false);
+			createParameter(it_Map_isUnique, "lambda", _Lambda_Map_K_OclAny, false);
+			it_Map_one.setType(_Boolean);
+			createIterator(it_Map_one, "i", _Map_K, false);
+			createParameter(it_Map_one, "lambda", _Lambda_Map_K_Boolean, true);
+			it_Map_reject.setType(_Map_Map_K_F_Map_V_F);
+			createIterator(it_Map_reject, "i", _Map_K, false);
+			createParameter(it_Map_reject, "lambda", _Lambda_Map_K_Boolean, true);
+			it_Map_select.setType(_Map_Map_K_F_Map_V_F);
+			createIterator(it_Map_select, "i", _Map_K, false);
+			createParameter(it_Map_select, "lambda", _Lambda_Map_K_Boolean, true);
+			it_OrderedSet_closure.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createIterator(it_OrderedSet_closure, "i", _OrderedSet_T, true);
+			createParameter(it_OrderedSet_closure, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
+			it_OrderedSet_reject.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createIterator(it_OrderedSet_reject, "i", _OrderedSet_T, false);
+			createParameter(it_OrderedSet_reject, "lambda", _Lambda_OrderedSet_T_Boolean, true);
+			it_OrderedSet_select.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createIterator(it_OrderedSet_select, "i", _OrderedSet_T, false);
+			createParameter(it_OrderedSet_select, "lambda", _Lambda_OrderedSet_T_Boolean, true);
+			it_OrderedSet_sortedBy.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createIterator(it_OrderedSet_sortedBy, "i", _OrderedSet_T, false);
+			createParameter(it_OrderedSet_sortedBy, "lambda", _Lambda_OrderedSet_T_OclAny, false);
+			it_Sequence_closure.setType(_OrderedSet_Sequence_T_T_L0);
+			createIterator(it_Sequence_closure, "i", _Sequence_T, true);
+			createParameter(it_Sequence_closure, "lambda", _Lambda_Sequence_T_OrderedSet, false);
+			it_Sequence_reject.setType(_Sequence_Sequence_T_T_L0);
+			createIterator(it_Sequence_reject, "i", _Sequence_T, false);
+			createParameter(it_Sequence_reject, "lambda", _Lambda_Sequence_T_Boolean, true);
+			it_Sequence_select.setType(_Sequence_Sequence_T_T_L0);
+			createIterator(it_Sequence_select, "i", _Sequence_T, false);
+			createParameter(it_Sequence_select, "lambda", _Lambda_Sequence_T_Boolean, true);
+			it_Sequence_sortedBy.setType(_Sequence_Sequence_T_T_L0);
+			createIterator(it_Sequence_sortedBy, "i", _Sequence_T, false);
+			createParameter(it_Sequence_sortedBy, "lambda", _Lambda_Sequence_T_OclAny, false);
+			it_Set_closure.setType(_Set_Set_T_T_L0);
+			createIterator(it_Set_closure, "i", _Set_T, true);
+			createParameter(it_Set_closure, "lambda", _Lambda_Set_T_Set, false);
+			it_Set_reject.setType(_Set_Set_T_T_L0);
+			createIterator(it_Set_reject, "i", _Set_T, false);
+			createParameter(it_Set_reject, "lambda", _Lambda_Set_T_Boolean, true);
+			it_Set_select.setType(_Set_Set_T_T_L0);
+			createIterator(it_Set_select, "i", _Set_T, false);
+			createParameter(it_Set_select, "lambda", _Lambda_Set_T_Boolean, true);
+			it_Set_sortedBy.setType(_OrderedSet_Set_T_T_L0);
+			createIterator(it_Set_sortedBy, "i", _Set_T, false);
+			createParameter(it_Set_sortedBy, "lambda", _Lambda_Set_T_OclAny, false);
+			it_UniqueCollection_sortedBy.setType(_OrderedSet_UniqueCollection_T_T_L0);
+			createIterator(it_UniqueCollection_sortedBy, "i", _UniqueCollection_T, false);
+			createParameter(it_UniqueCollection_sortedBy, "lambda", _Lambda_UniqueCollection_T_OclAny, false);
 			op_Boolean__lt__gt_.setType(_Boolean);
 			op_Boolean__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Boolean__lt__gt_, "object2", _OclSelf, false);
 			op_Boolean__eq_.setType(_Boolean);
 			op_Boolean__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Boolean__eq_, "object2", _OclSelf, false);
+			op_Boolean_allInstances.setType(_Set_OclSelf_T_L0);
+			createParameter(op_Boolean_allInstances, "dummy", _Integer, true);
 			op_Boolean_and.setType(_Boolean);
 			op_Boolean_and.setIsInvalidating(true);
 			op_Boolean_and.setIsRequired(false);
@@ -1930,6 +2191,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_String_at.setType(_String);
 			op_String_at.setIsInvalidating(true);
 			createParameter(op_String_at, "i", _Integer, true);
+			op_String_characters.setType(_Sequence_String_T_L0);
 			op_String_compareTo.setType(_Integer);
 			createParameter(op_String_compareTo, "that", _OclSelf, true);
 			op_String_concat.setType(_String);
@@ -1971,9 +2233,18 @@ public class OCLstdlib extends ASResourceImpl
 			op_String_toLowerCase.setType(_String);
 			op_String_toReal.setType(_Real);
 			op_String_toReal.setIsRequired(false);
+		}
+
+		private void installSlots10f() {
 			op_String_toString.setType(_String);
 			op_String_toUpper.setType(_String);
 			op_String_toUpperCase.setType(_String);
+			op_String_tokenize.setType(_Sequence_String_T_L0);
+			op_String_tokenize_1.setType(_Sequence_String_T_L0);
+			createParameter(op_String_tokenize_1, "delimiters", _String, true);
+			op_String_tokenize_2.setType(_Sequence_String_T_L0);
+			createParameter(op_String_tokenize_2, "delimiters", _String, true);
+			createParameter(op_String_tokenize_2, "returnDelimiters", _Boolean, true);
 			op_String_trim.setType(_String);
 			op_UnlimitedNatural_max.setType(_UnlimitedNatural);
 			createParameter(op_UnlimitedNatural_max, "i", _OclSelf, true);
@@ -1987,27 +2258,54 @@ public class OCLstdlib extends ASResourceImpl
 			op_Bag__eq_.setType(_Boolean);
 			op_Bag__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Bag__eq_, "object2", _OclSelf, false);
+			op_Bag_excluding.setType(_Bag_Bag_T_T_L0);
+			createParameter(op_Bag_excluding, "object", _Bag_T, false);
+			op_Bag_excludingAll.setType(_Bag_Bag_T_T_L0);
+			createParameter(op_Bag_excludingAll, "objects", _Collection_Bag_T_T_L0, true);
+			op_Bag_including.setType(_Bag_Bag_T_T_L0);
+			createParameter(op_Bag_including, "object", _Bag_T, false);
+			op_Bag_includingAll.setType(_Bag_Bag_T_T_L0);
+			createParameter(op_Bag_includingAll, "objects", _Collection_Bag_T_T_L0, true);
+			op_BooleanType_allInstances.setType(_Set_OclSelf_T_L0);
+			op_Class_allInstances.setType(_Set_OclSelf_T_L0);
 			op_Collection__lt__gt_.setType(_Boolean);
 			op_Collection__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Collection__lt__gt_, "object2", _OclSelf, false);
 			op_Collection__eq_.setType(_Boolean);
 			op_Collection__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Collection__eq_, "object2", _OclSelf, false);
-		}
-
-		private void installSlots4f() {
+			op_Collection_asBag.setType(_Bag_Collection_T_T_L0);
+			op_Collection_asOrderedSet.setType(_OrderedSet_Collection_T_T_L0);
+			op_Collection_asSequence.setType(_Sequence_Collection_T_T_L0);
+			op_Collection_asSet.setType(_Set_Collection_T_T_L0);
 			op_Collection_count.setType(_Integer);
 			createParameter(op_Collection_count, "object", _Collection_T, false);
 			op_Collection_excludes.setType(_Boolean);
 			createParameter(op_Collection_excludes, "object", _Collection_T, false);
+			op_Collection_excluding.setType(_Collection_Collection_T_T_L0);
+			createParameter(op_Collection_excluding, "object", _Collection_T, false);
+			op_Collection_excludingAll.setType(_Collection_Collection_T_T_L0);
+			createParameter(op_Collection_excludingAll, "objects", _Collection_Collection_T_T_L0, true);
 			op_Collection_includes.setType(_Boolean);
 			createParameter(op_Collection_includes, "object", _Collection_T, false);
+			op_Collection_including.setType(_Collection_Collection_T_T_L0);
+			createParameter(op_Collection_including, "object", _Collection_T, false);
+			op_Collection_includingAll.setType(_Collection_Collection_T_T_L0);
+			createParameter(op_Collection_includingAll, "objects", _Collection_Collection_T_T_L0, true);
+			op_Collection_intersection.setType(_Bag_Collection_T_T_L0);
+			createParameter(op_Collection_intersection, "c", _Collection_Collection_T_T_L0, true);
+			op_Collection_intersection_1.setType(_Set_Collection_T_T_L0);
+			createParameter(op_Collection_intersection_1, "u", _UniqueCollection_Collection_T_T_L0, true);
 			op_Collection_isEmpty.setType(_Boolean);
 			op_Collection_max.setType(_Collection_T);
 			op_Collection_min.setType(_Collection_T);
 			op_Collection_notEmpty.setType(_Boolean);
 			op_Collection_size.setType(_Integer);
 			op_Collection_sum.setType(_Collection_T);
+			op_Collection_union.setType(_Bag_Collection_T_T_L0);
+			createParameter(op_Collection_union, "c", _Collection_Collection_T_T_L0, true);
+			op_Enumeration_allInstances.setType(_Set_OclSelf_T_L0);
+			op_InvalidType_allInstances.setType(_Set_OclSelf_T_L0);
 			op_Map__lt__gt_.setType(_Boolean);
 			op_Map__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Map__lt__gt_, "object2", _OclSelf, false);
@@ -2025,6 +2323,13 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_Map_excludes_1, "value", _Map_V, false);
 			op_Map_excludesValue.setType(_Boolean);
 			createParameter(op_Map_excludesValue, "value", _Map_V, false);
+			op_Map_excluding.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excluding, "key", _Map_K, false);
+			op_Map_excluding_1.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excluding_1, "key", _Map_K, false);
+			createParameter(op_Map_excluding_1, "value", _Map_V, false);
+			op_Map_excludingAll.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_excludingAll, "keys", _Collection_Map_K_T_L0, true);
 			op_Map_includes.setType(_Boolean);
 			createParameter(op_Map_includes, "key", _Map_K, false);
 			op_Map_includes_1.setType(_Boolean);
@@ -2032,15 +2337,21 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_Map_includes_1, "value", _Map_V, false);
 			op_Map_includesValue.setType(_Boolean);
 			createParameter(op_Map_includesValue, "value", _Map_V, false);
+			op_Map_including.setType(_Map_Map_K_T_Map_V_T);
+			createParameter(op_Map_including, "key", _Map_K, false);
+			createParameter(op_Map_including, "value", _Map_V, false);
 			op_Map_isEmpty.setType(_Boolean);
+			op_Map_keys.setType(_Set_Map_K_T_L0);
 			op_Map_notEmpty.setType(_Boolean);
 			op_Map_size.setType(_Integer);
+			op_Map_values.setType(_Bag_Map_V_T_L0);
 			op_OclAny__lt__gt_.setType(_Boolean);
 			op_OclAny__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OclAny__lt__gt_, "object2", _OclSelf, false);
 			op_OclAny__eq_.setType(_Boolean);
 			op_OclAny__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OclAny__eq_, "object2", _OclSelf, false);
+			op_OclAny_oclAsSet.setType(_Set_OclSelf_T_L0);
 			op_OclAny_oclIsInState.setType(_Boolean);
 			createParameter(op_OclAny_oclIsInState, "statespec", _OclState, false);
 			op_OclAny_oclIsInvalid.setType(_Boolean);
@@ -2057,6 +2368,7 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_OclAny_oclLog_1, "message", _String, true);
 			op_OclAny_oclType.setType(_OclSelf);
 			op_OclAny_oclType.setIsTypeof(true);
+			op_OclAny_oclTypes.setType(_Set_OclSelf_T_L0);
 			op_OclAny_toString.setType(_String);
 			op_OclComparable__lt_.setType(_Boolean);
 			op_OclComparable__lt_.setPrecedence(prec_RELATIONAL);
@@ -2072,6 +2384,8 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_OclComparable__gt__eq_, "that", _OclSelf, true);
 			op_OclComparable_compareTo.setType(_Integer);
 			createParameter(op_OclComparable_compareTo, "that", _OclSelf, true);
+			op_OclElement_allInstances.setType(_Set_OclSelf_T_L0);
+			createParameter(op_OclElement_allInstances, "dummy", _Integer, true);
 			op_OclElement_oclBase.setType(_OclType);
 			op_OclElement_oclBase.setIsRequired(false);
 			op_OclElement_oclBase_1.setType(_OclType);
@@ -2079,20 +2393,29 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_OclElement_oclBase_1, "base", _OclType, true);
 			op_OclElement_oclContainer.setType(_OclElement);
 			op_OclElement_oclContainer.setIsRequired(false);
+			op_OclElement_oclContents.setType(_Set_OclElement_T_L0);
 			op_OclElement_oclExtension.setType(_OclElement);
 			op_OclElement_oclExtension.setIsInvalidating(true);
 			op_OclElement_oclExtension.setIsRequired(false);
 			createParameter(op_OclElement_oclExtension, "stereotype", _OclStereotype, true);
+			op_OclElement_oclExtensions.setType(_Set_OclElement_T_L0);
+			op_OclElement_oclExtensions_1.setType(_Set_OclElement_T_L0);
+			createParameter(op_OclElement_oclExtensions_1, "stereotype", _OclStereotype, true);
 			op_OclElement_oclIsModelKindOf.setType(_Boolean);
 			createParameter(op_OclElement_oclIsModelKindOf, "type", _OclType, true);
 			op_OclElement_oclModelType.setType(_OclSelf);
 			op_OclElement_oclModelType.setIsTypeof(true);
+			op_OclElement_oclModelTypes.setType(_Set_OclSelf_T_L0);
+			op_OclEnumeration_allInstances.setType(_Set_OclSelf_T_L0);
+			createParameter(op_OclEnumeration_allInstances, "dummy", _Integer, true);
 			op_OclInvalid__lt__gt_.setType(_Boolean);
 			op_OclInvalid__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OclInvalid__lt__gt_, "object2", _OclSelf, false);
 			op_OclInvalid__eq_.setType(_Boolean);
 			op_OclInvalid__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OclInvalid__eq_, "object2", _OclSelf, false);
+			op_OclInvalid_allInstances.setType(_Set_OclSelf_T_L0);
+			createParameter(op_OclInvalid_allInstances, "dummy", _Integer, true);
 			op_OclInvalid_and.setType(_Boolean);
 			op_OclInvalid_and.setIsRequired(false);
 			op_OclInvalid_and.setIsValidating(true);
@@ -2103,12 +2426,16 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclInvalid_implies.setIsValidating(true);
 			op_OclInvalid_implies.setPrecedence(prec_IMPLIES);
 			createParameter(op_OclInvalid_implies, "b", _Boolean, false);
+			op_OclInvalid_oclAsSet.setType(_Set_OclSelf_T_L0);
 			op_OclInvalid_oclBadOperation.setType(_OclAny);
 			op_OclInvalid_oclBadOperation.setIsRequired(false);
 			op_OclInvalid_oclIsInvalid.setType(_Boolean);
 			op_OclInvalid_oclIsInvalid.setIsValidating(true);
 			op_OclInvalid_oclIsKindOf.setType(_Boolean);
 			createParameter(op_OclInvalid_oclIsKindOf, "type", _OclType, true);
+		}
+
+		private void installSlots10g() {
 			op_OclInvalid_oclIsTypeOf.setType(_Boolean);
 			createParameter(op_OclInvalid_oclIsTypeOf, "type", _OclType, true);
 			op_OclInvalid_oclIsUndefined.setType(_Boolean);
@@ -2126,6 +2453,8 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclMessage_isSignalSent.setType(_Boolean);
 			op_OclMessage_result.setType(_OclAny);
 			op_OclMessage_result.setIsRequired(false);
+			op_OclStereotype_allInstances.setType(_Set_OclSelf_T_L0);
+			createParameter(op_OclStereotype_allInstances, "dummy", _Integer, true);
 			op_OclSummable_sum.setType(_OclSelf);
 			createParameter(op_OclSummable_sum, "that", _OclSelf, true);
 			op_OclSummable_zero.setType(_OclSelf);
@@ -2146,6 +2475,8 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid__eq_.setType(_Boolean);
 			op_OclVoid__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OclVoid__eq_, "object2", _OclSelf, false);
+			op_OclVoid_allInstances.setType(_Set_OclSelf_F_L0);
+			createParameter(op_OclVoid_allInstances, "dummy", _Integer, true);
 			op_OclVoid_and.setType(_Boolean);
 			op_OclVoid_and.setIsInvalidating(true);
 			op_OclVoid_and.setIsRequired(false);
@@ -2165,6 +2496,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_not.setIsRequired(false);
 			op_OclVoid_not.setIsValidating(true);
 			op_OclVoid_not.setPrecedence(prec_UNARY);
+			op_OclVoid_oclAsSet.setType(_Set_OclSelf_T_L0);
 			op_OclVoid_oclIsInvalid.setType(_Boolean);
 			op_OclVoid_oclIsInvalid.setIsValidating(true);
 			op_OclVoid_oclIsKindOf.setType(_Boolean);
@@ -2175,6 +2507,7 @@ public class OCLstdlib extends ASResourceImpl
 			op_OclVoid_oclIsUndefined.setIsValidating(true);
 			op_OclVoid_oclType.setType(_OclSelf);
 			op_OclVoid_oclType.setIsTypeof(true);
+			op_OclVoid_oclTypes.setType(_Set_OclSelf_T_L0);
 			op_OclVoid_or.setType(_Boolean);
 			op_OclVoid_or.setIsInvalidating(true);
 			op_OclVoid_or.setIsRequired(false);
@@ -2199,29 +2532,104 @@ public class OCLstdlib extends ASResourceImpl
 			op_OrderedCollection_last.setType(_OrderedCollection_T);
 			op_OrderedCollection_last.setIsInvalidating(true);
 			op_OrderedCollection_last.setIsRequired(false);
+			op_OrderedSet__neg_.setType(_OrderedSet_OrderedSet_T_T_L0);
+			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_OrderedSet__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
 			op_OrderedSet__lt__gt_.setType(_Boolean);
 			op_OrderedSet__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OrderedSet__lt__gt_, "object2", _OclSelf, false);
 			op_OrderedSet__eq_.setType(_Boolean);
 			op_OrderedSet__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_OrderedSet__eq_, "object2", _OclSelf, false);
+			op_OrderedSet_append.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_append, "object", _OrderedSet_T, false);
+			op_OrderedSet_appendAll.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_appendAll, "objects", _OrderedCollection_OrderedSet_T_T_L0, true);
+			op_OrderedSet_excluding.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_excluding, "object", _OrderedSet_T, false);
+			op_OrderedSet_excludingAll.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_excludingAll, "objects", _Collection_OrderedSet_T_T_L0, true);
+			op_OrderedSet_including.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_including, "object", _OrderedSet_T, false);
+			op_OrderedSet_includingAll.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_includingAll, "objects", _Collection_OrderedSet_T_T_L0, true);
+			op_OrderedSet_insertAt.setType(_OrderedSet_OrderedSet_T_T_L0);
+			op_OrderedSet_insertAt.setIsInvalidating(true);
+			createParameter(op_OrderedSet_insertAt, "index", _Integer, true);
+			createParameter(op_OrderedSet_insertAt, "object", _OrderedSet_T, false);
+			op_OrderedSet_prepend.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_prepend, "object", _OrderedSet_T, false);
+			op_OrderedSet_prependAll.setType(_OrderedSet_OrderedSet_T_T_L0);
+			createParameter(op_OrderedSet_prependAll, "objects", _OrderedCollection_OrderedSet_T_T_L0, true);
+			op_OrderedSet_reverse.setType(_OrderedSet_OrderedSet_T_T_L0);
+			op_OrderedSet_subOrderedSet.setType(_OrderedSet_OrderedSet_T_T_L0);
+			op_OrderedSet_subOrderedSet.setIsInvalidating(true);
+			createParameter(op_OrderedSet_subOrderedSet, "lower", _Integer, true);
+			createParameter(op_OrderedSet_subOrderedSet, "upper", _Integer, true);
 			op_Sequence__lt__gt_.setType(_Boolean);
 			op_Sequence__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Sequence__lt__gt_, "object2", _OclSelf, false);
 			op_Sequence__eq_.setType(_Boolean);
 			op_Sequence__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Sequence__eq_, "object2", _OclSelf, false);
+			op_Sequence_append.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_append, "object", _Sequence_T, false);
+			op_Sequence_appendAll.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_appendAll, "objects", _OrderedCollection_Sequence_T_T_L0, true);
+			op_Sequence_excluding.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_excluding, "object", _Sequence_T, false);
+			op_Sequence_excludingAll.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_excludingAll, "objects", _Collection_Sequence_T_T_L0, true);
+			op_Sequence_including.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_including, "object", _Sequence_T, false);
+			op_Sequence_includingAll.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_includingAll, "objects", _Collection_Sequence_T_T_L0, true);
+			op_Sequence_insertAt.setType(_Sequence_Sequence_T_T_L0);
+			op_Sequence_insertAt.setIsInvalidating(true);
+			createParameter(op_Sequence_insertAt, "index", _Integer, true);
+			createParameter(op_Sequence_insertAt, "object", _Sequence_T, false);
+			op_Sequence_prepend.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_prepend, "object", _Sequence_T, false);
+			op_Sequence_prependAll.setType(_Sequence_Sequence_T_T_L0);
+			createParameter(op_Sequence_prependAll, "objects", _OrderedCollection_Sequence_T_T_L0, true);
+			op_Sequence_reverse.setType(_Sequence_Sequence_T_T_L0);
+			op_Sequence_subSequence.setType(_Sequence_Sequence_T_T_L0);
+			op_Sequence_subSequence.setIsInvalidating(true);
+			createParameter(op_Sequence_subSequence, "lower", _Integer, true);
+			createParameter(op_Sequence_subSequence, "upper", _Integer, true);
+			op_Set__neg_.setType(_Set_Set_T_T_L0);
+			op_Set__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_Set__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
 			op_Set__lt__gt_.setType(_Boolean);
 			op_Set__lt__gt_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Set__lt__gt_, "object2", _OclSelf, false);
 			op_Set__eq_.setType(_Boolean);
 			op_Set__eq_.setPrecedence(prec_EQUALITY);
 			createParameter(op_Set__eq_, "object2", _OclSelf, false);
+			op_Set_excluding.setType(_Set_Set_T_T_L0);
+			createParameter(op_Set_excluding, "object", _Set_T, false);
+			op_Set_excludingAll.setType(_Set_Set_T_T_L0);
+			createParameter(op_Set_excludingAll, "objects", _Collection_Set_T_T_L0, true);
+			op_Set_including.setType(_Set_Set_T_T_L0);
+			createParameter(op_Set_including, "object", _Set_T, false);
+			op_Set_includingAll.setType(_Set_Set_T_T_L0);
+			createParameter(op_Set_includingAll, "objects", _Collection_Set_T_T_L0, true);
+			op_Stereotype_allInstances.setType(_Set_OclSelf_T_L0);
 			op_Type_conformsTo.setType(_Boolean);
 			createParameter(op_Type_conformsTo, "type2", _Type, false);
+			op_UniqueCollection__neg_.setType(_UniqueCollection_UniqueCollection_T_T_L0);
+			op_UniqueCollection__neg_.setPrecedence(prec_ADDITIVE);
+			createParameter(op_UniqueCollection__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
+			op_UniqueCollection_intersection.setType(_Set_UniqueCollection_T_T_L0);
+			createParameter(op_UniqueCollection_intersection, "c", _Collection_UniqueCollection_T_T_L0, true);
+			op_UniqueCollection_symmetricDifference.setType(_Set_UniqueCollection_T_T_L0);
+			createParameter(op_UniqueCollection_symmetricDifference, "s", _UniqueCollection_OclAny_T_L0, true);
+			op_UniqueCollection_union.setType(_Set_UniqueCollection_T_T_L0);
+			createParameter(op_UniqueCollection_union, "s", _UniqueCollection_UniqueCollection_T_T_L0, true);
+			op_VoidType_allInstances.setType(_Set_OclSelf_F_L0);
 		}
 
-		private void installSlots5a() {
+		private void installSlots11() {
 			_Collection_Bag_collectNested_V_T_L0 = getCollectionType(_Collection, _Bag_collectNested_V, true, 0, -1);
 			_Collection_Bag_collect_V_T_L0 = getCollectionType(_Collection, _Bag_collect_V, true, 0, -1);
 			_Collection_Bag_flatten_T2_T_L0 = getCollectionType(_Collection, _Bag_flatten_T2, true, 0, -1);
@@ -2253,13 +2661,50 @@ public class OCLstdlib extends ASResourceImpl
 			_Collection_Set_flatten_T2_T_L0 = getCollectionType(_Collection, _Set_flatten_T2, true, 0, -1);
 			_Collection_Set_selectByKind_TT_T_L0 = getCollectionType(_Collection, _Set_selectByKind_TT, true, 0, -1);
 			_Collection_Set_selectByType_TT_T_L0 = getCollectionType(_Collection, _Set_selectByType_TT, true, 0, -1);
-			_Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, _Collection_T, false, _Collection_collectBy_V, false);
-			_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_excludesMap_K2, true, _Map_excludesMap_V2, true);
-			_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_excludingMap_K2, true, _Map_excludingMap_V2, true);
-			_Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_includesMap_K2, true, _Map_includesMap_V2, true);
-			_Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, _Map_includingMap_K2, true, _Map_includingMap_V2, true);
-			_Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_collectBy_V2, false);
-			_Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, _Map_K, false, _Map_collectNested_V2, false);
+			_OrderedCollection_OrderedSet_collectNested_V_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_collectNested_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_collect_V_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_collect_V, true, 0, -1);
+			_OrderedCollection_OrderedSet_flatten_T2_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_selectByType_TT, true, 0, -1);
+			_OrderedCollection_Sequence_collectNested_V_T_L0 = getCollectionType(_OrderedCollection, _Sequence_collectNested_V, true, 0, -1);
+			_OrderedCollection_Sequence_collect_V_T_L0 = getCollectionType(_OrderedCollection, _Sequence_collect_V, true, 0, -1);
+			_OrderedCollection_Sequence_flatten_T2_T_L0 = getCollectionType(_OrderedCollection, _Sequence_flatten_T2, true, 0, -1);
+			_OrderedCollection_Sequence_selectByKind_TT_T_L0 = getCollectionType(_OrderedCollection, _Sequence_selectByKind_TT, true, 0, -1);
+			_OrderedCollection_Sequence_selectByType_TT_T_L0 = getCollectionType(_OrderedCollection, _Sequence_selectByType_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_flatten_T2_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_flatten_T2, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_selectByType_TT, true, 0, -1);
+			_UniqueCollection_Set_flatten_T2_T_L0 = getCollectionType(_UniqueCollection, _Set_flatten_T2, true, 0, -1);
+			_UniqueCollection_Set_selectByKind_TT_T_L0 = getCollectionType(_UniqueCollection, _Set_selectByKind_TT, true, 0, -1);
+			_UniqueCollection_Set_selectByType_TT_T_L0 = getCollectionType(_UniqueCollection, _Set_selectByType_TT, true, 0, -1);
+			_Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map, _Collection_T, false, _Collection_collectBy_V, false);
+			_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map, _Map_excludesMap_K2, true, _Map_excludesMap_V2, true);
+			_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map, _Map_excludingMap_K2, true, _Map_excludingMap_V2, true);
+			_Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map, _Map_includesMap_K2, true, _Map_includesMap_V2, true);
+			_Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map, _Map_includingMap_K2, true, _Map_includingMap_V2, true);
+			_Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map, _Map_K, false, _Map_collectBy_V2, false);
+			_Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map, _Map_K, false, _Map_collectNested_V2, false);
+			_Bag_Bag_collectNested_V_T_L0 = getCollectionType(_Bag, _Bag_collectNested_V, true, 0, -1);
+			_Bag_Bag_collect_V_T_L0 = getCollectionType(_Bag, _Bag_collect_V, true, 0, -1);
+			_Bag_Bag_flatten_T2_T_L0 = getCollectionType(_Bag, _Bag_flatten_T2, true, 0, -1);
+			_Bag_Bag_selectByKind_TT_T_L0 = getCollectionType(_Bag, _Bag_selectByKind_TT, true, 0, -1);
+			_Bag_Bag_selectByType_TT_T_L0 = getCollectionType(_Bag, _Bag_selectByType_TT, true, 0, -1);
+			_Bag_Map_collect_V2_T_L0 = getCollectionType(_Bag, _Map_collect_V2, true, 0, -1);
+			_Bag_Set_collectNested_V_T_L0 = getCollectionType(_Bag, _Set_collectNested_V, true, 0, -1);
+			_Bag_Set_collect_V_T_L0 = getCollectionType(_Bag, _Set_collect_V, true, 0, -1);
+			_OrderedSet_OrderedSet_flatten_T2_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_flatten_T2, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_selectByKind_TT, true, 0, -1);
+			_OrderedSet_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_selectByType_TT, true, 0, -1);
+			_Sequence_OrderedSet_collectNested_V_T_L0 = getCollectionType(_Sequence, _OrderedSet_collectNested_V, true, 0, -1);
+			_Sequence_OrderedSet_collect_V_T_L0 = getCollectionType(_Sequence, _OrderedSet_collect_V, true, 0, -1);
+			_Sequence_Sequence_collectNested_V_T_L0 = getCollectionType(_Sequence, _Sequence_collectNested_V, true, 0, -1);
+			_Sequence_Sequence_collect_V_T_L0 = getCollectionType(_Sequence, _Sequence_collect_V, true, 0, -1);
+			_Sequence_Sequence_flatten_T2_T_L0 = getCollectionType(_Sequence, _Sequence_flatten_T2, true, 0, -1);
+			_Sequence_Sequence_selectByKind_TT_T_L0 = getCollectionType(_Sequence, _Sequence_selectByKind_TT, true, 0, -1);
+			_Sequence_Sequence_selectByType_TT_T_L0 = getCollectionType(_Sequence, _Sequence_selectByType_TT, true, 0, -1);
+			_Set_Set_flatten_T2_T_L0 = getCollectionType(_Set, _Set_flatten_T2, true, 0, -1);
+			_Set_Set_selectByKind_TT_T_L0 = getCollectionType(_Set, _Set_selectByKind_TT, true, 0, -1);
+			_Set_Set_selectByType_TT_T_L0 = getCollectionType(_Set, _Set_selectByType_TT, true, 0, -1);
 			_Tuple = getTupleType(_OclTuple,
 				createProperty("first", _Collection_T),
 				createProperty("second", _Collection_product_T2));
@@ -2279,181 +2724,9 @@ public class OCLstdlib extends ASResourceImpl
 			_Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, _Sequence_T, _Sequence_collect_V);
 			_Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, _Set_T, _Set_collectNested_V);
 			_Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, _Set_T, _Set_collect_V);
-		}
-
-		private void installSlots5b() {
-			checkSuperClass(_Collection_Integer_T_L0, _OclAny);
-			checkSuperClass(_Collection_String_T_L0, _OclAny);
-			checkSuperClass(_Collection_Bag_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_CollectionType_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_MapType_T_L0, _OclAny);
-			checkSuperClass(_Collection_Map_K_T_L0, _OclAny);
-			checkSuperClass(_Collection_Map_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_OclAny_T_L0, _OclAny);
-			checkSuperClass(_Collection_OclElement_T_L0, _OclAny);
-			checkSuperClass(_Collection_OclInvalid_T_L0, _OclAny);
-			checkSuperClass(_Collection_OclSelf_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedCollection_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_T_T_L0, _OclAny);
-			checkSuperClass(_Collection_UniqueCollection_T_T_L0, _OclAny);
-			addSuperClass(_OrderedCollection, _Collection_OrderedCollection_T_T_L0);
-			addSuperClass(_UniqueCollection, _Collection_UniqueCollection_T_T_L0);
-			checkSuperClass(_Map_Map_K_T_Map_V_T, _OclAny);
-			checkSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
-			addSuperClass(_Bag, _Collection_Bag_T_T_L0);
-			addSuperClass(_Lambda_Bag_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Map_K_OclAny, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Boolean, _OclLambda);
-			addSuperClass(_Lambda_Set_T_OclAny, _OclLambda);
-			addSuperClass(_Lambda_UniqueCollection_T_OclAny, _OclLambda);
-			it_Collection_any.setType(_Collection_T);
-			it_Collection_any.setIsRequired(false);
-			createIterator(it_Collection_any, "i", _Collection_T, true);
-			createParameter(it_Collection_any, "body", _Lambda_Collection_T_Boolean, true);
-			it_Collection_exists.setType(_Boolean);
-			it_Collection_exists.setIsInvalidating(true);
-			it_Collection_exists.setIsRequired(false);
-			it_Collection_exists.setIsValidating(true);
-			createIterator(it_Collection_exists, "i", _Collection_T, false);
-			createIterator(it_Collection_exists, "j", _Collection_T, false);
-			createIterator(it_Collection_exists, "k", _Collection_T, false);
-			createParameter(it_Collection_exists, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_exists_1.setType(_Boolean);
-			it_Collection_exists_1.setIsInvalidating(true);
-			it_Collection_exists_1.setIsRequired(false);
-			it_Collection_exists_1.setIsValidating(true);
-			createIterator(it_Collection_exists_1, "i", _Collection_T, false);
-			createIterator(it_Collection_exists_1, "j", _Collection_T, false);
-			createParameter(it_Collection_exists_1, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_exists_2.setType(_Boolean);
-			it_Collection_exists_2.setIsInvalidating(true);
-			it_Collection_exists_2.setIsRequired(false);
-			it_Collection_exists_2.setIsValidating(true);
-			createIterator(it_Collection_exists_2, "i", _Collection_T, false);
-			createParameter(it_Collection_exists_2, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_forAll.setType(_Boolean);
-			it_Collection_forAll.setIsInvalidating(true);
-			it_Collection_forAll.setIsRequired(false);
-			it_Collection_forAll.setIsValidating(true);
-			createIterator(it_Collection_forAll, "i", _Collection_T, false);
-			createIterator(it_Collection_forAll, "j", _Collection_T, false);
-			createIterator(it_Collection_forAll, "k", _Collection_T, false);
-			createParameter(it_Collection_forAll, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_forAll_1.setType(_Boolean);
-			it_Collection_forAll_1.setIsInvalidating(true);
-			it_Collection_forAll_1.setIsRequired(false);
-			it_Collection_forAll_1.setIsValidating(true);
-			createIterator(it_Collection_forAll_1, "i", _Collection_T, false);
-			createIterator(it_Collection_forAll_1, "j", _Collection_T, false);
-			createParameter(it_Collection_forAll_1, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_forAll_2.setType(_Boolean);
-			it_Collection_forAll_2.setIsInvalidating(true);
-			it_Collection_forAll_2.setIsRequired(false);
-			it_Collection_forAll_2.setIsValidating(true);
-			createIterator(it_Collection_forAll_2, "i", _Collection_T, false);
-			createParameter(it_Collection_forAll_2, "lambda", _Lambda_Collection_T_Boolean, false);
-			it_Collection_isUnique.setType(_Boolean);
-			createIterator(it_Collection_isUnique, "i", _Collection_T, false);
-			createParameter(it_Collection_isUnique, "lambda", _Lambda_Collection_T_OclAny, false);
-			it_Collection_one.setType(_Boolean);
-			createIterator(it_Collection_one, "i", _Collection_T, false);
-			createParameter(it_Collection_one, "lambda", _Lambda_Collection_T_Boolean, true);
-			it_Collection_reject.setType(_Collection_Collection_T_T_L0);
-			createIterator(it_Collection_reject, "i", _Collection_T, false);
-			createParameter(it_Collection_reject, "lambda", _Lambda_Collection_T_Boolean, true);
-			it_Collection_select.setType(_Collection_Collection_T_T_L0);
-			createIterator(it_Collection_select, "i", _Collection_T, false);
-			createParameter(it_Collection_select, "lambda", _Lambda_Collection_T_Boolean, true);
-			it_Map_any.setType(_Map_K);
-			it_Map_any.setIsRequired(false);
-			createIterator(it_Map_any, "k", _Map_K, true);
-			createParameter(it_Map_any, "body", _Lambda_Map_K_Boolean, true);
-			it_Map_exists.setType(_Boolean);
-			it_Map_exists.setIsInvalidating(true);
-			it_Map_exists.setIsRequired(false);
-			it_Map_exists.setIsValidating(true);
-			createIterator(it_Map_exists, "k1", _Map_K, false);
-			createIterator(it_Map_exists, "k2", _Map_K, false);
-			createIterator(it_Map_exists, "k3", _Map_K, false);
-			createParameter(it_Map_exists, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_exists_1.setType(_Boolean);
-			it_Map_exists_1.setIsInvalidating(true);
-			it_Map_exists_1.setIsRequired(false);
-			it_Map_exists_1.setIsValidating(true);
-			createIterator(it_Map_exists_1, "k1", _Map_K, false);
-			createIterator(it_Map_exists_1, "k2", _Map_K, false);
-			createParameter(it_Map_exists_1, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_exists_2.setType(_Boolean);
-			it_Map_exists_2.setIsInvalidating(true);
-			it_Map_exists_2.setIsRequired(false);
-			it_Map_exists_2.setIsValidating(true);
-			createIterator(it_Map_exists_2, "k", _Map_K, false);
-			createParameter(it_Map_exists_2, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_forAll.setType(_Boolean);
-			it_Map_forAll.setIsInvalidating(true);
-			it_Map_forAll.setIsRequired(false);
-			it_Map_forAll.setIsValidating(true);
-			createIterator(it_Map_forAll, "k1", _Map_K, false);
-			createIterator(it_Map_forAll, "k2", _Map_K, false);
-			createIterator(it_Map_forAll, "k3", _Map_K, false);
-			createParameter(it_Map_forAll, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_forAll_1.setType(_Boolean);
-			it_Map_forAll_1.setIsInvalidating(true);
-			it_Map_forAll_1.setIsRequired(false);
-			it_Map_forAll_1.setIsValidating(true);
-			createIterator(it_Map_forAll_1, "k1", _Map_K, false);
-			createIterator(it_Map_forAll_1, "k2", _Map_K, false);
-			createParameter(it_Map_forAll_1, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_forAll_2.setType(_Boolean);
-			it_Map_forAll_2.setIsInvalidating(true);
-			it_Map_forAll_2.setIsRequired(false);
-			it_Map_forAll_2.setIsValidating(true);
-			createIterator(it_Map_forAll_2, "k", _Map_K, false);
-			createParameter(it_Map_forAll_2, "lambda", _Lambda_Map_K_Boolean, false);
-			it_Map_isUnique.setType(_Boolean);
-			createIterator(it_Map_isUnique, "i", _Map_K, false);
-			createParameter(it_Map_isUnique, "lambda", _Lambda_Map_K_OclAny, false);
-			it_Map_one.setType(_Boolean);
-			createIterator(it_Map_one, "i", _Map_K, false);
-			createParameter(it_Map_one, "lambda", _Lambda_Map_K_Boolean, true);
-			it_Map_reject.setType(_Map_Map_K_F_Map_V_F);
-			createIterator(it_Map_reject, "i", _Map_K, false);
-			createParameter(it_Map_reject, "lambda", _Lambda_Map_K_Boolean, true);
-			it_Map_select.setType(_Map_Map_K_F_Map_V_F);
-			createIterator(it_Map_select, "i", _Map_K, false);
-			createParameter(it_Map_select, "lambda", _Lambda_Map_K_Boolean, true);
 			op_UnlimitedNatural_oclAsType.setType(_UnlimitedNatural_oclAsType_TT);
 			op_UnlimitedNatural_oclAsType.setIsInvalidating(true);
 			createParameter(op_UnlimitedNatural_oclAsType, "type", _UnlimitedNatural_oclAsType_TT, true).setIsTypeof(true);
-			op_Collection_excluding.setType(_Collection_Collection_T_T_L0);
-			createParameter(op_Collection_excluding, "object", _Collection_T, false);
-			op_Collection_excludingAll.setType(_Collection_Collection_T_T_L0);
-			createParameter(op_Collection_excludingAll, "objects", _Collection_Collection_T_T_L0, true);
-			op_Collection_including.setType(_Collection_Collection_T_T_L0);
-			createParameter(op_Collection_including, "object", _Collection_T, false);
-			op_Collection_includingAll.setType(_Collection_Collection_T_T_L0);
-			createParameter(op_Collection_includingAll, "objects", _Collection_Collection_T_T_L0, true);
-			op_Map_excluding.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_excluding, "key", _Map_K, false);
-			op_Map_excluding_1.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_excluding_1, "key", _Map_K, false);
-			createParameter(op_Map_excluding_1, "value", _Map_V, false);
-			op_Map_excludingAll.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_excludingAll, "keys", _Collection_Map_K_T_L0, true);
-			op_Map_including.setType(_Map_Map_K_T_Map_V_T);
-			createParameter(op_Map_including, "key", _Map_K, false);
-			createParameter(op_Map_including, "value", _Map_V, false);
 			op_OclAny_oclAsType.setType(_OclAny_oclAsType_TT);
 			op_OclAny_oclAsType.setIsInvalidating(true);
 			createParameter(op_OclAny_oclAsType, "type", _OclAny_oclAsType_TT, true).setIsTypeof(true);
@@ -2468,119 +2741,22 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_OclVoid_oclAsType, "type", _OclVoid_oclAsType_TT, true).setIsTypeof(true);
 		}
 
-		private void installSlots6a() {
+		private void installSlots12a() {
+		}
+
+		private void installSlots12b() {
 			_Collection_Tuple_T_L0 = getCollectionType(_Collection, _Tuple, true, 0, -1);
-			_OrderedCollection_Integer_T_L0 = getCollectionType(_OrderedCollection, _Integer, true, 0, -1);
-			_OrderedCollection_String_T_L0 = getCollectionType(_OrderedCollection, _String, true, 0, -1);
-			_OrderedCollection_Bag_T_T_L0 = getCollectionType(_OrderedCollection, _Bag_T, true, 0, -1);
-			_OrderedCollection_Collection_T_T_L0 = getCollectionType(_OrderedCollection, _Collection_T, true, 0, -1);
-			_OrderedCollection_OrderedSet_collectNested_V_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_collectNested_V, true, 0, -1);
-			_OrderedCollection_OrderedSet_collect_V_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_collect_V, true, 0, -1);
-			_OrderedCollection_OrderedSet_flatten_T2_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_flatten_T2, true, 0, -1);
-			_OrderedCollection_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
-			_OrderedCollection_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_selectByType_TT, true, 0, -1);
-			_OrderedCollection_OrderedSet_T_T_L0 = getCollectionType(_OrderedCollection, _OrderedSet_T, true, 0, -1);
-			_OrderedCollection_Sequence_collectNested_V_T_L0 = getCollectionType(_OrderedCollection, _Sequence_collectNested_V, true, 0, -1);
-			_OrderedCollection_Sequence_collect_V_T_L0 = getCollectionType(_OrderedCollection, _Sequence_collect_V, true, 0, -1);
-			_OrderedCollection_Sequence_flatten_T2_T_L0 = getCollectionType(_OrderedCollection, _Sequence_flatten_T2, true, 0, -1);
-			_OrderedCollection_Sequence_selectByKind_TT_T_L0 = getCollectionType(_OrderedCollection, _Sequence_selectByKind_TT, true, 0, -1);
-			_OrderedCollection_Sequence_selectByType_TT_T_L0 = getCollectionType(_OrderedCollection, _Sequence_selectByType_TT, true, 0, -1);
-			_OrderedCollection_Sequence_T_T_L0 = getCollectionType(_OrderedCollection, _Sequence_T, true, 0, -1);
-			_OrderedCollection_Set_T_T_L0 = getCollectionType(_OrderedCollection, _Set_T, true, 0, -1);
-			_OrderedCollection_UniqueCollection_T_T_L0 = getCollectionType(_OrderedCollection, _UniqueCollection_T, true, 0, -1);
 			_UniqueCollection_Tuple_T_L0 = getCollectionType(_UniqueCollection, _Tuple, true, 0, -1);
-			_UniqueCollection_Bag_T_T_L0 = getCollectionType(_UniqueCollection, _Bag_T, true, 0, -1);
-			_UniqueCollection_Collection_T_T_L0 = getCollectionType(_UniqueCollection, _Collection_T, true, 0, -1);
-			_UniqueCollection_Map_K_T_L0 = getCollectionType(_UniqueCollection, _Map_K, true, 0, -1);
-			_UniqueCollection_OclAny_T_L0 = getCollectionType(_UniqueCollection, _OclAny, true, 0, -1);
-			_UniqueCollection_OclElement_T_L0 = getCollectionType(_UniqueCollection, _OclElement, true, 0, -1);
-			_UniqueCollection_OclSelf_T_L0 = getCollectionType(_UniqueCollection, _OclSelf, true, 0, -1);
-			_UniqueCollection_OrderedSet_flatten_T2_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_flatten_T2, true, 0, -1);
-			_UniqueCollection_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_selectByKind_TT, true, 0, -1);
-			_UniqueCollection_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_selectByType_TT, true, 0, -1);
-			_UniqueCollection_OrderedSet_T_T_L0 = getCollectionType(_UniqueCollection, _OrderedSet_T, true, 0, -1);
-			_UniqueCollection_Sequence_T_T_L0 = getCollectionType(_UniqueCollection, _Sequence_T, true, 0, -1);
-			_UniqueCollection_Set_flatten_T2_T_L0 = getCollectionType(_UniqueCollection, _Set_flatten_T2, true, 0, -1);
-			_UniqueCollection_Set_selectByKind_TT_T_L0 = getCollectionType(_UniqueCollection, _Set_selectByKind_TT, true, 0, -1);
-			_UniqueCollection_Set_selectByType_TT_T_L0 = getCollectionType(_UniqueCollection, _Set_selectByType_TT, true, 0, -1);
-			_UniqueCollection_Set_T_T_L0 = getCollectionType(_UniqueCollection, _Set_T, true, 0, -1);
-			_UniqueCollection_UniqueCollection_T_T_L0 = getCollectionType(_UniqueCollection, _UniqueCollection_T, true, 0, -1);
-			_Bag_Bag_collectNested_V_T_L0 = getCollectionType(_Bag, _Bag_collectNested_V, true, 0, -1);
-			_Bag_Bag_collect_V_T_L0 = getCollectionType(_Bag, _Bag_collect_V, true, 0, -1);
-			_Bag_Bag_flatten_T2_T_L0 = getCollectionType(_Bag, _Bag_flatten_T2, true, 0, -1);
-			_Bag_Bag_selectByKind_TT_T_L0 = getCollectionType(_Bag, _Bag_selectByKind_TT, true, 0, -1);
-			_Bag_Bag_selectByType_TT_T_L0 = getCollectionType(_Bag, _Bag_selectByType_TT, true, 0, -1);
-			_Bag_Bag_T_T_L0 = getCollectionType(_Bag, _Bag_T, true, 0, -1);
-			_Bag_CollectionType_T_L0 = getCollectionType(_Bag, _CollectionType, true, 0, -1);
-			_Bag_Collection_T_T_L0 = getCollectionType(_Bag, _Collection_T, true, 0, -1);
-			_Bag_MapType_T_L0 = getCollectionType(_Bag, _MapType, true, 0, -1);
-			_Bag_Map_collect_V2_T_L0 = getCollectionType(_Bag, _Map_collect_V2, true, 0, -1);
-			_Bag_Map_V_T_L0 = getCollectionType(_Bag, _Map_V, true, 0, -1);
-			_Bag_OclElement_T_L0 = getCollectionType(_Bag, _OclElement, true, 0, -1);
-			_Bag_OclInvalid_T_L0 = getCollectionType(_Bag, _OclInvalid, true, 0, -1);
-			_Bag_Set_collectNested_V_T_L0 = getCollectionType(_Bag, _Set_collectNested_V, true, 0, -1);
-			_Bag_Set_collect_V_T_L0 = getCollectionType(_Bag, _Set_collect_V, true, 0, -1);
+			_Set_Tuple_T_L0 = getCollectionType(_Set, _Tuple, true, 0, -1);
 		}
 
-		private void installSlots6b() {
-			checkSuperClass(_Collection_Bag_collectNested_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Bag_collect_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Bag_flatten_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Bag_selectByKind_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Bag_selectByType_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_collectNested_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_collect_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_excludesAll_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_flatten_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_includesAll_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_product_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_selectByKind_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Collection_selectByType_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Map_collect_V2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Map_excludesAll_K2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Map_includesAll_K2_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_collectNested_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_collect_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_flatten_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_selectByKind_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_OrderedSet_selectByType_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_collectNested_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_collect_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_flatten_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_selectByKind_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Sequence_selectByType_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_collectNested_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_collect_V_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_flatten_T2_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_selectByKind_TT_T_L0, _OclAny);
-			checkSuperClass(_Collection_Set_selectByType_TT_T_L0, _OclAny);
-			checkSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
-			checkSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
-			checkSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
-			checkSuperClass(_Map_Map_includesMap_K2_T_Map_includesMap_V2_T, _OclAny);
-			checkSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
-			checkSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
-			checkSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
-		}
-
-		private void installSlots6c() {
-			addSuperClass(_Tuple, _OclTuple);
-			addSuperClass(_Lambda_Bag_T_Bag_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Bag_T_Bag_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collectBy_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Collection_T_Collection_iterate_Tacc, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collectBy_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collectNested_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_collect_V2, _OclLambda);
-			addSuperClass(_Lambda_Map_K_Map_iterate_Tacc, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Sequence_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_Sequence_collect_V, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set_collectNested_V, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set_collect_V, _OclLambda);
+		private void installSlots12c() {
+			it_Bag_collectNested.setType(_Bag_Bag_collectNested_V_T_L0);
+			createIterator(it_Bag_collectNested, "i", _Bag_T, false);
+			createParameter(it_Bag_collectNested, "lambda", _Lambda_Bag_T_Bag_collectNested_V, false);
+			it_Bag_collect.setType(_Bag_Bag_collect_V_T_L0);
+			createIterator(it_Bag_collect, "i", _Bag_T, false);
+			createParameter(it_Bag_collect, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
 			it_Collection_collectBy.setType(_Map_Collection_T_F_Collection_collectBy_V_F);
 			createIterator(it_Collection_collectBy, "i", _Collection_T, false);
 			createParameter(it_Collection_collectBy, "lambda", _Lambda_Collection_T_Collection_collectBy_V, false);
@@ -2601,16 +2777,45 @@ public class OCLstdlib extends ASResourceImpl
 			it_Map_collectNested.setType(_Map_Map_K_F_Map_collectNested_V2_F);
 			createIterator(it_Map_collectNested, "k", _Map_K, false);
 			createParameter(it_Map_collectNested, "lambda", _Lambda_Map_K_Map_collectNested_V2, false);
+			it_Map_collect.setType(_Bag_Map_collect_V2_T_L0);
+			createIterator(it_Map_collect, "k", _Map_K, false);
+			createParameter(it_Map_collect, "lambda", _Lambda_Map_K_Map_collect_V2, false);
 			it_Map_iterate.setType(_Map_iterate_Tacc);
 			it_Map_iterate.setIsRequired(false);
 			createIterator(it_Map_iterate, "i", _Map_K, false);
 			createAccumulator(it_Map_iterate, "acc", _Map_iterate_Tacc, false);
 			createParameter(it_Map_iterate, "lambda", _Lambda_Map_K_Map_iterate_Tacc, false);
+			it_OrderedSet_collectNested.setType(_Sequence_OrderedSet_collectNested_V_T_L0);
+			createIterator(it_OrderedSet_collectNested, "i", _OrderedSet_T, false);
+			createParameter(it_OrderedSet_collectNested, "lambda", _Lambda_OrderedSet_T_OrderedSet_collectNested_V, false);
+			it_OrderedSet_collect.setType(_Sequence_OrderedSet_collect_V_T_L0);
+			createIterator(it_OrderedSet_collect, "i", _OrderedSet_T, false);
+			createParameter(it_OrderedSet_collect, "lambda", _Lambda_OrderedSet_T_OrderedSet_collect_V, false);
+			it_Sequence_collectNested.setType(_Sequence_Sequence_collectNested_V_T_L0);
+			createIterator(it_Sequence_collectNested, "i", _Sequence_T, false);
+			createParameter(it_Sequence_collectNested, "lambda", _Lambda_Sequence_T_Sequence_collectNested_V, false);
+			it_Sequence_collect.setType(_Sequence_Sequence_collect_V_T_L0);
+			createIterator(it_Sequence_collect, "i", _Sequence_T, false);
+			createParameter(it_Sequence_collect, "lambda", _Lambda_Sequence_T_Sequence_collect_V, false);
+			it_Set_collectNested.setType(_Bag_Set_collectNested_V_T_L0);
+			createIterator(it_Set_collectNested, "i", _Set_T, false);
+			createParameter(it_Set_collectNested, "lambda", _Lambda_Set_T_Set_collectNested_V, false);
+			it_Set_collect.setType(_Bag_Set_collect_V_T_L0);
+			createIterator(it_Set_collect, "i", _Set_T, false);
+			createParameter(it_Set_collect, "lambda", _Lambda_Set_T_Set_collect_V, false);
+			op_Bag_flatten.setType(_Bag_Bag_flatten_T2_T_L0);
+			op_Bag_selectByKind.setType(_Bag_Bag_selectByKind_TT_T_L0);
+			createParameter(op_Bag_selectByKind, "type", _Bag_selectByKind_TT, true).setIsTypeof(true);
+			op_Bag_selectByType.setType(_Bag_Bag_selectByType_TT_T_L0);
+			createParameter(op_Bag_selectByType, "type", _Bag_selectByType_TT, true).setIsTypeof(true);
 			op_Collection_excludesAll.setType(_Boolean);
 			createParameter(op_Collection_excludesAll, "c2", _Collection_Collection_excludesAll_T2_T_L0, true);
 			op_Collection_flatten.setType(_Collection_Collection_flatten_T2_T_L0);
 			op_Collection_includesAll.setType(_Boolean);
 			createParameter(op_Collection_includesAll, "c2", _Collection_Collection_includesAll_T2_T_L0, true);
+		}
+
+		private void installSlots12d() {
 			op_Collection_selectByKind.setType(_Collection_Collection_selectByKind_TT_T_L0);
 			createParameter(op_Collection_selectByKind, "type", _Collection_selectByKind_TT, true).setIsTypeof(true);
 			op_Collection_selectByType.setType(_Collection_Collection_selectByType_TT_T_L0);
@@ -2627,396 +2832,41 @@ public class OCLstdlib extends ASResourceImpl
 			createParameter(op_Map_includesMap, "map", _Map_Map_includesMap_K2_T_Map_includesMap_V2_T, true);
 			op_Map_includingMap.setType(_Map_Map_K_T_Map_V_T);
 			createParameter(op_Map_includingMap, "map", _Map_Map_includingMap_K2_T_Map_includingMap_V2_T, true);
-		}
-
-		private void installSlots7a() {
-		}
-
-		private void installSlots7b() {
-			checkSuperClass(_Collection_Tuple_T_L0, _OclAny);
-			checkSuperClass(_OrderedCollection_Integer_T_L0, _Collection_Integer_T_L0);
-			checkSuperClass(_OrderedCollection_String_T_L0, _Collection_String_T_L0);
-			checkSuperClass(_OrderedCollection_Bag_T_T_L0, _Collection_Bag_T_T_L0);
-			checkSuperClass(_OrderedCollection_Collection_T_T_L0, _Collection_Collection_T_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_collectNested_V_T_L0, _Collection_OrderedSet_collectNested_V_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_collect_V_T_L0, _Collection_OrderedSet_collect_V_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_flatten_T2_T_L0, _Collection_OrderedSet_flatten_T2_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_selectByKind_TT_T_L0, _Collection_OrderedSet_selectByKind_TT_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_selectByType_TT_T_L0, _Collection_OrderedSet_selectByType_TT_T_L0);
-			checkSuperClass(_OrderedCollection_OrderedSet_T_T_L0, _Collection_OrderedSet_T_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_collectNested_V_T_L0, _Collection_Sequence_collectNested_V_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_collect_V_T_L0, _Collection_Sequence_collect_V_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_flatten_T2_T_L0, _Collection_Sequence_flatten_T2_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_selectByKind_TT_T_L0, _Collection_Sequence_selectByKind_TT_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_selectByType_TT_T_L0, _Collection_Sequence_selectByType_TT_T_L0);
-			checkSuperClass(_OrderedCollection_Sequence_T_T_L0, _Collection_Sequence_T_T_L0);
-			checkSuperClass(_OrderedCollection_Set_T_T_L0, _Collection_Set_T_T_L0);
-			checkSuperClass(_OrderedCollection_UniqueCollection_T_T_L0, _Collection_UniqueCollection_T_T_L0);
-			checkSuperClass(_UniqueCollection_Tuple_T_L0, _Collection_Tuple_T_L0);
-			checkSuperClass(_UniqueCollection_Bag_T_T_L0, _Collection_Bag_T_T_L0);
-			checkSuperClass(_UniqueCollection_Collection_T_T_L0, _Collection_Collection_T_T_L0);
-			checkSuperClass(_UniqueCollection_Map_K_T_L0, _Collection_Map_K_T_L0);
-			checkSuperClass(_UniqueCollection_OclAny_T_L0, _Collection_OclAny_T_L0);
-			checkSuperClass(_UniqueCollection_OclElement_T_L0, _Collection_OclElement_T_L0);
-			checkSuperClass(_UniqueCollection_OclSelf_T_L0, _Collection_OclSelf_T_L0);
-			checkSuperClass(_UniqueCollection_OrderedSet_flatten_T2_T_L0, _Collection_OrderedSet_flatten_T2_T_L0);
-			checkSuperClass(_UniqueCollection_OrderedSet_selectByKind_TT_T_L0, _Collection_OrderedSet_selectByKind_TT_T_L0);
-			checkSuperClass(_UniqueCollection_OrderedSet_selectByType_TT_T_L0, _Collection_OrderedSet_selectByType_TT_T_L0);
-			checkSuperClass(_UniqueCollection_OrderedSet_T_T_L0, _Collection_OrderedSet_T_T_L0);
-			checkSuperClass(_UniqueCollection_Sequence_T_T_L0, _Collection_Sequence_T_T_L0);
-			checkSuperClass(_UniqueCollection_Set_flatten_T2_T_L0, _Collection_Set_flatten_T2_T_L0);
-			checkSuperClass(_UniqueCollection_Set_selectByKind_TT_T_L0, _Collection_Set_selectByKind_TT_T_L0);
-			checkSuperClass(_UniqueCollection_Set_selectByType_TT_T_L0, _Collection_Set_selectByType_TT_T_L0);
-			checkSuperClass(_UniqueCollection_Set_T_T_L0, _Collection_Set_T_T_L0);
-			checkSuperClass(_UniqueCollection_UniqueCollection_T_T_L0, _Collection_UniqueCollection_T_T_L0);
-			checkSuperClass(_Bag_Bag_collectNested_V_T_L0, _Collection_Bag_collectNested_V_T_L0);
-			checkSuperClass(_Bag_Bag_collect_V_T_L0, _Collection_Bag_collect_V_T_L0);
-			checkSuperClass(_Bag_Bag_flatten_T2_T_L0, _Collection_Bag_flatten_T2_T_L0);
-			checkSuperClass(_Bag_Bag_selectByKind_TT_T_L0, _Collection_Bag_selectByKind_TT_T_L0);
-			checkSuperClass(_Bag_Bag_selectByType_TT_T_L0, _Collection_Bag_selectByType_TT_T_L0);
-			checkSuperClass(_Bag_Bag_T_T_L0, _Collection_Bag_T_T_L0);
-			checkSuperClass(_Bag_CollectionType_T_L0, _Collection_CollectionType_T_L0);
-			checkSuperClass(_Bag_Collection_T_T_L0, _Collection_Collection_T_T_L0);
-			checkSuperClass(_Bag_MapType_T_L0, _Collection_MapType_T_L0);
-			checkSuperClass(_Bag_Map_collect_V2_T_L0, _Collection_Map_collect_V2_T_L0);
-			checkSuperClass(_Bag_Map_V_T_L0, _Collection_Map_V_T_L0);
-			checkSuperClass(_Bag_OclElement_T_L0, _Collection_OclElement_T_L0);
-			checkSuperClass(_Bag_OclInvalid_T_L0, _Collection_OclInvalid_T_L0);
-			checkSuperClass(_Bag_Set_collectNested_V_T_L0, _Collection_Set_collectNested_V_T_L0);
-			checkSuperClass(_Bag_Set_collect_V_T_L0, _Collection_Set_collect_V_T_L0);
-			addSuperClass(_OrderedSet, _OrderedCollection_OrderedSet_T_T_L0);
-			addSuperClass(_OrderedSet, _UniqueCollection_OrderedSet_T_T_L0);
-			addSuperClass(_Sequence, _OrderedCollection_Sequence_T_T_L0);
-			addSuperClass(_Set, _UniqueCollection_Set_T_T_L0);
-			it_Bag_collectNested.setType(_Bag_Bag_collectNested_V_T_L0);
-			createIterator(it_Bag_collectNested, "i", _Bag_T, false);
-			createParameter(it_Bag_collectNested, "lambda", _Lambda_Bag_T_Bag_collectNested_V, false);
-			it_Bag_collect.setType(_Bag_Bag_collect_V_T_L0);
-			createIterator(it_Bag_collect, "i", _Bag_T, false);
-			createParameter(it_Bag_collect, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
-			it_Bag_reject.setType(_Bag_Bag_T_T_L0);
-			createIterator(it_Bag_reject, "i", _Bag_T, false);
-			createParameter(it_Bag_reject, "lambda", _Lambda_Bag_T_Boolean, true);
-			it_Bag_select.setType(_Bag_Bag_T_T_L0);
-			createIterator(it_Bag_select, "i", _Bag_T, false);
-			createParameter(it_Bag_select, "lambda", _Lambda_Bag_T_Boolean, true);
-			it_Map_collect.setType(_Bag_Map_collect_V2_T_L0);
-			createIterator(it_Map_collect, "k", _Map_K, false);
-			createParameter(it_Map_collect, "lambda", _Lambda_Map_K_Map_collect_V2, false);
-			it_Set_collectNested.setType(_Bag_Set_collectNested_V_T_L0);
-			createIterator(it_Set_collectNested, "i", _Set_T, false);
-			createParameter(it_Set_collectNested, "lambda", _Lambda_Set_T_Set_collectNested_V, false);
-			it_Set_collect.setType(_Bag_Set_collect_V_T_L0);
-			createIterator(it_Set_collect, "i", _Set_T, false);
-			createParameter(it_Set_collect, "lambda", _Lambda_Set_T_Set_collect_V, false);
-			op_Bag_excluding.setType(_Bag_Bag_T_T_L0);
-			createParameter(op_Bag_excluding, "object", _Bag_T, false);
-			op_Bag_excludingAll.setType(_Bag_Bag_T_T_L0);
-			createParameter(op_Bag_excludingAll, "objects", _Collection_Bag_T_T_L0, true);
-			op_Bag_flatten.setType(_Bag_Bag_flatten_T2_T_L0);
-			op_Bag_including.setType(_Bag_Bag_T_T_L0);
-			createParameter(op_Bag_including, "object", _Bag_T, false);
-			op_Bag_includingAll.setType(_Bag_Bag_T_T_L0);
-			createParameter(op_Bag_includingAll, "objects", _Collection_Bag_T_T_L0, true);
-			op_Bag_selectByKind.setType(_Bag_Bag_selectByKind_TT_T_L0);
-			createParameter(op_Bag_selectByKind, "type", _Bag_selectByKind_TT, true).setIsTypeof(true);
-			op_Bag_selectByType.setType(_Bag_Bag_selectByType_TT_T_L0);
-			createParameter(op_Bag_selectByType, "type", _Bag_selectByType_TT, true).setIsTypeof(true);
-			op_Collection_asBag.setType(_Bag_Collection_T_T_L0);
-			op_Collection_intersection.setType(_Bag_Collection_T_T_L0);
-			createParameter(op_Collection_intersection, "c", _Collection_Collection_T_T_L0, true);
-			op_Collection_union.setType(_Bag_Collection_T_T_L0);
-			createParameter(op_Collection_union, "c", _Collection_Collection_T_T_L0, true);
-			op_Map_values.setType(_Bag_Map_V_T_L0);
-			op_UniqueCollection__neg_.setType(_UniqueCollection_UniqueCollection_T_T_L0);
-			op_UniqueCollection__neg_.setPrecedence(prec_ADDITIVE);
-			createParameter(op_UniqueCollection__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
-		}
-
-		private void installSlots8() {
-			_OrderedSet_Collection_T_T_L0 = getCollectionType(_OrderedSet, _Collection_T, true, 0, -1);
-			_OrderedSet_OrderedSet_flatten_T2_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_flatten_T2, true, 0, -1);
-			_OrderedSet_OrderedSet_selectByKind_TT_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_selectByKind_TT, true, 0, -1);
-			_OrderedSet_OrderedSet_selectByType_TT_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_selectByType_TT, true, 0, -1);
-			_OrderedSet_OrderedSet_T_T_L0 = getCollectionType(_OrderedSet, _OrderedSet_T, true, 0, -1);
-			_OrderedSet_Sequence_T_T_L0 = getCollectionType(_OrderedSet, _Sequence_T, true, 0, -1);
-			_OrderedSet_Set_T_T_L0 = getCollectionType(_OrderedSet, _Set_T, true, 0, -1);
-			_OrderedSet_UniqueCollection_T_T_L0 = getCollectionType(_OrderedSet, _UniqueCollection_T, true, 0, -1);
-			_Sequence_Integer_T_L0 = getCollectionType(_Sequence, _Integer, true, 0, -1);
-			_Sequence_String_T_L0 = getCollectionType(_Sequence, _String, true, 0, -1);
-			_Sequence_Bag_T_T_L0 = getCollectionType(_Sequence, _Bag_T, true, 0, -1);
-			_Sequence_Collection_T_T_L0 = getCollectionType(_Sequence, _Collection_T, true, 0, -1);
-			_Sequence_OrderedSet_collectNested_V_T_L0 = getCollectionType(_Sequence, _OrderedSet_collectNested_V, true, 0, -1);
-			_Sequence_OrderedSet_collect_V_T_L0 = getCollectionType(_Sequence, _OrderedSet_collect_V, true, 0, -1);
-			_Sequence_Sequence_collectNested_V_T_L0 = getCollectionType(_Sequence, _Sequence_collectNested_V, true, 0, -1);
-			_Sequence_Sequence_collect_V_T_L0 = getCollectionType(_Sequence, _Sequence_collect_V, true, 0, -1);
-			_Sequence_Sequence_flatten_T2_T_L0 = getCollectionType(_Sequence, _Sequence_flatten_T2, true, 0, -1);
-			_Sequence_Sequence_selectByKind_TT_T_L0 = getCollectionType(_Sequence, _Sequence_selectByKind_TT, true, 0, -1);
-			_Sequence_Sequence_selectByType_TT_T_L0 = getCollectionType(_Sequence, _Sequence_selectByType_TT, true, 0, -1);
-			_Sequence_Sequence_T_T_L0 = getCollectionType(_Sequence, _Sequence_T, true, 0, -1);
-			_Set_Tuple_T_L0 = getCollectionType(_Set, _Tuple, true, 0, -1);
-			_Set_Bag_T_T_L0 = getCollectionType(_Set, _Bag_T, true, 0, -1);
-			_Set_Collection_T_T_L0 = getCollectionType(_Set, _Collection_T, true, 0, -1);
-			_Set_Map_K_T_L0 = getCollectionType(_Set, _Map_K, true, 0, -1);
-			_Set_OclElement_T_L0 = getCollectionType(_Set, _OclElement, true, 0, -1);
-			_Set_OclSelf_T_L0 = getCollectionType(_Set, _OclSelf, true, 0, -1);
-			_Set_OclSelf_F_L0 = getCollectionType(_Set, _OclSelf, false, 0, -1);
-			_Set_Set_flatten_T2_T_L0 = getCollectionType(_Set, _Set_flatten_T2, true, 0, -1);
-			_Set_Set_selectByKind_TT_T_L0 = getCollectionType(_Set, _Set_selectByKind_TT, true, 0, -1);
-			_Set_Set_selectByType_TT_T_L0 = getCollectionType(_Set, _Set_selectByType_TT, true, 0, -1);
-			_Set_Set_T_T_L0 = getCollectionType(_Set, _Set_T, true, 0, -1);
-			_Set_UniqueCollection_T_T_L0 = getCollectionType(_Set, _UniqueCollection_T, true, 0, -1);
-		}
-
-		private void installSlots9a() {
-			_Lambda_Bag_T_Set = getLambdaType(_OclLambda, _Bag_T, _Set_Bag_T_T_L0);
-			_Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, _OrderedSet_T, _OrderedSet_OrderedSet_T_T_L0);
-			_Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, _Sequence_T, _OrderedSet_Sequence_T_T_L0);
-			_Lambda_Set_T_Set = getLambdaType(_OclLambda, _Set_T, _Set_Set_T_T_L0);
-			checkSuperClass(_OrderedSet_Collection_T_T_L0, _OrderedCollection_Collection_T_T_L0);
-			checkSuperClass(_OrderedSet_Collection_T_T_L0, _UniqueCollection_Collection_T_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_flatten_T2_T_L0, _OrderedCollection_OrderedSet_flatten_T2_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_flatten_T2_T_L0, _UniqueCollection_OrderedSet_flatten_T2_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T_L0, _OrderedCollection_OrderedSet_selectByKind_TT_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T_L0, _UniqueCollection_OrderedSet_selectByKind_TT_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T_L0, _OrderedCollection_OrderedSet_selectByType_TT_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T_L0, _UniqueCollection_OrderedSet_selectByType_TT_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_T_T_L0, _OrderedCollection_OrderedSet_T_T_L0);
-			checkSuperClass(_OrderedSet_OrderedSet_T_T_L0, _UniqueCollection_OrderedSet_T_T_L0);
-			checkSuperClass(_OrderedSet_Sequence_T_T_L0, _OrderedCollection_Sequence_T_T_L0);
-			checkSuperClass(_OrderedSet_Sequence_T_T_L0, _UniqueCollection_Sequence_T_T_L0);
-			checkSuperClass(_OrderedSet_Set_T_T_L0, _OrderedCollection_Set_T_T_L0);
-			checkSuperClass(_OrderedSet_Set_T_T_L0, _UniqueCollection_Set_T_T_L0);
-			checkSuperClass(_OrderedSet_UniqueCollection_T_T_L0, _OrderedCollection_UniqueCollection_T_T_L0);
-			checkSuperClass(_OrderedSet_UniqueCollection_T_T_L0, _UniqueCollection_UniqueCollection_T_T_L0);
-			checkSuperClass(_Sequence_Integer_T_L0, _OrderedCollection_Integer_T_L0);
-			checkSuperClass(_Sequence_String_T_L0, _OrderedCollection_String_T_L0);
-			checkSuperClass(_Sequence_Bag_T_T_L0, _OrderedCollection_Bag_T_T_L0);
-			checkSuperClass(_Sequence_Collection_T_T_L0, _OrderedCollection_Collection_T_T_L0);
-			checkSuperClass(_Sequence_OrderedSet_collectNested_V_T_L0, _OrderedCollection_OrderedSet_collectNested_V_T_L0);
-			checkSuperClass(_Sequence_OrderedSet_collect_V_T_L0, _OrderedCollection_OrderedSet_collect_V_T_L0);
-			checkSuperClass(_Sequence_Sequence_collectNested_V_T_L0, _OrderedCollection_Sequence_collectNested_V_T_L0);
-			checkSuperClass(_Sequence_Sequence_collect_V_T_L0, _OrderedCollection_Sequence_collect_V_T_L0);
-			checkSuperClass(_Sequence_Sequence_flatten_T2_T_L0, _OrderedCollection_Sequence_flatten_T2_T_L0);
-			checkSuperClass(_Sequence_Sequence_selectByKind_TT_T_L0, _OrderedCollection_Sequence_selectByKind_TT_T_L0);
-			checkSuperClass(_Sequence_Sequence_selectByType_TT_T_L0, _OrderedCollection_Sequence_selectByType_TT_T_L0);
-			checkSuperClass(_Sequence_Sequence_T_T_L0, _OrderedCollection_Sequence_T_T_L0);
-			checkSuperClass(_Set_Tuple_T_L0, _UniqueCollection_Tuple_T_L0);
-			checkSuperClass(_Set_Bag_T_T_L0, _UniqueCollection_Bag_T_T_L0);
-			checkSuperClass(_Set_Collection_T_T_L0, _UniqueCollection_Collection_T_T_L0);
-			checkSuperClass(_Set_Map_K_T_L0, _UniqueCollection_Map_K_T_L0);
-			checkSuperClass(_Set_OclElement_T_L0, _UniqueCollection_OclElement_T_L0);
-			checkSuperClass(_Set_OclSelf_T_L0, _UniqueCollection_OclSelf_T_L0);
-			checkSuperClass(_Set_OclSelf_F_L0, _UniqueCollection_OclSelf_T_L0);
-			checkSuperClass(_Set_Set_flatten_T2_T_L0, _UniqueCollection_Set_flatten_T2_T_L0);
-			checkSuperClass(_Set_Set_selectByKind_TT_T_L0, _UniqueCollection_Set_selectByKind_TT_T_L0);
-			checkSuperClass(_Set_Set_selectByType_TT_T_L0, _UniqueCollection_Set_selectByType_TT_T_L0);
-			checkSuperClass(_Set_Set_T_T_L0, _UniqueCollection_Set_T_T_L0);
-		}
-
-		private void installSlots9b() {
-			checkSuperClass(_Set_UniqueCollection_T_T_L0, _UniqueCollection_UniqueCollection_T_T_L0);
-			it_Bag_sortedBy.setType(_Sequence_Bag_T_T_L0);
-			createIterator(it_Bag_sortedBy, "i", _Bag_T, false);
-			createParameter(it_Bag_sortedBy, "lambda", _Lambda_Bag_T_OclAny, false);
-			it_Collection_sortedBy.setType(_Sequence_Collection_T_T_L0);
-			createIterator(it_Collection_sortedBy, "i", _Collection_T, false);
-			createParameter(it_Collection_sortedBy, "lambda", _Lambda_Collection_T_OclAny, false);
-			it_OrderedSet_collectNested.setType(_Sequence_OrderedSet_collectNested_V_T_L0);
-			createIterator(it_OrderedSet_collectNested, "i", _OrderedSet_T, false);
-			createParameter(it_OrderedSet_collectNested, "lambda", _Lambda_OrderedSet_T_OrderedSet_collectNested_V, false);
-			it_OrderedSet_collect.setType(_Sequence_OrderedSet_collect_V_T_L0);
-			createIterator(it_OrderedSet_collect, "i", _OrderedSet_T, false);
-			createParameter(it_OrderedSet_collect, "lambda", _Lambda_OrderedSet_T_OrderedSet_collect_V, false);
-			it_OrderedSet_reject.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createIterator(it_OrderedSet_reject, "i", _OrderedSet_T, false);
-			createParameter(it_OrderedSet_reject, "lambda", _Lambda_OrderedSet_T_Boolean, true);
-			it_OrderedSet_select.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createIterator(it_OrderedSet_select, "i", _OrderedSet_T, false);
-			createParameter(it_OrderedSet_select, "lambda", _Lambda_OrderedSet_T_Boolean, true);
-			it_OrderedSet_sortedBy.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createIterator(it_OrderedSet_sortedBy, "i", _OrderedSet_T, false);
-			createParameter(it_OrderedSet_sortedBy, "lambda", _Lambda_OrderedSet_T_OclAny, false);
-			it_Sequence_collectNested.setType(_Sequence_Sequence_collectNested_V_T_L0);
-			createIterator(it_Sequence_collectNested, "i", _Sequence_T, false);
-			createParameter(it_Sequence_collectNested, "lambda", _Lambda_Sequence_T_Sequence_collectNested_V, false);
-			it_Sequence_collect.setType(_Sequence_Sequence_collect_V_T_L0);
-			createIterator(it_Sequence_collect, "i", _Sequence_T, false);
-			createParameter(it_Sequence_collect, "lambda", _Lambda_Sequence_T_Sequence_collect_V, false);
-			it_Sequence_reject.setType(_Sequence_Sequence_T_T_L0);
-			createIterator(it_Sequence_reject, "i", _Sequence_T, false);
-			createParameter(it_Sequence_reject, "lambda", _Lambda_Sequence_T_Boolean, true);
-			it_Sequence_select.setType(_Sequence_Sequence_T_T_L0);
-			createIterator(it_Sequence_select, "i", _Sequence_T, false);
-			createParameter(it_Sequence_select, "lambda", _Lambda_Sequence_T_Boolean, true);
-			it_Sequence_sortedBy.setType(_Sequence_Sequence_T_T_L0);
-			createIterator(it_Sequence_sortedBy, "i", _Sequence_T, false);
-			createParameter(it_Sequence_sortedBy, "lambda", _Lambda_Sequence_T_OclAny, false);
-			it_Set_reject.setType(_Set_Set_T_T_L0);
-			createIterator(it_Set_reject, "i", _Set_T, false);
-			createParameter(it_Set_reject, "lambda", _Lambda_Set_T_Boolean, true);
-			it_Set_select.setType(_Set_Set_T_T_L0);
-			createIterator(it_Set_select, "i", _Set_T, false);
-			createParameter(it_Set_select, "lambda", _Lambda_Set_T_Boolean, true);
-			it_Set_sortedBy.setType(_OrderedSet_Set_T_T_L0);
-			createIterator(it_Set_sortedBy, "i", _Set_T, false);
-			createParameter(it_Set_sortedBy, "lambda", _Lambda_Set_T_OclAny, false);
-			it_UniqueCollection_sortedBy.setType(_OrderedSet_UniqueCollection_T_T_L0);
-			createIterator(it_UniqueCollection_sortedBy, "i", _UniqueCollection_T, false);
-			createParameter(it_UniqueCollection_sortedBy, "lambda", _Lambda_UniqueCollection_T_OclAny, false);
-			op_Boolean_allInstances.setType(_Set_OclSelf_T_L0);
-			createParameter(op_Boolean_allInstances, "dummy", _Integer, true);
-			op_String_characters.setType(_Sequence_String_T_L0);
-			op_String_tokenize.setType(_Sequence_String_T_L0);
-			op_String_tokenize_1.setType(_Sequence_String_T_L0);
-			createParameter(op_String_tokenize_1, "delimiters", _String, true);
-			op_String_tokenize_2.setType(_Sequence_String_T_L0);
-			createParameter(op_String_tokenize_2, "delimiters", _String, true);
-			createParameter(op_String_tokenize_2, "returnDelimiters", _Boolean, true);
-			op_BooleanType_allInstances.setType(_Set_OclSelf_T_L0);
-			op_Class_allInstances.setType(_Set_OclSelf_T_L0);
-			op_Collection_asOrderedSet.setType(_OrderedSet_Collection_T_T_L0);
-			op_Collection_asSequence.setType(_Sequence_Collection_T_T_L0);
-			op_Collection_asSet.setType(_Set_Collection_T_T_L0);
-			op_Collection_intersection_1.setType(_Set_Collection_T_T_L0);
-			createParameter(op_Collection_intersection_1, "u", _UniqueCollection_Collection_T_T_L0, true);
-			op_Collection_product.setType(_Set_Tuple_T_L0);
-			createParameter(op_Collection_product, "c2", _Collection_Collection_product_T2_T_L0, true);
-			op_Enumeration_allInstances.setType(_Set_OclSelf_T_L0);
-			op_InvalidType_allInstances.setType(_Set_OclSelf_T_L0);
-			op_Map_keys.setType(_Set_Map_K_T_L0);
-			op_OclAny_oclAsSet.setType(_Set_OclSelf_T_L0);
-			op_OclAny_oclTypes.setType(_Set_OclSelf_T_L0);
-			op_OclElement_allInstances.setType(_Set_OclSelf_T_L0);
-			createParameter(op_OclElement_allInstances, "dummy", _Integer, true);
-			op_OclElement_oclContents.setType(_Set_OclElement_T_L0);
-			op_OclElement_oclExtensions.setType(_Set_OclElement_T_L0);
-			op_OclElement_oclExtensions_1.setType(_Set_OclElement_T_L0);
-			createParameter(op_OclElement_oclExtensions_1, "stereotype", _OclStereotype, true);
-			op_OclElement_oclModelTypes.setType(_Set_OclSelf_T_L0);
-			op_OclEnumeration_allInstances.setType(_Set_OclSelf_T_L0);
-			createParameter(op_OclEnumeration_allInstances, "dummy", _Integer, true);
-			op_OclInvalid_allInstances.setType(_Set_OclSelf_T_L0);
-			createParameter(op_OclInvalid_allInstances, "dummy", _Integer, true);
-			op_OclInvalid_oclAsSet.setType(_Set_OclSelf_T_L0);
-			op_OclStereotype_allInstances.setType(_Set_OclSelf_T_L0);
-			createParameter(op_OclStereotype_allInstances, "dummy", _Integer, true);
-			op_OclVoid_allInstances.setType(_Set_OclSelf_F_L0);
-			createParameter(op_OclVoid_allInstances, "dummy", _Integer, true);
-			op_OclVoid_oclAsSet.setType(_Set_OclSelf_T_L0);
-			op_OclVoid_oclTypes.setType(_Set_OclSelf_T_L0);
-			op_OrderedSet__neg_.setType(_OrderedSet_OrderedSet_T_T_L0);
-			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
-			createParameter(op_OrderedSet__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
-			op_OrderedSet_append.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_append, "object", _OrderedSet_T, false);
-			op_OrderedSet_appendAll.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_appendAll, "objects", _OrderedCollection_OrderedSet_T_T_L0, true);
-			op_OrderedSet_excluding.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_excluding, "object", _OrderedSet_T, false);
-			op_OrderedSet_excludingAll.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_excludingAll, "objects", _Collection_OrderedSet_T_T_L0, true);
 			op_OrderedSet_flatten.setType(_OrderedSet_OrderedSet_flatten_T2_T_L0);
-			op_OrderedSet_including.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_including, "object", _OrderedSet_T, false);
-			op_OrderedSet_includingAll.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_includingAll, "objects", _Collection_OrderedSet_T_T_L0, true);
-			op_OrderedSet_insertAt.setType(_OrderedSet_OrderedSet_T_T_L0);
-			op_OrderedSet_insertAt.setIsInvalidating(true);
-			createParameter(op_OrderedSet_insertAt, "index", _Integer, true);
-			createParameter(op_OrderedSet_insertAt, "object", _OrderedSet_T, false);
-			op_OrderedSet_prepend.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_prepend, "object", _OrderedSet_T, false);
-			op_OrderedSet_prependAll.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createParameter(op_OrderedSet_prependAll, "objects", _OrderedCollection_OrderedSet_T_T_L0, true);
-			op_OrderedSet_reverse.setType(_OrderedSet_OrderedSet_T_T_L0);
 			op_OrderedSet_selectByKind.setType(_OrderedSet_OrderedSet_selectByKind_TT_T_L0);
 			createParameter(op_OrderedSet_selectByKind, "type", _OrderedSet_selectByKind_TT, true).setIsTypeof(true);
 			op_OrderedSet_selectByType.setType(_OrderedSet_OrderedSet_selectByType_TT_T_L0);
 			createParameter(op_OrderedSet_selectByType, "type", _OrderedSet_selectByType_TT, true).setIsTypeof(true);
-			op_OrderedSet_subOrderedSet.setType(_OrderedSet_OrderedSet_T_T_L0);
-			op_OrderedSet_subOrderedSet.setIsInvalidating(true);
-			createParameter(op_OrderedSet_subOrderedSet, "lower", _Integer, true);
-			createParameter(op_OrderedSet_subOrderedSet, "upper", _Integer, true);
-			op_Sequence_append.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_append, "object", _Sequence_T, false);
-			op_Sequence_appendAll.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_appendAll, "objects", _OrderedCollection_Sequence_T_T_L0, true);
-			op_Sequence_excluding.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_excluding, "object", _Sequence_T, false);
-			op_Sequence_excludingAll.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_excludingAll, "objects", _Collection_Sequence_T_T_L0, true);
 			op_Sequence_flatten.setType(_Sequence_Sequence_flatten_T2_T_L0);
-			op_Sequence_including.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_including, "object", _Sequence_T, false);
-			op_Sequence_includingAll.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_includingAll, "objects", _Collection_Sequence_T_T_L0, true);
-			op_Sequence_insertAt.setType(_Sequence_Sequence_T_T_L0);
-			op_Sequence_insertAt.setIsInvalidating(true);
-			createParameter(op_Sequence_insertAt, "index", _Integer, true);
-			createParameter(op_Sequence_insertAt, "object", _Sequence_T, false);
-			op_Sequence_prepend.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_prepend, "object", _Sequence_T, false);
-			op_Sequence_prependAll.setType(_Sequence_Sequence_T_T_L0);
-			createParameter(op_Sequence_prependAll, "objects", _OrderedCollection_Sequence_T_T_L0, true);
-			op_Sequence_reverse.setType(_Sequence_Sequence_T_T_L0);
 			op_Sequence_selectByKind.setType(_Sequence_Sequence_selectByKind_TT_T_L0);
 			createParameter(op_Sequence_selectByKind, "type", _Sequence_selectByKind_TT, true).setIsTypeof(true);
 			op_Sequence_selectByType.setType(_Sequence_Sequence_selectByType_TT_T_L0);
 			createParameter(op_Sequence_selectByType, "type", _Sequence_selectByType_TT, true).setIsTypeof(true);
-			op_Sequence_subSequence.setType(_Sequence_Sequence_T_T_L0);
-			op_Sequence_subSequence.setIsInvalidating(true);
-			createParameter(op_Sequence_subSequence, "lower", _Integer, true);
-			createParameter(op_Sequence_subSequence, "upper", _Integer, true);
-			op_Set__neg_.setType(_Set_Set_T_T_L0);
-			op_Set__neg_.setPrecedence(prec_ADDITIVE);
-			createParameter(op_Set__neg_, "s", _UniqueCollection_OclAny_T_L0, true);
-			op_Set_excluding.setType(_Set_Set_T_T_L0);
-			createParameter(op_Set_excluding, "object", _Set_T, false);
-			op_Set_excludingAll.setType(_Set_Set_T_T_L0);
-			createParameter(op_Set_excludingAll, "objects", _Collection_Set_T_T_L0, true);
 			op_Set_flatten.setType(_Set_Set_flatten_T2_T_L0);
-			op_Set_including.setType(_Set_Set_T_T_L0);
-			createParameter(op_Set_including, "object", _Set_T, false);
-			op_Set_includingAll.setType(_Set_Set_T_T_L0);
-			createParameter(op_Set_includingAll, "objects", _Collection_Set_T_T_L0, true);
 			op_Set_selectByKind.setType(_Set_Set_selectByKind_TT_T_L0);
 			createParameter(op_Set_selectByKind, "type", _Set_selectByKind_TT, true).setIsTypeof(true);
 			op_Set_selectByType.setType(_Set_Set_selectByType_TT_T_L0);
 			createParameter(op_Set_selectByType, "type", _Set_selectByType_TT, true).setIsTypeof(true);
-			op_Stereotype_allInstances.setType(_Set_OclSelf_T_L0);
-			op_UniqueCollection_intersection.setType(_Set_UniqueCollection_T_T_L0);
-			createParameter(op_UniqueCollection_intersection, "c", _Collection_UniqueCollection_T_T_L0, true);
-			op_UniqueCollection_symmetricDifference.setType(_Set_UniqueCollection_T_T_L0);
-			createParameter(op_UniqueCollection_symmetricDifference, "s", _UniqueCollection_OclAny_T_L0, true);
-			op_UniqueCollection_union.setType(_Set_UniqueCollection_T_T_L0);
-			createParameter(op_UniqueCollection_union, "s", _UniqueCollection_UniqueCollection_T_T_L0, true);
-			op_VoidType_allInstances.setType(_Set_OclSelf_F_L0);
 		}
 
-		private void installSlots10() {
-			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
-			it_Bag_closure.setType(_Set_Bag_T_T_L0);
-			createIterator(it_Bag_closure, "i", _Bag_T, true);
-			createParameter(it_Bag_closure, "lambda", _Lambda_Bag_T_Set, false);
-			it_OrderedSet_closure.setType(_OrderedSet_OrderedSet_T_T_L0);
-			createIterator(it_OrderedSet_closure, "i", _OrderedSet_T, true);
-			createParameter(it_OrderedSet_closure, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
-			it_Sequence_closure.setType(_OrderedSet_Sequence_T_T_L0);
-			createIterator(it_Sequence_closure, "i", _Sequence_T, true);
-			createParameter(it_Sequence_closure, "lambda", _Lambda_Sequence_T_OrderedSet, false);
-			it_Set_closure.setType(_Set_Set_T_T_L0);
-			createIterator(it_Set_closure, "i", _Set_T, true);
-			createParameter(it_Set_closure, "lambda", _Lambda_Set_T_Set, false);
+		private void installSlots13() {
+			op_Collection_product.setType(_Set_Tuple_T_L0);
+			createParameter(op_Collection_product, "c2", _Collection_Collection_product_T2_T_L0, true);
 		}
 
-		private void installSlots11() {
+		private void installSlots14() {
 		}
 
-		private void installSlots12() {
+		private void installSlots15() {
+		}
+
+		private void installSlots16() {
+		}
+
+		private void installSlots17() {
+		}
+
+		private void installSlots18() {
 		}
 
 		private void installProperties() {
@@ -3066,13 +2916,13 @@ public class OCLstdlib extends ASResourceImpl
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
 			installComment(property, "Evaluates to the lower bound on the number of collection elements.");
-			ownedProperties.add(property = createProperty("upper", _Integer));
+			ownedProperties.add(property = createProperty("upper", _UnlimitedNatural));
 			property.setIsResolveProxies(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 			installComment(property, "Evaluates to the upper bound on the number of collection elements.");
 
-			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
+			ownedProperties = _Map.getOwnedProperties();
 			ownedProperties.add(property = createProperty("keyType", _Map_K));
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);

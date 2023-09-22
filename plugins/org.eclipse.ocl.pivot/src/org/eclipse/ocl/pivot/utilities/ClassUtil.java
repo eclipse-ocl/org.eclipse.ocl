@@ -373,4 +373,58 @@ public class ClassUtil
 	public static @NonNull String toString(Object anObject) {
 		return String.valueOf(anObject);
 	}
+
+	/**
+	 * Verify that comparator satisfies its general contract wrt elements. REturns true if ok.
+	 * (Does not validate the Exception throwing option.)
+	 * Beware this validation has cubic cost wrt elements so should only be used for debugging, hence the assert failures.
+	 */
+	public static <T> boolean validateGeneralContract(@NonNull List<@NonNull T> elements, @NonNull Comparator<@NonNull T> comparator) {
+		for (@NonNull T x : elements) {
+			for (@NonNull T y : elements) {
+				int diff_x_y = comparator.compare(x, y);
+				int diff_y_x = comparator.compare(y, x);
+			    // The implementor must ensure that {@code sgn(compare(x, y)) ==
+			    // -sgn(compare(y, x))} for all {@code x} and {@code y}.  (This
+			    // implies that {@code compare(x, y)} must throw an exception if and only
+			    // if {@code compare(y, x)} throws an exception.)<p>
+				if (!(Integer.signum(diff_x_y) == -Integer.signum(diff_y_x))) {
+					diff_x_y = comparator.compare(x, y);
+					diff_y_x = comparator.compare(y, x);
+					return false;
+				}
+				for (@NonNull T z : elements) {
+				    // The implementor must also ensure that the relation is transitive:
+				    // {@code ((compare(x, y)>0) && (compare(y, z)>0))} implies
+				    // {@code compare(x, z)>0}.<p>
+					if (diff_x_y > 0) {
+						int diff_y_z = comparator.compare(y, z);
+						if (diff_y_z > 0) {
+							int diff_x_z = comparator.compare(x, z);
+							if (!(diff_x_z > 0)) {
+								diff_x_y = comparator.compare(x, y);
+								diff_y_z = comparator.compare(y, z);
+								diff_x_z = comparator.compare(x, z);
+								return false;
+							}
+						}
+					}
+				    // Finally, the implementor must ensure that {@code compare(x, y)==0}
+				    // implies that {@code sgn(compare(x, z))==sgn(compare(y, z))} for all
+				    // {@code z}.<p>
+					if (diff_x_y == 0) {
+						int diff_x_z = comparator.compare(x, z);
+						int diff_y_z = comparator.compare(y, z);
+						if (!(Integer.signum(diff_x_z) == Integer.signum(diff_y_z))) {
+							diff_x_y = comparator.compare(x, y);
+							diff_y_z = comparator.compare(y, z);
+							diff_x_z = comparator.compare(x, z);
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

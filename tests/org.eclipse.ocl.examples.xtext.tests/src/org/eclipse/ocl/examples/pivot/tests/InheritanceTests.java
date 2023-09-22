@@ -14,7 +14,6 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -24,6 +23,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -48,7 +48,7 @@ public class InheritanceTests extends PivotTestSuite
 		String libraryClone = "http://www.eclipse.org/ocl/2015/LibraryClone";
 		StandardLibraryContribution mutableLibrary = new OCLstdlib.Loader() {
 			@Override
-			public @NonNull Resource getResource() {
+			public @NonNull ASResource getResource() {
 				return OCLstdlib.create(libraryClone + PivotConstants.OCL_AS_FILE_EXTENSION);
 			}
 		};

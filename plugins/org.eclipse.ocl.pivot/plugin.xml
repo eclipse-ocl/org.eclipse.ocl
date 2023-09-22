@@ -210,6 +210,8 @@
       	class="org.eclipse.ocl.pivot.internal.validation.OCL_Import_AnnotationValidator"/>
       <validator uri="http://www.eclipse.org/OCL/MetaAnnotation"
       	class="org.eclipse.ocl.pivot.internal.validation.OCL_MetaAnnotation_AnnotationValidator"/>
+      <validator uri="http://www.eclipse.org/OCL-EPackage-Import"
+      	class="org.eclipse.ocl.pivot.internal.validation.OCL_Import_AnnotationValidator"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">

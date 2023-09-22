@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -457,6 +458,10 @@ public class PivotUtilInternal //extends PivotUtil
 		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
 	}
 
+	public static @NonNull List<@NonNull Element> getOwnedAnnotationsList(@NonNull NamedElement namedElement) {
+		return ClassUtil.nullFree(namedElement.getOwnedAnnotations());
+	}
+
 	/**
 	 * @since 1.3
 	 */
@@ -639,6 +644,9 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
 			return PivotConstants.DERIVATION_NAME;
+		}
+		else if (eContainingFeature == null) {
+			return "orphan";
 		}
 		return "";
 	}

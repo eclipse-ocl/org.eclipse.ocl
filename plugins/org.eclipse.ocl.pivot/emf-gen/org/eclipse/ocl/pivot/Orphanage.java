@@ -57,6 +57,11 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	void gc();
 
 	/**
+	 * Return the templateArguments specialization of genericClass, which should not be a built-in generic such as Collection/Lambda/Map.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getClassType(org.eclipse.ocl.pivot.@NonNull Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments);
+
+	/**
 	 * Return the specialized collection type for a collection type characteristics.
 	 */
 	@NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);

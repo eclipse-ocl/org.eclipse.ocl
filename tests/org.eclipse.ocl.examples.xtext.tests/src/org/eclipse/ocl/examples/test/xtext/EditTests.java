@@ -264,6 +264,10 @@ public class EditTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	//
+	//	This test can be troublesome when preceeded by a UMLValidateTest that leaves a ComposedEValidor in the EValidatorRegistry. This results in
+	//	an 'extra' PivotEObjectValidator usage that loads the standard OCLstdlib with potentially conflicting OclAny etc. See Bug 510503.
+	//
 	public void testEdit_Paste_OCLstdlib_541380() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
@@ -292,10 +296,10 @@ public class EditTests extends XtextTestCase
 				+ "	abstract type OclType conformsTo OclElement {}\n"
 				+ "	type OclVoid : VoidType conformsTo OclAny {}\n"
 				+ "	type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"
-				+ "	type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"
+				+ "	type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) {}\n"
 				+ "	type Real : PrimitiveType conformsTo OclAny => 'org.eclipse.ocl.pivot.values.RealValue' {}\n"
-				+ "	type Sequence(T) : SequenceType conformsTo Collection(T) {}\n"
-				+ "	type Set(T) : SetType conformsTo Collection(T) {}\n"
+				+ "	type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {}\n"
+				+ "	type Set(T) : SetType conformsTo UniqueCollection(T) {}\n"
 				+ "	type String : PrimitiveType conformsTo OclAny => 'java.lang.String' {}\n"
 				+ "	type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}\n"
 				+ "	type UnlimitedNatural : PrimitiveType conformsTo Integer => 'org.eclipse.ocl.pivot.values.UnlimitedNaturalValue' {}\n"

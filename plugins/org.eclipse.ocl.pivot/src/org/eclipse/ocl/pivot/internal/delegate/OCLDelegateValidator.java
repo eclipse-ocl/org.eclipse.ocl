@@ -132,7 +132,7 @@ public class OCLDelegateValidator extends EObjectValidator
 				if (constraint != null) {
 					for (String validationDelegate : validationDelegates) {
 						if (validationDelegate != null) {
-							String expression = AnnotationUtil.getEAnnotationValue(eClass, validationDelegate, constraint);
+							String expression = AnnotationUtil.basicGetEAnnotationValue(eClass, validationDelegate, constraint);
 							if (expression != null) {
 								result &= validateDelegatedConstraint(eClass, eObject, diagnostics, context, validationDelegate,
 									constraint, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
@@ -220,7 +220,7 @@ public class OCLDelegateValidator extends EObjectValidator
 				if ((eOperation != null) && EcoreUtil.isInvariant(eOperation)) {
 					for (String validationDelegate : validationDelegates) {
 						if (validationDelegate != null) {
-							String expression = AnnotationUtil.getEAnnotationValue(eOperation, validationDelegate, "body");
+							String expression = AnnotationUtil.basicGetEAnnotationValue(eOperation, validationDelegate, "body");
 							if (expression != null) {
 								result &= validateDelegatedInvariant(eClass, eObject, diagnostics, context,
 									validationDelegate, eOperation, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);

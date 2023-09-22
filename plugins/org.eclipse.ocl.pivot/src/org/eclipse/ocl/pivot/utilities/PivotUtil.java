@@ -674,7 +674,7 @@ public class PivotUtil
 		Class<?> instanceClass = eDataType.getInstanceClass();
 		boolean isBoolean = (instanceClass == Boolean.class) || (instanceClass == boolean.class);
 		PrimitiveType pivotType = isBoolean ? PivotFactory.eINSTANCE.createBooleanType() : PivotFactory.eINSTANCE.createPrimitiveType();
-		pivotType.setName(eDataType.getName());
+		pivotType.setName(NameUtil.getOriginalName(eDataType));
 		((PivotObjectImpl)pivotType).setESObject(eDataType);
 		return pivotType;
 	}

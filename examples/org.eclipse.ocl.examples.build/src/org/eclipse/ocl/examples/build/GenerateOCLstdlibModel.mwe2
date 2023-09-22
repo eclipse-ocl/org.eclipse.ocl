@@ -52,6 +52,7 @@ Workflow {
     	excludedEClassifierName = "Stereotype"
     	excludedEClassifierName = "Type"
     	excludedEClassifierName = "VoidType"
+    	scheduleLogFile = "/org.eclipse.ocl.pivot/model-gen/OCLstdlib.txt"
     }
     component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/oclstdlib.genmodel"

@@ -16,12 +16,15 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -30,7 +33,10 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -38,7 +44,9 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -95,7 +103,6 @@ public class PivotLUSSIDs extends LUSSIDs
 	@Override
 	protected @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, boolean normalizeTemplateParameters) {
 		assert asResource == element.eResource();
-		int localId = 0;
 		if (!(element instanceof NamedElement)) {
 			return null;
 		}
@@ -103,6 +110,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		if (name == null) {
 			return null;
 		}
+		int localId = 0;
 		localId += name.hashCode();
 		if (element instanceof TemplateableElement) {
 			int templateIndexMultiplier = TEMPLATE_BINDING_MULTIPLIER;
@@ -144,6 +152,13 @@ public class PivotLUSSIDs extends LUSSIDs
 					localId += MAP_VALUES_ARE_NULL_FREE_MULTIPLIER;
 				}
 			}
+			else if (element instanceof TupleType) {
+				TupleType tupleType = (TupleType)element;
+				for (Property part : tupleType.getOwnedProperties()) {
+					localId += TUPLE_TYPE_NAME_MULTIPLIER * part.getName().hashCode();
+					localId += TUPLE_TYPE_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getType(part), normalizeTemplateParameters);
+				}
+			}
 			else if (element instanceof LambdaType) {
 				LambdaType lambdaType = (LambdaType)element;
 				localId += LAMBDA_TYPE_CONTEXT_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getContextType(lambdaType), normalizeTemplateParameters);
@@ -160,6 +175,36 @@ public class PivotLUSSIDs extends LUSSIDs
 			}
 			else if (element instanceof Operation) {
 				localId += computeParametersLUSSID(as2id, PivotUtil.getOwnedParameters((Operation)element));
+			}
+			else if (element instanceof AnyType) {
+				;
+			}
+			else if (element instanceof Enumeration) {
+				;
+			}
+			else if (element instanceof InvalidType) {
+				;
+			}
+			else if (element instanceof PrimitiveType) {
+				;
+			}
+			else if (element instanceof SelfType) {
+				;
+			}
+			else if (element instanceof VoidType) {
+				;
+			}
+			else if (element instanceof WildcardType) {
+				;
+			}
+			else if (element.eClass() == PivotPackage.Literals.CLASS) {
+				;
+			}
+			else if (element.eClass() == PivotPackage.Literals.DATA_TYPE) {
+				;
+			}
+			else {
+				System.err.println("computeLocalLUSSID omits " + element.eClass().getName());
 			}
 		}
 		else if (element instanceof Property) {

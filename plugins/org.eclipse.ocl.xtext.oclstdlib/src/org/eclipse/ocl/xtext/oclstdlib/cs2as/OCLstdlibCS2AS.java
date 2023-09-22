@@ -26,11 +26,16 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.basecs.ClassCS;
+import org.eclipse.ocl.xtext.basecs.PackageCS;
+import org.eclipse.ocl.xtext.basecs.RootPackageCS;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
@@ -115,13 +120,54 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 		return new OCLstdlibCSPreOrderVisitor(converter);
 	}
 
+	private boolean hasOclAny(@NonNull BaseCSResource csResource) {
+		for (@NonNull EObject eObject : csResource.getContents()) {
+			if (eObject instanceof RootPackageCS) {
+				RootPackageCS csRootPackage = (RootPackageCS)eObject;
+				if (csRootPackage.getOwnedImports().isEmpty()) {
+					for (@NonNull PackageCS csPackage : csRootPackage.getOwnedPackages()) {
+						for (@NonNull ClassCS csClass : csPackage.getOwnedClasses()) {
+							if (TypeId.OCL_ANY_NAME.equals(csClass.getName())) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
-		metamodelManager.setLibraryLoadInProgress(metamodelManager.getLibraryResource() == null);
+		String dynamicLibraryContent = null;
+		if (hasOclAny(csResource)) { // definition of OclAny requires dynamic loading of library to displace built-in library
+			assert !metamodelManager.isLibraryLoadInProgress();
+			metamodelManager.setLibraryLoadInProgress(true);
+			dynamicLibraryContent = "$dynamicLibraryContent$";
+			metamodelManager.getStandardLibrary().setDefaultStandardLibraryURI(dynamicLibraryContent);
+			StandardLibraryContribution.REGISTRY.put(dynamicLibraryContent, new StandardLibraryContribution()
+			{
+				@Override
+				public @NonNull StandardLibraryContribution getContribution() {
+					return this;
+				}
+
+				@Override
+				public @NonNull ASResource getResource() {
+					return asResource;
+				}
+			});
+		}
+	//	metamodelManager.setLibraryLoadInProgress(metamodelManager.getLibraryResource() == null);
 		try {
 			super.update(diagnosticsConsumer);
 		} finally {
-			metamodelManager.setLibraryLoadInProgress(false);
+		//	metamodelManager.setLibraryLoadInProgress(false);
+			if (dynamicLibraryContent != null) {
+				metamodelManager.setLibraryLoadInProgress(false);
+				StandardLibraryContribution.REGISTRY.remove(dynamicLibraryContent);
+			}
 		}
 	}
 }

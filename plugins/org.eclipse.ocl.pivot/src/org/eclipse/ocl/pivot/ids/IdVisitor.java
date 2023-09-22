@@ -29,6 +29,7 @@ public interface IdVisitor<R>
 	R visitNsURIPackageId(@NonNull NsURIPackageId id);
 	R visitNullId(@NonNull OclVoidTypeId id);
 	R visitOperationId(@NonNull OperationId id);
+	R visitOverloadId(@NonNull OverloadId id);
 	R visitPrimitiveTypeId(@NonNull PrimitiveTypeId id);
 	R visitPropertyId(@NonNull PropertyId id);
 	R visitRootPackageId(@NonNull RootPackageId id);
