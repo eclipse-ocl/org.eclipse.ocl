@@ -840,6 +840,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 			String kind = AnnotationUtil.basicGetEAnnotationValue(eTypedElement, AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+			if (kind == null) {
+				kind = AnnotationUtil.basicGetEAnnotationValue(eTypedElement, AnnotationUtil.legacy_AS_LIBRARY_ANNOTATION_SOURCE, AnnotationUtil.COLLECTION_KIND);
+			}
 			CollectionType genericCollectionType = null;
 			if (kind != null) {
 				if ("Collection".equals(kind)) {

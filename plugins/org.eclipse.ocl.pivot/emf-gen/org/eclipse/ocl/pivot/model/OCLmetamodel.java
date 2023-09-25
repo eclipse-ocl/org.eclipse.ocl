@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -238,7 +239,7 @@ public class OCLmetamodel extends ASResourceImpl
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
 			metamodelResource.getContents().add(root);
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
-			createAnnotation(pivot, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
+			createAnnotation(pivot, AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE);
 			installPackages();
 			installSlots0();
 			installSlots1();

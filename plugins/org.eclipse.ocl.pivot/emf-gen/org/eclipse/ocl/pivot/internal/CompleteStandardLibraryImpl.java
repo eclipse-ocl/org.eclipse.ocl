@@ -1194,10 +1194,10 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		Resource asResource = asModel.eResource();
 		assert asResource != null;
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		if (AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) == null) {
+		if (!AnnotationUtil.isASLibrary(asPackage)) {
 			metamodelManager.getASResourceSet().getResources().add(asResource);
 		}
-		if (AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null) {
+		if (AnnotationUtil.isASMetamodel(asPackage)) {
 			metamodelManager.setASmetamodel(asPackage);		// Standard meta-model
 		}
 		//		asResourceSet.getResources().add(asResource);

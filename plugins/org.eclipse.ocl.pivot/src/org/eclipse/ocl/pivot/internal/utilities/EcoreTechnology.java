@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 
 public class EcoreTechnology extends AbstractTechnology
 {
@@ -41,7 +41,7 @@ public class EcoreTechnology extends AbstractTechnology
 		// assert !"http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI()); -- occurs for static profile
 		// assert !"http://www.eclipse.org/uml2/5.0.0/Types".equals(ePackage.getNsURI());
 		RootPackageId metamodel = null;
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+		if (AnnotationUtil.isASMetamodel(ePackage)) {
 			metamodel = IdManager.METAMODEL;
 		}
 		else {

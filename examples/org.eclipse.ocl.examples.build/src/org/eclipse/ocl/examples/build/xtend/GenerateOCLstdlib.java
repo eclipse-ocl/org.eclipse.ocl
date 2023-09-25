@@ -49,9 +49,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -319,7 +319,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				//			}
 				if (isASLibrary) {
 					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+					eAnnotation.setSource(AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE);
 					ePackage.getEAnnotations().add(eAnnotation);
 				}
 				log.info("Saving '" + ecoreURI + "'");

@@ -193,7 +193,7 @@ mapping UML2Ecore::CreatePackage::createPackage() : Ecore::EPackage
 --	};
 	if (self.isASmetamodel) {
 		result.eAnnotations += object Ecore::EAnnotation {
-			source := 'http://www.eclipse.org/OCL/ASMetamodel';
+			source := 'http://www.eclipse.org/OCL-EPackage-ASMetamodel';
 		};
 	};
 	result.map installNullFree(oldPackages, isNullFree);

@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
@@ -172,8 +171,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	 * @since 1.17
 	 */
 	public boolean isLibrary(@NonNull EPackage ePackage) {
-		EAnnotation asLibraryAnnotation = ePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
-		return asLibraryAnnotation != null;
+		return AnnotationUtil.isASLibrary(ePackage);
 	}
 
 	public boolean isRequired(@NonNull EPackage ePackage) {

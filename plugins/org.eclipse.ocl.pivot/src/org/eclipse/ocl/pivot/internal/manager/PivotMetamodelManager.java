@@ -1524,7 +1524,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 			asLibraries.add(asLibrary);
-			if (AnnotationUtil.basicGetAnnotation(asLibrary, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+			if (AnnotationUtil.isASLibrary(asLibrary)) {
 				asLibraryResource = asLibrary.eResource();
 				standardLibrary.defineLibraryTypes(PivotUtil.getOwnedClasses(asLibrary));
 				return;
@@ -1994,7 +1994,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void setASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		assert AnnotationUtil.basicGetAnnotation(asPackage, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null;
+		assert AnnotationUtil.isASMetamodel(asPackage);
 		asMetamodel = asPackage;
 		String uri = asMetamodel.getURI();
 		if (uri != null) {

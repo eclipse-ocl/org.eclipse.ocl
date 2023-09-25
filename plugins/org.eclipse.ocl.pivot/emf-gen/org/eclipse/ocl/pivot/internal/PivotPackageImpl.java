@@ -9905,8 +9905,8 @@ implements PivotPackage  {
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/OCL/ASMetamodel
-		createASMetamodelAnnotations();
+		// http://www.eclipse.org/OCL-EPackage-ASMetamodel
+		createOCLEPackageASMetamodelAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
 		// http://www.eclipse.org/OCL-EClassifier
@@ -9915,21 +9915,21 @@ implements PivotPackage  {
 		createPivotAnnotations();
 		// http://www.eclipse.org/uml2/2.0.0/UML
 		createUMLAnnotations();
-		// http://www.eclipse.org/OCL/Collection
-		createCollectionAnnotations();
+		// http://www.eclipse.org/OCL-Collection
+		createOCLCollectionAnnotations();
 		// http://www.eclipse.org/OCL-EStructuralFeature
 		createOCLEStructuralFeatureAnnotations();
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/ASMetamodel</b>.
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL-EPackage-ASMetamodel</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createASMetamodelAnnotations()
+	protected void createOCLEPackageASMetamodelAnnotations()
 	{
-		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$
+		String source = "http://www.eclipse.org/OCL-EPackage-ASMetamodel"; //$NON-NLS-1$
 		addAnnotation
 		  (this,
 		   source,
@@ -10073,25 +10073,6 @@ implements PivotPackage  {
 		   new URI[]
 		   {
 			 URI.createURI(eNS_URI).appendFragment("//UnlimitedNatural") //$NON-NLS-1$
-		   });
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
-	 * <!-- begin-user-doc -->
-	 * @since 1.18
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createCollectionAnnotations()
-	{
-		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
-		addAnnotation
-		  (getLoopExp_OwnedCoIterators(),
-		   source,
-		   new String[]
-		   {
-			   "nullFree", "false" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
@@ -11695,6 +11676,24 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL-Collection</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOCLCollectionAnnotations()
+	{
+		String source = "http://www.eclipse.org/OCL-Collection"; //$NON-NLS-1$
+		addAnnotation
+		  (getLoopExp_OwnedCoIterators(),
+		   source,
+		   new String[]
+		   {
+			   "nullFree", "false" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

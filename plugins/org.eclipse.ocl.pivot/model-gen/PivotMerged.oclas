@@ -4,8 +4,8 @@
     xmiidVersion="1">
   <ownedImports importedNamespace="#82dOP" name="ocl" xmiidVersion="1"/>
   <ownedPackages xsi:type="pivot:Library" xmi:id="82dOP" URI="http://www.eclipse.org/ocl/2015/Pivot" name="pivot" nsPrefix="pivot">
-    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
-    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASMetamodel"/>
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-Package-ASLibrary"/>
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-Package-ASMetamodel"/>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
       <ownedDetails name="PackageRole">
         <values>StandardLibrary</values>

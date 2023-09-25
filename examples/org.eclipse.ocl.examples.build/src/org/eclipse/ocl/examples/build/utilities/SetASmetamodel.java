@@ -18,10 +18,10 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 
 /**
- * Adds the http://www.eclipse.org/OCL/ASMetamodel annotation.
+ * Adds the http://www.eclipse.org/OCL-EPackage-ASMetamodel annotation.
  */
 public class SetASmetamodel extends WorkflowComponentWithModelSlot
 {
@@ -33,7 +33,7 @@ public class SetASmetamodel extends WorkflowComponentWithModelSlot
 		log.info("Adding ASmetamodel annotation in '" + resource.getURI() + "'");
 		for (EObject eObject : resource.getContents()) {
 			if (eObject instanceof EPackage) {
-				ClassUtil.getMetamodelAnnotation((EPackage) eObject);	// Install EAnnotation
+				AnnotationUtil.getEAnnotation((EPackage)eObject, AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE); // Install EAnnotation
 			}
 		}
 	}

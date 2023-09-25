@@ -18,14 +18,10 @@ import org.eclipse.ocl.common.OCLConstants;
  */
 public interface PivotConstants
 {
-	/**
-	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Metamodel.
-	 * No details are defined for this EAnnotation.
-	 * <p>
-	 * This annotation is used by /org.eclipse.ocl.pivot/model/Pivot.ecore. It is not
-	 * intended to be used by client code.
-	 */
-	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
+	@Deprecated
+	static final @NonNull String AS_LIBRARY_ANNOTATION_SOURCE = AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE;
+	@Deprecated
+	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE;
 
 	/**
 	 * The Package name of the shared metamodel.
@@ -65,15 +61,6 @@ public interface PivotConstants
 	static final @NonNull String META_ANNOTATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/MetaAnnotation";
 	static final @NonNull String SYSML_ANNOTATION_SOURCE = "http://www.omg.org/spec/SysML";
 	static final @NonNull String EXTENDED_META_DATA_ANNOTATION_SOURCE = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
-
-	/**
-	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
-	 * No details are defined for this EAnnotation.
-	 * <p>
-	 * This annotation is used by /org.eclipse.ocl.pivot/model/oclstdlib.ecore. It is not
-	 * intended to be used by client code.
-	 */
-	static final @NonNull String AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASLibrary";
 
 	static final @NonNull String OMG_OCL_ANNOTATION_SOURCE = "http://www.omg.org/ocl";
 

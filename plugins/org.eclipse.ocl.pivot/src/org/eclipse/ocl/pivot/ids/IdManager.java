@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl.WildcardIdSingletonScope;
 import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -551,7 +552,7 @@ public final class IdManager
 	 * Return the typeId for ePackage.
 	 */
 	public static @NonNull PackageId getPackageId(@NonNull EPackage ePackage) {
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+		if (AnnotationUtil.isASMetamodel(ePackage)) {
 			return METAMODEL;
 		}
 		String nsURI = ePackage.getNsURI();

@@ -188,6 +188,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	public static boolean isNullFree(@NonNull ENamedElement eObject) {
 		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
+		if (eAnnotation == null) {
+			eAnnotation = eObject.getEAnnotation(AnnotationUtil.legacy_COLLECTION_ANNOTATION_SOURCE);
+		}
 		if (eAnnotation != null) {
 			String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
 			if (isNullFreeValue != null) {
@@ -858,7 +861,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			return false;
 		}
 		EPackage ecorePackage = (EPackage) ecoreRoot;
-		if (ClassUtil.basicGetMetamodelAnnotation(ecorePackage) != null) {
+		if (AnnotationUtil.isASMetamodel(ecorePackage)) {
 			return true;
 		}
 		// FIXME Following code should be redundant
@@ -906,7 +909,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 	}
 	protected void loadImports(@NonNull EPackage ePackage, @Nullable URI baseURI) {
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+		if (AnnotationUtil.isASMetamodel(ePackage)) {
 			if (asMetamodels == null) {
 				asMetamodels = new HashSet<>();
 			}

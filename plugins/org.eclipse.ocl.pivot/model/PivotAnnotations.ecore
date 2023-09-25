@@ -4,14 +4,14 @@
     nsPrefix="annotations">
   <eClassifiers xsi:type="ecore:EClass" name="ASLibrary_EPackage">
     <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
-      <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+      <eAnnotations source="http://www.eclipse.org/OCL-Package-ASLibrary" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
         <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
       </eAnnotations>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ASMetamodel_EPackage">
     <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
-      <eAnnotations source="http://www.eclipse.org/OCL/ASMetamodel" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+      <eAnnotations source="http://www.eclipse.org/OCL-EPackage-ASMetamodel" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
         <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
       </eAnnotations>
     </eAnnotations>

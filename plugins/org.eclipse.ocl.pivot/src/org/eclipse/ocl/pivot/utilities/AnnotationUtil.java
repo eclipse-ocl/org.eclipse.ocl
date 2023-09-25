@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -71,8 +72,9 @@ public class AnnotationUtil
 	/**
 	 * ETypedElement annotation qualification.
 	 */
-	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
-//	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE2 = "http://www.eclipse.org/OCL-Collection";
+	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Collection";
+	public static final @NonNull String legacy_COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
+	public static final @NonNull String COLLECTION_ANNOTATION_SOURCE2 = "http://www.eclipse.org/OCL-Collection";
 	/**
 	 * ETypedElement annotation identifying that a collection is null-free.
 	 */
@@ -132,6 +134,26 @@ public class AnnotationUtil
 	 * 	 The operation has a given named precedence.
 	 */
 	public static final @NonNull String EOPERATION_PRECEDENCE = "precedence";
+
+	/**
+	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
+	 * No details are defined for this EAnnotation.
+	 * <p>
+	 * This annotation is used by /org.eclipse.ocl.pivot/model/oclstdlib.ecore. It is not
+	 * intended to be used by client code.
+	 */
+	public static final @NonNull String EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-EPackage-ASLibrary";
+	public static final @NonNull String legacy_AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASLibrary";
+
+	/**
+	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Metamodel.
+	 * No details are defined for this EAnnotation.
+	 * <p>
+	 * This annotation is used by /org.eclipse.ocl.pivot/model/Pivot.ecore. It is not
+	 * intended to be used by client code.
+	 */
+	public static final @NonNull String EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-EPackage-ASMetamodel";
+	public static final @NonNull String legacy_AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
 
 	/**
 	 * EPackage annotation identifying models that must be imported to enable the OCL embedded as
@@ -215,6 +237,24 @@ public class AnnotationUtil
 	 */
 	public static final @NonNull String ETYPED_ELEMENT_ORIGINAL_TYPE = "originalType";
 
+	/**
+	 * Package annotation indicating that the Package is the AS Library part of an AS Metamodel.
+	 * No details are defined for this Annotation.
+	 * <p>
+	 * This annotation is used to indicate that the transient packageId should $metamodel$. It is not
+	 * intended to be used by client code.
+	 */
+	public static final @NonNull String PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Package-ASLibrary";
+
+	/**
+	 * Package annotation indicating that the Package is part of the OCL AS Metamodel.
+	 * No details are defined for this Annotation.
+	 * <p>
+	 * This annotation is used to indicate that the transient packageId should $metamodel$. It is not
+	 * intended to be used by client code.
+	 */
+	public static final @NonNull String PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL-Package-ASMetamodel";
+
 	public static final class EAnnotationComparator implements Comparator<EAnnotation>
 	{
 		public static final @NonNull EAnnotationComparator INSTANCE = new EAnnotationComparator();
@@ -292,6 +332,26 @@ public class AnnotationUtil
 		String role = basicGetEAnnotationValue(eClassifier, ECLASSIFIER_ANNOTATION_SOURCE, ECLASSIFIER_ROLE);
 	//	return (role != null) && !CLASSIFIER_ROLE_DATA_TYPE.equals(role);
 		return isSyntheticRole(role);
+	}
+
+	public static boolean isASLibrary(@NonNull EPackage ePackage) {
+		return (ePackage.getEAnnotation(AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE) != null)
+		||  (ePackage.getEAnnotation(AnnotationUtil.legacy_AS_LIBRARY_ANNOTATION_SOURCE) != null);
+	}
+
+	public static boolean isASLibrary(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return (AnnotationUtil.basicGetAnnotation(asPackage, AnnotationUtil.PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE) != null)
+		||  (AnnotationUtil.basicGetAnnotation(asPackage, AnnotationUtil.legacy_AS_LIBRARY_ANNOTATION_SOURCE) != null);
+	}
+
+	public static boolean isASMetamodel(@NonNull EPackage ePackage) {
+		return (ePackage.getEAnnotation(AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE) != null)
+		|| (ePackage.getEAnnotation(AnnotationUtil.legacy_AS_METAMODEL_ANNOTATION_SOURCE) != null);
+	}
+
+	public static boolean isASMetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return (AnnotationUtil.basicGetAnnotation(asPackage, AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE) != null)
+		|| (AnnotationUtil.basicGetAnnotation(asPackage, AnnotationUtil.legacy_AS_METAMODEL_ANNOTATION_SOURCE) != null);
 	}
 
 	public static @Nullable EAnnotation isDataType(@NonNull EModelElement eModelElement) {

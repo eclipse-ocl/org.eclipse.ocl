@@ -263,6 +263,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			if (AnnotationUtil.DATA_TYPE_ANNOTATION_SOURCE.equals(source)) {
 				continue;
 			}
+			if (AnnotationUtil.PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
+				continue;
+			}
+			if (AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+				continue;
+			}
 			Object eObject = safeVisit(pivotObject);
 			if (eObject != null) {
 				eModelElement.getEAnnotations().add((EAnnotation)eObject);
@@ -812,6 +818,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		if (pivotPackage.eIsSet(PivotPackage.Literals.PACKAGE__URI)) {
 			ePackage.setNsURI(pivotPackage.getURI());
+		}
+		if (AnnotationUtil.basicGetAnnotation(pivotPackage, AnnotationUtil.PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+			AnnotationUtil.getEAnnotation(ePackage, AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE);
+		}
+		if (AnnotationUtil.basicGetAnnotation(pivotPackage, AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE) != null) {
+			AnnotationUtil.getEAnnotation(ePackage, AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE);
 		}
 		@SuppressWarnings("null")@NonNull List<EPackage> eSubpackages = ePackage.getESubpackages();
 		safeVisitAll(eSubpackages, pivotPackage.getOwnedPackages());

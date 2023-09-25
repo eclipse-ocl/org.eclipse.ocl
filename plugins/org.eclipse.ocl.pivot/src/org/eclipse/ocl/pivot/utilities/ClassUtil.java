@@ -105,14 +105,6 @@ public class ClassUtil
 	}
 
 	/**
-	 * Return the DomainConstants.AS_METAMODEL_ANNOTATION_SOURCE for ePackage or null if none.
-	 */
-	public static @Nullable EAnnotation basicGetMetamodelAnnotation(@NonNull EPackage ePackage) {
-		EAnnotation asMetamodelAnnotation = ePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
-		return asMetamodelAnnotation;
-	}
-
-	/**
 	 * Return an iterator over no content. This replaces com.google.common.collect.Iterators.emptyIterator() for which no
 	 * alternative exists on an adequate range of Guava versions.
 	 *
@@ -174,19 +166,6 @@ public class ClassUtil
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			eAnnotation.setSource(sourceURI);
 			eModelElement.getEAnnotations().add(eAnnotation);
-		}
-		return eAnnotation;
-	}
-
-	/**
-	 * Return the DomainConstants.AS_METAMODEL_ANNOTATION_SOURCE for ePackage, creating it if needed.
-	 */
-	public static @NonNull EAnnotation getMetamodelAnnotation(@NonNull EPackage ePackage) {
-		EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
-		if (eAnnotation == null) {
-			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
-			ePackage.getEAnnotations().add(eAnnotation);
 		}
 		return eAnnotation;
 	}

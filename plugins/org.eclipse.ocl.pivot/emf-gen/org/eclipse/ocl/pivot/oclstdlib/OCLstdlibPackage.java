@@ -1388,8 +1388,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/OCL/ASLibrary
-		createASLibraryAnnotations();
+		// http://www.eclipse.org/OCL-EPackage-ASLibrary
+		createOCLEPackageASLibraryAnnotations();
 		// http://www.omg.org/ocl
 		createOclAnnotations();
 		// http://www.eclipse.org/OCL-EClassifier
@@ -1401,19 +1401,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/ASLibrary</b>.
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL-EPackage-ASLibrary</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createASLibraryAnnotations() {
-		String source = "http://www.eclipse.org/OCL/ASLibrary"; //$NON-NLS-1$
+	protected void createOCLEPackageASLibraryAnnotations() {
+		String source = "http://www.eclipse.org/OCL-EPackage-ASLibrary"; //$NON-NLS-1$
 		addAnnotation
 		  (this,
 		   source,
 		   new String[] {
 		   });
 	}
+
 
 	/**
 	 * Initializes the annotations for <b>http://www.omg.org/ocl</b>.

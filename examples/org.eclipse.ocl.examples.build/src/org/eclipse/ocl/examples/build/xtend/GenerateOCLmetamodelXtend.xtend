@@ -95,6 +95,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.resource.ASResource;
+			import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
@@ -288,7 +289,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						metamodelResource.getContents().add(«root.getSymbolName()»);
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
-						createAnnotation(«pkge.getSymbolName()», PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
+						createAnnotation(«pkge.getSymbolName()», AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE);
 						«FOR comment : pkge.ownedComments»
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»

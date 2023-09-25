@@ -376,6 +376,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
 				if (eContainer instanceof ENamedElement) {
 					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
+					if (eAnnotation == null) {
+						eAnnotation = ((ENamedElement)eContainer).getEAnnotation(AnnotationUtil.legacy_COLLECTION_ANNOTATION_SOURCE);
+					}
 					if (eAnnotation != null) {
 						String isNullFreeValue = eAnnotation.getDetails().get(AnnotationUtil.COLLECTION_IS_NULL_FREE);
 						if (isNullFreeValue != null) {
@@ -694,7 +697,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			context.getDelegateInstaller().installDelegates(ePackage);
 		}
 		if (context.isPivot(pivotPackage)) {
-			ClassUtil.getMetamodelAnnotation(ePackage);
+			AnnotationUtil.getEAnnotation(ePackage, AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE);
 		}
 		return null;
 	}

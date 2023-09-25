@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="P-pivot" name="pivot" nsURI="http://www.eclipse.org/ocl/2015/Pivot"
     nsPrefix="pivot">
-  <eAnnotations source="http://www.eclipse.org/OCL/ASMetamodel"/>
+  <eAnnotations source="http://www.eclipse.org/OCL-EPackage-ASMetamodel"/>
   <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
     <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
     <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
@@ -1675,7 +1675,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
         name="ownedCoIterators" upperBound="-1" eType="#T-pivot-IteratorVariable"
         containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+      <eAnnotations source="http://www.eclipse.org/OCL-Collection">
         <details key="nullFree" value="false"/>
       </eAnnotations>
     </eStructuralFeatures>

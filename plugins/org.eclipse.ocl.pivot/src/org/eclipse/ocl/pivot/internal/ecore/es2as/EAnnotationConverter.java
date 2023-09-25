@@ -91,12 +91,15 @@ public class EAnnotationConverter
 		add(OCLConstants.OCL_DELEGATE_URI_DEBUG, DelegateURIEAnnotationConverter.INSTANCE);
 		add(OCLConstants.OCL_DELEGATE_URI_LPG, DelegateURIEAnnotationConverter.INSTANCE);
 		add(OCLConstants.OCL_DELEGATE_URI_PIVOT, DelegateURIEAnnotationConverter.INSTANCE);
-		add(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE, ASLibraryEAnnotationConverter.INSTANCE);
-		add(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE, ASMetamodelEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE, ASLibraryEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.legacy_AS_LIBRARY_ANNOTATION_SOURCE, ASLibraryEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE, ASMetamodelEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.legacy_AS_METAMODEL_ANNOTATION_SOURCE, ASMetamodelEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.ECLASSIFIER_ANNOTATION_SOURCE, ClassifierEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
-		add(AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.legacy_COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.EPACKAGE_IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
+		add(AnnotationUtil.legacy_IMPORT_ANNOTATION_SOURCE, ImportEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.EOPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
 		//	add(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
 		add(AnnotationUtil.EPACKAGE_ORIGINAL_TYPE_ANNOTATION_SOURCE_PREFIX + "Boolean", OriginalTypeEAnnotationConverter.INSTANCE);

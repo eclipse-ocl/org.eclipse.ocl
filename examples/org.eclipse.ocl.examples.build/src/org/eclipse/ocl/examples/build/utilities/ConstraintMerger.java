@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -130,8 +131,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				ResourceUtils.checkResource(ecoreResource);
 				for (EObject eObject : ecoreResource.getContents()) {
 					if (eObject instanceof EPackage) {
-						EPackage ePackage = (EPackage) eObject;
-						ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
+						AnnotationUtil.getEAnnotation((EPackage)eObject, AnnotationUtil.EPACKAGE_AS_METAMODEL_ANNOTATION_SOURCE); // Install EAnnotation
 					}
 				}
 				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);

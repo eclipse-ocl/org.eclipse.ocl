@@ -2,7 +2,7 @@
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib" name="OCL-2.5.oclstdlib" xmiidVersion="1">
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
-    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL-Package-ASLibrary"/>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
       <ownedDetails name="PackageRole">
         <values>StandardLibrary</values>

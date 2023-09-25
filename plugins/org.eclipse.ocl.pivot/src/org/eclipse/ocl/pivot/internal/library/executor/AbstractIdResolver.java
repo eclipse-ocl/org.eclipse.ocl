@@ -93,6 +93,7 @@ import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.JavaTypeImpl;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -307,7 +308,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			String internedMetmodelName = PivotConstants.METAMODEL_NAME.intern();
 			EPackage ePackage = userPackage.getEPackage();
 			if (ePackage != null) {
-				if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+				if (AnnotationUtil.isASMetamodel(ePackage)) {
 					if (roots2package.get(internedMetmodelName) == null) {
 						roots2package.put(internedMetmodelName, userPackage);
 					}

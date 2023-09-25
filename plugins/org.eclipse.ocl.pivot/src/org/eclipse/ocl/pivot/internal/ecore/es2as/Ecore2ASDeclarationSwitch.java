@@ -416,7 +416,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		org.eclipse.ocl.pivot.Package pivotElement;
 		if (converter.isLibrary(ePackage)) {
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
-			AnnotationUtil.getAnnotation(pivotElement, PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+			AnnotationUtil.getAnnotation(pivotElement, AnnotationUtil.PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE);
 		}
 		else if ((ePackage.eContainer() == null) || converter.isRequired(ePackage)) {
 			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, ePackage);
@@ -424,8 +424,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else {
 			return true;
 		}
-		if (ePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null) {
-			AnnotationUtil.getAnnotation(pivotElement, PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
+		if (AnnotationUtil.isASLibrary(ePackage)) {
+			AnnotationUtil.getAnnotation(pivotElement, AnnotationUtil.PACKAGE_AS_LIBRARY_ANNOTATION_SOURCE);
+		}
+		if (AnnotationUtil.isASMetamodel(ePackage)) {
+			AnnotationUtil.getAnnotation(pivotElement, AnnotationUtil.PACKAGE_AS_METAMODEL_ANNOTATION_SOURCE);
 		}
 		String oldName = pivotElement.getName();
 		String newName = technology.getOriginalName(ePackage);
@@ -762,7 +765,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement) {
 		copyNamedElement(pivotElement, eTypedElement);
-		EAnnotation eAnnotation = eTypedElement.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
+	//	EAnnotation eAnnotation = eTypedElement.getEAnnotation(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
 		copyAnnotatedElement(pivotElement, eTypedElement);
 		int lower = eTypedElement.getLowerBound();
 	/*	if ((lower == 0) && converter.cannotBeOptional(eTypedElement)) {

@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.uml.internal.library.UMLExtensionProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -137,7 +137,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	@Override
 	public RootPackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2) {
 		RootPackageId metamodel = null;
-		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
+		if (AnnotationUtil.isASMetamodel(eObject2)) {
 			metamodel = IdManager.METAMODEL;
 		}
 		else if (eObject2 instanceof UMLPackage) {
@@ -214,7 +214,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		if (eObject instanceof Element) {
 			return (Element) eObject;
 		}
-		EnvironmentFactoryInternal environmentFactoryInternalExtension = (EnvironmentFactoryInternal)environmentFactory;
+		EnvironmentFactoryInternal environmentFactoryInternalExtension = environmentFactory;
 		pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, eObject);
 		if ((eObject instanceof org.eclipse.uml2.uml.Constraint) && (pivotElement instanceof Constraint) && (pivotElement.eContainer() == null)) {
 			pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, ((org.eclipse.uml2.uml.Constraint)eObject).getSpecification());

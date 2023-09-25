@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -576,9 +577,9 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				//				ePackage.getEAnnotations().remove(eAnnotation);
 				//			}
 			//	if (isASLibrary) {
-				assert ePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null;
+				assert AnnotationUtil.isASLibrary(ePackage);
 			//		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			//		eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+			//		eAnnotation.setSource(AnnotationUtil.EPACKAGE_AS_LIBRARY_ANNOTATION_SOURCE);
 			//		ePackage.getEAnnotations().add(eAnnotation);
 			//	}
 				log.info("Saving '" + ecoreURI + "'");
