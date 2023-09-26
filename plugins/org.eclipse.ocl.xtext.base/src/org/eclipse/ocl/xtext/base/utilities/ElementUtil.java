@@ -400,9 +400,6 @@ public class ElementUtil
 	 */
 	public static @Nullable String getTextName(@NonNull ElementCS csElement) {
 		String text = getTrimmedText(csElement);
-		if (text == null) {
-			return null;
-		}
 		int length = text.length();
 		if ((length >= 3) && text.startsWith("_'") && text.endsWith("'")) {
 			return text.substring(2, length-1);
@@ -410,6 +407,14 @@ public class ElementUtil
 		else {
 			return text;
 		}
+	}
+
+	/**
+	 * Return the simply spaced text tokens associated with a csElement.
+	 */
+	public static @Nullable String getTokenText(@NonNull ElementCS csElement) {
+		ICompositeNode node = NodeModelUtils.getNode(csElement);
+		return node != null ? NodeModelUtils.getTokenText(node) : null;
 	}
 
 	/**

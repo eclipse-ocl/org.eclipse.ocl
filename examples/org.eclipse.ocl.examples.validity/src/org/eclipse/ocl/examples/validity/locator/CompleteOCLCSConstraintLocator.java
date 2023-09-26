@@ -105,7 +105,7 @@ public class CompleteOCLCSConstraintLocator extends PivotConstraintLocator
 			return null;
 		}
 		ModelElementCS csElement = (ConstraintCS)constrainingObject;
-		return ElementUtil.getTrimmedText(csElement);
+		return ElementUtil.getTokenText(csElement);
 	}
 
 	@Override
