@@ -21,13 +21,17 @@ import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
  */
 public final class OCL_Collection_AnnotationValidator extends BasicEAnnotationValidator2
 {
-	public static final @NonNull OCL_Collection_AnnotationValidator INSTANCE = new OCL_Collection_AnnotationValidator();
+	public static final @NonNull OCL_Collection_AnnotationValidator INSTANCE = new OCL_Collection_AnnotationValidator(AnnotationUtil.COLLECTION_ANNOTATION_SOURCE);
 	public static final @NonNull String ANNOTATION_NAME = "OCL_Collection";
-	public static final @NonNull String ANNOTATION_SOURCE = AnnotationUtil.COLLECTION_ANNOTATION_SOURCE;
 	public static final @NonNull String DIAGNOSTIC_SOURCE = "org.eclipse.ocl.pivot.annotation";
 
-	public OCL_Collection_AnnotationValidator() {
-		super(ANNOTATION_SOURCE, ANNOTATION_NAME, DIAGNOSTIC_SOURCE,
+	public static class Legacy
+	{
+		public static final @NonNull OCL_Collection_AnnotationValidator INSTANCE = new OCL_Collection_AnnotationValidator(AnnotationUtil.legacy_COLLECTION_ANNOTATION_SOURCE);
+	}
+
+	private OCL_Collection_AnnotationValidator(@NonNull String annotationSource) {
+		super(annotationSource, ANNOTATION_NAME, DIAGNOSTIC_SOURCE,
 			PivotAnnotationsPackage.Literals.COLLECTION_ECLASS,
 			PivotAnnotationsPackage.Literals.COLLECTION_EPACKAGE,
 			PivotAnnotationsPackage.Literals.COLLECTION_ETYPED_ELEMENT);
