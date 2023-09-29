@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public abstract class PivotDiagnostician extends Diagnostician
 {
@@ -265,8 +266,16 @@ public abstract class PivotDiagnostician extends Diagnostician
 		 * can be exploited.
 		 */
 		public static BasicDiagnostic validate(EObject eObject, Map<Object, Object> validationContext) {
-			BasicDiagnostic diagnostics = new BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { Diagnostician.INSTANCE.getObjectLabel(eObject) }), new Object [] { eObject });
-			Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext);
+			Object object = validationContext.get(EValidator.class);
+			Diagnostician diagnostician;
+			if (object instanceof Diagnostician) {
+				diagnostician = (Diagnostician)object;
+			}
+			else {
+				diagnostician = ValidationRegistryAdapter.getDiagnostician(eObject);
+			}
+			BasicDiagnostic diagnostics = new BasicDiagnosticWithRemove(EObjectValidator.DIAGNOSTIC_SOURCE, 0, EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic", new Object[] { diagnostician.getObjectLabel(eObject) }), new Object [] { eObject });
+			diagnostician.validate(eObject, diagnostics, validationContext);
 			return diagnostics;
 		}
 

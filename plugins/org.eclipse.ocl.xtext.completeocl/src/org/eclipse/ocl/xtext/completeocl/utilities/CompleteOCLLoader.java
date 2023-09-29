@@ -45,17 +45,18 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
 public abstract class CompleteOCLLoader
 {  // FIXME This is a pragmatic re-use. Redesign as part of a coherent API.
 	protected final @NonNull OCLInternal ocl;
-	protected final @NonNull List<Model> oclModels = new ArrayList<Model>();
-	protected final @NonNull Set<EPackage> mmPackages;
+	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
+	protected final @NonNull Set<@NonNull EPackage> mmPackages;
 
 	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
-		this.mmPackages = new HashSet<EPackage>();
+		this.mmPackages = new HashSet<>();
 	}
 
 	public void dispose() {
@@ -88,7 +89,7 @@ public abstract class CompleteOCLLoader
  			}
 		}
 		Set<Resource> mmResources = new HashSet<Resource>();
-		for (@SuppressWarnings("null")@NonNull EPackage mmPackage : mmPackages) {
+		for (@NonNull EPackage mmPackage : mmPackages) {
 			Resource mmResource = EcoreUtil.getRootContainer(mmPackage).eResource();
 			if (mmResource != null) {
 				mmResources.add(mmResource);
@@ -122,10 +123,11 @@ public abstract class CompleteOCLLoader
 		//
 		//	Install validation for all the complemented packages
 		//
-		PivotEObjectValidator.install(ocl.getResourceSet(), ocl.getEnvironmentFactory());
+		ResourceSet resourceSet = ocl.getEnvironmentFactory().getResourceSet();
+		ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		PivotEObjectValidator extraEValidator = new PivotEObjectValidator(oclModels);
 		for (EPackage mmPackage : mmPackages) {
-			assert mmPackage != null;
-			PivotEObjectValidator.install(mmPackage, oclModels);
+			localValidationRegistry.add(mmPackage, extraEValidator);
 		}
 	}
 

@@ -35,8 +35,10 @@ import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -52,6 +54,8 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
@@ -88,6 +92,12 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 	}
 
+	protected @NonNull ValidationContext createValidationContext(@NonNull ResourceSet resourceSet) {
+		ValidationRegistryAdapter validationRegistry = getValidationRegistryAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		return validationContext;
+	}
+
 	public @Nullable EObject getStereotypeApplication(org.eclipse.uml2.uml.@NonNull Element umlElement, org.eclipse.uml2.uml.@NonNull Stereotype umlStereotype) {
 		for (EObject eObject : umlElement.eResource().getContents()) {
 			if (ClassUtil.safeEquals(eObject.eClass().getName(), umlStereotype.getName())) {
@@ -103,6 +113,13 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		return null;
 	}
+
+	protected @NonNull ValidationRegistryAdapter getValidationRegistryAdapter(@NonNull ResourceSet resourceSet) {
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		validationRegistry.put(null, new OCLinEcoreEObjectValidator());
+		return validationRegistry;
+	}
+
 	//
 	// Test framework
 	//
@@ -112,8 +129,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			UMLStandaloneSetup.init();
 		}
-		EValidator.Registry.INSTANCE.put(null, new OCLinEcoreEObjectValidator());
-
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 		//			"xmi", new EcoreResourceFactoryImpl());
 		OCLstdlib.install();
@@ -164,6 +179,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
+		getValidationRegistryAdapter(resourceSet);		// Install OCLinEcoreEObjectValidator
 		URI uri = getTestModelURI("models/uml/Bug408990.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
@@ -182,6 +198,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
+		getValidationRegistryAdapter(resourceSet);		// Install OCLinEcoreEObjectValidator
 		URI uri = getTestModelURI("models/uml/Bug408990.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
@@ -205,6 +222,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		else {
 			UML2AS.initializeUML(resourceSet);
 		}
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		URI uri = getTestModelURI("models/uml/PapyrusTestFile.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
@@ -235,9 +253,10 @@ public class UMLValidateTest extends AbstractValidateTests
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("lowercase");
 		//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
 		//		ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class", "CamelCaseName", EcoreUtils.qualifiedNameFor(umlClass1)));
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlClass1, validationContext);
+	//	ValidationContext validationContext = new ValidationContext(validationRegistry);
+	//	validationContext.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
+		List<Diagnostic> diagnostics = validationContext.createDiagnostics();
+		Diagnostic diagnostic = validationContext.getDiagnostician().validate(umlClass1, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
 		assertDiagnostics("Loading", umlResource, diagnostics,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
@@ -333,7 +352,10 @@ public class UMLValidateTest extends AbstractValidateTests
 		URI uri = getTestModelURI("models/uml/bug432920.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		validationContext.put(EnvironmentFactory.class, environmentFactory);
+	//	LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -379,7 +401,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		URI uri = getTestModelURI("models/uml/Bug434433.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -409,7 +431,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		URI uri = getTestModelURI("models/uml/Bug434356.uml");
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Realization umlRealization1 = (org.eclipse.uml2.uml.Realization)umlModel.getPackagedElement("Realization1");
@@ -441,7 +463,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCL ocl = createOCL();
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug436945.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(ocl.getResourceSet());
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		//		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES); //,
@@ -517,7 +539,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug448470.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		Enumeration xx = (Enumeration) model.getOwnedType("Xx");
@@ -545,7 +567,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug452621.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
@@ -570,7 +592,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug458326.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES); //,
 		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
@@ -590,11 +612,10 @@ public class UMLValidateTest extends AbstractValidateTests
 		//		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug458394.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.InstanceSpecification xx = (org.eclipse.uml2.uml.InstanceSpecification)model.getOwnedMember("Class1BadInstance");
@@ -623,7 +644,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug458470.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Package pack = model.getNestedPackage("Package2");
@@ -649,7 +670,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug464808.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
@@ -674,7 +695,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug467192.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		//		Model model = (Model) umlResource.getContents().get(0);
 		//		org.eclipse.uml2.uml.NamedElement xx = model.getOwnedMember("InstanceSpecification1");
@@ -712,7 +733,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug472461.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -732,7 +753,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug472469.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -752,7 +773,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug476662.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -772,7 +793,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug478416.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -792,7 +813,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug485586.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -812,7 +833,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug506191.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -832,7 +853,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug513773.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
@@ -852,7 +873,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug514353.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource/*,
@@ -878,7 +899,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug515027.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
@@ -903,7 +924,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug566594.uml"));
 		assertNoResourceErrors("Loading", umlResource);
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);

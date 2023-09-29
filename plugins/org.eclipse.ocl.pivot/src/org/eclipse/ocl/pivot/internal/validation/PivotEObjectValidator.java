@@ -128,19 +128,6 @@ public class PivotEObjectValidator implements EValidator
 	public static @Nullable ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new ValidationAdapter(environmentFactory);
 	}
-/*	public static @NonNull ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		ValidationAdapter validationAdapter = new ValidationAdapter(environmentFactory);
-		if (validationAdapter != null) {
-			if (validationAdapter.getEnvironmentFactory() != environmentFactory) {
-				throw new IllegalArgumentException("Inconsistent EnvironmentFactory");
-			}
-		}
-		else {
-			validationAdapter = new ValidationAdapter(environmentFactory);
-		//	resourceSet.eAdapters().add(validationAdapter);
-		}
-		return validationAdapter;
-	} */
 
 	/**
 	 * Install Pivot-defined validation support for ePackage.
@@ -149,14 +136,15 @@ public class PivotEObjectValidator implements EValidator
 	public static synchronized void install(@NonNull EPackage ePackage) {
 		install(ePackage, null);
 	}
-	public static synchronized void install(@NonNull EPackage ePackage, @Nullable List<Model> complementingModels) {
-		ComposedEValidator composedEValidator = ComposedEValidator.install(ePackage);
+	public static synchronized void install(@NonNull EPackage ePackage, @Nullable List<@NonNull Model> complementingModels) {
+		PivotEObjectValidator complementingEValidator;
 		if ((complementingModels == null) || complementingModels.isEmpty()) {
-			composedEValidator.addChild(INSTANCE);
+			complementingEValidator = INSTANCE;
 		}
 		else {
-			composedEValidator.addChild(new PivotEObjectValidator(complementingModels));
+			complementingEValidator = new PivotEObjectValidator(complementingModels);
 		}
+		ComposedEValidator.install(ePackage, complementingEValidator);
 	}
 
 	/**
@@ -195,14 +183,18 @@ public class PivotEObjectValidator implements EValidator
 		return resourceSet;
 	}
 
-	protected final @Nullable List<Model> complementingModels;	// FIXME substantially redundant
+	/**
+	 * The Complete OCL models whose constraints are to be validated. Other constraints are skipped
+	 * to avoid duplication of a sibling EObjectValidator.
+	 */
+	protected final @Nullable List<@NonNull Model> complementingModels;
 
 	@Deprecated		// Temporary internal API preservation for Mars RC3
 	protected PivotEObjectValidator() {
 		this.complementingModels = null;
 	}
 
-	public PivotEObjectValidator(@Nullable List<Model> complementingModels) {
+	public PivotEObjectValidator(@Nullable List</*@NonNull*/ Model> complementingModels) {
 		this.complementingModels = complementingModels;
 	}
 

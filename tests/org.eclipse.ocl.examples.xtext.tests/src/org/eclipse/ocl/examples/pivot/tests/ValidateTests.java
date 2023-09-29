@@ -82,7 +82,7 @@ public class ValidateTests extends AbstractValidateTests
 	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
-			validationContext.put(OCL.class,  ocl);
+			validationContext.put(OCL.class, ocl);
 		}
 		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
 		for (EObject eObject : resource.getContents()) {
@@ -620,7 +620,7 @@ public class ValidateTests extends AbstractValidateTests
 		assertTrue(helper.loadDocument(testFile.getFileURI()));
 		helper.installPackages();
 
-		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(//validationContext,
+		assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
 			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),

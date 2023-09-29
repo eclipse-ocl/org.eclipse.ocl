@@ -15,7 +15,6 @@ package org.eclipse.ocl.pivot.internal.delegate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -31,7 +30,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 /**
  * A basic implementation of a delegated behavior.
@@ -182,9 +182,11 @@ implements DelegatedBehavior<E, R, F> {
 	}
 
 	public void validate(@NonNull EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
-		if (!Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext)) {
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostician diagnostician = validationContext.getDiagnostician();
+		BasicDiagnostic diagnostics = diagnostician.createDefaultDiagnostic(eObject);
+		if (!diagnostician.validate(eObject, diagnostics, validationContext)) {
 			StringBuilder s = null;
 			for (Diagnostic diagnostic : diagnostics.getChildren()) {
 				if (s == null) {

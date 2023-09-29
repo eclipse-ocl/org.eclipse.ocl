@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -114,10 +115,13 @@ public class LabelUtil
 	 * is mapped to the eValidator, and the EValidator.SubstitutionLabelProvider.class key
 	 * is mapped to a SubstitutionLabelProvider that uses getLabel().
 	 */
-	public static @NonNull Map<Object, Object> createDefaultContext(EValidator eValidator) {
-		Map<Object, Object> context = new HashMap<Object, Object>();
+	@Deprecated /* @deprecated shift to Diagnostician /  caller */
+	public static @NonNull Map<Object, Object> createDefaultContext(@NonNull EValidator eValidator) {
+		Diagnostician diagnostician = (eValidator instanceof Diagnostician) ? (Diagnostician)eValidator : Diagnostician.INSTANCE;
+		Map<Object, Object> context = diagnostician.createDefaultContext();
 		context.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
 		context.put(EValidator.class, eValidator);
+	//	context.put(EValidator.ValidationDelegate.Registry.class, diagnostician.get);
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
 		context.put(EnvironmentFactory.class, environmentFactory);
 		return context;

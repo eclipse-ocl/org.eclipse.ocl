@@ -83,6 +83,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
@@ -461,17 +463,18 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, Map<Object, Object> validationContext, @NonNull String @Nullable [] messages) {
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull ValidationContext validationContext, @NonNull String @Nullable [] messages) {
 		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
-			List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+			List<Diagnostic> diagnostics = new ArrayList<>();
 			for (EObject eObject : resource.getContents()) {
-				//			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 				Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 				diagnostics.addAll(diagnostic.getChildren());
 			}
