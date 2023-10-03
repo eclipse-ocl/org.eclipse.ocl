@@ -2,3 +2,4 @@
 /build.acceleo
 /xtend-gen/
 /lpg-gen/
+/.polyglot.build.properties
