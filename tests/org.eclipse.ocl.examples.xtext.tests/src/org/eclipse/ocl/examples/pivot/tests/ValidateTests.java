@@ -24,9 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EValidatorRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -62,6 +60,8 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
@@ -80,15 +80,15 @@ import junit.framework.TestCase;
 public class ValidateTests extends AbstractValidateTests
 {
 	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+		validationRegistry.put(EcorePackage.eINSTANCE, EcoreOCLEValidator.INSTANCE);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		if (ocl != null) {
 			validationContext.put(OCL.class, ocl);
 		}
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+		Diagnostician dignostician = validationContext.getDiagnostician();
+		List<Diagnostic> diagnostics = new ArrayList<>();
 		for (EObject eObject : resource.getContents()) {
-			EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
-			registry.put(EcorePackage.eINSTANCE, EcoreOCLEValidator.INSTANCE);
-			Diagnostician dignostician = new Diagnostician(registry);
 			Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
@@ -125,11 +125,14 @@ public class ValidateTests extends AbstractValidateTests
 		OCL ocl2 = createOCL();
 		ocl2.getResourceSet().getResources().add(ecoreResource);
 		EPackage overloadsPackage = (EPackage) ecoreResource.getContents().get(0);
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 		EObject testInstance = eCreate(overloadsPackage, "SubClass");
+		testResource.getContents().add(testInstance);
 		//
 		//	Check EObjectValidator errors
 		//
-		EValidator.Registry.INSTANCE.put(overloadsPackage, EObjectValidator.INSTANCE);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).put(overloadsPackage, EObjectValidator.INSTANCE);
 		checkValidationDiagnostics(testInstance, Diagnostic.ERROR);
 		ocl1.dispose();
 		ocl2.dispose();
@@ -418,7 +421,10 @@ public class ValidateTests extends AbstractValidateTests
 		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
 		EPackage validatePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
 		try {
+			ResourceSet testResourceSet = new ResourceSetImpl();
+			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 			EObject testInstance = eCreate(validatePackage, "MyNumber");
+			testResource.getContents().add(testInstance);
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
 			ocl.assertQueryFalse(testInstance, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(1)");
@@ -452,7 +458,6 @@ public class ValidateTests extends AbstractValidateTests
 		}
 		finally {
 			ocl.dispose();
-			EValidator.Registry.INSTANCE.remove(validatePackage);
 		}
 	}
 
@@ -512,10 +517,14 @@ public class ValidateTests extends AbstractValidateTests
 		OCL ocl0 = createOCL();
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
-		EValidator.Registry.INSTANCE.put(validatePackage1, completeOCLEObjectValidator);
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage1, completeOCLEObjectValidator);
 		try {
 			EObject testInstance1 = eCreate(validatePackage1, "Level3");
 			EObject testInstance2 = eCreate(validatePackage2, "Level3");
+			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
+			testResource.getContents().add(testInstance1);
+			testResource.getContents().add(testInstance2);
 			String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
 			String objectLabel;
 			//
@@ -581,7 +590,6 @@ public class ValidateTests extends AbstractValidateTests
 			ocl0.dispose();
 			ocl1.dispose();
 			ocl2.dispose();
-			EValidator.Registry.INSTANCE.remove(validatePackage1);
 		}
 	}
 
@@ -718,18 +726,21 @@ public class ValidateTests extends AbstractValidateTests
 		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore"));
 		ocl1.getEnvironmentFactory().adapt(ecoreResource.getResourceSet());
 		EPackage validatePackage = (EPackage) ecoreResource.getContents().get(0);
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 		EObject testInstance = eCreate(validatePackage, "Level3");
 		eSet(testInstance, "ref", "ref");
 		eSet(testInstance, "l1", "l1");
 		eSet(testInstance, "l2a", "l2a");
 		eSet(testInstance, "l2b", "l2b");
 		eSet(testInstance, "l3", "l3");
+		testResource.getContents().add(testInstance);
 		String objectLabel = LabelUtil.getLabel(testInstance);
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		//	Check EObjectValidator errors
 		//
-		EValidator.Registry.INSTANCE.put(validatePackage, EObjectValidator.INSTANCE);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage, EObjectValidator.INSTANCE);
 		try {
 			String template = EcorePlugin.INSTANCE.getString("_UI_GenericConstraint_diagnostic");
 			checkValidationDiagnostics(testInstance, Diagnostic.ERROR,
@@ -740,7 +751,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	Check OCLinEcoreEObjectValidator warnings and distinct message
 			//
-			EValidator.Registry.INSTANCE.put(validatePackage, new OCLinEcoreEObjectValidator());
+			ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage, new OCLinEcoreEObjectValidator());
 			template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1", objectLabel),
@@ -770,7 +781,6 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template, "Level1::L1", objectLabel));
 		} finally {
 			ocl1.dispose();
-			EValidator.Registry.INSTANCE.remove(validatePackage);
 		}
 	}
 }

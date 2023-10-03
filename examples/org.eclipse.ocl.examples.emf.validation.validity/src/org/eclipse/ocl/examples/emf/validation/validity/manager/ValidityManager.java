@@ -56,11 +56,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public class ValidityManager
 {
-	private static final @NonNull Map<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>> constraintLocatorDescriptors = new HashMap<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>>();
-	private static final @NonNull Map<@NonNull String, @NonNull List<@NonNull ConstraintLocator>> constraintLocators = new HashMap<@NonNull String, @NonNull List<@NonNull ConstraintLocator>>();
+	private static final @NonNull Map<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>> constraintLocatorDescriptors = new HashMap<>();
+	private static final @NonNull Map<@NonNull String, @NonNull List<@NonNull ConstraintLocator>> constraintLocators = new HashMap<>();
 
 	public static final @NonNull TracingOption ANALYZE_RESOURCE = new TracingOption(ValidityPlugin.PLUGIN_ID, "analyze/resource");
 	public static final @NonNull TracingOption BUILD_TYPE = new TracingOption(ValidityPlugin.PLUGIN_ID, "build/type");
@@ -69,14 +71,14 @@ public class ValidityManager
 	public static final @NonNull TracingOption CREATE_VALIDATABLE = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/validatable");
 	public static final @NonNull TracingOption LOCATE_RESOURCE = new TracingOption(ValidityPlugin.PLUGIN_ID, "locate/resource");
 
-	public static final @NonNull Map<ILabelGenerator.@NonNull Option<?>, @Nullable Object> LABEL_OPTIONS = new HashMap<ILabelGenerator.@NonNull Option<?>, @Nullable Object>();
+	public static final @NonNull Map<ILabelGenerator.@NonNull Option<?>, @Nullable Object> LABEL_OPTIONS = new HashMap<>();
 	static {
 		LABEL_OPTIONS.put(ILabelGenerator.Builder.SHOW_QUALIFIER, null);
 	}
 
-	private final @NonNull LinkedHashSet<@NonNull Resource> newResources = new LinkedHashSet<@NonNull Resource>();
+	private final @NonNull LinkedHashSet<@NonNull Resource> newResources = new LinkedHashSet<>();
 
-	private final @NonNull Set<@NonNull Resource> oldResources = new HashSet<@NonNull Resource>();
+	private final @NonNull Set<@NonNull Resource> oldResources = new HashSet<>();
 
 	/**
 	 * This add the corresponding constraint locator if it exists in the list of
@@ -90,7 +92,7 @@ public class ValidityManager
 	public static synchronized void addConstraintLocator(/*@NonNull*/ String nsURI, ConstraintLocator.@NonNull Descriptor constraintLocator) {
 		List<ConstraintLocator.@NonNull Descriptor> list = constraintLocatorDescriptors.get(nsURI);
 		if (list == null) {
-			list = new ArrayList<ConstraintLocator.@NonNull Descriptor>();
+			list = new ArrayList<>();
 			constraintLocatorDescriptors.put(nsURI, list);
 		}
 		if (!list.contains(constraintLocator)) {
@@ -127,7 +129,7 @@ public class ValidityManager
 	public static synchronized @NonNull List<@NonNull ConstraintLocator> getConstraintLocators(@NonNull String nsURI) {
 		List<@NonNull ConstraintLocator> list = constraintLocators.get(nsURI);
 		if (list == null) {
-			list = new ArrayList<@NonNull ConstraintLocator>();
+			list = new ArrayList<>();
 			constraintLocators.put(nsURI, list);
 			List<ConstraintLocator.@NonNull Descriptor> descriptors = constraintLocatorDescriptors.get(nsURI);
 			if (descriptors == null) {
@@ -147,8 +149,8 @@ public class ValidityManager
 	}
 
 	protected final @NonNull ComposedAdapterFactory adapterFactory;
-	protected final @NonNull Map<@NonNull ResultValidatableNode, @NonNull Result> resultsMap = new HashMap<@NonNull ResultValidatableNode, @NonNull Result>();
-	protected final @SuppressWarnings("null")@NonNull Map<Object, Object> context = Diagnostician.INSTANCE.createDefaultContext();
+	protected final @NonNull Map<@NonNull ResultValidatableNode, @NonNull Result> resultsMap = new HashMap<>();
+	private Map<Object, Object> context = null;
 	private @Nullable ValidityModel model = null;
 	protected @Nullable ResultSet lastResultSet = null;
 	private boolean forceRefresh = false;
@@ -210,7 +212,11 @@ public class ValidityManager
 	}
 
 	public @NonNull Map<Object, Object> createDefaultContext() {
-		return context;
+		Map<Object, Object> context2 = context;
+		if (context2 == null) {		// Local ValidationRegistry context normally set by setInput().
+			context = Diagnostician.INSTANCE.createDefaultContext();
+		}
+		return context2;
 	}
 
 	@SuppressWarnings("null")
@@ -235,7 +241,7 @@ public class ValidityManager
 
 	protected @Nullable Set<@NonNull ConstraintLocator> gatherConstraintLocators(@Nullable Set<@NonNull ConstraintLocator> set, @NonNull List<@NonNull ConstraintLocator> list) {
 		if (set == null) {
-			set = new HashSet<@NonNull ConstraintLocator>();
+			set = new HashSet<>();
 		}
 		set.addAll(list);
 		return set;
@@ -262,7 +268,7 @@ public class ValidityManager
 	}
 
 	public @NonNull List<@NonNull Result> getConstrainingNodeResults(@NonNull ConstrainingNode element) {
-		List<@NonNull Result> results = new ArrayList<@NonNull Result>();
+		List<@NonNull Result> results = new ArrayList<>();
 		if (element.getLabel().startsWith("EOperation")) {
 			getAllConstrainingNodeResults(results, element);
 		}
@@ -404,7 +410,7 @@ public class ValidityManager
 	}
 
 	public @NonNull List<@NonNull Result> getValidatableNodeResults(@NonNull ValidatableNode element) {
-		List<@NonNull Result> results = new ArrayList<@NonNull Result>();
+		List<@NonNull Result> results = new ArrayList<>();
 		getAllValidatableNodeResults(results, element);
 		return results;
 	}
@@ -535,6 +541,8 @@ public class ValidityManager
 
 		if (selectedResourceSet != null) {
 			synchronized (selectedResourceSet) {
+				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(selectedResourceSet);
+				context = new ValidationContext(validationRegistry);
 				List<@NonNull Resource> selectedResources = ClassUtil.nullFree(selectedResourceSet.getResources());
 				for (int i = 0; i < selectedResources.size(); i++) {	// Tolerate domain growth without a CME
 					Resource eResource = ClassUtil.nonNull(selectedResources.get(i));

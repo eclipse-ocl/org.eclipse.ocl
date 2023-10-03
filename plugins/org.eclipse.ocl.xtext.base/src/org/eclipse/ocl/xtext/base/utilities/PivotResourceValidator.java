@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.utilities;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -22,8 +21,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
@@ -94,8 +94,9 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 
 	protected void performValidation(IAcceptor<Issue> acceptor, Resource asResource, CancelIndicator monitor) {
 		//		System.out.println(Thread.currentThread().getName() + " performValidation " + NameUtil.debugSimpleName(asResource));
-		Diagnostician diagnostician = getDiagnostician();
-		Map<Object, Object> context = LabelUtil.createDefaultContext(diagnostician);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(asResource);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostician diagnostician = validationContext.getDiagnostician();
 		//		List<Resource> resources = asResource.getResourceSet().getResources();
 		//		for (int i = 0; i < resources.size(); i++) {
 		Resource pResource = asResource; //resources.get(i);
@@ -112,7 +113,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 					return;
 				EObject pObject = contents.get(j);
 				ValidationDiagnostic diagnostic = createDefaultDiagnostic(diagnostician, pObject);
-				diagnostician.validate(pObject, diagnostic, context);
+				diagnostician.validate(pObject, diagnostic, validationContext);
 				if (!diagnostic.getChildren().isEmpty()) {
 					if (diagnostic.getSeverity() == Diagnostic.ERROR) {
 						pResource.getErrors().add(diagnostic);
@@ -201,32 +202,33 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 
 			// Validation errors
 			// Collect validator Diagnostics
+			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+			ValidationContext validationContext = new ValidationContext(validationRegistry);
+			Diagnostician diagnostician = validationContext.getDiagnostician();
 			for (EObject ele : resource.getContents()) {
 				try {
 					if (monitor.isCanceled())
 						return Collections.emptyList();
-					Diagnostician diagnostician = getDiagnostician();
-					Map<Object, Object> options = LabelUtil.createDefaultContext(diagnostician);
-					options.put(CheckMode.KEY, mode);
-					options.put(CancelableDiagnostician.CANCEL_INDICATOR, monitor);
+					validationContext.put(CheckMode.KEY, mode);
+					validationContext.put(CancelableDiagnostician.CANCEL_INDICATOR, monitor);
 					// disable concrete syntax validation, since a semantic model that has been parsed
 					// from the concrete syntax always complies with it - otherwise there are parse errors.
-					options.put(ConcreteSyntaxEValidator.DISABLE_CONCRETE_SYNTAX_EVALIDATOR, Boolean.TRUE);
+					validationContext.put(ConcreteSyntaxEValidator.DISABLE_CONCRETE_SYNTAX_EVALIDATOR, Boolean.TRUE);
 					// see EObjectValidator.getRootEValidator(Map<Object, Object>)
 					boolean hasSyntaxError = false;
 					if (resource instanceof XtextResource) {
-						options.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
+						validationContext.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
 						if (resource instanceof BaseCSResource) {
 							BaseCSResource csResource = (BaseCSResource)resource;
 							@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
 							hasSyntaxError = ElementUtil.hasSyntaxError(errors);
 							if (hasSyntaxError) {
-								options.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
+								validationContext.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
 							}
 						}
 					}
 					if (!hasSyntaxError) {
-						Diagnostic diagnostic = getDiagnostician().validate(ele, options);
+						Diagnostic diagnostic = diagnostician.validate(ele, validationContext);
 						if (!diagnostic.getChildren().isEmpty()) {
 							for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 								issueFromEValidatorDiagnostic(childDiagnostic, acceptor);

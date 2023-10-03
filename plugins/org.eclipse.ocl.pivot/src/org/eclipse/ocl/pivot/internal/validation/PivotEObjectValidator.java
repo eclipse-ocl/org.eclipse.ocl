@@ -56,10 +56,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * A PivotEObjectValidator augments EValidator.Registry.INSTANCE validation by validation of
+ * A PivotEObjectValidator augments EObjectValidator validation by validation of
  * additional Pivot-defined invariants.
  *
  * Since there is no per-ResourceSet EValidator.Registry it is necessary for the additional
@@ -114,7 +115,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * The static instance that is installed in the EValidator.Registry.INSTANCE to compose
+	 * The static instance that may be installed in a local ValidationRegistryAdapter to compose
 	 * Pivot validation with whatever other validation was installed.
 	 *
 	 * @since 1.14
@@ -136,7 +137,17 @@ public class PivotEObjectValidator implements EValidator
 	public static synchronized void install(@NonNull EPackage ePackage) {
 		install(ePackage, null);
 	}
+	@Deprecated		/* @deprecated specify an explicit Validation Registry */
 	public static synchronized void install(@NonNull EPackage ePackage, @Nullable List<@NonNull Model> complementingModels) {
+		install(ValidationRegistryAdapter.getFallbackGlobalValidationRegistry(), ePackage, complementingModels);
+	}
+	/**
+	 * Install Pivot-defined validation support for ePackage in validationRegistry. If complementingModels is non-null,
+	 * only constraints within complementingModels are validated to avoid double validation wrt a regular EObjectValidator.
+	 *
+	 * @since 1.19
+	 */
+	public static synchronized void install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage, @Nullable List<@NonNull Model> complementingModels) {
 		PivotEObjectValidator complementingEValidator;
 		if ((complementingModels == null) || complementingModels.isEmpty()) {
 			complementingEValidator = INSTANCE;
@@ -144,7 +155,7 @@ public class PivotEObjectValidator implements EValidator
 		else {
 			complementingEValidator = new PivotEObjectValidator(complementingModels);
 		}
-		ComposedEValidator.install(ePackage, complementingEValidator);
+		ComposedEValidator.install(validationRegistry, ePackage, complementingEValidator);
 	}
 
 	/**
@@ -189,7 +200,7 @@ public class PivotEObjectValidator implements EValidator
 	 */
 	protected final @Nullable List<@NonNull Model> complementingModels;
 
-	@Deprecated		// Temporary internal API preservation for Mars RC3
+	@Deprecated		// no longer used - Temporary internal API preservation for Mars RC3
 	protected PivotEObjectValidator() {
 		this.complementingModels = null;
 	}

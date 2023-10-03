@@ -44,8 +44,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -56,7 +57,9 @@ public class ValidateCommand extends ValidateAction
 	@Override
 	protected Diagnostician createDiagnostician(AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		ResourceSet resourceSet = ClassUtil.nonNullEMF(domain.getResourceSet());
-		return PivotDiagnostician.createDiagnostician(resourceSet, adapterFactory, progressMonitor);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		return validationContext.getDiagnostician(); //.createDiagnostician(resourceSet, adapterFactory, progressMonitor);
 	}
 
 	/**

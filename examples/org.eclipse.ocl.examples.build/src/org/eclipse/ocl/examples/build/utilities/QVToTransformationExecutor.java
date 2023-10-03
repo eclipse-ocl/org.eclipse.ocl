@@ -43,8 +43,9 @@ import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public class QVToTransformationExecutor extends AbstractWorkflowComponent
 {
@@ -326,10 +327,12 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 	}
 
 	public static void validate(@NonNull Resource resource) throws IOException {
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostician diagnostician = validationContext.getDiagnostician();
 		for (EObject eObject : resource.getContents()) {
-			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 			PivotUtilInternal.getEnvironmentFactory(resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
-			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+			Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
 			List<Diagnostic> children = diagnostic.getChildren();
 			if (children.size() <= 0) {
 				return;

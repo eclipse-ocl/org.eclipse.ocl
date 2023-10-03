@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.validation;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
 
 /**
  * The ValidationRegistryAdapter supports a local ResourceSet ValidationRegistry that delegates to the global ValidationRegistry
@@ -37,6 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements Adapter.Internal
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = Logger.getLogger(ValidationRegistryAdapter.class);
 
 	/**
 	 * Return any ValidationRegistryAdapter already adapting this notifier, which may be an EObject or REsource or ResourceSet.
@@ -62,14 +65,25 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 			return null;
 		}
 	}
+
 	/**
 	 * Return and if necessary create a ValidationRegistryAdapter adapting this notifier, which may be an EObject or REsource or ResourceSet.
 	 */
 	public static @NonNull ValidationRegistryAdapter getAdapter(@NonNull Notifier notifier) {
 		Resource resource = notifier instanceof EObject ? ((EObject)notifier).eResource() : notifier instanceof Resource ? (Resource)notifier : null;
 		ResourceSet resourceSet = resource != null ? resource.getResourceSet() : (ResourceSet)notifier;
-		assert resourceSet != null;
+		if (resourceSet == null) {
+			if (!(resource instanceof ImmutableResource)) {
+				logger.error("No ResourceSet available for ValidationRegistryAdapter.getAdapter()");
+			}
+			return new ValidationRegistryAdapter();
+		}
 		return getAdapter(resourceSet);
+	}
+
+	public static EValidator.@NonNull Registry getFallbackGlobalValidationRegistry() {
+		logger.error("Falling back on global EValidator.Registry - no ResourceSet available");
+		return EValidator.Registry.INSTANCE;
 	}
 
 	/**
@@ -102,8 +116,12 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 
 	protected /*final @NonNull*/ ResourceSet resourceSet;
 
-	public ValidationRegistryAdapter(@NonNull ResourceSet resourceSet) {
+	private ValidationRegistryAdapter() {
 		super(EValidator.Registry.INSTANCE);
+	}
+
+	public ValidationRegistryAdapter(@NonNull ResourceSet resourceSet) {
+		this();
 		this.resourceSet = resourceSet;
 		resourceSet.eAdapters().add(this);
 	}

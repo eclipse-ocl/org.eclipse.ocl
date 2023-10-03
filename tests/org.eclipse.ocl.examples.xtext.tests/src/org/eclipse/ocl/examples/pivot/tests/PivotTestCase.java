@@ -45,7 +45,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -75,7 +74,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -387,10 +385,10 @@ public class PivotTestCase extends TestCase
 	}
 
 	protected static void assertNoValidationErrorsInternal(@NonNull String string, @NonNull EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
-		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {

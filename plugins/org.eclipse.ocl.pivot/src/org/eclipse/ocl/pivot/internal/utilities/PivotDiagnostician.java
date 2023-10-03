@@ -47,6 +47,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 {
 	private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
 
+	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistyAdapter */
 	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
 			AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		return createDiagnostician(resourceSet, null, adapterFactory, progressMonitor);
@@ -56,6 +57,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistyAdapter */
 	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
 			EValidator.@Nullable Registry globalEValidatorRegistry, AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		EValidatorRegistryImpl localEValidatorRegistry = new EValidatorRegistryImpl();

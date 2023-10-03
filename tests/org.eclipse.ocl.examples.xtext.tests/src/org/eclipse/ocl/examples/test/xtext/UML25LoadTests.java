@@ -83,7 +83,7 @@ public class UML25LoadTests extends LoadTests
 	@Override
 	protected void tearDown() throws Exception {
 		extraURImap = null;
-		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
+		assert EValidator.Registry.INSTANCE.get(PivotPackage.eINSTANCE) == PivotValidator.INSTANCE;	// Verify global integrity - Bug 582494
 		super.tearDown();
 	}
 

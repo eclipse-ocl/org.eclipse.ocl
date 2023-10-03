@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractMetamodelDeclaration;
 import org.eclipse.xtext.AbstractRule;
@@ -51,7 +52,7 @@ import org.eclipse.xtext.XtextFactory;
  * AbstractGrammarResource provides the common functionality for a derived GrammarResource that serializes the *.xtextbin
  * Xtext grammar.
  */
-public abstract class AbstractGrammarResource extends XMIResourceImpl
+public abstract class AbstractGrammarResource extends XMIResourceImpl implements ImmutableResource
 {
 	private static final Method ABSTRACT_ELEMENT_SET_FIRST_SET_PREDICATED_METHOD;
 
@@ -247,4 +248,9 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 	 */
 	@Override
 	protected final void doUnload() {}
+
+	@Override
+	public boolean isCompatibleWith(@NonNull String metamodelURI) {
+		return false;
+	}
 }

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -38,8 +37,9 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.validation.UMLOCLEValidator;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -52,15 +52,15 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
 
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
+		ValidationContext validationContext = new ValidationContext(registry);
 		if (ocl != null) {
 			PivotDiagnostician.setOCL(validationContext, ocl);
 		}
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+		registry.put(UMLPackage.eINSTANCE, UMLOCLEValidator.INSTANCE);
+		Diagnostician dignostician = validationContext.getDiagnostician();
+		List<Diagnostic> diagnostics = new ArrayList<>();
 		for (EObject eObject : resource.getContents()) {
-			EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
-			registry.put(UMLPackage.eINSTANCE, UMLOCLEValidator.INSTANCE);
-			Diagnostician dignostician = new Diagnostician(registry);
 			Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
@@ -72,7 +72,8 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		for (@NonNull String message : expectedMessage) {
 			expectedMessages.add(message);
 		}
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(testInstance);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {

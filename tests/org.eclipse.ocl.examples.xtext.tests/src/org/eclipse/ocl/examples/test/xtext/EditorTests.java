@@ -43,6 +43,8 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -205,8 +207,11 @@ public class EditorTests extends XtextTestCase
 			public Object exec(@Nullable XtextResource resource) throws Exception {
 				assert resource != null;
 				resource.setValidationDisabled(false);
+				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+				ValidationContext validationContext = new ValidationContext(validationRegistry);
+				Diagnostician diagnostician = validationContext.getDiagnostician();
 				PivotResourceValidator resourceValidator = new PivotResourceValidator();
-				resourceValidator.setDiagnostician(Diagnostician.INSTANCE);
+				resourceValidator.setDiagnostician(diagnostician);
 				resourceValidator.setDiagnosticConverter(new PivotDiagnosticConverter());
 				resourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
 				return null;

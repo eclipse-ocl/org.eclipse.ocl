@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.completeocl.validation.CompleteOCLEObjectValidator;
 
 /**
@@ -271,12 +272,13 @@ public class PivotDocumentationExamples extends XtextTestCase
 		//-------------------------------------------------------------------------
 
 		// Register an additional EValidator for the Complete OCL document constraints
-		ComposedEValidator newEValidator = ComposedEValidator.install(EXTLibraryPackage.eINSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ComposedEValidator newEValidator = ComposedEValidator.install(validationRegistry, EXTLibraryPackage.eINSTANCE);
 		newEValidator.addChild(new CompleteOCLEObjectValidator(EXTLibraryPackage.eINSTANCE, uri));
 
 		// Validate the entire Resource containing the library
 		Resource resource = library.eResource();
-		MyDiagnostician diagnostician = new MyDiagnostician();
+		MyDiagnostician diagnostician = new MyDiagnostician(validationRegistry);
 		Diagnostic diagnostics = diagnostician.validate(resource);
 
 		// Print the diagnostics
@@ -292,6 +294,14 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 	public class MyDiagnostician extends Diagnostician
 	{
+	//	public MyDiagnostician() {
+	//		super();
+	//	}
+
+		public MyDiagnostician(EValidator.@NonNull Registry eValidatorRegistry) {
+			super(eValidatorRegistry);
+		}
+
 		@Override
 		public Map<Object, Object> createDefaultContext() {
 			Map<Object, Object> context = super.createDefaultContext();

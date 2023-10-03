@@ -47,14 +47,14 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -131,9 +131,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				return;
 			}
 			ASResource asResource = xtextResource.getASResource();
-			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(asResource);
+			ValidationContext validationContext = new ValidationContext(validationRegistry);
+			Diagnostician diagnostician = validationContext.getDiagnostician();
 			for (EObject eObject : asResource.getContents()) {
-				Diagnostic diagnostic = PivotDiagnostician.INSTANCE.validate(eObject, validationContext);
+				Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
 				if (diagnostic.getSeverity() > Diagnostic.INFO) {
 					message = PivotUtil.formatDiagnostics(diagnostic, "\n");
 					issues.addError(this, message, null, null, null);

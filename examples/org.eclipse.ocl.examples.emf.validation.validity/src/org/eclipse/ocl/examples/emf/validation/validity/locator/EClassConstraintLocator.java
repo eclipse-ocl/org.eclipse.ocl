@@ -41,7 +41,8 @@ import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 public class EClassConstraintLocator extends AbstractConstraintLocator
 {
 	public static @NonNull EClassConstraintLocator INSTANCE = new EClassConstraintLocator();
-	
+
+	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@NonNull ValidityModel validityModel,
 			@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
 		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
@@ -75,14 +76,17 @@ public class EClassConstraintLocator extends AbstractConstraintLocator
 		return map;
 	}
 
+	@Override
 	public Object getImage() {
 		return ValidityPlugin.INSTANCE.getImage("EOperation.gif");
 	}
 
+	@Override
 	public @NonNull ConstraintLocator getInstance() {
 		return INSTANCE;
 	}
 
+	@Override
 	public @NonNull String getName() {
 		return "EClass invariants";
 	}

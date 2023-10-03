@@ -10,7 +10,6 @@
  */
 package org.eclipse.ocl.pivot.uml.internal.validation;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +56,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.uml2.uml.Classifier;
@@ -565,11 +566,12 @@ public class UMLOCLEValidator implements EValidator
 	 * @since 1.3
 	 */
 	protected boolean validateSemantics(org.eclipse.uml2.uml.@NonNull Element umlElement, @NonNull ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		Diagnostician nestedDiagnostician = Diagnostician.INSTANCE;
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(umlElement);
+		ValidationContext nestedValidationContext = new ValidationContext(validationRegistry);
+		Diagnostician nestedDiagnostician = nestedValidationContext.getDiagnostician();
 		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(umlElement);
-		Map<Object,Object> nestedContext = new HashMap<>(context);
-		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
-		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+		nestedValidationContext.remove(EObjectValidator.ROOT_OBJECT);
+		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedValidationContext)) {
 			if (diagnostics != null) {
 				StringBuilder s = new StringBuilder();
 				s.append("OCL Validation error for \"" + expressionInOCL.getBody() + "\"");

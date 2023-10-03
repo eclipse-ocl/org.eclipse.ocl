@@ -90,6 +90,7 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		return map;
 	}
 
+	@Override
 	public @NonNull Set<@NonNull TypeURI> getAllTypes(@NonNull ValidityManager validityManager, @NonNull EObject constrainingObject) {
 		Set<@NonNull TypeURI> allTypes = new HashSet<@NonNull TypeURI>();
 		allTypes.add(validityManager.getTypeURI(constrainingObject));
@@ -103,10 +104,12 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		return allTypes;
 	}
 
+	@Override
 	public @NonNull EObject getConstrainingType(@NonNull EObject constrainedType, @NonNull Object constrainingObject) {
 		return constrainedType;
 	}
 
+	@Override
 	public @Nullable ConstrainingURI getConstrainingURI(@NonNull EObject eObject) {
 		Resource resource = eObject.eResource();
 		if (resource == null) {
@@ -119,18 +122,22 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		return new ConstrainingURI(uri);
 	}
 
+	@Override
 	public @NonNull ConstraintLocator getConstraintLocator() {
 		return this;
 	}
 
+	@Override
 	public @Nullable Object getImage() {
 		return null;
 	}
 
+	@Override
 	public @Nullable Collection<@NonNull Resource> getImports(@NonNull EPackage ePackage, @NonNull Resource resource) {
 		return null;
 	}
 
+	@Override
 	public @NonNull String getLabel(@NonNull EModelElement eObject) {
 		StringBuilder s = new StringBuilder();
 		if (eObject instanceof ENamedElement) {
@@ -159,15 +166,18 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		assert severity != null;
 		return severity;
 	}
-	
+
+	@Override
 	public @Nullable String getSourceExpression(@NonNull LeafConstrainingNode node) {
 		return null;
 	}
 
+	@Override
 	public @Nullable Resource getSourceResource(@NonNull LeafConstrainingNode node) {
 		return null;
 	}
 
+	@Override
 	public @Nullable TypeURI getTypeURI(@NonNull EObject eObject) {
 		Resource resource = eObject.eResource();
 		if (resource == null) {
@@ -190,6 +200,7 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		return "\"" + getName() + "\"";
 	}
 
+	@Override
 	public void validate(@NonNull Result result, @NonNull ValidityManager validityManager, @Nullable Monitor monitor) {
 		result.setDiagnostic("Unimplemented validate for " + getClass().getName());
 		result.setSeverity(Severity.FATAL);

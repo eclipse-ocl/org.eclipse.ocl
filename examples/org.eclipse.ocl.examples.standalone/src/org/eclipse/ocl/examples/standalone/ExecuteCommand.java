@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -25,7 +24,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -42,12 +40,13 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.queries.QueriesFactory;
 import org.eclipse.ocl.pivot.queries.QueryModel;
 import org.eclipse.ocl.pivot.queries.QueryResult;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -418,10 +417,10 @@ public class ExecuteCommand extends StandaloneCommand
 			try {
 				query = parserContext.parse(classContext, queryString);
 				//	PivotTestSuite.assertNoValidationErrors(expression, query);
-				Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(query);
+				ValidationContext validationContext = new ValidationContext(validationRegistry);
 				//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 				//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
-				//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 				BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(query, validationContext);
 				List<Diagnostic> children = diagnostics.getChildren();
 				if (children.size() > 0) {

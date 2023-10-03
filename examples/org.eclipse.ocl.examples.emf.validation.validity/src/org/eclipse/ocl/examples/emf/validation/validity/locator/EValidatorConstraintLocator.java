@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EValidator.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -40,15 +41,23 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public class EValidatorConstraintLocator extends AbstractConstraintLocator
 {
 	public static @NonNull EValidatorConstraintLocator INSTANCE = new EValidatorConstraintLocator();
-	
+
+	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@NonNull ValidityModel validityModel,
 			@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
 		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
-		Object object = EValidator.Registry.INSTANCE.get(ePackage);
+		Registry validationRegistry = EValidator.Registry.INSTANCE;
+		for (@NonNull Resource resource : resources) {
+			ValidationRegistryAdapter validationRegistryAdapter = ValidationRegistryAdapter.getAdapter(resource);
+			validationRegistry = validationRegistryAdapter;
+			break;
+		}
+		Object object = validationRegistry.get(ePackage);
 		if (object instanceof EValidator) {
 			map = getConstraints(map, validityModel, ePackage, (EValidator) object, monitor);
 		}
@@ -141,6 +150,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		return map;
 	}
 
+	@Override
 	public Object getImage() {
 		return ValidityPlugin.INSTANCE.getImage("methpub_obj.gif");
 	}
@@ -150,6 +160,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		return INSTANCE;
 	}
 
+	@Override
 	public @NonNull String getName() {
 		return "Java validateXXXX methods";
 	}
@@ -168,6 +179,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		ArrayList<EClassifier> sortedList = new ArrayList<EClassifier>(map.keySet());
 		Collections.sort(sortedList, new Comparator<EClassifier>()
 		{
+			@Override
 			public int compare(EClassifier o1, EClassifier o2) {
 				return o1.getName().compareTo(o2.getName());
 			}

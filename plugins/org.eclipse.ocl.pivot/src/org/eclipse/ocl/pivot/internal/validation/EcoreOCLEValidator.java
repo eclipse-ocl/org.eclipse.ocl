@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.validation;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +72,8 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -968,11 +969,12 @@ public class EcoreOCLEValidator implements EValidator
 				return false;
 			}
 		}
-		Diagnostician nestedDiagnostician = Diagnostician.INSTANCE;
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(expressionInOCL);
+		ValidationContext nestedValidationContext = new ValidationContext(validationRegistry);
+		Diagnostician nestedDiagnostician = nestedValidationContext.getDiagnostician();
 		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(eNamedElement);
-		Map<Object,Object> nestedContext = new HashMap<>(context);
-		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
-		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+		nestedValidationContext.remove(EObjectValidator.ROOT_OBJECT);
+		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedValidationContext)) {
 			if (diagnostics != null) {
 				StringBuilder s = new StringBuilder();
 				s.append("OCL Validation error for \"" + expressionInOCL.getBody() + "\"");
@@ -1014,11 +1016,12 @@ public class EcoreOCLEValidator implements EValidator
 				}
 			}
 		}
-		Diagnostician nestedDiagnostician = PivotDiagnostician.INSTANCE;
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(expressionInOCL);
+		ValidationContext nestedValidationContext = new ValidationContext(validationRegistry);
+		Diagnostician nestedDiagnostician = nestedValidationContext.getDiagnostician();
 		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(getEObjectContext(asSpecification, eNamedElement));
-		Map<Object,Object> nestedContext = new HashMap<>(context);
-		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
-		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+		nestedValidationContext.remove(EObjectValidator.ROOT_OBJECT);
+		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedValidationContext)) {
 			allOk = false;
 			if (diagnostics != null) {
 				String role = PivotUtilInternal.getSpecificationRole(asSpecification);

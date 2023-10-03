@@ -42,6 +42,7 @@ public abstract class AbstractGrammarTests extends XtextTestCase
 		//	Load binary grammar
 		//
 		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResources().add(javaResource);
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xtextbin", new BinaryGrammarResourceFactoryImpl());
 		Resource binaryResource = resourceSet.createResource(URI.createURI(fileName), null);
 		InputStream inputStream = grammarClass.getResourceAsStream(fileName);

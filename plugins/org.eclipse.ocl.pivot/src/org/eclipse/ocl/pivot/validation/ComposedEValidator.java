@@ -28,9 +28,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * A ComposedEValidator supports validation over a list of EValidators, validation terminating prematurely at
  * the first child EValidator that returns false.
  * <p>
- * A ComposedEValidator may be installed to displace an EValidator.Registry.INSTANCE entry. This in itself is
- * harmless but since the EValidator.Registry.INSTANCE is global, any additional EValidators added to the
- * ComposedEValidator should restrict their activities to ResourceSets in which they are required.
+ * A ComposedEValidator may be installed to displace an EValidator.Registry entry with a composite of the
+ * current EValidator and an additional EValidator.
+ * <p>
+ * This functionality used to be applied to the global EValidator.Registry.INSTANCE requiring the composed
+ * validation to be sensitive to the ResourceSet for which it is installed. With the advent of ValidatorRegistryAdapter
+ * a ComposedEValidator should only be in use within a relevant ResourceSEt.
  */
 public class ComposedEValidator implements EValidator
 {
@@ -51,14 +54,23 @@ public class ComposedEValidator implements EValidator
 	 * Install a ComposedEValidator for ePackage displacing the prevailing EValidator.Registry.INSTANCE
 	 * entry and adding it as the first ComposedEValidator child.
 	 */
+	@Deprecated /* @deprecated specify a specific (probably local) registry */
 	public static synchronized @NonNull ComposedEValidator install(@NonNull EPackage ePackage) {
-		Registry eValidatorRegistry = EValidator.Registry.INSTANCE;
-		synchronized (eValidatorRegistry) {
-			Object oldEValidator = eValidatorRegistry.get(ePackage);
+		return install(ValidationRegistryAdapter.getFallbackGlobalValidationRegistry(), ePackage);
+	}
+	/**
+	 * Install a ComposedEValidator for ePackage displacing the prevailing validationRegistry
+	 * entry and adding it as the first ComposedEValidator child.
+	 *
+	 * @since 1.19
+	 */
+	public static synchronized @NonNull ComposedEValidator install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage) {
+		synchronized (validationRegistry) {
+			Object oldEValidator = validationRegistry.get(ePackage);
 			if (oldEValidator == null) {
 				for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 					if (eClassifier instanceof EClass) {
-						oldEValidator = getEValidator(eValidatorRegistry, (EClass)eClassifier);
+						oldEValidator = getEValidator(validationRegistry, (EClass)eClassifier);
 						if (oldEValidator != null) {
 							break;
 						}
@@ -72,7 +84,7 @@ public class ComposedEValidator implements EValidator
 				oldEValidator = ((EValidator.Descriptor)oldEValidator).getEValidator();
 			}
 			ComposedEValidator newEValidator = new ComposedEValidator(oldEValidator instanceof EValidator ? (EValidator) oldEValidator : null);
-			eValidatorRegistry.put(ePackage, newEValidator);
+			validationRegistry.put(ePackage, newEValidator);
 			return newEValidator;
 		}
 	}
@@ -80,8 +92,8 @@ public class ComposedEValidator implements EValidator
 	/**
 	 * @since 1.19
 	 */
-	public static void install(@NonNull EPackage ePackage, @NonNull EValidator additionalEValidator) {
-		ComposedEValidator composedEValidator = install(ePackage);
+	public static void install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage, @NonNull EValidator additionalEValidator) {
+		ComposedEValidator composedEValidator = install(validationRegistry, ePackage);
 		composedEValidator.addChild(additionalEValidator);
 	}
 

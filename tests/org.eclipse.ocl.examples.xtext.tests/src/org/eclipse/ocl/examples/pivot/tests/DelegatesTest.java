@@ -39,13 +39,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.QueryDelegate;
@@ -112,6 +110,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.junit.AfterClass;
 
@@ -170,6 +170,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
 		extensionToFactoryMap.put("xmi", new EcoreResourceFactoryImpl());
 		extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		validationRegistry.put(null, new OCLinEcoreEObjectValidator());
 
 		OCLDelegateDomain.lazyInitializeLocals(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT, true, new OCLDelegateDomain.FactoryFactory()
 		{
@@ -308,22 +310,23 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Registry packageRegistry = resourceSet.getPackageRegistry();
 		packageRegistry.put(CompanyPackage.eNS_URI, CompanyPackage.eINSTANCE);
 		packageRegistry.put(NoreflectioncompanyPackage.eNS_URI, NoreflectioncompanyPackage.eINSTANCE);
-		EValidator.Registry.INSTANCE.put(CompanyPackage.eINSTANCE, CompanyValidator.INSTANCE);
-		EValidator.Registry.INSTANCE.put(NoreflectioncompanyPackage.eINSTANCE, NoreflectioncompanyValidator.INSTANCE);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		validationRegistry.put(CompanyPackage.eINSTANCE, CompanyValidator.INSTANCE);
+		validationRegistry.put(NoreflectioncompanyPackage.eINSTANCE, NoreflectioncompanyValidator.INSTANCE);
 	}
 
 	protected void initCodeGeneratedPackageRegistrations(@NonNull ResourceSet resourceSet) {
 		resourceSet.getPackageRegistry().put(CodegencompanyPackage.eNS_URI, CodegencompanyPackage.eINSTANCE);
-		EValidator.Registry.INSTANCE.put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
+		ValidationRegistryAdapter.getAdapter(resourceSet).put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
 	}
 
 	/*	protected void removePackageRegistrations() {
 		resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);
 		resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);
 		resourceSet.getPackageRegistry().remove(CodegencompanyPackage.eNS_URI);
-		EValidator.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);
-		EValidator.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);
-		EValidator.Registry.INSTANCE.remove(CodegencompanyPackage.eNS_URI);
+		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CompanyPackage.eNS_URI);
+		ValidationRegistryAdapter.getAdapter(resourceSet).remove(NoreflectioncompanyPackage.eNS_URI);
+		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CodegencompanyPackage.eNS_URI);
 	} */
 	//
 	// Test framework
@@ -341,7 +344,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		/**
 		 * Ensure that there is support for custom messages and severities.
 		 */
-		EValidator.Registry.INSTANCE.put(null, new OCLinEcoreEObjectValidator());
 		EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);						// Reference and nullify the side effect of the reference
 		//		resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);				// In case previous test failed
 		EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);			// Reference and nullify the side effect of the reference
@@ -355,7 +357,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (testResource != null) {
 			testResource.unload();
 		}
-		EValidator.Registry.INSTANCE.remove(null);
 		//		OCL.Internal.disposeGlobalEnvironmentFactory();
 		if (EPackage.Registry.INSTANCE.getEFactory(CompanyPackage.eNS_URI) instanceof CompanyFactory) {
 			DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(CompanyPackage.eINSTANCE);
@@ -1881,8 +1882,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithoutError(EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostic validation = validationContext.getDiagnostician().validate(eObject, validationContext);
 		if (validation.getSeverity() != Diagnostic.OK) {
 			List<Diagnostic> diagnostics = validation.getChildren();
 			if (!diagnostics.isEmpty()) {
@@ -1907,8 +1909,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateConstraintWithSeverity(String constraintName, int severity, EObject eObject, String message) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostic validation = validationContext.getDiagnostician().validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
 		Diagnostic diagnostic = diagnostics.get(0);
@@ -1927,8 +1930,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithSeverity(String constraintName, int severity, EObject eObject, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostic validation = validationContext.getDiagnostician().validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
 		Diagnostic diagnostic = diagnostics.get(0);
@@ -1940,8 +1944,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithDelegationSeverity(String constraintName, int severity, EObject eObject, String source, Class<? extends Exception> exceptionClass, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostic validation = validationContext.getDiagnostician().validate(eObject, validationContext);
 		assertEquals("Validation of '" + constraintName + "' severity:", severity, validation.getSeverity());
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());

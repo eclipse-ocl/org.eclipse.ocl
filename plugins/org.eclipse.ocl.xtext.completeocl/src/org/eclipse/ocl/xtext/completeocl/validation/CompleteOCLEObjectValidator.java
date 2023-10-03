@@ -51,8 +51,8 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
 	 * for the meta-models managed by a newly created environmentFactory.
 	 */
-	@SuppressWarnings("deprecation")
 	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI) {
+		super(null);
 		this.ePackage = ePackage;
 		this.oclURI = oclURI;
 	}

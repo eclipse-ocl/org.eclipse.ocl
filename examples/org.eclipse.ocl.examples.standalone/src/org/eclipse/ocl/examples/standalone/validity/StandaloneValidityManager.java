@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone.validity;
 
@@ -84,11 +84,12 @@ public class StandaloneValidityManager extends ValidityManager
 		}
 		return ancestors;
 	}
-	
+
 	private @NonNull IsActivePredicate isActivePredicate = new IsActivePredicate();
 
 	public StandaloneValidityManager() {}
 
+	@Override
 	public @NonNull Iterable<ConstraintLocator> getActiveConstraintLocators(@NonNull String nsURI) {
 		return Iterables.filter(super.getActiveConstraintLocators(nsURI), isActivePredicate);
 	}
@@ -100,8 +101,7 @@ public class StandaloneValidityManager extends ValidityManager
 			try {
 				ValidatableNode validatable = result.getValidatableNode();
 				ValidatableNode validatableParent = validatable.getParent();
-				LeafConstrainingNode constraint = result
-						.getLeafConstrainingNode();
+				LeafConstrainingNode constraint = result.getLeafConstrainingNode();
 
 				if (constraint != null) {
 					List<ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
@@ -117,8 +117,7 @@ public class StandaloneValidityManager extends ValidityManager
 					boolean isEnabledForValidation = false;
 					if (isConstrainingNodeEnabled) {
 						if (validatable instanceof ResultValidatableNode) {
-							if (validatableParent != null
-									&& validatableParent.isEnabled()) {
+							if (validatableParent != null && validatableParent.isEnabled()) {
 								isEnabledForValidation = true;
 							}
 						} else {
@@ -127,10 +126,8 @@ public class StandaloneValidityManager extends ValidityManager
 					}
 
 					if (isEnabledForValidation) {
-						ConstraintLocator constraintLocator = constraint
-								.getConstraintLocator();
-						constraintLocator.validate(result,
-								StandaloneValidityManager.this, null);
+						ConstraintLocator constraintLocator = constraint.getConstraintLocator();
+						constraintLocator.validate(result, StandaloneValidityManager.this, null);
 					} else {
 						result.setSeverity(Severity.UNKNOWN);
 					}
@@ -147,11 +144,11 @@ public class StandaloneValidityManager extends ValidityManager
 	public void setRunJavaConstraints(boolean runJavaConstraints) {
 		isActivePredicate.runJavaConstraints = runJavaConstraints;
 	}
-	
+
 	public void setRunOCLConstraints(boolean runOCLConstraints) {
 		isActivePredicate.runOCLConstraints = runOCLConstraints;
 	}
-	
+
 	public void setRunUMLConstraints(boolean runUMLConstraints) {
 		isActivePredicate.runUMLConstraints = runUMLConstraints;
 	}

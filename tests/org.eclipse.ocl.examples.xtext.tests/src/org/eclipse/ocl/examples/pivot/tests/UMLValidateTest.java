@@ -15,7 +15,6 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
@@ -355,7 +353,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		ValidationContext validationContext = createValidationContext(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
 		validationContext.put(EnvironmentFactory.class, environmentFactory);
-	//	LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -513,9 +510,10 @@ public class UMLValidateTest extends AbstractValidateTests
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
 		Stereotype appliedStereotype = umlClass1.getAppliedStereotype("Profile1::St1");
 		EObject stereotypeApplication = umlClass1.getStereotypeApplication(appliedStereotype);
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlModel, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(umlResource);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		List<Diagnostic> diagnostics = new ArrayList<>();
+		Diagnostic diagnostic = validationContext.getDiagnostician().validate(umlModel, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
 		assertDiagnostics("Loading", umlResource, diagnostics); //,
 		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlModel)));

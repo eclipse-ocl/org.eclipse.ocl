@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.test.xtext;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -48,11 +47,12 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 /**
  * Tests for the OCLinEcore tutorial using LPG or Pivot delegate URIs on LPG or Pivot evaluator.
@@ -161,15 +161,17 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		Object b2Available = queryEval.evaluate(b2Book);
 		assertFalse((Boolean)b2Available);
 
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		Diagnostic diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		Diagnostician diagnostician = validationContext.getDiagnostician();
+		Diagnostic diagnostics = diagnostician.validate(xmiLibrary, validationContext);
 		assertEquals(3, diagnostics.getChildren().size());
 
 		b2Book.eSet(bookCopies, BigInteger.valueOf(4));
 		b2Available = queryEval.evaluate(b2Book);
 		assertTrue((Boolean)b2Available);
 
-		diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
+		diagnostics = diagnostician.validate(xmiLibrary, validationContext);
 		assertEquals(2, diagnostics.getChildren().size());
 
 		b2Book.eSet(bookCopies, BigInteger.valueOf(3));
@@ -233,8 +235,10 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 			Object b2Available = queryEval.evaluateEcore(b2Book);
 			assertFalse(ValueUtil.asBoolean(b2Available));
 
-			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-			Diagnostic diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
+			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+			ValidationContext validationContext = new ValidationContext(validationRegistry);
+			Diagnostician diagnostician = validationContext.getDiagnostician();
+			Diagnostic diagnostics = diagnostician.validate(xmiLibrary, validationContext);
 			assertEquals(3, diagnostics.getChildren().size());
 
 			//		    queryEval.invalidateCaches();
@@ -245,7 +249,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 			b2Available = queryEval.evaluateEcore(b2Book);
 			assertTrue(ValueUtil.asBoolean(b2Available));
 
-			diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
+			diagnostics = diagnostician.validate(xmiLibrary, validationContext);
 			assertEquals(2, diagnostics.getChildren().size());
 
 			b2Book.eSet(bookCopies, BigInteger.valueOf(3));
@@ -298,7 +302,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 			unloadResourceSet(resourceSet);
 		}
 		resourceSet = null;
-		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
+		assert EValidator.Registry.INSTANCE.get(PivotPackage.eINSTANCE) == PivotValidator.INSTANCE;	// Verify global integrity - Bug 582494
 		super.tearDown();
 	}
 }
