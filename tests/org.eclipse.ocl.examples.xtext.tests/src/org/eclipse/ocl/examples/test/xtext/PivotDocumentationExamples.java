@@ -292,6 +292,16 @@ public class PivotDocumentationExamples extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void zztest_code_snippets()
+	{
+		// Code for 7.2 traditional validation
+		EObject eObject = null;
+		Diagnostician diagnostician = Diagnostician.INSTANCE;
+		Map<Object, Object> context = diagnostician.createDefaultContext();
+		BasicDiagnostic diagnostics = diagnostician.createDefaultDiagnostic(eObject);
+		diagnostician.validate(eObject, diagnostics, context);
+	}
+
 	public class MyDiagnostician extends Diagnostician
 	{
 	//	public MyDiagnostician() {
