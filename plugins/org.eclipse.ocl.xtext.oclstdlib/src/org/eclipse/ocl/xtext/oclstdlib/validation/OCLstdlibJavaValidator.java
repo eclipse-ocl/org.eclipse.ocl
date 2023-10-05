@@ -18,7 +18,7 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 
 
-public class OCLstdlibJavaValidator extends AbstractOCLstdlibJavaValidator {
+public class OCLstdlibJavaValidator extends OCLstdlibValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

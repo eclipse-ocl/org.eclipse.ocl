@@ -21,8 +21,6 @@ Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.xtext.oclstdlib.ui,
  org.eclipse.ocl.xtext.oclstdlib.ui.contentassist,
- org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.antlr,
- org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.antlr.internal;x-internal:=true,
  org.eclipse.ocl.xtext.oclstdlib.ui.internal,
  org.eclipse.ocl.xtext.oclstdlib.ui.labeling,
  org.eclipse.ocl.xtext.oclstdlib.ui.messages,

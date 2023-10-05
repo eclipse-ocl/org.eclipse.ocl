@@ -11,11 +11,11 @@
 package org.eclipse.ocl.xtext.base.validation;
 
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-public class BaseJavaValidator extends org.eclipse.ocl.xtext.base.validation.AbstractBaseJavaValidator {
+public class BaseJavaValidator extends BaseValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {
