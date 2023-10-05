@@ -60,6 +60,7 @@ Workflow {
 			}
 			code = {
 				preferXtendStubs = false
+				lineDelimiter = "\n"
 				encoding = "UTF-8"
 				fileHeader =
 "/*******************************************************************************
@@ -80,8 +81,8 @@ Workflow {
 			name = "${completeOCLprojectName}.CompleteOCL"
 			fileExtensions = "ocl"
 			generator = null
-			serializer = {
-				generateStub = false
+			serializer = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
 			}
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
@@ -97,15 +98,15 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
-				fragment = org.eclipse.xtext.generator.formatting.FormatterFragment {}
+			formatter = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
 			}
 			// EssentialOCL bindings 
-			fragment = org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment {}			
+			fragment = org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment {}
 			// Support Markup and Hover text 
 			fragment = org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment {}
 			// *.xtextbin support on Xtext 2.3		
-			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			
+			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
 		}
 	}
 	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
@@ -117,7 +118,22 @@ Workflow {
 		fileName = "${completeOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/completeocl/parser/antlr/internal/InternalCompleteOCLParser.java"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/src"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/src"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}.ui/src-gen"
