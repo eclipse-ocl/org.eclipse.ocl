@@ -1597,8 +1597,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
-		newOpposite.setIsImplicit(true);
 		newOpposite.setName(name);
+		newOpposite.setIsImplicit(true);
 		if (thisProperty.isIsComposite()) {
 			Type thisType = standardLibrary.resolveContextSpecialization(thisClass);
 			newOpposite.setType(thisType);
