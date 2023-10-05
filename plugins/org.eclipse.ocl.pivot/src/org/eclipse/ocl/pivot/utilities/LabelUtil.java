@@ -94,7 +94,7 @@ public class LabelUtil
 		{
 			@Override
 			public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull ENamedElement labelledObject) {
-				String name = labelledObject.getName();
+				String name = NameUtil.getOriginalName(labelledObject);
 				if (name != null)
 					labelBuilder.appendString(name);
 				else {
