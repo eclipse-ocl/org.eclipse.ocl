@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -774,10 +774,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!derived'?
+	 *         qualifiers+='derived'?
 	 *         (
 	 *             (
-	 *                 qualifiers+='derived' |
+	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
@@ -785,7 +785,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!derived'?
+	 *             qualifiers+='derived'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -896,15 +896,15 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='readonly'?
+	 *         qualifiers+='composes'?
 	 *         (
 	 *             (
-	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
+	 *                 qualifiers+='readonly' |
 	 *                 qualifiers+='!readonly' |
 	 *                 qualifiers+='resolve' |
 	 *                 qualifiers+='!resolve' |
@@ -917,7 +917,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='readonly'?
+	 *             qualifiers+='composes'?
 	 *         )*
 	 *         (
 	 *             (
