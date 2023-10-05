@@ -318,7 +318,7 @@ public class EditorTests extends XtextTestCase
 		String ecoreContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n" +
 				"    name=\"test\" nsURI=\"testURI\" nsPrefix=\"test\"/>\n";
-		String oclinecoreContent = "package test : test = 'testURI';";
+		String oclinecoreContent = "package test : test = 'testURI';\n";
 		XtextEditor editor = doStartUp(OCLinEcoreUiModule.EDITOR_ID, testFileName, ecoreContent);
 		checkContent(editor, oclinecoreContent);
 		replaceInContent(editor, "testURI", "testing");
