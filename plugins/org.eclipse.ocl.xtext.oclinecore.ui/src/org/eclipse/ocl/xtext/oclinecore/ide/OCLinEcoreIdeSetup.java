@@ -27,5 +27,5 @@ public class OCLinEcoreIdeSetup extends OCLinEcoreStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new OCLinEcoreRuntimeModule(), new OCLinEcoreIdeModule()));
 	}
-	
+
 }

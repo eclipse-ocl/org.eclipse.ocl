@@ -27,5 +27,5 @@ public class OCLstdlibIdeSetup extends OCLstdlibStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new OCLstdlibRuntimeModule(), new OCLstdlibIdeModule()));
 	}
-	
+
 }

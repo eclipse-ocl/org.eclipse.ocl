@@ -14,12 +14,12 @@ package org.eclipse.ocl.xtext.base.validation;
 
 
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class BaseValidator extends AbstractBaseValidator {
-	
+
 //	public static final String INVALID_NAME = "invalidName";
 //
 //	@Check
@@ -30,5 +30,5 @@ public class BaseValidator extends AbstractBaseValidator {
 //					INVALID_NAME);
 //		}
 //	}
-	
+
 }

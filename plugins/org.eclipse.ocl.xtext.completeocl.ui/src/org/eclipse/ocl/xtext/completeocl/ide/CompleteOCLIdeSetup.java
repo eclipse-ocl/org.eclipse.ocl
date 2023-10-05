@@ -27,5 +27,5 @@ public class CompleteOCLIdeSetup extends CompleteOCLStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new CompleteOCLRuntimeModule(), new CompleteOCLIdeModule()));
 	}
-	
+
 }

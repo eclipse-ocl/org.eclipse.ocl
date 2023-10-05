@@ -16,18 +16,19 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
-import org.eclipse.ocl.xtext.base.formatting.BaseFormatter;
+import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
+import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
 import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseLexer;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
-import org.eclipse.ocl.xtext.base.serializer.BaseSemanticSequencer;
-import org.eclipse.ocl.xtext.base.serializer.BaseSyntacticSequencer;
+import org.eclipse.ocl.xtext.base.serializer.BaseSerializationMetaData;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 import org.eclipse.ocl.xtext.base.validation.BaseValidator;
 import org.eclipse.xtext.Constants;
 import org.eclipse.xtext.IGrammarAccess;
-import org.eclipse.xtext.formatting.IFormatter;
+import org.eclipse.xtext.formatting.INodeModelFormatter;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.parser.IParser;
@@ -53,9 +54,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.SingletonBinding;
@@ -93,19 +91,19 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 		return BaseGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return BaseSemanticSequencer.class;
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends INodeModelFormatter> bindINodeModelFormatter() {
+		return DeclarativeFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return BaseSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
-		return Serializer.class;
+		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
+		return BaseSerializationMetaData.Provider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -194,11 +192,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
-	}
-
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends IFormatter> bindIFormatter() {
-		return BaseFormatter.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.CompatibilityFragment

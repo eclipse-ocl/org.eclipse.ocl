@@ -27,5 +27,5 @@ public class EssentialOCLIdeSetup extends EssentialOCLStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new EssentialOCLRuntimeModule(), new EssentialOCLIdeModule()));
 	}
-	
+
 }

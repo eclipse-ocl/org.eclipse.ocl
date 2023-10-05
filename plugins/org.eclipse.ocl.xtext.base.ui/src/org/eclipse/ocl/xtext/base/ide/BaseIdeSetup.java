@@ -27,5 +27,5 @@ public class BaseIdeSetup extends BaseStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new BaseRuntimeModule(), new BaseIdeModule()));
 	}
-	
+
 }
