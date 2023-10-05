@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -1420,8 +1421,19 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
+		boolean isImplicit = false;
+		CompleteClass completeClass = metamodelManager.getCompleteClass(PivotUtil.getOwningClass(property));
+		Iterable<@NonNull Property> asProperties = completeClass.getProperties(property);
+		assert !(asProperties instanceof PartialProperties);
+		if (asProperties != null) {
+			for (Property asProperty : asProperties) {
+				if (asProperty.isIsImplicit()) {
+					isImplicit = true;
+				}
+			}
+		}
 		NavigationCallExp callExp;
-		if (property.isIsImplicit()) {
+		if (isImplicit) {
 			callExp = refreshOppositePropertyCallExp(csNameExp, sourceExp, property);
 		}
 		else {
