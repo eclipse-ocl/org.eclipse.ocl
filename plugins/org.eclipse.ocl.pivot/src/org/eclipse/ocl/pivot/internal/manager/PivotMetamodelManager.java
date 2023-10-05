@@ -852,6 +852,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeModel.getCompletePackage(asPackage);
 	}
 
+	@Override
 	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
 		ExpressionInOCL defaultExpression = null;
 		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {

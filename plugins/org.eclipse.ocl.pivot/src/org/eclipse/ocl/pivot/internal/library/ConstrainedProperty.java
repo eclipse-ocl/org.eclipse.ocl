@@ -44,7 +44,7 @@ public class ConstrainedProperty extends AbstractProperty
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		ExpressionInOCL expression2 = expression;
 		if (expression2 == null) {
-			LanguageExpression defaultSpecification = property.getOwnedExpression();
+			LanguageExpression defaultSpecification = executor.getMetamodelManager().getDefaultExpression(property);
 			if (defaultSpecification == null) {
 				throw new InvalidValueException("No defaultExpression for '{0}'", property);
 			}

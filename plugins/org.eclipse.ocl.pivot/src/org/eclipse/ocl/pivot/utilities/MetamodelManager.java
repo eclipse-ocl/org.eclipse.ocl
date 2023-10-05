@@ -36,6 +36,8 @@ public interface MetamodelManager
 
 	@NonNull CompleteModel getCompleteModel();
 
+	@Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property);
+
 	@Nullable <T extends EObject> T getEcoreOfPivot(@NonNull Class<T> ecoreClass, @NonNull Element element);
 
 	@NonNull EnvironmentFactory getEnvironmentFactory();
