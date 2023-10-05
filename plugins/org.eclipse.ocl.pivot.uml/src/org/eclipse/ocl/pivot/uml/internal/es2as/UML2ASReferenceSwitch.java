@@ -300,7 +300,8 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		String associationName = asAssociationClass.getName();
 		if (associationName != null) {						// Null name suppresses navigation to Association; see BUG 413766 comments
 			//
-			//	Create mutually opposite pairs of Property between each UML member end's referenced type and the AssociationClass.
+			//	Create mutually opposite pairs of Property between each UML member end's referenced type
+			//	to navigate to and from the AssociationClass.
 			//
 			for (int i = 0; i < umlMemberEnds.size(); i++) {
 				org.eclipse.uml2.uml.Property umlMemberProperty = umlMemberEnds.get(i);
@@ -328,7 +329,8 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			}
 		}
 		//
-		//	Create mutually opposite pairs of Property between the types referenced by each pair of UML member ends.
+		//	Create mutually opposite pairs of Property between the types referenced by each pair of UML member ends
+		//	to navigate to and from the referred type.
 		//
 		for (int iThis2That = 0; iThis2That < umlMemberEnds.size(); iThis2That++) {
 			org.eclipse.uml2.uml.Property umlThis2ThatProperty = umlMemberEnds.get(iThis2That);
