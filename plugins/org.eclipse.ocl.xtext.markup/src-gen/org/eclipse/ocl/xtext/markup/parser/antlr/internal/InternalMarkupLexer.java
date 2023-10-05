@@ -365,8 +365,8 @@ public class InternalMarkupLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalMarkup.g:1290:22: ( '0' .. '9' )
-            // InternalMarkup.g:1290:24: '0' .. '9'
+            // InternalMarkup.g:1255:22: ( '0' .. '9' )
+            // InternalMarkup.g:1255:24: '0' .. '9'
             {
             matchRange('0','9');
 
@@ -381,8 +381,8 @@ public class InternalMarkupLexer extends Lexer {
     // $ANTLR start "RULE_LETTER"
     public final void mRULE_LETTER() throws RecognitionException {
         try {
-            // InternalMarkup.g:1292:22: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
-            // InternalMarkup.g:1292:24: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // InternalMarkup.g:1257:22: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
+            // InternalMarkup.g:1257:24: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -405,8 +405,8 @@ public class InternalMarkupLexer extends Lexer {
     // $ANTLR start "RULE_ESCAPED"
     public final void mRULE_ESCAPED() throws RecognitionException {
         try {
-            // InternalMarkup.g:1294:23: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' ) )
-            // InternalMarkup.g:1294:25: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' )
+            // InternalMarkup.g:1259:23: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' ) )
+            // InternalMarkup.g:1259:25: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' )
             {
             match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='<'||input.LA(1)=='>'||(input.LA(1)>='[' && input.LA(1)<=']')||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -430,8 +430,8 @@ public class InternalMarkupLexer extends Lexer {
     // $ANTLR start "RULE_VERTICAL_WS"
     public final void mRULE_VERTICAL_WS() throws RecognitionException {
         try {
-            // InternalMarkup.g:1296:27: ( ( '\\n' | '\\r' ) )
-            // InternalMarkup.g:1296:29: ( '\\n' | '\\r' )
+            // InternalMarkup.g:1261:27: ( ( '\\n' | '\\r' ) )
+            // InternalMarkup.g:1261:29: ( '\\n' | '\\r' )
             {
             if ( input.LA(1)=='\n'||input.LA(1)=='\r' ) {
                 input.consume();
@@ -454,8 +454,8 @@ public class InternalMarkupLexer extends Lexer {
     // $ANTLR start "RULE_HORIZONTAL_WS"
     public final void mRULE_HORIZONTAL_WS() throws RecognitionException {
         try {
-            // InternalMarkup.g:1298:29: ( ( ' ' | '\\t' ) )
-            // InternalMarkup.g:1298:31: ( ' ' | '\\t' )
+            // InternalMarkup.g:1263:29: ( ( ' ' | '\\t' ) )
+            // InternalMarkup.g:1263:31: ( ' ' | '\\t' )
             {
             if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
                 input.consume();
@@ -480,10 +480,10 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1300:10: ( ( RULE_NUMBER )+ )
-            // InternalMarkup.g:1300:12: ( RULE_NUMBER )+
+            // InternalMarkup.g:1265:10: ( ( RULE_NUMBER )+ )
+            // InternalMarkup.g:1265:12: ( RULE_NUMBER )+
             {
-            // InternalMarkup.g:1300:12: ( RULE_NUMBER )+
+            // InternalMarkup.g:1265:12: ( RULE_NUMBER )+
             int cnt1=0;
             loop1:
             do {
@@ -497,7 +497,7 @@ public class InternalMarkupLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalMarkup.g:1300:12: RULE_NUMBER
+            	    // InternalMarkup.g:1265:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER();
 
@@ -529,11 +529,11 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1302:13: ( '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalMarkup.g:1302:15: '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalMarkup.g:1267:13: ( '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalMarkup.g:1267:15: '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"');
-            // InternalMarkup.g:1302:19: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalMarkup.g:1267:19: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )*
             loop2:
             do {
                 int alt2=3;
@@ -549,14 +549,14 @@ public class InternalMarkupLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalMarkup.g:1302:20: RULE_ESCAPED
+            	    // InternalMarkup.g:1267:20: RULE_ESCAPED
             	    {
             	    mRULE_ESCAPED();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalMarkup.g:1302:33: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalMarkup.g:1267:33: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -593,11 +593,11 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1304:9: ( RULE_LETTER ( RULE_LETTER | RULE_NUMBER )* )
-            // InternalMarkup.g:1304:11: RULE_LETTER ( RULE_LETTER | RULE_NUMBER )*
+            // InternalMarkup.g:1269:9: ( RULE_LETTER ( RULE_LETTER | RULE_NUMBER )* )
+            // InternalMarkup.g:1269:11: RULE_LETTER ( RULE_LETTER | RULE_NUMBER )*
             {
             mRULE_LETTER();
-            // InternalMarkup.g:1304:23: ( RULE_LETTER | RULE_NUMBER )*
+            // InternalMarkup.g:1269:23: ( RULE_LETTER | RULE_NUMBER )*
             loop3:
             do {
                 int alt3=2;
@@ -646,10 +646,10 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_WORD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1306:11: ( ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+ )
-            // InternalMarkup.g:1306:13: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+
+            // InternalMarkup.g:1271:11: ( ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+ )
+            // InternalMarkup.g:1271:13: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+
             {
-            // InternalMarkup.g:1306:13: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+
+            // InternalMarkup.g:1271:13: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) ) )+
             int cnt4=0;
             loop4:
             do {
@@ -666,14 +666,14 @@ public class InternalMarkupLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalMarkup.g:1306:14: RULE_ESCAPED
+            	    // InternalMarkup.g:1271:14: RULE_ESCAPED
             	    {
             	    mRULE_ESCAPED();
 
             	    }
             	    break;
             	case 2 :
-            	    // InternalMarkup.g:1306:27: ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) )
+            	    // InternalMarkup.g:1271:27: ~ ( ( '\\\\' | '\"' | '[' | ']' | ':' | '#' | ',' | RULE_HORIZONTAL_WS | RULE_VERTICAL_WS ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\b')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\u001F')||input.LA(1)=='!'||(input.LA(1)>='$' && input.LA(1)<='+')||(input.LA(1)>='-' && input.LA(1)<='9')||(input.LA(1)>=';' && input.LA(1)<='Z')||(input.LA(1)>='^' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -713,10 +713,10 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_NL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1308:9: ( ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+ )
-            // InternalMarkup.g:1308:11: ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+
+            // InternalMarkup.g:1273:9: ( ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+ )
+            // InternalMarkup.g:1273:11: ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+
             {
-            // InternalMarkup.g:1308:11: ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+
+            // InternalMarkup.g:1273:11: ( ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS )+
             int cnt6=0;
             loop6:
             do {
@@ -730,9 +730,9 @@ public class InternalMarkupLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalMarkup.g:1308:12: ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS
+            	    // InternalMarkup.g:1273:12: ( RULE_HORIZONTAL_WS )* RULE_VERTICAL_WS
             	    {
-            	    // InternalMarkup.g:1308:12: ( RULE_HORIZONTAL_WS )*
+            	    // InternalMarkup.g:1273:12: ( RULE_HORIZONTAL_WS )*
             	    loop5:
             	    do {
             	        int alt5=2;
@@ -745,7 +745,7 @@ public class InternalMarkupLexer extends Lexer {
 
             	        switch (alt5) {
             	    	case 1 :
-            	    	    // InternalMarkup.g:1308:12: RULE_HORIZONTAL_WS
+            	    	    // InternalMarkup.g:1273:12: RULE_HORIZONTAL_WS
             	    	    {
             	    	    mRULE_HORIZONTAL_WS();
 
@@ -787,10 +787,10 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1310:9: ( ( RULE_HORIZONTAL_WS )+ )
-            // InternalMarkup.g:1310:11: ( RULE_HORIZONTAL_WS )+
+            // InternalMarkup.g:1275:9: ( ( RULE_HORIZONTAL_WS )+ )
+            // InternalMarkup.g:1275:11: ( RULE_HORIZONTAL_WS )+
             {
-            // InternalMarkup.g:1310:11: ( RULE_HORIZONTAL_WS )+
+            // InternalMarkup.g:1275:11: ( RULE_HORIZONTAL_WS )+
             int cnt7=0;
             loop7:
             do {
@@ -804,7 +804,7 @@ public class InternalMarkupLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalMarkup.g:1310:11: RULE_HORIZONTAL_WS
+            	    // InternalMarkup.g:1275:11: RULE_HORIZONTAL_WS
             	    {
             	    mRULE_HORIZONTAL_WS();
 
@@ -836,8 +836,8 @@ public class InternalMarkupLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalMarkup.g:1312:16: ( . )
-            // InternalMarkup.g:1312:18: .
+            // InternalMarkup.g:1277:16: ( . )
+            // InternalMarkup.g:1277:18: .
             {
             matchAny();
 
