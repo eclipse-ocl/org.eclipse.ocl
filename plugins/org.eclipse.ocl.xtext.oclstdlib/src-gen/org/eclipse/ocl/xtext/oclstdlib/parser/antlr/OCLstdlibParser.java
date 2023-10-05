@@ -5,17 +5,20 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.parser.antlr;
 
 import com.google.inject.Inject;
-
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibParser;
 import org.eclipse.ocl.xtext.oclstdlib.services.OCLstdlibGrammarAccess;
+import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class OCLstdlibParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
+public class OCLstdlibParser extends AbstractAntlrParser {
 
 	@Inject
 	private OCLstdlibGrammarAccess grammarAccess;
@@ -25,9 +28,10 @@ public class OCLstdlibParser extends org.eclipse.xtext.parser.antlr.AbstractAntl
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 
+
 	@Override
-	protected org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibParser createParser(XtextTokenStream stream) {
-		return new org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibParser(stream, getGrammarAccess());
+	protected InternalOCLstdlibParser createParser(XtextTokenStream stream) {
+		return new InternalOCLstdlibParser(stream, getGrammarAccess());
 	}
 
 	@Override
@@ -42,5 +46,4 @@ public class OCLstdlibParser extends org.eclipse.xtext.parser.antlr.AbstractAntl
 	public void setGrammarAccess(OCLstdlibGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-
 }

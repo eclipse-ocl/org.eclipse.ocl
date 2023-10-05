@@ -24,12 +24,12 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator
 Export-Package: org.eclipse.ocl.xtext.essentialocl.ui,
  org.eclipse.ocl.xtext.essentialocl.ui.contentassist,
- org.eclipse.ocl.xtext.essentialocl.ui.contentassist.antlr,
- org.eclipse.ocl.xtext.essentialocl.ui.contentassist.antlr.internal,
  org.eclipse.ocl.xtext.essentialocl.ui.internal,
  org.eclipse.ocl.xtext.essentialocl.ui.labeling,
  org.eclipse.ocl.xtext.essentialocl.ui.model,
  org.eclipse.ocl.xtext.essentialocl.ui.outline,
  org.eclipse.ocl.xtext.essentialocl.ui.quickfix,
- org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring
+ org.eclipse.ocl.xtext.essentialocl.ui.syntaxcoloring,
+ org.eclipse.ocl.xtext.essentialocl.ide.contentassist.antlr.internal,
+ org.eclipse.ocl.xtext.essentialocl.ide.contentassist.antlr
 Automatic-Module-Name: org.eclipse.ocl.xtext.essentialocl.ui

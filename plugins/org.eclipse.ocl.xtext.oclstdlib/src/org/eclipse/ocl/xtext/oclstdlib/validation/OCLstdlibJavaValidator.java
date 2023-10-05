@@ -15,10 +15,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.essentialocl.validation.EssentialOCLJavaValidator;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 
 
-public class OCLstdlibJavaValidator extends AbstractOCLstdlibJavaValidator {
+public class OCLstdlibJavaValidator extends EssentialOCLJavaValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

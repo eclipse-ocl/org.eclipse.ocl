@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.validation;
 
+import org.eclipse.ocl.xtext.essentialocl.validation.EssentialOCLJavaValidator;
+
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-public class CompleteOCLJavaValidator extends org.eclipse.ocl.xtext.completeocl.validation.AbstractCompleteOCLJavaValidator {
+public class CompleteOCLJavaValidator extends EssentialOCLJavaValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

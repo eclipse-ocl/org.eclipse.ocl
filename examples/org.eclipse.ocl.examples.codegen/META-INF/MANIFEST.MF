@@ -14,8 +14,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ocl.pivot;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,
  org.objectweb.asm;bundle-version="5.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.codegen.ecore.templates.model;x-internal:=true,
- org.eclipse.ocl.examples.codegen,
+Export-Package: org.eclipse.ocl.examples.codegen,
  org.eclipse.ocl.examples.codegen.analyzer,
  org.eclipse.ocl.examples.codegen.asm5;x-internal:=true,
  org.eclipse.ocl.examples.codegen.cgmodel,

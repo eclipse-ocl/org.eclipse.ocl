@@ -5,17 +5,18 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.ui;
 
+import com.google.inject.Injector;
+import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -25,12 +26,13 @@ public class EssentialOCLExecutableExtensionFactory extends AbstractGuiceAwareEx
 
 	@Override
 	protected Bundle getBundle() {
-		return EssentialOCLActivator.getInstance().getBundle();
+		return FrameworkUtil.getBundle(EssentialOCLActivator.class);
 	}
 
 	@Override
 	protected Injector getInjector() {
-		return EssentialOCLActivator.getInstance().getInjector(EssentialOCLActivator.ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL);
+		EssentialOCLActivator activator = EssentialOCLActivator.getInstance();
+		return activator != null ? activator.getInjector(EssentialOCLActivator.ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL) : null;
 	}
 
 }

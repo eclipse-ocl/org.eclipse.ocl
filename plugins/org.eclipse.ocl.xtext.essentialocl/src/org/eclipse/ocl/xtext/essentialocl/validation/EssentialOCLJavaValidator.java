@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.validation;
 
+import org.eclipse.ocl.xtext.base.validation.BaseJavaValidator;
 
-public class EssentialOCLJavaValidator extends AbstractEssentialOCLJavaValidator {
+public class EssentialOCLJavaValidator extends BaseJavaValidator {
 
 //	@Check
 //	public void checkTypeNameStartsWithCapital(Type type) {
