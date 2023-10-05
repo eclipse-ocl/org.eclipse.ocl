@@ -131,7 +131,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 
 	/**
-	 * Whether this flat class can evolve. Initally null. Set false by static initFragments from XXXTables.
+	 * Whether this flat class can evolve. Initally null. Set false by static initFragments from YYYTables.
 	 * Set true by reflective initFragments.
 	 */
 	private @Nullable Boolean mutable = null;
@@ -199,10 +199,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected void addProperty(@NonNull Property property) {
 		String name = NameUtil.getName(property);
-		assert name2propertyOrProperties != null;
-		Object old = name2propertyOrProperties.put(name, property);
+		final Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		assert name2propertyOrProperties2 != null;
+		Object old = name2propertyOrProperties2.get(name);
 		if (old == null) {
-			;
+			name2propertyOrProperties2.put(name, property);
 		}
 		else if (old == property) {
 			;																	// XXX FIXME should not have inherited legacy duplicates
@@ -215,10 +216,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			else {
 				partialProperties = new PartialProperties(getStandardLibrary());		// XXX avoid EnvironmentFactory for partial Ecore
 				partialProperties.didAddProperty((Property)old);
+				name2propertyOrProperties2.put(name, partialProperties);
 			}
 			partialProperties.didAddProperty(property);
-			assert name2propertyOrProperties != null;
-			name2propertyOrProperties.put(name, partialProperties);
 		}
 	}
 
@@ -714,17 +714,20 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 			initProperties();
 		}
+		final Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		assert name2propertyOrProperties2 != null;
 		if (name != null) {
-			Property asProperty = resolvePropertyOrProperties(featureFilter, name);
-			return (asProperty != null) ? Collections.singletonList(asProperty) : Collections.emptyList();
+			Iterable<@NonNull Property> asSelectedProperties = selectProperties(featureFilter, name);
+			return asSelectedProperties != null ? asSelectedProperties : Collections.emptyList();
 		}
 		else {
 			List<@NonNull Property> asProperties = new ArrayList<>();
-			assert name2propertyOrProperties != null;
-			for (@NonNull String key : name2propertyOrProperties.keySet()) {
-				Property asProperty = resolvePropertyOrProperties(featureFilter, key);
-				if (asProperty != null) {
-					asProperties.add(asProperty);
+			for (@NonNull String key : name2propertyOrProperties2.keySet()) {
+				Iterable<@NonNull Property> asSelectedProperties = selectProperties(featureFilter, key);
+				if (asSelectedProperties != null) {
+					for (@NonNull Property asProperty : asSelectedProperties) {
+						asProperties.add(asProperty);
+					}
 				}
 			}
 			return asProperties;
@@ -1231,20 +1234,36 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		name2propertyOrProperties = null;
 	}
 
-	private @Nullable Property resolvePropertyOrProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+	private @Nullable Iterable<@NonNull Property> selectProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
 		assert name2propertyOrProperties != null;
 		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
-		Property asProperty;
+		List<@NonNull Property> asProperties = null;
 		if (asPropertyOrProperties instanceof PartialProperties) {
-			asProperty = ((PartialProperties)asPropertyOrProperties).get();
+			final Iterable<@NonNull Property> partiaProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
+			if (partiaProperties != null) {
+				for (@NonNull Property asProperty : partiaProperties) {
+					if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+						if (asProperties == null) {
+							asProperties = new ArrayList<>();
+						}
+						asProperties.add(asProperty);
+					}
+				}
+			}
 		}
-		else {
-			asProperty = (Property)asPropertyOrProperties;
+		else if (asPropertyOrProperties instanceof Property){
+			Property asProperty = (Property)asPropertyOrProperties;
+			if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+				if (asProperties == null) {
+					asProperties = new ArrayList<>();
+				}
+				asProperties.add(asProperty);
+			}
 		}
-		if ((asProperty != null) && (featureFilter != null) && !featureFilter.accept(asProperty)) {
-			asProperty = null;
+		else if (asPropertyOrProperties != null) {
+			throw new IllegalStateException();
 		}
-		return asProperty;
+		return asProperties;
 	}
 
 	@Override
