@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -1210,7 +1209,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * implicit opposite properties. Iterator bodies are left unresolved.
 	 */
 	protected void resolveOperationArgumentTypes(@Nullable List<Parameter> parameters, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
-		int argIndex = 0;
+	//	int argIndex = 0;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
 			if (csArgument.getRole() == NavigationRole.ITERATOR) {
 				break;
@@ -1226,7 +1225,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						context.installPivotUsage(csArgument, arg);
 					}
 				}
-				argIndex++;
+			//	argIndex++;
 			}
 		}
 	}
@@ -1421,17 +1420,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
-		boolean isImplicit = false;
-		CompleteClass completeClass = metamodelManager.getCompleteClass(PivotUtil.getOwningClass(property));
-		Iterable<@NonNull Property> asProperties = completeClass.getProperties(property);
-		assert !(asProperties instanceof PartialProperties);
-		if (asProperties != null) {
-			for (Property asProperty : asProperties) {
-				if (asProperty.isIsImplicit()) {
-					isImplicit = true;
-				}
-			}
-		}
+		boolean isImplicit = metamodelManager.isImplicit(property);
 		NavigationCallExp callExp;
 		if (isImplicit) {
 			callExp = refreshOppositePropertyCallExp(csNameExp, sourceExp, property);
@@ -2328,7 +2317,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		assert !TemplateSpecialisation.needsCompletion(type);
 		assert !TemplateSpecialisation.needsSpecialisation(type);
-		return type != null ? resolveTypeExp(csTypeLiteralExp, type) : null;
+		return resolveTypeExp(csTypeLiteralExp, type);
 	}
 
 	@Override

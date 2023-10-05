@@ -89,6 +89,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
+import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -1661,6 +1662,21 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public boolean isAdapterForType(Object type) {
 		return type == PivotMetamodelManager.class;
+	}
+
+	public boolean isImplicit(@NonNull Property property) {
+		CompleteClass completeClass = getCompleteClass(PivotUtil.getOwningClass(property));
+		boolean isImplicit = false;
+		Iterable<@NonNull Property> asProperties = completeClass.getProperties(property);
+		assert !(asProperties instanceof PartialProperties);
+		if (asProperties != null) {
+			for (@NonNull Property asProperty : asProperties) {
+				if (asProperty.isIsImplicit()) {
+					isImplicit = true;
+				}
+			}
+		}
+		return isImplicit;
 	}
 
 	public boolean isLibraryLoadInProgress() {
