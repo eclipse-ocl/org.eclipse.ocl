@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -511,6 +512,7 @@ public class ValidateTests extends AbstractValidateTests
 		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 		getProjectMap().initializeResourceSet(resourceSet);
 		//		}
+		PivotUtilInternal.getEnvironmentFactory(null);		// Ensure CompleteStrandardLibrary in use
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true), true);
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 	}
