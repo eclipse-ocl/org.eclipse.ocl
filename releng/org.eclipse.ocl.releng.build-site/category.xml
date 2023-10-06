@@ -1,60 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <feature id="org.eclipse.ocl.examples" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.source" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.master" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.master.source" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
-   <feature id="org.eclipse.ocl.all" version="0.0.0">
-      <category name="mdt.ocl"/>
+   <feature id="org.eclipse.ocl.examples.classic" version="0.0.0">
+      <category name="ocl"/>
    </feature>
-   <feature id="org.eclipse.ocl.all.source" version="0.0.0">
-      <category name="mdt.ocl"/>
+   <feature id="org.eclipse.ocl.examples.classic.source" version="0.0.0">
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.unified" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.unified.source" version="0.0.0">
-      <category name="mdt.ocl"/>
+      <category name="ocl"/>
    </feature>
    <feature id="org.eclipse.ocl.build" version="0.0.0">
-      <category name="mdt.ocl.build"/>
+      <category name="ocl.build"/>
    </feature>
    <feature id="org.eclipse.ocl.build.source" version="0.0.0">
-      <category name="mdt.ocl.build"/>
+      <category name="ocl.build"/>
    </feature>
    <feature id="org.eclipse.ocl.tests" version="0.0.0">
-      <category name="mdt.ocl.tests"/>
+      <category name="ocl.tests"/>
    </feature>
    <feature id="org.eclipse.ocl.tests.source" version="0.0.0">
-      <category name="mdt.ocl.tests"/>
+      <category name="ocl.tests"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.tests" version="0.0.0">
-      <category name="mdt.ocl.tests"/>
+      <category name="ocl.tests"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.tests.source" version="0.0.0">
-      <category name="mdt.ocl.tests"/>
+      <category name="ocl.tests"/>
    </feature>
-   <category-def name="mdt.ocl" label="OCL">
+   <feature id="org.eclipse.ocl.tools" version="0.0.0">
+      <category name="ocl.tools"/>
+   </feature>
+   <feature id="org.eclipse.ocl.tools.source" version="0.0.0">
+      <category name="ocl.tools"/>
+   </feature>
+   <category-def name="ocl" label="OCL">
       <description>
          Eclipse OCL.
+          
+         Install this if you just want to use Eclipse OCL.
       </description>
    </category-def>
-   <category-def name="mdt.ocl.build" label="OCL build">
+   <category-def name="ocl.build" label="OCL build">
       <description>
          Eclipse OCL build.
+          
+         Install this if you want to build a modified version of Eclipse OCL.
       </description>
    </category-def>
-   <category-def name="mdt.ocl.tests" label="OCL tests">
+   <category-def name="ocl.tests" label="OCL tests">
       <description>
          Eclipse OCL tests.
+         
+         Install this if you want to test a modified version of Eclipse OCL.
+      </description>
+   </category-def>
+   <category-def name="ocl.tools" label="OCL tools">
+      <description>
+         Eclipse OCL tools.
+         
+         The LPG parser required by the Classic OCL. This should be installed automatically.
       </description>
    </category-def>
 </site>

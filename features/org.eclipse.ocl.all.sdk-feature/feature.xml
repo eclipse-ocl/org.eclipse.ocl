@@ -22,19 +22,15 @@
    </url>
 
    <includes
-         id="org.eclipse.ocl.core.sdk"
+         id="org.eclipse.ocl.simrel.classic"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.doc"
+         id="org.eclipse.ocl.uml"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.edit"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.ui"
+         id="org.eclipse.ocl"
          version="0.0.0"/>
 
 </feature>

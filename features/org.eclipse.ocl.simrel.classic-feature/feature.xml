@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.ocl.simrel"
+      id="org.eclipse.ocl.simrel.classic"
       label="%featureName"
       version="5.19.0.qualifier"
       provider-name="%providerName"
