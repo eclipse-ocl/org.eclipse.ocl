@@ -14,7 +14,7 @@ import org.eclipse.xtext.xtext.generator.DefaultGeneratorModule;
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 
 /**
- * This override supports the specifocation of an activatorName to fix Bug 564238
+ * This override supports the specification of an activatorName to fix Bug 564238
  */
 public class MyDefaultGeneratorModule extends DefaultGeneratorModule
 {

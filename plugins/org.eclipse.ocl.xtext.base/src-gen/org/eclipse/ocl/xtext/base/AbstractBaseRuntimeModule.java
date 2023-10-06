@@ -91,17 +91,17 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 		return BaseGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends INodeModelFormatter> bindINodeModelFormatter() {
 		return DeclarativeFormatter.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
 		return BaseSerializationMetaData.Provider.class;
 	}

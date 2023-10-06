@@ -24,4 +24,5 @@ Workflow {
   component = @GenerateOCLinEcoreEditor {}
   component = @GenerateCompleteOCLEditor {}
   component = @GenerateOCLstdlibEditor {}
+  component = @GenerateIdiomsEditor {}
 }
