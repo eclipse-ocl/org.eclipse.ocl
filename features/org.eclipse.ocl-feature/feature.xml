@@ -21,6 +21,10 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates"/>
    </url>
 
+   <includes
+         id="org.eclipse.ocl.tools"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.ocl"
          download-size="0"
@@ -30,13 +34,6 @@
 
    <plugin
          id="org.eclipse.ocl.ecore"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="lpg.runtime.java"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -27,10 +27,12 @@
       <module>org.eclipse.ocl.examples.tests-feature</module>
       <module>org.eclipse.ocl.examples.unified-feature</module>
       <module>org.eclipse.ocl.master-feature</module>
+      <module>org.eclipse.ocl.simrel.classic-feature</module>
+      <module>org.eclipse.ocl.tests-feature</module>
+      <module>org.eclipse.ocl.tools-feature</module>
       <module>org.eclipse.ocl.ui-feature</module>
       <module>org.eclipse.ocl.uml-feature</module>
       <module>org.eclipse.ocl.unified.core-feature</module>
       <module>org.eclipse.ocl.unified.ui-feature</module>
-      <module>org.eclipse.ocl.tests-feature</module>
   </modules>
 </project>
