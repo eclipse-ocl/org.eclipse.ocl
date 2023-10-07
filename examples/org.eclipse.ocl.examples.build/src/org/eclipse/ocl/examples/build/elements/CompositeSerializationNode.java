@@ -11,7 +11,7 @@
 package org.eclipse.ocl.examples.build.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {

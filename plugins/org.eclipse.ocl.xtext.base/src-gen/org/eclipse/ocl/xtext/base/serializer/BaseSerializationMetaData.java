@@ -15,25 +15,11 @@ package org.eclipse.ocl.xtext.base.serializer;
 import com.google.inject.Inject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue.EReference_TargetGrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueSingle;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.service.GrammarProvider;
@@ -80,6 +66,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[18];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [6] @NonNull [];
 	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[35];
+	private final @NonNull SubstringStep @NonNull [] substringSteps = new @NonNull SubstringStep[0];
 	private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {" *"};
 	private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {"/*"};
 	private final @NonNull String @Nullable [] multipleLineCommentSuffixes = new @NonNull String[] {"*/"};
@@ -94,6 +81,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		initSerializationSegments();
 		initSerializationSteps();
 		initSerializationRules();
+		initSubstringSteps();
 		initGrammarRuleValues();
 		initEClassValues();
 	}
@@ -183,8 +171,13 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		return singleLineCommentPrefixes;
 	}
 
+	@Override
+	public @NonNull SubstringStep @NonNull [] getSubstringSteps() {
+		return substringSteps;
+	}
+
 	/**
-	 * Initialize configuration for each EClass that may be serialized.
+	 * Initialize configuration for each EClassifier that may be serialized.
 	 */
 	private void initEClassValues() {
 		eClassValues[0] = new EClassValue(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS,
@@ -303,11 +296,11 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			),
 			(0 << 16) | 5	/* referredElement=UnrestrictedName : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[5] = new DataTypeRuleValue(5, "ID");
+		grammarRuleValues[5] = createDataTypeRuleValue(5, "ID", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[6] = new TerminalRuleValue(6, "INT");
-		grammarRuleValues[7] = new DataTypeRuleValue(7, "Identifier");
+		grammarRuleValues[7] = createDataTypeRuleValue(7, "Identifier", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[8] = new TerminalRuleValue(8, "LETTER_CHARACTER");
-		grammarRuleValues[9] = new DataTypeRuleValue(9, "LOWER");
+		grammarRuleValues[9] = createDataTypeRuleValue(9, "LOWER", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[10] = new TerminalRuleValue(10, "ML_COMMENT");
 		grammarRuleValues[11] = new TerminalRuleValue(11, "ML_SINGLE_QUOTED_STRING");
 		grammarRuleValues[12] = createParserRuleValue(12, "MultiplicityBoundsCS", -1,
@@ -345,7 +338,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			),
 			(0 << 16) | 5	/* stringBounds=("*"|"+"|"?") : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[15] = new DataTypeRuleValue(15, "NUMBER_LITERAL");
+		grammarRuleValues[15] = createDataTypeRuleValue(15, "NUMBER_LITERAL", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[16] = createParserRuleValue(16, "NextPathElementCS", -1,
 			createSerializationRules(
 				9	/* NextPathElementCS-0: PathElementCS::referredElement=UnreservedName */
@@ -365,7 +358,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[18] = new TerminalRuleValue(18, "SIMPLE_ID");
 		grammarRuleValues[19] = new TerminalRuleValue(19, "SINGLE_QUOTED_STRING");
 		grammarRuleValues[20] = new TerminalRuleValue(20, "SL_COMMENT");
-		grammarRuleValues[21] = new DataTypeRuleValue(21, "StringLiteral");
+		grammarRuleValues[21] = createDataTypeRuleValue(21, "StringLiteral", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[22] = createParserRuleValue(22, "TemplateBindingCS", -1,
 			createSerializationRules(
 				11	/* TemplateBindingCS-0: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS (',' TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS)[V0:*] (TemplateBindingCS::ownedMultiplicity=MultiplicityCS)[V1:?] */
@@ -434,9 +427,9 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 0	/* ownedBinding=TemplateBindingCS : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */
 		);
-		grammarRuleValues[29] = new DataTypeRuleValue(29, "UPPER");
-		grammarRuleValues[30] = new DataTypeRuleValue(30, "URI");
-		grammarRuleValues[31] = new DataTypeRuleValue(31, "UnreservedName");
+		grammarRuleValues[29] = createDataTypeRuleValue(29, "UPPER", 5 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[30] = createDataTypeRuleValue(30, "URI", 5 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[31] = createDataTypeRuleValue(31, "UnreservedName", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[32] = createParserRuleValue(32, "UnreservedPathNameCS", -1,
 			createSerializationRules(
 				16	/* UnreservedPathNameCS-0: PathNameCS::ownedPathElements+=NextPathElementCS ('::' PathNameCS::ownedPathElements+=NextPathElementCS)[V0:*] */
@@ -447,7 +440,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 3	/* "::" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedPathElements+=NextPathElementCS : [value] | [value] */
 		);
-		grammarRuleValues[33] = new DataTypeRuleValue(33, "UnrestrictedName");
+		grammarRuleValues[33] = createDataTypeRuleValue(33, "UnrestrictedName", 5 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[34] = new TerminalRuleValue(34, "WS");
 		grammarRuleValues[35] = createParserRuleValue(35, "WildcardTypeRefCS", -1,
 			createSerializationRules(
@@ -1073,13 +1066,19 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		// 34: PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space
 		serializationSteps[34] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"), 33, 5);
 	}
+
+	/**
+	 * Initialize the various serialization steps used to serialize a serialization rule.
+	 */
+	private void initSubstringSteps() {
+	}
 }
 
-//	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
+//	Commented imports ensure the Xtend synthesis provides a true import allowing unqualified annotated usage
 //	import Inject;
 //	import NonNull;
 //	import Nullable;
-//	import DataTypeRuleValue;
+//	import BaseCommentSegmentSupport;
 //	import EClassValue;
 //	import EReference_TargetGrammarRuleVector;
 //	import EnumerationValue;
@@ -1096,8 +1095,8 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 //	import SerializationSegment;
 //	import CustomSerializationSegment;
 //	import SerializationStep;
+//	import SubstringStep;
 //	import TerminalRuleValue;
-//	import BaseCommentSegmentSupport;
 //	import BaseCSPackage;
 //	import Grammar;
 //	import GrammarProvider;

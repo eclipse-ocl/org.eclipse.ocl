@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.GrammarAnalysis;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueNull;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueNull;
 
 public abstract class AbstractAssignedSerializationNode extends AbstractSerializationNode implements AssignedSerializationNode
 {

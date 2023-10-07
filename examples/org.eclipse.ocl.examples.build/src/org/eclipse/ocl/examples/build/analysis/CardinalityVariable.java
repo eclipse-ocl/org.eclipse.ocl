@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.build.analysis;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.Indexed;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.Indexed;
 
 /**
  * A CardinalityVariable represents the unknown cardinality of a grammar term for which a constant value must be deduced prior

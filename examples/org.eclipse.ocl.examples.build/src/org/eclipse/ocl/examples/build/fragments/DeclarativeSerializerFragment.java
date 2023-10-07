@@ -33,39 +33,43 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.AbstractRuleAnalysis;
+import org.eclipse.ocl.examples.build.analysis.DataTypeRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.build.analysis.ParserRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
-import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAbstractFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssignKeyword;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepKeyword;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepSequence;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.serializer.AbstractSerializationMetaData;
+import org.eclipse.ocl.xtext.base.serializer.DeclarativeFormatter;
+import org.eclipse.ocl.xtext.base.serializer.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue.EReference_TargetGrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMetaData;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationAttribute;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationReference;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAbstractFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssignKeyword;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepKeyword;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepSequence;
+import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.SubstringStep;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -114,7 +118,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 	}
 
-	protected static final class SerializationStepComparator extends SerializationUtils.ToStringComparator<@NonNull SerializationStep>
+	protected static final class SerializationStepComparator extends NameUtil.ToStringComparator<@NonNull SerializationStep>
 	{
 		protected final @NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id;
 		private @NonNull Map<@NonNull SerializationStep, @NonNull String> step2key = new HashMap<>();
@@ -126,7 +130,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			for (@NonNull SerializationStep step : serializationStepList) {
 				String key = step.getGlobalSortKey(serializationSegments2id);
 				step2key.put(step, key);
-				Object indexOrIndexes = SerializationUtils.maybeNull(key2indexOrIndexes.get(key));
+				Object indexOrIndexes = key2indexOrIndexes.get(key);
 				if (indexOrIndexes == null) {
 					key2indexOrIndexes.put(key, index);
 				}
@@ -147,10 +151,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 		@Override
 		public int compare(@NonNull SerializationStep s1, @NonNull SerializationStep s2) {
-			String k1 = SerializationUtils.nonNullState(step2key.get(s1));
-			String k2 = SerializationUtils.nonNullState(step2key.get(s2));
-			Class<?> c1 = SerializationUtils.nonNullState(key2indexOrIndexes.get(k1)).getClass();
-			Class<?> c2 = SerializationUtils.nonNullState(key2indexOrIndexes.get(k2)).getClass();
+			String k1 = ClassUtil.nonNullState(step2key.get(s1));
+			String k2 = ClassUtil.nonNullState(step2key.get(s2));
+			Class<?> c1 = ClassUtil.nonNullState(key2indexOrIndexes.get(k1)).getClass();
+			Class<?> c2 = ClassUtil.nonNullState(key2indexOrIndexes.get(k2)).getClass();
 			if (c1 != c2) {
 				return c1 == Integer.class ? -1 : 1;
 			}
@@ -177,13 +181,40 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 	}
 
+	protected static final class SubstringStepComparator extends NameUtil.ToStringComparator<@NonNull SubstringStep>
+	{
+		private @NonNull Map<@NonNull SubstringStep, @NonNull String> step2key = new HashMap<>();
+
+		public SubstringStepComparator(@NonNull List<@NonNull SubstringStep> substringStepList) {
+			for (@NonNull SubstringStep step : substringStepList) {
+				String key = step.getGlobalSortKey();
+				step2key.put(step, key);
+			}
+		}
+
+		@Override
+		public int compare(@NonNull SubstringStep s1, @NonNull SubstringStep s2) {
+			String k1 = ClassUtil.nonNullState(step2key.get(s1));
+			String k2 = ClassUtil.nonNullState(step2key.get(s2));
+			int comparison = k1.compareTo(k2);
+			if (comparison != 0) {
+				return comparison;
+			}
+			int r1 = -999;
+			int r2 = -999;
+			if (r1 != r2) {
+				return r1 - r2;
+			}
+			return super.compare(s1, s2);
+		}
+	}
+
 	public static DebugTimestamp timestamp = new DebugTimestamp("DeclarativeSerializerFragment")
 	{
 		@Override
 		protected void doLog(String message) {}
 	};
 	private static final Logger LOG = Logger.getLogger(DeclarativeSerializerFragment.class);
-	@SuppressWarnings("null")
 	private static final @NonNull List<@Nullable Integer> UNPAGED_PAGE_NUMBER_LIST = Collections.singletonList(null);
 
 	// Following are empirically set to comfortably avoid 64k limits.
@@ -196,6 +227,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	public static int SERIALIZATION_RULES_PER_PAGE = 64;
 	public static int SERIALIZATION_SEGMENTS_PER_PAGE = 512;
 	public static int SERIALIZATION_STEPS_PER_PAGE = 512;
+	public static int SUBSTRING_STEPS_PER_PAGE = 512;
 
 	@Inject
 	private XtextGeneratorNaming xtextGeneratorNaming;
@@ -232,16 +264,30 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @Nullable List<@NonNull List<@NonNull SerializationSegment>> serializationSegmentsList = null;
 	private @Nullable Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id = null;
 
-	private @Nullable Map<@NonNull SerializationRule, @Nullable Integer> serializationRule2id = null;
+	private @Nullable Map<@NonNull SerializationRule, @NonNull Integer> serializationRule2id = null;
 	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysisList = null;
 
 	private @Nullable Map<@NonNull SerializationStep, @Nullable Integer> serializationStep2id = null;
 	private @Nullable List<@NonNull SerializationStep> serializationStepList = null;
+
+	private @Nullable Map<@NonNull SubstringStep, @Nullable Integer> substringStep2id = null;
+	private @Nullable List<@NonNull SubstringStep> substringStepList = null;
+
 	private int firstGlobalSerializationStepAssignmentIndex = -1;
 	private int firstGlobalSerializationStepLiteralIndex = -1;
 	protected int firstStepLiteralIndex;
 	private int lastGlobalSerializationStepAssignmentIndex = -1;
 	private int lastGlobalSerializationStepLiteralIndex = -1;
+
+	protected void addSerializationSegments(@NonNull SerializationSegment [] staticSegments) {
+		Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id2 = serializationSegments2id;
+		assert serializationSegments2id2 != null;
+		if ((staticSegments != null) && (staticSegments.length > 0)) {
+			ArrayList<@NonNull SerializationSegment> serializationSegments = Lists.newArrayList(staticSegments);
+			assert serializationSegments != null;
+			serializationSegments2id2.put(serializationSegments, null);
+		}
+	}
 
 	protected abstract StringConcatenationClient doGetSerializationMetaDataContent(@NonNull GrammarAnalysis grammarAnalysis);
 
@@ -374,7 +420,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {
-		return SerializationUtils.nonNullState(getGenModelHelper().getQualifiedPackageInterfaceName(ePackage));
+		return ClassUtil.nonNullState(getGenModelHelper().getQualifiedPackageInterfaceName(ePackage));
 	}
 
 	private void gatherFormattingTexts(@NonNull AbstractElement grammarElement, @NonNull List<@NonNull String> formattingTexts) {
@@ -548,7 +594,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				eClass2id2.put(eClassValue.getEClass(), null);
 			}
 			eClassList2 = eClassList = new ArrayList<>(eClass2id2.keySet());
-			Collections.sort(eClassList2, SerializationUtils.ENAMED_ELEMENT_COMPARATOR);
+			Collections.sort(eClassList2, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			int i = 0;
 			for (@NonNull EClass eClass : eClassList2) {
 				eClass2id2.put(eClass, i++);
@@ -611,7 +657,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			enumerationValuesList2 = enumerationValuesList = new ArrayList<>(enumerationValue2id2.keySet());
-			Collections.sort(enumerationValuesList2, SerializationUtils.NAMEABLE_COMPARATOR);
+			Collections.sort(enumerationValuesList2, NameUtil.NAMEABLE_COMPARATOR);
 			int i = 0;
 			for (@NonNull EnumerationValue enumerationValue : enumerationValuesList2) {
 				enumerationValue2id2.put(enumerationValue, i++);
@@ -623,7 +669,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull List<@NonNull EReference_TargetGrammarRuleVector> getEReferenceRuleIndexesIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
 		List<@NonNull EReference_TargetGrammarRuleVector> eReferenceRuleIndexes = Lists.newArrayList(grammarAnalysis.getEReferenceRuleIndexes(eClass));
 		assert eReferenceRuleIndexes != null;
-		Collections.sort(eReferenceRuleIndexes, SerializationUtils.NAMEABLE_COMPARATOR);
+		Collections.sort(eReferenceRuleIndexes, NameUtil.NAMEABLE_COMPARATOR);
 		return eReferenceRuleIndexes;
 	}
 
@@ -642,7 +688,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		@NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray = grammarAnalysis.getInnerFormattingSegments(parserRuleValue);
 		List<@NonNull List<@NonNull SerializationSegment>> serializationSegmentsList = new ArrayList<>(innerFormattingSegmentsArray.length);
 		for (@NonNull SerializationSegment @NonNull [] innerFormattingSegments : innerFormattingSegmentsArray) {
-			serializationSegmentsList.add(SerializationUtils.nonNullState(Lists.newArrayList(innerFormattingSegments)));
+			serializationSegmentsList.add(ClassUtil.nonNullState(Lists.newArrayList(innerFormattingSegments)));
 		}
 		return serializationSegmentsList;
 	}
@@ -652,7 +698,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		@NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray = grammarAnalysis.getOuterFormattingSegments(parserRuleValue);
 		List<@NonNull List<@NonNull SerializationSegment>> serializationSegmentsList = new ArrayList<>(outerFormattingSegmentsArray.length);
 		for (@NonNull SerializationSegment @NonNull [] outerFormattingSegments : outerFormattingSegmentsArray) {
-			serializationSegmentsList.add(SerializationUtils.nonNullState(Lists.newArrayList(outerFormattingSegments)));
+			serializationSegmentsList.add(ClassUtil.nonNullState(Lists.newArrayList(outerFormattingSegments)));
 		}
 		return serializationSegmentsList;
 	}
@@ -695,7 +741,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	protected @NonNull String getGrammarRuleName(@NonNull Integer grammarRuleValueIndex) {
 		assert grammarRuleValueIndex2ruleName != null;
-		String id = SerializationUtils.maybeNull(grammarRuleValueIndex2ruleName.get(grammarRuleValueIndex));
+		String id = grammarRuleValueIndex2ruleName.get(grammarRuleValueIndex);
 		assert id != null;
 		return id;
 	}
@@ -729,7 +775,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				grammarRuleValueIndex2ruleName2.put(grammarRuleAnalysis.getRuleValue().getIndex(), grammarRuleAnalysis.getName());
 			}
 			grammarRuleValueList2 = grammarRuleValueList = new ArrayList<>(grammarRuleValue2id2.keySet());
-			Collections.sort(grammarRuleValueList2, SerializationUtils.NAMEABLE_COMPARATOR);
+			Collections.sort(grammarRuleValueList2, NameUtil.NAMEABLE_COMPARATOR);
 			int i = 0;
 			for (@NonNull GrammarRuleValue grammarRuleValue : grammarRuleValueList2) {
 				grammarRuleValue2id2.put(grammarRuleValue, i++);
@@ -814,7 +860,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			int i = 0;
 			for (@NonNull GrammarRuleVector grammarRuleVector : grammarRuleVectors2) {
 				if (i > 0) {
-					GrammarRuleVector prevGrammarRuleVector = SerializationUtils.nonNullState(grammarRuleVectors2.get(i-1));
+					GrammarRuleVector prevGrammarRuleVector = ClassUtil.nonNullState(grammarRuleVectors2.get(i-1));
 					if (!(grammarRuleVector.compareTo(prevGrammarRuleVector) > 0)) {
 						assert grammarRuleVector.compareTo(prevGrammarRuleVector) > 0;
 					}
@@ -871,7 +917,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			matchStepList = matchStepList2 = new ArrayList<>(matchStep2id2.keySet());
-			Collections.sort(matchStepList2, new SerializationUtils.ToStringComparator<@NonNull SerializationMatchStep>()); // FIXME per-class so that that internally ENamed
+			Collections.sort(matchStepList2, new NameUtil.ToStringComparator<@NonNull SerializationMatchStep>()); // FIXME per-class so that that internally ENamed
 			int i = 0;
 			for (@NonNull SerializationMatchStep matchStep : matchStepList2) {
 				matchStep2id2.put(matchStep, Integer.valueOf(i++));
@@ -925,7 +971,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					}
 					String s1 = getString(o1);
 					String s2 = getString(o2);
-					return SerializationUtils.safeCompareTo(s1, s2);
+					return ClassUtil.safeCompareTo(s1, s2);
 				}
 
 				private String getString(@NonNull Object o) {
@@ -1039,8 +1085,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			serializationRuleAnalysisList2 = serializationRuleAnalysisList = new ArrayList<>(serializationRuleAnalysesSet);
-			Collections.sort(serializationRuleAnalysisList2, new SerializationUtils.ToStringComparator<@NonNull SerializationRuleAnalysis>());
-			Map<@NonNull SerializationRule, @Nullable Integer> serializationRule2id2 = serializationRule2id;
+			Collections.sort(serializationRuleAnalysisList2, new NameUtil.ToStringComparator<@NonNull SerializationRuleAnalysis>());
+			Map<@NonNull SerializationRule, @NonNull Integer> serializationRule2id2 = serializationRule2id;
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			int i = 0;
 			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalysisList2) {
@@ -1066,7 +1112,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	//	timestamp.log("getSerializationRulesList " +  parserRuleValue.getName() + " start");
 		List<@NonNull SerializationRule> serializationRules = Lists.newArrayList(grammarAnalysis.getSerializationRules(parserRuleValue));
 		assert serializationRules != null;
-		Collections.sort(serializationRules, new SerializationUtils.ToStringComparator<@NonNull SerializationRule>());	// FIXME ?? Lowest slot usage first
+		Collections.sort(serializationRules, new NameUtil.ToStringComparator<@NonNull SerializationRule>());	// FIXME ?? Lowest slot usage first
 		return serializationRules;
 	}
 
@@ -1106,17 +1152,21 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				serializationSegments2id2.put(SerializationSegment.VALUE_SEGMENTS_LIST, null);
 				for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis: getSerializationRuleAnalysisList(grammarAnalysis)) {
 					for (@NonNull SerializationStep serializationStep : serializationRuleAnalysis.getSerializationRule().getSerializationSteps()) {
-						@NonNull SerializationSegment[] staticSegments = serializationStep.getSerializationSegments();
-						if ((staticSegments != null) && (staticSegments.length > 0)) {
-							ArrayList<@NonNull SerializationSegment> serializationSegments = Lists.newArrayList(staticSegments);
-							assert serializationSegments != null;
-							serializationSegments2id2.put(serializationSegments, null);
+						addSerializationSegments(serializationStep.getSerializationSegments());
+					}
+				}
+				for (@NonNull AbstractRuleAnalysis ruleAnalysis: grammarAnalysis.getRuleAnalyses()) {
+					if (ruleAnalysis instanceof DataTypeRuleAnalysis) {
+						DataTypeRuleAnalysis dataTypeRuleAnalysis = (DataTypeRuleAnalysis)ruleAnalysis;
+						addSerializationSegments(dataTypeRuleAnalysis.getSerializationSegments());
+						for (@NonNull SubstringStep substringStep: dataTypeRuleAnalysis.getRuleValue().getSubstringSteps()) {
+							addSerializationSegments(substringStep.getSerializationSegments());
 						}
 					}
 				}
 			}
 			serializationSegmentsList2 = serializationSegmentsList = new ArrayList<>(serializationSegments2id2.keySet());
-			Collections.sort(serializationSegmentsList2, new SerializationUtils.ToStringComparator<@NonNull List<@NonNull SerializationSegment>>() {
+			Collections.sort(serializationSegmentsList2, new NameUtil.ToStringComparator<@NonNull List<@NonNull SerializationSegment>>() {
 				// Shortest first so that {value} is at index 0.
 				@Override
 				public int compare(@NonNull List<@NonNull SerializationSegment> o1, @NonNull List<@NonNull SerializationSegment> o2) {
@@ -1160,8 +1210,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				serializationStep2id = serializationStep2id2 = new HashMap<>();
 			}
 			for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-				for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
-					for(@NonNull SerializationStep serializationStep : serializationRule.getSerializationSteps()) {
+				for( @NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+					for (@NonNull SerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 						serializationStep2id2.put(serializationStep, null);
 					}
 				}
@@ -1196,6 +1246,51 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".serializer";
 	}
 
+	protected int getSubstringStepCount() {
+		assert substringStep2id != null;
+		return substringStep2id.size();
+	}
+
+	protected int getSubstringStepIndex(@NonNull SubstringStep substringStep) {
+		assert substringStep2id != null;
+		Integer id = substringStep2id.get(substringStep);
+		if (id == null) {
+			assert substringStep2id != null;
+			id = substringStep2id.get(substringStep);
+		}
+		assert id != null;
+		return id.intValue();
+	}
+
+
+	protected @NonNull List<@NonNull SubstringStep> getSubstringStepList(@NonNull GrammarAnalysis grammarAnalysis) {
+		List<@NonNull SubstringStep> substringStepList2 = substringStepList;
+		if (substringStepList2 == null) {
+			timestamp.log("getSubstringStepList start");
+			Map<@NonNull SubstringStep, @Nullable Integer> substringStep2id2 = substringStep2id;
+			if (substringStep2id2 == null) {
+				substringStep2id = substringStep2id2 = new HashMap<>();
+			}
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
+				if (ruleAnalysis instanceof DataTypeRuleAnalysis) {
+					for (@NonNull SubstringStep substringStep : ((DataTypeRuleAnalysis)ruleAnalysis).getRuleValue().getSubstringSteps()) {
+						if (!substringStep2id2.containsKey(substringStep)) {
+							substringStep2id2.put(substringStep, null);
+						}
+					}
+				}
+			}
+			substringStepList2 = substringStepList = new ArrayList<>(substringStep2id2.keySet());
+			SubstringStepComparator substringStepComparator = new SubstringStepComparator(substringStepList2);
+			Collections.sort(substringStepList2, substringStepComparator);
+			int i = 0;
+			for (@NonNull SubstringStep step : substringStepList2) {
+				substringStep2id2.put(step, i++);
+			}
+		}
+		return substringStepList2;
+	}
+
 	@Override
 	protected TypeReference getSyntacticSequencerClass(final Grammar grammar) {
 		throw new UnsupportedOperationException();
@@ -1205,6 +1300,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		getEnumerationValueList(grammarAnalysis);
 		getSerializationSegmentsList(grammarAnalysis);
 		getSerializationStepList(grammarAnalysis);
+		getSubstringStepList(grammarAnalysis);
 		getMatchTermList(grammarAnalysis);
 		getMatchStepList(grammarAnalysis);
 		getGrammarRuleValueList(grammarAnalysis);
@@ -1270,6 +1366,22 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	public @NonNull String toString(@NonNull SerializationStep serializationStep) {
 		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
 		serializationStep.toString(s, 0);
+		return s.toString();
+	}
+
+	public @NonNull String toCommentString(@NonNull SubstringStep substringStep) {
+		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
+		substringStep.toString(s, 0);
+		s.append( " : [");
+		boolean isFirst = true;
+		for (@NonNull SerializationSegment serializationSegment : substringStep.getSerializationSegments()) {
+			if (!isFirst) {
+				s.append(", ");
+			}
+			s.append(serializationSegment.toCommentString());
+			isFirst = false;
+		}
+		s.append("]");
 		return s.toString();
 	}
 }

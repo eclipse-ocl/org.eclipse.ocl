@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 
 /**
  * SerializationRuleAnalysisComparator provides a stable comparison that may be used in a sort to
@@ -43,7 +42,7 @@ public class SerializationRuleAnalysisComparator implements Comparator<@NonNull 
 	}
 
 	private int getSize(@NonNull SerializationRuleAnalysis serializationRule) {
-		Integer size = SerializationUtils.maybeNull(rule2size.get(serializationRule));
+		Integer size = rule2size.get(serializationRule);
 		if (size == null) {
 			size = getSize(serializationRule.getRootSerializationNode());
 			rule2size.put(serializationRule, size);

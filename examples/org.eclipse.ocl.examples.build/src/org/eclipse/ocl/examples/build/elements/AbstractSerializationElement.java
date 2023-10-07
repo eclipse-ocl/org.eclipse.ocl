@@ -19,10 +19,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.ParserRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString.ToDebugStringable;
 import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationElement implements SerializationElement, ToDebugStringable

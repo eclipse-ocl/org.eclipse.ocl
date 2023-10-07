@@ -66,6 +66,7 @@ import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.util.EmfFormatter;
 
 import com.google.inject.Guice;
@@ -174,6 +175,15 @@ public class TestUtil
 		}
 		else {
 			Guice.createInjector(new org.eclipse.ocl.xtext.oclstdlib.OCLstdlibRuntimeModule());
+		}
+	}
+
+	public static void doXtextSetup() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			XtextStandaloneSetup.doSetup();			// FIXME BUG 382058
+		}
+		else {
+			Guice.createInjector(new org.eclipse.xtext.XtextRuntimeModule());
 		}
 	}
 

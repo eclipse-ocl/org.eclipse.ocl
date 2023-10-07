@@ -77,7 +77,7 @@ Workflow {
  *******************************************************************************/"
 			}
 		}
-		language = StandardLanguage {
+		language = org.eclipse.ocl.examples.build.fragments.MyStandardLanguage {
 			name = "${markupProjectName}.Markup"
 			fileExtensions = "markupocl"
 			generator = null

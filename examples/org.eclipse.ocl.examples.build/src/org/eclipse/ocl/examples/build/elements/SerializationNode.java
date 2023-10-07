@@ -16,9 +16,9 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
@@ -36,7 +36,7 @@ public interface SerializationNode extends SerializationElement
 	@NonNull GrammarCardinality getGrammarCardinality();
 
 	/**
-	 * Gather the runtime represetation of the nodes in steps.
+	 * Gather the runtime representation of the nodes in steps.
 	 */
 	void gatherStepsAndSubIdioms(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull List<@NonNull SerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms);

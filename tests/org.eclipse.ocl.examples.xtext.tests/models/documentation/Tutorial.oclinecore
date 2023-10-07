@@ -1,0 +1,25 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore';
+package tutorial : tut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial' {
+	class Library {
+		attribute name : String[1];
+		property books#library : Book[*] { composes };
+		property loans : Loan[*] { composes };
+		property members#library : Member[*] { composes };
+	}
+	class Book {
+		attribute name : String[1];
+		attribute copies : Integer[1];
+		property library#books : Library[?];
+		invariant SufficientCopies:
+      	library.loans->select(book=self)->size() <= copies;
+	}
+	class Member {
+		attribute name : String[1];
+		property library#members : Library[?];
+	}
+	class Loan {
+		property book : Book[1];
+		property member : Member[1];
+		attribute date : ecore::EDate[?];
+	}
+}

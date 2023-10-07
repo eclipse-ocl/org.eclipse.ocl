@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -57,6 +58,7 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -201,7 +203,11 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			return csArgument;
 		}
 		if (asSource instanceof VariableExp) {
-			VariableDeclaration asVariable = ((VariableExp)asSource).getReferredVariable();
+			VariableExp asVariableExp = (VariableExp)asSource;
+			if (asVariableExp.isIsImplicit()) { // Skip implicit self navigation
+				return csArgument;
+			}
+			VariableDeclaration asVariable = asVariableExp.getReferredVariable();
 			if ((asVariable instanceof Variable) && ((Variable)asVariable).isIsImplicit()) { // Skip implicit iterator variables
 				return csArgument;
 			}
@@ -291,17 +297,17 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		return precedenceManager.getOrder(asThisPrecedence) > precedenceManager.getOrder(asThatPrecedence);
 	}
 
-	protected ElementCS refreshConstraint(@NonNull ConstraintCS csElement, @NonNull Constraint object) {
+	protected ElementCS refreshConstraint(@NonNull ConstraintCS csConstraint, @NonNull Constraint object) {
 		if (object.eContainmentFeature() == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
-			csElement.setStereotype(PivotConstants.POSTCONDITION_NAME);
+			csConstraint.setStereotype(PivotConstants.POSTCONDITION_NAME);
 		}
 		else if (object.eContainmentFeature() == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
-			csElement.setStereotype(PivotConstants.PRECONDITION_NAME);
+			csConstraint.setStereotype(PivotConstants.PRECONDITION_NAME);
 		}
 		else {
-			csElement.setStereotype(PivotConstants.INVARIANT_NAME);
+			csConstraint.setStereotype(PivotConstants.INVARIANT_NAME);
 		}
-		ExpSpecificationCS csStatus = null;
+		ExpSpecificationCS csStatusSpecification = null;
 		LanguageExpression specification = object.getOwnedSpecification();
 		String body = specification.getBody();
 		if (body != null) {
@@ -326,86 +332,70 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 								messageString = messageString.substring(0, lastIndex);
 							}
 							csMessage.setExprString(messageString);
-							csElement.setOwnedMessageSpecification(csMessage);
+							csConstraint.setOwnedMessageSpecification(csMessage);
 							StringBuilder status = new StringBuilder();
 							status.append(lines[i].substring(lines[i].indexOf("=")+1, lines[i].length()).trim());
 							for (i++; i < lastLineNumber; i++) {
 								status.append("\n" + lines[i]);
 							}
-							csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-							csStatus.setExprString(status.toString());
+							csStatusSpecification = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+							csStatusSpecification.setExprString(status.toString());
 						}
 					}
 				}
 			}
-			if (csStatus == null) {
-				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-				csStatus.setExprString(body);
+			if (csStatusSpecification == null) {
+				csStatusSpecification = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+				csStatusSpecification.setExprString(body);
 			}
 		}
-		if ((csStatus == null) && (specification instanceof ExpressionInOCL)) {
+		if ((csStatusSpecification == null) && (specification instanceof ExpressionInOCL)) {
 			OCLExpression bodyExpression = ((ExpressionInOCL)specification).getOwnedBody();
-			if ((bodyExpression instanceof TupleLiteralExp) && (bodyExpression.getTypeId() == TUPLE_MESSAGE_STATUS)) {
-				TupleLiteralPart messagePart = NameUtil.getNameable(((TupleLiteralExp)bodyExpression).getOwnedParts(), TUPLE_MESSAGE_STATUS_0.getName());
-				TupleLiteralPart statusPart = NameUtil.getNameable(((TupleLiteralExp)bodyExpression).getOwnedParts(), TUPLE_MESSAGE_STATUS_1.getName());
-				OCLExpression messageExpression = messagePart != null ? messagePart.getOwnedInit() : null;
-				OCLExpression statusExpression = statusPart != null ? statusPart.getOwnedInit() : null;
-				ExpSpecificationCS csMessage = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-				csMessage.setExprString(messageExpression != null ? PrettyPrinter.print(messageExpression) : "null");
-				csElement.setOwnedMessageSpecification(csMessage);
-				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-				csStatus.setExprString(statusExpression != null ? PrettyPrinter.print(statusExpression) : "null");
+			if (bodyExpression != null) {
+				refreshConstraintBody(csConstraint, specification, bodyExpression);
 			}
-			else if (bodyExpression != null) {
-				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-				csStatus.setExprString(PrettyPrinter.print(bodyExpression));
+			else {
+				csConstraint.setOwnedSpecification(csStatusSpecification);
 			}
 		}
-	/*	if ((csStatus == null) && (specification != null)) {
-			String body = specification.getBody();
-			if (body != null) {
-				if (body.startsWith("Tuple")) {
-					String[] lines = body.split("\n");
-					int lastLineNumber = lines.length-1;
-					if ((lastLineNumber >= 3)
-							&& lines[0].replaceAll("\\s", "").equals("Tuple{")
-							&& lines[1].replaceAll("\\s", "").startsWith("message:String=")
-							&& lines[lastLineNumber].replaceAll("\\s", "").equals("}.status")) {
-						StringBuilder message = new StringBuilder();
-						message.append(lines[1].substring(lines[1].indexOf("=")+1, lines[1].length()).trim());
-						for (int i = 2; i < lastLineNumber; i++) {
-							if (!lines[i].replaceAll("\\s", "").startsWith("status:Boolean=")) {
-								message.append("\n" + lines[i]);
+		else {
+			csConstraint.setOwnedSpecification(csStatusSpecification);
+		}
+		return csConstraint;
+	}
+
+	protected void refreshConstraintBody(@NonNull ConstraintCS csConstraint, @NonNull LanguageExpression specification, @NonNull OCLExpression bodyExpression) {
+		if (bodyExpression instanceof PropertyCallExp) {//&& (bodyExpression.getTypeId() == TUPLE_MESSAGE_STATUS)) {
+			PropertyCallExp propertyCallExp = (PropertyCallExp)bodyExpression;
+			if (propertyCallExp.isIsImplicit()) {
+				Property property = propertyCallExp.getReferredProperty();
+				OCLExpression source = propertyCallExp.getOwnedSource();
+				if ((property.eContainer() instanceof TupleType) && PivotConstants.STATUS_PART_NAME.equals(property.getName()) && (source instanceof TupleLiteralExp)) {
+					List<TupleLiteralPart> ownedParts = ((TupleLiteralExp)source).getOwnedParts();
+					TupleLiteralPart statusPart = NameUtil.getNameable(ownedParts, TUPLE_MESSAGE_STATUS_1.getName());
+					if (statusPart != null) {
+						TupleLiteralPart messagePart = NameUtil.getNameable(ownedParts, TUPLE_MESSAGE_STATUS_0.getName());
+						if (ownedParts.size() == (messagePart != null ? 2 : 1)) {
+							if (messagePart != null) {
+								ExpSpecificationCS csMessageSpecification = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+								ExpCS csMessage = (ExpCS)messagePart.getOwnedInit().accept(this);
+								csMessageSpecification.setOwnedExpression(csMessage);
+								csConstraint.setOwnedMessageSpecification(csMessageSpecification);
 							}
-							else {
-								ExpSpecificationCS csMessage = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-								String messageString = message.toString();
-								int lastIndex = messageString.lastIndexOf(',');
-								if (lastIndex > 0) {
-									messageString = messageString.substring(0, lastIndex);
-								}
-								csMessage.setExprString(messageString);
-								csElement.setOwnedMessageSpecification(csMessage);
-								StringBuilder status = new StringBuilder();
-								status.append(lines[i].substring(lines[i].indexOf("=")+1, lines[i].length()).trim());
-								for (i++; i < lastLineNumber; i++) {
-									status.append("\n" + lines[i]);
-								}
-								csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-								csStatus.setExprString(status.toString());
-							}
+							ExpSpecificationCS csStatusSpecification = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+							ExpCS csStatus = (ExpCS)statusPart.getOwnedInit().accept(this);
+							csStatusSpecification.setOwnedExpression(csStatus);
+							csConstraint.setOwnedSpecification(csStatusSpecification);
+							return;
 						}
 					}
 				}
-				if (csStatus == null) {
-					csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
-					csStatus.setExprString(body);
-				}
 			}
-		} */
-		//		csElement.setSpecification(context.visitDeclaration(SpecificationCS.class, specification));
-		csElement.setOwnedSpecification(csStatus);
-		return csElement;
+		}
+		ExpSpecificationCS csSpecification = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+		ExpCS csBody = (ExpCS)bodyExpression.accept(this);
+		csSpecification.setOwnedExpression(csBody);
+		csConstraint.setOwnedSpecification(csSpecification);
 	}
 
 	// FIXME Unify VariableCS and TypedElementCS

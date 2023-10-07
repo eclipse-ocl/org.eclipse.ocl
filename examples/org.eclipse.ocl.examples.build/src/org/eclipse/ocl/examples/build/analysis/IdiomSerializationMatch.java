@@ -17,10 +17,11 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.elements.SerializationNode;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.idioms.Idiom;
+import org.eclipse.ocl.xtext.idioms.IdiomsUtils;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 
 /**
  * An IdiomMatch is created after a first successful match of an idiom. It accumulates
@@ -71,7 +72,7 @@ public class IdiomSerializationMatch implements IdiomMatch
 		}
 		if (subIdiomIndex >= locatedNodes.length) {
 			for (@NonNull SerializationNode serializationNode : locatedNodes) {
-				List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(serializationNode2subIdioms.get(serializationNode));
+				List<@NonNull SubIdiom> subIdioms = serializationNode2subIdioms.get(serializationNode);
 				if ((subIdioms != null) && !isAllMixIn(subIdioms)) {
 					return false;
 				}
@@ -83,9 +84,9 @@ public class IdiomSerializationMatch implements IdiomMatch
 		if (subIdiomIndex >= locatedNodes.length) {
 			for (int i = 0; i < locatedNodes.length; i++) {
 				SerializationNode serializationNode = locatedNodes[i];
-				SubIdiom subIdiom = SerializationUtils.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
+				SubIdiom subIdiom = ClassUtil.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
 				if (subIdiom.getOwnedSegments().size() > 0) {		// Locator-only subidioms are trivislly 'mixed-in'
-					List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(serializationNode2subIdioms.get(serializationNode));
+					List<@NonNull SubIdiom> subIdioms = serializationNode2subIdioms.get(serializationNode);
 					if (subIdioms == null) {
 						subIdioms = new ArrayList<>();
 						serializationNode2subIdioms.put(serializationNode, subIdioms);

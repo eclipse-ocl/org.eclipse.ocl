@@ -10,6 +10,7 @@
  *******************************************************************************/
 model org.eclipse.ocl.xtext.base.Base
 import "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore#/" as basecs
+import "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore#/" as essentialoclcs
 
 idiom COMMENTED_RULE at returns basecs::ModelElementCS do custom "org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport" value;
 

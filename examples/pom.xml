@@ -38,8 +38,5 @@
       <module>org.eclipse.ocl.examples.unified</module>
       <module>org.eclipse.ocl.examples.validity</module>
       <module>org.eclipse.ocl.examples.xtext.console</module>
-      <module>org.eclipse.ocl.examples.xtext.idioms</module>
-      <module>org.eclipse.ocl.examples.xtext.idioms.ui</module>
-      <module>org.eclipse.ocl.examples.xtext.serializer</module>
-  </modules>
+   </modules>
 </project>

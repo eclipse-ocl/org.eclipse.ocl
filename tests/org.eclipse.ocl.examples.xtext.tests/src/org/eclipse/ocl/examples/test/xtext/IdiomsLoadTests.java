@@ -20,18 +20,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
-import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
+import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
+import org.eclipse.ocl.xtext.base.serializer.DeclarativeFormatter;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
+import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
 import org.eclipse.xtext.formatting.INodeModelFormatter.IFormattedRegion;
@@ -46,7 +47,7 @@ public class IdiomsLoadTests extends XtextTestCase
 {
 	protected static final @NonNull String @NonNull [] NO_MESSAGES = new @NonNull String[] {};
 
-	public @Nullable String readFile(@NonNull InputStream inputStream) throws IOException {
+	public @NonNull String readFile(@NonNull InputStream inputStream) throws IOException {
 		Reader reader = new InputStreamReader(inputStream);
 		StringBuilder s = new StringBuilder();
 		char[] buf = new char[16384];
@@ -130,7 +131,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		return xmiResource;
 	}
 
-	public void doReformat_Idioms(@NonNull OCL ocl, URI inputURI) throws IOException {
+	public void doReformat(@NonNull OCL ocl, @NonNull DeclarativeFormatter declarativeFormatter, @NonNull URI inputURI, @NonNull URI referenceURI) throws IOException {
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -168,16 +169,24 @@ public class IdiomsLoadTests extends XtextTestCase
 			int totalLength = rootNode.getTotalLength();
 			String text = rootNode.getText();
 		//	xtextResource.save(XMIUtil.createSaveOptions());
-			DeclarativeFormatter instance = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 			rootOffset += rootLength/4;
 			rootLength /= 2;
-			IFormattedRegion region = instance.format(rootNode, rootOffset, rootLength);
+			String unformattedText = text.substring(rootOffset, rootOffset+rootLength);
+			IFormattedRegion region = declarativeFormatter.format(rootNode, rootOffset, rootLength);
 			String formattedText = region.getFormattedText();
+
+
+			InputStream referenceStream = resourceSet.getURIConverter().createInputStream(referenceURI, null);
+			String referenceText = readFile(referenceStream);
+
+
+
+
 			if (rootOffset == 0) {
-				assertEquals(text, formattedText);
+				assertEquals(referenceText, formattedText);
 			}
-			else if (!text.contains(formattedText)) {
-				assertEquals(text, formattedText);
+			else if (!referenceText.contains(formattedText)) {
+				assertEquals(referenceText, formattedText);
 			}
 		//	debugTimestamp.log("Serialization save done");
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
@@ -246,9 +255,10 @@ public class IdiomsLoadTests extends XtextTestCase
 	 * A temporary test to help debugging a troublesome construct.
 	 */
 	public void testIdiomsLoad_Reformat_DebugTest_idioms() throws IOException, InterruptedException {
+		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/idioms/DebugTest.idioms", true);
-		doReformat_Idioms(ocl, idiomsURI);
+		doReformat(ocl, declarativeFormatter, idiomsURI, idiomsURI);
 		ocl.dispose();
 	}
 
@@ -257,7 +267,12 @@ public class IdiomsLoadTests extends XtextTestCase
 			System.err.println(getName() + " has been disabled -see Bug 569138");
 			return;
 		}
+	//	TestUtil.doCompleteOCLSetup();
+	//	TestUtil.doOCLstdlibSetup();
+		TestUtil.doEssentialOCLSetup();
+		TestUtil.doXtextSetup();
 		TestOCL ocl = createOCL();
+		ClasspathURIHandler.init(ocl.getResourceSet());
 		URI idiomsURI = getTestFileURI("EssentialOCL.idioms", EssentialOCLStandaloneSetup.class.getResourceAsStream("EssentialOCL.idioms"));
 		doLoad_Idioms(ocl, idiomsURI);
 		ocl.dispose();
@@ -271,9 +286,10 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 	public void testIdiomsLoad_Reformat_Idioms_idioms() throws IOException, InterruptedException {
+		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
-		doReformat_Idioms(ocl, idiomsURI);
+		doReformat(ocl, declarativeFormatter, idiomsURI, idiomsURI);
 		ocl.dispose();
 	}
 
@@ -316,10 +332,20 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testIdiomsLoad_Reformat_Tutorial_oclinecore() throws IOException, InterruptedException {
+		DeclarativeFormatter declarativeFormatter = new OCLinEcoreStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
+		TestOCL ocl = createOCL();
+		URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/documentation/Tutorial.oclinecore", true);
+		URI referenceURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/documentation/Tutorial.reformatted.oclinecore", true);
+		doReformat(ocl, declarativeFormatter, inputURI, referenceURI);
+		ocl.dispose();
+	}
+
 	public void testIdiomsLoad_Reformat_Xtext_idioms() throws IOException, InterruptedException {
+		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/idioms/Xtext.idioms", true);
-		doReformat_Idioms(ocl, idiomsURI);
+		doReformat(ocl, declarativeFormatter, idiomsURI, idiomsURI);
 		ocl.dispose();
 	}
 }

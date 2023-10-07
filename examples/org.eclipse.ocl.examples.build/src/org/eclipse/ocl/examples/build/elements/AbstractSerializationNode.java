@@ -19,13 +19,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepSequence;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepSequence;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -91,7 +90,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 			@NonNull List<@NonNull SerializationStep> stepsList, @NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms) {
 		@NonNull SerializationSegment @Nullable [] allSerializationSegments = null;
 		@NonNull SerializationSegment @Nullable [] eachSerializationSegments = null;
-		List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(serializationNode2subIdioms.get(this));
+		List<@NonNull SubIdiom> subIdioms = serializationNode2subIdioms.get(this);
 		if (subIdioms != null) {
 			GrammarAnalysis grammarAnalysis = serializationRuleAnalysis.getGrammarAnalysis();
 			allSerializationSegments = grammarAnalysis.getSerializationSegments(subIdioms, true);

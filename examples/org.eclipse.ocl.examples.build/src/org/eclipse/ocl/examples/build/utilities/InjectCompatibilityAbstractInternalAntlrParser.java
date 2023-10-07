@@ -32,9 +32,9 @@ import org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrPa
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 
 /**
- * Convert the line endings of all files in a directory tree to use Unix line endings.
- * Trailing whitespace is also removed.
- * Binary file extensions may be excluded from conversion.
+ * Tweak the src-gen/.../parser/antlr/internal/Internal...Parser.java file to extend
+ * CompatibilityAbstractInternalAntlrParser rather than AbstractInternalAntlrParser so that
+ * a parser built on Xtext >= 2.22 can run on Xtext < 2.22.
  */
 public class InjectCompatibilityAbstractInternalAntlrParser extends AbstractWorkflowComponent2 {
 

@@ -21,16 +21,16 @@ import org.eclipse.ocl.examples.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.DirectAssignmentAnalysis;
 import org.eclipse.ocl.examples.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueNull;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueNull;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.Keyword;
 
 /**

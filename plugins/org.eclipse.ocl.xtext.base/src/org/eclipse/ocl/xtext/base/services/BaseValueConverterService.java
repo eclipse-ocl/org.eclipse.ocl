@@ -85,7 +85,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 				return value.toString();
 			}
 			else {
-				return " " + value.toString() + " ";
+				return " " + value.toString() + " ";	// Not needed for DeclarativeSerializer
 			}
 		}
 	}

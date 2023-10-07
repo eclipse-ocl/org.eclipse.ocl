@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -69,6 +70,9 @@ public class SerializeTests extends XtextTestCase
 		default @NonNull String @NonNull [] asSecondValidationMessages() {
 			return asFirstValidationMessages();
 		}
+		default void conditionAS(@NonNull ASResource asResource) {
+			return;
+		}
 		default @Nullable String cs2asErrorMessages() {
 			return null;
 		}
@@ -81,6 +85,19 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public static final @NonNull SerializeTestHelper DEFAULT_HELPER = new SerializeTestHelper() {};
+
+	public static final @NonNull SerializeTestHelper FULL_SERIALIZATION_HELPER = new SerializeTestHelper()
+	{
+		@Override
+		public void conditionAS(@NonNull ASResource asResource) {
+			for (EObject eObject : new TreeIterable(asResource)) {
+				if (eObject instanceof ExpressionInOCL) {
+					((ExpressionInOCL)eObject).setBody(null);
+				}
+			}
+		}
+
+	};
 
 	public static final @NonNull SerializeTestHelper NO_VALIDATION = new SerializeTestHelper()
 	{
@@ -141,6 +158,7 @@ public class SerializeTests extends XtextTestCase
 					assertValidationDiagnostics("Normalisation invalid 2", asResource, asReValidationMessages);
 				}
 			}
+			testHelper.conditionAS(asResource);
 			//
 			//	Pivot to CS
 			//
@@ -756,6 +774,14 @@ public class SerializeTests extends XtextTestCase
 				return StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1");
 			}
 		});
+	}
+
+	public void testSerialize_Tutorial_echoed() throws Exception {
+		doSerialize(getTestModelURI("models/documentation/Tutorial1.ecore"), DEFAULT_HELPER);
+	}
+
+	public void testSerialize_Tutorial_reformatted() throws Exception {
+		doSerialize(getTestModelURI("models/documentation/Tutorial1.ecore"), getTestModelURI("models/documentation/Tutorial1ref.ecore"), FULL_SERIALIZATION_HELPER);
 	}
 
 	public void testSerialize_XMLNamespace() throws Exception {

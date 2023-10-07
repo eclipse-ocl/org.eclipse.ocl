@@ -20,10 +20,10 @@ import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
 import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
 
-var idiomsProjectName = "org.eclipse.ocl.examples.xtext.idioms"
-var idiomsRuntimeProject = "../../examples/${idiomsProjectName}"
+var idiomsProjectName = "org.eclipse.ocl.xtext.idioms"
+var idiomsRuntimeProject = "../../plugins/${idiomsProjectName}"
 
-var rootPath = "../../examples"
+var rootPath = "../../plugins"
 
 /**
  *	Generate the Idioms Editor.
@@ -33,9 +33,9 @@ Workflow {
 		scanClassPath = true
 		platformUri = ".."
 		registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
-		registerGeneratedEPackage = "org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage"
+		registerGeneratedEPackage = "org.eclipse.ocl.xtext.idioms.IdiomsPackage"
 		registerGenModelFile = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
-		registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.idioms/model/Idioms.genmodel"
 	}
 	
 	component = XtextGenerator {
@@ -81,10 +81,12 @@ Workflow {
  *******************************************************************************/"
 			}
 		}
-		language = StandardLanguage {
+		language = org.eclipse.ocl.examples.build.fragments.MyStandardLanguage {
 			name = "${idiomsProjectName}.Idioms"
 			fileExtensions = "idioms"
+			grammarUri = "platform:/resource/${idiomsProjectName}/src/org/eclipse/ocl/xtext/idioms/Idioms.xtext"
 			generator = null
+			// Comment the serializer out during a transient rebuild after an incompatible Idioms.ecore/idioms/xtext change
 			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
 				generateStub = true
 			}
@@ -102,20 +104,21 @@ Workflow {
 					classSplitting = true
 				}
 			}
+			// Comment the formatter out during a transient rebuild after an incompatible Idioms.ecore/idioms/xtext change
 			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragmentXtend {
 				generateStub = true
 			}
 			// *.xtextbin support on Xtext 2.3		
-		//	fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
+			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
 		}
 	}
-//	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
-//		javaFolder = "${idiomsRuntimeProject}/src-gen"
-//		javaPackageName = "${idiomsProjectName}"
-//		grammarFileStem = "Idioms"
-//	}
+	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
+		javaFolder = "${idiomsRuntimeProject}/src-gen"
+		javaPackageName = "${idiomsProjectName}"
+		grammarFileStem = "Idioms"
+	}
 	component = org.eclipse.ocl.examples.build.utilities.InjectCompatibilityAbstractInternalAntlrParser {
-		fileName = "${idiomsRuntimeProject}/src-gen/org/eclipse/ocl/examples/xtext/idioms/parser/antlr/internal/InternalIdiomsParser.java"
+		fileName = "${idiomsRuntimeProject}/src-gen/org/eclipse/ocl/xtext/idioms/parser/antlr/internal/InternalIdiomsParser.java"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${idiomsRuntimeProject}/META-INF"

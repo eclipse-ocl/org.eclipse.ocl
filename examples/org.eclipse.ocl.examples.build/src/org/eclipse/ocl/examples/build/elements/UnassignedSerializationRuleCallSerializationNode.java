@@ -13,14 +13,14 @@ package org.eclipse.ocl.examples.build.elements;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 
 /**
  * An UnassignedSerializationRuleCallSerializationNode delegates one of the functionalities of one
@@ -30,8 +30,8 @@ public class UnassignedSerializationRuleCallSerializationNode extends AbstractUn
 {
 	protected final @NonNull SerializationRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedSerializationRuleCallSerializationNode(@NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality, @NonNull SerializationRuleAnalysis calledRuleAnalysis) {
-		super(producedEClass, grammarCardinality);
+	public UnassignedSerializationRuleCallSerializationNode(@NonNull EClassifier producedEClassifier, @NonNull GrammarCardinality grammarCardinality, @NonNull SerializationRuleAnalysis calledRuleAnalysis) {
+		super(producedEClassifier, grammarCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
@@ -39,7 +39,7 @@ public class UnassignedSerializationRuleCallSerializationNode extends AbstractUn
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
 	//	throw new UnsupportedOperationException();		// Should have been flattened already
 	//	if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new UnassignedSerializationRuleCallSerializationNode(producedEClass, this.grammarCardinality, calledRuleAnalysis);
+		return new UnassignedSerializationRuleCallSerializationNode(producedEClassifier, this.grammarCardinality, calledRuleAnalysis);
 	}
 
 	@Override

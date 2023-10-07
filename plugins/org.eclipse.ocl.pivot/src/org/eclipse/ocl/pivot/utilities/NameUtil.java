@@ -16,6 +16,8 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -49,61 +51,88 @@ public class NameUtil
 		}
 	}
 
-	public static final class ENamedElementComparator implements Comparator<ENamedElement>
+	public static final class ENamedElementComparator implements Comparator<@NonNull ENamedElement>
 	{
 		public static final @NonNull ENamedElementComparator INSTANCE = new ENamedElementComparator();
 
 		@Override
-		public int compare(ENamedElement o1, ENamedElement o2) {
+		public int compare(@NonNull ENamedElement o1, @NonNull ENamedElement o2) {
+			if (o1 == o2) {
+				return 0;		// Short circuit containment compare / independent searches
+			}
 			String n1 = o1.getName();
 			String n2 = o2.getName();
-			return ClassUtil.safeCompareTo(n1, n2);
+			int comparison = ClassUtil.safeCompareTo(n1, n2);
+			if (comparison != 0) {
+				return comparison;
+			}
+			if ((o1 instanceof EPackage) && (o2 instanceof EPackage)) {
+				n1 = ((EPackage)o1).getNsURI();
+				n2 = ((EPackage)o2).getNsURI();
+				comparison = ClassUtil.safeCompareTo(n1, n2);
+				if (comparison != 0) {
+					return comparison;
+				}
+			}
+			EObject p1 = o1.eContainer();
+			EObject p2 = o2.eContainer();
+			if ((p1 instanceof ENamedElement) && (p2 instanceof ENamedElement)) {
+				return compare((ENamedElement)p1, (ENamedElement)p2);
+			}
+			return comparison;
 		}
 	}
 
 	/**
 	 * @since 1.3
 	 */
-	public static final class ToStringComparator implements Comparator<@NonNull Object>
+	public static class ToStringComparator<T> implements Comparator<@NonNull T>
 	{
 		/**
-		 * Provide a simple shared INSTABCE for comparison based on toString().
-		 * If toString() is mpre expensive that a Map.get() a toString() cache can be
+		 * Provide a simple shared INSTANCE for comparison based on toString().
+		 * If toString() is more expensive than a Map.get() a toString() cache can be
 		 * activated by constructing a new ToStringComparator instance.
 		 */
-		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator(null);
+		public static final @NonNull ToStringComparator<@NonNull Object> INSTANCE = new ToStringComparator<@NonNull Object>(null);
 
 		/*
 		 * toString can be expensive so avoid repeated evaluations.
 		 */
-		private final Map<@NonNull Object, String> object2string;
+		private final Map<@NonNull T, @NonNull String> object2string;
 
 		public ToStringComparator() {
 			this(new HashMap<>());
 		}
 
-		protected ToStringComparator(@Nullable Map<@NonNull Object, String> object2string) {
+		protected ToStringComparator(@Nullable Map<@NonNull T, @NonNull String> object2string) {
 			this.object2string = object2string;
 		}
 
 		@Override
-		public int compare(@NonNull Object o1, @NonNull Object o2) {
+		public int compare(@NonNull T o1, @NonNull T o2) {
+			String s1;
+			String s2;
 			if (object2string == null) {
-				String s1 = o1.toString();
-				String s2 = o2.toString();
-				return ClassUtil.safeCompareTo(s1, s2);
+				s1 = o1.toString();
+				s2 = o2.toString();
 			}
 			else {
-				String s1 = getString(o1);
-				String s2 = getString(o2);
-				return ClassUtil.safeCompareTo(s1, s2);
+				s1 = getString(o1);
+				s2 = getString(o2);
 			}
+			return ClassUtil.safeCompareTo(s1, s2);
 		}
 
-		private String getString(@NonNull Object o) {
+		/**
+		 * @since 1.19
+		 */
+		protected @NonNull String getString(@NonNull T o) {
 			String string = object2string.get(o);
 			if (string == null) {
 				string = o.toString();
+				if (string == null) {
+					string = "";
+				}
 				object2string.put(o, string);
 			}
 			return string;
@@ -120,7 +149,7 @@ public class NameUtil
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull ToStringComparator TO_STRING_COMPARATOR = ToStringComparator.INSTANCE;
+	public static final @NonNull ToStringComparator<@NonNull Object> TO_STRING_COMPARATOR = ToStringComparator.INSTANCE;
 
 	public static String debugFullName(Object object) {
 		if (object == null) {

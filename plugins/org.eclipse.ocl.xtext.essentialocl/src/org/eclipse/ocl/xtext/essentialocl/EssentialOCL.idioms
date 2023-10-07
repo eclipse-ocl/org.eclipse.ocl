@@ -10,5 +10,8 @@
  *******************************************************************************/
 model org.eclipse.ocl.xtext.essentialocl.EssentialOCL
 with "platform:/resource/org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms"
+grammar "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext" as essentialoclx
 
 idiom HASH at "#" do no-space value no-space;
+
+idiom NAVIGATION_OPERATOR_NAME at rule essentialoclx::EssentialOCLNavigationOperatorName do no-space value no-space;

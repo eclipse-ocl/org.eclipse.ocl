@@ -23,23 +23,25 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.Nameable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermDivide;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermGreaterThan;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermMultiply;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermSubtract;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermVariable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermDivide;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermGreaterThan;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermMultiply;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermSubtract;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermVariable;
 
 /**
  * A CardinalityExpression equates the sum of CardinalityVariable products to the number of elements in an eStructuralFeature slot.
@@ -96,7 +98,7 @@ public abstract class CardinalityExpression implements Nameable
 		@Override
 		public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
 			assert this.enumerationValue == null;
-			CardinalityExpression cardinalityExpression = SerializationUtils.maybeNull(enumerationValue2cardinalityExpression.get(enumerationValue));
+			CardinalityExpression cardinalityExpression = enumerationValue2cardinalityExpression.get(enumerationValue);
 			if (cardinalityExpression == null) {
 				grammarAnalysis.addEnumeration(eAttribute, enumerationValue);
 				cardinalityExpression = new EAttributeCardinalityExpression(this, enumerationValue);
@@ -142,7 +144,7 @@ public abstract class CardinalityExpression implements Nameable
 			s.append("| = ");
 			appendSumOfProducts(s);
 			List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(enumerationValue2cardinalityExpression.values());
-			Collections.sort(sortedExpressions, SerializationUtils.NAMEABLE_COMPARATOR);
+			Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 				cardinalityExpression.toString(s);
 			}
@@ -188,7 +190,7 @@ public abstract class CardinalityExpression implements Nameable
 
 		@Override
 		public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull GrammarRuleVector grammarRuleVector) {
-			CardinalityExpression cardinalityExpression = SerializationUtils.maybeNull(grammarRuleVector2cardinalityExpression.get(grammarRuleVector));
+			CardinalityExpression cardinalityExpression = grammarRuleVector2cardinalityExpression.get(grammarRuleVector);
 			if (cardinalityExpression == null) {
 				String subName = name + "." + grammarRuleVector2cardinalityExpression.size();
 				cardinalityExpression = new EReferenceCardinalityExpression(subName, eReference, grammarRuleVector);
@@ -230,7 +232,7 @@ public abstract class CardinalityExpression implements Nameable
 			s.append("}| = ");
 			appendSumOfProducts(s);
 			List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(grammarRuleVector2cardinalityExpression.values());
-			Collections.sort(sortedExpressions, SerializationUtils.NAMEABLE_COMPARATOR);
+			Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 				cardinalityExpression.toString(s);
 			}
@@ -874,7 +876,7 @@ public abstract class CardinalityExpression implements Nameable
 				return false;		// Two variables is not trivial
 			}
 			else {
-				CardinalityVariable unknownVariable = SerializationUtils.nonNullState(unknownVariables.get(0));
+				CardinalityVariable unknownVariable = ClassUtil.nonNullState(unknownVariables.get(0));
 				if (linearVariable == null) {
 					linearVariable = unknownVariable;
 					grammarRuleVector = product.getGrammarRuleVector();
@@ -1237,7 +1239,7 @@ public abstract class CardinalityExpression implements Nameable
 			if (variables.size() == 1) {
 				nonConstantProducts++;
 				for (CardinalityVariable variable : variables) {
-					Set<@NonNull Integer> ruleIndexes = SerializationUtils.maybeNull(variablesToRuleIndexes.get(variable));
+					Set<@NonNull Integer> ruleIndexes = variablesToRuleIndexes.get(variable);
 					if (ruleIndexes == null) {
 						ruleIndexes = new HashSet<>();
 						variablesToRuleIndexes.put(variable, ruleIndexes);

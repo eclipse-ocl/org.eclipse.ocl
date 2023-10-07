@@ -15,23 +15,23 @@ package org.eclipse.ocl.xtext.markup.serializer;
 import com.google.inject.Inject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.AbstractSerializationMetaData;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue.EReference_TargetGrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMetaData;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SubstringStep;
+import org.eclipse.ocl.xtext.base.serializer.TerminalRuleValue;
 import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.service.GrammarProvider;
@@ -78,6 +78,7 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[14];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [5] @NonNull [];
 	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[33];
+	private final @NonNull SubstringStep @NonNull [] substringSteps = new @NonNull SubstringStep[0];
 
 	private MarkupSerializationMetaData(@NonNull Grammar grammar) {
 		super(grammar);
@@ -88,6 +89,7 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 		initSerializationSegments();
 		initSerializationSteps();
 		initSerializationRules();
+		initSubstringSteps();
 		initGrammarRuleValues();
 		initEClassValues();
 	}
@@ -177,8 +179,13 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 		return null;
 	}
 
+	@Override
+	public @NonNull SubstringStep @NonNull [] getSubstringSteps() {
+		return substringSteps;
+	}
+
 	/**
-	 * Initialize configuration for each EClass that may be serialized.
+	 * Initialize configuration for each EClassifier that may be serialized.
 	 */
 	private void initEClassValues() {
 		eClassValues[0] = new EClassValue(MarkupPackage.Literals.BULLET_ELEMENT,
@@ -422,7 +429,7 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 0	/* OCLTextElement : [value] | [value] */,
 			(0 << 16) | 0	/* TextElement : [value] | [value] */
 		);
-		grammarRuleValues[14] = new DataTypeRuleValue(14, "MarkupKeyword");
+		grammarRuleValues[14] = createDataTypeRuleValue(14, "MarkupKeyword", 4 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[15] = new TerminalRuleValue(15, "NL");
 		grammarRuleValues[16] = new TerminalRuleValue(16, "NUMBER");
 		grammarRuleValues[17] = createParserRuleValue(17, "NewLineElement", -1,
@@ -943,13 +950,18 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 		// 32: TextElement::text+=ID|WORD|INT|WS || soft-space value soft-space
 		serializationSteps[32] = createSerializationStepAssigns(MarkupPackage.Literals.TEXT_ELEMENT__TEXT, 0 /* '#|,|:' */, new int[] { 9/*ID*/,25/*WORD*/,10/*INT*/,26/*WS*/}, 4);
 	}
+
+	/**
+	 * Initialize the various serialization steps used to serialize a serialization rule.
+	 */
+	private void initSubstringSteps() {
+	}
 }
 
-//	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
+//	Commented imports ensure the Xtend synthesis provides a true import allowing unqualified annotated usage
 //	import Inject;
 //	import NonNull;
 //	import Nullable;
-//	import DataTypeRuleValue;
 //	import EClassValue;
 //	import EReference_TargetGrammarRuleVector;
 //	import EnumerationValue;
@@ -964,6 +976,7 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 //	import SerializationFeature;
 //	import SerializationSegment;
 //	import SerializationStep;
+//	import SubstringStep;
 //	import TerminalRuleValue;
 //	import MarkupPackage;
 //	import Grammar;

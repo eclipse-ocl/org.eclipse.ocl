@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: C:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.base\src-gen\org\eclipse\ocl\xtext\base\Base.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.base\src-gen\org\eclipse\ocl\xtext\base\Base.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.

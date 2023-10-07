@@ -77,9 +77,10 @@ Workflow {
  *******************************************************************************/"
 			}
 		}
-		language = StandardLanguage {
+		language = org.eclipse.ocl.examples.build.fragments.MyStandardLanguage {
 			name = "${completeOCLprojectName}.CompleteOCL"
 			fileExtensions = "ocl"
+			grammarUri = "platform:/resource/${completeOCLprojectName}/src/org/eclipse/ocl/xtext/completeocl/CompleteOCL.xtext"
 			generator = null
 			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
 				generateStub = true

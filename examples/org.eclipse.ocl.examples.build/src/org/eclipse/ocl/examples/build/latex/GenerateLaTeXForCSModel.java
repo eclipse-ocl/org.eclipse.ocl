@@ -13,17 +13,15 @@ package org.eclipse.ocl.examples.build.latex;
 import java.io.File;
 import java.io.FileWriter;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
-import org.eclipse.ocl.examples.build.utilities.ClasspathURIHandler;
+import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -55,8 +53,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 		OCL ocl = OCL.newInstance();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new ClasspathURIHandler());
+		ClasspathURIHandler.init(resourceSet);
 		try {
 			org.eclipse.ocl.pivot.Package asPackage = null;
 			org.eclipse.ocl.pivot.Package cs2asPackage = null;

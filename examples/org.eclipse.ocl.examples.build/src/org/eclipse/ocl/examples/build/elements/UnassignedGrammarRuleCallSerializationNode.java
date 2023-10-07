@@ -13,15 +13,15 @@ package org.eclipse.ocl.examples.build.elements;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 
 /**
  * An UnassignedGrammarRuleCallSerializationNode uses another GrammarRule to provide the produced EClass.
@@ -34,8 +34,8 @@ public class UnassignedGrammarRuleCallSerializationNode extends AbstractUnassign
 {
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedGrammarRuleCallSerializationNode(@NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
-		super(producedEClass, grammarCardinality);
+	public UnassignedGrammarRuleCallSerializationNode(@NonNull EClassifier producedEClassifier, @NonNull GrammarCardinality grammarCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+		super(producedEClassifier, grammarCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 

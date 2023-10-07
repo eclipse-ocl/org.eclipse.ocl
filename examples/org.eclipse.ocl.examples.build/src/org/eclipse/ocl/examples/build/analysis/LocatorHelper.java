@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.build.analysis;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,16 +22,18 @@ import org.eclipse.ocl.examples.build.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.examples.build.elements.AssignedSerializationNode;
 import org.eclipse.ocl.examples.build.elements.SerializationNode;
 import org.eclipse.ocl.examples.build.elements.UnassignedKeywordSerializationNode;
-import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
-import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
-import org.eclipse.ocl.examples.xtext.idioms.KeywordLocator;
-import org.eclipse.ocl.examples.xtext.idioms.Locator;
-import org.eclipse.ocl.examples.xtext.idioms.LocatorDeclaration;
-import org.eclipse.ocl.examples.xtext.idioms.ReturnsLocator;
-import org.eclipse.ocl.examples.xtext.idioms.util.IdiomsSwitch;
+import org.eclipse.ocl.xtext.idioms.AnyAssignmentLocator;
+import org.eclipse.ocl.xtext.idioms.AnyElementLocator;
+import org.eclipse.ocl.xtext.idioms.AssignmentLocator;
+import org.eclipse.ocl.xtext.idioms.FinalLocator;
+import org.eclipse.ocl.xtext.idioms.KeywordLocator;
+import org.eclipse.ocl.xtext.idioms.Locator;
+import org.eclipse.ocl.xtext.idioms.LocatorDeclaration;
+import org.eclipse.ocl.xtext.idioms.ReturnsLocator;
+import org.eclipse.ocl.xtext.idioms.RuleLocator;
+import org.eclipse.ocl.xtext.idioms.util.IdiomsSwitch;
 import org.eclipse.xtext.AbstractElement;
+import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Keyword;
@@ -81,8 +84,13 @@ public interface LocatorHelper
 		}
 
 		@Override
-		public @Nullable LocatorHelper caseReturnsLocator(ReturnsLocator producedEClassLocator) {
+		public @Nullable LocatorHelper caseReturnsLocator(ReturnsLocator returnsLocator) {
 			return ReturnsLocatorHelper.INSTANCE;
+		}
+
+		@Override
+		public @Nullable LocatorHelper caseRuleLocator(RuleLocator ruleLocator) {
+			return RuleLocatorHelper.INSTANCE;
 		}
 
 		@Override
@@ -109,7 +117,7 @@ public interface LocatorHelper
 		public static final @NonNull AnyAssignmentLocatorHelper INSTANCE = new AnyAssignmentLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			if (grammarElement instanceof Assignment) {
 				return true;
 			}
@@ -130,7 +138,7 @@ public interface LocatorHelper
 		public static final @NonNull AnyElementLocatorHelper INSTANCE = new AnyElementLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			return true;
 		}
 
@@ -145,9 +153,9 @@ public interface LocatorHelper
 		public static final @NonNull AssignmentLocatorHelper INSTANCE = new AssignmentLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			if (grammarElement instanceof Assignment) {
-				AssignmentAnalysis assignmentAnalysis = parserRuleAnalysis.getGrammarAnalysis().getAssignmentAnalysis((Assignment)grammarElement);
+				AssignmentAnalysis assignmentAnalysis = nonTerminalRuleAnalysis.getGrammarAnalysis().getAssignmentAnalysis((Assignment)grammarElement);
 				AssignmentLocator assignmentLocator = (AssignmentLocator)locator;
 				EStructuralFeature assignedEStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 				return AnalysisUtils.isEqual(assignmentLocator.getEStructuralFeature(), assignedEStructuralFeature);
@@ -171,13 +179,13 @@ public interface LocatorHelper
 		public static final @NonNull FinalLocatorHelper INSTANCE = new FinalLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			if (grammarElement instanceof Assignment) {
 				Assignment assignment = (Assignment)grammarElement;
 				if (assignment.getTerminal() instanceof CrossReference) {
 					return true;
 				}
-				AssignmentAnalysis assignmentAnalysis = parserRuleAnalysis.getGrammarAnalysis().getAssignmentAnalysis(assignment);
+				AssignmentAnalysis assignmentAnalysis = nonTerminalRuleAnalysis.getGrammarAnalysis().getAssignmentAnalysis(assignment);
 				EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 				if (eStructuralFeature instanceof EAttribute) {
 					return true;
@@ -210,7 +218,7 @@ public interface LocatorHelper
 		public static final @NonNull KeywordLocatorHelper INSTANCE = new KeywordLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			String value = null;
 			if (grammarElement instanceof Keyword) {
 				value = ((Keyword)grammarElement).getValue();
@@ -246,11 +254,11 @@ public interface LocatorHelper
 		public static final @NonNull ReturnsLocatorHelper INSTANCE = new ReturnsLocatorHelper();
 
 		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			if (grammarElement.eContainer() instanceof ParserRule) {
-				ReturnsLocator producedEClassLocator = (ReturnsLocator)locator;
-				EClass producedEClass = parserRuleAnalysis.getReturnedEClass();
-				EClass eClass = producedEClassLocator.getEClass();
+				ReturnsLocator returnsLocator = (ReturnsLocator)locator;
+				EClassifier producedEClass = nonTerminalRuleAnalysis.getReturnedEClassifier();
+				EClass eClass = returnsLocator.getEClass();
 				if (AnalysisUtils.isSuperTypeOf(eClass, producedEClass)) {
 					return true;
 				}
@@ -261,9 +269,9 @@ public interface LocatorHelper
 		@Override
 		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
 			if (serializationNode == serializationRuleAnalysis.getRootSerializationNode()) {
-				ReturnsLocator producedEClassLocator = (ReturnsLocator)locator;
+				ReturnsLocator returnsLocator = (ReturnsLocator)locator;
 				EClass producedEClass = serializationRuleAnalysis.getProducedEClass();
-				EClass eClass = producedEClassLocator.getEClass();
+				EClass eClass = returnsLocator.getEClass();
 				if (AnalysisUtils.isSuperTypeOf(eClass, producedEClass)) {
 					return true;
 				}
@@ -272,10 +280,40 @@ public interface LocatorHelper
 		}
 	}
 
+
+	public static class RuleLocatorHelper extends AbstractLocatorHelper
+	{
+		public static final @NonNull RuleLocatorHelper INSTANCE = new RuleLocatorHelper();
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
+			if (grammarElement.eContainer() instanceof ParserRule) {
+				RuleLocator ruleLocator = (RuleLocator)locator;
+				AbstractRule rule = nonTerminalRuleAnalysis.getRule();
+				if (rule == ruleLocator.getReferredRule()) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+			if (serializationNode == serializationRuleAnalysis.getRootSerializationNode()) {
+				RuleLocator ruleLocator = (RuleLocator)locator;
+				AbstractRule rule = serializationRuleAnalysis.getRuleAnalysis().getRule();
+				if (rule == ruleLocator.getReferredRule()) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
 	/**
-	 * Return true if locator matches grammarElement on the context of a parserRuleAnalysis.
+	 * Return true if locator matches grammarElement on the context of a nonTerminalRuleAnalysis.
 	 */
-	boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis);
+	boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis);
 
 	/**
 	 * Return true if locator matches serializationNode.

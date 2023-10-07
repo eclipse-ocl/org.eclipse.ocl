@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -38,39 +39,41 @@ import org.eclipse.ocl.examples.build.elements.AssignedSerializationNode;
 import org.eclipse.ocl.examples.build.elements.CompositeSerializationNode;
 import org.eclipse.ocl.examples.build.elements.SequenceSerializationNode;
 import org.eclipse.ocl.examples.build.elements.SerializationNode;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
-import org.eclipse.ocl.examples.xtext.idioms.Locator;
-import org.eclipse.ocl.examples.xtext.idioms.ReferredLocator;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.idioms.impl.LocatorImpl;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder.DiagnosticStringBuilderWithHelper;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.Nameable;
-import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.RuleMatch;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermUnsupported;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationEnumeratedAttribute;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationSimpleAttribute;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRuleHelper;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder.DiagnosticStringBuilderWithHelper;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.RuleMatch;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermUnsupported;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationAttribute;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationEnumeratedAttribute;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationReference;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationSimpleAttribute;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRuleHelper;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.xtext.idioms.Idiom;
+import org.eclipse.ocl.xtext.idioms.IdiomsUtils;
+import org.eclipse.ocl.xtext.idioms.Locator;
+import org.eclipse.ocl.xtext.idioms.ReferredLocator;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.idioms.impl.LocatorImpl;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -108,7 +111,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality = null;
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
@@ -162,7 +165,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		this.ruleAnalysis = ruleAnalysis;
 		this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.rootSerializationNode = rootSerializationNode;
-		this.producedEClass = refineProducedEClass(rootSerializationNode, ruleAnalysis.getReturnedEClass());
+		EClass returnedEClass = ruleAnalysis.getReturnedEClass();
+		this.producedEClass = refineProducedEClass(rootSerializationNode, returnedEClass);
 		this.variantNumber = variantNumber;
 		this.variantName = ruleAnalysis.getName() + "-" + variantNumber;
 		assert rootSerializationNode.onlyRootUnassignedSerializationRuleCall(true);
@@ -198,16 +202,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	}
 
 	private void analyzeAssignment(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue, @NonNull GrammarCardinality netGrammarCardinality) {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
+		Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
 		if (eAttribute2enumerationValue2grammarCardinality2 == null) {
 			eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = SerializationUtils.maybeNull(eAttribute2enumerationValue2grammarCardinality2.get(eAttribute));
+		Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2.get(eAttribute);
 		if (enumerationValue2grammarCardinality == null) {
 			enumerationValue2grammarCardinality = new HashMap<>();
 			eAttribute2enumerationValue2grammarCardinality2.put(eAttribute, enumerationValue2grammarCardinality);
 		}
-		GrammarCardinality oldGrammarCardinality = SerializationUtils.maybeNull(enumerationValue2grammarCardinality.get(enumerationValue));
+		GrammarCardinality oldGrammarCardinality = enumerationValue2grammarCardinality.get(enumerationValue);
 		GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
 		enumerationValue2grammarCardinality.put(enumerationValue, newGrammarCardinality);
 	}
@@ -217,7 +221,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		if (eReference2ruleAnalysis2grammarCardinality2 == null) {
 			eReference2ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2 = new HashMap<>();
 		}
-		Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = SerializationUtils.maybeNull(eReference2ruleAnalysis2grammarCardinality2.get(eReference));
+		Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
 		if (ruleAnalysis2grammarCardinality == null) {
 			ruleAnalysis2grammarCardinality = new HashMap<>();
 			eReference2ruleAnalysis2grammarCardinality2.put(eReference, ruleAnalysis2grammarCardinality);
@@ -225,7 +229,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		for (int ruleIndex : grammarRuleVector) {
 			@NonNull AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(ruleIndex);
 			if (ruleAnalysis2 instanceof ParserRuleAnalysis) {
-				GrammarCardinality oldGrammarCardinality = SerializationUtils.maybeNull(ruleAnalysis2grammarCardinality.get(ruleAnalysis2));
+				GrammarCardinality oldGrammarCardinality = ruleAnalysis2grammarCardinality.get(ruleAnalysis2);
 				GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
 				ruleAnalysis2grammarCardinality.put((ParserRuleAnalysis) ruleAnalysis2, newGrammarCardinality);
 			}
@@ -242,7 +246,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		//
 		//	Accumulate enumerated attributes
 		//
-		CardinalityExpression cardinalityExpression = SerializationUtils.maybeNull(eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature));
+		CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
@@ -275,7 +279,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			//
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
-			cardinalityExpression = SerializationUtils.maybeNull(eStructuralFeature2requiredSlotsExpression.get(eReference));
+			cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eReference);
 			if (cardinalityExpression == null) {
 				String name = String.format("E%02d", eStructuralFeature2requiredSlotsExpression.size());
 				assert name != null;;
@@ -335,9 +339,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			//	String name = String.format("C%02d", index);
 			//	assert name != null;
 				cardinalityVariable = new CardinalityVariable(index, grammarCardinality);
-				CardinalityVariable old2 = SerializationUtils.maybeNull(node2variable.put(serializationNode, cardinalityVariable));
+				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
-				SerializationNode old3 = SerializationUtils.maybeNull(variable2node.put(cardinalityVariable, serializationNode));
+				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
 				assert old3 == null;
 			}
 		}
@@ -370,7 +374,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
-		SerializationMatchTerm solution = SerializationUtils.maybeNull(variableIndex2solution.get(cardinalityVariableIndex));
+		SerializationMatchTerm solution = variableIndex2solution.get(cardinalityVariableIndex);
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
 
@@ -379,19 +383,19 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	}
 
 	public @NonNull SerializationAttribute @Nullable [] basicGetSerializationAttributes() {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
+		Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
 		if (eAttribute2enumerationValue2grammarCardinality2 == null) {
 			return null;
 		}
 		@NonNull SerializationAttribute [] serializationAttributes = new @NonNull SerializationAttribute[eAttribute2enumerationValue2grammarCardinality2.size()];
 		int i1 = 0;
-		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2grammarCardinality2.entrySet()) {
-			EAttribute eAttribute = SerializationUtils.maybeNull(entry1.getKey());
+		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2grammarCardinality2.entrySet()) {
+			EAttribute eAttribute = entry1.getKey();
 			assert eAttribute != null;
-			@SuppressWarnings("null") @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = entry1.getValue();
-			CardinalityExpression cardinalityExpression = SerializationUtils.maybeNull(eStructuralFeature2requiredSlotsExpression.get(eAttribute));
-			boolean needsDefault = SerializationUtils.nonNullState(cardinalityExpression).isOne();
-			List<@Nullable EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
+			@SuppressWarnings("null") @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = entry1.getValue();
+			CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eAttribute);
+			boolean needsDefault = ClassUtil.nonNullState(cardinalityExpression).isOne();
+			List<@NonNull EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
 			EnumerationValue firstEnumerationValue;
 			if ((enumerationValueList.size() == 1) && ((firstEnumerationValue = enumerationValueList.get(0)) != null) && firstEnumerationValue.isNull()) {
 				GrammarCardinality grammarCardinality = enumerationValue2grammarCardinality.get(firstEnumerationValue);
@@ -399,23 +403,23 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				serializationAttributes[i1++] = new SerializationSimpleAttribute(eAttribute, needsDefault, grammarCardinality);
 			}
 			else {
-				@SuppressWarnings("null") List<@NonNull EnumerationValue> enumerationValueList2 = (List<@NonNull EnumerationValue>)enumerationValueList;
-				Collections.sort(enumerationValueList2, SerializationUtils.NAMEABLE_COMPARATOR);
+				@SuppressWarnings("null") List<@NonNull EnumerationValue> enumerationValueList2 = enumerationValueList;
+				Collections.sort(enumerationValueList2, NameUtil.NAMEABLE_COMPARATOR);
 				int iMax = enumerationValueList2.size();
 				@NonNull EnumerationValue [] enumerationValues = new @NonNull EnumerationValue[iMax];
 				@NonNull GrammarCardinality [] grammarCardinalities = new @NonNull GrammarCardinality[iMax];
 				for (int i = 0; i < iMax; i++) {
-					EnumerationValue enumerationValue = SerializationUtils.maybeNull(enumerationValueList2.get(i));
+					EnumerationValue enumerationValue = enumerationValueList2.get(i);
 					assert enumerationValue != null;
 					enumerationValues[i] = enumerationValue;
-					GrammarCardinality grammarCardinaity = SerializationUtils.maybeNull(enumerationValue2grammarCardinality.get(enumerationValue));
+					GrammarCardinality grammarCardinaity = enumerationValue2grammarCardinality.get(enumerationValue);
 					assert grammarCardinaity != null;
 					grammarCardinalities[i] = grammarCardinaity;
 				}
 				serializationAttributes[i1++] = new SerializationEnumeratedAttribute(eAttribute, needsDefault, enumerationValues, grammarCardinalities);
 			}
 		}
-		Arrays.sort(serializationAttributes, SerializationUtils.NAMEABLE_COMPARATOR);
+		Arrays.sort(serializationAttributes, NameUtil.NAMEABLE_COMPARATOR);
 		return serializationAttributes;
 	}
 
@@ -458,18 +462,18 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			@NonNull GrammarCardinality @NonNull [] grammarCardinalities = new @NonNull GrammarCardinality[iMax];
 			int i2 = 0;
 			List<@NonNull ParserRuleAnalysis> ruleAnalyses = new ArrayList<>(ruleAnalysis2grammarCardinality.keySet());
-			Collections.sort(ruleAnalyses, SerializationUtils.NAMEABLE_COMPARATOR);
+			Collections.sort(ruleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				grammarRuleIndexes[i2] = ruleAnalysis.getIndex();
-				GrammarCardinality grammarCardinality = SerializationUtils.maybeNull(ruleAnalysis2grammarCardinality.get(ruleAnalysis));
+				GrammarCardinality grammarCardinality = ruleAnalysis2grammarCardinality.get(ruleAnalysis);
 				assert grammarCardinality != null;
 				grammarCardinalities[i2] = grammarCardinality;
 				i2++;
 			}
-			GrammarRuleVector targetGrammarRuleVector = SerializationUtils.maybeNull(getEReference2AssignedRuleValueIndexes().get(eReference));
+			GrammarRuleVector targetGrammarRuleVector = getEReference2AssignedRuleValueIndexes().get(eReference);
 			eReference2ruleValueIndex2grammarCardinality[i1++] = new SerializationReference(eReference, targetGrammarRuleVector, grammarRuleIndexes, grammarCardinalities);
 		}
-		Arrays.sort(eReference2ruleValueIndex2grammarCardinality, SerializationUtils.NAMEABLE_COMPARATOR);
+		Arrays.sort(eReference2ruleValueIndex2grammarCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eReference2ruleValueIndex2grammarCardinality;
 	}
 
@@ -480,7 +484,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
 		Set<@NonNull CardinalityExpression> unresolvedExpressions = new HashSet<>();
 		for (@NonNull CardinalityVariable variable : variableGroup) {
-			Set<@NonNull CardinalityExpression> expressions = SerializationUtils.maybeNull(variable2expressions.get(variable));
+			Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 			assert expressions != null;
 			unresolvedExpressions.addAll(expressions);
 		}
@@ -497,7 +501,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			Iterable<@NonNull CardinalityVariable> unsolvedVariables = expression.getUnknownVariables(this);
 			if (unsolvedVariables != null) {
 				for (@NonNull CardinalityVariable variable : unsolvedVariables) {
-					Set<@NonNull CardinalityVariable> variables = SerializationUtils.maybeNull(expression2unsolvedVariables.get(expression));
+					Set<@NonNull CardinalityVariable> variables = expression2unsolvedVariables.get(expression);
 					if (variables == null) {
 						variables = new HashSet<>();
 						expression2unsolvedVariables.put(expression, variables);
@@ -518,15 +522,15 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> unsolvedVariable2unresolvedVariables = new HashMap<>();
 		List<@NonNull CardinalityVariable> workVariables = new ArrayList<>(unsolvedVariable2expressions.keySet());
 		for (@NonNull CardinalityVariable workVariable : workVariables) {
-			Set<@NonNull CardinalityVariable> unsolvedVariables = SerializationUtils.maybeNull(unsolvedVariable2unresolvedVariables.get(workVariable));
+			Set<@NonNull CardinalityVariable> unsolvedVariables = unsolvedVariable2unresolvedVariables.get(workVariable);
 			if (unsolvedVariables == null) {
 				unsolvedVariables = new HashSet<>();
 				unsolvedVariable2unresolvedVariables.put(workVariable, unsolvedVariables);
 				unsolvedVariables.add(workVariable);
-				Set<@NonNull CardinalityExpression> expressions = SerializationUtils.maybeNull(unsolvedVariable2expressions.get(workVariable));
+				Set<@NonNull CardinalityExpression> expressions = unsolvedVariable2expressions.get(workVariable);
 				assert expressions != null;
 				for (@NonNull CardinalityExpression expression : expressions) {
-					Set<@NonNull CardinalityVariable> moreUnsolvedVariables1 = SerializationUtils.maybeNull(expression2unsolvedVariables.get(expression));
+					Set<@NonNull CardinalityVariable> moreUnsolvedVariables1 = expression2unsolvedVariables.get(expression);
 					assert moreUnsolvedVariables1 != null;
 					Set<@NonNull CardinalityVariable> moreUnsolvedVariables2 = new HashSet<>(moreUnsolvedVariables1);
 					moreUnsolvedVariables2.removeAll(unsolvedVariables);
@@ -547,10 +551,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2variables) {
 		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions = new HashMap<>();
 		for (@NonNull CardinalityExpression expression : expression2variables.keySet()) {
-			Set<@NonNull CardinalityVariable> variables = SerializationUtils.maybeNull(expression2variables.get(expression));
+			Set<@NonNull CardinalityVariable> variables = expression2variables.get(expression);
 			assert variables != null;
 			for (@NonNull CardinalityVariable variable : variables) {
-				Set<@NonNull CardinalityExpression> expressions = SerializationUtils.maybeNull(variable2expressions.get(variable));
+				Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 				if (expressions == null) {
 					expressions = new HashSet<>();
 					variable2expressions.put(variable, expressions);
@@ -595,14 +599,14 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				}
 			}
 			if (eContainments != null) {
-				Collections.sort(eContainments, SerializationUtils.ENAMED_ELEMENT_COMPARATOR);
+				Collections.sort(eContainments, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 				for (@NonNull EReference eReference : eContainments) {
 					Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> value = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
 					assert value != null;
 				//	@SuppressWarnings("null")
 					GrammarRuleVector grammarRuleVector = new GrammarRuleVector();
 					for (@NonNull ParserRuleAnalysis assignedRuleAnalysis : value.keySet()) {
-						for (@NonNull ParserRuleAnalysis subRuleAnalysis : assignedRuleAnalysis.getSubRuleAnalysesClosure()) {
+						for (@NonNull AbstractNonTerminalRuleAnalysis subRuleAnalysis : assignedRuleAnalysis.getSubRuleAnalysesClosure()) {
 							grammarRuleVector.set(subRuleAnalysis.getIndex());
 						}
 					}
@@ -634,7 +638,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		do {
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = SerializationUtils.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
 				if (residualExpression.generateLinear(this, false)) {
 					residualExpressions.remove(i);
 				}
@@ -650,7 +654,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = SerializationUtils.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
 				if (residualExpression.generateMayBeZeroCommonFactors(this, false)) {
 					gotOne = true;
 					break;
@@ -658,7 +662,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					CardinalityExpression residualExpression = SerializationUtils.nonNullState(residualExpressions.get(i));
+					CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
 					if (residualExpression.generateLinear(this, false)) {
 						residualExpressions.remove(i);
 					}
@@ -672,7 +676,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = SerializationUtils.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
 				if (residualExpression.generateMayBeZeroCommonFactors(this, true)) {
 					gotOne = true;
 					break;
@@ -680,7 +684,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					CardinalityExpression residualExpression = SerializationUtils.nonNullState(residualExpressions.get(i));
+					CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
 					if (residualExpression.generateLinear(this, true)) {
 						residualExpressions.remove(i);
 					}
@@ -712,7 +716,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				Iterable<@NonNull CardinalityExpression> unresolvedExpressions = computeExpressions(unsolvedVariableGroup, unsolvedVariable2expressions);
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
-					CardinalityExpression residualExpression = SerializationUtils.nonNullState(unresolvedExpressions.iterator().next());
+					CardinalityExpression residualExpression = ClassUtil.nonNullState(unresolvedExpressions.iterator().next());
 					/*if (residualExpression.generateMayBeZeroCommonFactors(this, true)) {
 						// ok
 					}
@@ -787,7 +791,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		if (!eStructuralFeaturesSet.isEmpty()) {
 			int insertIndex = 0;
 			List<@NonNull EStructuralFeature> eStructuralFeatures = new ArrayList<>(eStructuralFeaturesSet);
-			Collections.sort(eStructuralFeatures, SerializationUtils.ENAMED_ELEMENT_COMPARATOR);
+			Collections.sort(eStructuralFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			for (@NonNull EStructuralFeature eStructuralFeature : eStructuralFeatures) {	// Add checks
 				SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize matchTerm = new SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize(eStructuralFeature);
 				SerializationMatchStep.MatchStep_Assert matchStep = new SerializationMatchStep.MatchStep_Assert(matchTerm);
@@ -809,7 +813,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				residualExpressions.add(expression);
 			}
 		}
-		Collections.sort(residualExpressions, SerializationUtils.NAMEABLE_COMPARATOR);
+		Collections.sort(residualExpressions, NameUtil.NAMEABLE_COMPARATOR);
 		return residualExpressions;
 	}
 
@@ -818,7 +822,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	}
 
 	public int getCardinalityVariableIndex(@NonNull SerializationNode serializationNode) {
-		CardinalityVariable cardinalityVariable = SerializationUtils.maybeNull(node2variable.get(serializationNode));
+		CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 		return cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
 	}
 
@@ -842,7 +846,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordsSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = SerializationUtils.maybeNull(eAttribute2enumerationValues.get(eAttribute));
+			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -857,7 +861,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
 				EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
 			//	if (!enumerationValue.isNull()) {
-					Set<@NonNull EnumerationValue> enumerationValues = SerializationUtils.maybeNull(eAttribute2enumerationValues.get(eAttribute));
+					Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 					if (enumerationValues == null) {
 						enumerationValues = new HashSet<>();
 						eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -869,7 +873,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = SerializationUtils.maybeNull(eAttribute2enumerationValues.get(eAttribute));
+			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -899,7 +903,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
-				GrammarRuleVector netGrammarRuleVector = SerializationUtils.maybeNull(eReference2assignedRuleIndexes.get(eReference));
+				GrammarRuleVector netGrammarRuleVector = eReference2assignedRuleIndexes.get(eReference);
 				if (netGrammarRuleVector == null) {
 					netGrammarRuleVector = new GrammarRuleVector();
 					eReference2assignedRuleIndexes.put(eReference, netGrammarRuleVector);
@@ -930,13 +934,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		assert hasMatchAnalyses;
 		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = SerializationUtils.maybeNull(eAttribute2enumerationValue2grammarCardinality.get(eStructuralFeature));
+			Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality.get(eStructuralFeature);
 			if (enumerationValue2grammarCardinality != null) {
 				return enumerationValue2grammarCardinality.get(null);
 			}
 		}
 	/*	if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = SerializationUtils.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eStructuralFeature));
+			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eStructuralFeature);
 			if (ruleAnalysis2grammarCardinality != null) {
 				return ruleAnalysis2grammarCardinality.get(null);
 			}
@@ -947,7 +951,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		assert hasMatchAnalyses;
 		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = SerializationUtils.maybeNull(eAttribute2enumerationValue2grammarCardinality.get(eAttribute));
+			Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality.get(eAttribute);
 			if (enumerationValue2grammarCardinality != null) {
 				return enumerationValue2grammarCardinality.get(enumerationValue);
 			}
@@ -958,7 +962,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert hasMatchAnalyses;
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = SerializationUtils.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eReference));
+			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eReference);
 			if (ruleAnalysis2grammarCardinality != null) {
 				return ruleAnalysis2grammarCardinality.get(ruleAnalysis);
 			}
@@ -969,7 +973,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
 		assert hasMatchAnalyses;
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = SerializationUtils.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eReference));
+			Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eReference);
 			if (ruleAnalysis2grammarCardinality != null) {
 				for (@NonNull ParserRuleAnalysis parserRuleAnalysis : ruleAnalysis2grammarCardinality.keySet()) {
 					if (parserRuleAnalysis.getRuleValue() == ruleValue) {
@@ -1043,7 +1047,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		return rootSerializationNode;
 	}
 
-	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
+	public @NonNull AbstractNonTerminalRuleAnalysis getRuleAnalysis() {
 		return ruleAnalysis;
 	}
 
@@ -1065,8 +1069,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
 				boolean isOk = true;
 				EClass inEClass = idiom.getForEClass();
-				if ((inEClass != null) && !AnalysisUtils.isSuperTypeOf(inEClass, producedEClass)) {
-					isOk = false;
+				if (inEClass != null) {
+					if (!AnalysisUtils.isSuperTypeOf(inEClass, producedEClass)) {
+						isOk = false;
+					}
 				}
 				Pattern pattern = idiom.getRegexPattern();
 				if (pattern != null) {
@@ -1077,6 +1083,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				}
 				if (isOk) {
 					idioms.add(idiom);
+					if ("BINARY_OPERATOR_NAME_SPACING".equals(idiom.getName())) {
+					//	System.out.println("getSerializationNode2subIdioms " + NameUtil.debugSimpleName(this) + " " + this);
+						getClass();
+					}
 				}
 			}
 			//
@@ -1104,14 +1114,14 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			analyzeMatches();
 			serializationRule2 = serializationRule;
 			if (serializationRule2 == null) {
-				@NonNull SerializationMatchStep @NonNull [] matchStepsArray = SerializationUtils.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
+				@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
 				List<@NonNull SerializationStep> stepsList = new ArrayList<>();
 				Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms = getSerializationNode2subIdioms();
 				rootSerializationNode.gatherStepsAndSubIdioms(this, stepsList, serializationNode2subIdioms);
 				int size = stepsList.size();
-				@NonNull SerializationStep @NonNull [] serializationSteps = SerializationUtils.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
+				@NonNull SerializationStep @NonNull [] serializationSteps = ClassUtil.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
 				serializationRule = serializationRule2 = new SerializationRule(this, getVariantName(), ruleAnalysis.getIndex(), matchStepsArray, serializationSteps, basicGetSerializationFeatures());
-				SerializationRule old = SerializationUtils.maybeNull(debugMap.put(this, serializationRule2));		// FIXME debugging
+				SerializationRule old = debugMap.put(this, serializationRule2);		// FIXME debugging
 				assert old == null;
 			}
 		}
@@ -1139,7 +1149,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert hasMatchAnalyses;
-		return SerializationUtils.nonNullState(variable2node.keySet());
+		return ClassUtil.nonNullState(variable2node.keySet());
 	}
 
 	/**
@@ -1203,27 +1213,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			: newMayBeZero ? GrammarCardinality.ZERO_OR_ONE : GrammarCardinality.ONE;
 	}
 
-/*	protected @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {
-		if (serializationNode instanceof AssignedSerializationNode) {
-			EClass assignedEClass = ((AssignedSerializationNode)serializationNode).getAssignedEClass();
-			producedEClass = SerializationUtils.getSubTypeOf(producedEClass, assignedEClass);
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				producedEClass = refineProducedEClass(nestedSerializationNode, producedEClass);
-			}
-		}
-		return producedEClass;
-	} */
-
-	protected @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {
+	private @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {
 		if (serializationNode instanceof AssignedSerializationNode) {
 			EClass assignedEClass = ((AssignedSerializationNode)serializationNode).getAssignedEClass();
 			producedEClass = SerializationUtils.getSubTypeOf(producedEClass, assignedEClass);
 		}
 		else if (serializationNode instanceof AbstractUnassignedSerializationNode) {
-			EClass assignedEClass = ((AbstractUnassignedSerializationNode)serializationNode).getProducedEClass();
-			producedEClass = SerializationUtils.getSubTypeOf(producedEClass, assignedEClass);
+			EClassifier assignedEClassifier = ((AbstractUnassignedSerializationNode)serializationNode).getProducedEClassifier();
+			if (assignedEClassifier instanceof EClass) {
+				producedEClass = SerializationUtils.getSubTypeOf(producedEClass, (EClass)assignedEClassifier);
+			}
 		}
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {

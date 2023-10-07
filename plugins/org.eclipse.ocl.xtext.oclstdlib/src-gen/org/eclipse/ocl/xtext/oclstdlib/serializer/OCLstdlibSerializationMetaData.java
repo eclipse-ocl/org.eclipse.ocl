@@ -15,26 +15,26 @@ package org.eclipse.ocl.xtext.oclstdlib.serializer;
 import com.google.inject.Inject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue;
+import org.eclipse.ocl.xtext.base.serializer.EClassValue.EReference_TargetGrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueSingle;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMetaData;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.CustomSerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SubstringStep;
+import org.eclipse.ocl.xtext.base.serializer.TerminalRuleValue;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
@@ -83,6 +83,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[120];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [10] @NonNull [];
 	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[248];
+	private final @NonNull SubstringStep @NonNull [] substringSteps = new @NonNull SubstringStep[4];
 	private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {" *"};
 	private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {"/*"};
 	private final @NonNull String @Nullable [] multipleLineCommentSuffixes = new @NonNull String[] {"*/"};
@@ -98,6 +99,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 		initSerializationSteps();
 		initSerializationRules0();
 		initSerializationRules1();
+		initSubstringSteps();
 		initGrammarRuleValues();
 		initEClassValues();
 	}
@@ -187,8 +189,13 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 		return singleLineCommentPrefixes;
 	}
 
+	@Override
+	public @NonNull SubstringStep @NonNull [] getSubstringSteps() {
+		return substringSteps;
+	}
+
 	/**
-	 * Initialize configuration for each EClass that may be serialized.
+	 * Initialize configuration for each EClassifier that may be serialized.
 	 */
 	private void initEClassValues() {
 		eClassValues[0] = new EClassValue(BaseCSPackage.Literals.ANNOTATION_CS,
@@ -1023,8 +1030,12 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* AnnotationCS : [value] | [value] */,
 			(0 << 16) | 0	/* DocumentationCS : [value] | [value] */
 		);
-		grammarRuleValues[4] = new DataTypeRuleValue(4, "AnyName");
-		grammarRuleValues[5] = new DataTypeRuleValue(5, "BinaryOperatorName");
+		grammarRuleValues[4] = createDataTypeRuleValue(4, "AnyName", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[5] = createDataTypeRuleValue(5, "BinaryOperatorName", 7 /* [soft-space, value, soft-space] */,
+			0	/* '->' : [no-space, value, no-space] */,
+			1	/* '.' : [no-space, value, no-space] */,
+			2	/* '?->' : [no-space, value, no-space] */,
+			3	/* '?.' : [no-space, value, no-space] */);
 		grammarRuleValues[6] = createParserRuleValue(6, "BooleanLiteralExpCS", -1,
 			createSerializationRules(
 				17	/* BooleanLiteralExpCS-0: BooleanLiteralExpCS::symbol='false|true' */
@@ -1105,7 +1116,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* ownedCollectionMultiplicity=MultiplicityCS? : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */
 		);
-		grammarRuleValues[13] = new DataTypeRuleValue(13, "CollectionTypeIdentifier");
+		grammarRuleValues[13] = createDataTypeRuleValue(13, "CollectionTypeIdentifier", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[14] = createParserRuleValue(14, "CurlyBracketedClauseCS", -1,
 			createSerializationRules(
 				24	/* CurlyBracketedClauseCS-0: '{' (CurlyBracketedClauseCS::ownedParts+=ShadowPartCS (',' CurlyBracketedClauseCS::ownedParts+=ShadowPartCS)[V1:*])[V0:?] '}' */
@@ -1159,12 +1170,16 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 7	/* "then" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedThenExpression=ExpCS : [value] | [value] */
 		);
-		grammarRuleValues[21] = new DataTypeRuleValue(21, "EssentialOCLInfixOperatorName");
-		grammarRuleValues[22] = new DataTypeRuleValue(22, "EssentialOCLNavigationOperatorName");
-		grammarRuleValues[23] = new DataTypeRuleValue(23, "EssentialOCLReservedKeyword");
-		grammarRuleValues[24] = new DataTypeRuleValue(24, "EssentialOCLUnaryOperatorName");
-		grammarRuleValues[25] = new DataTypeRuleValue(25, "EssentialOCLUnreservedName");
-		grammarRuleValues[26] = new DataTypeRuleValue(26, "EssentialOCLUnrestrictedName");
+		grammarRuleValues[21] = createDataTypeRuleValue(21, "EssentialOCLInfixOperatorName", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[22] = createDataTypeRuleValue(22, "EssentialOCLNavigationOperatorName", 4 /* [no-space, value, no-space] */,
+			0	/* '->' : [no-space, value, no-space] */,
+			1	/* '.' : [no-space, value, no-space] */,
+			2	/* '?->' : [no-space, value, no-space] */,
+			3	/* '?.' : [no-space, value, no-space] */);
+		grammarRuleValues[23] = createDataTypeRuleValue(23, "EssentialOCLReservedKeyword", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[24] = createDataTypeRuleValue(24, "EssentialOCLUnaryOperatorName", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[25] = createDataTypeRuleValue(25, "EssentialOCLUnreservedName", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[26] = createDataTypeRuleValue(26, "EssentialOCLUnrestrictedName", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[27] = createParserRuleValue(27, "ExpCS", 74 /* BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 			createSerializationRules(
 				17	/* BooleanLiteralExpCS-0: BooleanLiteralExpCS::symbol='false|true' */,
@@ -1202,9 +1217,9 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			),
 			(0 << 16) | 7	/* referredElement=UnrestrictedName : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[29] = new DataTypeRuleValue(29, "ID");
+		grammarRuleValues[29] = createDataTypeRuleValue(29, "ID", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[30] = new TerminalRuleValue(30, "INT");
-		grammarRuleValues[31] = new DataTypeRuleValue(31, "Identifier");
+		grammarRuleValues[31] = createDataTypeRuleValue(31, "Identifier", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[32] = createParserRuleValue(32, "IfExpCS", -1,
 			createSerializationRules(
 				27	/* IfExpCS-0: 'if' IfExpCS::ownedCondition=ExpCS|PatternExpCS 'then' IfExpCS::ownedThenExpression=ExpCS (IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS)[V0:*] 'else' IfExpCS::ownedElseExpression=ExpCS 'endif' */
@@ -1231,7 +1246,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* ownedPathName=URIPathNameCS : [value] | [value] */,
 			(0 << 16) | 7	/* isAll?="::*"? : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[34] = new DataTypeRuleValue(34, "InfixOperatorName");
+		grammarRuleValues[34] = createDataTypeRuleValue(34, "InfixOperatorName", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[35] = createParserRuleValue(35, "InvCS", -1,
 			createSerializationRules(
 				87	/* InvCS-0: ConstraintCS::stereotype='inv' (NamedElementCS::name=UnrestrictedName ('(' ConstraintCS::ownedMessageSpecification=SpecificationCS ')')[V1:?])[V0:?] ':' ConstraintCS::ownedSpecification=SpecificationCS ';' */
@@ -1266,7 +1281,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* ownedType=TypedMultiplicityRefCS : [value] | [value] */
 		);
 		grammarRuleValues[38] = new TerminalRuleValue(38, "LETTER_CHARACTER");
-		grammarRuleValues[39] = new DataTypeRuleValue(39, "LOWER");
+		grammarRuleValues[39] = createDataTypeRuleValue(39, "LOWER", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[40] = createParserRuleValue(40, "LambdaContextTypeRefCS", -1,
 			createSerializationRules(
 				89	/* LambdaContextTypeRefCS-0: TypedTypeRefCS::ownedPathName=LibPathNameCS */
@@ -1631,8 +1646,8 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			),
 			(0 << 16) | 7	/* stringBounds=("*"|"+"|"?") : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[64] = new DataTypeRuleValue(64, "NUMBER_LITERAL");
-		grammarRuleValues[65] = new DataTypeRuleValue(65, "Name");
+		grammarRuleValues[64] = createDataTypeRuleValue(64, "NUMBER_LITERAL", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[65] = createDataTypeRuleValue(65, "Name", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[66] = createParserRuleValue(66, "NameExpCS", -1,
 			createSerializationRules(
 				36	/* NameExpCS-0: AbstractNameExpCS::ownedPathName=PathNameCS (AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS)[V0:*] (AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS)[V1:?] (AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS)[V2:?] (AbstractNameExpCS::isPre?='@' 'pre')[V3:?] */
@@ -1786,7 +1801,11 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 7	/* "=" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedInitExpression=ExpCS : [value] | [value] */
 		);
-		grammarRuleValues[72] = new DataTypeRuleValue(72, "NavigationOperatorName");
+		grammarRuleValues[72] = createDataTypeRuleValue(72, "NavigationOperatorName", 7 /* [soft-space, value, soft-space] */,
+			0	/* '->' : [no-space, value, no-space] */,
+			1	/* '.' : [no-space, value, no-space] */,
+			2	/* '?->' : [no-space, value, no-space] */,
+			3	/* '?.' : [no-space, value, no-space] */);
 		grammarRuleValues[73] = createParserRuleValue(73, "NestedExpCS", -1,
 			createSerializationRules(
 				48	/* NestedExpCS-0: '(' NestedExpCS::ownedExpression=ExpCS ')' */
@@ -2012,8 +2031,8 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			),
 			(0 << 16) | 7	/* name=PrimitiveTypeIdentifier : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[90] = new DataTypeRuleValue(90, "PrimitiveTypeIdentifier");
-		grammarRuleValues[91] = new DataTypeRuleValue(91, "RestrictedKeywords");
+		grammarRuleValues[90] = createDataTypeRuleValue(90, "PrimitiveTypeIdentifier", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[91] = createDataTypeRuleValue(91, "RestrictedKeywords", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[92] = createParserRuleValue(92, "RoundBracketedClauseCS", -1,
 			createSerializationRules(
 				55	/* RoundBracketedClauseCS-0: '(' (RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS (RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[V1:*])[V0:?] ')' */
@@ -2073,7 +2092,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* ownedTerms+=ExpCS : [value] | [value] */,
 			(0 << 16) | 1	/* "]" : [value] | [no-space, value] */
 		);
-		grammarRuleValues[101] = new DataTypeRuleValue(101, "StringLiteral");
+		grammarRuleValues[101] = createDataTypeRuleValue(101, "StringLiteral", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[102] = createParserRuleValue(102, "StringLiteralExpCS", -1,
 			createSerializationRules(
 				61	/* StringLiteralExpCS-0: (StringLiteralExpCS::segments+=StringLiteral)[V0:+] */
@@ -2302,8 +2321,8 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* ownedBinding=TemplateBindingCS : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */
 		);
-		grammarRuleValues[121] = new DataTypeRuleValue(121, "UPPER");
-		grammarRuleValues[122] = new DataTypeRuleValue(122, "URI");
+		grammarRuleValues[121] = createDataTypeRuleValue(121, "UPPER", 7 /* [soft-space, value, soft-space] */);
+		grammarRuleValues[122] = createDataTypeRuleValue(122, "URI", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[123] = createParserRuleValue(123, "URIFirstPathElementCS", -1,
 			createSerializationRules(
 				77	/* URIFirstPathElementCS-0: PathElementCS::referredElement=URI */,
@@ -2325,7 +2344,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 4	/* "::" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedPathElements+=NextPathElementCS : [value] | [value] */
 		);
-		grammarRuleValues[125] = new DataTypeRuleValue(125, "UnaryOperatorName");
+		grammarRuleValues[125] = createDataTypeRuleValue(125, "UnaryOperatorName", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[126] = createParserRuleValue(126, "UnlimitedNaturalLiteralExpCS", -1,
 			createSerializationRules(
 				80	/* UnlimitedNaturalLiteralExpCS-0: '*' */
@@ -2334,7 +2353,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 0	/* {UnlimitedNaturalLiteralExpCS} : [value] | [value] */,
 			(0 << 16) | 7	/* "*" : [value] | [soft-space, value, soft-space] */
 		);
-		grammarRuleValues[127] = new DataTypeRuleValue(127, "UnreservedName");
+		grammarRuleValues[127] = createDataTypeRuleValue(127, "UnreservedName", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[128] = createParserRuleValue(128, "UnreservedPathNameCS", -1,
 			createSerializationRules(
 				15	/* UnreservedPathNameCS-0: PathNameCS::ownedPathElements+=NextPathElementCS ('::' PathNameCS::ownedPathElements+=NextPathElementCS)[V0:*] */
@@ -2345,7 +2364,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			(0 << 16) | 4	/* "::" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedPathElements+=NextPathElementCS : [value] | [value] */
 		);
-		grammarRuleValues[129] = new DataTypeRuleValue(129, "UnrestrictedName");
+		grammarRuleValues[129] = createDataTypeRuleValue(129, "UnrestrictedName", 7 /* [soft-space, value, soft-space] */);
 		grammarRuleValues[130] = new TerminalRuleValue(130, "WS");
 		grammarRuleValues[131] = createParserRuleValue(131, "WildcardTypeRefCS", -1,
 			createSerializationRules(
@@ -7602,13 +7621,27 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 		// 247: ConstraintCS::stereotype='pre' || soft-space value soft-space
 		serializationSteps[247] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, 13 /* 'pre' */, 7);
 	}
+
+	/**
+	 * Initialize the various serialization steps used to serialize a serialization rule.
+	 */
+	private void initSubstringSteps() {
+		// 0: '->' : [no-space, value, no-space]
+		substringSteps[0] = createSubstringStep("->", 4 /* no-space, value, no-space */);
+		// 1: '.' : [no-space, value, no-space]
+		substringSteps[1] = createSubstringStep(".", 4 /* no-space, value, no-space */);
+		// 2: '?->' : [no-space, value, no-space]
+		substringSteps[2] = createSubstringStep("?->", 4 /* no-space, value, no-space */);
+		// 3: '?.' : [no-space, value, no-space]
+		substringSteps[3] = createSubstringStep("?.", 4 /* no-space, value, no-space */);
+	}
 }
 
-//	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
+//	Commented imports ensure the Xtend synthesis provides a true import allowing unqualified annotated usage
 //	import Inject;
 //	import NonNull;
 //	import Nullable;
-//	import DataTypeRuleValue;
+//	import BaseCommentSegmentSupport;
 //	import EClassValue;
 //	import EReference_TargetGrammarRuleVector;
 //	import EnumerationValue;
@@ -7625,8 +7658,8 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 //	import SerializationSegment;
 //	import CustomSerializationSegment;
 //	import SerializationStep;
+//	import SubstringStep;
 //	import TerminalRuleValue;
-//	import BaseCommentSegmentSupport;
 //	import BaseCSPackage;
 //	import EssentialOCLCSPackage;
 //	import OCLstdlibCSPackage;

@@ -16,10 +16,11 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.idioms.Idiom;
+import org.eclipse.ocl.xtext.idioms.IdiomsUtils;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.AbstractElement;
 
 /**
@@ -71,7 +72,7 @@ public class IdiomGrammarMatch implements IdiomMatch
 		}
 		if (subIdiomIndex >= locatedElements.length) {
 			for (@NonNull AbstractElement grammarElement : locatedElements) {
-				List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(grammarElement2subIdioms.get(grammarElement));
+				List<@NonNull SubIdiom> subIdioms = grammarElement2subIdioms.get(grammarElement);
 				if ((subIdioms != null) && !isAllMixIn(subIdioms)) {
 					return false;
 				}
@@ -83,9 +84,9 @@ public class IdiomGrammarMatch implements IdiomMatch
 		if (subIdiomIndex >= locatedElements.length) {
 			for (int i = 0; i < locatedElements.length; i++) {
 				AbstractElement grammarElement = locatedElements[i];
-				SubIdiom subIdiom = SerializationUtils.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
+				SubIdiom subIdiom = ClassUtil.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
 				if (subIdiom.getOwnedSegments().size() > 0) {		// Locator-only subidioms are trivislly 'mixed-in'
-					List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(grammarElement2subIdioms.get(grammarElement));
+					List<@NonNull SubIdiom> subIdioms = grammarElement2subIdioms.get(grammarElement);
 					if (subIdioms == null) {
 						subIdioms = new ArrayList<>();
 						grammarElement2subIdioms.put(grammarElement, subIdioms);
@@ -128,27 +129,27 @@ public class IdiomGrammarMatch implements IdiomMatch
 	 * Return true if grammarElement is a match for the next subidiom,
 	 * updating locatedNodes,additionalMatch, nextMatch accordingly.
 	 */
-	public boolean nextMatch(@NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
+	public boolean nextMatch(@NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 		List<@NonNull SubIdiom> subIdioms = IdiomsUtils.getOwnedSubIdioms(idiom);
 		if (subIdiomIndex >= locatedElements.length) {
 			if (additionalMatch != null) {
-				additionalMatch.nextMatch(grammarElement, parserRuleAnalysis);
+				additionalMatch.nextMatch(grammarElement, nonTerminalRuleAnalysis);
 			}
-			else if (parserRuleAnalysis.matches(subIdioms.get(0), grammarElement)) {		// Look to chain a new sub-match
+			else if (nonTerminalRuleAnalysis.matches(subIdioms.get(0), grammarElement)) {		// Look to chain a new sub-match
 				additionalMatch = new IdiomGrammarMatch(idiom, grammarElement);
 			}
 			return true;																	// Handled by additional match
 		}
 		if (nestedMatch != null) {															// Pass down to active sub-match
-			if (nestedMatch.nextMatch(grammarElement, parserRuleAnalysis)) {
+			if (nestedMatch.nextMatch(grammarElement, nonTerminalRuleAnalysis)) {
 				return true;
 			}
 		}
-		if (parserRuleAnalysis.matches(subIdioms.get(subIdiomIndex), grammarElement)) {	// Continue current match
+		if (nonTerminalRuleAnalysis.matches(subIdioms.get(subIdiomIndex), grammarElement)) {	// Continue current match
 			locatedElements[subIdiomIndex++] = grammarElement;
 			return true;
 		}
-		else if (parserRuleAnalysis.matches(subIdioms.get(0), grammarElement)) {			// Look to nest a recursive sub-match
+		else if (nonTerminalRuleAnalysis.matches(subIdioms.get(0), grammarElement)) {			// Look to nest a recursive sub-match
 			nestedMatch = new IdiomGrammarMatch(idiom, grammarElement);
 			return true;
 		}

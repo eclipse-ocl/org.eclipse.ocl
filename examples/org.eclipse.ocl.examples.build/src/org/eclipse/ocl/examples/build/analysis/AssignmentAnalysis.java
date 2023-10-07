@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.build.analysis;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.Nameable;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.xtext.AbstractElement;
 
 /**

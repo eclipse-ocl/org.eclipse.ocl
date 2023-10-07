@@ -40,6 +40,14 @@
          version="0.0.0"
          unpack="false"/>
 
+
+   <plugin
+         id="org.eclipse.ocl.xtext.idioms.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
    <plugin
          id="org.eclipse.ocl.xtext.markup.ui"
          download-size="0"
@@ -56,20 +64,6 @@
 
    <plugin
          id="org.eclipse.ocl.xtext.oclstdlib.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ocl.examples.xtext.idioms"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ocl.examples.xtext.idioms.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

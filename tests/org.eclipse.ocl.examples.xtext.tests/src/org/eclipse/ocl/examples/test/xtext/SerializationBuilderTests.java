@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationBuilder;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.xtext.base.serializer.SerializationBuilder;
 
 public class SerializationBuilderTests extends XtextTestCase
 {

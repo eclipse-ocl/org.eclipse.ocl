@@ -10,23 +10,23 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.elements;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
 
 public abstract class AbstractUnassignedSerializationNode extends AbstractSerializationNode
 {
 	/**
 	 * The produced EClass wrt this and preceding nodes as initially defined by the rule's returned EClass and refined by Actions.
 	 */
-	protected final @NonNull EClass producedEClass;
+	protected final @NonNull EClassifier producedEClassifier;
 
-	protected AbstractUnassignedSerializationNode(@NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality) {
+	protected AbstractUnassignedSerializationNode(@NonNull EClassifier producedEClassifier, @NonNull GrammarCardinality grammarCardinality) {
 		super(grammarCardinality);
-		this.producedEClass = producedEClass;
+		this.producedEClassifier = producedEClassifier;
 	}
 
-	public @NonNull EClass getProducedEClass() {
-		return producedEClass;
+	public @NonNull EClassifier getProducedEClassifier() {
+		return producedEClassifier;
 	}
 }

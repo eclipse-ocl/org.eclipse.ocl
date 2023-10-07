@@ -14,12 +14,13 @@ import java.util.Comparator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.Indexed;
-import org.eclipse.ocl.examples.xtext.serializer.Nameable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.Indexed;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString;
+import org.eclipse.ocl.xtext.base.serializer.ToDebugString.ToDebugStringable;
 import org.eclipse.xtext.AbstractRule;
 
 /**
@@ -35,7 +36,7 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 		public int compare(@NonNull AbstractRuleAnalysis o1, @NonNull AbstractRuleAnalysis o2) {
 			String n1 = o1.getQualifiedName();
 			String n2 = o2.getQualifiedName();
-			return SerializationUtils.safeCompareTo(n1, n2);
+			return ClassUtil.safeCompareTo(n1, n2);
 		}
 	}
 

@@ -19,7 +19,6 @@ import com.google.inject.Inject;
 /**
  * This override supports the specifocation of an activatorName to fix Bug 564238
  */
-@SuppressWarnings("restriction")
 public class MyXtextGeneratorNaming extends XtextGeneratorNaming
 {
 	@Inject

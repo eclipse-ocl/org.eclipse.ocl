@@ -11,9 +11,9 @@
 package org.eclipse.ocl.examples.build.analysis;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm;
 
 public class SerializationMatchTermRuntime extends SerializationMatchTerm
 {

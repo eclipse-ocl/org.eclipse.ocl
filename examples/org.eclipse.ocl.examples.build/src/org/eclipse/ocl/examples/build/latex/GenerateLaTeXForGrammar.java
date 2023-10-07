@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -13,17 +13,15 @@ package org.eclipse.ocl.examples.build.latex;
 import java.io.File;
 import java.io.FileWriter;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
-import org.eclipse.ocl.examples.build.utilities.ClasspathURIHandler;
+import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
@@ -39,8 +37,7 @@ public abstract class GenerateLaTeXForGrammar extends GenerateLaTeXUtils
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		XtextStandaloneSetup.doSetup();
 		CompleteOCLStandaloneSetup.doSetup();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new ClasspathURIHandler());
+		ClasspathURIHandler.init(resourceSet);
 		File folder = new File(rootPath + latexFolder);
 		folder.mkdirs();
 		try {

@@ -18,16 +18,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.build.analysis.LocatorHelper.LocatorSwitch;
 import org.eclipse.ocl.examples.build.elements.AbstractAssignedSerializationNode;
 import org.eclipse.ocl.examples.build.elements.AbstractSerializationElement;
 import org.eclipse.ocl.examples.build.elements.AlternativeAssignedKeywordsSerializationNode;
@@ -45,28 +43,26 @@ import org.eclipse.ocl.examples.build.elements.SequenceSerializationNode;
 import org.eclipse.ocl.examples.build.elements.SerializationElement;
 import org.eclipse.ocl.examples.build.elements.SerializationNode;
 import org.eclipse.ocl.examples.build.elements.SerializationRuleAnalysisComparator;
+import org.eclipse.ocl.examples.build.elements.UnassignedElementSerializationNode;
 import org.eclipse.ocl.examples.build.elements.UnassignedGrammarRuleCallSerializationNode;
 import org.eclipse.ocl.examples.build.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.examples.build.elements.UnassignedSerializationRuleCallSerializationNode;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
-import org.eclipse.ocl.examples.xtext.idioms.Locator;
-import org.eclipse.ocl.examples.xtext.idioms.ReferredLocator;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.idioms.impl.LocatorImpl;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
-import org.eclipse.ocl.examples.xtext.serializer.Indexed;
-import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.serializer.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CharacterRange;
 import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Group;
@@ -79,15 +75,15 @@ import org.eclipse.xtext.util.XtextSwitch;
 import com.google.common.collect.Iterables;
 
 /**
- * An XtextParserRuleAnalysis provides the extended analysis of an Xtext ParserRule
+ * A ParserRuleAnalysis provides the extended analysis of an Xtext ParserRule
  */
-public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
+public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 {
 	/**
 	 * The AbstractElement2SerializationElementSwitch supports the recursive transformation of a ParserRule AbstractElement to its
-	 * disjoint normal form comprisising an outer disjunction of conjunctions of terms with cardinatlities.
+	 * disjoint normal form comprising an outer disjunction of conjunctions of terms with cardinalities.
 	 * Some alternatives such as an an enumeration of keywords are aggregated as an inner alternative tio avoid
-	 * the permutatioon of alternatives getting out of hand. Parser rule calls are flattened.
+	 * the permutation of alternatives getting out of hand. Parser rule calls are flattened.
 	 */
 	protected static class ActionAndAssignmentAnalysisSwitch extends XtextSwitch<@NonNull ActionAndAssignmentAnalysisSwitch>
 	{
@@ -242,17 +238,17 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 
 	/**
 	 * The SerializationElementSynthesisSwitch supports the recursive transformation of a ParserRule AbstractElement to its
-	 * disjoint normal form comprisising an outer disjunction of conjunctions of terms with cardinatlities.
+	 * disjoint normal form comprising an outer disjunction of conjunctions of terms with cardinalities.
 	 * Some alternatives such as an an enumeration of keywords are aggregated as an inner alternative tio avoid
-	 * the permutatioon of alternatives getting out of hand. Parser rule calls are flattened.
+	 * the permutation of alternatives getting out of hand. Parser rule calls are flattened.
 	 */
-	protected static class SerializationElementSynthesisSwitch extends XtextSwitch<@NonNull SerializationElement>
+	private static class SerializationElementSynthesisSwitch extends XtextSwitch<@NonNull SerializationElement>
 	{
-		protected static final class AlterantiveSerializationElementComparator extends SerializationUtils.ToStringComparator<@NonNull SerializationElement>
+		protected static final class AlternativeSerializationElementComparator extends NameUtil.ToStringComparator<@NonNull SerializationElement>
 		{
 			private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2index = new HashMap<>();
 
-			public AlterantiveSerializationElementComparator(@Nullable Iterable<@NonNull EStructuralFeature> eFeatures) {
+			public AlternativeSerializationElementComparator(@Nullable Iterable<@NonNull EStructuralFeature> eFeatures) {
 				if (eFeatures != null) {
 					int index = 0;
 					for (@NonNull EStructuralFeature eFeature : eFeatures) {
@@ -276,6 +272,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 
 		protected final @NonNull ParserRuleAnalysis parserRuleAnalysis;
 		protected final @NonNull GrammarAnalysis grammarAnalysis;
+
 		/**
 		 * The prevailing action/returns EClass.
 		 */
@@ -307,7 +304,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				assert serializationElement != null;
 			}
 			assert serializationElement.noUnassignedParserRuleCall();					// FIXME -- need to flatten if not CompoundElement
-			assert serializationElement.onlyRootUnassignedSerializationRuleCall(true);	// FIXME -- need to flatten if not CompoundElement
+			assert  serializationElement.onlyRootUnassignedSerializationRuleCall(true);	// FIXME -- need to flatten if not CompoundElement
 			return serializationElement;
 		}
 
@@ -364,7 +361,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						if (eFeature2keywords == null) {
 							eFeature2keywords = new HashMap<>();
 						}
-						List<@NonNull Keyword> keywords = SerializationUtils.maybeNull(eFeature2keywords.get(eFeature));
+						List<@NonNull Keyword> keywords = eFeature2keywords.get(eFeature);
 						if (keywords == null) {
 							keywords = new ArrayList<>();
 							eFeature2keywords.put(eFeature, keywords);
@@ -381,7 +378,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						if (eFeature2ruleCalls == null) {
 							eFeature2ruleCalls = new HashMap<>();
 						}
-						List<@NonNull RuleCall> ruleCalls = SerializationUtils.maybeNull(eFeature2ruleCalls.get(eFeature));
+						List<@NonNull RuleCall> ruleCalls = eFeature2ruleCalls.get(eFeature);
 						if (ruleCalls == null) {
 							ruleCalls = new ArrayList<>();
 							eFeature2ruleCalls.put(eFeature, ruleCalls);
@@ -419,12 +416,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 			if (eFeatures != null) {
 				for (@NonNull EStructuralFeature eFeature : eFeatures) {
-					List<@NonNull Keyword> keywords = eFeature2keywords != null ? SerializationUtils.maybeNull(eFeature2keywords.get(eFeature)) : null;
-					List<@NonNull RuleCall> ruleCalls = eFeature2ruleCalls != null ? SerializationUtils.maybeNull(eFeature2ruleCalls.get(eFeature)) : null;
+					List<@NonNull Keyword> keywords = eFeature2keywords != null ? eFeature2keywords.get(eFeature) : null;
+					List<@NonNull RuleCall> ruleCalls = eFeature2ruleCalls != null ? eFeature2ruleCalls.get(eFeature) : null;
 					if (ruleCalls == null) {
 						assert keywords != null;
-						Keyword firstKeyword = SerializationUtils.nonNullState(keywords.get(0));
-						Assignment assignment = SerializationUtils.nonNullState((Assignment)firstKeyword.eContainer());
+						Keyword firstKeyword = ClassUtil.nonNullState(keywords.get(0));
+						Assignment assignment = ClassUtil.nonNullState((Assignment)firstKeyword.eContainer());
 						DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 						if (keywords.size() == 1) {
 							alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, GrammarCardinality.ONE, firstKeyword));
@@ -434,8 +431,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						}
 					}
 					else if ((keywords == null) && (ruleCalls.size() == 1)) {
-						RuleCall firstRuleCall = SerializationUtils.nonNullState(ruleCalls.get(0));
-						Assignment assignment = SerializationUtils.nonNullState((Assignment)firstRuleCall.eContainer());
+						RuleCall firstRuleCall = ClassUtil.nonNullState(ruleCalls.get(0));
+						Assignment assignment = ClassUtil.nonNullState((Assignment)firstRuleCall.eContainer());
 						DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 						AbstractRuleAnalysis firstRuleAnalysis = grammarAnalysis.getRuleAnalysis(SerializationUtils.getRule(firstRuleCall));
 						alternativeSerializationElements.add(new AssignedRuleCallSerializationNode(assignmentAnalysis, GrammarCardinality.ONE, firstRuleAnalysis.getIndex()));
@@ -446,20 +443,19 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						int [] ruleIndexes = new int [ruleCalls.size()];
 						int i = 0;
 						for (@NonNull RuleCall ruleCall : ruleCalls) {
-							Assignment assignment = SerializationUtils.nonNullState((Assignment)ruleCall.eContainer());
+							Assignment assignment = ClassUtil.nonNullState((Assignment)ruleCall.eContainer());
 							assignmentAnalyses.add(grammarAnalysis.getAssignmentAnalysis(assignment));
 							AbstractRuleAnalysis ruleAnalysis = grammarAnalysis.getRuleAnalysis(SerializationUtils.getRule(ruleCall));
 							ruleIndexes[i++] = ruleAnalysis.getIndex();
 						}
-						@SuppressWarnings("null")
 						@NonNull DirectAssignmentAnalysis directAssignmentAnalysis = assignmentAnalyses.get(0);
 						alternativeSerializationElements.add(new AlternativeAssignsSerializationNode(grammarAnalysis, directAssignmentAnalysis.getEClass(), eFeature, GrammarCardinality.ONE, keywords, ruleIndexes, getTargetRuleAnalyses(assignmentAnalyses)));
 					}
 				}
 			}
-			//  Would try to preserve declration order, but it may not always work.
-			// There is no precedence so alphabetocal is ok/stable.
-			Collections.sort(alternativeSerializationElements, new AlterantiveSerializationElementComparator(eFeatures));
+			//  Would try to preserve declaration order, but it may not always work.
+			// There is no precedence so alphabetical is ok/stable.
+			Collections.sort(alternativeSerializationElements, new AlternativeSerializationElementComparator(eFeatures));
 			return doAlternatives(alternatives, alternativeSerializationElements, grammarCardinality);
 		}
 
@@ -513,7 +509,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						return new AlternativeAssignsSerializationNode(assignmentAnalysis, grammarCardinality, keywords, ruleIndexes);
 					}
 					else {
-						AbstractRuleAnalysis firstRuleAnalysis = SerializationUtils.nonNullState(ruleAnalyses.get(0));
+						AbstractRuleAnalysis firstRuleAnalysis = ClassUtil.nonNullState(ruleAnalyses.get(0));
 						return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, firstRuleAnalysis.getIndex());
 					}
 				}
@@ -527,6 +523,13 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				}
 			}
 			throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");
+		}
+
+		@Override
+		public @NonNull SerializationElement caseCharacterRange(CharacterRange characterRange) {
+			assert characterRange != null;
+			GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(characterRange);
+			return new UnassignedElementSerializationNode(characterRange, producedEClass, grammarCardinality);
 		}
 
 		@Override
@@ -570,7 +573,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			AbstractRule abstractRule = SerializationUtils.getRule(ruleCall);
 			AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(abstractRule);
 			if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
-				return NullSerializationNode.INSTANCE;
+				return NullSerializationNode.INSTANCE;		// Serialization analysis of nodes ignores gratuitous trext
 			}
 			GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(ruleCall);
 			return new UnassignedGrammarRuleCallSerializationNode(producedEClass, grammarCardinality, calledRuleAnalysis);
@@ -649,37 +652,28 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
-	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
+	private @Nullable ParserRuleValue parserRuleValue = null;
 
 	/**
-	 * The super rules directly call this rule as an undecorated unassigned alterative.
+	 * The super rules directly call this rule as an undecorated unassigned alternative.
 	 * This rule may therefore substitute the super rule.
 	 */
 	private @Nullable Set<@NonNull ParserRuleAnalysis> superRuleAnalyses = null;
 
 	/**
-	 * The rules which transitively call this rule as undecorated unassigned alteratives.
+	 * The rules which transitively call this rule as undecorated unassigned alternatives.
 	 * This rule may therefore substitute the super rule.
 	 */
 	private @Nullable List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosure = null;
 
 	/**
-	 * The rules transitively called by this rule as undecorated unassigned alteratives.
+	 * The rules transitively called by this rule as undecorated unassigned alternatives.
 	 * The sub-rules may therefore substitute this rule.
 	 */
 	private final @NonNull List<@NonNull ParserRuleAnalysis> subRuleAnalysesClosure = new UniqueList<>();
 
-	/**
-	 * The EReferences that need a run-time check is needed that the actual user element is compatible with any rules.
-	 */
-//	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2discriminatingRuleAnalyses = null;
 
-	private @Nullable ParserRuleValue parserRuleValue = null;
-
-	/**
-	 * The subidioms to decorate each node during formatting.
-	 */
-	private @Nullable Map<@NonNull AbstractElement, @NonNull List<@NonNull SubIdiom>> grammarElement2subIdioms = null;
+	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, index, parserRule);
@@ -689,7 +683,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	protected void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
 		grammarAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		List<@NonNull AssignmentAnalysis> assignmentAnalyses = SerializationUtils.maybeNull(eFeature2assignmentAnalyses.get(eStructuralFeature));
+		List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eStructuralFeature);
 		if (assignmentAnalyses == null) {
 			assignmentAnalyses = new ArrayList<>();
 			eFeature2assignmentAnalyses.put(eStructuralFeature, assignmentAnalyses);
@@ -715,6 +709,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	}
 
 	public void analyzeMatches() {
+		List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = basicGetSerializationRuleAnalyses();
 		assert serializationRuleAnalyses != null;
 		for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
 			serializationRuleAnalysis.analyzeMatches();
@@ -739,24 +734,24 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				EReference eReference = (EReference)eStructuralFeature;
 				for (int ruleIndex : assignedSerializationNode.getAssignedRuleIndexes()) {
 					AbstractRuleAnalysis newRuleAnalysis = grammarAnalysis.getRuleAnalysis(ruleIndex);
-					if (newRuleAnalysis instanceof ParserRuleAnalysis) {
-						Object oldRuleAnalysisOrAnalyses = SerializationUtils.maybeNull(eReference2ruleAnalysisOrAnalyses.get(eReference));
+					if (newRuleAnalysis instanceof AbstractNonTerminalRuleAnalysis) {
+						Object oldRuleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
 						if (oldRuleAnalysisOrAnalyses == null) {
 							eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysis);
 						}
-						else if (oldRuleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
+						else if (oldRuleAnalysisOrAnalyses instanceof AbstractNonTerminalRuleAnalysis) {
 							if (oldRuleAnalysisOrAnalyses != newRuleAnalysis) {
-								List<@NonNull ParserRuleAnalysis> newRuleAnalysisOrAnalyses = new ArrayList<>();
-								newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)oldRuleAnalysisOrAnalyses);
-								newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+								List<@NonNull AbstractNonTerminalRuleAnalysis> newRuleAnalysisOrAnalyses = new ArrayList<>();
+								newRuleAnalysisOrAnalyses.add((AbstractNonTerminalRuleAnalysis)oldRuleAnalysisOrAnalyses);
+								newRuleAnalysisOrAnalyses.add((AbstractNonTerminalRuleAnalysis)newRuleAnalysis);
 								eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysisOrAnalyses);
 							}
 						}
 						else {
 							@SuppressWarnings("unchecked")
-							List<@NonNull ParserRuleAnalysis> oldRuleAnalyses = (List<@NonNull ParserRuleAnalysis>)oldRuleAnalysisOrAnalyses;
+							List<@NonNull AbstractNonTerminalRuleAnalysis> oldRuleAnalyses = (List<@NonNull AbstractNonTerminalRuleAnalysis>)oldRuleAnalysisOrAnalyses;
 							if (!oldRuleAnalyses.contains(newRuleAnalysis)) {
-								oldRuleAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+								oldRuleAnalyses.add((AbstractNonTerminalRuleAnalysis)newRuleAnalysis);
 							}
 						}
 					}
@@ -773,6 +768,16 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	@Override
 	public @Nullable ParserRuleValue basicGetRuleValue() {
 		return parserRuleValue;
+	}
+
+	protected @Nullable List<@NonNull SerializationRuleAnalysis> basicGetSerializationRuleAnalyses() {
+		return serializationRuleAnalyses;
+	}
+
+	protected @NonNull SerializationElement createSerializationResult() {
+		SerializationElementSynthesisSwitch serializationElementSynthesisSwitch = new SerializationElementSynthesisSwitch(this);
+		SerializationElement serializationResult = serializationElementSynthesisSwitch.analyze();
+		return serializationResult;
 	}
 
 	protected void createSerializationRuleAnalyses(@NonNull List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses, @NonNull SerializationNode serializationNode) {
@@ -792,98 +797,20 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		}
 	}
 
-	private void gatherFormattingIdioms(@NonNull AbstractElement abstractElement, @NonNull List<@Nullable List<@NonNull SubIdiom>> serializationIdiomsList) {
-		serializationIdiomsList.add(getSubIdioms(abstractElement));
-		if (abstractElement instanceof CompoundElement) {
-			for (AbstractElement childElement : ((CompoundElement)abstractElement).getElements()) {
-				assert childElement != null;
-				gatherFormattingIdioms(childElement, serializationIdiomsList);
-			}
-		}
-	}
-
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
 	}
 
-	public @NonNull Map<@NonNull AbstractElement, @NonNull List<@NonNull SubIdiom>> getGrammarElement2subIdioms() {
-		Map<@NonNull AbstractElement, @NonNull List<@NonNull SubIdiom>> grammarElement2subIdioms2 = grammarElement2subIdioms;
-		if (grammarElement2subIdioms2 == null) {
-			EClass producedEClass = (EClass) abstractRule.getType().getClassifier();
-			assert producedEClass != null;
-			List<@NonNull Idiom> idioms = new ArrayList<>();
-			for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
-				boolean isOk = true;
-				EClass inEClass = idiom.getForEClass();
-				if ((inEClass != null) && !AnalysisUtils.isSuperTypeOf(inEClass, producedEClass)) {
-					isOk = false;
-				}
-				Pattern pattern = idiom.getRegexPattern();
-				if (pattern != null) {
-					Matcher matcher = pattern.matcher(getName());
-					if (!matcher.matches()) {
-						isOk = false;
-					}
-				}
-				if (isOk) {
-					idioms.add(idiom);
-				}
-			}
-			//
-			//	Locate the matches for each idiom.
-			//
-			@Nullable IdiomGrammarMatch @NonNull [] idiomMatches = new @Nullable IdiomGrammarMatch[Iterables.size(idioms)];
-			AbstractElement alternatives = abstractRule.getAlternatives();
-			assert alternatives != null;
-			getIdiomMatches(alternatives, idioms, idiomMatches);
-			//
-			//	Install the subidioms for each first/mixin full idiom match.
-			//
-			grammarElement2subIdioms2 = new HashMap<>();
-			for (@Nullable IdiomGrammarMatch idiomMatch : idiomMatches) {
-				if (idiomMatch != null) {
-					idiomMatch.installIn(grammarElement2subIdioms2);
-				}
-			}
-			grammarElement2subIdioms = grammarElement2subIdioms2;
-		}
-		return grammarElement2subIdioms2;
+	public @NonNull ParserRule getParserRule() {
+		return (ParserRule)abstractRule;
 	}
 
-	private void getIdiomMatches(@NonNull AbstractElement abstractElement, @NonNull Iterable<@NonNull Idiom> idioms,
-			@Nullable IdiomGrammarMatch @NonNull [] idiomMatches) {
-		int idiomIndex = 0;
-		for (@NonNull Idiom idiom : idioms) {
-			IdiomGrammarMatch idiomMatch = idiomMatches[idiomIndex];
-			if (idiomMatch == null) {
-				SubIdiom firstSubIdiom = idiom.getOwnedSubIdioms().get(0);
-				assert firstSubIdiom != null;
-				boolean firstSubIdiomMatches = matches(firstSubIdiom, abstractElement);
-				idiomMatches[idiomIndex] = firstSubIdiomMatches ? grammarAnalysis.createIdiomMatch(idiom, abstractElement) : null;
-			}
-			else {
-				idiomMatch.nextMatch(abstractElement, this);
-			}
-			idiomIndex++;
-		}
-		if (abstractElement instanceof CompoundElement) {				// FIXME Alternatives need permutation or maybe just a constraint check
-			for (AbstractElement nestedElement : ((CompoundElement)abstractElement).getElements()) {
-				assert nestedElement != null;
-				getIdiomMatches(nestedElement, idioms, idiomMatches);
-			}
-		}
+	protected @NonNull EClass getReturnedEClass() {
+		return eClass;
 	}
 
 	@Override
-	public int getIndex() {
-		return index;
-	}
-
-	public @NonNull ParserRule getParserRule() {
-		return (ParserRule) abstractRule;
-	}
-
-	public @NonNull EClass getReturnedEClass() {
+	protected @NonNull EClassifier getReturnedEClassifier() {
 		return eClass;
 	}
 
@@ -891,21 +818,21 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	public @NonNull ParserRuleValue getRuleValue() {
 		ParserRuleValue parserRuleValue2 = parserRuleValue;
 		if (parserRuleValue2 == null) {
-			Collection<@NonNull ParserRuleValue> subParserRuleValueClosure = null;
-			for (@NonNull ParserRuleAnalysis subParserRuleAnalysis : getSubRuleAnalysesClosure()) {
-				if (subParserRuleAnalysis != this) {
-					if (subParserRuleValueClosure == null) {
-						subParserRuleValueClosure = new ArrayList<>();
+			Collection<@NonNull ParserRuleValue> parserRuleValueClosure = null;
+			for (@NonNull ParserRuleAnalysis parserRuleAnalysis : getSubRuleAnalysesClosure()) {
+				if (parserRuleAnalysis != this) {
+					if (parserRuleValueClosure == null) {
+						parserRuleValueClosure = new ArrayList<>();
 					}
-					subParserRuleValueClosure.add(subParserRuleAnalysis.getRuleValue());
+					parserRuleValueClosure.add(parserRuleAnalysis.getRuleValue());
 				}
 			}
-			GrammarRuleVector subParserRuleValueIndexes = null;
-			if (subParserRuleValueClosure != null) {
-				subParserRuleValueIndexes = new GrammarRuleVector();
-				subParserRuleValueIndexes.set(index);
-				for (@NonNull ParserRuleValue parserRuleValue : subParserRuleValueClosure) {
-					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
+			GrammarRuleVector parserRuleValueIndexes = null;
+			if (parserRuleValueClosure != null) {
+				parserRuleValueIndexes = new GrammarRuleVector();
+				parserRuleValueIndexes.set(index);
+				for (@NonNull ParserRuleValue parserRuleValue : parserRuleValueClosure) {
+					parserRuleValueIndexes.set(parserRuleValue.getIndex());
 				}
 			}
 			List<@Nullable List<@NonNull SubIdiom>> formattingSubIdiomsList = new ArrayList<>();
@@ -927,7 +854,21 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				innerFormattingSegmentsArray[i] = innerFormattingSegments != null ? innerFormattingSegments : SerializationSegment.VALUE_SEGMENTS_ARRAY;
 				outerFormattingSegmentsArray[i] = outerFormattingSegments != null ? outerFormattingSegments : SerializationSegment.VALUE_SEGMENTS_ARRAY;
 			}
-			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getName(), serializationRules, outerFormattingSegmentsArray, innerFormattingSegmentsArray, subParserRuleValueIndexes);
+		//	nonTerminalRuleValue2 = createRuleValue(subNonTerminalRuleValueIndexes, serializationRules,
+		//		innerFormattingSegmentsArray, outerFormattingSegmentsArray);
+
+
+
+		//	protected @NonNull ParserRuleValue createRuleValue(@NonNull GrammarRuleVector subParserRuleValueIndexes,
+		//			@NonNull SerializationRule @NonNull [] serializationRules,
+		//			@NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray,
+		//			@NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray) {
+				assert parserRuleValue == null;
+				parserRuleValue2 = parserRuleValue = new ParserRuleValue(index, getName(), serializationRules, outerFormattingSegmentsArray, innerFormattingSegmentsArray, parserRuleValueIndexes);
+		//		return parserRuleValue;
+		//	}
+
+
 			//
 			// serializationRules content defined after construction to allow recursive references
 			//
@@ -947,13 +888,13 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return serializationRuleAnalyses;
 	}
 
-	public @Nullable List<@NonNull SubIdiom> getSubIdioms(@NonNull AbstractElement grammarElement) {
-		return getGrammarElement2subIdioms().get(grammarElement);
+	public @NonNull Collection<@NonNull ParserRuleAnalysis> getSubRuleAnalysesClosure() {
+		assert superRuleAnalysesClosure != null;	// subRuleAnalysesClosure assigned as corollary of superRuleAnalysesClosure
+		return subRuleAnalysesClosure;
 	}
 
-	public @NonNull Collection<@NonNull ParserRuleAnalysis> getSubRuleAnalysesClosure() {
-		assert superRuleAnalysesClosure != null;	// subRuleAnalysesClosure assigned as corrolary of superRuleAnalysesClosure
-		return subRuleAnalysesClosure;
+	protected @Nullable List<@NonNull ParserRuleAnalysis> getSuperRuleAnalysesClosure() {
+		return superRuleAnalysesClosure;
 	}
 
 	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getSuperRuleAnalysisClosure() {
@@ -962,7 +903,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			UniqueList<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureSet = new UniqueList<>();
 			superRuleAnalysesClosureSet.add(this);
 			for (int i = 0; i < superRuleAnalysesClosureSet.size(); i++) {
-				ParserRuleAnalysis ruleAnalysis = SerializationUtils.nonNullState(superRuleAnalysesClosureSet.get(i));
+				ParserRuleAnalysis ruleAnalysis = ClassUtil.nonNullState(superRuleAnalysesClosureSet.get(i));
 				Set<@NonNull ParserRuleAnalysis> superRuleAnalyses = ruleAnalysis.superRuleAnalyses;
 				if (superRuleAnalyses != null) {
 					superRuleAnalysesClosureSet.addAll(superRuleAnalyses);
@@ -978,47 +919,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return superRuleAnalysesClosureList;
 	}
 
-	public boolean matches(@NonNull SubIdiom subIdiom, @NonNull AbstractElement grammarElement) {
-		Locator locator = IdiomsUtils.getLocator(subIdiom);
-		return matches(locator, grammarElement);
-	}
-
-	public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement) {
-		assert !(locator instanceof ReferredLocator);
-	//	if (locator instanceof ReferredLocator) {
-	//		locator = IdiomsUtils.getOwnedLocator(IdiomsUtils.getLocatorDeclaration((ReferredLocator)locator));
-	//	}
-		LocatorImpl locatorImpl = (LocatorImpl)locator;
-		LocatorHelper locatorHelper = (LocatorHelper)locatorImpl.basicGetHelper();
-		if (locatorHelper == null) {
-			LocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getLocatorSwitch();
-			locatorHelper = subIdiomLocatorSwitch.doSwitch(locator);
-			locatorImpl.setHelper(locatorHelper);
-		}
-		if (locatorHelper == null) {	// Only actually null after an UnsupportedOperationException
-			return false;
-		}
-		return locatorHelper.matches(locator, grammarElement, this);
-	}
-
-	public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode) {
-		assert !(locator instanceof ReferredLocator);
-	//	if (locator instanceof ReferredLocator) {
-	//		locator = IdiomsUtils.getOwnedLocator(IdiomsUtils.getLocatorDeclaration((ReferredLocator)locator));
-	//	}
-		LocatorImpl locatorImpl = (LocatorImpl)locator;
-		LocatorHelper locatorHelper = (LocatorHelper)locatorImpl.basicGetHelper();
-		if (locatorHelper == null) {
-			LocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getLocatorSwitch();
-			locatorHelper = subIdiomLocatorSwitch.doSwitch(locator);
-			locatorImpl.setHelper(locatorHelper);
-		}
-		if (locatorHelper == null) {	// Only actually null after an UnsupportedOperationException
-			return false;
-		}
-		return locatorHelper.matches(locator, serializationNode);
-	}
-
 	/**
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
@@ -1027,8 +927,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		//
 		//	Convert the parser element tree to a normalized/flattened disjunction of conjunctions of nodes.
 		//
-		SerializationElementSynthesisSwitch serializationElementSynthesisSwitch = new SerializationElementSynthesisSwitch(this);
-		SerializationElement serializationResult = serializationElementSynthesisSwitch.analyze();
+		SerializationElement serializationResult = createSerializationResult();
 		//
 		//	Convert the disjunction of conjunctions of nodes to one or more rules.
 		//
@@ -1046,7 +945,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationElement.asListOfList().getLists()) {
 				SerializationNode serializationNode;
 				if (serializationNodes.size() == 1) {
-					serializationNode = SerializationUtils.nonNullState(serializationNodes.get(0));
+					serializationNode = ClassUtil.nonNullState(serializationNodes.get(0));
 					createSerializationRuleAnalyses(serializationRuleAnalyses, serializationNode);
 				}
 				else {
@@ -1060,7 +959,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			List<@NonNull SerializationNode> serializationNodes = serializationElement.asList().getNodes();
 			SerializationNode serializationNode;
 			if (serializationNodes.size() == 1) {
-				serializationNode = SerializationUtils.nonNullState(serializationNodes.get(0));
+				serializationNode = ClassUtil.nonNullState(serializationNodes.get(0));
 			}
 			else {
 				CompoundElement alternatives = (CompoundElement)SerializationUtils.getAlternatives(abstractRule);
@@ -1094,7 +993,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				isFirst1 = false;
 			}
 		} */
-		List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosure2 = superRuleAnalysesClosure;
+		List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosure2 = getSuperRuleAnalysesClosure();
 		if (superRuleAnalysesClosure2 != null) {
 			s.append(" -> ");
 			boolean isFirst1 = true;
@@ -1106,6 +1005,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				isFirst1 = false;
 			}
 		}
+		List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = basicGetSerializationRuleAnalyses();
 		if (serializationRuleAnalyses != null) {
 			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
 				SerializationUtils.appendIndentation(s, depth+1);

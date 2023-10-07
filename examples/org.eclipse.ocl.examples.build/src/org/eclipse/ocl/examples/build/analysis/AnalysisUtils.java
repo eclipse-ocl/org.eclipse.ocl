@@ -16,7 +16,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
 
 public class AnalysisUtils extends SerializationUtils
 {
@@ -35,7 +36,7 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEClassifier.eClass() != thatEClassifier.eClass()) {
 			return false;
 		}
-		if (!SerializationUtils.safeEquals(thisEClassifier.getName(), thatEClassifier.getName())) {
+		if (!ClassUtil.safeEquals(thisEClassifier.getName(), thatEClassifier.getName())) {
 			return false;
 		}
 		return isEqual(thisEClassifier.getEPackage(), thatEClassifier.getEPackage());
@@ -56,13 +57,13 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEPackage.eClass() != thatEPackage.eClass()) {
 			return false;
 		}
-		if (!SerializationUtils.safeEquals(thisEPackage.getName(), thatEPackage.getName())) {
+		if (!ClassUtil.safeEquals(thisEPackage.getName(), thatEPackage.getName())) {
 			return false;
 		}
 		EPackage thisESuperPackage = thisEPackage.getESuperPackage();
 		EPackage thatESuperPackage = thatEPackage.getESuperPackage();
 		if ((thisESuperPackage == null) && (thatESuperPackage == null)) {
-			return SerializationUtils.safeEquals(thisEPackage.getNsURI(), thatEPackage.getNsURI());
+			return ClassUtil.safeEquals(thisEPackage.getNsURI(), thatEPackage.getNsURI());
 		}
 		else {
 			return isEqual(thisESuperPackage, thatESuperPackage);
@@ -84,19 +85,20 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEStructuralFeature.eClass() != thatEStructuralFeature.eClass()) {
 			return false;
 		}
-		if (!SerializationUtils.safeEquals(thisEStructuralFeature.getName(), thatEStructuralFeature.getName())) {
+		if (!ClassUtil.safeEquals(thisEStructuralFeature.getName(), thatEStructuralFeature.getName())) {
 			return false;
 		}
 		return isEqual(thisEStructuralFeature.getEContainingClass(), thatEStructuralFeature.getEContainingClass());
 	}
 
-	public static boolean isSuperTypeOf(@Nullable EClass thisEClass, @NonNull EClass thatEClass) {
-		if (isEqual(thisEClass, thatEClass)) {
+	public static boolean isSuperTypeOf(@Nullable EClassifier thisEClassifier, @NonNull EClassifier thatEClassifier) {
+		if (isEqual(thisEClassifier, thatEClassifier)) {
 			return true;
-		}
-		for (EClass thatSuperEClass : thatEClass.getEAllSuperTypes()) {
-			if (isEqual(thisEClass, thatSuperEClass)) {
-				return true;
+		}if ((thisEClassifier instanceof EClass) && (thatEClassifier instanceof EClass)) {
+			for (EClass thatSuperEClass : ((EClass)thatEClassifier).getEAllSuperTypes()) {
+				if (isEqual(thisEClassifier, thatSuperEClass)) {
+					return true;
+				}
 			}
 		}
 		return false;

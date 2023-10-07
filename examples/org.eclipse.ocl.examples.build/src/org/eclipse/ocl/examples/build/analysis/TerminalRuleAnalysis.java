@@ -13,12 +13,12 @@ package org.eclipse.ocl.examples.build.analysis;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
-import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.TerminalRuleValue;
 import org.eclipse.xtext.TerminalRule;
 
 /**
- * An XtextTerminalRuleAnalysis provides the extended analysis of an Xtext TerminalRule
+ * A TerminalRuleAnalysis provides the extended analysis of an Xtext TerminalRule
  */
 public class TerminalRuleAnalysis extends AbstractRuleAnalysis
 {

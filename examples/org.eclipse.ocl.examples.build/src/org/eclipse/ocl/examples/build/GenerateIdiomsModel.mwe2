@@ -19,7 +19,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
-var sourceName = "org.eclipse.ocl.examples.xtext.idioms"
+var sourceName = "org.eclipse.ocl.xtext.idioms"
 
 /**
  *	Generate the Idioms Model, by converting idioms.ecore to *.java.

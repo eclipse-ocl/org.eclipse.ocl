@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.build.analysis;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
 import org.eclipse.xtext.Action;
 
 /**

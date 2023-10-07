@@ -239,6 +239,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			}
 			else {
 				asTuplePartExp = PivotFactory.eINSTANCE.createPropertyCallExp();
+				asTuplePartExp.setIsImplicit(true);
 				asExpressionInOCL.setOwnedBody(asTuplePartExp);
 				helper.setType(asExpressionInOCL, asTuplePartExp.getType(), asTuplePartExp.isIsRequired());
 			}

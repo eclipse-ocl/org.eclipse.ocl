@@ -90,7 +90,6 @@ public class EssentialOCLFragment extends AbstractXtextGeneratorFragment //imple
 		bindFactory.addTypeToType(new TypeReference(keyClass.getName()), new TypeReference(valueClassName));
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
 	public void generate() {
 		generateRT();

@@ -13,17 +13,17 @@ package org.eclipse.ocl.examples.build.elements;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
-import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
-import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepKeyword;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
+import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep;
+import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepKeyword;
+import org.eclipse.ocl.xtext.idioms.SubIdiom;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -32,8 +32,8 @@ public class UnassignedKeywordSerializationNode extends AbstractUnassignedSerial
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality) {
-		super(producedEClass, grammarCardinality);
+	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull EClassifier producedEClassifier, @NonNull GrammarCardinality grammarCardinality) {
+		super(producedEClassifier, grammarCardinality);
 		this.keyword = keyword;
 		this.value = SerializationUtils.getValue(keyword);
 		assert !grammarCardinality.mayBeZero();
@@ -42,7 +42,7 @@ public class UnassignedKeywordSerializationNode extends AbstractUnassignedSerial
 	@Override
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
 		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
-		return new UnassignedKeywordSerializationNode(keyword, producedEClass, grammarCardinality);
+		return new UnassignedKeywordSerializationNode(keyword, producedEClassifier, grammarCardinality);
 	}
 
 	@Override

@@ -17,54 +17,59 @@ import org.eclipse.jdt.annotation.Nullable
 import org.eclipse.ocl.examples.build.analysis.GrammarAnalysis
 import org.eclipse.ocl.examples.build.analysis.SerializationMatchTermRuntime
 import org.eclipse.ocl.examples.build.analysis.SerializationRuleAnalysis
-import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueOthers
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue
-import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector
-import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue
-import org.eclipse.ocl.examples.xtext.serializer.SerializationBuilder
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermAdd
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermDivide
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermGreaterThan
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermMultiply
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermSubtract
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermVariable
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationSimpleAttribute
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.StringSerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.ValueSerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssignKeyword
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssignedRuleCall
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepCrossReference
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepKeyword
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepSequence
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepWrapper
-import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue
+import org.eclipse.ocl.xtext.base.serializer.DataTypeRuleValue
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueMultiple
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueOthers
+import org.eclipse.ocl.xtext.base.serializer.EnumerationValue.EnumerationValueSingle
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleValue
+import org.eclipse.ocl.xtext.base.serializer.GrammarRuleVector
+import org.eclipse.ocl.xtext.base.serializer.ParserRuleValue
+import org.eclipse.ocl.xtext.base.serializer.SerializationBuilder
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchStep
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermAdd
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermDivide
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermGreaterThan
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermInteger
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermMultiply
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermSubtract
+import org.eclipse.ocl.xtext.base.serializer.SerializationMatchTerm.SerializationMatchTermVariable
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationAttribute
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationReference
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationSimpleAttribute
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.CustomSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.StringSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.ValueSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssignKeyword
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssignedRuleCall
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssigns
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepCrossReference
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepKeyword
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepWrapper
+import org.eclipse.ocl.xtext.base.serializer.TerminalRuleValue
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature
-import org.eclipse.ocl.examples.xtext.serializer.PreCommentSerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.PostCommentSerializationSegment
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData
+import org.eclipse.ocl.xtext.base.serializer.SerializationRule.SerializationFeature
+import org.eclipse.ocl.xtext.base.serializer.PreCommentSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.PostCommentSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationMetaData
 import org.eclipse.xtext.service.GrammarProvider
 import org.eclipse.xtext.Grammar
+import org.eclipse.ocl.xtext.base.serializer.EClassValue
+import org.eclipse.ocl.xtext.base.serializer.EClassValue.EReference_TargetGrammarRuleVector
+import org.eclipse.ocl.xtext.base.serializer.SubstringStep
+import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepSequence
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.SpacingSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.ControlSerializationSegment
+import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.UserSerializationSegment
+import org.eclipse.ocl.pivot.utilities.StringUtil
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -124,6 +129,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				private final @NonNull «newTypeReference(SerializationRule)» @NonNull [] serializationRules = new @NonNull «newTypeReference(SerializationRule)»[«getSerializationRuleCount()»];
 				private final @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @NonNull [] serializationSegments = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [«getSerializationSegmentsCount()»] @NonNull [];
 				private final @NonNull «newTypeReference(SerializationStep)» @NonNull [] serializationSteps = new @NonNull «newTypeReference(SerializationStep)»[«getSerializationStepCount()»];
+				private final @NonNull «newTypeReference(SubstringStep)» @NonNull [] substringSteps = new @NonNull «newTypeReference(SubstringStep)»[«getSubstringStepCount()»];
 				«IF multipleLineCommentCharacterRanges !== null»
 				private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {«FOR entry : getMultipleLineCommentMidfixes(multipleLineCommentCharacterRanges) SEPARATOR ','»"«entry !== null ? Strings.convertToJavaString(entry) : "null"»"«ENDFOR»};
 				private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {«FOR entry : multipleLineCommentCharacterRanges.entrySet() SEPARATOR ','»"«Strings.convertToJavaString(entry.getKey())»"«ENDFOR»};
@@ -142,6 +148,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 					«generatePagedInit("SerializationSegments", getSerializationSegmentsCount(), SERIALIZATION_SEGMENTS_PER_PAGE)»
 					«generatePagedInit("SerializationSteps", getSerializationStepCount(), SERIALIZATION_STEPS_PER_PAGE)»
 					«generatePagedInit("SerializationRules", getSerializationRuleCount(), SERIALIZATION_RULES_PER_PAGE)»
+					«generatePagedInit("SubstringSteps", getSubstringStepCount(), SUBSTRING_STEPS_PER_PAGE)»
 					«generatePagedInit("GrammarRuleValues", getGrammarRuleValueCount(), GRAMMAR_RULE_VALUES_PER_PAGE)»
 					«generatePagedInit("EClassValues", getEClassCount(), ECLASS_VALUES_PER_PAGE)»
 				}
@@ -230,6 +237,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				public @NonNull String @Nullable [] getSingleLineCommentPrefixes() {
 					return «IF singleLineCommentKeywords !== null»singleLineCommentPrefixes«ELSE»null«ENDIF»;
 				}
+
+				@Override
+				public @NonNull «newTypeReference(SubstringStep)» @NonNull [] getSubstringSteps() {
+					return substringSteps;
+				}
 													
 				«generateEClassValues(grammarAnalysis)»
 				
@@ -248,15 +260,18 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«generateSerializationSegments(grammarAnalysis)»
 
 				«generateSerializationSteps(grammarAnalysis)»
+
+				«generateSubstringSteps(grammarAnalysis)»
 			}
 
-			//	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
+			//	Commented imports ensure the Xtend synthesis provides a true import allowing unqualified annotated usage
 			«FOR importedClassName : getImportedClassNameIterable()»
-				«var index = importedClassName.lastIndexOf('.')»
+				«var importedClassName2 = importedClassName.replace('$', '.')»
+				«var index = importedClassName2.lastIndexOf('.')»
 				«IF index < 0»
-					//	import «newTypeReference(importedClassName)»;
+					//	import «newTypeReference(importedClassName2)»;
 				«ELSE»
-					//	import «new TypeReference(importedClassName.substring(0, index), importedClassName.substring(index+1).replace('$', '.'))»;
+					//	import «new TypeReference(importedClassName2.substring(0, index), importedClassName2.substring(index+1))»;
 				«ENDIF»
 			«ENDFOR»
 		'''
@@ -278,7 +293,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		var enumValuePageNumbers = getPageNumberList(eClassValuesSize, ECLASS_VALUES_PER_PAGE);
 		'''
 		/**
-		 * Initialize configuration for each EClass that may be serialized.
+		 * Initialize configuration for each EClassifier that may be serialized.
 		 */
 		«FOR page : enumValuePageNumbers»
 			private void initEClassValues«page !== null ? page : ""»() {
@@ -382,7 +397,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateGrammarRuleValue_DataTypeRule(GrammarAnalysis grammarAnalysis, DataTypeRuleValue dataTypeRuleValue) {
-		'''new «newTypeReference(DataTypeRuleValue)»(«dataTypeRuleValue.getIndex()», "«dataTypeRuleValue.getName()»");'''
+		'''
+			«var serializationSegments = dataTypeRuleValue.getSerializationSegments()»
+			createDataTypeRuleValue(«dataTypeRuleValue.getIndex()», "«dataTypeRuleValue.getName()»", «getSerializationSegmentsIndex(dataTypeRuleValue.getSerializationSegments())» /* [«FOR segment : serializationSegments SEPARATOR ', '»«segment.toString()»«ENDFOR»] */«FOR substringStep : dataTypeRuleValue.getSubstringSteps()»,
+				«getSubstringStepIndex(substringStep)»	/* «toCommentString(substringStep)» */«ENDFOR»);
+		'''
 	}
 	
 	protected def generateGrammarRuleValue_ParserRuleValue(GrammarAnalysis grammarAnalysis, ParserRuleValue parserRuleValue) {
@@ -680,7 +699,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«var serializationSegments = serializationSegmentsList.get(elementIndex)»
 				serializationSegments[«getSerializationSegmentsIndex(serializationSegments)»] = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] {
 					«FOR segment : serializationSegments SEPARATOR ','»
-					«generateSerializationSegment(segment)» /* «segment.toString()» */
+					«generateSerializationSegment(segment)» /* «segment.toCommentString()» */
 					«ENDFOR»
 				};
 				«ENDFOR»
@@ -694,19 +713,20 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		CustomSerializationSegment: return generateSerializationSegment_Custom(segment)
 		PostCommentSerializationSegment : return generateSerializationSegment_PostComment(segment)
 		PreCommentSerializationSegment : return generateSerializationSegment_PreComment(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.HALF_NEW_LINE) : return generateSerializationSegment_HalfNewLine(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.NEW_LINE) : return generateSerializationSegment_NewLine(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.NO_SPACE) : return generateSerializationSegment_NoSpace(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.POP) : return generateSerializationSegment_Pop(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH) : return generateSerializationSegment_Push(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH_NEXT) : return generateSerializationSegment_PushNext(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_NEW_LINE) : return generateSerializationSegment_SoftNewLine(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_SPACE) : return generateSerializationSegment_SoftSpace(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_ANCHOR) : return generateSerializationSegment_WrapAnchor(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_BEGIN_ALL) : return generateSerializationSegment_WrapBeginAll(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_BEGIN_SOME) : return generateSerializationSegment_WrapBeginSome(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_END) : return generateSerializationSegment_WrapEnd(segment)
-		StringSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_HERE) : return generateSerializationSegment_WrapHere(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.HALF_NEW_LINE) : return generateSerializationSegment_HalfNewLine(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.NEW_LINE) : return generateSerializationSegment_NewLine(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.NO_SPACE) : return generateSerializationSegment_NoSpace(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.POP) : return generateSerializationSegment_Pop(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH) : return generateSerializationSegment_Push(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH_NEXT) : return generateSerializationSegment_PushNext(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_NEW_LINE) : return generateSerializationSegment_SoftNewLine(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_SPACE) : return generateSerializationSegment_SoftSpace(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_ANCHOR) : return generateSerializationSegment_WrapAnchor(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_BEGIN_ALL) : return generateSerializationSegment_WrapBeginAll(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_BEGIN_SOME) : return generateSerializationSegment_WrapBeginSome(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_END) : return generateSerializationSegment_WrapEnd(segment)
+		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.WRAP_HERE) : return generateSerializationSegment_WrapHere(segment)
+		UserSerializationSegment: return generateSerializationSegment_User(segment)
 		ValueSerializationSegment: return generateSerializationSegment_Value(segment)
 		default: segment.getClass().getName() //throw new UnsupportedOperationException()
 		}
@@ -756,8 +776,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''«newTypeReference(SerializationSegment)».SOFT_SPACE'''
 	}
 	
-	protected def generateSerializationSegment_String(StringSerializationSegment segment) {
-		'''«newTypeReference(SerializationSegment)».createStringSegment(«segment.getString()»)'''
+	protected def generateSerializationSegment_User(UserSerializationSegment segment) {
+		'''«newTypeReference(SerializationSegment)».getString("«Strings.convertToJavaString(segment.getString())»")'''
 	}
 	
 	protected def generateSerializationSegment_Value(ValueSerializationSegment segment) {
@@ -849,5 +869,34 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationStep_Wrapper(SerializationStepWrapper serializationStep) {
 		'''createSerializationStepWrapper(«getSerializationSegmentsIndex(serializationStep.getSerializationSegments())»)'''
+	}
+	
+	/* ************************************************************************************************************************** */	
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateSubstringSteps(GrammarAnalysis grammarAnalysis) {
+		var substringSteps = getSubstringStepList(grammarAnalysis);
+		var substringStepsSize = substringSteps.size();
+		var substringStepPageNumbers = getPageNumberList(substringStepsSize, SUBSTRING_STEPS_PER_PAGE);
+		'''
+		/**
+		 * Initialize the various serialization steps used to serialize a serialization rule.
+		 */
+		«FOR page : substringStepPageNumbers»
+			private void initSubstringSteps«page !== null ? page : ""»() {
+				«FOR elementIndex : getPageElementList(page, substringStepsSize, SUBSTRING_STEPS_PER_PAGE)»
+					«var substringStep = substringSteps.get(elementIndex)»
+					// «getSubstringStepIndex(substringStep)»: «toCommentString(substringStep)»
+					substringSteps[«getSubstringStepIndex(substringStep)»] = «generateSubstringStep(substringStep)»;
+				«ENDFOR»
+			}
+		«ENDFOR»
+		'''
+	}
+	
+	protected def generateSubstringStep(SubstringStep substringStep) {
+		var serializationSegments = substringStep.getSerializationSegments();
+		'''createSubstringStep("«Strings.convertToJavaString(substringStep.getString())»", «getSerializationSegmentsIndex(serializationSegments)» /* «FOR segment : serializationSegments SEPARATOR ','»«segment.toCommentString()» «ENDFOR»*/)'''
 	}
 }
