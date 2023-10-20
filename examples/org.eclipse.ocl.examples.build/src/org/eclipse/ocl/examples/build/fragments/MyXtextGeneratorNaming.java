@@ -1,6 +1,5 @@
-package org.eclipse.ocl.examples.build.fragments;
 /*******************************************************************************
- * Copyright (c) 2020 Willink Transformations and others.
+ * Copyright (c) 2020, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -9,6 +8,7 @@ package org.eclipse.ocl.examples.build.fragments;
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
+package org.eclipse.ocl.examples.build.fragments;
 
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
