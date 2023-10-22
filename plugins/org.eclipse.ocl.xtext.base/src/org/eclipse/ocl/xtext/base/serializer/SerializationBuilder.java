@@ -1154,7 +1154,7 @@ public class SerializationBuilder
 	 */
 	protected int tabWidth;
 
-	protected final @NonNull IndentingStringBuilder s;
+	protected @NonNull IndentingStringBuilder s;
 
 	/**
 	 * The serialization state hanging over from the previous append.
@@ -1198,8 +1198,7 @@ public class SerializationBuilder
 		this.indentString = indentString;
 		this.lineLength = lineLength;
 		this.tabWidth = tabWidth;
-		WrappingStringBuilder sw = new WrappingStringBuilder(new StringBuilder(), lineLength, lineDelimiter, tabWidth);
-		this.s = new IndentingStringBuilder(sw, lineDelimiter, indentString);
+		this.s = resetBuilder();
 	}
 
 	/**
@@ -1335,6 +1334,12 @@ public class SerializationBuilder
 
 	public int getTabWidth() {
 		return tabWidth;
+	}
+
+	public @NonNull IndentingStringBuilder resetBuilder() {
+		WrappingStringBuilder sw = new WrappingStringBuilder(new StringBuilder(), lineLength, lineDelimiter, tabWidth);
+		this.s = new IndentingStringBuilder(sw, lineDelimiter, indentString);
+		return this.s;
 	}
 
 	public void setIndentString(@NonNull String indentString) {

@@ -27,6 +27,7 @@ import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.eclipse.xtext.util.Strings;
 
 import com.google.inject.Inject;
 
@@ -44,13 +45,32 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	private @NonNull UserModelAnalysis modelAnalysis;
 
 	/**
-	 * The SerializationBuilder aggregates the formatted text..
+	 * The SerializationBuilder aggregates the formatted text.
 	 */
 	@Inject
 	private @NonNull SerializationBuilder serializationBuilder;
 
+	private int selectStart;
+	private int selectEnd;
+
+	private @Nullable String darkText(@NonNull String text) {
+		if (text.length() <= 0) {
+			return null;
+		}
+		for (int i = 0; i < text.length(); i++) {
+			char c = text.charAt(i);
+			if (Character.isWhitespace(c)) {
+				return null;
+			}
+		}
+		return text;
+	}
+
 	@Override
-	public IFormattedRegion format(ICompositeNode root, int selectStart, int selectLength) {
+	public IFormattedRegion format(ICompositeNode root, final int selectStart, final int selectLength) {
+		serializationBuilder.resetBuilder();
+		this.selectStart = selectStart;
+		this.selectEnd = selectStart + selectLength;
 		assert root != null;
 		int selectEnd = selectStart+selectLength;
 		//
@@ -68,54 +88,92 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		} */
 		ILeafNode startNode = NodeModelUtils.findLeafNodeAtOffset(root, selectStart);
 		assert startNode != null;
-		ILeafNode endNode = selectLength > 0 ? NodeModelUtils.findLeafNodeAtOffset(root, selectEnd) : startNode;
-		assert endNode != null;
-		String oldText = root.getText();
+		@Nullable ILeafNode endNodeOrEOF = /*selectLength > 0 ?*/ NodeModelUtils.findLeafNodeAtOffset(root, selectEnd) /*: startNode*/;		// zero length is total reformat
+	//	assert zendNode != null;
+		String rootText = root.getText();
 		int oldStart = startNode.getTotalOffset();
-		int oldEnd = endNode.getTotalEndOffset();
-		@SuppressWarnings("unused") String oldSelectedText = oldText.substring(selectStart, selectEnd);
-		@SuppressWarnings("unused") String oldNodeText = oldText.substring(oldStart, oldEnd);
+		int oldEnd = endNodeOrEOF != null ? endNodeOrEOF.getTotalEndOffset() : root.getTotalEndOffset();
+		@SuppressWarnings("unused") String oldSelectedText = rootText.substring(selectStart, selectEnd);
+		@SuppressWarnings("unused") String oldTotalText = rootText.substring(oldStart, oldEnd);
+		System.out.println("format  oldSelectedText: " + oldSelectedText.length() + " chars at " + selectStart + "-" + selectEnd + ": '" + Strings.convertToJavaString(oldSelectedText) + "'");
+		System.out.println("\toldTotalText: " + oldTotalText.length() + " chars at " + oldStart + "-" + oldEnd + ": '" + Strings.convertToJavaString(oldTotalText) + "'");
 		//
 		//	Condition the insertion site to follow a new-line else follow all whitespace.
 		//
-		boolean oldFollowsNewLine = false;
-		for (; oldStart < oldEnd; oldStart++) {		// Step to first non-whitespace character
-			char c = oldText.charAt(oldStart);
+		for (; oldStart < selectStart; oldStart++) {		// Step to first non-whitespace character
+			char c = rootText.charAt(oldStart);
 			if (!Character.isWhitespace(c)) {
 				break;
 			}
 		}
+		char precedingChar = 0;
 		for (int i = oldStart; i > 0; --i) {		// Step to first preceding new-line / non-whitespace character
-			char c = oldText.charAt(i-1);
+			char c = rootText.charAt(i-1);
 			if (c == '\n') {
 				oldStart = i;
-				oldFollowsNewLine = true;
+				precedingChar = c;
+				break;
 			}
 			else if (!Character.isWhitespace(c)) {
+				precedingChar = c;
 				break;
 			}
 		}
 		//
 		//	Condition the insertion site to precede a new-line else follow all whitespace.
 		//
-		boolean oldPrecedesNewLine = false;
-		for (; oldStart < oldEnd; --oldEnd) {		// Step to past last non-whitespace character
-			char c = oldText.charAt(oldEnd-1);
+		for (; selectEnd < oldEnd; --oldEnd) {		// Step to past last non-whitespace character
+			char c = rootText.charAt(oldEnd-1);
 			if (!Character.isWhitespace(c)) {
 				break;
 			}
 		}
+		char followingChar = 0;
 		for (int i = oldEnd; oldStart < i; i++) {	// Step to last following new-line / non-whitespace character
-			char c = oldText.charAt(i);
+			char c = rootText.charAt(i);
 			if (c == '\n') {
 				oldEnd = i;
-				oldPrecedesNewLine = true;
+				followingChar = c;
+				break;
 			}
 			else if (!Character.isWhitespace(c)) {
+				followingChar = c;
 				break;
 			}
 		}
-		@SuppressWarnings("unused") String oldConditionedText = oldText.substring(oldStart, oldEnd);
+		@SuppressWarnings("unused") String oldContextText = rootText.substring(oldStart, oldEnd);
+		System.out.println("\toldContextText: " + (precedingChar != 0 ? ("'" + Strings.convertToJavaString(String.valueOf(precedingChar)) + "'") : "«BOF»") + " then " + oldStart + "-" + oldEnd + ": '" + Strings.convertToJavaString(oldContextText) + "' then " + (followingChar != 0 ? ("'" + Strings.convertToJavaString(String.valueOf(followingChar)) + "'") : "«EOF»"));
+		String prefixText = rootText.substring(oldStart, selectStart);
+		String suffixText = rootText.substring(selectEnd, oldEnd);
+		String darkPrefixText = darkText(prefixText);
+		String darkSuffixText = darkText(suffixText);
+		int i = selectStart;
+		for ( ; i >= oldStart; --i) {
+			char c = rootText.charAt(i-1);
+			if (c == '\n') {
+				break;
+			}
+			if (!Character.isWhitespace(c)) {
+				break;
+			}
+		}
+		String whitePrefixText = i < selectStart ? rootText.substring(i, selectStart) : null;
+		i = selectEnd;
+		for ( ; i <= oldEnd; i++) {
+			char c = rootText.charAt(i);
+			if (c == '\n') {
+				break;
+			}
+			if (!Character.isWhitespace(c)) {
+				break;
+			}
+		}
+		String whiteSuffixText = i > selectEnd ? rootText.substring(selectEnd, i) : null;
+		System.out.println("\tdarkPrefixText: " + (darkPrefixText != null ? "'" + Strings.convertToJavaString(darkPrefixText) + "'" : "null"));
+		System.out.println("\twhitePrefixText: " + (whitePrefixText != null ? "'" + Strings.convertToJavaString(whitePrefixText) + "'" : "null"));
+		System.out.println("\tdarkSuffixText: " + (darkSuffixText != null ? "'" + Strings.convertToJavaString(darkSuffixText) + "'" : "null"));
+		System.out.println("\twhiteSuffixText: " + (whitePrefixText != null ? "'" + Strings.convertToJavaString(whiteSuffixText) + "'" : "null"));
+	//	System.out.println("\treplace: " + (selectEnd - selectStart) + " chars at " + selectStart + "-" + selectEnd + " by the " + newText.length() + " chars of '" + Strings.convertToJavaString(newText) + "'");
 	//	EObject rootEObject = NodeModelUtils.findActualSemanticObjectFor(root);
 	//	assert rootEObject != null;
 	//	modelAnalysis.analyze(rootEObject);	-- SerializationRules not used
@@ -126,15 +184,15 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		for (INode node = startNode; node != null; node = node.getParent()) {
 			startNodeStack.push(node);
 		}
-		boolean hasEnded = formatAncestry(startNodeStack, endNode);
-		assert hasEnded;
+		formatAncestry(startNodeStack, endNodeOrEOF, "");
 		String newText = serializationBuilder.toString();
 		int newStart = 0;
 		int newEnd = newText.length();
-		//
+		System.out.println("\tnewText: " + newText.length() + " chars of '" + Strings.convertToJavaString(newText) + "'");
+	//
 		//	Condition the new text to follow a new-line else follow all whitespace.
 		//
-		if (!oldFollowsNewLine) {
+		if (followingChar != '\n') {
 			for (; newStart < newEnd; newStart++) {		// Step to first non-whitespace character
 				char c = newText.charAt(newStart);
 				if (!Character.isWhitespace(c)) {
@@ -145,7 +203,7 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		//
 		//	Condition the new text to precede a new-line else precede all whitespace.
 		//
-		if (!oldPrecedesNewLine) {
+		if (precedingChar != '\n') {
 			for (; newStart < newEnd; newEnd--) {		// Step to first non-whitespace character
 				char c = newText.charAt(newEnd-1);
 				if (!Character.isWhitespace(c)) {
@@ -153,17 +211,48 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				}
 			}
 		}
-		String newConditionedText = newText.substring(newStart, newEnd);
-		return new FormattedRegion(newStart, newEnd - newStart, newConditionedText);
+//		String newContextText = newText.substring(newStart, newEnd);
+		if (darkPrefixText != null) {
+			int index = newText.indexOf(darkPrefixText);
+			if (index >= 0) {
+				newText = newText.substring(index + darkPrefixText.length());
+			}
+		}
+		if ((whitePrefixText != null) && newText.startsWith(whitePrefixText)) {
+			newText = newText.substring(whitePrefixText.length());
+		}
+		if (darkSuffixText != null) {
+			int index = newText.lastIndexOf(darkSuffixText);
+			if (index >= 0) {
+				newText = newText.substring(0, index);
+			}
+		}
+		if ((whiteSuffixText != null) && newText.endsWith(whiteSuffixText)){
+			newText = newText.substring(0, newText.length() - whiteSuffixText.length());
+		}
+//		System.out.println("\tnewContextText: '" + Strings.convertToJavaString(newContextText) + "'");
+		System.out.println("\treplace: " + (selectEnd - selectStart) + " chars at " + selectStart + "-" + selectEnd + " by the " + newText.length() + " chars of '" + Strings.convertToJavaString(newText) + "'");
+		return new FormattedRegion(selectStart, selectEnd - selectStart, newText);
 	}
 
 	/**
 	 * Format all nodes between and including startNode and endNode with surrounding whitespace as if
 	 * no other outside nodes existed.
 	 */
-	protected boolean formatAncestry(@NonNull Stack<@NonNull INode> startNodeStack, @NonNull ILeafNode endNode) {
+	protected void formatAncestry(@NonNull Stack<@NonNull INode> startNodeStack, @Nullable ILeafNode endNodeOrEOF, @NonNull String indent) {
+//		if (endNodeOrEOF != null) {
+//			String endNodeText = NodeModelUtils.getTokenText(endNodeOrEOF);
+//			System.out.println(indent + "formatAncestry endNode: " + endNodeOrEOF.getTotalOffset() + "-" + endNodeOrEOF.getOffset() + " " + endNodeOrEOF.getEndOffset() + "-" + endNodeOrEOF.getTotalEndOffset() + " " + NameUtil.debugSimpleName(endNodeOrEOF) + " '" + Strings.convertToJavaString(endNodeText) + "'");
+//		}
+//		else {
+//			System.out.println(indent + "formatAncestry endNode: EOF");
+//		}
 		ICompositeNode parentStartNode = (ICompositeNode) startNodeStack.pop();
+		String parentStartNodeText = NodeModelUtils.getTokenText(parentStartNode);
+//		System.out.println(indent + "formatAncestry parentStartNode: " + parentStartNode.getTotalOffset() + "-" + parentStartNode.getOffset() + " .. "  + parentStartNode.getEndOffset() + "-" + parentStartNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(parentStartNode) + " '" + Strings.convertToJavaString(parentStartNodeText) + "'");
 		INode childStartNode = startNodeStack.peek();
+		String childStartNodeText = NodeModelUtils.getTokenText(childStartNode);
+//		System.out.println(indent + "formatAncestry childStartNode: " + childStartNode.getTotalOffset() + "-" + childStartNode.getOffset() + " .. " +  + childStartNode.getEndOffset() + "-" + childStartNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childStartNode) + " '" + Strings.convertToJavaString(childStartNodeText) + "'");
 		EObject semanticElement = parentStartNode.getSemanticElement();
 		assert semanticElement != null;
 		AbstractElement compoundedGrammarElement = getCompoundedGrammarElement(parentStartNode);
@@ -182,26 +271,19 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		//
 		//	Format the included node range.
 		//
-		boolean hasStarted = false;
-		boolean hasEnded = false;
 		for (@NonNull INode childNode : SerializationUtils.getChildren(parentStartNode)) {
-			if (!hasStarted && (childNode == childStartNode)) {
-				hasStarted = true;
-				if (childStartNode instanceof ICompositeNode) {
-					hasEnded = formatAncestry(startNodeStack, endNode);
-				}
-				else {
-					hasEnded = formatNode(childNode, hasStarted, endNode);
-				}
+			String childNodeText = NodeModelUtils.getTokenText(childNode);
+//			System.out.println(indent + "formatAncestry childNode: " + childNode.getTotalOffset() + "-" + childNode.getOffset() + " .. " + childNode.getEndOffset() + "-" + childNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childNode) + " '" + Strings.convertToJavaString(childNodeText) + "'");
+			if (!hasStarted(childNode) && (childNode == childStartNode)&& (childStartNode instanceof ICompositeNode)) {
+				formatAncestry(startNodeStack, endNodeOrEOF, indent + "  ");
 			}
 			else {
-				hasEnded = formatNode(childNode, hasStarted, endNode);
+				formatNode(childNode, endNodeOrEOF);
 			}
-			if (hasEnded) {
+			if (hasEnded(childNode)) {
 				break;
 			}
 		}
-		assert hasStarted;
 		//
 		//	Format the trailing whitespace for the excluded ancestry.
 		//
@@ -218,10 +300,9 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				}
 			}
 		}
-		return hasEnded;
 	}
 
-	protected boolean formatCompositeNode(@NonNull ICompositeNode compositeNode, boolean hasStarted, @NonNull ILeafNode endNode) {
+	protected void formatCompositeNode(@NonNull ICompositeNode compositeNode, @Nullable ILeafNode endNodeOrEOF) {
 		String text = compositeNode.getText();
 		assert text != null;
 		EObject semanticElement = compositeNode.getSemanticElement();
@@ -251,18 +332,17 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		//
 		//	Inner formatting of the specific node.
 		//
-		boolean hasEnded = false;
 		@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
 		for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
 			if (formattingSegment.isValue()) {
 				for (@NonNull INode childNode : SerializationUtils.getChildren(compositeNode)) {
-					if (formatNode(childNode, hasStarted, endNode)) {
-						hasEnded = true;
+					formatNode(childNode, endNodeOrEOF);
+					if (hasEnded(childNode)) {
 						break;
 					}
 				}
 			}
-			else if (hasStarted) {
+			else if (hasStarted(compositeNode)) {
 				formattingSegment.format(elementFormatter, serializationBuilder);
 			}
 		}
@@ -290,10 +370,14 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				}
 			}
 		}
-		return hasEnded;
 	}
 
-	protected void formatLeafNode(@NonNull ILeafNode leafNode, boolean hasStarted) {
+	protected void formatLeafNode(@NonNull ILeafNode leafNode) {
+		int offset = leafNode.getOffset();
+		int endOffset = leafNode.getEndOffset();
+		int totalOffset = leafNode.getTotalOffset();
+		boolean hasStarted = (selectStart <= endOffset);
+		//	assert progress.hasStarted() == (selectStart <= endOffset);
 		String text = leafNode.getText();
 		assert text != null;
 		if (!leafNode.isHidden()) {
@@ -322,8 +406,7 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 			//
 			//	Inner formatting of the specific node.
 			//
-			@NonNull
-			SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
+			@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
 			for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
 				if (hasStarted || formattingSegment.isControl()) {
 					formattingSegment.format(elementFormatter, serializationBuilder);
@@ -355,21 +438,15 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		}
 	}
 
-	protected boolean formatNode(@NonNull INode childNode, boolean hasStarted, @NonNull ILeafNode endNode) {
+	protected void formatNode(@NonNull INode childNode, @Nullable ILeafNode endNodeOrEOF) {
 		if (childNode instanceof ICompositeNode) {
-			if (formatCompositeNode((ICompositeNode)childNode, hasStarted, endNode)) {
-				return true;
-			}
+			formatCompositeNode((ICompositeNode)childNode, endNodeOrEOF);
 		}
 		else {
-			if (!((ILeafNode) childNode).isHidden()) {
-				formatLeafNode((ILeafNode)childNode, hasStarted);
-			}
-			if (childNode == endNode) {
-				return true;
+			if (!((ILeafNode)childNode).isHidden()) {
+				formatLeafNode((ILeafNode)childNode);
 			}
 		}
-		return false;
 	}
 
 	/**
@@ -432,5 +509,15 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 			grammarElement = eContainer;
 		}
 		return grammarElement instanceof AbstractElement ? (AbstractElement)grammarElement : SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
+	}
+
+	private boolean hasEnded(@NonNull INode node) {
+		int endOffset = node.getEndOffset();
+		return endOffset >= selectEnd;
+	}
+
+	private boolean hasStarted(@NonNull INode node) {
+		int offset = node.getOffset();
+		return offset >= selectStart;
 	}
 }
