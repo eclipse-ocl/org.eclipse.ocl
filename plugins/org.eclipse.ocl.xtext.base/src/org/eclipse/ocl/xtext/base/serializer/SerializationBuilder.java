@@ -1025,6 +1025,10 @@ public class SerializationBuilder
 			return s.length();
 		}
 
+		public int length() {
+			return s.length();
+		}
+
 		@Override
 		public @NonNull String toString() {
 			int maximumRequiredColumns = rootContext.getRequiredColumns();
@@ -1109,6 +1113,10 @@ public class SerializationBuilder
 				appendNewLine(false);
 			}
 			s.close();
+		}
+
+		public int length() {
+			return s.length();
 		}
 
 		public void pop() {
@@ -1221,6 +1229,9 @@ public class SerializationBuilder
 		else if (nextString == NO_SPACE) System.out.println("NO_SPACE");
 		else {
 			System.out.println("'" + StringUtil.convertToOCLString(nextString )+ "'");
+			if (nextString.contains("final")) {
+				getClass();
+			}
 		} */
 		if (nextString == null) {
 			/* ignore */;
@@ -1328,6 +1339,13 @@ public class SerializationBuilder
 		return errors;
 	}
 
+	/**
+	 * Return the prevailing internal string length before any line-wrapping occurs.
+	 */
+	public int length() {
+		return s.length();
+	}
+
 	public int getLineLength() {
 		return lineLength;
 	}
@@ -1339,6 +1357,9 @@ public class SerializationBuilder
 	public @NonNull IndentingStringBuilder resetBuilder() {
 		WrappingStringBuilder sw = new WrappingStringBuilder(new StringBuilder(), lineLength, lineDelimiter, tabWidth);
 		this.s = new IndentingStringBuilder(sw, lineDelimiter, indentString);
+		this.trailingStringState = NO_SPACE;
+		this.pushingNext = false;
+		this.errors = null;
 		return this.s;
 	}
 
