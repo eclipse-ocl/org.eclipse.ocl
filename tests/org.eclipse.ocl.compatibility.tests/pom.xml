@@ -42,7 +42,6 @@
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
     <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
-    <executionEnvironment>${executionEnvironment}</executionEnvironment>
     <!-- For launching Eclipse and running JUnit tests -->
     <runtime-jdk-version>1.8</runtime-jdk-version>
     <source-java-version>1.8</source-java-version>
@@ -149,7 +148,6 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
-          <includePackedArtifacts>true</includePackedArtifacts>
           <resolver>p2</resolver>
           <executionEnvironment>${executionEnvironment}</executionEnvironment>
           <target>
@@ -806,8 +804,8 @@
       </activation>
       <properties>
         <buildType></buildType>
-        <executionEnvironment>JavaSE-11</executionEnvironment>
-        <runtime-jdk-version>11.0</runtime-jdk-version>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
         <targetRelease>2023-06</targetRelease>
       </properties>
     </profile>
@@ -818,8 +816,8 @@
       </activation>
       <properties>
         <buildType></buildType>
-        <executionEnvironment>JavaSE-11</executionEnvironment>
-        <runtime-jdk-version>11.0</runtime-jdk-version>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
         <targetRelease>2023-09</targetRelease>
       </properties>
     </profile>
@@ -830,8 +828,8 @@
       </activation>
       <properties>
         <buildType></buildType>
-        <executionEnvironment>JavaSE-11</executionEnvironment>
-        <runtime-jdk-version>11.0</runtime-jdk-version>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
         <targetRelease>2023-12</targetRelease>
       </properties>
     </profile>
