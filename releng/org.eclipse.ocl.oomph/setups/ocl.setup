@@ -330,6 +330,11 @@
   <project name="dev"
       label="Development (required)">
     <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.ocl.unified.core.feature.group"/>
+    </setupTask>
+    <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
           rootFolder="${ocl.git.clone.location/examples}"
@@ -779,19 +784,16 @@
         label="Master (Latest)"/>
     <stream
         name="6.19.0"
-        label="6.19.0 (2023-12)">
-    </stream>
+        label="6.19.0 (2023-12)"/>
     <stream
         name="6.18.0_with_2023-06_source_compatibility"
         label="6.18.0_with_2023-06_source_compatibility"/>
     <stream
         name="6.18.0"
-        label="6.18.0 (2022-12)">
-    </stream>
+        label="6.18.0 (2022-12)"/>
     <stream
         name="6.17.0"
-        label="6.17.0 (2021-12)">
-    </stream>
+        label="6.17.0 (2021-12)"/>
     <stream
         name="6.16.0"
         label="6.16.0 (2021-09)">
