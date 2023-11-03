@@ -576,6 +576,9 @@
         name="6.19.0"
         label="6.19.0 (2023-12)"/>
     <stream
+        name="6.18.0_with_2023-06_source_compatibility"
+        label="6.18.0_with_2023-06_source_compatibility"/>
+    <stream
         name="6.18.0"
         label="6.18.0 (2022-12)"/>
     <stream
@@ -778,6 +781,9 @@
         name="6.19.0"
         label="6.19.0 (2023-12)">
     </stream>
+    <stream
+        name="6.18.0_with_2023-06_source_compatibility"
+        label="6.18.0_with_2023-06_source_compatibility"/>
     <stream
         name="6.18.0"
         label="6.18.0 (2022-12)">
@@ -1355,6 +1361,9 @@
     <stream
         name="6.19.0"
         label="6.19.0 (2023-12)"/>
+    <stream
+        name="6.18.0_with_2023-06_source_compatibility"
+        label="6.18.0_with_2023-06_source_compatibility"/>
     <stream
         name="6.18.0"
         label="6.18.0 (2022-12)"/>
