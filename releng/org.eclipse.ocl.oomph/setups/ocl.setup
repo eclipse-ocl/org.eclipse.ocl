@@ -52,7 +52,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2021-12"
+      defaultValue="2022-12"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -107,6 +107,24 @@
             url="https://download.eclipse.org/releases/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
+      </repositoryList>
+      <repositoryList
+          name="2023-09">
+        <repository
+            url="https://download.eclipse.org/releases/2023-09"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230302014618/repository"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
+      </repositoryList>
+      <repositoryList
+          name="2023-06">
+        <repository
+            url="https://download.eclipse.org/releases/2023-06"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
       </repositoryList>
@@ -555,6 +573,12 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.19.0"
+        label="6.19.0 (2023-12)"/>
+    <stream
+        name="6.18.0"
+        label="6.18.0 (2022-12)"/>
+    <stream
         name="6.17.0"
         label="6.17.0 (2021-12)"/>
     <stream
@@ -750,6 +774,14 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.19.0"
+        label="6.19.0 (2023-12)">
+    </stream>
+    <stream
+        name="6.18.0"
+        label="6.18.0 (2022-12)">
+    </stream>
     <stream
         name="6.17.0"
         label="6.17.0 (2021-12)">
@@ -1320,6 +1352,12 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.19.0"
+        label="6.19.0 (2023-12)"/>
+    <stream
+        name="6.18.0"
+        label="6.18.0 (2022-12)"/>
     <stream
         name="6.17.0"
         label="6.17.0 (2021-12)"/>
