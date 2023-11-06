@@ -13,7 +13,25 @@ with "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/
 import "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore#/" as basecs
 import "platform:/resource/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.ecore#/" as oclinecorecs
 
-idiom BRACES_in_ClassCS for basecs::ClassCS {
+idiom BRACES4_in_ClassCS for basecs::ClassCS {
+	at "{" do soft-space value soft-space;
+	at "}" do soft-space value soft-space;
+	at "{" do soft-new-line value push soft-new-line;
+	at "}" do pop soft-space value soft-new-line half-new-line;
+}
+
+idiom BRACES2a_in_ClassCS for basecs::ClassCS {
+	at "{" do soft-space value soft-space;
+	at "}" do soft-space value soft-space;
+	at ";" do no-space value soft-new-line half-new-line;
+}
+
+idiom BRACES2b_in_ClassCS for basecs::ClassCS {
+	at "{" do soft-new-line value push soft-new-line;
+	at "}" do pop soft-space value soft-new-line half-new-line;
+}
+
+idiom BRACES4_in_OperationCS for basecs::OperationCS {
 	at "{" do soft-space value soft-space;
 	at "}" do soft-space value soft-space;
 	at "{" do soft-space value push soft-new-line;
@@ -26,7 +44,12 @@ idiom BRACES2_in_OperationCS for basecs::OperationCS {
 	at ";" do no-space value soft-new-line;
 }
 
-idiom BRACES4_in_OperationCS for basecs::OperationCS {
+idiom BRACES2_in_PackageCS for basecs::PackageCS {
+	at "{" do soft-new-line value push soft-new-line;
+	at "}" do pop soft-space value soft-new-line;
+}
+
+idiom BRACES4_in_StructuralFeatureCS for basecs::StructuralFeatureCS {
 	at "{" do soft-space value soft-space;
 	at "}" do soft-space value soft-space;
 	at "{" do soft-space value push soft-new-line;
@@ -37,13 +60,6 @@ idiom BRACES2_in_StructuralFeatureCS for basecs::StructuralFeatureCS {
 	at "{" do soft-space value soft-space;
 	at "}" do soft-space value soft-space;
 	at ";" do no-space value soft-new-line;
-}
-
-idiom BRACES4_in_StructuralFeatureCS for basecs::StructuralFeatureCS {
-	at "{" do soft-space value soft-space;
-	at "}" do soft-space value soft-space;
-	at "{" do soft-space value push soft-new-line;
-	at "}" do pop soft-space value soft-new-line;
 }
 
 idiom COLON_in_OCLinEcoreConstraintCS for oclinecorecs::OCLinEcoreConstraintCS at ":" do no-space value soft-space;

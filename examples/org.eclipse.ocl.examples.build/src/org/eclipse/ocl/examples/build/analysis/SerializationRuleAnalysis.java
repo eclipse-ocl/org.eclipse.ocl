@@ -1083,10 +1083,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				}
 				if (isOk) {
 					idioms.add(idiom);
-					if ("BINARY_OPERATOR_NAME_SPACING".equals(idiom.getName())) {
-					//	System.out.println("getSerializationNode2subIdioms " + NameUtil.debugSimpleName(this) + " " + this);
-						getClass();
-					}
 				}
 			}
 			//
@@ -1112,6 +1108,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		SerializationRule serializationRule2 = serializationRule;
 		if (serializationRule2 == null) {
 			analyzeMatches();
+			assert serializationRule == null;		// XXX testing redundancy else needs recursion comment
 			serializationRule2 = serializationRule;
 			if (serializationRule2 == null) {
 				@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));

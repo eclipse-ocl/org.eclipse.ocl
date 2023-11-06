@@ -31,6 +31,12 @@ idiom COMMA at "," do no-space value soft-space;
 
 idiom DOT_DOT at ".." do no-space value no-space;
 
+idiom IMPORT_SPACING for basecs::ImportCS at ";" do no-space value soft-new-line half-new-line;
+
+idiom IMPORTS_SPACING at assignment basecs::RootCS::ownedImports do value half-new-line;
+
+idiom PACKAGES_SPACING at assignment basecs::PackageOwnerCS::ownedPackages do half-new-line value half-new-line;
+
 idiom PARENTHESES {
 	at "(" do no-space value no-space;
 	at ")" do no-space value;

@@ -50,8 +50,6 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	{
 		private final int lineNumber;			// 0-based line number
 		private final int columnNumber;			// 0-based column number
-	//	private final int trailingTabs;
-	//	private final int trailingSpaces;
 
 		public Position(int lineNumber, int columnNumber) {
 			this.lineNumber = lineNumber;
@@ -93,14 +91,6 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		public int getLineNumber() {
 			return lineNumber;
 		}
-
-//		public int getTrailingSpaces() {
-//			return trailingSpaces;
-//		}
-
-//		public int getTrailingTabs() {
-//			return trailingTabs;
-//		}
 
 		@Override
 		public @NonNull String toString() {
@@ -691,145 +681,18 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	public IFormattedRegion format(ICompositeNode rootNode, final int selectStart, final int selectLength) {
 		assert rootNode != null;
 		serializationBuilder.resetBuilder();
-//		this.rootNode = rootNode;
-//		this.selectStart = selectStart;
 		this.selectEnd = selectStart + selectLength;
 		this.rootText = rootNode.getText();
-//		int rootTextLength = rootText.length();
-
-
-//		int selectEnd = selectStart+selectLength;
-		//
-		//	Find selected node range.
-		//
-/*		XtextAbstractCommentSegmentSupport xtextCommentSegmentSupport = new XtextCommentSegmentSupport();
-		SerializationMetaData serializationMetaData = modelAnalysis.getSerializationMetaData();
-		List<@NonNull Comment> preComments = xtextCommentSegmentSupport.getPreComments(serializationMetaData, startNode);
-		List<@NonNull Comment> postComments = xtextCommentSegmentSupport.getPostComments(serializationMetaData, endNode);
-		if ((preComments != null) && (preComments.size() > 0)) {
-			newStart = preComments.get(0).getNode().getOffset();
-		}
-		if ((postComments != null) && (postComments.size() > 0)) {
-			newStart = postComments.get(postComments.size()-1).getNode().getEndOffset();
-		} */
 		String selectedText = rootText.substring(selectStart, selectEnd);
-		System.out.println("format\tselectedText: " + selectedText.length() + " chars at " + selectStart + "-" + selectEnd + ": '" + Strings.convertToJavaString(selectedText) + "'");
-
-
+//		System.out.println("format\tselectedText: " + selectedText.length() + " chars at " + selectStart + "-" + selectEnd + ": '" + Strings.convertToJavaString(selectedText) + "'");
 		start = createStartBoundary(rootNode, selectStart);
 		end = createEndBoundary(rootNode, selectEnd);
-
-	//	int oldStart = start.getSelectedNode().getTotalOffset();
-	//	int oldEnd = end.getSelectedNode().getTotalEndOffset();
-	//	String oldTotalText = rootText.substring(oldStart, oldEnd);
-	//	System.out.println("\toldTotalText: " + oldTotalText.length() + " chars at " + oldStart + "-" + oldEnd + ": '" + Strings.convertToJavaString(oldTotalText) + "'");
-
-
-	/*	String prefixText = rootText.substring(oldStart, selectStart);
-		String darkPrefixText = darkText(prefixText);
-		int iStart = selectStart;
-		for ( ; iStart >= oldStart; --iStart) {
-			if (iStart == 0) {			// Emulate a new-line at start of file
-				break;
-			}
-			char c = rootText.charAt(iStart-1);
-			if (c == '\n') {
-				break;
-			}
-			if (!Character.isWhitespace(c)) {
-				break;
-			}
-		}
-		String whitePrefixText = iStart < selectStart ? rootText.substring(iStart, selectStart) : null; */
-
-
-
-
-	/*	String suffixText = rootText.substring(selectEnd, oldEnd);
-		String darkSuffixText = darkText(suffixText);
-		int iEnd = selectEnd;
-		for ( ; iEnd <= oldEnd; iEnd++) {
-			if ((iEnd < 0) || (iEnd >= rootText.length())) {			// Emulate a new-line at start/end of file
-				break;
-			}
-			char c = rootText.charAt(iEnd);
-			if (c == '\n') {
-				break;
-			}
-			if (!Character.isWhitespace(c)) {
-				break;
-			}
-		}
-		String whiteSuffixText = iEnd > selectEnd ? rootText.substring(selectEnd, iEnd) : null; */
-	//	System.out.println("\tdarkPrefixText: " + (darkPrefixText != null ? "'" + Strings.convertToJavaString(darkPrefixText) + "'" : "null"));
-	//	System.out.println("\twhitePrefixText: " + (whitePrefixText != null ? "'" + Strings.convertToJavaString(whitePrefixText) + "'" : "null"));
-	//	System.out.println("\tdarkSuffixText: " + (darkSuffixText != null ? "'" + Strings.convertToJavaString(darkSuffixText) + "'" : "null"));
-	//	System.out.println("\twhiteSuffixText: " + (whiteSuffixText != null ? "'" + Strings.convertToJavaString(whiteSuffixText) + "'" : "null"));
-
-
-
-//		this.darkStartNode = start.getSelectedNode();
-//		if (!isDark(darkStartNode)) {
-//			this.darkStartNode = null;
-//			this.darkStartNode1 = previousDarkNode(start.getSelectedNode());
-//			this.darkStartNode2 = nextDarkNode(start.getSelectedNode());
-//		}
-//		System.out.println("\tdarkStartNode: " + debugText(darkStartNode));
-//		System.out.println("\tdarkStartNode1: " + debugText(darkStartNode1));
-//		System.out.println("\tdarkStartNode2: " + debugText(darkStartNode2));
-//		this.selectStartToDarkStartEnd = darkStartNode.getEndOffset() - selectStart;
-	//	System.out.println("format darkDarkStart: " + darkStartEndIndex + " " + debugText(darkStartNode));
-
-//		String optionalWhiteStartText = null;
-//		String requiredWhiteStartText = null;
-/*		int darkStartStart = darkStartNode.getOffset();
-		int selectStartToDarkStartStart = darkStartStart - selectStart;
-		if (selectStartToDarkStartStart > 0) {
-
-
-			int i = darkStartStart;
-			while (--i >= 0) {
-				char c = rootText.charAt(i);
-				if ((c == '\n') || !Character.isWhitespace(c)) {
-					break;
-				}
-			}
-			optionalWhiteStartText = rootText.substring(i + 1, darkStartStart);
-			System.out.println("\toptionalWhiteStartText: " + (i+1) + " '" + Strings.convertToJavaString(optionalWhiteStartText) + "'");
-			int j = i+1;
-			while (--j >= 0) {
-				char c = rootText.charAt(j);
-				if ((c == '\n') || !Character.isWhitespace(c)) {
-					break;
-				}
-			}
-			requiredWhiteStartText = rootText.substring(j+1, i+1);
-			System.out.println("\trequiredWhiteStartText: " + (j+1) + " '" + Strings.convertToJavaString(requiredWhiteStartText) + "'");
-		} */
-//		System.out.println("\tselectedEndNode: " + debugText(end.getSelectedNode()));
-//		this.darkEndNode = end.getSelectedNode();
-//		if (!isDark(darkEndNode)) {
-//			this.darkEndNode = null;
-//			this.darkEndNode1 = previousDarkNode(end.getSelectedNode());
-//			this.darkEndNode2 = nextDarkNode(end.getSelectedNode());
-//		}
-//		System.out.println("\tdarkEndNode: " + debugText(darkEndNode));
-//		System.out.println("\tdarkEndNode1: " + debugText(darkEndNode1));
-//		System.out.println("\tdarkEndNode2: " + debugText(darkEndNode2));
-//		end.debugPrintln("\t");
-//		this.selectEndToEndNodeEnd = darkEndNode.getEndOffset() - selectEnd;
-//		System.out.println("\tdarkEndNode: " + darkEndEndIndex + " " + debugText(darkEndNode));
 //		start.debugPrintln("\t");
 //		end.debugPrintln("\t");
-
 		extendedSelectStart = start.getExtendedStartIndex(); //Math.min(darkStartNode.getTotalOffset(), end.getSelectedNode().getTotalOffset());
 		extendedSelectEnd = end.getExtendedEndIndex(); //Math.max(darkEndNode.getTotalEndOffset(), end.getSelectedNode().getTotalEndOffset());
 		String extendedText = rootText.substring(extendedSelectStart, extendedSelectEnd);
-		System.out.println("\textendedText: " + extendedText.length() + " chars at " + extendedSelectStart + "-" + extendedSelectEnd + ": '" + Strings.convertToJavaString(extendedText) + "'");
-
-
-
-
+//		System.out.println("\textendedText: " + extendedText.length() + " chars at " + extendedSelectStart + "-" + extendedSelectEnd + ": '" + Strings.convertToJavaString(extendedText) + "'");
 		formatNode(rootNode, 0);
 		INode lastNode = getLastLeafNode(rootNode);
 	//	assert lastNode != null;
@@ -837,55 +700,17 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 			serializationBuilder.append(SerializationBuilder.NEW_LINE);				// trailing new-line got lost - must make explicit
 		}
 		String reformattedText = serializationBuilder.toString();
-		System.out.println("\treformattedText: " + reformattedText.length() + " chars of '" + Strings.convertToJavaString(reformattedText) + "'");
-
+//		System.out.println("\treformattedText: " + reformattedText.length() + " chars of '" + Strings.convertToJavaString(reformattedText) + "'");
 		start.setReformattedText(reformattedText);
 		end.setReformattedText(reformattedText);
-
-		start.debugPrintln("\t");
-		end.debugPrintln("\t");
-		//
-		//	Condition the insertion site to follow a new-line else follow all whitespace.
-		//
-//		for (; oldStart < selectStart; oldStart++) {		// Step to first non-whitespace character
-//			char c = rootText.charAt(oldStart);
-//			if (!Character.isWhitespace(c)) {
-//				break;
-//			}
-//		}
-//		@SuppressWarnings("unused") String oldContextText = rootText.substring(oldStart, oldEnd);
-//		System.out.println("\toldContextText: " + (precedingChar != 0 ? ("'" + Strings.convertToJavaString(String.valueOf(precedingChar)) + "'") : "«BOF»") + " then " + oldStart + "-" + oldEnd + ": '" + Strings.convertToJavaString(oldContextText) + "' then " + (followingChar != 0 ? ("'" + Strings.convertToJavaString(String.valueOf(followingChar)) + "'") : "«EOF»"));
-
-//		System.out.println("\tdarkStartEndIndex: " + darkStartEndIndex);
-//		System.out.println("\tdarkEndEndIndex: " + darkEndEndIndex);
-
-		System.out.println("\tselect: " + selectStart + " .. " + selectEnd);
-//		System.out.println("\tselectStartToDarkStartEnd: " + selectStartToDarkStartEnd);
-//		System.out.println("\tselectEndToEndNodeEnd: " + selectEndToEndNodeEnd);
-
+//		start.debugPrintln("\t");
+//		end.debugPrintln("\t");
+//		System.out.println("\tselect: " + selectStart + " .. " + selectEnd);
 		int startIndex = start.getReformattedSelectIndex(); //darkStartEndIndex - selectStartToDarkStartEnd;
 		int endIndex = end.getReformattedSelectIndex(); //darkEndEndIndex - selectEndToEndNodeEnd;
-		System.out.println("\treformatted: " + startIndex + " .. " + endIndex);
+//		System.out.println("\treformatted: " + startIndex + " .. " + endIndex);
 		String newNewText = reformattedText.substring(startIndex, endIndex);
-	/*	if (darkPrefixText != null) {
-			int index = newText.indexOf(darkPrefixText);
-			if (index >= 0) {
-				newText = newText.substring(index + darkPrefixText.length());
-			}
-		}
-		if ((whitePrefixText != null) && newText.startsWith(whitePrefixText)) {
-			newText = newText.substring(whitePrefixText.length());
-		}
-		if (darkSuffixText != null) {
-			int index = newText.lastIndexOf(darkSuffixText);
-			if (index >= 0) {
-				newText = newText.substring(0, index);
-			}
-		}
-		if ((whiteSuffixText != null) && newText.endsWith(whiteSuffixText)){
-			newText = newText.substring(0, newText.length() - whiteSuffixText.length());
-		} */
-		System.out.println("\treplace: " + (selectEnd - selectStart) + " chars at " + selectStart + "-" + selectEnd + " by the " + newNewText.length() + " chars of '" + Strings.convertToJavaString(newNewText) + "'");
+//		System.out.println("\treplace: " + (selectEnd - selectStart) + " chars at " + selectStart + "-" + selectEnd + " by the " + newNewText.length() + " chars of '" + Strings.convertToJavaString(newNewText) + "'");
 		return new FormattedRegion(selectStart, selectEnd - selectStart, newNewText);
 	}
 

@@ -1089,9 +1089,12 @@ public class SerializationBuilder
 				assert indent != null;
 				int length = indent.length();
 				if (length > 0) {
-					char lastChar = indent.charAt(length-1);
-					if (!Character.isWhitespace(lastChar)) {
-						s.appendIndent(indent);
+					for (int i = length; --i >= 0; ) {
+						char c = indent.charAt(i);
+						if (!Character.isWhitespace(c)) {
+							s.appendIndent(indent.substring(0, i+1));
+							break;
+						}
 					}
 				}
 			}

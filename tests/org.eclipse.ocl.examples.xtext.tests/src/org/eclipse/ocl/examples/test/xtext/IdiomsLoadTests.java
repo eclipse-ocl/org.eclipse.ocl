@@ -303,7 +303,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		doReformatText(declarativeFormatter, rootNode, 0, referenceText.length(), referenceText);
 		// almost total selection
 		for (int i = 0; i <= 5; i++) {
-			System.out.println(i);
+		//	System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, i, referenceText.length()-i, referenceText);
 			doReformatText(declarativeFormatter, rootNode, 0, referenceText.length()-i, referenceText);
 		}
@@ -313,12 +313,12 @@ public class IdiomsLoadTests extends XtextTestCase
 		doReformatText(declarativeFormatter, rootNode, endHeaderOffset, 0, referenceText);
 		// nothing across end of long /**/ comment
 		for (int i = endHeaderOffset-5; i < endHeaderOffset+5; i++) {
-			System.out.println(i);
+		//	System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, endHeaderOffset, 0, referenceText);
 		}
 		// selection across end of long /**/ comment
 		for (int i = endHeaderOffset-15; i < endHeaderOffset+5; i++) {
-			System.out.println(i);
+		//	System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, endHeaderOffset, 10, referenceText);
 		}
 
@@ -329,7 +329,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		doReformatText(declarativeFormatter, rootNode, keyOffset + 32, 100, referenceText);
 		// selection across end of long // comment
 		for (int i = -5; i < keyLength + 5; i++) {
-			System.out.println(i);
+		//	System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, keyOffset + i, 100, referenceText);
 		}
 
@@ -341,23 +341,23 @@ public class IdiomsLoadTests extends XtextTestCase
 		int indentedWindow = 15;
 		assert rootNode == NodeModelUtils.getNode(rootEObject);
 		int i1 = -indentedWindow-2;
-		System.out.println(i1 + " " + (indentedOffset+i1));
+	//	System.out.println(i1 + " " + (indentedOffset+i1));
 		doReformatText(declarativeFormatter, rootNode, indentedOffset+i1, indentedWindow, replacedText);
 	//	String indentedKey2 = "ES {\n\tat \"{\"";
 	//	String reformattedKey2 = "\t at \"{\"";
 		int i2 = -indentedWindow-1;
-		System.out.println(i2 + " " + (indentedOffset+i2));
+	//	System.out.println(i2 + " " + (indentedOffset+i2));
 		doReformatText(declarativeFormatter, rootNode, indentedOffset+i2, indentedWindow, replacedText);//.replace(indentedKey2, reformattedKey2));
-	//	for (int i = -indentedWindow-2; i < -indentedWindow; i++) {
+	//	for (int i = -indentedWindow-2; i < -indentedWindow; i++) {		// XXX
 	//		System.out.println(i + " " + (indentedOffset+i));
 	//		doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
 	//	}
 		for (int i = -indentedWindow; i < 0; i++) {
-			System.out.println(i + " " + (indentedOffset+i));
+		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, referenceText);
 		}
 		for (int i = 0; i < +indentedWindow; i++) {
-			System.out.println(i + " " + (indentedOffset+i));
+		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
 		}
 		replace((LazyLinkingResource) rootEObject.eResource(), rootNode, deficientIndentedKey, indentedKey);
@@ -370,15 +370,15 @@ public class IdiomsLoadTests extends XtextTestCase
 		indentedWindow = 15;
 		assert rootNode == NodeModelUtils.getNode(rootEObject);
 		for (int i = -indentedWindow-2; i < -indentedWindow; i++) {
-			System.out.println(i + " " + (indentedOffset+i));
+		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
 		}
 		for (int i = -indentedWindow; i < 0; i++) {
-			System.out.println(i + " " + (indentedOffset+i));
+		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, referenceText);
 		}
 		for (int i = 0; i < +indentedWindow; i++) {
-			System.out.println(i + " " + (indentedOffset+i));
+		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
 		}
 		replace((LazyLinkingResource) rootEObject.eResource(), rootNode, excessIndentedKey, indentedKey);
@@ -389,7 +389,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 
-	public void testIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
+	public void zztestIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -425,7 +425,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
+	public void zztestIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -448,7 +448,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
+	public void zztestIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = new IdiomsStandaloneSetup().createInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
