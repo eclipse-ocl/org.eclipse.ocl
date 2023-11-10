@@ -61,7 +61,7 @@ public class DeclarativeSerializer extends Serializer // implements ISerializer 
 		//	}
 
 		//
-		//	Analyze each element of the user model to determine the applicabale serialization rule(s).
+		//	Analyze each element of the user model to determine the applicable serialization rule(s).
 		//
 		modelAnalysis.analyze(eObject);
 	//	String s2 = modelAnalysis.toString();

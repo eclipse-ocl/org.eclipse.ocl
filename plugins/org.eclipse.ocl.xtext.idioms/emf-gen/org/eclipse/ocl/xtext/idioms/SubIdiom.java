@@ -47,7 +47,7 @@ public interface SubIdiom
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Whether the segments apply once to  serialization of all located elements, or repeatedly to each occurrence.
+	 * Whether the segments apply once to serialization of all located elements, or repeatedly to each occurrence.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>All</em>' attribute.
 	 * @see #setAll(boolean)

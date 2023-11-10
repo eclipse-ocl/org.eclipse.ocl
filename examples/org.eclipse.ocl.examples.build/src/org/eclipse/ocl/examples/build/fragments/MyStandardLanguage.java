@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IClasspathUriResolver;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.xtext.generator.Issues;
 import org.eclipse.xtext.xtext.generator.StandardLanguage;
 
 /**
@@ -25,6 +27,16 @@ public class MyStandardLanguage extends StandardLanguage
 
 	public MyStandardLanguage() {
 		super();
+	}
+
+	@Override
+	public void checkConfiguration(Issues issues) {
+		super.checkConfiguration(issues);
+		String grammarUri = getGrammarUri();
+		URI uri = URI.createURI(grammarUri);
+		if (!uri.isPlatformResource()) {
+			issues.addWarning("grammarUri should be a 'platform:' URI to support use as a rule locator");
+		}
 	}
 
 	@Override

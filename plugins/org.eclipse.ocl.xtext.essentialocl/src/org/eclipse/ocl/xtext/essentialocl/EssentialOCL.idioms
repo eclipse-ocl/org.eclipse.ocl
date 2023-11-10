@@ -10,8 +10,33 @@
  *******************************************************************************/
 model org.eclipse.ocl.xtext.essentialocl.EssentialOCL
 with "platform:/resource/org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms"
+import "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore#/" as essentialoclcs
 grammar "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext" as essentialoclx
 
 idiom HASH at "#" do no-space value no-space;
 
 idiom NAVIGATION_OPERATOR_NAME at rule essentialoclx::EssentialOCLNavigationOperatorName do no-space value no-space;
+
+idiom ELSEIFEXP_SPACING for essentialoclcs::IfThenExpCS {
+	at "elseif" do soft-new-line pop soft-space value push soft-space;
+	at "then" do pop value push soft-space;
+}
+
+idiom IFEXP_SPACING for essentialoclcs::IfExpCS {
+	at "if" do soft-new-line value push soft-space;
+	at "then" do pop soft-space value push soft-space;
+	at "else" do soft-new-line pop value push soft-space;
+	at "endif" do soft-new-line pop value soft-space;
+}
+
+idiom LETEXP_SPACING for essentialoclcs::LetExpCS {
+	at "let" do soft-space value push;
+	at "in" do soft-space pop value soft-new-line;
+}
+
+idiom TUPLELITERALEXP_BRACES {
+	at "{" do soft-space value push soft-new-line;
+	at "}" do pop soft-new-line value soft-new-line;
+}
+
+idiom TUPLELITERALEXP_COMMA for essentialoclcs::TupleLiteralExpCS at "," do no-space value soft-new-line;

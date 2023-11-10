@@ -14,6 +14,8 @@ import "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCL
 
 idiom COMMENTED_RULE at returns basecs::ModelElementCS do custom "org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport" value;
 
+idiom ARROW at "->" do no-space value no-space;
+
 idiom BRACES {
 	at "{" do soft-space value push soft-new-line;
 	at "}" do pop soft-space value soft-new-line;
@@ -29,9 +31,9 @@ idiom COLON_COLON at "::" do no-space value no-space;
 
 idiom COMMA at "," do no-space value soft-space;
 
-idiom DOT_DOT at ".." do no-space value no-space;
+idiom DOT at "." do no-space value no-space;
 
-idiom IMPORT_SPACING for basecs::ImportCS at ";" do no-space value soft-new-line half-new-line;
+idiom DOT_DOT at ".." do no-space value no-space;
 
 idiom IMPORTS_SPACING at assignment basecs::RootCS::ownedImports do value half-new-line;
 

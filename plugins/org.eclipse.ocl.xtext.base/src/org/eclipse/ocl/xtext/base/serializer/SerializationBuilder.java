@@ -18,6 +18,8 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * SerializationBuilder builds the intermediate serialization from an interleaving of concrete strings and virtual
@@ -79,7 +81,7 @@ public class SerializationBuilder
 	public static final @NonNull String RAW_NEW_LINE = new String("raw-new-line");
 
 	/**
-	 * The virtual character/string to start a new line,  but avoid multiple new lines.
+	 * The virtual character/string to start a new line, but avoid multiple new lines.
 	 */
 	public static final @NonNull String SOFT_NEW_LINE = new String("soft-new-line");
 
@@ -120,6 +122,7 @@ public class SerializationBuilder
 	 */
 	public static final @NonNull String WRAP_ANCHOR = new String("wrap-anchor");
 
+	public static final @NonNull TracingOption SERIALIZATION = new TracingOption("org.eclipse.ocl.xtext.base", "serialization");
 	/**
 	 * An AbstractContext identifies (the left edge of) a significant character location in the
 	 * indented but not yet wrapped output text.
@@ -1179,6 +1182,8 @@ public class SerializationBuilder
 	 */
 	private @Nullable String trailingStringState = NO_SPACE;
 
+	private boolean hasHalfNewLine = false;
+
 	/**
 	 * True if the last append was PUSH_NEXT and so the next append is its argument.
 	 * trailingStringState is the state of a five-valued concurrent state machine.
@@ -1195,6 +1200,8 @@ public class SerializationBuilder
 	 */
 	private @Nullable List<@NonNull String> errors = null;
 
+	protected final boolean tracing;
+
 	public SerializationBuilder() {
 		// See Bug 439440 for the inability to pass useful EMF save options via SaveOptions forcing in-built Xtext defaults
 		this("\n", "\t", 0, 4);
@@ -1210,6 +1217,7 @@ public class SerializationBuilder
 		this.lineLength = lineLength;
 		this.tabWidth = tabWidth;
 		this.s = resetBuilder();
+		this.tracing = SERIALIZATION.isActive();
 	}
 
 	/**
@@ -1220,22 +1228,26 @@ public class SerializationBuilder
 	//		debugStrings.add(nextString);
 	//	}
 	// == rather than String.equals() in the following to use the dedicated non-interned singletons
-	/*	if (nextString == null) System.out.println("null");
-		else if (nextString == PUSH_NEXT) System.out.println("PUSH_NEXT");
-		else if (nextString == PUSH) System.out.println("PUSH");
-		else if (nextString == POP) System.out.println("POP");
-		else if (nextString == NEW_LINE) System.out.println("NEW_LINE");
-		else if (nextString == RAW_NEW_LINE) System.out.println("RAW_NEW_LINE");
-		else if (nextString == HALF_NEW_LINE) System.out.println("HALF_NEW_LINE");
-		else if (nextString == SOFT_NEW_LINE) System.out.println("SOFT_NEW_LINE");
-		else if (nextString == SOFT_SPACE) System.out.println("SOFT_SPACE");
-		else if (nextString == NO_SPACE) System.out.println("NO_SPACE");
-		else {
-			System.out.println("'" + StringUtil.convertToOCLString(nextString )+ "'");
-			if (nextString.contains("final")) {
-				getClass();
+		if (tracing) {
+			String traceString;
+			if (nextString == null) traceString = "null";
+			else if (nextString == PUSH_NEXT) traceString = "PUSH_NEXT";
+			else if (nextString == PUSH) traceString = "PUSH";
+			else if (nextString == POP) traceString = "POP";
+			else if (nextString == NEW_LINE) traceString = "NEW_LINE";
+			else if (nextString == RAW_NEW_LINE) traceString = "RAW_NEW_LINE";
+			else if (nextString == HALF_NEW_LINE) traceString = "HALF_NEW_LINE";
+			else if (nextString == SOFT_NEW_LINE) traceString = "SOFT_NEW_LINE";
+			else if (nextString == SOFT_SPACE) traceString = "SOFT_SPACE";
+			else if (nextString == NO_SPACE) traceString = "NO_SPACE";
+			else {
+				traceString = "'" + StringUtil.convertToOCLString(nextString )+ "'";
+				if (nextString.contains("/**")) {
+					getClass();
+				}
 			}
-		} */
+			SERIALIZATION.println(traceString);
+		}
 		if (nextString == null) {
 			/* ignore */;
 		}
@@ -1255,22 +1267,28 @@ public class SerializationBuilder
 		else if (nextString == NEW_LINE) {
 			s.appendNewLine(false);
 			trailingStringState = NO_SPACE;
+			hasHalfNewLine = false;
 		}
 		else if (nextString == RAW_NEW_LINE) {
 			s.appendNewLine(true);
 			trailingStringState = NO_SPACE;
+			hasHalfNewLine = false;
 		}
 		else if (nextString == HALF_NEW_LINE) {
-			if ((trailingStringState == SOFT_NEW_LINE) || (trailingStringState == HALF_NEW_LINE)) {
+			if (hasHalfNewLine) {
 				s.appendNewLine(false);
-				trailingStringState = NO_SPACE;
+				hasHalfNewLine = false;
 			}
 			else {
-				trailingStringState = HALF_NEW_LINE;
+				hasHalfNewLine = true;
+			}
+			if (/*(trailingStringState == NO_SPACE) ||*/ (trailingStringState == SOFT_SPACE)) {
+				trailingStringState = null;
 			}
 		}
 		else if (nextString == SOFT_NEW_LINE) {
 			trailingStringState = SOFT_NEW_LINE;
+			hasHalfNewLine = false;
 		}
 		else if (nextString == SOFT_SPACE) {
 			if (trailingStringState == NO_SPACE) {
@@ -1316,6 +1334,7 @@ public class SerializationBuilder
 				}
 			}
 			trailingStringState = null;
+			hasHalfNewLine = false;
 		}
 	}
 

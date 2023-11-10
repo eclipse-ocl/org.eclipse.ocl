@@ -693,7 +693,7 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		extendedSelectEnd = end.getExtendedEndIndex(); //Math.max(darkEndNode.getTotalEndOffset(), end.getSelectedNode().getTotalEndOffset());
 		String extendedText = rootText.substring(extendedSelectStart, extendedSelectEnd);
 //		System.out.println("\textendedText: " + extendedText.length() + " chars at " + extendedSelectStart + "-" + extendedSelectEnd + ": '" + Strings.convertToJavaString(extendedText) + "'");
-		formatNode(rootNode, 0);
+		formatRootNode(rootNode);
 		INode lastNode = getLastLeafNode(rootNode);
 	//	assert lastNode != null;
 		if ((lastNode != null) && isFormatting(lastNode) /*&& !lastNode.getText().endsWith("\n")*/ && rootText.endsWith("\n")) {
@@ -889,6 +889,12 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 //			String childNodeText = childNode.getText();
 //			System.out.println(getIndent(indent) + "formatNode childNode: " + childNode.getTotalOffset() + "-" + childNode.getOffset() + " .. " +  + childNode.getEndOffset() + "-" + childNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childNode) + " '" + Strings.convertToJavaString(childNodeText) + "'");
 		}
+	}
+
+	protected void formatRootNode(@NonNull ICompositeNode rootNode) {
+		EObject eObject = rootNode.getSemanticElement();
+		modelAnalysis.analyze(eObject);
+		formatCompositeNode(rootNode, 0);
 	}
 
 	/**

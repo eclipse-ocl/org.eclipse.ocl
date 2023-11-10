@@ -69,7 +69,7 @@ public class UserModelAnalysis
 		assert model.eContainer() == null;
 		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, null, model);
 		analyzeHierarchy(rootElementAnalysis, model);
-		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
+		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omitted by a toString().
 	}
 
 	private void analyzeHierarchy(@NonNull UserElementAnalysis parentAnalysis, @NonNull EObject eParent) {
@@ -157,7 +157,7 @@ public class UserModelAnalysis
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable ParserRuleValue targetRuleValue) {
 		debugSerializeCount++;
 		UserElementAnalysis elementAnalysis = getElementAnalysis(eObject);
-		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetRuleValue != null ? targetRuleValue : null);
+		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetRuleValue);
 		if (okMatch != null) {
 			UserElementSerializer serializer = createUserElementSerializer(okMatch, eObject);
 			serializer.serialize(serializationBuilder);

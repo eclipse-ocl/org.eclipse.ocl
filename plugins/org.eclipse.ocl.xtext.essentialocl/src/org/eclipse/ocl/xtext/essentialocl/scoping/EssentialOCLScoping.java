@@ -139,7 +139,7 @@ public class EssentialOCLScoping
 						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
 					}
 					else {
-						assert elementType == PivotPackage.Literals.ELEMENT;
+						assert (elementType == null) || (elementType == PivotPackage.Literals.ELEMENT): String.valueOf(elementType);		// May be null during transient edit
 						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticElement_ERROR_ :*/ PivotMessagesInternal.UnresolvedElement_ERROR_;
 					}
 				}

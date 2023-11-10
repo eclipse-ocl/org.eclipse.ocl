@@ -502,6 +502,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 	public void testIdiomsLoad_Xtext_idioms() throws IOException, InterruptedException {
+	//	SerializationBuilder.SERIALIZATION.setState(true);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/idioms/Xtext.idioms", true);
 		doLoad_Idioms(ocl, idiomsURI);

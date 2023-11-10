@@ -287,7 +287,7 @@ public abstract class SerializationMatchStep
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getMatchTermClosure() {
 			@SuppressWarnings("null")
-			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = (@NonNull Set<@NonNull SerializationMatchTerm>)Collections.<@NonNull SerializationMatchTerm>emptySet();
+			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = Collections.<@NonNull SerializationMatchTerm>emptySet();
 			return emptySet;
 		}
 
@@ -456,7 +456,7 @@ public abstract class SerializationMatchStep
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getMatchTermClosure() {
 			@SuppressWarnings("null")
-			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = (@NonNull Set<@NonNull SerializationMatchTerm>)Collections.<@NonNull SerializationMatchTerm>emptySet();
+			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = Collections.<@NonNull SerializationMatchTerm>emptySet();
 			return emptySet;
 		}
 
@@ -553,7 +553,7 @@ public abstract class SerializationMatchStep
 	}
 
 	/**
-	 * Execute this step to contribute to the dermination of a successful dynamicRuleMatch.
+	 * Execute this step to contribute to the determination of a successful dynamicRuleMatch.
 	 *
 	 * Returns true if the execution is successful, false if the dynamicRuleMatch is to fail.
 	 */

@@ -80,6 +80,7 @@ Workflow {
 		language = org.eclipse.ocl.examples.build.fragments.MyStandardLanguage {
 			name = "${markupProjectName}.Markup"
 			fileExtensions = "markupocl"
+			grammarUri = "platform:/resource/${markupProjectName}/src/org/eclipse/ocl/xtext/markup/Markup.xtext"
 			generator = null
 			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
 				generateStub = true

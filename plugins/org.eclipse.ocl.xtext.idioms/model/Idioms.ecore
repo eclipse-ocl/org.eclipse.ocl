@@ -279,7 +279,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether the segments apply once to  serialization of all located elements, or repeatedly to each occurrence."/>
+        <details key="documentation" value="Whether the segments apply once to serialization of all located elements, or repeatedly to each occurrence."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLocator" eType="#//Locator"

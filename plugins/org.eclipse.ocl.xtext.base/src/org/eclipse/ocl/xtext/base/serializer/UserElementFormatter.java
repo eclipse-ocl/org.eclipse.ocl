@@ -25,22 +25,32 @@ public class UserElementFormatter
 {
 	protected final @NonNull INode node;
 	protected final @NonNull AbstractElement compoundedGrammarElement;
-	protected final @NonNull UserModelAnalysis modelAnalysis;
-	protected final @NonNull EObject element;
+	protected final @NonNull UserElementAnalysis elementAnalysis;
 
 	public UserElementFormatter(@NonNull INode node, @NonNull AbstractElement compoundedGrammarElement, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		this.node = node;
 		this.compoundedGrammarElement = compoundedGrammarElement;
-		this.modelAnalysis = modelAnalysis;
-		this.element = element;
+		this.elementAnalysis = modelAnalysis.getElementAnalysis(element);
+		if ("stateMachineName : String{}".equals(element.toString())) {
+			getClass();
+		}
 	}
 
 	public @NonNull EObject getElement() {
-		return element;
+		return elementAnalysis.getEObject();
 	}
 
 	public @NonNull SerializationSegment @NonNull [] getInnerFormattingSegments() {
-		@NonNull SerializationSegment[] innerFormattingSegments = modelAnalysis.getSerializationMetaData().getInnerFormattingSegments(compoundedGrammarElement);
+		ParserRuleValue targetParserRuleValue = null;
+		SerializationRule serializationRule = null;
+		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetParserRuleValue);
+		if (okMatch != null) {
+			serializationRule = okMatch.getSerializationRule();
+			getClass();
+		}
+	//	serializationRule.get
+	//	assert false;
+		@NonNull SerializationSegment[] innerFormattingSegments = getSerializationMetaData().getInnerFormattingSegments(compoundedGrammarElement);	// XXX must use SerializationRule
 	/*	StringBuilder s = new StringBuilder();
 		s.append(NameUtil.debugSimpleName(this) + " inner:");
 		for (@NonNull SerializationSegment segment : innerFormattingSegments) {
@@ -59,7 +69,7 @@ public class UserElementFormatter
 //	}
 
 	public @NonNull SerializationSegment @NonNull [] getOuterFormattingSegments() {
-		@NonNull SerializationSegment[] outerFormattingSegments = modelAnalysis.getSerializationMetaData().getOuterFormattingSegments(compoundedGrammarElement);
+		@NonNull SerializationSegment[] outerFormattingSegments = getSerializationMetaData().getOuterFormattingSegments(compoundedGrammarElement);
 	/*	StringBuilder s = new StringBuilder();
 		s.append(NameUtil.debugSimpleName(this) + " outer:");
 		for (@NonNull SerializationSegment segment : outerFormattingSegments) {
@@ -73,10 +83,10 @@ public class UserElementFormatter
 		ParserRule parserRule = GrammarUtil.containingParserRule(compoundedGrammarElement);
 		AbstractElement rootGrammarElement = parserRule.getAlternatives();
 		assert rootGrammarElement !=  null;
-		return modelAnalysis.getSerializationMetaData().getInnerFormattingSegments(rootGrammarElement);
+		return getSerializationMetaData().getInnerFormattingSegments(rootGrammarElement);
 	}
 
 	public @NonNull SerializationMetaData getSerializationMetaData() {
-		return modelAnalysis.getSerializationMetaData();
+		return elementAnalysis.getSerializationMetaData();
 	}
 }

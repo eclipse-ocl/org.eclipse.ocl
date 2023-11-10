@@ -12,3 +12,6 @@ org.eclipse.ocl.xtext.base/continuation=false
 # Turn on debug retry of failed lookups
 org.eclipse.ocl.xtext.base/debug/retry=false
 
+# Turn on tracing of each segment concatenated by the serializer
+org.eclipse.ocl.xtext.base/serialization=false
+

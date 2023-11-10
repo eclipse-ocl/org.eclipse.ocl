@@ -1,3 +1,6 @@
+/**
+ * The OCLinEcore tutorial.
+ */
 import ecore : 'http://www.eclipse.org/emf/2002/Ecore';
 package tutorial : tut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial' {
 	class Library {

@@ -67,9 +67,9 @@ import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStep
 import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepAssigns;
 import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepKeyword;
 import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStepSequence;
-import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
 import org.eclipse.ocl.xtext.base.serializer.SubstringStep;
+import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -1150,6 +1150,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			if (serializationSegments2id2 == null) {
 				serializationSegments2id = serializationSegments2id2 = new HashMap<>();
 				serializationSegments2id2.put(SerializationSegment.VALUE_SEGMENTS_LIST, null);
+
+
+				grammarAnalysis.getRuleAnalyses();
+
+
 				for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis: getSerializationRuleAnalysisList(grammarAnalysis)) {
 					for (@NonNull SerializationStep serializationStep : serializationRuleAnalysis.getSerializationRule().getSerializationSteps()) {
 						addSerializationSegments(serializationStep.getSerializationSegments());
@@ -1161,6 +1166,16 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 						addSerializationSegments(dataTypeRuleAnalysis.getSerializationSegments());
 						for (@NonNull SubstringStep substringStep: dataTypeRuleAnalysis.getRuleValue().getSubstringSteps()) {
 							addSerializationSegments(substringStep.getSerializationSegments());
+						}
+					}
+					else if (ruleAnalysis instanceof ParserRuleAnalysis) {
+						ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)ruleAnalysis;
+						ParserRuleValue parserRuleValue = parserRuleAnalysis.getRuleValue();
+						for (@NonNull SerializationSegment[] serializationSegments : parserRuleValue.getInnerFormattingSegments()) {
+							addSerializationSegments(serializationSegments);
+						}
+						for (@NonNull SerializationSegment[] serializationSegments : parserRuleValue.getOuterFormattingSegments()) {
+							addSerializationSegments(serializationSegments);
 						}
 					}
 				}

@@ -535,6 +535,10 @@ public class UserElementAnalysis implements Nameable
 		return name;
 	}
 
+	public @NonNull SerializationMetaData getSerializationMetaData() {
+		return serializationMetaData;
+	}
+
 	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
 		return serializationRules;
 	}
