@@ -45,9 +45,10 @@ public class UserModelAnalysis
 	@Inject
 	private SerializationMetaData.@NonNull Provider serializationMetaDataProvider;
 
-//	private AbstractSerializationMetaData serializationMetaData;
-
 	private @Nullable SerializationMetaData serializationMetaData;
+
+	private @Nullable CommentSegmentSupport commentSegmentSupport = null;
+
 
 	/**
 	 * The analysis of each user model element.
@@ -57,9 +58,19 @@ public class UserModelAnalysis
 	private int debugUserElementAnalysisCount = 0;
 	private int debugSerializeCount = 0;
 	private int debugDynamicRuleMatchCount = 0;
+	private int depth = 0;
 
 	public UserModelAnalysis() {
 		super();
+	}
+
+	public void addCommentSupport(@NonNull CommentSegmentSupport commentSegmentSupport) {
+		if (this.commentSegmentSupport == null) {
+			this.commentSegmentSupport = commentSegmentSupport;
+		}
+		else if (this.commentSegmentSupport != commentSegmentSupport) {
+			System.out.println("Conflicting CommentSegmentSupport");
+		}
 	}
 
 	/**
@@ -127,8 +138,16 @@ public class UserModelAnalysis
 		return elementAnalysis.diagnose(s);
 	}
 
+	public @Nullable CommentSegmentSupport getCommentSegmentSupport() {
+		return commentSegmentSupport;
+	}
+
 	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
 		return crossReferenceSerializer;
+	}
+
+	public int getDepth() {
+		return depth;
 	}
 
 	/**
@@ -150,6 +169,14 @@ public class UserModelAnalysis
 		return valueConverterService;
 	}
 
+	public int popDepth() {
+		return --depth;
+	}
+
+	public int pushDepth() {
+		return ++depth;
+	}
+
 	/**
 	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
 	 * to the serializationBuilder.
@@ -159,8 +186,10 @@ public class UserModelAnalysis
 		UserElementAnalysis elementAnalysis = getElementAnalysis(eObject);
 		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetRuleValue);
 		if (okMatch != null) {
+			int savedDepth = this.depth++;
 			UserElementSerializer serializer = createUserElementSerializer(okMatch, eObject);
 			serializer.serialize(serializationBuilder);
+			this.depth = savedDepth;
 		}
 		else {
 			DiagnosticStringBuilder s = new SerializationMetaDataDiagnosticStringBuilder(getSerializationMetaData());

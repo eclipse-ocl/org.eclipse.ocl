@@ -11,7 +11,7 @@
     <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Library">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//Integer"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="books" ordered="false"
         upperBound="-1" eType="#//Book" containment="true" eOpposite="#//Book/library">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
@@ -38,14 +38,14 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="SufficientCopies" value="&#xA;      &#x9;library.loans->select(book=self)->size() &lt;= copies"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//Integer"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="copies" lowerBound="1"
         eType="ecore:EDataType primitives.ecore#//Integer"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="library" eType="#//Library"
         eOpposite="#//Library/books"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Member">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType primitives.ecore#//Integer"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="library" eType="#//Library"
         eOpposite="#//Library/members"/>
   </eClassifiers>

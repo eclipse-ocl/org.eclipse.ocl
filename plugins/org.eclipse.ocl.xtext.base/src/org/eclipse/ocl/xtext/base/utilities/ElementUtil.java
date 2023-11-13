@@ -73,6 +73,7 @@ import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.nodemodel.BidiIterator;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
@@ -159,6 +160,45 @@ public class ElementUtil
 		}
 	}
 
+	public static @NonNull List<@Nullable String> getCommentBodies(@NonNull List<@NonNull ILeafNode> documentationNodes) {
+		List<@Nullable String> newBodies = new ArrayList<>();
+		if ((documentationNodes.size() == 1) && "/**/".equals(documentationNodes.get(0).getText())) {
+			newBodies.add(null);
+		}
+		else {
+			for (@NonNull ILeafNode documentationNode : documentationNodes) {
+				String body = getCommentBody(documentationNode);
+				newBodies.add(body);
+			}
+		}
+		return newBodies;
+	}
+
+	public static @NonNull String getCommentBody(@NonNull ILeafNode documentationNode) {
+		String text = documentationNode.getText().replace("\r", "");
+		if (text.startsWith("/*") && text.endsWith("*/")) {
+			StringBuilder s = new StringBuilder();
+			String contentString = text.substring(2, text.length()-2);
+			@NonNull String[] strings = contentString.split("\n");
+			for (int i = 0; i < strings.length; ) {
+				@NonNull String string = strings[i++];
+				String trimmedString = string.trim();
+				if (trimmedString.equals("*")) ;//s.append("\n");
+				else if (trimmedString.startsWith("* ")) s.append(trimmedString.substring(2));
+				else if (trimmedString.startsWith("*\t")) s.append(trimmedString.substring(2));
+				else if (trimmedString.startsWith("*")) s.append(trimmedString.substring(1));
+				else s.append(trimmedString);
+				if (i < strings.length) {
+					s.append("\n");
+				}
+			}
+			return s.toString();
+		}
+		else {
+			return text.trim();
+		}
+	}
+
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asElement);
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
@@ -207,6 +247,32 @@ public class ElementUtil
 			}
 		}
 		return null;
+	}
+
+	public static @Nullable List<@NonNull ILeafNode> getDocumentationNodes(@NonNull ICompositeNode node) {
+		List<@NonNull ILeafNode> documentationNodes = null;
+		for (ILeafNode leafNode : node.getLeafNodes()) {
+			EObject grammarElement = leafNode.getGrammarElement();
+			if (!(grammarElement instanceof TerminalRule)) {
+				break;
+			}
+			TerminalRule terminalRule = (TerminalRule) grammarElement;
+			String name = terminalRule.getName();
+			if ("WS".equals(name)) {
+			}
+			else if ("SL_COMMENT".equals(name)) {
+			}
+			else if ("ML_COMMENT".equals(name)) {
+				if (documentationNodes == null) {
+					documentationNodes = new ArrayList<>();
+				}
+				documentationNodes.add(leafNode);
+			}
+			else {
+				break;
+			}
+		}
+		return documentationNodes;
 	}
 
 	/**

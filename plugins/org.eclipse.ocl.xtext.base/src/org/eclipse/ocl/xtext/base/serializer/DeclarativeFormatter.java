@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.serializer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -19,10 +20,21 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CompoundElement;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.formatting.impl.AbstractNodeModelFormatter;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
@@ -40,6 +52,8 @@ import com.google.inject.Inject;
  */
 public class DeclarativeFormatter extends AbstractNodeModelFormatter
 {
+	public static final @NonNull TracingOption FORMATTER_FRAGMENTS = new TracingOption(BasePlugin.PLUGIN_ID, "formatter/fragments");
+
 	enum Darkness {
 		DARK,			// contains non-hidden content
 		COMMENT,		// contains hidden comment
@@ -539,17 +553,6 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		}
 	}
 
-/*	private static @NonNull List<@NonNull String> indents = new ArrayList<>(10);
-
-	private static @NonNull String getIndent(int indent) {
-		if (indents.size() <= indent) {
-			for (int i = indents.size(); i <= indent; i++) {
-				indents.add(i == 0 ? "" : (indents.get(i-1) + "  "));
-			}
-		}
-		return indents.get(indent);
-	} */
-
 	/**
 	 * Return the darkness of node.
 	 */
@@ -664,6 +667,33 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		}
 	}
 
+protected String debugContext(@NonNull EObject semanticElement, AbstractElement compoundedGrammarElement) {
+		StringBuilder s = new StringBuilder();
+		s.append(semanticElement.eClass().getName());
+		s.append(" ");
+		AbstractRule rule = GrammarUtil.containingRule(compoundedGrammarElement);
+		s.append(rule.getName());
+		s.append("..");
+		s.append(compoundedGrammarElement.eClass().getName());
+		if (compoundedGrammarElement instanceof Keyword) {
+			s.append(" '" + ((Keyword)compoundedGrammarElement).getValue() + "'");
+		}
+		else if (compoundedGrammarElement instanceof Action) {
+			s.append(" {" + ((Action)compoundedGrammarElement).getType() + "}");
+		}
+		else if (compoundedGrammarElement instanceof Assignment) {
+			s.append(" =" + ((Assignment)compoundedGrammarElement).getFeature() + "=");
+		}
+		else if (compoundedGrammarElement instanceof RuleCall) {
+			s.append(" @" + ((RuleCall)compoundedGrammarElement).getRule().getName() + "@");
+		}
+		else {
+			s.append(" ?" + compoundedGrammarElement.eClass().getName() + "?");
+		}
+	//	s.append(LabelUtil.getLabel(compoundedGrammarElement));
+		return s.toString();
+	}
+
 /*	private @Nullable String darkText(@NonNull String text) {
 		if (text.length() <= 0) {
 			return null;
@@ -715,13 +745,21 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	}
 
 	protected void formatCompositeNode(final @NonNull ICompositeNode compositeNode, final int indent) {
+		boolean isTracing = FORMATTER_FRAGMENTS.isActive();
 		String text = compositeNode.getText();
 		assert text != null;
 		EObject semanticElement = compositeNode.getSemanticElement();
 		assert semanticElement != null;
+		if (semanticElement.eClass().getName().equals("TransformationCS")) {
+			getClass();		// XX
+		}
 		AbstractElement compoundedGrammarElement = getCompoundedGrammarElement(compositeNode);
 		EList<?> assignedCollection = getAssignedCollection(compositeNode, compoundedGrammarElement);
 		UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(compositeNode, compoundedGrammarElement, semanticElement);
+		if (isTracing) {
+			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "composite: " + semanticElement.eClass().getName() + " \"" + LabelUtil.getLabel(semanticElement) + "\" " + LabelUtil.getLabel(compoundedGrammarElement) + " '" + StringUtil.convertToOCLString(text )+ "'");
+			modelAnalysis.pushDepth();
+		}
 //		System.out.println(getIndent(indent) + "formatCompositeNode compositeNode: " + compositeNode.getTotalOffset() + "-" + compositeNode.getOffset() + " .. " +  + compositeNode.getEndOffset() + "-" + compositeNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(compositeNode) + " '" + Strings.convertToJavaString(text) + "'");
 		//
 		//	Different previous assigned collection requires outer head formatting.
@@ -742,11 +780,22 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				if ((assignedCollection == null) || (assignedCollection != prevAssignedCollection)) {
 					boolean isFormatting = isFormatting(firstChild);
 					@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
+					if (isTracing) {
+//						StringBuilder s = new StringBuilder();
+//						Arrays.t
+//						s.append(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+//						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()-1) + " outers: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(outerFormattingSegments));
+					}
+				//	FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + " " + LabelUtil.getLabel(compoundedGrammarElement) + " " + outerFormattingSegments);
 					for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
 						if (formattingSegment.isValue()) {
 							break;
 						}
 						if (isFormatting || formattingSegment.isControl()) {					// PUSH/POP even when not started
+							if (isTracing) {
+								FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+							}
 							formattingSegment.format(elementFormatter, serializationBuilder);
 						}
 					}
@@ -765,6 +814,10 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 			}
 		}
 		@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
+		if (isTracing) {
+			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
+			modelAnalysis.pushDepth();
+		}
 		for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
 			if (formattingSegment.isValue()) {
 				//	hasValue = true;
@@ -772,7 +825,14 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 					if (isEpilog(childNode)) {
 						break;
 					}
+					if (isTracing) {
+						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
+						modelAnalysis.pushDepth();
+					}
 					formatNode(childNode, indent + 1);
+					if (isTracing) {
+						modelAnalysis.popDepth();
+					}
 				//	int totalOffset = childNode.getTotalOffset();
 				//	boolean hasEnded = selectEnd <= totalOffset;
 				//	if (hasEnded) { //(childNode)) {
@@ -781,8 +841,14 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				}
 			}
 			else if ((!hasProlog && isFormatting) || formattingSegment.isControl()) {		// only if >= VALUE
+				if (isTracing) {
+					FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
+				}
 				formattingSegment.format(elementFormatter, serializationBuilder);
 			}
+		}
+		if (isTracing) {
+			modelAnalysis.popDepth();
 		}
 		//
 		//	Different next assigned collection requires outer tail formatting.
@@ -804,16 +870,37 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 					}
 				}
 				else if (isFormatting || formattingSegment.isControl()) {
+					if (isTracing) {
+						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+					}
 					formattingSegment.format(elementFormatter, serializationBuilder);
 				}
 			}
 		}
+		if (isTracing) {
+			modelAnalysis.popDepth();
+		}
+	}
+
+	protected void formatDocumentationNode(@NonNull ILeafNode leafNode, int indent) {
+		CommentSegmentSupport commentSegmentSupport = modelAnalysis.getCommentSegmentSupport();
+		if (commentSegmentSupport != null) {
+			String body = ElementUtil.getCommentBody(leafNode);
+			commentSegmentSupport.appendBody(serializationBuilder, body);
+		}
 	}
 
 	protected void formatLeafNode(@NonNull ILeafNode leafNode, int indent) {
+		boolean isTracing = FORMATTER_FRAGMENTS.isActive();
 		String text = leafNode.getText();
 		assert text != null;
+		if (",".equals(text)) {
+			getClass();
+		}
 //		System.out.println(getIndent(indent) + "formatLeafNode compositeNode: " + leafNode.getTotalOffset() + "-" + leafNode.getOffset() + " .. " +  + leafNode.getEndOffset() + "-" + leafNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(leafNode) + " '" + Strings.convertToJavaString(text) + "'");
+		if (isTracing) {
+			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "leaf: '" + StringUtil.convertToOCLString(leafNode.getText())+ "'");
+		}
 		if (!leafNode.isHidden()) {
 			EObject semanticElement = leafNode.getSemanticElement();
 			assert semanticElement != null;
@@ -842,8 +929,15 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 			//
 			boolean isFormatting = isFormatting(leafNode);
 			@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
+			if (isTracing) {
+				FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
+				modelAnalysis.pushDepth();
+			}
 			for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
 				if (isFormatting || formattingSegment.isControl()) {					// PUSH/POP even when not started
+					if (isTracing) {
+						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
+					}
 					formattingSegment.format(elementFormatter, serializationBuilder);
 					if (formattingSegment.isValue()) {				// no point tracking the less stable hidden nodes
 						int index = serializationBuilder.length();
@@ -851,6 +945,9 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 						end.setLeafNodeAt(leafNode, index);
 					}
 				}
+			}
+			if (isTracing) {
+				modelAnalysis.popDepth();
 			}
 			//
 			//	Different next grammar element requires outer tail formatting.
@@ -879,20 +976,30 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	}
 
 	protected void formatNode(@NonNull INode childNode, int indent) {
+		EObject grammarElement = childNode.getGrammarElement();
+		assert grammarElement != null;
+		assert !(grammarElement instanceof CompoundElement);
 		if (childNode instanceof ICompositeNode) {
 			formatCompositeNode((ICompositeNode)childNode, indent);
 		}
-		else if (!((ILeafNode)childNode).isHidden()) {
-			formatLeafNode((ILeafNode)childNode, indent);
-		}
 		else {
-//			String childNodeText = childNode.getText();
-//			System.out.println(getIndent(indent) + "formatNode childNode: " + childNode.getTotalOffset() + "-" + childNode.getOffset() + " .. " +  + childNode.getEndOffset() + "-" + childNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childNode) + " '" + Strings.convertToJavaString(childNodeText) + "'");
+			ILeafNode leafNode = (ILeafNode)childNode;
+			if (!leafNode.isHidden()) {
+				formatLeafNode(leafNode, indent);
+			}
+			else if (isDocumentation(leafNode)){
+				formatDocumentationNode(leafNode, indent);
+			}
+			else {
+	//			String childNodeText = childNode.getText();
+	//			System.out.println(getIndent(indent) + "formatNode childNode: " + childNode.getTotalOffset() + "-" + childNode.getOffset() + " .. " +  + childNode.getEndOffset() + "-" + childNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childNode) + " '" + Strings.convertToJavaString(childNodeText) + "'");
+			}
 		}
 	}
 
 	protected void formatRootNode(@NonNull ICompositeNode rootNode) {
 		EObject eObject = rootNode.getSemanticElement();
+		assert eObject != null;
 		modelAnalysis.analyze(eObject);
 		formatCompositeNode(rootNode, 0);
 	}
@@ -949,14 +1056,33 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	}
 
 	/**
-	 * Return the grammar element for node whose container is a CompoundElement; i.e. ascend the terminals of an assignment to return thr assignment.
+	 * Return the grammar element for node whose container is a CompoundElement; i.e. ascend the terminals of an assignment to return the assignment.
 	 */
 	protected @NonNull AbstractElement getCompoundedGrammarElement(@NonNull INode node) {
 		EObject grammarElement = node.getGrammarElement();
 		for (EObject eContainer = grammarElement.eContainer(); (eContainer instanceof AbstractElement) && !(eContainer instanceof CompoundElement); eContainer = grammarElement.eContainer()) {
 			grammarElement = eContainer;
 		}
-		return grammarElement instanceof AbstractElement ? (AbstractElement)grammarElement : SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
+		AbstractElement abstractElement = grammarElement instanceof AbstractElement ? (AbstractElement)grammarElement : SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
+		if (abstractElement instanceof Group) {
+			assert abstractElement.eContainer() instanceof AbstractRule;
+		}
+		else if (abstractElement instanceof Assignment) {
+			assert true;
+		}
+		else if (abstractElement instanceof RuleCall) {
+			assert true;
+		}
+		else if (abstractElement instanceof Keyword) {
+			assert true;
+		}
+		else if (abstractElement instanceof Action) {
+			assert true;
+		}
+		else {
+			assert false;
+		}
+		return abstractElement;
 	}
 
 	private @Nullable ILeafNode getLastLeafNode(@NonNull ICompositeNode rootNode) {
@@ -972,14 +1098,20 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		return rootText;
 	}
 
+	protected boolean isDocumentation(@NonNull ILeafNode leafNode) {
+		EObject grammarElement = leafNode.getGrammarElement();
+		if (grammarElement instanceof TerminalRule) {
+			TerminalRule terminalRule = (TerminalRule) grammarElement;
+			String name = terminalRule.getName();
+			if ("ML_COMMENT".equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean isEpilog(@NonNull INode node) {
-	//	String text = node.getText();
 		int totalOffset = node.getOffset();
-	//	int totalSelectEndOffset = selectedEndNode.getTotalEndOffset();
-	//	boolean isEpilog =  extendedSelectEnd < totalOffset;
-	//	if (isEpilog) {
-	//		getClass();		// XXX
-	//	}
 		return extendedSelectEnd < totalOffset;
 	}
 

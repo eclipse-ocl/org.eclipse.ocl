@@ -109,6 +109,9 @@ public class UserElementSerializer
 	 * Serialize this serializer's configured element to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+		if (DeclarativeSerializer.SERIALIZER_FRAGMENTS.isActive()) {
+			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "rule: " + serializationRule); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+		}
 		serializationRule.serialize(this, serializationBuilder);
 	}
 

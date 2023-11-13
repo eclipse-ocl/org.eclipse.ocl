@@ -579,9 +579,19 @@ public class SerializationRule implements Nameable
 	}
 
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		boolean isTracing = DeclarativeSerializer.SERIALIZER_FRAGMENTS.isActive();
+		if (isTracing) {
+			serializer.getModelAnalysis().pushDepth();
+		}
 		for (int index = 0; index < serializationSteps.length; ) {
 			SerializationStep serializationStep = serializationSteps[index];
+			if (isTracing) {
+				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()) + "step: " + serializationStep); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+			}
 			index = serializationStep.serializeOuterValue(index, serializer, serializationBuilder);
+		}
+		if (isTracing) {
+			serializer.getModelAnalysis().popDepth();
 		}
 	}
 

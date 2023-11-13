@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,13 +68,11 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.diagnostics.Diagnostic;
 import org.eclipse.xtext.diagnostics.DiagnosticMessage;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
-import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.Triple;
@@ -115,7 +112,7 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 	 * Return the containment features ordered so that library and import features are processed before anything else.
 	 */
 	public static EList<EObject> computeRootContainmentFeatures(RootCS csRoot) {
-		BasicEList<EReference> containmentsList = new BasicEList<EReference>();
+		BasicEList<EReference> containmentsList = new BasicEList<>();
 		for (EStructuralFeature eStructuralFeature : csRoot.eClass().getEAllStructuralFeatures()) {
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference) eStructuralFeature;
@@ -128,10 +125,10 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		if (index > 0) {
 			containmentsList.move(0, index);		// Process imports second
 		}
-		return new EContentsEList<EObject>(csRoot, containmentsList);
+		return new EContentsEList<>(csRoot, containmentsList);
 	}
 
-	private static Map<EReference, UnresolvedProxyMessageProvider> unresolvedProxyMessageProviderMap = new HashMap<EReference, UnresolvedProxyMessageProvider>();
+	private static Map<EReference, UnresolvedProxyMessageProvider> unresolvedProxyMessageProviderMap = new HashMap<>();
 
 	/**
 	 * Whether to show file and line number context at the start of messages.
@@ -225,32 +222,6 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		return messageBinder.bind(csContext, messageTemplate, errorContext, linkText);
 	}
 
-	public static List<ILeafNode> getDocumentationNodes(@NonNull ICompositeNode node) {
-		List<ILeafNode> documentationNodes = null;
-		for (ILeafNode leafNode : node.getLeafNodes()) {
-			EObject grammarElement = leafNode.getGrammarElement();
-			if (!(grammarElement instanceof TerminalRule)) {
-				break;
-			}
-			TerminalRule terminalRule = (TerminalRule) grammarElement;
-			String name = terminalRule.getName();
-			if ("WS".equals(name)) {
-			}
-			else if ("SL_COMMENT".equals(name)) {
-			}
-			else if ("ML_COMMENT".equals(name)) {
-				if (documentationNodes == null) {
-					documentationNodes = new ArrayList<ILeafNode>();
-				}
-				documentationNodes.add(leafNode);
-			}
-			else {
-				break;
-			}
-		}
-		return documentationNodes;
-	}
-
 	private static final class TypeValueFilter implements ScopeFilter
 	{
 		public static TypeValueFilter INSTANCE = new TypeValueFilter();
@@ -288,7 +259,7 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 	}
 
 	private static long startTime = System.currentTimeMillis();
-	private static @NonNull Map<Thread,Long> threadRunTimes = new HashMap<Thread,Long>();
+	private static @NonNull Map<Thread,Long> threadRunTimes = new HashMap<>();
 	private static long[] indentRunTimes = new long[100];
 	private static @NonNull Integer indentation = 0;
 	private static @NonNull String indents= ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
@@ -707,13 +678,13 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		//			Resource asResource = entry.getValue();
 		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " => " + asResource.getClass().getName() + "@" + asResource.hashCode());
 		//		}
-		/*		Set<String> deadCSIs = new HashSet<String>(oldCSI2AS.keySet());
+		/*		Set<String> deadCSIs = new HashSet<>(oldCSI2AS.keySet());
 		deadCSIs.removeAll(newCSIs);
 		for (String deadCSI : deadCSIs) {
 			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
 //			metamodelManager.kill(deadPivot);
 		} */
-		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
+		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<>();
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);

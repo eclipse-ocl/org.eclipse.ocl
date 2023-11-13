@@ -18,6 +18,8 @@ import java.io.Writer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.xtext.formatting2.regionaccess.ITextRegionAccess;
 import org.eclipse.xtext.parsetree.reconstr.ITokenStream;
 import org.eclipse.xtext.resource.SaveOptions;
@@ -31,6 +33,8 @@ import com.google.inject.Inject;
 
 public class DeclarativeSerializer extends Serializer // implements ISerializer //extends Serializer
 {
+	public static final @NonNull TracingOption SERIALIZER_FRAGMENTS = new TracingOption(BasePlugin.PLUGIN_ID, "serializer/fragments");
+
 	@Inject
 	private @NonNull UserModelAnalysis modelAnalysis;
 

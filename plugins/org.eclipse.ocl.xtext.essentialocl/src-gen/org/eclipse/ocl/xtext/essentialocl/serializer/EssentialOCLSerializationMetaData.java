@@ -1017,7 +1017,7 @@ public class EssentialOCLSerializationMetaData extends AbstractSerializationMeta
 			(0 << 16) | 0	/* MultiplicityStringCS : [value] | [value] */,
 			(0 << 16) | 0	/* Alternatives? : [value] | [value] */,
 			(0 << 16) | 3	/* "|?" : [value] | [no-space, value, no-space] */,
-			(0 << 16) | 7	/* isNullFree?="|1" : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 3	/* isNullFree?="|1" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 1	/* "]" : [value] | [no-space, value] */
 		);
 		grammarRuleValues[41] = createParserRuleValue(41, "MultiplicityStringCS", -1,
@@ -1132,7 +1132,7 @@ public class EssentialOCLSerializationMetaData extends AbstractSerializationMeta
 				47	/* NavigatingCommaArgCS-3: NavigatingArgCS::prefix=',' NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
-			(0 << 16) | 7	/* prefix="," : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 5	/* prefix="," : [value] | [no-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedNameExpression=NavigatingArgExpCS : [value] | [value] */,
 			(0 << 16) | 0	/* Alternatives? : [value] | [value] */,
 			(0 << 16) | 0	/* Group : [value] | [value] */,
@@ -1171,7 +1171,7 @@ public class EssentialOCLSerializationMetaData extends AbstractSerializationMeta
 				48	/* NavigatingSemiArgCS-0: NavigatingArgCS::prefix=';' NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS (':' NavigatingArgCS::ownedType=TypeExpCS ('=' NavigatingArgCS::ownedInitExpression=ExpCS)[V1:?])[V0:?] */
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
-			(0 << 16) | 7	/* prefix=";" : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 4	/* prefix=";" : [value] | [no-space, value, soft-new-line] */,
 			(0 << 16) | 0	/* ownedNameExpression=NavigatingArgExpCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 7	/* ":" : [value] | [soft-space, value, soft-space] */,

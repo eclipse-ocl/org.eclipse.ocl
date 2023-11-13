@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
@@ -31,7 +32,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  */
 public class BaseScopeProvider extends AbstractDeclarativeScopeProvider
 {
-	public static final @NonNull TracingOption LOOKUP = new TracingOption("org.eclipse.ocl.xtext.base", "lookup"); //$NON-NLS-1$//$NON-NLS-2$
+	public static final @NonNull TracingOption LOOKUP = new TracingOption(BasePlugin.PLUGIN_ID, "lookup"); //$NON-NLS-1$
 
 	@Override
 	public IScope getScope(EObject context, EReference reference) {

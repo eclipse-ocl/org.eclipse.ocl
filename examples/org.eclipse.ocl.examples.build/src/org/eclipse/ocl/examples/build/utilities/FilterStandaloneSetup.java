@@ -35,10 +35,6 @@ public class FilterStandaloneSetup extends StandaloneSetup
 	@Override
 	protected void registerBundle(File file) {
 		String filePath = file.toString();
-		System.out.println("1: " + filePath);
-		if (filePath.contains("org.eclipse.emf.ecore")) {
-			getClass();
-		}
 		Matcher m = getPattern().matcher(filePath);
 		if (!m.matches()) {
 			super.registerBundle(file);
@@ -51,10 +47,6 @@ public class FilterStandaloneSetup extends StandaloneSetup
 	@Override
 	protected boolean scanFolder(File f, Set<String> visitedPathes) {
 		String filePath = f.toString();
-//		System.out.println("2: " + filePath);
-		if (filePath.endsWith("org.eclipse.emf.ecore")) {
-			getClass();
-		}
 		Matcher m = getPattern().matcher(filePath);
 		if (!m.matches()) {
 			return super.scanFolder(f, visitedPathes);

@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
@@ -65,12 +64,14 @@ public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 				if (csModelElement != null) {
 					ICompositeNode node = NodeModelUtils.getNode(csModelElement);
 					if (node != null) {
-						List<ILeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);
-						ILeafNode first = documentationNodes.get(0);
-						ILeafNode last = documentationNodes.get(documentationNodes.size()-1);
-						int start = first.getOffset();
-						int end = last.getOffset() + last.getLength();
-						return new TextRegion(start, end-start);
+						List<@NonNull ILeafNode> documentationNodes = ElementUtil.getDocumentationNodes(node);
+						if (documentationNodes != null) {
+							ILeafNode first = documentationNodes.get(0);
+							ILeafNode last = documentationNodes.get(documentationNodes.size()-1);
+							int start = first.getOffset();
+							int end = last.getOffset() + last.getLength();
+							return new TextRegion(start, end-start);
+						}
 					}
 				}
 			}

@@ -220,7 +220,13 @@ public interface LocatorHelper
 		@Override
 		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull AbstractNonTerminalRuleAnalysis nonTerminalRuleAnalysis) {
 			String value = null;
-			if (grammarElement instanceof Keyword) {
+			if (grammarElement instanceof Assignment) {
+				AbstractElement terminal = ((Assignment)grammarElement).getTerminal();
+				if (terminal instanceof Keyword) {
+					value = ((Keyword)terminal).getValue();
+				}
+			}
+			else if (grammarElement instanceof Keyword) {
 				value = ((Keyword)grammarElement).getValue();
 			}
 			KeywordLocator keywordLocator = (KeywordLocator)locator;

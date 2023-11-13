@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 
 /**
  * SerializationBuilder builds the intermediate serialization from an interleaving of concrete strings and virtual
@@ -122,7 +123,8 @@ public class SerializationBuilder
 	 */
 	public static final @NonNull String WRAP_ANCHOR = new String("wrap-anchor");
 
-	public static final @NonNull TracingOption SERIALIZATION = new TracingOption("org.eclipse.ocl.xtext.base", "serialization");
+	public static final @NonNull TracingOption SERIALIZATION = new TracingOption(BasePlugin.PLUGIN_ID, "serialization");
+
 	/**
 	 * An AbstractContext identifies (the left edge of) a significant character location in the
 	 * indented but not yet wrapped output text.
@@ -1242,9 +1244,6 @@ public class SerializationBuilder
 			else if (nextString == NO_SPACE) traceString = "NO_SPACE";
 			else {
 				traceString = "'" + StringUtil.convertToOCLString(nextString )+ "'";
-				if (nextString.contains("/**")) {
-					getClass();
-				}
 			}
 			SERIALIZATION.println(traceString);
 		}

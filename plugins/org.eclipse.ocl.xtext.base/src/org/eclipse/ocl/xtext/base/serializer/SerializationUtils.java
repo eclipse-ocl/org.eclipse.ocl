@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.serializer;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -290,6 +291,8 @@ public class SerializationUtils
 		}
 	}
 
+	public static @NonNull List<@NonNull String> indents = new ArrayList<>(10);
+
 	public static void appendIndentation(@NonNull StringBuilder s, int depth) {
 		appendIndentation(s, depth, defaultIndentation);
 	}
@@ -413,6 +416,15 @@ public class SerializationUtils
 
 	public static @NonNull String getFeature(@NonNull Assignment assignment) {
 		return ClassUtil.nonNullState(assignment.getFeature());
+	}
+
+	public static @NonNull String getIndent(int indent) {
+		if (indents.size() <= indent) {
+			for (int i = indents.size(); i <= indent; i++) {
+				indents.add(i == 0 ? "" : (indents.get(i-1) + "  "));
+			}
+		}
+		return indents.get(indent);
 	}
 
 	public static @NonNull Keyword getLeft(@NonNull CharacterRange characterRange) {

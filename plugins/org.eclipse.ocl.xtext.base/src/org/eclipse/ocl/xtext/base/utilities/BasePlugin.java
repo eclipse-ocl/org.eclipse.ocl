@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
 import org.osgi.framework.BundleContext;
 
@@ -24,6 +25,7 @@ import org.osgi.framework.BundleContext;
  * @generated
  */
 public final class BasePlugin extends EMFPlugin {
+	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.base";
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->

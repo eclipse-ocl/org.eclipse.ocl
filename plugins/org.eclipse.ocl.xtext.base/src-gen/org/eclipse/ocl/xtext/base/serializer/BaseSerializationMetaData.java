@@ -329,7 +329,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 0	/* MultiplicityStringCS : [value] | [value] */,
 			(0 << 16) | 0	/* Alternatives? : [value] | [value] */,
 			(0 << 16) | 3	/* "|?" : [value] | [no-space, value, no-space] */,
-			(0 << 16) | 5	/* isNullFree?="|1" : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 3	/* isNullFree?="|1" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 1	/* "]" : [value] | [no-space, value] */
 		);
 		grammarRuleValues[14] = createParserRuleValue(14, "MultiplicityStringCS", -1,

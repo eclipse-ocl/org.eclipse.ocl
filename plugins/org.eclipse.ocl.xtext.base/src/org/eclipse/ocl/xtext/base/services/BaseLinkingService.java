@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.cs2as.AmbiguitiesAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.ExceptionAdapter;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.linking.impl.DefaultLinkingService;
@@ -40,7 +41,7 @@ import com.google.inject.Inject;
 
 public class BaseLinkingService extends DefaultLinkingService
 {
-	public static final @NonNull TracingOption DEBUG_RETRY = new TracingOption("org.eclipse.ocl.xtext.base", "debug/retry");
+	public static final @NonNull TracingOption DEBUG_RETRY = new TracingOption(BasePlugin.PLUGIN_ID, "debug/retry");
 
 	private static int depth = -1;
 

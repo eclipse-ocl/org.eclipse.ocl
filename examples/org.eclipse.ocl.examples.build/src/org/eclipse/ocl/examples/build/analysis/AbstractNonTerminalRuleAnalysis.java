@@ -65,19 +65,16 @@ public abstract class AbstractNonTerminalRuleAnalysis extends AbstractRuleAnalys
 	public @NonNull Map<@NonNull AbstractElement, @NonNull List<@NonNull SubIdiom>> getGrammarElement2subIdioms() {
 		Map<@NonNull AbstractElement, @NonNull List<@NonNull SubIdiom>> grammarElement2subIdioms2 = grammarElement2subIdioms;
 		if (grammarElement2subIdioms2 == null) {
-			StringBuilder s = new StringBuilder();
-			new SerializationUtils.XtextToString(s, false).doSwitch(abstractRule.getAlternatives());
-			String ss = s.toString();
-			if (ss.contains("BinaryOperatorName")) {
-				getClass();
-			}
+		//	StringBuilder s = new StringBuilder();
+		//	new SerializationUtils.XtextToString(s, false).doSwitch(abstractRule.getAlternatives());
+		//	String ss = s.toString();
+		//	if (ss.contains("BinaryOperatorName")) {
+		//		getClass();
+		//	}
 			EClassifier producedEClassifier = abstractRule.getType().getClassifier();
 			assert producedEClassifier != null;
 			List<@NonNull Idiom> idioms = new ArrayList<>();
 			for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
-				if ("BINARY_OPERATOR_NAME_SPACING".equals(idiom.getName())) {
-					getClass();
-				}
 				boolean isOk = true;
 			// ParserRule has alternatives with distinct producedEClasses, so must defer to subidiom
 			//	EClass inEClass = idiom.getForEClass();
@@ -93,10 +90,6 @@ public abstract class AbstractNonTerminalRuleAnalysis extends AbstractRuleAnalys
 				}
 				if (isOk) {
 					idioms.add(idiom);
-					if ("BINARY_OPERATOR_NAME_SPACING".equals(idiom.getName())) {
-						getClass();
-				//		System.out.println("getGrammarElement2subIdioms " + NameUtil.debugSimpleName(this) + " " + this);
-					}
 				}
 			}
 			//

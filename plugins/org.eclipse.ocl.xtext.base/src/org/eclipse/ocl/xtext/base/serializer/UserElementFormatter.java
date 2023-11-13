@@ -26,37 +26,50 @@ public class UserElementFormatter
 	protected final @NonNull INode node;
 	protected final @NonNull AbstractElement compoundedGrammarElement;
 	protected final @NonNull UserElementAnalysis elementAnalysis;
+	protected final @NonNull SerializationMetaData serializationMetaData;
 
 	public UserElementFormatter(@NonNull INode node, @NonNull AbstractElement compoundedGrammarElement, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		this.node = node;
 		this.compoundedGrammarElement = compoundedGrammarElement;
 		this.elementAnalysis = modelAnalysis.getElementAnalysis(element);
-		if ("stateMachineName : String{}".equals(element.toString())) {
-			getClass();
-		}
+		this.serializationMetaData = elementAnalysis.getSerializationMetaData();
 	}
+
+	public void addCommentSupport(@NonNull CommentSegmentSupport commentSegmentSupport) {
+		elementAnalysis.getModelAnalysis().addCommentSupport(commentSegmentSupport);
+	}
+
+/*	public @NonNull AbstractRule getCalledRule() {
+		for (@NonNull INode child = node, ancestor = child.getParent(); ancestor != null; child = ancestor, ancestor = child.getParent()) {
+			EObject grammarElement = ancestor.getGrammarElement();
+			if (ancestor.getGrammarElement() instanceof RuleCall) {
+				AbstractRule calledRule = ((RuleCall)ancestor).getRule();
+				assert calledRule != null;
+				return calledRule;
+			}
+		}
+		throw new IllegalStateException("No called rule");
+	} */
+
+/*	public @Nullable AbstractRule getCallingRule() {
+		for (@NonNull INode ancestor = node.getParent(); ancestor != null; ancestor = ancestor.getParent()) {
+			EObject grammarElement = ancestor.getGrammarElement();
+			if (grammarElement instanceof RuleCall) {
+				AbstractRule callingRule = GrammarUtil.containingRule(grammarElement);
+				assert callingRule != null;
+				return callingRule;
+			}
+		}
+		/// assert RootNode
+		return null;
+	} */
 
 	public @NonNull EObject getElement() {
 		return elementAnalysis.getEObject();
 	}
 
 	public @NonNull SerializationSegment @NonNull [] getInnerFormattingSegments() {
-		ParserRuleValue targetParserRuleValue = null;
-		SerializationRule serializationRule = null;
-		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetParserRuleValue);
-		if (okMatch != null) {
-			serializationRule = okMatch.getSerializationRule();
-			getClass();
-		}
-	//	serializationRule.get
-	//	assert false;
-		@NonNull SerializationSegment[] innerFormattingSegments = getSerializationMetaData().getInnerFormattingSegments(compoundedGrammarElement);	// XXX must use SerializationRule
-	/*	StringBuilder s = new StringBuilder();
-		s.append(NameUtil.debugSimpleName(this) + " inner:");
-		for (@NonNull SerializationSegment segment : innerFormattingSegments) {
-			 s.append(" " + segment);
-		}
-		System.out.println(s.toString()); */
+		@NonNull SerializationSegment[] innerFormattingSegments = serializationMetaData.getInnerFormattingSegments(compoundedGrammarElement);
 		return innerFormattingSegments;
 	}
 
@@ -64,18 +77,8 @@ public class UserElementFormatter
 		return node;
 	}
 
-//	public @NonNull UserModelAnalysis getModelAnalysis() {
-//		return modelAnalysis;
-//	}
-
 	public @NonNull SerializationSegment @NonNull [] getOuterFormattingSegments() {
-		@NonNull SerializationSegment[] outerFormattingSegments = getSerializationMetaData().getOuterFormattingSegments(compoundedGrammarElement);
-	/*	StringBuilder s = new StringBuilder();
-		s.append(NameUtil.debugSimpleName(this) + " outer:");
-		for (@NonNull SerializationSegment segment : outerFormattingSegments) {
-			 s.append(" " + segment);
-		}
-		System.out.println(s.toString()); */
+		@NonNull SerializationSegment[] outerFormattingSegments = serializationMetaData.getOuterFormattingSegments(compoundedGrammarElement);
 		return outerFormattingSegments;
 	}
 
@@ -83,10 +86,10 @@ public class UserElementFormatter
 		ParserRule parserRule = GrammarUtil.containingParserRule(compoundedGrammarElement);
 		AbstractElement rootGrammarElement = parserRule.getAlternatives();
 		assert rootGrammarElement !=  null;
-		return getSerializationMetaData().getInnerFormattingSegments(rootGrammarElement);
+		return serializationMetaData.getInnerFormattingSegments(rootGrammarElement);
 	}
 
 	public @NonNull SerializationMetaData getSerializationMetaData() {
-		return elementAnalysis.getSerializationMetaData();
+		return serializationMetaData;
 	}
 }

@@ -83,6 +83,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.OperatorExpContinuation;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.TemplateSignatureContinuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -119,7 +120,7 @@ import com.google.common.collect.Iterables;
 public class CS2ASConversion extends AbstractBase2ASConversion
 {
 	private static final Logger logger = Logger.getLogger(CS2ASConversion.class);
-	public static final @NonNull TracingOption CONTINUATION = new TracingOption("org.eclipse.ocl.xtext.base", "continuation");  //$NON-NLS-1$//$NON-NLS-2$
+	public static final @NonNull TracingOption CONTINUATION = new TracingOption(BasePlugin.PLUGIN_ID, "continuation");  //$NON-NLS-1$
 
 	public static class CacheKey<T>
 	{
@@ -907,59 +908,27 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void refreshComments(Element pivotElement, ElementCS csElement) {
 		ICompositeNode node = NodeModelUtils.getNode(csElement);
 		if ((node != null) && !(node instanceof RootNode)) {
-			List<ILeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);
+			List<@NonNull ILeafNode> documentationNodes = ElementUtil.getDocumentationNodes(node);
 			List<Comment> ownedComments = pivotElement.getOwnedComments();
 			if (documentationNodes != null) {
+				List<@Nullable String> newBodies = ElementUtil.getCommentBodies(documentationNodes);
+				int newSize = newBodies.size();
+				int oldSize = ownedComments.size();
+				int iMax = Math.min(newSize, oldSize);
 				int i = 0;
-				if ((documentationNodes.size() == 1) && "/**/".equals(documentationNodes.get(0).getText())) {
+				for (; i < iMax; i++) {
+					Comment oldComment = ownedComments.get(i);
+					String newBody = newBodies.get(i);
+					oldComment.setBody(newBody);
+				}
+				for (; i < newSize; i++) {
+					String newBody = newBodies.get(i);
 					Comment comment = PivotFactory.eINSTANCE.createComment();
-					comment.setBody(null);
+					comment.setBody(newBody);
 					ownedComments.add(comment);
-					i = 1;
 				}
-				else {
-					List<String> documentationStrings = new ArrayList<>();
-					for (ILeafNode documentationNode : documentationNodes) {
-						String text = documentationNode.getText().replace("\r", "");
-						if (text.startsWith("/*") && text.endsWith("*/")) {
-							StringBuilder s = new StringBuilder();
-							String contentString = text.substring(2, text.length()-2).trim();
-							for (String string : contentString.split("\n")) {
-								String trimmedString = string.trim();
-								if (s.length() > 0) {
-									s.append("\n");
-								}
-								s.append(trimmedString.startsWith("*") ? trimmedString.substring(1).trim() : trimmedString);
-							}
-							documentationStrings.add(s.toString());
-						}
-						else {
-							documentationStrings.add(text.trim());
-						}
-					}
-					int iMax = Math.min(documentationStrings.size(), ownedComments.size());
-					for (; i < iMax; i++) {
-						String string = documentationStrings.get(i);
-						if (string != null) {
-							String trimmedString = string; //trimComments(string);
-							Comment comment = ownedComments.get(i);
-							if (!trimmedString.equals(comment.getBody())) {
-								comment.setBody(trimmedString);
-							}
-						}
-					}
-					for ( ; i < documentationStrings.size(); i++) {
-						String string = documentationStrings.get(i);
-						if (string != null) {
-							String trimmedString = string; //trimComments(string);
-							Comment comment = PivotFactory.eINSTANCE.createComment();
-							comment.setBody(trimmedString);
-							ownedComments.add(comment);
-						}
-					}
-				}
-				while (i < ownedComments.size()) {
-					ownedComments.remove(ownedComments.size()-1);
+				while (i < oldSize) {
+					ownedComments.remove(oldSize-1);
 				}
 			}
 			else {

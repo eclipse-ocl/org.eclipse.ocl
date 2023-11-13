@@ -1108,19 +1108,15 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		SerializationRule serializationRule2 = serializationRule;
 		if (serializationRule2 == null) {
 			analyzeMatches();
-			assert serializationRule == null;		// XXX testing redundancy else needs recursion comment
-			serializationRule2 = serializationRule;
-			if (serializationRule2 == null) {
-				@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
-				List<@NonNull SerializationStep> stepsList = new ArrayList<>();
-				Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms = getSerializationNode2subIdioms();
-				rootSerializationNode.gatherStepsAndSubIdioms(this, stepsList, serializationNode2subIdioms);
-				int size = stepsList.size();
-				@NonNull SerializationStep @NonNull [] serializationSteps = ClassUtil.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
-				serializationRule = serializationRule2 = new SerializationRule(this, getVariantName(), ruleAnalysis.getIndex(), matchStepsArray, serializationSteps, basicGetSerializationFeatures());
-				SerializationRule old = debugMap.put(this, serializationRule2);		// FIXME debugging
-				assert old == null;
-			}
+			@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
+			List<@NonNull SerializationStep> stepsList = new ArrayList<>();
+			Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms = getSerializationNode2subIdioms();
+			rootSerializationNode.gatherStepsAndSubIdioms(this, stepsList, serializationNode2subIdioms);
+			int size = stepsList.size();
+			@NonNull SerializationStep @NonNull [] serializationSteps = ClassUtil.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
+			serializationRule = serializationRule2 = new SerializationRule(this, getVariantName(), ruleAnalysis.getIndex(), matchStepsArray, serializationSteps, basicGetSerializationFeatures());
+			SerializationRule old = debugMap.put(this, serializationRule2);		// FIXME debugging
+			assert old == null;
 		}
 		return serializationRule2;
 	}

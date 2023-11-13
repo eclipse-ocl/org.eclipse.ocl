@@ -237,7 +237,7 @@ public abstract class SerializationSegment
 	public abstract void format(@NonNull UserElementFormatter formatter, @NonNull SerializationBuilder serializationBuilder);
 
 	/**
-	 * A control segment such as push or pop is serialized while fomatting the unselected prefix of a formatted
+	 * A control segment such as push or pop is serialized while formatting the unselected prefix of a formatted
 	 * region in order to ensure that the indentation is globally correct.
 	 */
 	public boolean isControl() {

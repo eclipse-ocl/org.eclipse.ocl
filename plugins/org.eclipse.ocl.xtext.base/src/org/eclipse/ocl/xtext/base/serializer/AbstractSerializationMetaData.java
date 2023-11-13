@@ -36,6 +36,7 @@ import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
 
@@ -626,19 +627,47 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	 */
 	public abstract @NonNull SubstringStep @NonNull [] getSubstringSteps();
 
-	private int setInnerFormattingSegments(@NonNull AbstractElement grammarElement, int index, @NonNull SerializationSegment @NonNull [] @NonNull [] formattingSegmentsArray) {
-		@NonNull SerializationSegment @NonNull [] formattingSegments = formattingSegmentsArray[index++];
-		assert grammarElement2innerFormattingSegments != null;
-		grammarElement2innerFormattingSegments.put(grammarElement, formattingSegments);
-	/*	StringBuilder s = new StringBuilder();
-		s.append("setInnerFormattingSegments ");
-		SerializationUtils.XtextToString ts = new SerializationUtils.XtextToString(s, false);
-		ts.doSwitch(grammarElement);
-		s.append(" :");
-		for (@NonNull SerializationSegment segment : formattingSegments) {
-			 s.append(" " + segment);
+/*	private @NonNull SerializationSegment @NonNull [] mergeParentSerializationSegments(
+			@NonNull SerializationSegment @NonNull [] formattingSegments, @NonNull SerializationSegment[] parentSerializationSegments) {
+		int isValues = 0;
+		for (@NonNull SerializationSegment parentSerializationSegment : parentSerializationSegments) {
+			if (parentSerializationSegment.isValue()) {
+				isValues++;
+			}
 		}
-		System.out.println(s.toString()); */
+		assert isValues == 1;
+		if (parentSerializationSegments.length > 1) {
+			@NonNull SerializationSegment @NonNull [] mergedFormattingSegments = new @NonNull SerializationSegment[parentSerializationSegments.length - isValues + formattingSegments.length];
+			int mergedIndex = 0;
+			for (@NonNull SerializationSegment parentSerializationSegment : parentSerializationSegments) {
+				if (parentSerializationSegment.isValue()) {
+					for (@NonNull SerializationSegment childSerializationSegment : formattingSegments) {
+						mergedFormattingSegments[mergedIndex++] = childSerializationSegment;
+					}
+				}
+				else {
+					mergedFormattingSegments[mergedIndex++] = parentSerializationSegment;
+				}
+			}
+			formattingSegments = mergedFormattingSegments;
+		}
+		return formattingSegments;
+	} */
+
+	/**
+	 * Perform the per-rule lazy initialization of the grammarElement to innerFormattingSegments.
+	 */
+	private int setInnerFormattingSegments(@NonNull AbstractElement grammarElement, int index, @NonNull SerializationSegment @NonNull [] @NonNull [] formattingSegmentsArray) {
+		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2innerFormattingSegments2 = grammarElement2innerFormattingSegments;
+		assert grammarElement2innerFormattingSegments2 != null;
+		@NonNull SerializationSegment @NonNull [] formattingSegments = formattingSegmentsArray[index++];
+		EObject parentGrammarElement = grammarElement.eContainer();
+		if ((parentGrammarElement instanceof Group) && (((Group)parentGrammarElement).getElements().get(0) == grammarElement)) {
+			@NonNull SerializationSegment[] parentSerializationSegments = grammarElement2innerFormattingSegments2.get(parentGrammarElement);
+			assert parentSerializationSegments != null;
+//			formattingSegments = mergeParentSerializationSegments(formattingSegments, parentSerializationSegments);
+		}
+		grammarElement2innerFormattingSegments2.put(grammarElement, formattingSegments);
 		if (grammarElement instanceof CompoundElement) {
 			for (@NonNull AbstractElement nestedElement : SerializationUtils.getElements((CompoundElement)grammarElement)) {
 				index = setInnerFormattingSegments(nestedElement, index, formattingSegmentsArray);
@@ -647,10 +676,20 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 		return index;
 	}
 
+	/**
+	 * Perform the per-rule lazy initialization of the grammarElement to outerFormattingSegments.
+	 */
 	private int setOuterFormattingSegments(@NonNull AbstractElement grammarElement, int index, @NonNull SerializationSegment @NonNull [] @NonNull [] formattingSegmentsArray) {
+		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2outerFormattingSegments2 = grammarElement2outerFormattingSegments;
+		assert grammarElement2outerFormattingSegments2 != null;
 		@NonNull SerializationSegment @NonNull [] formattingSegments = formattingSegmentsArray[index++];
-		assert grammarElement2outerFormattingSegments != null;
-		grammarElement2outerFormattingSegments.put(grammarElement, formattingSegments);
+		EObject parentGrammarElement = grammarElement.eContainer();
+		if ((parentGrammarElement instanceof Group) && (((Group)parentGrammarElement).getElements().get(0) == grammarElement)) {
+			@NonNull SerializationSegment[] parentSerializationSegments = grammarElement2outerFormattingSegments2.get(parentGrammarElement);
+			assert parentSerializationSegments != null;
+//			formattingSegments = mergeParentSerializationSegments(formattingSegments, parentSerializationSegments);
+		}
+		grammarElement2outerFormattingSegments2.put(grammarElement, formattingSegments);
 		if (grammarElement instanceof CompoundElement) {
 			for (@NonNull AbstractElement nestedElement : SerializationUtils.getElements((CompoundElement)grammarElement)) {
 				index = setOuterFormattingSegments(nestedElement, index, formattingSegmentsArray);

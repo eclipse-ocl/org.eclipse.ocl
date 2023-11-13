@@ -29,6 +29,5 @@ public class DebugStep extends AbstractWorkflowComponent
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
 		log.info("Debug step");
-		getClass();
 	}
 }

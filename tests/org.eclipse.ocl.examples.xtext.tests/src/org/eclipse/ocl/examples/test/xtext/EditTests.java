@@ -89,7 +89,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	private void assertHasComments(@NonNull Resource aResource, @NonNull String @NonNull [] comments) {
-		Map<String, Integer> expected = new HashMap<String, Integer>();
+		Map<String, Integer> expected = new HashMap<>();
 		for (String comment : comments) {
 			Integer count = expected.get(comment);
 			count = (count != null) ? (count + 1) : 1;
@@ -698,7 +698,7 @@ public class EditTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		assertHasComments(ecoreResource_uncommented, new @NonNull String @NonNull []{});
 		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{"a comment"});
-		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"yet\nanother\ncomment"});
+		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"\nyet\nanother\ncomment\n"});
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		CSResource xtextResource;
@@ -722,20 +722,20 @@ public class EditTests extends XtextTestCase
 			TestUtil.assertSameModel(ecoreResource_commented, ecoreResource2);
 		}
 		//
-		//	Change "/* a comment */" to "/* yet\n* another\n * comment */".
+		//	Change "/* a comment */" to "/*\n* yet\n* another\n * comment\n*/".
 		//
 		{
-			replace(xtextResource, "/* a comment */", "/* yet\n* another\n * comment */");
+			replace(xtextResource, "/* a comment */", "/*\n* yet\n* another\n * comment\n* */");
 			assertNoResourceErrors("Changing comment", xtextResource);
 			URI ecoreURI3 = getTestFileURI("test3.ecore");
 			Resource ecoreResource3 = as2ecore(environmentFactory, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_recommented, ecoreResource3);
 		}
 		//
-		//	Change "/* yet\n* another\n * comment */" back to nothing.
+		//	Change "/*\n* yet\n* another\n * comment\n*/ back to nothing.
 		//
 		{
-			replace(xtextResource, "/* yet\n* another\n * comment */", "");
+			replace(xtextResource, "/*\n* yet\n* another\n * comment\n* */", "");
 			assertNoResourceErrors("Removing comment", xtextResource);
 			URI ecoreURI4 = getTestFileURI("test4.ecore");
 			Resource ecoreResource4 = as2ecore(environmentFactory, asResource, ecoreURI4, NO_MESSAGES);
@@ -778,7 +778,7 @@ public class EditTests extends XtextTestCase
 		ASResource asResource = ocl1.ecore2as(ecoreResource);
 		assertNoResourceErrors("Pivot load", asResource);
 		assertNoValidationErrors("Pivot load", asResource);
-		Set<EObject> loadPivotContent = new HashSet<EObject>();
+		Set<EObject> loadPivotContent = new HashSet<>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			//			System.out.println(ClassUtil.debugSimpleName(eObject));
@@ -792,7 +792,7 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Xtext load", xtextResource1);
 			ListBasedDiagnosticConsumer diagnosticsConsumer1 = new ListBasedDiagnosticConsumer();
 			xtextResource1.update(diagnosticsConsumer1);
-			Set<EObject> parsePivotContent = new HashSet<EObject>();
+			Set<EObject> parsePivotContent = new HashSet<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				//				System.out.println(ClassUtil.debugSimpleName(eObject));
@@ -817,7 +817,7 @@ public class EditTests extends XtextTestCase
 		ecore2as.update(asResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 		assertNoResourceErrors("Pivot reload", ecoreResource);
 		assertNoValidationErrors("Pivot reload", ecoreResource);
-		Set<EObject> newPivotContent = new HashSet<EObject>();
+		Set<EObject> newPivotContent = new HashSet<>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			//			System.out.println(PivotUtil.debugSimpleName(eObject));
@@ -833,7 +833,7 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Xtext load", xtextResource2);
 			ListBasedDiagnosticConsumer diagnosticsConsumer2 = new ListBasedDiagnosticConsumer();
 			xtextResource2.update(diagnosticsConsumer2);
-			Set<EObject> reparsePivotContent = new HashSet<EObject>();
+			Set<EObject> reparsePivotContent = new HashSet<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				//				System.out.println(PivotUtil.debugSimpleName(eObject));
@@ -1079,18 +1079,18 @@ public class EditTests extends XtextTestCase
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		SequenceType sequenceType = ocl.getStandardLibrary().getSequenceType();
-		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<@NonNull Type>(myType, true, null, null);
+		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<>(myType, true, null, null);
 		CompleteClassInternal sequenceCompleteClass = metamodelManager.getCompleteClass(sequenceType);
-		WeakReference<Type> sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		WeakReference<Type> sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		assertNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		assertNotNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
 		System.gc();
-		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
 		boolean isNull = debugStateRef(sequenceMyType);
 		sequenceMyType = null;
 		assertTrue(isNull);

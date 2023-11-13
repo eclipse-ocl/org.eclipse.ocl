@@ -841,11 +841,11 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 			gatherFormattingIdioms(alternatives, formattingSubIdiomsList);
 			Iterable<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = getSerializationRuleAnalyses();
 			@NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule [Iterables.size(serializationRuleAnalyses)];
-			@NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray = new @NonNull SerializationSegment [formattingSubIdiomsList.size()] @NonNull [];
-			@NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray = new @NonNull SerializationSegment [formattingSubIdiomsList.size()] @NonNull [];
+			@NonNull SerializationSegment @NonNull [] @Nullable [] innerFormattingSegmentsArray = new @NonNull SerializationSegment @NonNull [formattingSubIdiomsList.size()] @Nullable [];
+			@NonNull SerializationSegment @NonNull [] @Nullable [] outerFormattingSegmentsArray = new @NonNull SerializationSegment @NonNull [formattingSubIdiomsList.size()] @Nullable [];
 			for (int i = 0; i < formattingSubIdiomsList.size(); i++) {
-				@NonNull SerializationSegment[] innerFormattingSegments = null;
-				@NonNull SerializationSegment[] outerFormattingSegments = null;
+				@NonNull SerializationSegment @Nullable [] innerFormattingSegments = null;
+				@NonNull SerializationSegment @Nullable [] outerFormattingSegments = null;
 				List<@NonNull SubIdiom> formattingSubIdioms = formattingSubIdiomsList.get(i);
 				if (formattingSubIdioms != null) {
 					innerFormattingSegments = grammarAnalysis.getSerializationSegments(formattingSubIdioms, false);
@@ -864,7 +864,9 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 		//			@NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray,
 		//			@NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray) {
 				assert parserRuleValue == null;
-				parserRuleValue2 = parserRuleValue = new ParserRuleValue(index, getName(), serializationRules, outerFormattingSegmentsArray, innerFormattingSegmentsArray, parserRuleValueIndexes);
+				@SuppressWarnings("null") @NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray2 = (@NonNull SerializationSegment @NonNull [] @NonNull [])innerFormattingSegmentsArray;
+				@SuppressWarnings("null") @NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray2 = (@NonNull SerializationSegment @NonNull [] @NonNull [])outerFormattingSegmentsArray;
+				parserRuleValue2 = parserRuleValue = new ParserRuleValue(index, getName(), serializationRules, outerFormattingSegmentsArray2, innerFormattingSegmentsArray2, parserRuleValueIndexes);
 		//		return parserRuleValue;
 		//	}
 

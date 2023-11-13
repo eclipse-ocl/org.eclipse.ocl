@@ -220,6 +220,8 @@ public class IdiomsLoadTests extends XtextTestCase
 		IdiomsStandaloneSetup.doSetup();
 //		configurePlatformResources();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+//		DeclarativeFormatter.FORMATTER_FRAGMENTS.setState(true);
+//		DeclarativeSerializer.SERIALIZER_FRAGMENTS.setState(true);
 	}
 
 	@Override
@@ -348,10 +350,10 @@ public class IdiomsLoadTests extends XtextTestCase
 		int i2 = -indentedWindow-1;
 	//	System.out.println(i2 + " " + (indentedOffset+i2));
 		doReformatText(declarativeFormatter, rootNode, indentedOffset+i2, indentedWindow, replacedText);//.replace(indentedKey2, reformattedKey2));
-	//	for (int i = -indentedWindow-2; i < -indentedWindow; i++) {		// XXX
+		for (int i = -indentedWindow-2; i < -indentedWindow; i++) {
 	//		System.out.println(i + " " + (indentedOffset+i));
-	//		doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
-	//	}
+			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, replacedText);
+		}
 		for (int i = -indentedWindow; i < 0; i++) {
 		//	System.out.println(i + " " + (indentedOffset+i));
 			doReformatText(declarativeFormatter, rootNode, indentedOffset+i, indentedWindow, referenceText);
