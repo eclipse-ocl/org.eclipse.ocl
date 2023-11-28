@@ -48,8 +48,10 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	protected final @NonNull URI oclURI;
 
 	/**
-	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
-	 * for the meta-models managed by a newly created environmentFactory.
+	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage.
+	 * The returned validator should be put into an appropriate EValidator.Registry, which should
+	 * normally be a ValidationRegistryAdapter to avoid leakage and concurrency issues with the
+	 * shared global registry.
 	 */
 	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI) {
 		super(null);

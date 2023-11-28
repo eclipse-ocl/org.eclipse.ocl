@@ -17,18 +17,18 @@ idiom BRACES4_in_ClassCS for basecs::ClassCS {
 	at "{" do soft-space value soft-space;
 	at "}" do soft-space value soft-space;
 	at "{" do soft-new-line value push soft-new-line;
-	at "}" do pop soft-space value soft-new-line half-new-line;
+	at "}" do pop soft-space value soft-new-line;
 }
 
 idiom BRACES2a_in_ClassCS for basecs::ClassCS {
 	at "{" do soft-space value soft-space;
 	at "}" do soft-space value soft-space;
-	at ";" do no-space value soft-new-line half-new-line;
+	at ";" do no-space value soft-new-line;
 }
 
 idiom BRACES2b_in_ClassCS for basecs::ClassCS {
 	at "{" do soft-new-line value push soft-new-line;
-	at "}" do pop soft-space value soft-new-line half-new-line;
+	at "}" do pop soft-space value soft-new-line;
 }
 
 idiom BRACES4_in_OperationCS for basecs::OperationCS {
@@ -39,7 +39,7 @@ idiom BRACES4_in_OperationCS for basecs::OperationCS {
 }
 
 idiom BRACES2_in_OperationCS for basecs::OperationCS {
-	at "{" do soft-space value soft-space;
+	at "{" do soft-space value soft-new-line;
 	at "}" do soft-space value soft-space;
 	at ";" do no-space value soft-new-line;
 }
