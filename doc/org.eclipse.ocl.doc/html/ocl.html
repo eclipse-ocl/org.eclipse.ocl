@@ -520,7 +520,7 @@
 			<a class="link" href="#GettingStarted" title="Getting Started">Getting Started</a>.
 		</p>
 <p>A PDF version of this documentation is available at 
-			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.18.0/ocl.pdf" target="_new">OCL 2022-12 (6.18.0) Documentation</a>.
+			<a class="ulink" href="http://download.eclipse.org/ocl/doc/6.19.0/ocl.pdf" target="_new">OCL 2023-12 (6.19.0) Documentation</a>.
 		</p>
 <div class="section" title="What is OCL?">
 <div class="titlepage">
@@ -5366,10 +5366,10 @@ in&nbsp;test.substring(start,finish)<br>
 <p>Syntax errors are detected and offending text is underlined with accompanying annotations and problem markers.</p>
 <p>If there are no syntax errors, semantic validation is performed with similar feedback of problems. Semantic validation is not performed when there are syntax errors since a single syntax error may provoke many hundreds of semantic errors. These can make the original syntax error difficult to resolve.</p>
 <p>The use of the well-formedness rules for a final validation of the Abstract Syntax is only partially implemented,
-					since correction of the OCL in the OMG specifiucation is still work in progress.</p>
-<p>By default, the Xtext nature is not added to projects using OCL editors and so no builder runs in the background creating problem markers for OCL files. This is generally beneficial when you have many files for which the over-enthusiastic rebuilds waste build time, or experimental files for which the many errors clutter the Problem View. </p>
-<p>If your OCL is good quality, you may activate the Xtext nature and builder by selecting the project and then invoking 
-					<span class="bold"><strong>Configure-&gt;Add Xtext Nature</strong></span>.
+					since correction of the OCL in the OMG specification is still work in progress.</p>
+<p>By default, the OCL nature/builder is not added to projects using OCL editors and so no builder runs in the background creating problem markers for OCL files. This is generally beneficial when you have many files for which the over-enthusiastic rebuilds waste build time, or experimental files for which the many errors clutter the Problem View. </p>
+<p>If your OCL is good quality, you may activate the OCL nature/builder by selecting the project and then invoking 
+					<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span>.
 				</p>
 </div>
 <div class="section" title="Hover Text">
@@ -5447,7 +5447,7 @@ in&nbsp;test.substring(start,finish)<br>
 </div>
 </div>
 </div>
-<p>The build of an OCL or OCL-containing source file validates the ource file and updates markers in the Problems View to identify issues that the user may care to address. Double-clicking on the Problems View Marker opens an
+<p>The build of an OCL or OCL-containing source file validates the source file and updates markers in the Problems View to identify issues that the user may care to address. Double-clicking on the Problems View Marker opens an
 				editor to faciltate fixing the problem.</p>
 <p>The build validation occurs whenever a source file changes or is &lsquo;cleaned&rsquo; and when the containing project
 				has the OCL nature configured.</p>
@@ -12725,7 +12725,7 @@ endif)<br>
 </div>
 </div>
 </div>
-<p>This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.</p>
+<p>This tutorial has been refreshed for Eclipse 2023-12; Eclipse 4.30, EMF 2.36, OCL 6.19.0.</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -12869,6 +12869,9 @@ endif)<br>
 <p>The Sample Ecore Editor provides tree editing</p>
 </li>
 <li class="listitem">
+<p>The Xcore Editor provides text editing</p>
+</li>
+<li class="listitem">
 <p>The Ecore Tools project provides graphical editing</p>
 </li>
 <li class="listitem">
@@ -12939,7 +12942,8 @@ endif)<br>
 <p>An OCL project, analogously to many other Eclipse projects, has an OCL nature and an OCL builder that compile OCL resources so that any problems are shown as error/warning/info markers in the 
 						<span class="bold"><strong>Problems View</strong></span>.
 					</p>
-<p>The OCL nature may be added to our project by right-clicking on the project and then invoking 
+<p>The OCL nature may be added to our project by right-clicking on the 
+						<span class="bold"><strong>Tutorial</strong></span> project and then invoking 
 						<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span> from the context menu.
 					</p>
 <p>
@@ -13005,7 +13009,7 @@ endif)<br>
 						Select 
 						<span class="bold"><strong>New-&gt;Other...</strong></span> then select the 
 						<span class="bold"><strong>OCLinEcore Ecore File</strong></span> from the 
-						<span class="bold"><strong>OCL</strong></span> category. 
+						<span class="bold"><strong>OCL</strong></span> category. An almost empty file is created with a little example content.
 					</p>
 <p>
 						
@@ -13026,7 +13030,7 @@ endif)<br>
 <p></p>
 <p>Left-click 
 						<span class="bold"><strong>Next</strong></span> and enter 
-						<span class="bold"><strong>Tutorial.ecore</strong></span> as the file name. 
+						<span class="bold"><strong>Tutorial.ecore</strong></span> as the file name.
 					</p>
 <p>
 						
@@ -13037,7 +13041,7 @@ endif)<br>
 					
 </p>
 <p>Left-click 
-						<span class="bold"><strong>Finish</strong></span> to open up an editor with some minimal example content demonstrating
+						<span class="bold"><strong>Finish</strong></span> to open up an editor. The example content demonstrates
 					</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
@@ -13065,7 +13069,7 @@ endif)<br>
 </p>
 <p>Close the editor by left-clicking the cross on the editor tab.</p>
 <p>You can see the normal Ecore view of the file by right-clicking on the 
-						<span class="bold"><strong>Tutorial.ecore</strong></span> file to pop-up the context-sensitive menu
+						<span class="bold"><strong>Tutorial.ecore</strong></span> file in the Package Explorer to pop-up the context-sensitive menu
 						and select 
 						<span class="bold"><strong>Open With-&gt;Sample Ecore Model Editor</strong></span>.
 					</p>
@@ -13203,7 +13207,7 @@ endif)<br>
 </div>
 </div>
 <p>The example meta-model models a library with members and books
-						and loans of books to members. It may be viewed graphically using the Ecore Tools
+						and loans of books to members. It may be viewed graphically using the Ecore Tools editor
 						(not part of this tutorial).</p>
 <p>
 						
@@ -13302,7 +13306,7 @@ endif)<br>
 </ul>
 </div>
 <p>Select the 
-					<code class="code">Library</code> and give it a name such as 
+					<code class="code">Library</code> and use the Properties View to give it a name such as 
 					<code class="code">lib</code>.
 				</p>
 <p>From the right-button menu for 
@@ -13502,17 +13506,17 @@ endif)<br>
 </li>
 </ul>
 </div>
-<div class="itemizedlist">
-<ul class="itemizedlist" type="disc">
-<li class="listitem">
-<p>it used to be necessary to close an XML editor such as 
-							<span class="bold"><strong>Tutorial.xmi</strong></span> before modifying its meta-model since
-						</p>
-</li>
-</ul>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						It used to be necessary to close an XML editor such as 
+						<span class="bold"><strong>Tutorial.xmi</strong></span> before modifying its meta-model since
+						a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
+						This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.
+					</p>
+</blockquote>
 </div>
-<p>a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
-					This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.</p>
+<p></p>
 <p>Add the invariant shown below to the meta-model.</p>
 <p>
 					
@@ -13586,8 +13590,9 @@ endif)<br>
 <p>To make the OCL Console visible, first make the 
 					<span class="bold"><strong>Console</strong></span> view visible by
 
-					<span class="bold"><strong>Window-&gt;Show View-&gt;Console</strong></span>. Then right click on the 
-					<span class="bold"><strong>Open Console</strong></span> and
+					<span class="bold"><strong>Window-&gt;Show View-&gt;Console</strong></span>. Then left click on the 
+					<span class="bold"><strong>Open Console</strong></span> pull down
+					near top right of the console toolbar and 
 					left click on 
 					<span class="bold"><strong>Interactive Xtext OCL</strong></span>.
 				</p>
@@ -13623,7 +13628,7 @@ endif)<br>
 				</p>
 <p>Left-click to select the 
 					<code class="code">Library</code> in the 
-					<span class="bold"><strong>Tutorial.xmi</strong></span> as the context
+					<span class="bold"><strong>Tutorial.xmi</strong></span> editor as the context
 					for a query. The title of the console view shows the that the 
 					<code class="code">Library</code> has been selected as OCL&rsquo;s 
 					<code class="code">self</code> .
@@ -13648,7 +13653,7 @@ endif)<br>
 					<span class="bold"><strong>Page Up</strong></span> or 
 					<span class="bold"><strong>Page Down</strong></span> keys to save typing them again.
 				</p>
-<p>You can examine the execution of the query within out example invariant by selecting each of the books
+<p>You can examine the execution of the query within our example invariant by selecting each of the books
 					in turn and executing 
 					<code class="code">library.loans-&gt;select(book=self)</code>, to see that 
 					<code class="code">b1</code>
@@ -13694,9 +13699,17 @@ endif)<br>
 </div>
 <p>Reopen 
 					<span class="bold"><strong>Tutorial.xmi</strong></span> and select 
-					<span class="bold"><strong>Book b2</strong></span> so that the derived property is visible in the 
+					<span class="bold"><strong>Book b2</strong></span> so that the derived 
+					<span class="bold"><strong>loans</strong></span> property is visible in the 
 					<span class="bold"><strong>Properties</strong></span> view.
 				</p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						Beware. The Properties View provides a &lsquo;pleasanter&rsquo; presentation by capitalizing property names. This can be confusing when debugging.</p>
+</blockquote>
+</div>
+<p></p>
 <p>
 					
 </p>
@@ -17445,8 +17458,8 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 				<span class="bold"><strong>bin</strong></span> directory.
 			</p>
 <p>The OCL editors can be used wherever Ecore editors can be used. </p>
-<p>It is not necessary for a project to have a Java nature.</p>
-<p>It is not necessary for a project to have an Xtext nature. If you add an Xtext nature, your OCL files will be built automatically when other files in the project or its dependencies change. This can significantly clutter the Problems View if you have problems with your OCL, and may significantly increase build times.</p>
+<p>It is not necessary for a project to have a Java nature/builder.</p>
+<p>It is not necessary for a project to have an OCL nature/builder. If you add an OCL nature/builder, your OCL files will be built automatically when other files in the project or its dependencies change. This can significantly clutter the Problems View if you have problems with your OCL, and may significantly increase build times.</p>
 </div>
 <div class="section" title="OCLinEcore Tutorial Example Project">
 <div class="titlepage">
@@ -18479,7 +18492,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EcoreEnvironmentFactory.INSTANCE</code> is most practical.
 				</p>
 <p>The Ecore binding for OCL provides the following capabilities, reflecting the subset of Ecore&rsquo;s modeling constructs with respect to UML:</p>
-<table id="N14ACB">
+<table id="N14AD8">
 <tr>
 						
 <th>Capability</th>
@@ -18704,7 +18717,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EPackage</code> names corresponding to UML models.  A custom package registry may be provided by the client if necessary.
 				</p>
 <p>The UML binding for OCL provides the following capabilities:</p>
-<table id="N14C80">
+<table id="N14C8D">
 <tr>
 						
 <th>Capability</th>
@@ -19014,7 +19027,7 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 					<code class="code">Choice</code> s is supported for the
 					following tokens, which may be used by a client as auto-assist triggers:
 				</p>
-<table id="N14E7F">
+<table id="N14E8C">
 <tr>
 						
 <th>Token</th>
@@ -21334,20 +21347,194 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 </div>
 </div>
 </div>
-<p>When using the Pivot metamodel, there are two specialized validators available to support integration of OCL in to a larger Ecore environment. </p>
-<div class="section" title="OCLinEcoreEObjectValidator">
+<p>When using the Pivot metamodel, there are two specialized validators available to support integration of OCL in to a larger Ecore environment.</p>
+<div class="section" title="Validation Code">
 <div class="titlepage">
 <div>
 <div>
 <h3 class="title">
-<a name="OCLinEcoreEObjectValidator"></a>OCLinEcoreEObjectValidator</h3>
+<a name="ValidationCode"></a>Validation Code</h3>
 </div>
 </div>
 </div>
-<p>Unfortunately, in the Indigo release, EMF does not support this customization and so must be activated by explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the OCLinEcoreEObjectValidator, which you may install globally by:</p>
+<p>Before we describe OCL validation we need to review standard EMF validation.</p>
+<div class="section" title="Static / Global Validation">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="GlobalValidation"></a>Static / Global Validation</h4>
+</div>
+</div>
+</div>
+<p>EMF validation comprises two phases.</p>
+<p>The first initialization phase populates the global validation registry 
+						<code class="code">EValidator.Registry.INSTANCE</code> with a mapping from an 
+						<code class="code">EPackage</code> whose elements need validation to the derived 
+						<code class="code">EValidator</code> that will perform the validation. This initialization is typically performed at the end of the 
+						<code class="code">XXXPackageImpl.init()</code> auto-generated by genmodel.
+					</p>
+<div class="literallayout">
+<p>
+<code class="code">EValidator.Registry.INSTANCE.put(myEPackage,&nbsp;myEValidator);	<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>For standalone usage, this is executed as a side effect of referencing the model by e.g. 
+						<code class="code">XXXPackage.eINSTANCE</code>. For IDE usage, the 
+						<code class="code">org.eclipse.emf.ecore.generated_package</code> extension point ensures timely initialization. Either way, the initialization normally occurs without any special programming effort.
+					</p>
+<p>The second validation phase offers each model element to an appropriate 
+						<code class="code">EValidator</code> and accumulates the results as a list of 
+						<code class="code">BasicDiagnostic</code>. The 
+						<code class="code">Diagnostician</code> is often used to orchestrate this using code such as:
+					</p>
+<div class="literallayout">
+<p>
+<code class="code">Diagnostician&nbsp;diagnostician&nbsp;=&nbsp;Diagnostician.INSTANCE;<br>
+Map&lt;Object,&nbsp;Object&gt;&nbsp;context&nbsp;=&nbsp;diagnostician.createDefaultContext();<br>
+BasicDiagnostic&nbsp;diagnostics&nbsp;=&nbsp;diagnostician.createDefaultDiagnostic(eObject);<br>
+diagnostician.validate(eObject,&nbsp;diagnostics,&nbsp;context);	<br>
+
+</code>
+</p>
+</div>
+<p></p>
+</div>
+<div class="section" title="Dynamic / Local Validation">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="LocalValidation"></a>Dynamic / Local Validation</h4>
+</div>
+</div>
+</div>
+<p>An EMF 
+						<code class="code">ResourceSet</code> provides a local 
+						<code class="code">EPackage.Registry</code> and 
+						<code class="code">Resource.Factory.Registry</code> that delegates to the corresponding global registry. This allows an EMF-based application to register the 
+						<code class="code">EPackage</code> and 
+						<code class="code">ResourceFactory</code> for an application-specific purpose without leaking them to other applications. This also allows the garbage collector to clean up when an application completes.  
+						Unfortunately EMF provides no corresponding support for a local 
+						<code class="code">EValidator.Registry</code>. This provides a significant challenge for the OCL tooling where for instance an application may load a Complete OCL document with additional constraints that need validation. These additions should not affect other concurrent or subsequent applications.
+					</p>
+<div class="section" title="OCL EValidator registration pre 2023-12">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="EValidatorRegistrationPre2023-12"></a>OCL EValidator registration pre 2023-12</h5>
+</div>
+</div>
+</div>
+<p>With only a global validation registry available, the old approach was to install the dynamic contributions into the global registry using a 
+							<code class="code">ComposedEValidator</code> to ensure that multiple validators are registered with the appropriate one chosen according to the 
+							<code class="code">ResourceSet</code> of the validated 
+							<code class="code">EObject</code>.
+						</p>
+<p>This sort of works, but impairs garbage collection and has given trouble to users attempting to run multiple editors.</p>
+</div>
+<div class="section" title="OCL EValidator registration post 2023-12">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="EValidatorRegistrationPost2023-12"></a>OCL EValidator registration post 2023-12</h5>
+</div>
+</div>
+</div>
+<p>The 2023-12 OCL release introduces a local validation registry using 
+							<code class="code">ValidationRegistryAdapter</code> to install a 
+							<code class="code">ValidationRegistryImpl</code> as a 
+							<code class="code">ResourceSet</code> 
+							<code class="code">Adapter</code>. It delegates to the global validation registry. A 
+							<code class="code">ComposedEValidator</code> may still be used to compose a 
+							<code class="code">CompleteOCLEValidator</code> and a regular 
+							<code class="code">EObjectValidator</code> but they are 
+							<code class="code">ResourceSet</code>-specific and so do not impose a GC-lockin via a global facility.
+						</p>
+<p>Use of a local validation registry has a significant impact on application code.</p>
+<p>It is no longer possible to register OCL validators in some convenient initialization method. Validation Registry initialization, just like Resource Factory initialization cannot occur until the 
+							<code class="code">ResourceSet</code> is created.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">ValidationRegistryAdapter.getAdapter(myResourceSet)<br>
+	.put(myEPackage,&nbsp;myEValidator);<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>It is no longer possible to use 
+							<code class="code">Diagnostician.INSTANCE</code> to orchestrate validation. The variant constructor with a validation registry argument must be used.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">Diagnostician&nbsp;diagnostician&nbsp;=&nbsp;new&nbsp;Diagnostician(<br>
+	ValidationRegistryAdapter.getAdapter(myResourceSet));<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>Optionally the new 
+							<code class="code">ValidationContext</code> may be used in place of the 
+							<code class="code">Map&lt;Object,Object&gt;</code> to support the following idiom
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">ValidationRegistryAdapter&nbsp;validationRegistry&nbsp;=<br>
+	ValidationRegistryAdapter.getAdapter(myEObject);<br>
+ValidationContext&nbsp;validationContext&nbsp;=&nbsp;new&nbsp;ValidationContext(validationRegistry);<br>
+Diagnostician&nbsp;diagnostician&nbsp;=&nbsp;validationContext.getDiagnostician();<br>
+Diagnostic&nbsp;diagnostics&nbsp;=&nbsp;diagnostician.validate(myEObject,&nbsp;validationContext);<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>If the 
+							<code class="code">Diagnostician</code> is unaware of the local validation registry, any validators registered locally will be ignored. An error message is generated in the console log if global registration is attempted.
+						</p>
+</div>
+</div>
+</div>
+<div class="section" title="OCL Validators">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLValidators"></a>OCL Validators</h3>
+</div>
+</div>
+</div>
+<p>The OCL project provides a variety of validators.</p>
+<div class="section" title="OCLinEcoreEObjectValidator">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="OCLinEcoreEObjectValidator"></a>OCLinEcoreEObjectValidator</h4>
+</div>
+</div>
+</div>
+<p>Unfortunately EMF does not yet (2023-12 at time of writing) support message customization and so it must be activated by explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the OCLinEcoreEObjectValidator, which you may install globally by:</p>
 <div class="literallayout">
 <p>
 <code class="code">EValidator.Registry.INSTANCE.put(null,&nbsp;new&nbsp;OCLinEcoreEObjectValidator());<br>
+
+</code>
+</p>
+</div>
+<p>
+						but much better locally </p>
+<div class="literallayout">
+<p>
+<code class="code">ValidationRegistryAdapter.getAdapter(myResourceSet).put(null,&nbsp;new&nbsp;OCLinEcoreEObjectValidator());<br>
 
 </code>
 </p>
@@ -21357,55 +21544,52 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 <div class="literallayout">
 <p>
 <code class="code">import&nbsp;org.eclipse.emf.ecore.util.EObjectValidator;<br>
-
-<br>
-/**<br>
-&nbsp;*&nbsp;&lt;!--&nbsp;begin-user-doc&nbsp;--&gt;<br>
-&nbsp;*&nbsp;The&nbsp;&lt;b&gt;Validator&lt;/b&gt;&nbsp;for&nbsp;the&nbsp;model.<br>
-&nbsp;*&nbsp;&lt;!--&nbsp;end-user-doc&nbsp;--&gt;<br>
-&nbsp;*&nbsp;@see&nbsp;company.CompanyPackage<br>
-&nbsp;*/<br>
-public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;EObjectValidator&nbsp;{<br>
+/*<br>
+&nbsp;*&nbsp;&lt;!--&nbsp;begin-user-doc&nbsp;--<br>
+&nbsp;*&nbsp;The&nbsp;&lt;b&gt;Validator&lt;/b&gt;&nbsp;for&nbsp;the&nbsp;model<br>
+&nbsp;*&nbsp;&lt;!--&nbsp;end-user-doc&nbsp;--<br>
+&nbsp;*&nbsp;@see&nbsp;company.CompanyPackag<br>
+&nbsp;*<br>
+public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;EObjectValidator&nbsp;<br>
 
 </code>
 </p>
 </div>
-<p></p>
-<p>to</p>
+<p>
+						to</p>
 <div class="literallayout">
 <p>
 <code class="code">import&nbsp;org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;<br>
-
-<br>
-/**<br>
-&nbsp;*&nbsp;&lt;!--&nbsp;begin-user-doc&nbsp;--&gt;<br>
-&nbsp;*&nbsp;The&nbsp;&lt;b&gt;Validator&lt;/b&gt;&nbsp;for&nbsp;the&nbsp;model.<br>
-&nbsp;*&nbsp;&lt;!--&nbsp;end-user-doc&nbsp;--&gt;<br>
-&nbsp;*&nbsp;@see&nbsp;company.CompanyPackage<br>
+/*<br>
+&nbsp;*&nbsp;&lt;!--&nbsp;begin-user-doc&nbsp;--<br>
+&nbsp;*&nbsp;The&nbsp;&lt;b&gt;Validator&lt;/b&gt;&nbsp;for&nbsp;the&nbsp;model<br>
+&nbsp;*&nbsp;&lt;!--&nbsp;end-user-doc&nbsp;--<br>
+&nbsp;*&nbsp;@see&nbsp;company.CompanyPackag<br>
 &nbsp;*&nbsp;@generated&nbsp;not<br>
-&nbsp;*/<br>
-public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;OCLinEcoreEObjectValidator&nbsp;{<br>
+&nbsp;*<br>
+public&nbsp;class&nbsp;CompanyValidator&nbsp;extends&nbsp;OCLinEcoreEObjectValidator&nbsp;<br>
 
 </code>
 </p>
 </div>
-<p></p>
-<p>Note the 
-					<span class="bold"><strong>@generated not</strong></span> that indicates that the class interface is manually defined. Do not use 
-					<span class="bold"><strong>@generated NOT</strong></span> since that indicates that the whole class is manually defined.
-				</p>
+<p>
+						Note the 
+						<span class="bold"><strong>@generated not</strong></span> that indicates that the class interface is manually defined. Do not use 
+						<span class="bold"><strong>@generated NOT</strong></span> since that indicates that the whole class is manually defined.
+					</p>
 </div>
 <div class="section" title="CompleteOCLEObjectValidator">
 <div class="titlepage">
 <div>
 <div>
-<h3 class="title">
-<a name="CompleteOCLEObjectValidator"></a>CompleteOCLEObjectValidator</h3>
+<h4 class="title">
+<a name="CompleteOCLEObjectValidator"></a>CompleteOCLEObjectValidator</h4>
 </div>
 </div>
 </div>
 <p>The CompleteOCLEObjectValidator is used to enable Complete OCL documents to participate in the validation processing of an Xtext editor.</p>
 <p>The APIs for merging Complete OCL and Ecore as intermediate Pivots and then migrating the Pivot back to Ecore are experimental.</p>
+</div>
 </div>
 </div>
 <div class="section" title="The Pivot Evaluator">
@@ -21820,7 +22004,7 @@ org.eclipse.ocl.examples.standalone.StandaloneApplication&nbsp;help<br>
 <div>
 <div>
 <h5 class="title">
-<a name="N158AF"></a>-query ocl-query</h5>
+<a name="N15972"></a>-query ocl-query</h5>
 </div>
 </div>
 </div>
@@ -22053,7 +22237,7 @@ Result:&nbsp;5<br>
 <div>
 <div>
 <h5 class="title">
-<a name="N15968"></a>-model file-name</h5>
+<a name="N15A2B"></a>-model file-name</h5>
 </div>
 </div>
 </div>
@@ -22946,7 +23130,7 @@ org.eclipse.xtext<br>
 </li>
 </ul>
 </div>
-<table id="N15CB9">
+<table id="N15D7C">
 <tr>
 						
 <th>OCL</th>

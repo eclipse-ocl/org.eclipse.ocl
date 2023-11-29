@@ -44,11 +44,11 @@ Syntax errors are detected and offending text is underlined with accompanying an
 If there are no syntax errors, semantic validation is performed with similar feedback of problems. Semantic validation is not performed when there are syntax errors since a single syntax error may provoke many hundreds of semantic errors. These can make the original syntax error difficult to resolve.
 
 The use of the well-formedness rules for a final validation of the Abstract Syntax is only partially implemented,
-since correction of the OCL in the OMG specifiucation is still work in progress.
+since correction of the OCL in the OMG specification is still work in progress.
 
-By default, the Xtext nature is not added to projects using OCL editors and so no builder runs in the background creating problem markers for OCL files. This is generally beneficial when you have many files for which the over-enthusiastic rebuilds waste build time, or experimental files for which the many errors clutter the Problem View. 
+By default, the OCL nature/builder is not added to projects using OCL editors and so no builder runs in the background creating problem markers for OCL files. This is generally beneficial when you have many files for which the over-enthusiastic rebuilds waste build time, or experimental files for which the many errors clutter the Problem View. 
 
-If your OCL is good quality, you may activate the Xtext nature and builder by selecting the project and then invoking *Configure->Add Xtext Nature*.
+If your OCL is good quality, you may activate the OCL nature/builder by selecting the project and then invoking *Configure->Convert to OCL Project*.
 
 h3. Hover Text
 

@@ -1,16 +1,3 @@
-<!--
-    Copyright (c) 2023 Willink Transformations and others.
-   
-    This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License 2.0
-    which accompanies this distribution, and is available at
-    https://www.eclipse.org/legal/epl-2.0/
-   
-    SPDX-License-Identifier: EPL-2.0
-   
-    Contributors:
-        E.D.Willink - initial API and implementation
- -->
 <toc label="OCL Documentation">
 <topic href="help/OverviewandGettingStarted.html" label="Overview and Getting Started">
 <topic href="help/OverviewandGettingStarted.html#WhatisOCL" label="What is OCL?"></topic>
@@ -566,8 +553,17 @@
 <topic href="help/PivotProgrammersGuide.html#OCLperThread" label="OCL per Thread post-2021-03"></topic>
 </topic>
 <topic href="help/Validators.html" label="Validators">
+<topic href="help/Validators.html#ValidationCode" label="Validation Code">
+<topic href="help/Validators.html#GlobalValidation" label="Static / Global Validation"></topic>
+<topic href="help/Validators.html#LocalValidation" label="Dynamic / Local Validation">
+<topic href="help/Validators.html#EValidatorRegistrationPre2023-12" label="OCL EValidator registration pre 2023-12"></topic>
+<topic href="help/Validators.html#EValidatorRegistrationPost2023-12" label="OCL EValidator registration post 2023-12"></topic>
+</topic>
+</topic>
+<topic href="help/Validators.html#OCLValidators" label="OCL Validators">
 <topic href="help/Validators.html#OCLinEcoreEObjectValidator" label="OCLinEcoreEObjectValidator"></topic>
 <topic href="help/Validators.html#CompleteOCLEObjectValidator" label="CompleteOCLEObjectValidator"></topic>
+</topic>
 </topic>
 <topic href="help/PivotEvaluator.html" label="The Pivot Evaluator">
 <topic href="help/PivotEvaluator.html#PivotValue-History" label="The Evolving Pivot Value System"></topic>
@@ -586,7 +582,7 @@
 <topic href="help/PivotStandaloneApplication.html#Helpcommand" label="Help command"></topic>
 <topic href="help/PivotStandaloneApplication.html#Executecommand" label="Execute command">
 <topic href="help/PivotStandaloneApplication.html#queryoclquery" label="">
-<topic href="help/PivotStandaloneApplication.html#N158AF" label="-query ocl-query"></topic>
+<topic href="help/PivotStandaloneApplication.html#N15972" label="-query ocl-query"></topic>
 <topic href="help/PivotStandaloneApplication.html#selfselfuri" label="-self self-uri"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename" label="-output file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#exporternonetextmodel" label="-exporter none|text|model"></topic>
@@ -599,7 +595,7 @@
 </topic>
 <topic href="help/PivotStandaloneApplication.html#Validatecommand" label="Validate command">
 <topic href="help/PivotStandaloneApplication.html#modelfilename" label="">
-<topic href="help/PivotStandaloneApplication.html#N15968" label="-model file-name"></topic>
+<topic href="help/PivotStandaloneApplication.html#N15A2B" label="-model file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#rulesfilename" label="-rules file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename2" label="-output file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#exporterhtmlmodeltext" label="-exporter html|model|text"></topic>

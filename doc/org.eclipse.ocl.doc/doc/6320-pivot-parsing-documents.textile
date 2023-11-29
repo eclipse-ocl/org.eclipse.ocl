@@ -63,14 +63,14 @@ The @ComposedValidator@ enables multiple @EValidator@ to be composed and to beha
 @EValidator@. @ComposedEValidator.install()@ replaces the single @EValidator@ by a composite 
 initially containing just the replaced @EValidator@. A @CompleteOCLEObjectValidator@ provides the additional validation of the given @uri@ and @EPackage@.
 
-!{width:70%}images/6320-validating.png(Validating the Constraints)!
+!{width:80%}images/6320-validating.png(Validating the Constraints)!
 "[Text for cut and paste]":../references/6320-validating.txt
 
 The standard @Diagnostician@ does not directly support validation of a @Resource@.
 @MyDiagnostician@ remedies this deficiency and provides a @SubstitutionLabelProvider@
 that provides slightly better labels within OCL diagnostics.
 
-!{width:70%}images/6320-diagnostician.png(Extended Diagnostician)!
+!{width:80%}images/6320-diagnostician.png(Extended Diagnostician)!
 "[Text for cut and paste]":../references/6320-diagnostician.txt
 
 The source for these examples may be found in the org.eclipse.ocl.examples.xtext.tests plugin in model/parsingDocumentsExample.ocl and in src/org/eclipse/ocl/examples/test/xtext/PivotDocumentationExamples.java.

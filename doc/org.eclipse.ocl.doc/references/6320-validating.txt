@@ -1,17 +1,20 @@
 // Copied from org.eclipse.ocl.examples.test.xtext.PivotDocumentationExamples.java
 
-		// Register an extended EValidator for the Complete OCL document constraints
-		CompleteOCLEObjectValidator myValidator = new CompleteOCLEObjectValidator(
-			EXTLibraryPackage.eINSTANCE, uri, ocl.getEnvironmentFactory());
-		EValidator.Registry.INSTANCE.put(EXTLibraryPackage.eINSTANCE, myValidator);
-		
-		// Validate the entire Resource containing the library
-		Resource resource = library.eResource();
-		MyDiagnostician diagnostician = new MyDiagnostician();
-		Diagnostic diagnostics = diagnostician.validate(resource);
-		
-		// Print the diagnostics
-		if (diagnostics.getSeverity() != Diagnostic.OK) {
-			String formattedDiagnostics = PivotUtil.formatDiagnostics(diagnostics, "\n");
-			debugPrintf("Validation: %s\n", formattedDiagnostics);
-		}
+// Register an additional EValidator for the Complete OCL document constraints
+EXTLibraryPackage extPackage = EXTLibraryPackage.eINSTANCE;
+ValidationRegistryAdapter validationRegistry =
+	ValidationRegistryAdapter.getAdapter(resourceSet);
+ComposedEValidator newEValidator =
+	ComposedEValidator.install(validationRegistry, extPackage);
+newEValidator.addChild(new CompleteOCLEObjectValidator(extPackage, uri));
+
+// Validate the entire Resource containing the library
+Resource resource = library.eResource();
+MyDiagnostician diagnostician = new MyDiagnostician(validationRegistry);
+Diagnostic diagnostics = diagnostician.validate(resource);
+
+// Print the diagnostics
+if (diagnostics.getSeverity() != Diagnostic.OK) {
+	String formattedDiagnostics = PivotUtil.formatDiagnostics(diagnostics, "\n");
+	debugPrintf("Validation: %s\n", formattedDiagnostics);
+}

@@ -1,7 +1,7 @@
 
 h2(#OCLinEcoreTutorial). OCLinEcore tutorial
 
-This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.
+This tutorial has been refreshed for Eclipse 2023-12; Eclipse 4.30, EMF 2.36, OCL 6.19.0.
 * The graphical styling of some screenshots may be slightly out of date.
 
 h3. Overview 
@@ -51,6 +51,7 @@ There are many different (compatible) ways to create and edit Ecore models.
 * An Ecore Model may be created from a Rose model file
 * An Ecore Model may be created from annotated Java file
 * The Sample Ecore Editor provides tree editing
+* The Xcore Editor provides text editing
 * The Ecore Tools project provides graphical editing
 * Papyrus provides UML editing that may be converted to Ecore
 
@@ -80,7 +81,7 @@ h4. Convert to an OCL Project
 
 An OCL project, analogously to many other Eclipse projects, has an OCL nature and an OCL builder that compile OCL resources so that any problems are shown as error/warning/info markers in the *Problems View*.
 
-The OCL nature may be added to our project by right-clicking on the project and then invoking *Configure->Convert to OCL Project* from the context menu.
+The OCL nature may be added to our project by right-clicking on the *Tutorial* project and then invoking *Configure->Convert to OCL Project* from the context menu.
 
 !{width:60%}images/4100-convert_to_ocl_project.png(Conbert to OCL Project)!
 
@@ -105,7 +106,7 @@ h4. Create a New Ecore Model
 We will now create a new model for this example.
 
 First right-click on the *model* folder in the *Tutorial* project to define the target folder and pop-up the context-sensitive menu.
-Select *New->Other...* then select the *OCLinEcore Ecore File* from the *OCL* category. 
+Select *New->Other...* then select the *OCLinEcore Ecore File* from the *OCL* category. An almost empty file is created with a little example content.
 
 !{width:60%}images/4100-new_oclinecore-ecore.png(New OCLinEcore Ecore)!
 
@@ -113,11 +114,11 @@ bq..
 The alternative *OCLinEcore Text File* creates a *.oclinecore text file which preserves whitespace and comments more faithfully but which must be converted to a *.ecore file for many modeling purposes. 
 p. 
 
-Left-click *Next* and enter *Tutorial.ecore* as the file name. 
+Left-click *Next* and enter *Tutorial.ecore* as the file name.
 
 !{width:60%}images/4100-new_ecore_model_dialog.png(New Ecore Model Dialog)!
 
-Left-click *Finish* to open up an editor with some minimal example content demonstrating
+Left-click *Finish* to open up an editor. The example content demonstrates
 * the nesting of attributes or operations or invariants within classes within packages
 * use of OCL to define the body of an operation
 * the syntax for mutually opposite properties
@@ -127,7 +128,7 @@ Left-click *Finish* to open up an editor with some minimal example content demon
 
 Close the editor by left-clicking the cross on the editor tab.
 
-You can see the normal Ecore view of the file by right-clicking on the *Tutorial.ecore* file to pop-up the context-sensitive menu
+You can see the normal Ecore view of the file by right-clicking on the *Tutorial.ecore* file in the Package Explorer to pop-up the context-sensitive menu
 and select *Open With->Sample Ecore Model Editor*.
 
 !{width:60%}images/4100-empty_ecore.png(Empty Ecore Editor)!
@@ -179,7 +180,7 @@ corresponding textual syntax.
 h4. The Tutorial Meta-Model
 
 The example meta-model models a library with members and books
-and loans of books to members. It may be viewed graphically using the Ecore Tools
+and loans of books to members. It may be viewed graphically using the Ecore Tools editor
 (not part of this tutorial).
 
 !{width:50%}images/4100-ecore_diagram.png(Ecore Diagram)!
@@ -220,7 +221,7 @@ The model is automatically opened for editing.
 
 * If the Properties View is not visible, right-click within the editor and left-click on *Show Properties View*.
 
-Select the @Library@ and give it a name such as @lib@.
+Select the @Library@ and use the Properties View to give it a name such as @lib@.
 
 From the right-button menu for @Library@ use *New Child->Books Book* twice,
 use *New Child->Loans Loan* once and *New Child->Members Member* three times
@@ -308,9 +309,11 @@ In more detail:
 * @->size()@ is a collection operation that just counts the number of selected loans
 * @<= copies@, which is short for @<= self.copies@ converts the count to @true@ if it is consistent, or @false@ if inconsistent.
 
-* it used to be necessary to close an XML editor such as *Tutorial.xmi* before modifying its meta-model since
+bq.. 
+It used to be necessary to close an XML editor such as *Tutorial.xmi* before modifying its meta-model since
 a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
 This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.
+p. 
 
 Add the invariant shown below to the meta-model.
 
@@ -349,7 +352,8 @@ The OCL Console supports interactive execution of an OCL expression in the
 context of a model instance.
 
 To make the OCL Console visible, first make the *Console* view visible by
-*Window->Show View->Console*. Then right click on the *Open Console* and
+*Window->Show View->Console*. Then left click on the *Open Console* pull down
+near top right of the console toolbar and 
 left click on *Interactive Xtext OCL*.
 
 !{width:60%}images/4100-ocl_console_menu.png(OCL Console menu)!
@@ -366,7 +370,7 @@ p.
 The *Interactive Xtext OCL* console comprises two main text panes. The upper pane
 displays results. The lower pane supports entry of queries.
 
-Left-click to select the @Library@ in the *Tutorial.xmi* as the context
+Left-click to select the @Library@ in the *Tutorial.xmi* editor as the context
 for a query. The title of the console view shows the that the @Library@ has been selected as OCL's @self@ .
 
 Type @books@ followed by a new line into the lower pane of the console. 
@@ -379,7 +383,7 @@ Substantial OCL queries spanning many lines may be entered and so the cursor up
 and cursor down keys move across lines. If you want to access an earlier query,
 you may use the *Page Up* or *Page Down* keys to save typing them again.
 
-You can examine the execution of the query within out example invariant by selecting each of the books
+You can examine the execution of the query within our example invariant by selecting each of the books
 in turn and executing @library.loans->select(book=self)@, to see that @b1@
 has one Loan and @b2@ two.
 
@@ -396,7 +400,11 @@ Simplify the invariant to use the derived property.
 
 * Note that the derived property must also be volatile to avoid problems when a model is loaded but has no content.
 
-Reopen *Tutorial.xmi* and select *Book b2* so that the derived property is visible in the *Properties* view.
+Reopen *Tutorial.xmi* and select *Book b2* so that the derived *loans* property is visible in the *Properties* view.
+
+bq.. 
+Beware. The Properties View provides a 'pleasanter' presentation by capitalizing property names. This can be confusing when debugging.
+p. 
 
 !{width:60%}images/4100-derived_property.png(Derived Property)!
 

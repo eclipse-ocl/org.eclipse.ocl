@@ -1,28 +1,32 @@
 // Copied from org.eclipse.ocl.examples.test.xtext.PivotDocumentationExamples.java
 
-	public class MyDiagnostician extends Diagnostician
-	{
-		@Override
-		public Map<Object, Object> createDefaultContext() {
-			Map<Object, Object> context = super.createDefaultContext();
-			context.put(EValidator.SubstitutionLabelProvider.class,
-				new LabelSubstitutionLabelProvider());
-			return context;
-		}
-
-		public BasicDiagnostic createDefaultDiagnostic(Resource resource) {
-			return new BasicDiagnostic(EObjectValidator.DIAGNOSTIC_SOURCE, 0,
-				EMFEditUIPlugin.INSTANCE.getString(
-					"_UI_DiagnosisOfNObjects_message", new String[]{"1"}),
-				new Object[]{resource});
-		}
-
-		public Diagnostic validate(Resource resource) {
-			BasicDiagnostic diagnostics = createDefaultDiagnostic(resource);
-			Map<Object, Object> context = createDefaultContext();
-			for (EObject eObject : resource.getContents()) {
-				validate(eObject, diagnostics, context);
-			}
-		    return diagnostics;
-		}
+public class MyDiagnostician extends Diagnostician
+{
+	public MyDiagnostician(EValidator.@NonNull Registry eValidatorRegistry) {
+		super(eValidatorRegistry);
 	}
+
+	@Override
+	public Map<Object, Object> createDefaultContext() {
+		Map<Object, Object> context = super.createDefaultContext();
+		context.put(EValidator.SubstitutionLabelProvider.class,
+			new LabelSubstitutionLabelProvider());
+		return context;
+	}
+
+	public BasicDiagnostic createDefaultDiagnostic(Resource resource) {
+		return new BasicDiagnostic(EObjectValidator.DIAGNOSTIC_SOURCE, 0,
+			EMFEditUIPlugin.INSTANCE.getString(
+				"_UI_DiagnosisOfNObjects_message", new String[]{"1"}),
+			new Object[]{resource});
+	}
+
+	public Diagnostic validate(Resource resource) {
+		BasicDiagnostic diagnostics = createDefaultDiagnostic(resource);
+		Map<Object, Object> context = createDefaultContext();
+		for (EObject eObject : resource.getContents()) {
+			validate(eObject, diagnostics, context);
+		}
+		return diagnostics;
+	}
+}

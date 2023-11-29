@@ -272,9 +272,12 @@ public class PivotDocumentationExamples extends XtextTestCase
 		//-------------------------------------------------------------------------
 
 		// Register an additional EValidator for the Complete OCL document constraints
-		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
-		ComposedEValidator newEValidator = ComposedEValidator.install(validationRegistry, EXTLibraryPackage.eINSTANCE);
-		newEValidator.addChild(new CompleteOCLEObjectValidator(EXTLibraryPackage.eINSTANCE, uri));
+		EXTLibraryPackage extPackage = EXTLibraryPackage.eINSTANCE;
+		ValidationRegistryAdapter validationRegistry =
+			ValidationRegistryAdapter.getAdapter(resourceSet);
+		ComposedEValidator newEValidator =
+			ComposedEValidator.install(validationRegistry, extPackage);
+		newEValidator.addChild(new CompleteOCLEObjectValidator(extPackage, uri));
 
 		// Validate the entire Resource containing the library
 		Resource resource = library.eResource();
@@ -304,10 +307,6 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 	public class MyDiagnostician extends Diagnostician
 	{
-	//	public MyDiagnostician() {
-	//		super();
-	//	}
-
 		public MyDiagnostician(EValidator.@NonNull Registry eValidatorRegistry) {
 			super(eValidatorRegistry);
 		}

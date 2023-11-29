@@ -105,7 +105,7 @@
 </div>
 </div>
 </div>
-<p>This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.</p>
+<p>This tutorial has been refreshed for Eclipse 2023-12; Eclipse 4.30, EMF 2.36, OCL 6.19.0.</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -249,6 +249,9 @@
 <p>The Sample Ecore Editor provides tree editing</p>
 </li>
 <li class="listitem">
+<p>The Xcore Editor provides text editing</p>
+</li>
+<li class="listitem">
 <p>The Ecore Tools project provides graphical editing</p>
 </li>
 <li class="listitem">
@@ -319,7 +322,8 @@
 <p>An OCL project, analogously to many other Eclipse projects, has an OCL nature and an OCL builder that compile OCL resources so that any problems are shown as error/warning/info markers in the 
 						<span class="bold"><strong>Problems View</strong></span>.
 					</p>
-<p>The OCL nature may be added to our project by right-clicking on the project and then invoking 
+<p>The OCL nature may be added to our project by right-clicking on the 
+						<span class="bold"><strong>Tutorial</strong></span> project and then invoking 
 						<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span> from the context menu.
 					</p>
 <p>
@@ -385,7 +389,7 @@
 						Select 
 						<span class="bold"><strong>New-&gt;Other...</strong></span> then select the 
 						<span class="bold"><strong>OCLinEcore Ecore File</strong></span> from the 
-						<span class="bold"><strong>OCL</strong></span> category. 
+						<span class="bold"><strong>OCL</strong></span> category. An almost empty file is created with a little example content.
 					</p>
 <p>
 						
@@ -406,7 +410,7 @@
 <p></p>
 <p>Left-click 
 						<span class="bold"><strong>Next</strong></span> and enter 
-						<span class="bold"><strong>Tutorial.ecore</strong></span> as the file name. 
+						<span class="bold"><strong>Tutorial.ecore</strong></span> as the file name.
 					</p>
 <p>
 						
@@ -417,7 +421,7 @@
 					
 </p>
 <p>Left-click 
-						<span class="bold"><strong>Finish</strong></span> to open up an editor with some minimal example content demonstrating
+						<span class="bold"><strong>Finish</strong></span> to open up an editor. The example content demonstrates
 					</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
@@ -445,7 +449,7 @@
 </p>
 <p>Close the editor by left-clicking the cross on the editor tab.</p>
 <p>You can see the normal Ecore view of the file by right-clicking on the 
-						<span class="bold"><strong>Tutorial.ecore</strong></span> file to pop-up the context-sensitive menu
+						<span class="bold"><strong>Tutorial.ecore</strong></span> file in the Package Explorer to pop-up the context-sensitive menu
 						and select 
 						<span class="bold"><strong>Open With-&gt;Sample Ecore Model Editor</strong></span>.
 					</p>
@@ -583,7 +587,7 @@
 </div>
 </div>
 <p>The example meta-model models a library with members and books
-						and loans of books to members. It may be viewed graphically using the Ecore Tools
+						and loans of books to members. It may be viewed graphically using the Ecore Tools editor
 						(not part of this tutorial).</p>
 <p>
 						
@@ -682,7 +686,7 @@
 </ul>
 </div>
 <p>Select the 
-					<code class="code">Library</code> and give it a name such as 
+					<code class="code">Library</code> and use the Properties View to give it a name such as 
 					<code class="code">lib</code>.
 				</p>
 <p>From the right-button menu for 
@@ -882,17 +886,17 @@
 </li>
 </ul>
 </div>
-<div class="itemizedlist">
-<ul class="itemizedlist" type="disc">
-<li class="listitem">
-<p>it used to be necessary to close an XML editor such as 
-							<span class="bold"><strong>Tutorial.xmi</strong></span> before modifying its meta-model since
-						</p>
-</li>
-</ul>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						It used to be necessary to close an XML editor such as 
+						<span class="bold"><strong>Tutorial.xmi</strong></span> before modifying its meta-model since
+						a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
+						This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.
+					</p>
+</blockquote>
 </div>
-<p>a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
-					This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.</p>
+<p></p>
 <p>Add the invariant shown below to the meta-model.</p>
 <p>
 					
@@ -966,8 +970,9 @@
 <p>To make the OCL Console visible, first make the 
 					<span class="bold"><strong>Console</strong></span> view visible by
 
-					<span class="bold"><strong>Window-&gt;Show View-&gt;Console</strong></span>. Then right click on the 
-					<span class="bold"><strong>Open Console</strong></span> and
+					<span class="bold"><strong>Window-&gt;Show View-&gt;Console</strong></span>. Then left click on the 
+					<span class="bold"><strong>Open Console</strong></span> pull down
+					near top right of the console toolbar and 
 					left click on 
 					<span class="bold"><strong>Interactive Xtext OCL</strong></span>.
 				</p>
@@ -1003,7 +1008,7 @@
 				</p>
 <p>Left-click to select the 
 					<code class="code">Library</code> in the 
-					<span class="bold"><strong>Tutorial.xmi</strong></span> as the context
+					<span class="bold"><strong>Tutorial.xmi</strong></span> editor as the context
 					for a query. The title of the console view shows the that the 
 					<code class="code">Library</code> has been selected as OCL&rsquo;s 
 					<code class="code">self</code> .
@@ -1028,7 +1033,7 @@
 					<span class="bold"><strong>Page Up</strong></span> or 
 					<span class="bold"><strong>Page Down</strong></span> keys to save typing them again.
 				</p>
-<p>You can examine the execution of the query within out example invariant by selecting each of the books
+<p>You can examine the execution of the query within our example invariant by selecting each of the books
 					in turn and executing 
 					<code class="code">library.loans-&gt;select(book=self)</code>, to see that 
 					<code class="code">b1</code>
@@ -1074,9 +1079,17 @@
 </div>
 <p>Reopen 
 					<span class="bold"><strong>Tutorial.xmi</strong></span> and select 
-					<span class="bold"><strong>Book b2</strong></span> so that the derived property is visible in the 
+					<span class="bold"><strong>Book b2</strong></span> so that the derived 
+					<span class="bold"><strong>loans</strong></span> property is visible in the 
 					<span class="bold"><strong>Properties</strong></span> view.
 				</p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						Beware. The Properties View provides a &lsquo;pleasanter&rsquo; presentation by capitalizing property names. This can be confusing when debugging.</p>
+</blockquote>
+</div>
+<p></p>
 <p>
 					
 </p>
