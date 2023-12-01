@@ -91,7 +91,7 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getClass().getSimpleName());
 		s.append("@");

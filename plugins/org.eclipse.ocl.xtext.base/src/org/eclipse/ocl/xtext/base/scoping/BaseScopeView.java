@@ -440,7 +440,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		EObject target = getTarget();
 		StringBuilder s = new StringBuilder();
 		s.append("["); //$NON-NLS-1$

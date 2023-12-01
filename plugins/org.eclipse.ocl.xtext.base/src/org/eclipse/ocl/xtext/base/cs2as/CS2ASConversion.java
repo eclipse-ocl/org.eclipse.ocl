@@ -131,7 +131,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 
 		@Override
-		public String toString() { return name; }
+		public @NonNull String toString() { return name; }
 	}
 
 	protected final @NonNull CS2AS converter;

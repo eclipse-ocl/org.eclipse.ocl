@@ -894,9 +894,6 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		boolean isTracing = FORMATTER_FRAGMENTS.isActive();
 		String text = leafNode.getText();
 		assert text != null;
-		if (",".equals(text)) {
-			getClass();
-		}
 //		System.out.println(getIndent(indent) + "formatLeafNode compositeNode: " + leafNode.getTotalOffset() + "-" + leafNode.getOffset() + " .. " +  + leafNode.getEndOffset() + "-" + leafNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(leafNode) + " '" + Strings.convertToJavaString(text) + "'");
 		if (isTracing) {
 			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "leaf: '" + StringUtil.convertToOCLString(leafNode.getText())+ "'");

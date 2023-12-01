@@ -677,7 +677,7 @@ public class EditTests extends XtextTestCase
 						"}\n";
 		String testDocument_recommented =
 				"package p1 : p2 = 'p3' {\n" +
-						"    /*\n" +
+						"    /**\n" +
 						"	  *	yet \n" +
 						"	  *	another \n" +
 						"	  *	comment\n" +
@@ -697,8 +697,8 @@ public class EditTests extends XtextTestCase
 		Resource ecoreResource_recommented = getEcoreFromCS(ocl_recommented, testDocument_recommented, ecoreURI_recommented);
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		assertHasComments(ecoreResource_uncommented, new @NonNull String @NonNull []{});
-		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{"a comment"});
-		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"\nyet\nanother\ncomment\n"});
+		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{" a comment "});
+		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"*\nyet\nanother\ncomment\n"});
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		CSResource xtextResource;
@@ -722,20 +722,20 @@ public class EditTests extends XtextTestCase
 			TestUtil.assertSameModel(ecoreResource_commented, ecoreResource2);
 		}
 		//
-		//	Change "/* a comment */" to "/*\n* yet\n* another\n * comment\n*/".
+		//	Change "/* a comment */" to "/**\n* yet\n* another\n * comment\n*/".
 		//
 		{
-			replace(xtextResource, "/* a comment */", "/*\n* yet\n* another\n * comment\n* */");
+			replace(xtextResource, "/* a comment */", "/**\n* yet\n* another\n * comment\n* */");
 			assertNoResourceErrors("Changing comment", xtextResource);
 			URI ecoreURI3 = getTestFileURI("test3.ecore");
 			Resource ecoreResource3 = as2ecore(environmentFactory, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_recommented, ecoreResource3);
 		}
 		//
-		//	Change "/*\n* yet\n* another\n * comment\n*/ back to nothing.
+		//	Change "/**\n* yet\n* another\n * comment\n*/ back to nothing.
 		//
 		{
-			replace(xtextResource, "/*\n* yet\n* another\n * comment\n* */", "");
+			replace(xtextResource, "/**\n* yet\n* another\n * comment\n* */", "");
 			assertNoResourceErrors("Removing comment", xtextResource);
 			URI ecoreURI4 = getTestFileURI("test4.ecore");
 			Resource ecoreResource4 = as2ecore(environmentFactory, asResource, ecoreURI4, NO_MESSAGES);

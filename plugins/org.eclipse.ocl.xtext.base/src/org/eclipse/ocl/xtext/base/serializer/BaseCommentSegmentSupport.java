@@ -31,21 +31,21 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 				bodyLines.add(bodyLine);
 			}
 		}
-		int bodyCount = bodyLines.size();
-		if (bodyCount <= 0) {
+		int bodyLineCount = bodyLines.size();
+		if (bodyLineCount <= 0) {
 			serializationBuilder.append("/**/");
 		}
-		else if (bodyCount == 1) {
-			serializationBuilder.append("/**");
+		else if (bodyLineCount == 1) {
+			serializationBuilder.append("/*");
 			serializationBuilder.append(bodyLines.get(0));
-			serializationBuilder.append(" */");
+			serializationBuilder.append("*/");
 		}
-		else {
-			serializationBuilder.append("/**");
+		else if (bodyLines.get(0).startsWith("*")) {
+			serializationBuilder.append("/*");
 			serializationBuilder.append(bodyLines.get(0));
 			serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
 			serializationBuilder.append(" *");
-			for (int i = 1; i < bodyCount-1; i++) {
+			for (int i = 1; i < bodyLineCount-1; i++) {
 				serializationBuilder.append(SerializationBuilder.NEW_LINE);
 				String line = bodyLines.get(i);
 				if (line.length() > 0) {
@@ -54,7 +54,7 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 				}
 			}
 			serializationBuilder.append(SerializationBuilder.NEW_LINE);
-			String lastLine = bodyLines.get(bodyCount-1);
+			String lastLine = bodyLines.get(bodyLineCount-1);
 			if (lastLine.length() > 0) {
 				serializationBuilder.append(lastLine);
 				if (!lastLine.endsWith("*")) {
@@ -64,6 +64,25 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 			}
 			serializationBuilder.append("/");
 			serializationBuilder.append(SerializationBuilder.POP);
+		}
+		else {
+			serializationBuilder.append("/*");
+			serializationBuilder.append(bodyLines.get(0));
+		//	serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+			for (int i = 1; i < bodyLineCount-1; i++) {
+				serializationBuilder.append(SerializationBuilder.NEW_LINE);
+				String line = bodyLines.get(i);
+				if (line.length() > 0) {
+					serializationBuilder.append(line);
+				}
+			}
+			serializationBuilder.append(SerializationBuilder.NEW_LINE);
+			String lastLine = bodyLines.get(bodyLineCount-1);
+			if (lastLine.length() > 0) {
+				serializationBuilder.append(lastLine);
+			}
+			serializationBuilder.append("*/");
+		//	serializationBuilder.append(SerializationBuilder.POP);
 		}
 		serializationBuilder.append(SerializationBuilder.NEW_LINE);
 	}
