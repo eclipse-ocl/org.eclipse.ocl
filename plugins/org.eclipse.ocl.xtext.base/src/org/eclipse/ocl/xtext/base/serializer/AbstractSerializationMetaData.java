@@ -563,9 +563,9 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	public abstract @NonNull GrammarRuleVector @NonNull [] getGrammarRuleVectors();
 
 	@Override
-	public @NonNull SerializationSegment @NonNull [] getInnerFormattingSegments(@NonNull AbstractElement grammarElement) {
-		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2innerFormattingSegments2 = getGrammarElement2innerFormattingSegments(grammarElement);
-		@NonNull SerializationSegment[] innerFormattingSegments = grammarElement2innerFormattingSegments2.get(grammarElement);
+	public @NonNull SerializationSegment @NonNull [] getInnerFormattingSegments(@NonNull AbstractElement formattedGrammarElement) {
+		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2innerFormattingSegments2 = getGrammarElement2innerFormattingSegments(formattedGrammarElement);
+		@NonNull SerializationSegment[] innerFormattingSegments = grammarElement2innerFormattingSegments2.get(formattedGrammarElement);
 		return innerFormattingSegments != null ? innerFormattingSegments : SerializationSegment.VALUE_SEGMENTS_ARRAY;
 	}
 
@@ -582,9 +582,9 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	protected abstract int getLastGlobalSerializationStepLiteralIndex();
 
 	@Override
-	public @NonNull SerializationSegment @NonNull [] getOuterFormattingSegments(@NonNull AbstractElement grammarElement) {
-		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2outerFormattingSegments2 = getGrammarElement2outerFormattingSegments(grammarElement);
-		@NonNull SerializationSegment[] outerFormattingSegments = grammarElement2outerFormattingSegments2.get(grammarElement);
+	public @NonNull SerializationSegment @NonNull [] getOuterFormattingSegments(@NonNull AbstractElement formattedGrammarElement) {
+		Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2outerFormattingSegments2 = getGrammarElement2outerFormattingSegments(formattedGrammarElement);
+		@NonNull SerializationSegment[] outerFormattingSegments = grammarElement2outerFormattingSegments2.get(formattedGrammarElement);
 		return outerFormattingSegments != null ? outerFormattingSegments : SerializationSegment.VALUE_SEGMENTS_ARRAY;
 	}
 

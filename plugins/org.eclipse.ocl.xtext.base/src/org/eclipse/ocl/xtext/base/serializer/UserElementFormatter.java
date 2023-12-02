@@ -24,15 +24,18 @@ import org.eclipse.xtext.nodemodel.INode;
 public class UserElementFormatter
 {
 	protected final @NonNull INode node;
-	protected final @NonNull AbstractElement compoundedGrammarElement;
+	protected final @NonNull AbstractElement formattedGrammarElement;
 	protected final @NonNull UserElementAnalysis elementAnalysis;
 	protected final @NonNull SerializationMetaData serializationMetaData;
 
-	public UserElementFormatter(@NonNull INode node, @NonNull AbstractElement compoundedGrammarElement, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public UserElementFormatter(@NonNull INode node, @NonNull AbstractElement formattedGrammarElement, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		this.node = node;
-		this.compoundedGrammarElement = compoundedGrammarElement;
+		this.formattedGrammarElement = formattedGrammarElement;
 		this.elementAnalysis = modelAnalysis.getElementAnalysis(element);
 		this.serializationMetaData = elementAnalysis.getSerializationMetaData();
+	//	System.out.println("UserElementFormatter init " + NameUtil.debugSimpleName(node) + " for " + NameUtil.debugSimpleName(formattedGrammarElement)
+	//	+ " and " + NameUtil.debugSimpleName(element) + "\n\t'" + Strings.convertToJavaString(node.getText()) + "'");	// XXX
+	//	assert (compoundedGrammarElement instanceof Assignment) || (compoundedGrammarElement instanceof Group) || (compoundedGrammarElement instanceof Keyword) || (compoundedGrammarElement instanceof RuleCall);
 	}
 
 	public void addCommentSupport(@NonNull CommentSegmentSupport commentSegmentSupport) {
@@ -69,7 +72,7 @@ public class UserElementFormatter
 	}
 
 	public @NonNull SerializationSegment @NonNull [] getInnerFormattingSegments() {
-		@NonNull SerializationSegment[] innerFormattingSegments = serializationMetaData.getInnerFormattingSegments(compoundedGrammarElement);
+		@NonNull SerializationSegment[] innerFormattingSegments = serializationMetaData.getInnerFormattingSegments(formattedGrammarElement);
 		return innerFormattingSegments;
 	}
 
@@ -78,12 +81,12 @@ public class UserElementFormatter
 	}
 
 	public @NonNull SerializationSegment @NonNull [] getOuterFormattingSegments() {
-		@NonNull SerializationSegment[] outerFormattingSegments = serializationMetaData.getOuterFormattingSegments(compoundedGrammarElement);
+		@NonNull SerializationSegment[] outerFormattingSegments = serializationMetaData.getOuterFormattingSegments(formattedGrammarElement);
 		return outerFormattingSegments;
 	}
 
 	public @NonNull SerializationSegment @NonNull [] getRuleFormattingSegments() {
-		ParserRule parserRule = GrammarUtil.containingParserRule(compoundedGrammarElement);
+		ParserRule parserRule = GrammarUtil.containingParserRule(formattedGrammarElement);
 		AbstractElement rootGrammarElement = parserRule.getAlternatives();
 		assert rootGrammarElement !=  null;
 		return serializationMetaData.getInnerFormattingSegments(rootGrammarElement);

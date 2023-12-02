@@ -96,8 +96,8 @@ public class UserModelAnalysis
 		}
 	}
 
-	public @NonNull UserElementFormatter createUserElementFormatter(@NonNull INode node, @NonNull AbstractElement compoundedGrammarElement, @NonNull EObject eObject) {
-		return new UserElementFormatter(node, compoundedGrammarElement, this, eObject);
+	public @NonNull UserElementFormatter createUserElementFormatter(@NonNull INode node, @NonNull AbstractElement formattedGrammarElement, @NonNull EObject eObject) {
+		return new UserElementFormatter(node, formattedGrammarElement, this, eObject);
 	}
 
 	public @NonNull UserElementSerializer createUserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull EObject eObject) {

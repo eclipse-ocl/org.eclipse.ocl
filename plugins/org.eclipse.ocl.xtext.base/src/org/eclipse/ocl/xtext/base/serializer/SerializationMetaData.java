@@ -58,7 +58,7 @@ public interface SerializationMetaData
 	/**
 	 * Return the serialization segments to format a grammarElement.
 	 */
-	@NonNull SerializationSegment @NonNull [] getInnerFormattingSegments(@NonNull AbstractElement grammarElement);
+	@NonNull SerializationSegment @NonNull [] getInnerFormattingSegments(@NonNull AbstractElement formattedGrammarElement);
 
 	/**
 	 * Return the strings that may indent intermediate lines of multiple line comments corresponding to the
@@ -83,7 +83,7 @@ public interface SerializationMetaData
 	/**
 	 * Return the serialization segments to format a group of grammarElement.
 	 */
-	@NonNull SerializationSegment @NonNull [] getOuterFormattingSegments(@NonNull AbstractElement grammarElement);
+	@NonNull SerializationSegment @NonNull [] getOuterFormattingSegments(@NonNull AbstractElement formattedGrammarElement);
 
 	/**
 	 * Return the strings that may introduce single line comments..

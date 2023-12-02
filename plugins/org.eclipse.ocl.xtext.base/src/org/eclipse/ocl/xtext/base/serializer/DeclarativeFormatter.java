@@ -30,8 +30,8 @@ import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CompoundElement;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.GrammarUtil;
-import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
@@ -40,6 +40,7 @@ import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement;
+import org.eclipse.xtext.nodemodel.impl.RootNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.Strings;
 
@@ -667,28 +668,28 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		}
 	}
 
-protected String debugContext(@NonNull EObject semanticElement, AbstractElement compoundedGrammarElement) {
+protected String debugContext(@NonNull EObject semanticElement, AbstractElement formattedGrammarElement) {
 		StringBuilder s = new StringBuilder();
 		s.append(semanticElement.eClass().getName());
 		s.append(" ");
-		AbstractRule rule = GrammarUtil.containingRule(compoundedGrammarElement);
+		AbstractRule rule = GrammarUtil.containingRule(formattedGrammarElement);
 		s.append(rule.getName());
 		s.append("..");
-		s.append(compoundedGrammarElement.eClass().getName());
-		if (compoundedGrammarElement instanceof Keyword) {
-			s.append(" '" + ((Keyword)compoundedGrammarElement).getValue() + "'");
+		s.append(formattedGrammarElement.eClass().getName());
+		if (formattedGrammarElement instanceof Keyword) {
+			s.append(" '" + ((Keyword)formattedGrammarElement).getValue() + "'");
 		}
-		else if (compoundedGrammarElement instanceof Action) {
-			s.append(" {" + ((Action)compoundedGrammarElement).getType() + "}");
+		else if (formattedGrammarElement instanceof Action) {
+			s.append(" {" + ((Action)formattedGrammarElement).getType() + "}");
 		}
-		else if (compoundedGrammarElement instanceof Assignment) {
-			s.append(" =" + ((Assignment)compoundedGrammarElement).getFeature() + "=");
+		else if (formattedGrammarElement instanceof Assignment) {
+			s.append(" =" + ((Assignment)formattedGrammarElement).getFeature() + "=");
 		}
-		else if (compoundedGrammarElement instanceof RuleCall) {
-			s.append(" @" + ((RuleCall)compoundedGrammarElement).getRule().getName() + "@");
+		else if (formattedGrammarElement instanceof RuleCall) {
+			s.append(" @" + ((RuleCall)formattedGrammarElement).getRule().getName() + "@");
 		}
 		else {
-			s.append(" ?" + compoundedGrammarElement.eClass().getName() + "?");
+			s.append(" ?" + formattedGrammarElement.eClass().getName() + "?");
 		}
 	//	s.append(LabelUtil.getLabel(compoundedGrammarElement));
 		return s.toString();
@@ -750,14 +751,14 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		assert text != null;
 		EObject semanticElement = compositeNode.getSemanticElement();
 		assert semanticElement != null;
-		if (semanticElement.eClass().getName().equals("TransformationCS")) {
-			getClass();		// XX
+		if (semanticElement.eClass().getName().equals("MappingCS")) {
+			getClass();		// XXX
 		}
-		AbstractElement compoundedGrammarElement = getCompoundedGrammarElement(compositeNode);
-		EList<?> assignedCollection = getAssignedCollection(compositeNode, compoundedGrammarElement);
-		UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(compositeNode, compoundedGrammarElement, semanticElement);
+		AbstractElement formattedGrammarElement = getFormattedGrammarElement(compositeNode);
+		EList<?> assignedCollection = getAssignedCollection(compositeNode);
+		UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(compositeNode, formattedGrammarElement, semanticElement);
 		if (isTracing) {
-			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "composite: " + semanticElement.eClass().getName() + " \"" + LabelUtil.getLabel(semanticElement) + "\" " + LabelUtil.getLabel(compoundedGrammarElement) + " '" + StringUtil.convertToOCLString(text )+ "'");
+			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "composite: " + semanticElement.eClass().getName() + " \"" + LabelUtil.getLabel(semanticElement) + "\" " + LabelUtil.getLabel(formattedGrammarElement) + " '" + StringUtil.convertToOCLString(text )+ "'");
 			modelAnalysis.pushDepth();
 		}
 //		System.out.println(getIndent(indent) + "formatCompositeNode compositeNode: " + compositeNode.getTotalOffset() + "-" + compositeNode.getOffset() + " .. " +  + compositeNode.getEndOffset() + "-" + compositeNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(compositeNode) + " '" + Strings.convertToJavaString(text) + "'");
@@ -768,7 +769,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		if (assignedCollection != null) {
 			INode prevSibling = compositeNode.getPreviousSibling();
 			if (prevSibling instanceof ICompositeNode) {
-				prevAssignedCollection = getAssignedCollection((ICompositeNode)prevSibling, getCompoundedGrammarElement(prevSibling));
+				prevAssignedCollection = getAssignedCollection((ICompositeNode)prevSibling);
 			}
 		}
 		INode firstChild = compositeNode.getFirstChild();
@@ -785,7 +786,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 //						Arrays.t
 //						s.append(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
 //						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
-						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()-1) + " outers: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(outerFormattingSegments));
+						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()-1) + " outers: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(outerFormattingSegments));
 					}
 				//	FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + " " + LabelUtil.getLabel(compoundedGrammarElement) + " " + outerFormattingSegments);
 					for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
@@ -815,7 +816,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		}
 		@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
 		if (isTracing) {
-			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
+			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
 			modelAnalysis.pushDepth();
 		}
 		for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
@@ -857,7 +858,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		if (assignedCollection != null) {
 			INode nextSibling = compositeNode.getNextSibling();
 			if (nextSibling instanceof ICompositeNode) {
-				nextAssignedCollection = getAssignedCollection((ICompositeNode)nextSibling, getCompoundedGrammarElement(nextSibling));
+				nextAssignedCollection = getAssignedCollection((ICompositeNode)nextSibling);
 			}
 		}
 		if ((assignedCollection == null) || (assignedCollection != nextAssignedCollection)) {
@@ -901,15 +902,15 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		if (!leafNode.isHidden()) {
 			EObject semanticElement = leafNode.getSemanticElement();
 			assert semanticElement != null;
-			AbstractElement compoundedGrammarElement = getCompoundedGrammarElement(leafNode);
-			UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(leafNode, compoundedGrammarElement, semanticElement);
+			AbstractElement formattedGrammarElement = getFormattedGrammarElement(leafNode);
+			UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(leafNode, formattedGrammarElement, semanticElement);
 			//
 			//	Different previous grammar element requires outer head formatting.
 			//
 			for (INode prevSibling = leafNode.getPreviousSibling(); (prevSibling == null) || (prevSibling instanceof ILeafNode); prevSibling = prevSibling.getPreviousSibling()) {
 				if ((prevSibling == null) || !((ILeafNode)prevSibling).isHidden()) {
-					AbstractElement prevCompoundedGrammarElement = prevSibling != null ? getCompoundedGrammarElement(prevSibling) : null;
-					if (compoundedGrammarElement != prevCompoundedGrammarElement) {
+					AbstractElement prevCompoundedGrammarElement = prevSibling != null ? getFormattedGrammarElement(prevSibling) : null;
+					if (formattedGrammarElement != prevCompoundedGrammarElement) {
 						@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
 						for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
 							if (formattingSegment.isValue()) {
@@ -927,7 +928,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 			boolean isFormatting = isFormatting(leafNode);
 			@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
 			if (isTracing) {
-				FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, compoundedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
+				FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
 				modelAnalysis.pushDepth();
 			}
 			for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
@@ -951,8 +952,8 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 			//
 			for (INode nextSibling = leafNode.getNextSibling(); (nextSibling == null) || (nextSibling instanceof ILeafNode); nextSibling = nextSibling.getNextSibling()) {
 				if ((nextSibling == null) || !((ILeafNode)nextSibling).isHidden()) {
-					AbstractElement nextCompoundedGrammarElement = nextSibling != null ? getCompoundedGrammarElement(nextSibling) : null;
-					if (compoundedGrammarElement != nextCompoundedGrammarElement) {
+					AbstractElement nextFormattedGrammarElement = nextSibling != null ? getFormattedGrammarElement(nextSibling) : null;
+					if (formattedGrammarElement != nextFormattedGrammarElement) {
 						boolean isTail = false;
 						@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
 						for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
@@ -1004,11 +1005,12 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 	/**
 	 * Return the EList to which compositeNode assigns if compoundedGrammarElement is an is-many feature assignment. Else null.
 	 */
-	protected @Nullable EList<?> getAssignedCollection(@NonNull ICompositeNode compositeNode, @NonNull AbstractElement compoundedGrammarElement) {
-		if (!(compoundedGrammarElement instanceof Assignment)) {
+	protected @Nullable EList<?> getAssignedCollection(@NonNull ICompositeNode compositeNode) {
+		AbstractElement formattedGrammarElement = getFormattedGrammarElement(compositeNode);
+		if (!(formattedGrammarElement instanceof Assignment)) {
 			return null;
 		}
-		Assignment assignment = (Assignment)compoundedGrammarElement;
+		Assignment assignment = (Assignment)formattedGrammarElement;
 		EStructuralFeature eStructuralFeature = SerializationUtils.getEStructuralFeature(assignment);
 		if (!eStructuralFeature.isMany()) {
 			return null;
@@ -1053,33 +1055,52 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 	}
 
 	/**
-	 * Return the grammar element for node whose container is a CompoundElement; i.e. ascend the terminals of an assignment to return the assignment.
+	 * Return the assignment if node is assigned.
 	 */
-	protected @NonNull AbstractElement getCompoundedGrammarElement(@NonNull INode node) {
-		EObject grammarElement = node.getGrammarElement();
-		for (EObject eContainer = grammarElement.eContainer(); (eContainer instanceof AbstractElement) && !(eContainer instanceof CompoundElement); eContainer = grammarElement.eContainer()) {
-			grammarElement = eContainer;
-		}
-		AbstractElement abstractElement = grammarElement instanceof AbstractElement ? (AbstractElement)grammarElement : SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
-		if (abstractElement instanceof Group) {
-			assert abstractElement.eContainer() instanceof AbstractRule;
-		}
-		else if (abstractElement instanceof Assignment) {
-			assert true;
-		}
-		else if (abstractElement instanceof RuleCall) {
-			assert true;
-		}
-		else if (abstractElement instanceof Keyword) {
-			assert true;
-		}
-		else if (abstractElement instanceof Action) {
-			assert true;
+	protected @Nullable Assignment zgetAssignment(@NonNull INode node) {
+		AbstractElement assignment2 = getFormattedGrammarElement(node);
+		if (assignment2 instanceof Assignment) {
+			return (Assignment) assignment2;
 		}
 		else {
-			assert false;
+			return null;
 		}
-		return abstractElement;
+	}
+
+	/**
+	 * Return the grammar element that provides the formatting for node.
+	 */
+	protected @NonNull AbstractElement getFormattedGrammarElement(@NonNull INode node) {
+		EObject grammarElement = node.getGrammarElement();
+		//
+		//	root
+		//
+		if (grammarElement instanceof AbstractRule) {
+			INode parentNode = node;
+			while (((parentNode = parentNode.getParent()) != null) && !(parentNode instanceof RootNode)) {
+				assert !parentNode.hasDirectSemanticElement();
+			}
+			return SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
+		}
+		//
+		//	Assignment
+		//
+		EObject parentGrammarElement = grammarElement.eContainer();
+		while (parentGrammarElement instanceof CompoundElement) {				// de-compound assignment target
+			parentGrammarElement = parentGrammarElement.eContainer();
+		}
+		if (parentGrammarElement instanceof Assignment) {
+			assert (grammarElement instanceof CrossReference) || (grammarElement instanceof Keyword) || (grammarElement instanceof RuleCall);
+			return (Assignment)parentGrammarElement;
+		}
+		assert !(grammarElement.eContainer() instanceof Assignment);
+		//
+		//	Regular rule term
+		//
+		if (grammarElement instanceof Action) {
+			// Action is not formattable so may be we could return null and accelerate
+		}
+		return (AbstractElement)grammarElement;
 	}
 
 	private @Nullable ILeafNode getLastLeafNode(@NonNull ICompositeNode rootNode) {
