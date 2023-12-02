@@ -82,6 +82,8 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 
 	/**
 	 * Perform the loading and installation of the Complete OCL, returning true if successful.
+	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
+	 * overheads up front.
 	 */
 	public boolean initialize(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		Resource ecoreResource = ePackage.eResource();
