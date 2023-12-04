@@ -35,7 +35,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'each'", "'model'", "'.'", "'import'", "';'", "'as'", "'grammar'", "'with'", "'locator'", "'any-assignment'", "'any-element'", "'assignment'", "'::'", "'final'", "'returns'", "'rule'", "'segment'", "'custom'", "'half-new-line'", "'new-line'", "'no-space'", "'pop'", "'post-comment'", "'pre-comment'", "'push'", "'soft-new-line'", "'soft-space'", "'string'", "'value'", "'wrap-anchor'", "'wrap-begin-all'", "'wrap-begin-some'", "'wrap-end'", "'wrap-here'", "'idiom'", "'for'", "'in'", "'{'", "'}'", "'at'", "'do'", "'printable'", "'mixin'", "'all'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'each'", "'model'", "'.'", "'import'", "';'", "'as'", "'grammar'", "'with'", "'locator'", "'any-assignment'", "'any-element'", "'assignment'", "'::'", "'final'", "'returns'", "'rule'", "'segment'", "'custom'", "'half-new-line'", "'new-line'", "'no-new-line'", "'no-space'", "'pop'", "'post-comment'", "'pre-comment'", "'push'", "'soft-new-line'", "'soft-space'", "'string'", "'value'", "'wrap-anchor'", "'wrap-begin-all'", "'wrap-begin-some'", "'wrap-end'", "'wrap-here'", "'idiom'", "'for'", "'in'", "'{'", "'}'", "'at'", "'do'", "'printable'", "'mixin'", "'all'"
     };
     public static final int T__50=50;
     public static final int T__19=19;
@@ -44,6 +44,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__11=11;
+    public static final int T__55=55;
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
@@ -1740,12 +1741,97 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleNewLineSegment"
 
 
+    // $ANTLR start "entryRuleNoNewLineSegment"
+    // InternalIdioms.g:538:1: entryRuleNoNewLineSegment : ruleNoNewLineSegment EOF ;
+    public final void entryRuleNoNewLineSegment() throws RecognitionException {
+        try {
+            // InternalIdioms.g:539:1: ( ruleNoNewLineSegment EOF )
+            // InternalIdioms.g:540:1: ruleNoNewLineSegment EOF
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getNoNewLineSegmentRule());
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleNoNewLineSegment();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getNoNewLineSegmentRule());
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleNoNewLineSegment"
+
+
+    // $ANTLR start "ruleNoNewLineSegment"
+    // InternalIdioms.g:547:1: ruleNoNewLineSegment : ( ( rule__NoNewLineSegment__Group__0 ) ) ;
+    public final void ruleNoNewLineSegment() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+
+        try {
+            // InternalIdioms.g:551:2: ( ( ( rule__NoNewLineSegment__Group__0 ) ) )
+            // InternalIdioms.g:552:2: ( ( rule__NoNewLineSegment__Group__0 ) )
+            {
+            // InternalIdioms.g:552:2: ( ( rule__NoNewLineSegment__Group__0 ) )
+            // InternalIdioms.g:553:3: ( rule__NoNewLineSegment__Group__0 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getNoNewLineSegmentAccess().getGroup());
+            }
+            // InternalIdioms.g:554:3: ( rule__NoNewLineSegment__Group__0 )
+            // InternalIdioms.g:554:4: rule__NoNewLineSegment__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__NoNewLineSegment__Group__0();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getNoNewLineSegmentAccess().getGroup());
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleNoNewLineSegment"
+
+
     // $ANTLR start "entryRuleNoSpaceSegment"
-    // InternalIdioms.g:538:1: entryRuleNoSpaceSegment : ruleNoSpaceSegment EOF ;
+    // InternalIdioms.g:563:1: entryRuleNoSpaceSegment : ruleNoSpaceSegment EOF ;
     public final void entryRuleNoSpaceSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:539:1: ( ruleNoSpaceSegment EOF )
-            // InternalIdioms.g:540:1: ruleNoSpaceSegment EOF
+            // InternalIdioms.g:564:1: ( ruleNoSpaceSegment EOF )
+            // InternalIdioms.g:565:1: ruleNoSpaceSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNoSpaceSegmentRule());
@@ -1775,23 +1861,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleNoSpaceSegment"
-    // InternalIdioms.g:547:1: ruleNoSpaceSegment : ( ( rule__NoSpaceSegment__Group__0 ) ) ;
+    // InternalIdioms.g:572:1: ruleNoSpaceSegment : ( ( rule__NoSpaceSegment__Group__0 ) ) ;
     public final void ruleNoSpaceSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:551:2: ( ( ( rule__NoSpaceSegment__Group__0 ) ) )
-            // InternalIdioms.g:552:2: ( ( rule__NoSpaceSegment__Group__0 ) )
+            // InternalIdioms.g:576:2: ( ( ( rule__NoSpaceSegment__Group__0 ) ) )
+            // InternalIdioms.g:577:2: ( ( rule__NoSpaceSegment__Group__0 ) )
             {
-            // InternalIdioms.g:552:2: ( ( rule__NoSpaceSegment__Group__0 ) )
-            // InternalIdioms.g:553:3: ( rule__NoSpaceSegment__Group__0 )
+            // InternalIdioms.g:577:2: ( ( rule__NoSpaceSegment__Group__0 ) )
+            // InternalIdioms.g:578:3: ( rule__NoSpaceSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNoSpaceSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:554:3: ( rule__NoSpaceSegment__Group__0 )
-            // InternalIdioms.g:554:4: rule__NoSpaceSegment__Group__0
+            // InternalIdioms.g:579:3: ( rule__NoSpaceSegment__Group__0 )
+            // InternalIdioms.g:579:4: rule__NoSpaceSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NoSpaceSegment__Group__0();
@@ -1826,11 +1912,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRulePopSegment"
-    // InternalIdioms.g:563:1: entryRulePopSegment : rulePopSegment EOF ;
+    // InternalIdioms.g:588:1: entryRulePopSegment : rulePopSegment EOF ;
     public final void entryRulePopSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:564:1: ( rulePopSegment EOF )
-            // InternalIdioms.g:565:1: rulePopSegment EOF
+            // InternalIdioms.g:589:1: ( rulePopSegment EOF )
+            // InternalIdioms.g:590:1: rulePopSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPopSegmentRule());
@@ -1860,23 +1946,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rulePopSegment"
-    // InternalIdioms.g:572:1: rulePopSegment : ( ( rule__PopSegment__Group__0 ) ) ;
+    // InternalIdioms.g:597:1: rulePopSegment : ( ( rule__PopSegment__Group__0 ) ) ;
     public final void rulePopSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:576:2: ( ( ( rule__PopSegment__Group__0 ) ) )
-            // InternalIdioms.g:577:2: ( ( rule__PopSegment__Group__0 ) )
+            // InternalIdioms.g:601:2: ( ( ( rule__PopSegment__Group__0 ) ) )
+            // InternalIdioms.g:602:2: ( ( rule__PopSegment__Group__0 ) )
             {
-            // InternalIdioms.g:577:2: ( ( rule__PopSegment__Group__0 ) )
-            // InternalIdioms.g:578:3: ( rule__PopSegment__Group__0 )
+            // InternalIdioms.g:602:2: ( ( rule__PopSegment__Group__0 ) )
+            // InternalIdioms.g:603:3: ( rule__PopSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPopSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:579:3: ( rule__PopSegment__Group__0 )
-            // InternalIdioms.g:579:4: rule__PopSegment__Group__0
+            // InternalIdioms.g:604:3: ( rule__PopSegment__Group__0 )
+            // InternalIdioms.g:604:4: rule__PopSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PopSegment__Group__0();
@@ -1911,11 +1997,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRulePostCommentSegment"
-    // InternalIdioms.g:588:1: entryRulePostCommentSegment : rulePostCommentSegment EOF ;
+    // InternalIdioms.g:613:1: entryRulePostCommentSegment : rulePostCommentSegment EOF ;
     public final void entryRulePostCommentSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:589:1: ( rulePostCommentSegment EOF )
-            // InternalIdioms.g:590:1: rulePostCommentSegment EOF
+            // InternalIdioms.g:614:1: ( rulePostCommentSegment EOF )
+            // InternalIdioms.g:615:1: rulePostCommentSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostCommentSegmentRule());
@@ -1945,23 +2031,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rulePostCommentSegment"
-    // InternalIdioms.g:597:1: rulePostCommentSegment : ( ( rule__PostCommentSegment__Group__0 ) ) ;
+    // InternalIdioms.g:622:1: rulePostCommentSegment : ( ( rule__PostCommentSegment__Group__0 ) ) ;
     public final void rulePostCommentSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:601:2: ( ( ( rule__PostCommentSegment__Group__0 ) ) )
-            // InternalIdioms.g:602:2: ( ( rule__PostCommentSegment__Group__0 ) )
+            // InternalIdioms.g:626:2: ( ( ( rule__PostCommentSegment__Group__0 ) ) )
+            // InternalIdioms.g:627:2: ( ( rule__PostCommentSegment__Group__0 ) )
             {
-            // InternalIdioms.g:602:2: ( ( rule__PostCommentSegment__Group__0 ) )
-            // InternalIdioms.g:603:3: ( rule__PostCommentSegment__Group__0 )
+            // InternalIdioms.g:627:2: ( ( rule__PostCommentSegment__Group__0 ) )
+            // InternalIdioms.g:628:3: ( rule__PostCommentSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostCommentSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:604:3: ( rule__PostCommentSegment__Group__0 )
-            // InternalIdioms.g:604:4: rule__PostCommentSegment__Group__0
+            // InternalIdioms.g:629:3: ( rule__PostCommentSegment__Group__0 )
+            // InternalIdioms.g:629:4: rule__PostCommentSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PostCommentSegment__Group__0();
@@ -1996,11 +2082,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRulePreCommentSegment"
-    // InternalIdioms.g:613:1: entryRulePreCommentSegment : rulePreCommentSegment EOF ;
+    // InternalIdioms.g:638:1: entryRulePreCommentSegment : rulePreCommentSegment EOF ;
     public final void entryRulePreCommentSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:614:1: ( rulePreCommentSegment EOF )
-            // InternalIdioms.g:615:1: rulePreCommentSegment EOF
+            // InternalIdioms.g:639:1: ( rulePreCommentSegment EOF )
+            // InternalIdioms.g:640:1: rulePreCommentSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPreCommentSegmentRule());
@@ -2030,23 +2116,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rulePreCommentSegment"
-    // InternalIdioms.g:622:1: rulePreCommentSegment : ( ( rule__PreCommentSegment__Group__0 ) ) ;
+    // InternalIdioms.g:647:1: rulePreCommentSegment : ( ( rule__PreCommentSegment__Group__0 ) ) ;
     public final void rulePreCommentSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:626:2: ( ( ( rule__PreCommentSegment__Group__0 ) ) )
-            // InternalIdioms.g:627:2: ( ( rule__PreCommentSegment__Group__0 ) )
+            // InternalIdioms.g:651:2: ( ( ( rule__PreCommentSegment__Group__0 ) ) )
+            // InternalIdioms.g:652:2: ( ( rule__PreCommentSegment__Group__0 ) )
             {
-            // InternalIdioms.g:627:2: ( ( rule__PreCommentSegment__Group__0 ) )
-            // InternalIdioms.g:628:3: ( rule__PreCommentSegment__Group__0 )
+            // InternalIdioms.g:652:2: ( ( rule__PreCommentSegment__Group__0 ) )
+            // InternalIdioms.g:653:3: ( rule__PreCommentSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPreCommentSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:629:3: ( rule__PreCommentSegment__Group__0 )
-            // InternalIdioms.g:629:4: rule__PreCommentSegment__Group__0
+            // InternalIdioms.g:654:3: ( rule__PreCommentSegment__Group__0 )
+            // InternalIdioms.g:654:4: rule__PreCommentSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PreCommentSegment__Group__0();
@@ -2081,11 +2167,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRulePushSegment"
-    // InternalIdioms.g:638:1: entryRulePushSegment : rulePushSegment EOF ;
+    // InternalIdioms.g:663:1: entryRulePushSegment : rulePushSegment EOF ;
     public final void entryRulePushSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:639:1: ( rulePushSegment EOF )
-            // InternalIdioms.g:640:1: rulePushSegment EOF
+            // InternalIdioms.g:664:1: ( rulePushSegment EOF )
+            // InternalIdioms.g:665:1: rulePushSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPushSegmentRule());
@@ -2115,23 +2201,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rulePushSegment"
-    // InternalIdioms.g:647:1: rulePushSegment : ( ( rule__PushSegment__Group__0 ) ) ;
+    // InternalIdioms.g:672:1: rulePushSegment : ( ( rule__PushSegment__Group__0 ) ) ;
     public final void rulePushSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:651:2: ( ( ( rule__PushSegment__Group__0 ) ) )
-            // InternalIdioms.g:652:2: ( ( rule__PushSegment__Group__0 ) )
+            // InternalIdioms.g:676:2: ( ( ( rule__PushSegment__Group__0 ) ) )
+            // InternalIdioms.g:677:2: ( ( rule__PushSegment__Group__0 ) )
             {
-            // InternalIdioms.g:652:2: ( ( rule__PushSegment__Group__0 ) )
-            // InternalIdioms.g:653:3: ( rule__PushSegment__Group__0 )
+            // InternalIdioms.g:677:2: ( ( rule__PushSegment__Group__0 ) )
+            // InternalIdioms.g:678:3: ( rule__PushSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPushSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:654:3: ( rule__PushSegment__Group__0 )
-            // InternalIdioms.g:654:4: rule__PushSegment__Group__0
+            // InternalIdioms.g:679:3: ( rule__PushSegment__Group__0 )
+            // InternalIdioms.g:679:4: rule__PushSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PushSegment__Group__0();
@@ -2166,11 +2252,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleSoftNewLineSegment"
-    // InternalIdioms.g:663:1: entryRuleSoftNewLineSegment : ruleSoftNewLineSegment EOF ;
+    // InternalIdioms.g:688:1: entryRuleSoftNewLineSegment : ruleSoftNewLineSegment EOF ;
     public final void entryRuleSoftNewLineSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:664:1: ( ruleSoftNewLineSegment EOF )
-            // InternalIdioms.g:665:1: ruleSoftNewLineSegment EOF
+            // InternalIdioms.g:689:1: ( ruleSoftNewLineSegment EOF )
+            // InternalIdioms.g:690:1: ruleSoftNewLineSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftNewLineSegmentRule());
@@ -2200,23 +2286,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSoftNewLineSegment"
-    // InternalIdioms.g:672:1: ruleSoftNewLineSegment : ( ( rule__SoftNewLineSegment__Group__0 ) ) ;
+    // InternalIdioms.g:697:1: ruleSoftNewLineSegment : ( ( rule__SoftNewLineSegment__Group__0 ) ) ;
     public final void ruleSoftNewLineSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:676:2: ( ( ( rule__SoftNewLineSegment__Group__0 ) ) )
-            // InternalIdioms.g:677:2: ( ( rule__SoftNewLineSegment__Group__0 ) )
+            // InternalIdioms.g:701:2: ( ( ( rule__SoftNewLineSegment__Group__0 ) ) )
+            // InternalIdioms.g:702:2: ( ( rule__SoftNewLineSegment__Group__0 ) )
             {
-            // InternalIdioms.g:677:2: ( ( rule__SoftNewLineSegment__Group__0 ) )
-            // InternalIdioms.g:678:3: ( rule__SoftNewLineSegment__Group__0 )
+            // InternalIdioms.g:702:2: ( ( rule__SoftNewLineSegment__Group__0 ) )
+            // InternalIdioms.g:703:3: ( rule__SoftNewLineSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftNewLineSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:679:3: ( rule__SoftNewLineSegment__Group__0 )
-            // InternalIdioms.g:679:4: rule__SoftNewLineSegment__Group__0
+            // InternalIdioms.g:704:3: ( rule__SoftNewLineSegment__Group__0 )
+            // InternalIdioms.g:704:4: rule__SoftNewLineSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SoftNewLineSegment__Group__0();
@@ -2251,11 +2337,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleSoftSpaceSegment"
-    // InternalIdioms.g:688:1: entryRuleSoftSpaceSegment : ruleSoftSpaceSegment EOF ;
+    // InternalIdioms.g:713:1: entryRuleSoftSpaceSegment : ruleSoftSpaceSegment EOF ;
     public final void entryRuleSoftSpaceSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:689:1: ( ruleSoftSpaceSegment EOF )
-            // InternalIdioms.g:690:1: ruleSoftSpaceSegment EOF
+            // InternalIdioms.g:714:1: ( ruleSoftSpaceSegment EOF )
+            // InternalIdioms.g:715:1: ruleSoftSpaceSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftSpaceSegmentRule());
@@ -2285,23 +2371,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSoftSpaceSegment"
-    // InternalIdioms.g:697:1: ruleSoftSpaceSegment : ( ( rule__SoftSpaceSegment__Group__0 ) ) ;
+    // InternalIdioms.g:722:1: ruleSoftSpaceSegment : ( ( rule__SoftSpaceSegment__Group__0 ) ) ;
     public final void ruleSoftSpaceSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:701:2: ( ( ( rule__SoftSpaceSegment__Group__0 ) ) )
-            // InternalIdioms.g:702:2: ( ( rule__SoftSpaceSegment__Group__0 ) )
+            // InternalIdioms.g:726:2: ( ( ( rule__SoftSpaceSegment__Group__0 ) ) )
+            // InternalIdioms.g:727:2: ( ( rule__SoftSpaceSegment__Group__0 ) )
             {
-            // InternalIdioms.g:702:2: ( ( rule__SoftSpaceSegment__Group__0 ) )
-            // InternalIdioms.g:703:3: ( rule__SoftSpaceSegment__Group__0 )
+            // InternalIdioms.g:727:2: ( ( rule__SoftSpaceSegment__Group__0 ) )
+            // InternalIdioms.g:728:3: ( rule__SoftSpaceSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftSpaceSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:704:3: ( rule__SoftSpaceSegment__Group__0 )
-            // InternalIdioms.g:704:4: rule__SoftSpaceSegment__Group__0
+            // InternalIdioms.g:729:3: ( rule__SoftSpaceSegment__Group__0 )
+            // InternalIdioms.g:729:4: rule__SoftSpaceSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SoftSpaceSegment__Group__0();
@@ -2336,11 +2422,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleStringSegment"
-    // InternalIdioms.g:713:1: entryRuleStringSegment : ruleStringSegment EOF ;
+    // InternalIdioms.g:738:1: entryRuleStringSegment : ruleStringSegment EOF ;
     public final void entryRuleStringSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:714:1: ( ruleStringSegment EOF )
-            // InternalIdioms.g:715:1: ruleStringSegment EOF
+            // InternalIdioms.g:739:1: ( ruleStringSegment EOF )
+            // InternalIdioms.g:740:1: ruleStringSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentRule());
@@ -2370,23 +2456,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleStringSegment"
-    // InternalIdioms.g:722:1: ruleStringSegment : ( ( rule__StringSegment__Group__0 ) ) ;
+    // InternalIdioms.g:747:1: ruleStringSegment : ( ( rule__StringSegment__Group__0 ) ) ;
     public final void ruleStringSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:726:2: ( ( ( rule__StringSegment__Group__0 ) ) )
-            // InternalIdioms.g:727:2: ( ( rule__StringSegment__Group__0 ) )
+            // InternalIdioms.g:751:2: ( ( ( rule__StringSegment__Group__0 ) ) )
+            // InternalIdioms.g:752:2: ( ( rule__StringSegment__Group__0 ) )
             {
-            // InternalIdioms.g:727:2: ( ( rule__StringSegment__Group__0 ) )
-            // InternalIdioms.g:728:3: ( rule__StringSegment__Group__0 )
+            // InternalIdioms.g:752:2: ( ( rule__StringSegment__Group__0 ) )
+            // InternalIdioms.g:753:3: ( rule__StringSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:729:3: ( rule__StringSegment__Group__0 )
-            // InternalIdioms.g:729:4: rule__StringSegment__Group__0
+            // InternalIdioms.g:754:3: ( rule__StringSegment__Group__0 )
+            // InternalIdioms.g:754:4: rule__StringSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringSegment__Group__0();
@@ -2421,11 +2507,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleValueSegment"
-    // InternalIdioms.g:738:1: entryRuleValueSegment : ruleValueSegment EOF ;
+    // InternalIdioms.g:763:1: entryRuleValueSegment : ruleValueSegment EOF ;
     public final void entryRuleValueSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:739:1: ( ruleValueSegment EOF )
-            // InternalIdioms.g:740:1: ruleValueSegment EOF
+            // InternalIdioms.g:764:1: ( ruleValueSegment EOF )
+            // InternalIdioms.g:765:1: ruleValueSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValueSegmentRule());
@@ -2455,23 +2541,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleValueSegment"
-    // InternalIdioms.g:747:1: ruleValueSegment : ( ( rule__ValueSegment__Group__0 ) ) ;
+    // InternalIdioms.g:772:1: ruleValueSegment : ( ( rule__ValueSegment__Group__0 ) ) ;
     public final void ruleValueSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:751:2: ( ( ( rule__ValueSegment__Group__0 ) ) )
-            // InternalIdioms.g:752:2: ( ( rule__ValueSegment__Group__0 ) )
+            // InternalIdioms.g:776:2: ( ( ( rule__ValueSegment__Group__0 ) ) )
+            // InternalIdioms.g:777:2: ( ( rule__ValueSegment__Group__0 ) )
             {
-            // InternalIdioms.g:752:2: ( ( rule__ValueSegment__Group__0 ) )
-            // InternalIdioms.g:753:3: ( rule__ValueSegment__Group__0 )
+            // InternalIdioms.g:777:2: ( ( rule__ValueSegment__Group__0 ) )
+            // InternalIdioms.g:778:3: ( rule__ValueSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValueSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:754:3: ( rule__ValueSegment__Group__0 )
-            // InternalIdioms.g:754:4: rule__ValueSegment__Group__0
+            // InternalIdioms.g:779:3: ( rule__ValueSegment__Group__0 )
+            // InternalIdioms.g:779:4: rule__ValueSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValueSegment__Group__0();
@@ -2506,11 +2592,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleWrapAnchorSegment"
-    // InternalIdioms.g:763:1: entryRuleWrapAnchorSegment : ruleWrapAnchorSegment EOF ;
+    // InternalIdioms.g:788:1: entryRuleWrapAnchorSegment : ruleWrapAnchorSegment EOF ;
     public final void entryRuleWrapAnchorSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:764:1: ( ruleWrapAnchorSegment EOF )
-            // InternalIdioms.g:765:1: ruleWrapAnchorSegment EOF
+            // InternalIdioms.g:789:1: ( ruleWrapAnchorSegment EOF )
+            // InternalIdioms.g:790:1: ruleWrapAnchorSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapAnchorSegmentRule());
@@ -2540,23 +2626,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleWrapAnchorSegment"
-    // InternalIdioms.g:772:1: ruleWrapAnchorSegment : ( ( rule__WrapAnchorSegment__Group__0 ) ) ;
+    // InternalIdioms.g:797:1: ruleWrapAnchorSegment : ( ( rule__WrapAnchorSegment__Group__0 ) ) ;
     public final void ruleWrapAnchorSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:776:2: ( ( ( rule__WrapAnchorSegment__Group__0 ) ) )
-            // InternalIdioms.g:777:2: ( ( rule__WrapAnchorSegment__Group__0 ) )
+            // InternalIdioms.g:801:2: ( ( ( rule__WrapAnchorSegment__Group__0 ) ) )
+            // InternalIdioms.g:802:2: ( ( rule__WrapAnchorSegment__Group__0 ) )
             {
-            // InternalIdioms.g:777:2: ( ( rule__WrapAnchorSegment__Group__0 ) )
-            // InternalIdioms.g:778:3: ( rule__WrapAnchorSegment__Group__0 )
+            // InternalIdioms.g:802:2: ( ( rule__WrapAnchorSegment__Group__0 ) )
+            // InternalIdioms.g:803:3: ( rule__WrapAnchorSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapAnchorSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:779:3: ( rule__WrapAnchorSegment__Group__0 )
-            // InternalIdioms.g:779:4: rule__WrapAnchorSegment__Group__0
+            // InternalIdioms.g:804:3: ( rule__WrapAnchorSegment__Group__0 )
+            // InternalIdioms.g:804:4: rule__WrapAnchorSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapAnchorSegment__Group__0();
@@ -2591,11 +2677,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleWrapBeginAllSegment"
-    // InternalIdioms.g:788:1: entryRuleWrapBeginAllSegment : ruleWrapBeginAllSegment EOF ;
+    // InternalIdioms.g:813:1: entryRuleWrapBeginAllSegment : ruleWrapBeginAllSegment EOF ;
     public final void entryRuleWrapBeginAllSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:789:1: ( ruleWrapBeginAllSegment EOF )
-            // InternalIdioms.g:790:1: ruleWrapBeginAllSegment EOF
+            // InternalIdioms.g:814:1: ( ruleWrapBeginAllSegment EOF )
+            // InternalIdioms.g:815:1: ruleWrapBeginAllSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginAllSegmentRule());
@@ -2625,23 +2711,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleWrapBeginAllSegment"
-    // InternalIdioms.g:797:1: ruleWrapBeginAllSegment : ( ( rule__WrapBeginAllSegment__Group__0 ) ) ;
+    // InternalIdioms.g:822:1: ruleWrapBeginAllSegment : ( ( rule__WrapBeginAllSegment__Group__0 ) ) ;
     public final void ruleWrapBeginAllSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:801:2: ( ( ( rule__WrapBeginAllSegment__Group__0 ) ) )
-            // InternalIdioms.g:802:2: ( ( rule__WrapBeginAllSegment__Group__0 ) )
+            // InternalIdioms.g:826:2: ( ( ( rule__WrapBeginAllSegment__Group__0 ) ) )
+            // InternalIdioms.g:827:2: ( ( rule__WrapBeginAllSegment__Group__0 ) )
             {
-            // InternalIdioms.g:802:2: ( ( rule__WrapBeginAllSegment__Group__0 ) )
-            // InternalIdioms.g:803:3: ( rule__WrapBeginAllSegment__Group__0 )
+            // InternalIdioms.g:827:2: ( ( rule__WrapBeginAllSegment__Group__0 ) )
+            // InternalIdioms.g:828:3: ( rule__WrapBeginAllSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginAllSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:804:3: ( rule__WrapBeginAllSegment__Group__0 )
-            // InternalIdioms.g:804:4: rule__WrapBeginAllSegment__Group__0
+            // InternalIdioms.g:829:3: ( rule__WrapBeginAllSegment__Group__0 )
+            // InternalIdioms.g:829:4: rule__WrapBeginAllSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapBeginAllSegment__Group__0();
@@ -2676,11 +2762,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleWrapBeginSomeSegment"
-    // InternalIdioms.g:813:1: entryRuleWrapBeginSomeSegment : ruleWrapBeginSomeSegment EOF ;
+    // InternalIdioms.g:838:1: entryRuleWrapBeginSomeSegment : ruleWrapBeginSomeSegment EOF ;
     public final void entryRuleWrapBeginSomeSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:814:1: ( ruleWrapBeginSomeSegment EOF )
-            // InternalIdioms.g:815:1: ruleWrapBeginSomeSegment EOF
+            // InternalIdioms.g:839:1: ( ruleWrapBeginSomeSegment EOF )
+            // InternalIdioms.g:840:1: ruleWrapBeginSomeSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginSomeSegmentRule());
@@ -2710,23 +2796,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleWrapBeginSomeSegment"
-    // InternalIdioms.g:822:1: ruleWrapBeginSomeSegment : ( ( rule__WrapBeginSomeSegment__Group__0 ) ) ;
+    // InternalIdioms.g:847:1: ruleWrapBeginSomeSegment : ( ( rule__WrapBeginSomeSegment__Group__0 ) ) ;
     public final void ruleWrapBeginSomeSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:826:2: ( ( ( rule__WrapBeginSomeSegment__Group__0 ) ) )
-            // InternalIdioms.g:827:2: ( ( rule__WrapBeginSomeSegment__Group__0 ) )
+            // InternalIdioms.g:851:2: ( ( ( rule__WrapBeginSomeSegment__Group__0 ) ) )
+            // InternalIdioms.g:852:2: ( ( rule__WrapBeginSomeSegment__Group__0 ) )
             {
-            // InternalIdioms.g:827:2: ( ( rule__WrapBeginSomeSegment__Group__0 ) )
-            // InternalIdioms.g:828:3: ( rule__WrapBeginSomeSegment__Group__0 )
+            // InternalIdioms.g:852:2: ( ( rule__WrapBeginSomeSegment__Group__0 ) )
+            // InternalIdioms.g:853:3: ( rule__WrapBeginSomeSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginSomeSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:829:3: ( rule__WrapBeginSomeSegment__Group__0 )
-            // InternalIdioms.g:829:4: rule__WrapBeginSomeSegment__Group__0
+            // InternalIdioms.g:854:3: ( rule__WrapBeginSomeSegment__Group__0 )
+            // InternalIdioms.g:854:4: rule__WrapBeginSomeSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapBeginSomeSegment__Group__0();
@@ -2761,11 +2847,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleWrapEndSegment"
-    // InternalIdioms.g:838:1: entryRuleWrapEndSegment : ruleWrapEndSegment EOF ;
+    // InternalIdioms.g:863:1: entryRuleWrapEndSegment : ruleWrapEndSegment EOF ;
     public final void entryRuleWrapEndSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:839:1: ( ruleWrapEndSegment EOF )
-            // InternalIdioms.g:840:1: ruleWrapEndSegment EOF
+            // InternalIdioms.g:864:1: ( ruleWrapEndSegment EOF )
+            // InternalIdioms.g:865:1: ruleWrapEndSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapEndSegmentRule());
@@ -2795,23 +2881,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleWrapEndSegment"
-    // InternalIdioms.g:847:1: ruleWrapEndSegment : ( ( rule__WrapEndSegment__Group__0 ) ) ;
+    // InternalIdioms.g:872:1: ruleWrapEndSegment : ( ( rule__WrapEndSegment__Group__0 ) ) ;
     public final void ruleWrapEndSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:851:2: ( ( ( rule__WrapEndSegment__Group__0 ) ) )
-            // InternalIdioms.g:852:2: ( ( rule__WrapEndSegment__Group__0 ) )
+            // InternalIdioms.g:876:2: ( ( ( rule__WrapEndSegment__Group__0 ) ) )
+            // InternalIdioms.g:877:2: ( ( rule__WrapEndSegment__Group__0 ) )
             {
-            // InternalIdioms.g:852:2: ( ( rule__WrapEndSegment__Group__0 ) )
-            // InternalIdioms.g:853:3: ( rule__WrapEndSegment__Group__0 )
+            // InternalIdioms.g:877:2: ( ( rule__WrapEndSegment__Group__0 ) )
+            // InternalIdioms.g:878:3: ( rule__WrapEndSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapEndSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:854:3: ( rule__WrapEndSegment__Group__0 )
-            // InternalIdioms.g:854:4: rule__WrapEndSegment__Group__0
+            // InternalIdioms.g:879:3: ( rule__WrapEndSegment__Group__0 )
+            // InternalIdioms.g:879:4: rule__WrapEndSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapEndSegment__Group__0();
@@ -2846,11 +2932,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleWrapHereSegment"
-    // InternalIdioms.g:863:1: entryRuleWrapHereSegment : ruleWrapHereSegment EOF ;
+    // InternalIdioms.g:888:1: entryRuleWrapHereSegment : ruleWrapHereSegment EOF ;
     public final void entryRuleWrapHereSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:864:1: ( ruleWrapHereSegment EOF )
-            // InternalIdioms.g:865:1: ruleWrapHereSegment EOF
+            // InternalIdioms.g:889:1: ( ruleWrapHereSegment EOF )
+            // InternalIdioms.g:890:1: ruleWrapHereSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapHereSegmentRule());
@@ -2880,23 +2966,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleWrapHereSegment"
-    // InternalIdioms.g:872:1: ruleWrapHereSegment : ( ( rule__WrapHereSegment__Group__0 ) ) ;
+    // InternalIdioms.g:897:1: ruleWrapHereSegment : ( ( rule__WrapHereSegment__Group__0 ) ) ;
     public final void ruleWrapHereSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:876:2: ( ( ( rule__WrapHereSegment__Group__0 ) ) )
-            // InternalIdioms.g:877:2: ( ( rule__WrapHereSegment__Group__0 ) )
+            // InternalIdioms.g:901:2: ( ( ( rule__WrapHereSegment__Group__0 ) ) )
+            // InternalIdioms.g:902:2: ( ( rule__WrapHereSegment__Group__0 ) )
             {
-            // InternalIdioms.g:877:2: ( ( rule__WrapHereSegment__Group__0 ) )
-            // InternalIdioms.g:878:3: ( rule__WrapHereSegment__Group__0 )
+            // InternalIdioms.g:902:2: ( ( rule__WrapHereSegment__Group__0 ) )
+            // InternalIdioms.g:903:3: ( rule__WrapHereSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapHereSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:879:3: ( rule__WrapHereSegment__Group__0 )
-            // InternalIdioms.g:879:4: rule__WrapHereSegment__Group__0
+            // InternalIdioms.g:904:3: ( rule__WrapHereSegment__Group__0 )
+            // InternalIdioms.g:904:4: rule__WrapHereSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapHereSegment__Group__0();
@@ -2931,11 +3017,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleReferredSegment"
-    // InternalIdioms.g:888:1: entryRuleReferredSegment : ruleReferredSegment EOF ;
+    // InternalIdioms.g:913:1: entryRuleReferredSegment : ruleReferredSegment EOF ;
     public final void entryRuleReferredSegment() throws RecognitionException {
         try {
-            // InternalIdioms.g:889:1: ( ruleReferredSegment EOF )
-            // InternalIdioms.g:890:1: ruleReferredSegment EOF
+            // InternalIdioms.g:914:1: ( ruleReferredSegment EOF )
+            // InternalIdioms.g:915:1: ruleReferredSegment EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentRule());
@@ -2965,23 +3051,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleReferredSegment"
-    // InternalIdioms.g:897:1: ruleReferredSegment : ( ( rule__ReferredSegment__Group__0 ) ) ;
+    // InternalIdioms.g:922:1: ruleReferredSegment : ( ( rule__ReferredSegment__Group__0 ) ) ;
     public final void ruleReferredSegment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:901:2: ( ( ( rule__ReferredSegment__Group__0 ) ) )
-            // InternalIdioms.g:902:2: ( ( rule__ReferredSegment__Group__0 ) )
+            // InternalIdioms.g:926:2: ( ( ( rule__ReferredSegment__Group__0 ) ) )
+            // InternalIdioms.g:927:2: ( ( rule__ReferredSegment__Group__0 ) )
             {
-            // InternalIdioms.g:902:2: ( ( rule__ReferredSegment__Group__0 ) )
-            // InternalIdioms.g:903:3: ( rule__ReferredSegment__Group__0 )
+            // InternalIdioms.g:927:2: ( ( rule__ReferredSegment__Group__0 ) )
+            // InternalIdioms.g:928:3: ( rule__ReferredSegment__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getGroup());
             }
-            // InternalIdioms.g:904:3: ( rule__ReferredSegment__Group__0 )
-            // InternalIdioms.g:904:4: rule__ReferredSegment__Group__0
+            // InternalIdioms.g:929:3: ( rule__ReferredSegment__Group__0 )
+            // InternalIdioms.g:929:4: rule__ReferredSegment__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredSegment__Group__0();
@@ -3016,11 +3102,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleIdiom"
-    // InternalIdioms.g:913:1: entryRuleIdiom : ruleIdiom EOF ;
+    // InternalIdioms.g:938:1: entryRuleIdiom : ruleIdiom EOF ;
     public final void entryRuleIdiom() throws RecognitionException {
         try {
-            // InternalIdioms.g:914:1: ( ruleIdiom EOF )
-            // InternalIdioms.g:915:1: ruleIdiom EOF
+            // InternalIdioms.g:939:1: ( ruleIdiom EOF )
+            // InternalIdioms.g:940:1: ruleIdiom EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomRule());
@@ -3050,23 +3136,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleIdiom"
-    // InternalIdioms.g:922:1: ruleIdiom : ( ( rule__Idiom__Group__0 ) ) ;
+    // InternalIdioms.g:947:1: ruleIdiom : ( ( rule__Idiom__Group__0 ) ) ;
     public final void ruleIdiom() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:926:2: ( ( ( rule__Idiom__Group__0 ) ) )
-            // InternalIdioms.g:927:2: ( ( rule__Idiom__Group__0 ) )
+            // InternalIdioms.g:951:2: ( ( ( rule__Idiom__Group__0 ) ) )
+            // InternalIdioms.g:952:2: ( ( rule__Idiom__Group__0 ) )
             {
-            // InternalIdioms.g:927:2: ( ( rule__Idiom__Group__0 ) )
-            // InternalIdioms.g:928:3: ( rule__Idiom__Group__0 )
+            // InternalIdioms.g:952:2: ( ( rule__Idiom__Group__0 ) )
+            // InternalIdioms.g:953:3: ( rule__Idiom__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getGroup());
             }
-            // InternalIdioms.g:929:3: ( rule__Idiom__Group__0 )
-            // InternalIdioms.g:929:4: rule__Idiom__Group__0
+            // InternalIdioms.g:954:3: ( rule__Idiom__Group__0 )
+            // InternalIdioms.g:954:4: rule__Idiom__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group__0();
@@ -3101,11 +3187,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "entryRuleSubIdiom"
-    // InternalIdioms.g:938:1: entryRuleSubIdiom : ruleSubIdiom EOF ;
+    // InternalIdioms.g:963:1: entryRuleSubIdiom : ruleSubIdiom EOF ;
     public final void entryRuleSubIdiom() throws RecognitionException {
         try {
-            // InternalIdioms.g:939:1: ( ruleSubIdiom EOF )
-            // InternalIdioms.g:940:1: ruleSubIdiom EOF
+            // InternalIdioms.g:964:1: ( ruleSubIdiom EOF )
+            // InternalIdioms.g:965:1: ruleSubIdiom EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomRule());
@@ -3135,23 +3221,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleSubIdiom"
-    // InternalIdioms.g:947:1: ruleSubIdiom : ( ( rule__SubIdiom__Group__0 ) ) ;
+    // InternalIdioms.g:972:1: ruleSubIdiom : ( ( rule__SubIdiom__Group__0 ) ) ;
     public final void ruleSubIdiom() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:951:2: ( ( ( rule__SubIdiom__Group__0 ) ) )
-            // InternalIdioms.g:952:2: ( ( rule__SubIdiom__Group__0 ) )
+            // InternalIdioms.g:976:2: ( ( ( rule__SubIdiom__Group__0 ) ) )
+            // InternalIdioms.g:977:2: ( ( rule__SubIdiom__Group__0 ) )
             {
-            // InternalIdioms.g:952:2: ( ( rule__SubIdiom__Group__0 ) )
-            // InternalIdioms.g:953:3: ( rule__SubIdiom__Group__0 )
+            // InternalIdioms.g:977:2: ( ( rule__SubIdiom__Group__0 ) )
+            // InternalIdioms.g:978:3: ( rule__SubIdiom__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getGroup());
             }
-            // InternalIdioms.g:954:3: ( rule__SubIdiom__Group__0 )
-            // InternalIdioms.g:954:4: rule__SubIdiom__Group__0
+            // InternalIdioms.g:979:3: ( rule__SubIdiom__Group__0 )
+            // InternalIdioms.g:979:4: rule__SubIdiom__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubIdiom__Group__0();
@@ -3186,13 +3272,13 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Alternatives_3"
-    // InternalIdioms.g:962:1: rule__IdiomsModel__Alternatives_3 : ( ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) ) | ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) ) | ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) ) );
+    // InternalIdioms.g:987:1: rule__IdiomsModel__Alternatives_3 : ( ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) ) | ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) ) | ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) ) );
     public final void rule__IdiomsModel__Alternatives_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:966:1: ( ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) ) | ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) ) | ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) ) )
+            // InternalIdioms.g:991:1: ( ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) ) | ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) ) | ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) ) )
             int alt1=3;
             switch ( input.LA(1) ) {
             case 18:
@@ -3220,16 +3306,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
             switch (alt1) {
                 case 1 :
-                    // InternalIdioms.g:967:2: ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) )
+                    // InternalIdioms.g:992:2: ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) )
                     {
-                    // InternalIdioms.g:967:2: ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) )
-                    // InternalIdioms.g:968:3: ( rule__IdiomsModel__OwnedWithsAssignment_3_0 )
+                    // InternalIdioms.g:992:2: ( ( rule__IdiomsModel__OwnedWithsAssignment_3_0 ) )
+                    // InternalIdioms.g:993:3: ( rule__IdiomsModel__OwnedWithsAssignment_3_0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedWithsAssignment_3_0());
                     }
-                    // InternalIdioms.g:969:3: ( rule__IdiomsModel__OwnedWithsAssignment_3_0 )
-                    // InternalIdioms.g:969:4: rule__IdiomsModel__OwnedWithsAssignment_3_0
+                    // InternalIdioms.g:994:3: ( rule__IdiomsModel__OwnedWithsAssignment_3_0 )
+                    // InternalIdioms.g:994:4: rule__IdiomsModel__OwnedWithsAssignment_3_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedWithsAssignment_3_0();
@@ -3249,16 +3335,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:973:2: ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) )
+                    // InternalIdioms.g:998:2: ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) )
                     {
-                    // InternalIdioms.g:973:2: ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) )
-                    // InternalIdioms.g:974:3: ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 )
+                    // InternalIdioms.g:998:2: ( ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 ) )
+                    // InternalIdioms.g:999:3: ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedImportDeclarationsAssignment_3_1());
                     }
-                    // InternalIdioms.g:975:3: ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 )
-                    // InternalIdioms.g:975:4: rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1
+                    // InternalIdioms.g:1000:3: ( rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 )
+                    // InternalIdioms.g:1000:4: rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1();
@@ -3278,16 +3364,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalIdioms.g:979:2: ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) )
+                    // InternalIdioms.g:1004:2: ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) )
                     {
-                    // InternalIdioms.g:979:2: ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) )
-                    // InternalIdioms.g:980:3: ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 )
+                    // InternalIdioms.g:1004:2: ( ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 ) )
+                    // InternalIdioms.g:1005:3: ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedGrammarDeclarationsAssignment_3_2());
                     }
-                    // InternalIdioms.g:981:3: ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 )
-                    // InternalIdioms.g:981:4: rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2
+                    // InternalIdioms.g:1006:3: ( rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 )
+                    // InternalIdioms.g:1006:4: rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2();
@@ -3324,13 +3410,13 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Alternatives_4"
-    // InternalIdioms.g:989:1: rule__IdiomsModel__Alternatives_4 : ( ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) ) | ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) ) | ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) ) );
+    // InternalIdioms.g:1014:1: rule__IdiomsModel__Alternatives_4 : ( ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) ) | ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) ) | ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) ) );
     public final void rule__IdiomsModel__Alternatives_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:993:1: ( ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) ) | ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) ) | ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) ) )
+            // InternalIdioms.g:1018:1: ( ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) ) | ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) ) | ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) ) )
             int alt2=3;
             switch ( input.LA(1) ) {
             case 19:
@@ -3343,8 +3429,8 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                 alt2=2;
                 }
                 break;
-            case 45:
-            case 53:
+            case 46:
+            case 54:
                 {
                 alt2=3;
                 }
@@ -3359,16 +3445,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
             switch (alt2) {
                 case 1 :
-                    // InternalIdioms.g:994:2: ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) )
+                    // InternalIdioms.g:1019:2: ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) )
                     {
-                    // InternalIdioms.g:994:2: ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) )
-                    // InternalIdioms.g:995:3: ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 )
+                    // InternalIdioms.g:1019:2: ( ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 ) )
+                    // InternalIdioms.g:1020:3: ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsAssignment_4_0());
                     }
-                    // InternalIdioms.g:996:3: ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 )
-                    // InternalIdioms.g:996:4: rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0
+                    // InternalIdioms.g:1021:3: ( rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 )
+                    // InternalIdioms.g:1021:4: rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0();
@@ -3388,16 +3474,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1000:2: ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) )
+                    // InternalIdioms.g:1025:2: ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) )
                     {
-                    // InternalIdioms.g:1000:2: ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) )
-                    // InternalIdioms.g:1001:3: ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 )
+                    // InternalIdioms.g:1025:2: ( ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 ) )
+                    // InternalIdioms.g:1026:3: ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsAssignment_4_1());
                     }
-                    // InternalIdioms.g:1002:3: ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 )
-                    // InternalIdioms.g:1002:4: rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1
+                    // InternalIdioms.g:1027:3: ( rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 )
+                    // InternalIdioms.g:1027:4: rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1();
@@ -3417,16 +3503,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalIdioms.g:1006:2: ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) )
+                    // InternalIdioms.g:1031:2: ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) )
                     {
-                    // InternalIdioms.g:1006:2: ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) )
-                    // InternalIdioms.g:1007:3: ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 )
+                    // InternalIdioms.g:1031:2: ( ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 ) )
+                    // InternalIdioms.g:1032:3: ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsAssignment_4_2());
                     }
-                    // InternalIdioms.g:1008:3: ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 )
-                    // InternalIdioms.g:1008:4: rule__IdiomsModel__OwnedIdiomsAssignment_4_2
+                    // InternalIdioms.g:1033:3: ( rule__IdiomsModel__OwnedIdiomsAssignment_4_2 )
+                    // InternalIdioms.g:1033:4: rule__IdiomsModel__OwnedIdiomsAssignment_4_2
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsModel__OwnedIdiomsAssignment_4_2();
@@ -3463,13 +3549,13 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Locator__Alternatives"
-    // InternalIdioms.g:1016:1: rule__Locator__Alternatives : ( ( ruleAnyAssignmentLocator ) | ( ruleAnyElementLocator ) | ( ruleAssignmentLocator ) | ( ruleFinalLocator ) | ( ruleKeywordLocator ) | ( ruleReferredLocator ) | ( ruleReturnsLocator ) | ( ruleRuleLocator ) );
+    // InternalIdioms.g:1041:1: rule__Locator__Alternatives : ( ( ruleAnyAssignmentLocator ) | ( ruleAnyElementLocator ) | ( ruleAssignmentLocator ) | ( ruleFinalLocator ) | ( ruleKeywordLocator ) | ( ruleReferredLocator ) | ( ruleReturnsLocator ) | ( ruleRuleLocator ) );
     public final void rule__Locator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1020:1: ( ( ruleAnyAssignmentLocator ) | ( ruleAnyElementLocator ) | ( ruleAssignmentLocator ) | ( ruleFinalLocator ) | ( ruleKeywordLocator ) | ( ruleReferredLocator ) | ( ruleReturnsLocator ) | ( ruleRuleLocator ) )
+            // InternalIdioms.g:1045:1: ( ( ruleAnyAssignmentLocator ) | ( ruleAnyElementLocator ) | ( ruleAssignmentLocator ) | ( ruleFinalLocator ) | ( ruleKeywordLocator ) | ( ruleReferredLocator ) | ( ruleReturnsLocator ) | ( ruleRuleLocator ) )
             int alt3=8;
             switch ( input.LA(1) ) {
             case 20:
@@ -3522,10 +3608,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
             switch (alt3) {
                 case 1 :
-                    // InternalIdioms.g:1021:2: ( ruleAnyAssignmentLocator )
+                    // InternalIdioms.g:1046:2: ( ruleAnyAssignmentLocator )
                     {
-                    // InternalIdioms.g:1021:2: ( ruleAnyAssignmentLocator )
-                    // InternalIdioms.g:1022:3: ruleAnyAssignmentLocator
+                    // InternalIdioms.g:1046:2: ( ruleAnyAssignmentLocator )
+                    // InternalIdioms.g:1047:3: ruleAnyAssignmentLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getAnyAssignmentLocatorParserRuleCall_0());
@@ -3545,10 +3631,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1027:2: ( ruleAnyElementLocator )
+                    // InternalIdioms.g:1052:2: ( ruleAnyElementLocator )
                     {
-                    // InternalIdioms.g:1027:2: ( ruleAnyElementLocator )
-                    // InternalIdioms.g:1028:3: ruleAnyElementLocator
+                    // InternalIdioms.g:1052:2: ( ruleAnyElementLocator )
+                    // InternalIdioms.g:1053:3: ruleAnyElementLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getAnyElementLocatorParserRuleCall_1());
@@ -3568,10 +3654,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalIdioms.g:1033:2: ( ruleAssignmentLocator )
+                    // InternalIdioms.g:1058:2: ( ruleAssignmentLocator )
                     {
-                    // InternalIdioms.g:1033:2: ( ruleAssignmentLocator )
-                    // InternalIdioms.g:1034:3: ruleAssignmentLocator
+                    // InternalIdioms.g:1058:2: ( ruleAssignmentLocator )
+                    // InternalIdioms.g:1059:3: ruleAssignmentLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getAssignmentLocatorParserRuleCall_2());
@@ -3591,10 +3677,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalIdioms.g:1039:2: ( ruleFinalLocator )
+                    // InternalIdioms.g:1064:2: ( ruleFinalLocator )
                     {
-                    // InternalIdioms.g:1039:2: ( ruleFinalLocator )
-                    // InternalIdioms.g:1040:3: ruleFinalLocator
+                    // InternalIdioms.g:1064:2: ( ruleFinalLocator )
+                    // InternalIdioms.g:1065:3: ruleFinalLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getFinalLocatorParserRuleCall_3());
@@ -3614,10 +3700,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalIdioms.g:1045:2: ( ruleKeywordLocator )
+                    // InternalIdioms.g:1070:2: ( ruleKeywordLocator )
                     {
-                    // InternalIdioms.g:1045:2: ( ruleKeywordLocator )
-                    // InternalIdioms.g:1046:3: ruleKeywordLocator
+                    // InternalIdioms.g:1070:2: ( ruleKeywordLocator )
+                    // InternalIdioms.g:1071:3: ruleKeywordLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getKeywordLocatorParserRuleCall_4());
@@ -3637,10 +3723,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalIdioms.g:1051:2: ( ruleReferredLocator )
+                    // InternalIdioms.g:1076:2: ( ruleReferredLocator )
                     {
-                    // InternalIdioms.g:1051:2: ( ruleReferredLocator )
-                    // InternalIdioms.g:1052:3: ruleReferredLocator
+                    // InternalIdioms.g:1076:2: ( ruleReferredLocator )
+                    // InternalIdioms.g:1077:3: ruleReferredLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getReferredLocatorParserRuleCall_5());
@@ -3660,10 +3746,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 7 :
-                    // InternalIdioms.g:1057:2: ( ruleReturnsLocator )
+                    // InternalIdioms.g:1082:2: ( ruleReturnsLocator )
                     {
-                    // InternalIdioms.g:1057:2: ( ruleReturnsLocator )
-                    // InternalIdioms.g:1058:3: ruleReturnsLocator
+                    // InternalIdioms.g:1082:2: ( ruleReturnsLocator )
+                    // InternalIdioms.g:1083:3: ruleReturnsLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getReturnsLocatorParserRuleCall_6());
@@ -3683,10 +3769,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 8 :
-                    // InternalIdioms.g:1063:2: ( ruleRuleLocator )
+                    // InternalIdioms.g:1088:2: ( ruleRuleLocator )
                     {
-                    // InternalIdioms.g:1063:2: ( ruleRuleLocator )
-                    // InternalIdioms.g:1064:3: ruleRuleLocator
+                    // InternalIdioms.g:1088:2: ( ruleRuleLocator )
+                    // InternalIdioms.g:1089:3: ruleRuleLocator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getLocatorAccess().getRuleLocatorParserRuleCall_7());
@@ -3723,14 +3809,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Segment__Alternatives"
-    // InternalIdioms.g:1073:1: rule__Segment__Alternatives : ( ( ruleCustomSegment ) | ( ruleHalfNewLineSegment ) | ( ruleNewLineSegment ) | ( ruleNoSpaceSegment ) | ( rulePopSegment ) | ( rulePostCommentSegment ) | ( rulePreCommentSegment ) | ( rulePushSegment ) | ( ruleSoftNewLineSegment ) | ( ruleSoftSpaceSegment ) | ( ruleStringSegment ) | ( ruleValueSegment ) | ( ruleWrapAnchorSegment ) | ( ruleWrapBeginAllSegment ) | ( ruleWrapBeginSomeSegment ) | ( ruleWrapEndSegment ) | ( ruleWrapHereSegment ) );
+    // InternalIdioms.g:1098:1: rule__Segment__Alternatives : ( ( ruleCustomSegment ) | ( ruleHalfNewLineSegment ) | ( ruleNewLineSegment ) | ( ruleNoNewLineSegment ) | ( ruleNoSpaceSegment ) | ( rulePopSegment ) | ( rulePostCommentSegment ) | ( rulePreCommentSegment ) | ( rulePushSegment ) | ( ruleSoftNewLineSegment ) | ( ruleSoftSpaceSegment ) | ( ruleStringSegment ) | ( ruleValueSegment ) | ( ruleWrapAnchorSegment ) | ( ruleWrapBeginAllSegment ) | ( ruleWrapBeginSomeSegment ) | ( ruleWrapEndSegment ) | ( ruleWrapHereSegment ) );
     public final void rule__Segment__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1077:1: ( ( ruleCustomSegment ) | ( ruleHalfNewLineSegment ) | ( ruleNewLineSegment ) | ( ruleNoSpaceSegment ) | ( rulePopSegment ) | ( rulePostCommentSegment ) | ( rulePreCommentSegment ) | ( rulePushSegment ) | ( ruleSoftNewLineSegment ) | ( ruleSoftSpaceSegment ) | ( ruleStringSegment ) | ( ruleValueSegment ) | ( ruleWrapAnchorSegment ) | ( ruleWrapBeginAllSegment ) | ( ruleWrapBeginSomeSegment ) | ( ruleWrapEndSegment ) | ( ruleWrapHereSegment ) )
-            int alt4=17;
+            // InternalIdioms.g:1102:1: ( ( ruleCustomSegment ) | ( ruleHalfNewLineSegment ) | ( ruleNewLineSegment ) | ( ruleNoNewLineSegment ) | ( ruleNoSpaceSegment ) | ( rulePopSegment ) | ( rulePostCommentSegment ) | ( rulePreCommentSegment ) | ( rulePushSegment ) | ( ruleSoftNewLineSegment ) | ( ruleSoftSpaceSegment ) | ( ruleStringSegment ) | ( ruleValueSegment ) | ( ruleWrapAnchorSegment ) | ( ruleWrapBeginAllSegment ) | ( ruleWrapBeginSomeSegment ) | ( ruleWrapEndSegment ) | ( ruleWrapHereSegment ) )
+            int alt4=18;
             switch ( input.LA(1) ) {
             case 28:
                 {
@@ -3817,6 +3903,11 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                 alt4=17;
                 }
                 break;
+            case 45:
+                {
+                alt4=18;
+                }
+                break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
@@ -3827,10 +3918,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
             switch (alt4) {
                 case 1 :
-                    // InternalIdioms.g:1078:2: ( ruleCustomSegment )
+                    // InternalIdioms.g:1103:2: ( ruleCustomSegment )
                     {
-                    // InternalIdioms.g:1078:2: ( ruleCustomSegment )
-                    // InternalIdioms.g:1079:3: ruleCustomSegment
+                    // InternalIdioms.g:1103:2: ( ruleCustomSegment )
+                    // InternalIdioms.g:1104:3: ruleCustomSegment
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSegmentAccess().getCustomSegmentParserRuleCall_0());
@@ -3850,10 +3941,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1084:2: ( ruleHalfNewLineSegment )
+                    // InternalIdioms.g:1109:2: ( ruleHalfNewLineSegment )
                     {
-                    // InternalIdioms.g:1084:2: ( ruleHalfNewLineSegment )
-                    // InternalIdioms.g:1085:3: ruleHalfNewLineSegment
+                    // InternalIdioms.g:1109:2: ( ruleHalfNewLineSegment )
+                    // InternalIdioms.g:1110:3: ruleHalfNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSegmentAccess().getHalfNewLineSegmentParserRuleCall_1());
@@ -3873,10 +3964,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalIdioms.g:1090:2: ( ruleNewLineSegment )
+                    // InternalIdioms.g:1115:2: ( ruleNewLineSegment )
                     {
-                    // InternalIdioms.g:1090:2: ( ruleNewLineSegment )
-                    // InternalIdioms.g:1091:3: ruleNewLineSegment
+                    // InternalIdioms.g:1115:2: ( ruleNewLineSegment )
+                    // InternalIdioms.g:1116:3: ruleNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSegmentAccess().getNewLineSegmentParserRuleCall_2());
@@ -3896,21 +3987,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalIdioms.g:1096:2: ( ruleNoSpaceSegment )
+                    // InternalIdioms.g:1121:2: ( ruleNoNewLineSegment )
                     {
-                    // InternalIdioms.g:1096:2: ( ruleNoSpaceSegment )
-                    // InternalIdioms.g:1097:3: ruleNoSpaceSegment
+                    // InternalIdioms.g:1121:2: ( ruleNoNewLineSegment )
+                    // InternalIdioms.g:1122:3: ruleNoNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_3());
+                       before(grammarAccess.getSegmentAccess().getNoNewLineSegmentParserRuleCall_3());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleNoSpaceSegment();
+                    ruleNoNewLineSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_3());
+                       after(grammarAccess.getSegmentAccess().getNoNewLineSegmentParserRuleCall_3());
                     }
 
                     }
@@ -3919,21 +4010,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 5 :
-                    // InternalIdioms.g:1102:2: ( rulePopSegment )
+                    // InternalIdioms.g:1127:2: ( ruleNoSpaceSegment )
                     {
-                    // InternalIdioms.g:1102:2: ( rulePopSegment )
-                    // InternalIdioms.g:1103:3: rulePopSegment
+                    // InternalIdioms.g:1127:2: ( ruleNoSpaceSegment )
+                    // InternalIdioms.g:1128:3: ruleNoSpaceSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_4());
+                       before(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_4());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rulePopSegment();
+                    ruleNoSpaceSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_4());
+                       after(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_4());
                     }
 
                     }
@@ -3942,21 +4033,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 6 :
-                    // InternalIdioms.g:1108:2: ( rulePostCommentSegment )
+                    // InternalIdioms.g:1133:2: ( rulePopSegment )
                     {
-                    // InternalIdioms.g:1108:2: ( rulePostCommentSegment )
-                    // InternalIdioms.g:1109:3: rulePostCommentSegment
+                    // InternalIdioms.g:1133:2: ( rulePopSegment )
+                    // InternalIdioms.g:1134:3: rulePopSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_5());
+                       before(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_5());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rulePostCommentSegment();
+                    rulePopSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_5());
+                       after(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_5());
                     }
 
                     }
@@ -3965,21 +4056,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 7 :
-                    // InternalIdioms.g:1114:2: ( rulePreCommentSegment )
+                    // InternalIdioms.g:1139:2: ( rulePostCommentSegment )
                     {
-                    // InternalIdioms.g:1114:2: ( rulePreCommentSegment )
-                    // InternalIdioms.g:1115:3: rulePreCommentSegment
+                    // InternalIdioms.g:1139:2: ( rulePostCommentSegment )
+                    // InternalIdioms.g:1140:3: rulePostCommentSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_6());
+                       before(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_6());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rulePreCommentSegment();
+                    rulePostCommentSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_6());
+                       after(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_6());
                     }
 
                     }
@@ -3988,21 +4079,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 8 :
-                    // InternalIdioms.g:1120:2: ( rulePushSegment )
+                    // InternalIdioms.g:1145:2: ( rulePreCommentSegment )
                     {
-                    // InternalIdioms.g:1120:2: ( rulePushSegment )
-                    // InternalIdioms.g:1121:3: rulePushSegment
+                    // InternalIdioms.g:1145:2: ( rulePreCommentSegment )
+                    // InternalIdioms.g:1146:3: rulePreCommentSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_7());
+                       before(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_7());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rulePushSegment();
+                    rulePreCommentSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_7());
+                       after(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_7());
                     }
 
                     }
@@ -4011,21 +4102,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 9 :
-                    // InternalIdioms.g:1126:2: ( ruleSoftNewLineSegment )
+                    // InternalIdioms.g:1151:2: ( rulePushSegment )
                     {
-                    // InternalIdioms.g:1126:2: ( ruleSoftNewLineSegment )
-                    // InternalIdioms.g:1127:3: ruleSoftNewLineSegment
+                    // InternalIdioms.g:1151:2: ( rulePushSegment )
+                    // InternalIdioms.g:1152:3: rulePushSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_8());
+                       before(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_8());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleSoftNewLineSegment();
+                    rulePushSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_8());
+                       after(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_8());
                     }
 
                     }
@@ -4034,21 +4125,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 10 :
-                    // InternalIdioms.g:1132:2: ( ruleSoftSpaceSegment )
+                    // InternalIdioms.g:1157:2: ( ruleSoftNewLineSegment )
                     {
-                    // InternalIdioms.g:1132:2: ( ruleSoftSpaceSegment )
-                    // InternalIdioms.g:1133:3: ruleSoftSpaceSegment
+                    // InternalIdioms.g:1157:2: ( ruleSoftNewLineSegment )
+                    // InternalIdioms.g:1158:3: ruleSoftNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_9());
+                       before(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_9());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleSoftSpaceSegment();
+                    ruleSoftNewLineSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_9());
+                       after(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_9());
                     }
 
                     }
@@ -4057,21 +4148,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 11 :
-                    // InternalIdioms.g:1138:2: ( ruleStringSegment )
+                    // InternalIdioms.g:1163:2: ( ruleSoftSpaceSegment )
                     {
-                    // InternalIdioms.g:1138:2: ( ruleStringSegment )
-                    // InternalIdioms.g:1139:3: ruleStringSegment
+                    // InternalIdioms.g:1163:2: ( ruleSoftSpaceSegment )
+                    // InternalIdioms.g:1164:3: ruleSoftSpaceSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_10());
+                       before(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_10());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleStringSegment();
+                    ruleSoftSpaceSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_10());
+                       after(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_10());
                     }
 
                     }
@@ -4080,21 +4171,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 12 :
-                    // InternalIdioms.g:1144:2: ( ruleValueSegment )
+                    // InternalIdioms.g:1169:2: ( ruleStringSegment )
                     {
-                    // InternalIdioms.g:1144:2: ( ruleValueSegment )
-                    // InternalIdioms.g:1145:3: ruleValueSegment
+                    // InternalIdioms.g:1169:2: ( ruleStringSegment )
+                    // InternalIdioms.g:1170:3: ruleStringSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_11());
+                       before(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_11());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleValueSegment();
+                    ruleStringSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_11());
+                       after(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_11());
                     }
 
                     }
@@ -4103,21 +4194,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 13 :
-                    // InternalIdioms.g:1150:2: ( ruleWrapAnchorSegment )
+                    // InternalIdioms.g:1175:2: ( ruleValueSegment )
                     {
-                    // InternalIdioms.g:1150:2: ( ruleWrapAnchorSegment )
-                    // InternalIdioms.g:1151:3: ruleWrapAnchorSegment
+                    // InternalIdioms.g:1175:2: ( ruleValueSegment )
+                    // InternalIdioms.g:1176:3: ruleValueSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_12());
+                       before(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_12());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleWrapAnchorSegment();
+                    ruleValueSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_12());
+                       after(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_12());
                     }
 
                     }
@@ -4126,21 +4217,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 14 :
-                    // InternalIdioms.g:1156:2: ( ruleWrapBeginAllSegment )
+                    // InternalIdioms.g:1181:2: ( ruleWrapAnchorSegment )
                     {
-                    // InternalIdioms.g:1156:2: ( ruleWrapBeginAllSegment )
-                    // InternalIdioms.g:1157:3: ruleWrapBeginAllSegment
+                    // InternalIdioms.g:1181:2: ( ruleWrapAnchorSegment )
+                    // InternalIdioms.g:1182:3: ruleWrapAnchorSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_13());
+                       before(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_13());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleWrapBeginAllSegment();
+                    ruleWrapAnchorSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_13());
+                       after(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_13());
                     }
 
                     }
@@ -4149,21 +4240,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 15 :
-                    // InternalIdioms.g:1162:2: ( ruleWrapBeginSomeSegment )
+                    // InternalIdioms.g:1187:2: ( ruleWrapBeginAllSegment )
                     {
-                    // InternalIdioms.g:1162:2: ( ruleWrapBeginSomeSegment )
-                    // InternalIdioms.g:1163:3: ruleWrapBeginSomeSegment
+                    // InternalIdioms.g:1187:2: ( ruleWrapBeginAllSegment )
+                    // InternalIdioms.g:1188:3: ruleWrapBeginAllSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_14());
+                       before(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_14());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleWrapBeginSomeSegment();
+                    ruleWrapBeginAllSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_14());
+                       after(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_14());
                     }
 
                     }
@@ -4172,21 +4263,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 16 :
-                    // InternalIdioms.g:1168:2: ( ruleWrapEndSegment )
+                    // InternalIdioms.g:1193:2: ( ruleWrapBeginSomeSegment )
                     {
-                    // InternalIdioms.g:1168:2: ( ruleWrapEndSegment )
-                    // InternalIdioms.g:1169:3: ruleWrapEndSegment
+                    // InternalIdioms.g:1193:2: ( ruleWrapBeginSomeSegment )
+                    // InternalIdioms.g:1194:3: ruleWrapBeginSomeSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_15());
+                       before(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_15());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleWrapEndSegment();
+                    ruleWrapBeginSomeSegment();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_15());
+                       after(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_15());
                     }
 
                     }
@@ -4195,13 +4286,36 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 17 :
-                    // InternalIdioms.g:1174:2: ( ruleWrapHereSegment )
+                    // InternalIdioms.g:1199:2: ( ruleWrapEndSegment )
                     {
-                    // InternalIdioms.g:1174:2: ( ruleWrapHereSegment )
-                    // InternalIdioms.g:1175:3: ruleWrapHereSegment
+                    // InternalIdioms.g:1199:2: ( ruleWrapEndSegment )
+                    // InternalIdioms.g:1200:3: ruleWrapEndSegment
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_16());
+                       before(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_16());
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleWrapEndSegment();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+                    if ( state.backtracking==0 ) {
+                       after(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_16());
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 18 :
+                    // InternalIdioms.g:1205:2: ( ruleWrapHereSegment )
+                    {
+                    // InternalIdioms.g:1205:2: ( ruleWrapHereSegment )
+                    // InternalIdioms.g:1206:3: ruleWrapHereSegment
+                    {
+                    if ( state.backtracking==0 ) {
+                       before(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_17());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleWrapHereSegment();
@@ -4209,7 +4323,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_16());
+                       after(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_17());
                     }
 
                     }
@@ -4235,20 +4349,20 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Alternatives_5"
-    // InternalIdioms.g:1184:1: rule__Idiom__Alternatives_5 : ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) ) | ( ( rule__Idiom__Group_5_1__0 ) ) );
+    // InternalIdioms.g:1215:1: rule__Idiom__Alternatives_5 : ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) ) | ( ( rule__Idiom__Group_5_1__0 ) ) );
     public final void rule__Idiom__Alternatives_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1188:1: ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) ) | ( ( rule__Idiom__Group_5_1__0 ) ) )
+            // InternalIdioms.g:1219:1: ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) ) | ( ( rule__Idiom__Group_5_1__0 ) ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==50) ) {
+            if ( (LA5_0==51) ) {
                 alt5=1;
             }
-            else if ( (LA5_0==48) ) {
+            else if ( (LA5_0==49) ) {
                 alt5=2;
             }
             else {
@@ -4260,16 +4374,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt5) {
                 case 1 :
-                    // InternalIdioms.g:1189:2: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) )
+                    // InternalIdioms.g:1220:2: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) )
                     {
-                    // InternalIdioms.g:1189:2: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) )
-                    // InternalIdioms.g:1190:3: ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 )
+                    // InternalIdioms.g:1220:2: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 ) )
+                    // InternalIdioms.g:1221:3: ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomAccess().getOwnedSubIdiomsAssignment_5_0());
                     }
-                    // InternalIdioms.g:1191:3: ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 )
-                    // InternalIdioms.g:1191:4: rule__Idiom__OwnedSubIdiomsAssignment_5_0
+                    // InternalIdioms.g:1222:3: ( rule__Idiom__OwnedSubIdiomsAssignment_5_0 )
+                    // InternalIdioms.g:1222:4: rule__Idiom__OwnedSubIdiomsAssignment_5_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__OwnedSubIdiomsAssignment_5_0();
@@ -4289,16 +4403,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1195:2: ( ( rule__Idiom__Group_5_1__0 ) )
+                    // InternalIdioms.g:1226:2: ( ( rule__Idiom__Group_5_1__0 ) )
                     {
-                    // InternalIdioms.g:1195:2: ( ( rule__Idiom__Group_5_1__0 ) )
-                    // InternalIdioms.g:1196:3: ( rule__Idiom__Group_5_1__0 )
+                    // InternalIdioms.g:1226:2: ( ( rule__Idiom__Group_5_1__0 ) )
+                    // InternalIdioms.g:1227:3: ( rule__Idiom__Group_5_1__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getIdiomAccess().getGroup_5_1());
                     }
-                    // InternalIdioms.g:1197:3: ( rule__Idiom__Group_5_1__0 )
-                    // InternalIdioms.g:1197:4: rule__Idiom__Group_5_1__0
+                    // InternalIdioms.g:1228:3: ( rule__Idiom__Group_5_1__0 )
+                    // InternalIdioms.g:1228:4: rule__Idiom__Group_5_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__Group_5_1__0();
@@ -4335,17 +4449,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Alternatives_1"
-    // InternalIdioms.g:1205:1: rule__SubIdiom__Alternatives_1 : ( ( ( rule__SubIdiom__AllAssignment_1_0 ) ) | ( 'each' ) );
+    // InternalIdioms.g:1236:1: rule__SubIdiom__Alternatives_1 : ( ( ( rule__SubIdiom__AllAssignment_1_0 ) ) | ( 'each' ) );
     public final void rule__SubIdiom__Alternatives_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1209:1: ( ( ( rule__SubIdiom__AllAssignment_1_0 ) ) | ( 'each' ) )
+            // InternalIdioms.g:1240:1: ( ( ( rule__SubIdiom__AllAssignment_1_0 ) ) | ( 'each' ) )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
-            if ( (LA6_0==54) ) {
+            if ( (LA6_0==55) ) {
                 alt6=1;
             }
             else if ( (LA6_0==11) ) {
@@ -4360,16 +4474,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalIdioms.g:1210:2: ( ( rule__SubIdiom__AllAssignment_1_0 ) )
+                    // InternalIdioms.g:1241:2: ( ( rule__SubIdiom__AllAssignment_1_0 ) )
                     {
-                    // InternalIdioms.g:1210:2: ( ( rule__SubIdiom__AllAssignment_1_0 ) )
-                    // InternalIdioms.g:1211:3: ( rule__SubIdiom__AllAssignment_1_0 )
+                    // InternalIdioms.g:1241:2: ( ( rule__SubIdiom__AllAssignment_1_0 ) )
+                    // InternalIdioms.g:1242:3: ( rule__SubIdiom__AllAssignment_1_0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSubIdiomAccess().getAllAssignment_1_0());
                     }
-                    // InternalIdioms.g:1212:3: ( rule__SubIdiom__AllAssignment_1_0 )
-                    // InternalIdioms.g:1212:4: rule__SubIdiom__AllAssignment_1_0
+                    // InternalIdioms.g:1243:3: ( rule__SubIdiom__AllAssignment_1_0 )
+                    // InternalIdioms.g:1243:4: rule__SubIdiom__AllAssignment_1_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__SubIdiom__AllAssignment_1_0();
@@ -4389,10 +4503,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1216:2: ( 'each' )
+                    // InternalIdioms.g:1247:2: ( 'each' )
                     {
-                    // InternalIdioms.g:1216:2: ( 'each' )
-                    // InternalIdioms.g:1217:3: 'each'
+                    // InternalIdioms.g:1247:2: ( 'each' )
+                    // InternalIdioms.g:1248:3: 'each'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSubIdiomAccess().getEachKeyword_1_1());
@@ -4425,17 +4539,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0"
-    // InternalIdioms.g:1226:1: rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 : ( ( ruleSegment ) | ( ruleReferredSegment ) );
+    // InternalIdioms.g:1257:1: rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 : ( ( ruleSegment ) | ( ruleReferredSegment ) );
     public final void rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1230:1: ( ( ruleSegment ) | ( ruleReferredSegment ) )
+            // InternalIdioms.g:1261:1: ( ( ruleSegment ) | ( ruleReferredSegment ) )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( ((LA7_0>=28 && LA7_0<=44)) ) {
+            if ( ((LA7_0>=28 && LA7_0<=45)) ) {
                 alt7=1;
             }
             else if ( (LA7_0==RULE_ID) ) {
@@ -4450,10 +4564,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt7) {
                 case 1 :
-                    // InternalIdioms.g:1231:2: ( ruleSegment )
+                    // InternalIdioms.g:1262:2: ( ruleSegment )
                     {
-                    // InternalIdioms.g:1231:2: ( ruleSegment )
-                    // InternalIdioms.g:1232:3: ruleSegment
+                    // InternalIdioms.g:1262:2: ( ruleSegment )
+                    // InternalIdioms.g:1263:3: ruleSegment
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSubIdiomAccess().getOwnedSegmentsSegmentParserRuleCall_3_1_0_0());
@@ -4473,10 +4587,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:1237:2: ( ruleReferredSegment )
+                    // InternalIdioms.g:1268:2: ( ruleReferredSegment )
                     {
-                    // InternalIdioms.g:1237:2: ( ruleReferredSegment )
-                    // InternalIdioms.g:1238:3: ruleReferredSegment
+                    // InternalIdioms.g:1268:2: ( ruleReferredSegment )
+                    // InternalIdioms.g:1269:3: ruleReferredSegment
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getSubIdiomAccess().getOwnedSegmentsReferredSegmentParserRuleCall_3_1_0_1());
@@ -4513,14 +4627,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__0"
-    // InternalIdioms.g:1247:1: rule__IdiomsModel__Group__0 : rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1 ;
+    // InternalIdioms.g:1278:1: rule__IdiomsModel__Group__0 : rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1 ;
     public final void rule__IdiomsModel__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1251:1: ( rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1 )
-            // InternalIdioms.g:1252:2: rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1
+            // InternalIdioms.g:1282:1: ( rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1 )
+            // InternalIdioms.g:1283:2: rule__IdiomsModel__Group__0__Impl rule__IdiomsModel__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__IdiomsModel__Group__0__Impl();
@@ -4551,17 +4665,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__0__Impl"
-    // InternalIdioms.g:1259:1: rule__IdiomsModel__Group__0__Impl : ( 'model' ) ;
+    // InternalIdioms.g:1290:1: rule__IdiomsModel__Group__0__Impl : ( 'model' ) ;
     public final void rule__IdiomsModel__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1263:1: ( ( 'model' ) )
-            // InternalIdioms.g:1264:1: ( 'model' )
+            // InternalIdioms.g:1294:1: ( ( 'model' ) )
+            // InternalIdioms.g:1295:1: ( 'model' )
             {
-            // InternalIdioms.g:1264:1: ( 'model' )
-            // InternalIdioms.g:1265:2: 'model'
+            // InternalIdioms.g:1295:1: ( 'model' )
+            // InternalIdioms.g:1296:2: 'model'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getModelKeyword_0());
@@ -4592,14 +4706,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__1"
-    // InternalIdioms.g:1274:1: rule__IdiomsModel__Group__1 : rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2 ;
+    // InternalIdioms.g:1305:1: rule__IdiomsModel__Group__1 : rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2 ;
     public final void rule__IdiomsModel__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1278:1: ( rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2 )
-            // InternalIdioms.g:1279:2: rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2
+            // InternalIdioms.g:1309:1: ( rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2 )
+            // InternalIdioms.g:1310:2: rule__IdiomsModel__Group__1__Impl rule__IdiomsModel__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__IdiomsModel__Group__1__Impl();
@@ -4630,23 +4744,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__1__Impl"
-    // InternalIdioms.g:1286:1: rule__IdiomsModel__Group__1__Impl : ( ( rule__IdiomsModel__NamesAssignment_1 ) ) ;
+    // InternalIdioms.g:1317:1: rule__IdiomsModel__Group__1__Impl : ( ( rule__IdiomsModel__NamesAssignment_1 ) ) ;
     public final void rule__IdiomsModel__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1290:1: ( ( ( rule__IdiomsModel__NamesAssignment_1 ) ) )
-            // InternalIdioms.g:1291:1: ( ( rule__IdiomsModel__NamesAssignment_1 ) )
+            // InternalIdioms.g:1321:1: ( ( ( rule__IdiomsModel__NamesAssignment_1 ) ) )
+            // InternalIdioms.g:1322:1: ( ( rule__IdiomsModel__NamesAssignment_1 ) )
             {
-            // InternalIdioms.g:1291:1: ( ( rule__IdiomsModel__NamesAssignment_1 ) )
-            // InternalIdioms.g:1292:2: ( rule__IdiomsModel__NamesAssignment_1 )
+            // InternalIdioms.g:1322:1: ( ( rule__IdiomsModel__NamesAssignment_1 ) )
+            // InternalIdioms.g:1323:2: ( rule__IdiomsModel__NamesAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getNamesAssignment_1());
             }
-            // InternalIdioms.g:1293:2: ( rule__IdiomsModel__NamesAssignment_1 )
-            // InternalIdioms.g:1293:3: rule__IdiomsModel__NamesAssignment_1
+            // InternalIdioms.g:1324:2: ( rule__IdiomsModel__NamesAssignment_1 )
+            // InternalIdioms.g:1324:3: rule__IdiomsModel__NamesAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsModel__NamesAssignment_1();
@@ -4681,14 +4795,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__2"
-    // InternalIdioms.g:1301:1: rule__IdiomsModel__Group__2 : rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3 ;
+    // InternalIdioms.g:1332:1: rule__IdiomsModel__Group__2 : rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3 ;
     public final void rule__IdiomsModel__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1305:1: ( rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3 )
-            // InternalIdioms.g:1306:2: rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3
+            // InternalIdioms.g:1336:1: ( rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3 )
+            // InternalIdioms.g:1337:2: rule__IdiomsModel__Group__2__Impl rule__IdiomsModel__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__IdiomsModel__Group__2__Impl();
@@ -4719,22 +4833,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__2__Impl"
-    // InternalIdioms.g:1313:1: rule__IdiomsModel__Group__2__Impl : ( ( rule__IdiomsModel__Group_2__0 )* ) ;
+    // InternalIdioms.g:1344:1: rule__IdiomsModel__Group__2__Impl : ( ( rule__IdiomsModel__Group_2__0 )* ) ;
     public final void rule__IdiomsModel__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1317:1: ( ( ( rule__IdiomsModel__Group_2__0 )* ) )
-            // InternalIdioms.g:1318:1: ( ( rule__IdiomsModel__Group_2__0 )* )
+            // InternalIdioms.g:1348:1: ( ( ( rule__IdiomsModel__Group_2__0 )* ) )
+            // InternalIdioms.g:1349:1: ( ( rule__IdiomsModel__Group_2__0 )* )
             {
-            // InternalIdioms.g:1318:1: ( ( rule__IdiomsModel__Group_2__0 )* )
-            // InternalIdioms.g:1319:2: ( rule__IdiomsModel__Group_2__0 )*
+            // InternalIdioms.g:1349:1: ( ( rule__IdiomsModel__Group_2__0 )* )
+            // InternalIdioms.g:1350:2: ( rule__IdiomsModel__Group_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getGroup_2());
             }
-            // InternalIdioms.g:1320:2: ( rule__IdiomsModel__Group_2__0 )*
+            // InternalIdioms.g:1351:2: ( rule__IdiomsModel__Group_2__0 )*
             loop8:
             do {
                 int alt8=2;
@@ -4747,7 +4861,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalIdioms.g:1320:3: rule__IdiomsModel__Group_2__0
+            	    // InternalIdioms.g:1351:3: rule__IdiomsModel__Group_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    rule__IdiomsModel__Group_2__0();
@@ -4788,14 +4902,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__3"
-    // InternalIdioms.g:1328:1: rule__IdiomsModel__Group__3 : rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4 ;
+    // InternalIdioms.g:1359:1: rule__IdiomsModel__Group__3 : rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4 ;
     public final void rule__IdiomsModel__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1332:1: ( rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4 )
-            // InternalIdioms.g:1333:2: rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4
+            // InternalIdioms.g:1363:1: ( rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4 )
+            // InternalIdioms.g:1364:2: rule__IdiomsModel__Group__3__Impl rule__IdiomsModel__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__IdiomsModel__Group__3__Impl();
@@ -4826,22 +4940,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__3__Impl"
-    // InternalIdioms.g:1340:1: rule__IdiomsModel__Group__3__Impl : ( ( rule__IdiomsModel__Alternatives_3 )* ) ;
+    // InternalIdioms.g:1371:1: rule__IdiomsModel__Group__3__Impl : ( ( rule__IdiomsModel__Alternatives_3 )* ) ;
     public final void rule__IdiomsModel__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1344:1: ( ( ( rule__IdiomsModel__Alternatives_3 )* ) )
-            // InternalIdioms.g:1345:1: ( ( rule__IdiomsModel__Alternatives_3 )* )
+            // InternalIdioms.g:1375:1: ( ( ( rule__IdiomsModel__Alternatives_3 )* ) )
+            // InternalIdioms.g:1376:1: ( ( rule__IdiomsModel__Alternatives_3 )* )
             {
-            // InternalIdioms.g:1345:1: ( ( rule__IdiomsModel__Alternatives_3 )* )
-            // InternalIdioms.g:1346:2: ( rule__IdiomsModel__Alternatives_3 )*
+            // InternalIdioms.g:1376:1: ( ( rule__IdiomsModel__Alternatives_3 )* )
+            // InternalIdioms.g:1377:2: ( rule__IdiomsModel__Alternatives_3 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getAlternatives_3());
             }
-            // InternalIdioms.g:1347:2: ( rule__IdiomsModel__Alternatives_3 )*
+            // InternalIdioms.g:1378:2: ( rule__IdiomsModel__Alternatives_3 )*
             loop9:
             do {
                 int alt9=2;
@@ -4854,7 +4968,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
                 switch (alt9) {
             	case 1 :
-            	    // InternalIdioms.g:1347:3: rule__IdiomsModel__Alternatives_3
+            	    // InternalIdioms.g:1378:3: rule__IdiomsModel__Alternatives_3
             	    {
             	    pushFollow(FollowSets000.FOLLOW_6);
             	    rule__IdiomsModel__Alternatives_3();
@@ -4895,14 +5009,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__4"
-    // InternalIdioms.g:1355:1: rule__IdiomsModel__Group__4 : rule__IdiomsModel__Group__4__Impl ;
+    // InternalIdioms.g:1386:1: rule__IdiomsModel__Group__4 : rule__IdiomsModel__Group__4__Impl ;
     public final void rule__IdiomsModel__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1359:1: ( rule__IdiomsModel__Group__4__Impl )
-            // InternalIdioms.g:1360:2: rule__IdiomsModel__Group__4__Impl
+            // InternalIdioms.g:1390:1: ( rule__IdiomsModel__Group__4__Impl )
+            // InternalIdioms.g:1391:2: rule__IdiomsModel__Group__4__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsModel__Group__4__Impl();
@@ -4928,35 +5042,35 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group__4__Impl"
-    // InternalIdioms.g:1366:1: rule__IdiomsModel__Group__4__Impl : ( ( rule__IdiomsModel__Alternatives_4 )* ) ;
+    // InternalIdioms.g:1397:1: rule__IdiomsModel__Group__4__Impl : ( ( rule__IdiomsModel__Alternatives_4 )* ) ;
     public final void rule__IdiomsModel__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1370:1: ( ( ( rule__IdiomsModel__Alternatives_4 )* ) )
-            // InternalIdioms.g:1371:1: ( ( rule__IdiomsModel__Alternatives_4 )* )
+            // InternalIdioms.g:1401:1: ( ( ( rule__IdiomsModel__Alternatives_4 )* ) )
+            // InternalIdioms.g:1402:1: ( ( rule__IdiomsModel__Alternatives_4 )* )
             {
-            // InternalIdioms.g:1371:1: ( ( rule__IdiomsModel__Alternatives_4 )* )
-            // InternalIdioms.g:1372:2: ( rule__IdiomsModel__Alternatives_4 )*
+            // InternalIdioms.g:1402:1: ( ( rule__IdiomsModel__Alternatives_4 )* )
+            // InternalIdioms.g:1403:2: ( rule__IdiomsModel__Alternatives_4 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getAlternatives_4());
             }
-            // InternalIdioms.g:1373:2: ( rule__IdiomsModel__Alternatives_4 )*
+            // InternalIdioms.g:1404:2: ( rule__IdiomsModel__Alternatives_4 )*
             loop10:
             do {
                 int alt10=2;
                 int LA10_0 = input.LA(1);
 
-                if ( (LA10_0==19||LA10_0==27||LA10_0==45||LA10_0==53) ) {
+                if ( (LA10_0==19||LA10_0==27||LA10_0==46||LA10_0==54) ) {
                     alt10=1;
                 }
 
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalIdioms.g:1373:3: rule__IdiomsModel__Alternatives_4
+            	    // InternalIdioms.g:1404:3: rule__IdiomsModel__Alternatives_4
             	    {
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    rule__IdiomsModel__Alternatives_4();
@@ -4997,14 +5111,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group_2__0"
-    // InternalIdioms.g:1382:1: rule__IdiomsModel__Group_2__0 : rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1 ;
+    // InternalIdioms.g:1413:1: rule__IdiomsModel__Group_2__0 : rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1 ;
     public final void rule__IdiomsModel__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1386:1: ( rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1 )
-            // InternalIdioms.g:1387:2: rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1
+            // InternalIdioms.g:1417:1: ( rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1 )
+            // InternalIdioms.g:1418:2: rule__IdiomsModel__Group_2__0__Impl rule__IdiomsModel__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__IdiomsModel__Group_2__0__Impl();
@@ -5035,17 +5149,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group_2__0__Impl"
-    // InternalIdioms.g:1394:1: rule__IdiomsModel__Group_2__0__Impl : ( '.' ) ;
+    // InternalIdioms.g:1425:1: rule__IdiomsModel__Group_2__0__Impl : ( '.' ) ;
     public final void rule__IdiomsModel__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1398:1: ( ( '.' ) )
-            // InternalIdioms.g:1399:1: ( '.' )
+            // InternalIdioms.g:1429:1: ( ( '.' ) )
+            // InternalIdioms.g:1430:1: ( '.' )
             {
-            // InternalIdioms.g:1399:1: ( '.' )
-            // InternalIdioms.g:1400:2: '.'
+            // InternalIdioms.g:1430:1: ( '.' )
+            // InternalIdioms.g:1431:2: '.'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getFullStopKeyword_2_0());
@@ -5076,14 +5190,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group_2__1"
-    // InternalIdioms.g:1409:1: rule__IdiomsModel__Group_2__1 : rule__IdiomsModel__Group_2__1__Impl ;
+    // InternalIdioms.g:1440:1: rule__IdiomsModel__Group_2__1 : rule__IdiomsModel__Group_2__1__Impl ;
     public final void rule__IdiomsModel__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1413:1: ( rule__IdiomsModel__Group_2__1__Impl )
-            // InternalIdioms.g:1414:2: rule__IdiomsModel__Group_2__1__Impl
+            // InternalIdioms.g:1444:1: ( rule__IdiomsModel__Group_2__1__Impl )
+            // InternalIdioms.g:1445:2: rule__IdiomsModel__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsModel__Group_2__1__Impl();
@@ -5109,23 +5223,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__Group_2__1__Impl"
-    // InternalIdioms.g:1420:1: rule__IdiomsModel__Group_2__1__Impl : ( ( rule__IdiomsModel__NamesAssignment_2_1 ) ) ;
+    // InternalIdioms.g:1451:1: rule__IdiomsModel__Group_2__1__Impl : ( ( rule__IdiomsModel__NamesAssignment_2_1 ) ) ;
     public final void rule__IdiomsModel__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1424:1: ( ( ( rule__IdiomsModel__NamesAssignment_2_1 ) ) )
-            // InternalIdioms.g:1425:1: ( ( rule__IdiomsModel__NamesAssignment_2_1 ) )
+            // InternalIdioms.g:1455:1: ( ( ( rule__IdiomsModel__NamesAssignment_2_1 ) ) )
+            // InternalIdioms.g:1456:1: ( ( rule__IdiomsModel__NamesAssignment_2_1 ) )
             {
-            // InternalIdioms.g:1425:1: ( ( rule__IdiomsModel__NamesAssignment_2_1 ) )
-            // InternalIdioms.g:1426:2: ( rule__IdiomsModel__NamesAssignment_2_1 )
+            // InternalIdioms.g:1456:1: ( ( rule__IdiomsModel__NamesAssignment_2_1 ) )
+            // InternalIdioms.g:1457:2: ( rule__IdiomsModel__NamesAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getNamesAssignment_2_1());
             }
-            // InternalIdioms.g:1427:2: ( rule__IdiomsModel__NamesAssignment_2_1 )
-            // InternalIdioms.g:1427:3: rule__IdiomsModel__NamesAssignment_2_1
+            // InternalIdioms.g:1458:2: ( rule__IdiomsModel__NamesAssignment_2_1 )
+            // InternalIdioms.g:1458:3: rule__IdiomsModel__NamesAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsModel__NamesAssignment_2_1();
@@ -5160,14 +5274,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__0"
-    // InternalIdioms.g:1436:1: rule__EPackageDeclaration__Group__0 : rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1 ;
+    // InternalIdioms.g:1467:1: rule__EPackageDeclaration__Group__0 : rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1 ;
     public final void rule__EPackageDeclaration__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1440:1: ( rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1 )
-            // InternalIdioms.g:1441:2: rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1
+            // InternalIdioms.g:1471:1: ( rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1 )
+            // InternalIdioms.g:1472:2: rule__EPackageDeclaration__Group__0__Impl rule__EPackageDeclaration__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__EPackageDeclaration__Group__0__Impl();
@@ -5198,17 +5312,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__0__Impl"
-    // InternalIdioms.g:1448:1: rule__EPackageDeclaration__Group__0__Impl : ( 'import' ) ;
+    // InternalIdioms.g:1479:1: rule__EPackageDeclaration__Group__0__Impl : ( 'import' ) ;
     public final void rule__EPackageDeclaration__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1452:1: ( ( 'import' ) )
-            // InternalIdioms.g:1453:1: ( 'import' )
+            // InternalIdioms.g:1483:1: ( ( 'import' ) )
+            // InternalIdioms.g:1484:1: ( 'import' )
             {
-            // InternalIdioms.g:1453:1: ( 'import' )
-            // InternalIdioms.g:1454:2: 'import'
+            // InternalIdioms.g:1484:1: ( 'import' )
+            // InternalIdioms.g:1485:2: 'import'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getImportKeyword_0());
@@ -5239,14 +5353,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__1"
-    // InternalIdioms.g:1463:1: rule__EPackageDeclaration__Group__1 : rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2 ;
+    // InternalIdioms.g:1494:1: rule__EPackageDeclaration__Group__1 : rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2 ;
     public final void rule__EPackageDeclaration__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1467:1: ( rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2 )
-            // InternalIdioms.g:1468:2: rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2
+            // InternalIdioms.g:1498:1: ( rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2 )
+            // InternalIdioms.g:1499:2: rule__EPackageDeclaration__Group__1__Impl rule__EPackageDeclaration__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__EPackageDeclaration__Group__1__Impl();
@@ -5277,23 +5391,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__1__Impl"
-    // InternalIdioms.g:1475:1: rule__EPackageDeclaration__Group__1__Impl : ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) ) ;
+    // InternalIdioms.g:1506:1: rule__EPackageDeclaration__Group__1__Impl : ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) ) ;
     public final void rule__EPackageDeclaration__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1479:1: ( ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) ) )
-            // InternalIdioms.g:1480:1: ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) )
+            // InternalIdioms.g:1510:1: ( ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) ) )
+            // InternalIdioms.g:1511:1: ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) )
             {
-            // InternalIdioms.g:1480:1: ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) )
-            // InternalIdioms.g:1481:2: ( rule__EPackageDeclaration__EPackageAssignment_1 )
+            // InternalIdioms.g:1511:1: ( ( rule__EPackageDeclaration__EPackageAssignment_1 ) )
+            // InternalIdioms.g:1512:2: ( rule__EPackageDeclaration__EPackageAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getEPackageAssignment_1());
             }
-            // InternalIdioms.g:1482:2: ( rule__EPackageDeclaration__EPackageAssignment_1 )
-            // InternalIdioms.g:1482:3: rule__EPackageDeclaration__EPackageAssignment_1
+            // InternalIdioms.g:1513:2: ( rule__EPackageDeclaration__EPackageAssignment_1 )
+            // InternalIdioms.g:1513:3: rule__EPackageDeclaration__EPackageAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EPackageDeclaration__EPackageAssignment_1();
@@ -5328,14 +5442,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__2"
-    // InternalIdioms.g:1490:1: rule__EPackageDeclaration__Group__2 : rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3 ;
+    // InternalIdioms.g:1521:1: rule__EPackageDeclaration__Group__2 : rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3 ;
     public final void rule__EPackageDeclaration__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1494:1: ( rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3 )
-            // InternalIdioms.g:1495:2: rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3
+            // InternalIdioms.g:1525:1: ( rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3 )
+            // InternalIdioms.g:1526:2: rule__EPackageDeclaration__Group__2__Impl rule__EPackageDeclaration__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__EPackageDeclaration__Group__2__Impl();
@@ -5366,22 +5480,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__2__Impl"
-    // InternalIdioms.g:1502:1: rule__EPackageDeclaration__Group__2__Impl : ( ( rule__EPackageDeclaration__Group_2__0 )? ) ;
+    // InternalIdioms.g:1533:1: rule__EPackageDeclaration__Group__2__Impl : ( ( rule__EPackageDeclaration__Group_2__0 )? ) ;
     public final void rule__EPackageDeclaration__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1506:1: ( ( ( rule__EPackageDeclaration__Group_2__0 )? ) )
-            // InternalIdioms.g:1507:1: ( ( rule__EPackageDeclaration__Group_2__0 )? )
+            // InternalIdioms.g:1537:1: ( ( ( rule__EPackageDeclaration__Group_2__0 )? ) )
+            // InternalIdioms.g:1538:1: ( ( rule__EPackageDeclaration__Group_2__0 )? )
             {
-            // InternalIdioms.g:1507:1: ( ( rule__EPackageDeclaration__Group_2__0 )? )
-            // InternalIdioms.g:1508:2: ( rule__EPackageDeclaration__Group_2__0 )?
+            // InternalIdioms.g:1538:1: ( ( rule__EPackageDeclaration__Group_2__0 )? )
+            // InternalIdioms.g:1539:2: ( rule__EPackageDeclaration__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getGroup_2());
             }
-            // InternalIdioms.g:1509:2: ( rule__EPackageDeclaration__Group_2__0 )?
+            // InternalIdioms.g:1540:2: ( rule__EPackageDeclaration__Group_2__0 )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -5390,7 +5504,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt11) {
                 case 1 :
-                    // InternalIdioms.g:1509:3: rule__EPackageDeclaration__Group_2__0
+                    // InternalIdioms.g:1540:3: rule__EPackageDeclaration__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__EPackageDeclaration__Group_2__0();
@@ -5428,14 +5542,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__3"
-    // InternalIdioms.g:1517:1: rule__EPackageDeclaration__Group__3 : rule__EPackageDeclaration__Group__3__Impl ;
+    // InternalIdioms.g:1548:1: rule__EPackageDeclaration__Group__3 : rule__EPackageDeclaration__Group__3__Impl ;
     public final void rule__EPackageDeclaration__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1521:1: ( rule__EPackageDeclaration__Group__3__Impl )
-            // InternalIdioms.g:1522:2: rule__EPackageDeclaration__Group__3__Impl
+            // InternalIdioms.g:1552:1: ( rule__EPackageDeclaration__Group__3__Impl )
+            // InternalIdioms.g:1553:2: rule__EPackageDeclaration__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EPackageDeclaration__Group__3__Impl();
@@ -5461,22 +5575,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group__3__Impl"
-    // InternalIdioms.g:1528:1: rule__EPackageDeclaration__Group__3__Impl : ( ( ';' )? ) ;
+    // InternalIdioms.g:1559:1: rule__EPackageDeclaration__Group__3__Impl : ( ( ';' )? ) ;
     public final void rule__EPackageDeclaration__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1532:1: ( ( ( ';' )? ) )
-            // InternalIdioms.g:1533:1: ( ( ';' )? )
+            // InternalIdioms.g:1563:1: ( ( ( ';' )? ) )
+            // InternalIdioms.g:1564:1: ( ( ';' )? )
             {
-            // InternalIdioms.g:1533:1: ( ( ';' )? )
-            // InternalIdioms.g:1534:2: ( ';' )?
+            // InternalIdioms.g:1564:1: ( ( ';' )? )
+            // InternalIdioms.g:1565:2: ( ';' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getSemicolonKeyword_3());
             }
-            // InternalIdioms.g:1535:2: ( ';' )?
+            // InternalIdioms.g:1566:2: ( ';' )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -5485,7 +5599,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt12) {
                 case 1 :
-                    // InternalIdioms.g:1535:3: ';'
+                    // InternalIdioms.g:1566:3: ';'
                     {
                     match(input,15,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -5519,14 +5633,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group_2__0"
-    // InternalIdioms.g:1544:1: rule__EPackageDeclaration__Group_2__0 : rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1 ;
+    // InternalIdioms.g:1575:1: rule__EPackageDeclaration__Group_2__0 : rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1 ;
     public final void rule__EPackageDeclaration__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1548:1: ( rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1 )
-            // InternalIdioms.g:1549:2: rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1
+            // InternalIdioms.g:1579:1: ( rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1 )
+            // InternalIdioms.g:1580:2: rule__EPackageDeclaration__Group_2__0__Impl rule__EPackageDeclaration__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__EPackageDeclaration__Group_2__0__Impl();
@@ -5557,17 +5671,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group_2__0__Impl"
-    // InternalIdioms.g:1556:1: rule__EPackageDeclaration__Group_2__0__Impl : ( 'as' ) ;
+    // InternalIdioms.g:1587:1: rule__EPackageDeclaration__Group_2__0__Impl : ( 'as' ) ;
     public final void rule__EPackageDeclaration__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1560:1: ( ( 'as' ) )
-            // InternalIdioms.g:1561:1: ( 'as' )
+            // InternalIdioms.g:1591:1: ( ( 'as' ) )
+            // InternalIdioms.g:1592:1: ( 'as' )
             {
-            // InternalIdioms.g:1561:1: ( 'as' )
-            // InternalIdioms.g:1562:2: 'as'
+            // InternalIdioms.g:1592:1: ( 'as' )
+            // InternalIdioms.g:1593:2: 'as'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getAsKeyword_2_0());
@@ -5598,14 +5712,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group_2__1"
-    // InternalIdioms.g:1571:1: rule__EPackageDeclaration__Group_2__1 : rule__EPackageDeclaration__Group_2__1__Impl ;
+    // InternalIdioms.g:1602:1: rule__EPackageDeclaration__Group_2__1 : rule__EPackageDeclaration__Group_2__1__Impl ;
     public final void rule__EPackageDeclaration__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1575:1: ( rule__EPackageDeclaration__Group_2__1__Impl )
-            // InternalIdioms.g:1576:2: rule__EPackageDeclaration__Group_2__1__Impl
+            // InternalIdioms.g:1606:1: ( rule__EPackageDeclaration__Group_2__1__Impl )
+            // InternalIdioms.g:1607:2: rule__EPackageDeclaration__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EPackageDeclaration__Group_2__1__Impl();
@@ -5631,23 +5745,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__Group_2__1__Impl"
-    // InternalIdioms.g:1582:1: rule__EPackageDeclaration__Group_2__1__Impl : ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) ) ;
+    // InternalIdioms.g:1613:1: rule__EPackageDeclaration__Group_2__1__Impl : ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) ) ;
     public final void rule__EPackageDeclaration__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1586:1: ( ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) ) )
-            // InternalIdioms.g:1587:1: ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1617:1: ( ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) ) )
+            // InternalIdioms.g:1618:1: ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) )
             {
-            // InternalIdioms.g:1587:1: ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) )
-            // InternalIdioms.g:1588:2: ( rule__EPackageDeclaration__AsAssignment_2_1 )
+            // InternalIdioms.g:1618:1: ( ( rule__EPackageDeclaration__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1619:2: ( rule__EPackageDeclaration__AsAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getAsAssignment_2_1());
             }
-            // InternalIdioms.g:1589:2: ( rule__EPackageDeclaration__AsAssignment_2_1 )
-            // InternalIdioms.g:1589:3: rule__EPackageDeclaration__AsAssignment_2_1
+            // InternalIdioms.g:1620:2: ( rule__EPackageDeclaration__AsAssignment_2_1 )
+            // InternalIdioms.g:1620:3: rule__EPackageDeclaration__AsAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EPackageDeclaration__AsAssignment_2_1();
@@ -5682,14 +5796,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__0"
-    // InternalIdioms.g:1598:1: rule__GrammarDeclaration__Group__0 : rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1 ;
+    // InternalIdioms.g:1629:1: rule__GrammarDeclaration__Group__0 : rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1 ;
     public final void rule__GrammarDeclaration__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1602:1: ( rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1 )
-            // InternalIdioms.g:1603:2: rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1
+            // InternalIdioms.g:1633:1: ( rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1 )
+            // InternalIdioms.g:1634:2: rule__GrammarDeclaration__Group__0__Impl rule__GrammarDeclaration__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__GrammarDeclaration__Group__0__Impl();
@@ -5720,17 +5834,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__0__Impl"
-    // InternalIdioms.g:1610:1: rule__GrammarDeclaration__Group__0__Impl : ( 'grammar' ) ;
+    // InternalIdioms.g:1641:1: rule__GrammarDeclaration__Group__0__Impl : ( 'grammar' ) ;
     public final void rule__GrammarDeclaration__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1614:1: ( ( 'grammar' ) )
-            // InternalIdioms.g:1615:1: ( 'grammar' )
+            // InternalIdioms.g:1645:1: ( ( 'grammar' ) )
+            // InternalIdioms.g:1646:1: ( 'grammar' )
             {
-            // InternalIdioms.g:1615:1: ( 'grammar' )
-            // InternalIdioms.g:1616:2: 'grammar'
+            // InternalIdioms.g:1646:1: ( 'grammar' )
+            // InternalIdioms.g:1647:2: 'grammar'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getGrammarKeyword_0());
@@ -5761,14 +5875,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__1"
-    // InternalIdioms.g:1625:1: rule__GrammarDeclaration__Group__1 : rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2 ;
+    // InternalIdioms.g:1656:1: rule__GrammarDeclaration__Group__1 : rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2 ;
     public final void rule__GrammarDeclaration__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1629:1: ( rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2 )
-            // InternalIdioms.g:1630:2: rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2
+            // InternalIdioms.g:1660:1: ( rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2 )
+            // InternalIdioms.g:1661:2: rule__GrammarDeclaration__Group__1__Impl rule__GrammarDeclaration__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__GrammarDeclaration__Group__1__Impl();
@@ -5799,23 +5913,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__1__Impl"
-    // InternalIdioms.g:1637:1: rule__GrammarDeclaration__Group__1__Impl : ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) ) ;
+    // InternalIdioms.g:1668:1: rule__GrammarDeclaration__Group__1__Impl : ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) ) ;
     public final void rule__GrammarDeclaration__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1641:1: ( ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) ) )
-            // InternalIdioms.g:1642:1: ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) )
+            // InternalIdioms.g:1672:1: ( ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) ) )
+            // InternalIdioms.g:1673:1: ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) )
             {
-            // InternalIdioms.g:1642:1: ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) )
-            // InternalIdioms.g:1643:2: ( rule__GrammarDeclaration__GrammarAssignment_1 )
+            // InternalIdioms.g:1673:1: ( ( rule__GrammarDeclaration__GrammarAssignment_1 ) )
+            // InternalIdioms.g:1674:2: ( rule__GrammarDeclaration__GrammarAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getGrammarAssignment_1());
             }
-            // InternalIdioms.g:1644:2: ( rule__GrammarDeclaration__GrammarAssignment_1 )
-            // InternalIdioms.g:1644:3: rule__GrammarDeclaration__GrammarAssignment_1
+            // InternalIdioms.g:1675:2: ( rule__GrammarDeclaration__GrammarAssignment_1 )
+            // InternalIdioms.g:1675:3: rule__GrammarDeclaration__GrammarAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__GrammarDeclaration__GrammarAssignment_1();
@@ -5850,14 +5964,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__2"
-    // InternalIdioms.g:1652:1: rule__GrammarDeclaration__Group__2 : rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3 ;
+    // InternalIdioms.g:1683:1: rule__GrammarDeclaration__Group__2 : rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3 ;
     public final void rule__GrammarDeclaration__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1656:1: ( rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3 )
-            // InternalIdioms.g:1657:2: rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3
+            // InternalIdioms.g:1687:1: ( rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3 )
+            // InternalIdioms.g:1688:2: rule__GrammarDeclaration__Group__2__Impl rule__GrammarDeclaration__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__GrammarDeclaration__Group__2__Impl();
@@ -5888,22 +6002,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__2__Impl"
-    // InternalIdioms.g:1664:1: rule__GrammarDeclaration__Group__2__Impl : ( ( rule__GrammarDeclaration__Group_2__0 )? ) ;
+    // InternalIdioms.g:1695:1: rule__GrammarDeclaration__Group__2__Impl : ( ( rule__GrammarDeclaration__Group_2__0 )? ) ;
     public final void rule__GrammarDeclaration__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1668:1: ( ( ( rule__GrammarDeclaration__Group_2__0 )? ) )
-            // InternalIdioms.g:1669:1: ( ( rule__GrammarDeclaration__Group_2__0 )? )
+            // InternalIdioms.g:1699:1: ( ( ( rule__GrammarDeclaration__Group_2__0 )? ) )
+            // InternalIdioms.g:1700:1: ( ( rule__GrammarDeclaration__Group_2__0 )? )
             {
-            // InternalIdioms.g:1669:1: ( ( rule__GrammarDeclaration__Group_2__0 )? )
-            // InternalIdioms.g:1670:2: ( rule__GrammarDeclaration__Group_2__0 )?
+            // InternalIdioms.g:1700:1: ( ( rule__GrammarDeclaration__Group_2__0 )? )
+            // InternalIdioms.g:1701:2: ( rule__GrammarDeclaration__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getGroup_2());
             }
-            // InternalIdioms.g:1671:2: ( rule__GrammarDeclaration__Group_2__0 )?
+            // InternalIdioms.g:1702:2: ( rule__GrammarDeclaration__Group_2__0 )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -5912,7 +6026,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalIdioms.g:1671:3: rule__GrammarDeclaration__Group_2__0
+                    // InternalIdioms.g:1702:3: rule__GrammarDeclaration__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__GrammarDeclaration__Group_2__0();
@@ -5950,14 +6064,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__3"
-    // InternalIdioms.g:1679:1: rule__GrammarDeclaration__Group__3 : rule__GrammarDeclaration__Group__3__Impl ;
+    // InternalIdioms.g:1710:1: rule__GrammarDeclaration__Group__3 : rule__GrammarDeclaration__Group__3__Impl ;
     public final void rule__GrammarDeclaration__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1683:1: ( rule__GrammarDeclaration__Group__3__Impl )
-            // InternalIdioms.g:1684:2: rule__GrammarDeclaration__Group__3__Impl
+            // InternalIdioms.g:1714:1: ( rule__GrammarDeclaration__Group__3__Impl )
+            // InternalIdioms.g:1715:2: rule__GrammarDeclaration__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__GrammarDeclaration__Group__3__Impl();
@@ -5983,22 +6097,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group__3__Impl"
-    // InternalIdioms.g:1690:1: rule__GrammarDeclaration__Group__3__Impl : ( ( ';' )? ) ;
+    // InternalIdioms.g:1721:1: rule__GrammarDeclaration__Group__3__Impl : ( ( ';' )? ) ;
     public final void rule__GrammarDeclaration__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1694:1: ( ( ( ';' )? ) )
-            // InternalIdioms.g:1695:1: ( ( ';' )? )
+            // InternalIdioms.g:1725:1: ( ( ( ';' )? ) )
+            // InternalIdioms.g:1726:1: ( ( ';' )? )
             {
-            // InternalIdioms.g:1695:1: ( ( ';' )? )
-            // InternalIdioms.g:1696:2: ( ';' )?
+            // InternalIdioms.g:1726:1: ( ( ';' )? )
+            // InternalIdioms.g:1727:2: ( ';' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getSemicolonKeyword_3());
             }
-            // InternalIdioms.g:1697:2: ( ';' )?
+            // InternalIdioms.g:1728:2: ( ';' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -6007,7 +6121,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalIdioms.g:1697:3: ';'
+                    // InternalIdioms.g:1728:3: ';'
                     {
                     match(input,15,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6041,14 +6155,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group_2__0"
-    // InternalIdioms.g:1706:1: rule__GrammarDeclaration__Group_2__0 : rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1 ;
+    // InternalIdioms.g:1737:1: rule__GrammarDeclaration__Group_2__0 : rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1 ;
     public final void rule__GrammarDeclaration__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1710:1: ( rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1 )
-            // InternalIdioms.g:1711:2: rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1
+            // InternalIdioms.g:1741:1: ( rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1 )
+            // InternalIdioms.g:1742:2: rule__GrammarDeclaration__Group_2__0__Impl rule__GrammarDeclaration__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__GrammarDeclaration__Group_2__0__Impl();
@@ -6079,17 +6193,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group_2__0__Impl"
-    // InternalIdioms.g:1718:1: rule__GrammarDeclaration__Group_2__0__Impl : ( 'as' ) ;
+    // InternalIdioms.g:1749:1: rule__GrammarDeclaration__Group_2__0__Impl : ( 'as' ) ;
     public final void rule__GrammarDeclaration__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1722:1: ( ( 'as' ) )
-            // InternalIdioms.g:1723:1: ( 'as' )
+            // InternalIdioms.g:1753:1: ( ( 'as' ) )
+            // InternalIdioms.g:1754:1: ( 'as' )
             {
-            // InternalIdioms.g:1723:1: ( 'as' )
-            // InternalIdioms.g:1724:2: 'as'
+            // InternalIdioms.g:1754:1: ( 'as' )
+            // InternalIdioms.g:1755:2: 'as'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getAsKeyword_2_0());
@@ -6120,14 +6234,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group_2__1"
-    // InternalIdioms.g:1733:1: rule__GrammarDeclaration__Group_2__1 : rule__GrammarDeclaration__Group_2__1__Impl ;
+    // InternalIdioms.g:1764:1: rule__GrammarDeclaration__Group_2__1 : rule__GrammarDeclaration__Group_2__1__Impl ;
     public final void rule__GrammarDeclaration__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1737:1: ( rule__GrammarDeclaration__Group_2__1__Impl )
-            // InternalIdioms.g:1738:2: rule__GrammarDeclaration__Group_2__1__Impl
+            // InternalIdioms.g:1768:1: ( rule__GrammarDeclaration__Group_2__1__Impl )
+            // InternalIdioms.g:1769:2: rule__GrammarDeclaration__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__GrammarDeclaration__Group_2__1__Impl();
@@ -6153,23 +6267,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__Group_2__1__Impl"
-    // InternalIdioms.g:1744:1: rule__GrammarDeclaration__Group_2__1__Impl : ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) ) ;
+    // InternalIdioms.g:1775:1: rule__GrammarDeclaration__Group_2__1__Impl : ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) ) ;
     public final void rule__GrammarDeclaration__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1748:1: ( ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) ) )
-            // InternalIdioms.g:1749:1: ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1779:1: ( ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) ) )
+            // InternalIdioms.g:1780:1: ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) )
             {
-            // InternalIdioms.g:1749:1: ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) )
-            // InternalIdioms.g:1750:2: ( rule__GrammarDeclaration__AsAssignment_2_1 )
+            // InternalIdioms.g:1780:1: ( ( rule__GrammarDeclaration__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1781:2: ( rule__GrammarDeclaration__AsAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getAsAssignment_2_1());
             }
-            // InternalIdioms.g:1751:2: ( rule__GrammarDeclaration__AsAssignment_2_1 )
-            // InternalIdioms.g:1751:3: rule__GrammarDeclaration__AsAssignment_2_1
+            // InternalIdioms.g:1782:2: ( rule__GrammarDeclaration__AsAssignment_2_1 )
+            // InternalIdioms.g:1782:3: rule__GrammarDeclaration__AsAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__GrammarDeclaration__AsAssignment_2_1();
@@ -6204,14 +6318,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__0"
-    // InternalIdioms.g:1760:1: rule__IdiomsImport__Group__0 : rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1 ;
+    // InternalIdioms.g:1791:1: rule__IdiomsImport__Group__0 : rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1 ;
     public final void rule__IdiomsImport__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1764:1: ( rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1 )
-            // InternalIdioms.g:1765:2: rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1
+            // InternalIdioms.g:1795:1: ( rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1 )
+            // InternalIdioms.g:1796:2: rule__IdiomsImport__Group__0__Impl rule__IdiomsImport__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__IdiomsImport__Group__0__Impl();
@@ -6242,17 +6356,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__0__Impl"
-    // InternalIdioms.g:1772:1: rule__IdiomsImport__Group__0__Impl : ( 'with' ) ;
+    // InternalIdioms.g:1803:1: rule__IdiomsImport__Group__0__Impl : ( 'with' ) ;
     public final void rule__IdiomsImport__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1776:1: ( ( 'with' ) )
-            // InternalIdioms.g:1777:1: ( 'with' )
+            // InternalIdioms.g:1807:1: ( ( 'with' ) )
+            // InternalIdioms.g:1808:1: ( 'with' )
             {
-            // InternalIdioms.g:1777:1: ( 'with' )
-            // InternalIdioms.g:1778:2: 'with'
+            // InternalIdioms.g:1808:1: ( 'with' )
+            // InternalIdioms.g:1809:2: 'with'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getWithKeyword_0());
@@ -6283,14 +6397,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__1"
-    // InternalIdioms.g:1787:1: rule__IdiomsImport__Group__1 : rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2 ;
+    // InternalIdioms.g:1818:1: rule__IdiomsImport__Group__1 : rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2 ;
     public final void rule__IdiomsImport__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1791:1: ( rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2 )
-            // InternalIdioms.g:1792:2: rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2
+            // InternalIdioms.g:1822:1: ( rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2 )
+            // InternalIdioms.g:1823:2: rule__IdiomsImport__Group__1__Impl rule__IdiomsImport__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__IdiomsImport__Group__1__Impl();
@@ -6321,23 +6435,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__1__Impl"
-    // InternalIdioms.g:1799:1: rule__IdiomsImport__Group__1__Impl : ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) ) ;
+    // InternalIdioms.g:1830:1: rule__IdiomsImport__Group__1__Impl : ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) ) ;
     public final void rule__IdiomsImport__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1803:1: ( ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) ) )
-            // InternalIdioms.g:1804:1: ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) )
+            // InternalIdioms.g:1834:1: ( ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) ) )
+            // InternalIdioms.g:1835:1: ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) )
             {
-            // InternalIdioms.g:1804:1: ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) )
-            // InternalIdioms.g:1805:2: ( rule__IdiomsImport__IdiomsModelAssignment_1 )
+            // InternalIdioms.g:1835:1: ( ( rule__IdiomsImport__IdiomsModelAssignment_1 ) )
+            // InternalIdioms.g:1836:2: ( rule__IdiomsImport__IdiomsModelAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getIdiomsModelAssignment_1());
             }
-            // InternalIdioms.g:1806:2: ( rule__IdiomsImport__IdiomsModelAssignment_1 )
-            // InternalIdioms.g:1806:3: rule__IdiomsImport__IdiomsModelAssignment_1
+            // InternalIdioms.g:1837:2: ( rule__IdiomsImport__IdiomsModelAssignment_1 )
+            // InternalIdioms.g:1837:3: rule__IdiomsImport__IdiomsModelAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsImport__IdiomsModelAssignment_1();
@@ -6372,14 +6486,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__2"
-    // InternalIdioms.g:1814:1: rule__IdiomsImport__Group__2 : rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3 ;
+    // InternalIdioms.g:1845:1: rule__IdiomsImport__Group__2 : rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3 ;
     public final void rule__IdiomsImport__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1818:1: ( rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3 )
-            // InternalIdioms.g:1819:2: rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3
+            // InternalIdioms.g:1849:1: ( rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3 )
+            // InternalIdioms.g:1850:2: rule__IdiomsImport__Group__2__Impl rule__IdiomsImport__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__IdiomsImport__Group__2__Impl();
@@ -6410,22 +6524,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__2__Impl"
-    // InternalIdioms.g:1826:1: rule__IdiomsImport__Group__2__Impl : ( ( rule__IdiomsImport__Group_2__0 )? ) ;
+    // InternalIdioms.g:1857:1: rule__IdiomsImport__Group__2__Impl : ( ( rule__IdiomsImport__Group_2__0 )? ) ;
     public final void rule__IdiomsImport__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1830:1: ( ( ( rule__IdiomsImport__Group_2__0 )? ) )
-            // InternalIdioms.g:1831:1: ( ( rule__IdiomsImport__Group_2__0 )? )
+            // InternalIdioms.g:1861:1: ( ( ( rule__IdiomsImport__Group_2__0 )? ) )
+            // InternalIdioms.g:1862:1: ( ( rule__IdiomsImport__Group_2__0 )? )
             {
-            // InternalIdioms.g:1831:1: ( ( rule__IdiomsImport__Group_2__0 )? )
-            // InternalIdioms.g:1832:2: ( rule__IdiomsImport__Group_2__0 )?
+            // InternalIdioms.g:1862:1: ( ( rule__IdiomsImport__Group_2__0 )? )
+            // InternalIdioms.g:1863:2: ( rule__IdiomsImport__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getGroup_2());
             }
-            // InternalIdioms.g:1833:2: ( rule__IdiomsImport__Group_2__0 )?
+            // InternalIdioms.g:1864:2: ( rule__IdiomsImport__Group_2__0 )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -6434,7 +6548,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalIdioms.g:1833:3: rule__IdiomsImport__Group_2__0
+                    // InternalIdioms.g:1864:3: rule__IdiomsImport__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__IdiomsImport__Group_2__0();
@@ -6472,14 +6586,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__3"
-    // InternalIdioms.g:1841:1: rule__IdiomsImport__Group__3 : rule__IdiomsImport__Group__3__Impl ;
+    // InternalIdioms.g:1872:1: rule__IdiomsImport__Group__3 : rule__IdiomsImport__Group__3__Impl ;
     public final void rule__IdiomsImport__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1845:1: ( rule__IdiomsImport__Group__3__Impl )
-            // InternalIdioms.g:1846:2: rule__IdiomsImport__Group__3__Impl
+            // InternalIdioms.g:1876:1: ( rule__IdiomsImport__Group__3__Impl )
+            // InternalIdioms.g:1877:2: rule__IdiomsImport__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsImport__Group__3__Impl();
@@ -6505,22 +6619,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group__3__Impl"
-    // InternalIdioms.g:1852:1: rule__IdiomsImport__Group__3__Impl : ( ( ';' )? ) ;
+    // InternalIdioms.g:1883:1: rule__IdiomsImport__Group__3__Impl : ( ( ';' )? ) ;
     public final void rule__IdiomsImport__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1856:1: ( ( ( ';' )? ) )
-            // InternalIdioms.g:1857:1: ( ( ';' )? )
+            // InternalIdioms.g:1887:1: ( ( ( ';' )? ) )
+            // InternalIdioms.g:1888:1: ( ( ';' )? )
             {
-            // InternalIdioms.g:1857:1: ( ( ';' )? )
-            // InternalIdioms.g:1858:2: ( ';' )?
+            // InternalIdioms.g:1888:1: ( ( ';' )? )
+            // InternalIdioms.g:1889:2: ( ';' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getSemicolonKeyword_3());
             }
-            // InternalIdioms.g:1859:2: ( ';' )?
+            // InternalIdioms.g:1890:2: ( ';' )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -6529,7 +6643,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt16) {
                 case 1 :
-                    // InternalIdioms.g:1859:3: ';'
+                    // InternalIdioms.g:1890:3: ';'
                     {
                     match(input,15,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6563,14 +6677,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group_2__0"
-    // InternalIdioms.g:1868:1: rule__IdiomsImport__Group_2__0 : rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1 ;
+    // InternalIdioms.g:1899:1: rule__IdiomsImport__Group_2__0 : rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1 ;
     public final void rule__IdiomsImport__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1872:1: ( rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1 )
-            // InternalIdioms.g:1873:2: rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1
+            // InternalIdioms.g:1903:1: ( rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1 )
+            // InternalIdioms.g:1904:2: rule__IdiomsImport__Group_2__0__Impl rule__IdiomsImport__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__IdiomsImport__Group_2__0__Impl();
@@ -6601,17 +6715,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group_2__0__Impl"
-    // InternalIdioms.g:1880:1: rule__IdiomsImport__Group_2__0__Impl : ( 'as' ) ;
+    // InternalIdioms.g:1911:1: rule__IdiomsImport__Group_2__0__Impl : ( 'as' ) ;
     public final void rule__IdiomsImport__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1884:1: ( ( 'as' ) )
-            // InternalIdioms.g:1885:1: ( 'as' )
+            // InternalIdioms.g:1915:1: ( ( 'as' ) )
+            // InternalIdioms.g:1916:1: ( 'as' )
             {
-            // InternalIdioms.g:1885:1: ( 'as' )
-            // InternalIdioms.g:1886:2: 'as'
+            // InternalIdioms.g:1916:1: ( 'as' )
+            // InternalIdioms.g:1917:2: 'as'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getAsKeyword_2_0());
@@ -6642,14 +6756,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group_2__1"
-    // InternalIdioms.g:1895:1: rule__IdiomsImport__Group_2__1 : rule__IdiomsImport__Group_2__1__Impl ;
+    // InternalIdioms.g:1926:1: rule__IdiomsImport__Group_2__1 : rule__IdiomsImport__Group_2__1__Impl ;
     public final void rule__IdiomsImport__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1899:1: ( rule__IdiomsImport__Group_2__1__Impl )
-            // InternalIdioms.g:1900:2: rule__IdiomsImport__Group_2__1__Impl
+            // InternalIdioms.g:1930:1: ( rule__IdiomsImport__Group_2__1__Impl )
+            // InternalIdioms.g:1931:2: rule__IdiomsImport__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsImport__Group_2__1__Impl();
@@ -6675,23 +6789,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__Group_2__1__Impl"
-    // InternalIdioms.g:1906:1: rule__IdiomsImport__Group_2__1__Impl : ( ( rule__IdiomsImport__AsAssignment_2_1 ) ) ;
+    // InternalIdioms.g:1937:1: rule__IdiomsImport__Group_2__1__Impl : ( ( rule__IdiomsImport__AsAssignment_2_1 ) ) ;
     public final void rule__IdiomsImport__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1910:1: ( ( ( rule__IdiomsImport__AsAssignment_2_1 ) ) )
-            // InternalIdioms.g:1911:1: ( ( rule__IdiomsImport__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1941:1: ( ( ( rule__IdiomsImport__AsAssignment_2_1 ) ) )
+            // InternalIdioms.g:1942:1: ( ( rule__IdiomsImport__AsAssignment_2_1 ) )
             {
-            // InternalIdioms.g:1911:1: ( ( rule__IdiomsImport__AsAssignment_2_1 ) )
-            // InternalIdioms.g:1912:2: ( rule__IdiomsImport__AsAssignment_2_1 )
+            // InternalIdioms.g:1942:1: ( ( rule__IdiomsImport__AsAssignment_2_1 ) )
+            // InternalIdioms.g:1943:2: ( rule__IdiomsImport__AsAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getAsAssignment_2_1());
             }
-            // InternalIdioms.g:1913:2: ( rule__IdiomsImport__AsAssignment_2_1 )
-            // InternalIdioms.g:1913:3: rule__IdiomsImport__AsAssignment_2_1
+            // InternalIdioms.g:1944:2: ( rule__IdiomsImport__AsAssignment_2_1 )
+            // InternalIdioms.g:1944:3: rule__IdiomsImport__AsAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IdiomsImport__AsAssignment_2_1();
@@ -6726,14 +6840,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__0"
-    // InternalIdioms.g:1922:1: rule__LocatorDeclaration__Group__0 : rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1 ;
+    // InternalIdioms.g:1953:1: rule__LocatorDeclaration__Group__0 : rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1 ;
     public final void rule__LocatorDeclaration__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1926:1: ( rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1 )
-            // InternalIdioms.g:1927:2: rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1
+            // InternalIdioms.g:1957:1: ( rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1 )
+            // InternalIdioms.g:1958:2: rule__LocatorDeclaration__Group__0__Impl rule__LocatorDeclaration__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__LocatorDeclaration__Group__0__Impl();
@@ -6764,17 +6878,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__0__Impl"
-    // InternalIdioms.g:1934:1: rule__LocatorDeclaration__Group__0__Impl : ( 'locator' ) ;
+    // InternalIdioms.g:1965:1: rule__LocatorDeclaration__Group__0__Impl : ( 'locator' ) ;
     public final void rule__LocatorDeclaration__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1938:1: ( ( 'locator' ) )
-            // InternalIdioms.g:1939:1: ( 'locator' )
+            // InternalIdioms.g:1969:1: ( ( 'locator' ) )
+            // InternalIdioms.g:1970:1: ( 'locator' )
             {
-            // InternalIdioms.g:1939:1: ( 'locator' )
-            // InternalIdioms.g:1940:2: 'locator'
+            // InternalIdioms.g:1970:1: ( 'locator' )
+            // InternalIdioms.g:1971:2: 'locator'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getLocatorKeyword_0());
@@ -6805,14 +6919,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__1"
-    // InternalIdioms.g:1949:1: rule__LocatorDeclaration__Group__1 : rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2 ;
+    // InternalIdioms.g:1980:1: rule__LocatorDeclaration__Group__1 : rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2 ;
     public final void rule__LocatorDeclaration__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1953:1: ( rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2 )
-            // InternalIdioms.g:1954:2: rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2
+            // InternalIdioms.g:1984:1: ( rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2 )
+            // InternalIdioms.g:1985:2: rule__LocatorDeclaration__Group__1__Impl rule__LocatorDeclaration__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_10);
             rule__LocatorDeclaration__Group__1__Impl();
@@ -6843,23 +6957,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__1__Impl"
-    // InternalIdioms.g:1961:1: rule__LocatorDeclaration__Group__1__Impl : ( ( rule__LocatorDeclaration__NameAssignment_1 ) ) ;
+    // InternalIdioms.g:1992:1: rule__LocatorDeclaration__Group__1__Impl : ( ( rule__LocatorDeclaration__NameAssignment_1 ) ) ;
     public final void rule__LocatorDeclaration__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1965:1: ( ( ( rule__LocatorDeclaration__NameAssignment_1 ) ) )
-            // InternalIdioms.g:1966:1: ( ( rule__LocatorDeclaration__NameAssignment_1 ) )
+            // InternalIdioms.g:1996:1: ( ( ( rule__LocatorDeclaration__NameAssignment_1 ) ) )
+            // InternalIdioms.g:1997:1: ( ( rule__LocatorDeclaration__NameAssignment_1 ) )
             {
-            // InternalIdioms.g:1966:1: ( ( rule__LocatorDeclaration__NameAssignment_1 ) )
-            // InternalIdioms.g:1967:2: ( rule__LocatorDeclaration__NameAssignment_1 )
+            // InternalIdioms.g:1997:1: ( ( rule__LocatorDeclaration__NameAssignment_1 ) )
+            // InternalIdioms.g:1998:2: ( rule__LocatorDeclaration__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getNameAssignment_1());
             }
-            // InternalIdioms.g:1968:2: ( rule__LocatorDeclaration__NameAssignment_1 )
-            // InternalIdioms.g:1968:3: rule__LocatorDeclaration__NameAssignment_1
+            // InternalIdioms.g:1999:2: ( rule__LocatorDeclaration__NameAssignment_1 )
+            // InternalIdioms.g:1999:3: rule__LocatorDeclaration__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LocatorDeclaration__NameAssignment_1();
@@ -6894,14 +7008,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__2"
-    // InternalIdioms.g:1976:1: rule__LocatorDeclaration__Group__2 : rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3 ;
+    // InternalIdioms.g:2007:1: rule__LocatorDeclaration__Group__2 : rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3 ;
     public final void rule__LocatorDeclaration__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1980:1: ( rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3 )
-            // InternalIdioms.g:1981:2: rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3
+            // InternalIdioms.g:2011:1: ( rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3 )
+            // InternalIdioms.g:2012:2: rule__LocatorDeclaration__Group__2__Impl rule__LocatorDeclaration__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__LocatorDeclaration__Group__2__Impl();
@@ -6932,23 +7046,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__2__Impl"
-    // InternalIdioms.g:1988:1: rule__LocatorDeclaration__Group__2__Impl : ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) ) ;
+    // InternalIdioms.g:2019:1: rule__LocatorDeclaration__Group__2__Impl : ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) ) ;
     public final void rule__LocatorDeclaration__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:1992:1: ( ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) ) )
-            // InternalIdioms.g:1993:1: ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) )
+            // InternalIdioms.g:2023:1: ( ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) ) )
+            // InternalIdioms.g:2024:1: ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) )
             {
-            // InternalIdioms.g:1993:1: ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) )
-            // InternalIdioms.g:1994:2: ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 )
+            // InternalIdioms.g:2024:1: ( ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 ) )
+            // InternalIdioms.g:2025:2: ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getOwnedLocatorAssignment_2());
             }
-            // InternalIdioms.g:1995:2: ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 )
-            // InternalIdioms.g:1995:3: rule__LocatorDeclaration__OwnedLocatorAssignment_2
+            // InternalIdioms.g:2026:2: ( rule__LocatorDeclaration__OwnedLocatorAssignment_2 )
+            // InternalIdioms.g:2026:3: rule__LocatorDeclaration__OwnedLocatorAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LocatorDeclaration__OwnedLocatorAssignment_2();
@@ -6983,14 +7097,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__3"
-    // InternalIdioms.g:2003:1: rule__LocatorDeclaration__Group__3 : rule__LocatorDeclaration__Group__3__Impl ;
+    // InternalIdioms.g:2034:1: rule__LocatorDeclaration__Group__3 : rule__LocatorDeclaration__Group__3__Impl ;
     public final void rule__LocatorDeclaration__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2007:1: ( rule__LocatorDeclaration__Group__3__Impl )
-            // InternalIdioms.g:2008:2: rule__LocatorDeclaration__Group__3__Impl
+            // InternalIdioms.g:2038:1: ( rule__LocatorDeclaration__Group__3__Impl )
+            // InternalIdioms.g:2039:2: rule__LocatorDeclaration__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LocatorDeclaration__Group__3__Impl();
@@ -7016,17 +7130,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__Group__3__Impl"
-    // InternalIdioms.g:2014:1: rule__LocatorDeclaration__Group__3__Impl : ( ';' ) ;
+    // InternalIdioms.g:2045:1: rule__LocatorDeclaration__Group__3__Impl : ( ';' ) ;
     public final void rule__LocatorDeclaration__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2018:1: ( ( ';' ) )
-            // InternalIdioms.g:2019:1: ( ';' )
+            // InternalIdioms.g:2049:1: ( ( ';' ) )
+            // InternalIdioms.g:2050:1: ( ';' )
             {
-            // InternalIdioms.g:2019:1: ( ';' )
-            // InternalIdioms.g:2020:2: ';'
+            // InternalIdioms.g:2050:1: ( ';' )
+            // InternalIdioms.g:2051:2: ';'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getSemicolonKeyword_3());
@@ -7057,14 +7171,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyAssignmentLocator__Group__0"
-    // InternalIdioms.g:2030:1: rule__AnyAssignmentLocator__Group__0 : rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1 ;
+    // InternalIdioms.g:2061:1: rule__AnyAssignmentLocator__Group__0 : rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1 ;
     public final void rule__AnyAssignmentLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2034:1: ( rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1 )
-            // InternalIdioms.g:2035:2: rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1
+            // InternalIdioms.g:2065:1: ( rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1 )
+            // InternalIdioms.g:2066:2: rule__AnyAssignmentLocator__Group__0__Impl rule__AnyAssignmentLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_12);
             rule__AnyAssignmentLocator__Group__0__Impl();
@@ -7095,23 +7209,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyAssignmentLocator__Group__0__Impl"
-    // InternalIdioms.g:2042:1: rule__AnyAssignmentLocator__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:2073:1: rule__AnyAssignmentLocator__Group__0__Impl : ( () ) ;
     public final void rule__AnyAssignmentLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2046:1: ( ( () ) )
-            // InternalIdioms.g:2047:1: ( () )
+            // InternalIdioms.g:2077:1: ( ( () ) )
+            // InternalIdioms.g:2078:1: ( () )
             {
-            // InternalIdioms.g:2047:1: ( () )
-            // InternalIdioms.g:2048:2: ()
+            // InternalIdioms.g:2078:1: ( () )
+            // InternalIdioms.g:2079:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyAssignmentLocatorAccess().getAnyAssignmentLocatorAction_0());
             }
-            // InternalIdioms.g:2049:2: ()
-            // InternalIdioms.g:2049:3:
+            // InternalIdioms.g:2080:2: ()
+            // InternalIdioms.g:2080:3:
             {
             }
 
@@ -7136,14 +7250,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyAssignmentLocator__Group__1"
-    // InternalIdioms.g:2057:1: rule__AnyAssignmentLocator__Group__1 : rule__AnyAssignmentLocator__Group__1__Impl ;
+    // InternalIdioms.g:2088:1: rule__AnyAssignmentLocator__Group__1 : rule__AnyAssignmentLocator__Group__1__Impl ;
     public final void rule__AnyAssignmentLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2061:1: ( rule__AnyAssignmentLocator__Group__1__Impl )
-            // InternalIdioms.g:2062:2: rule__AnyAssignmentLocator__Group__1__Impl
+            // InternalIdioms.g:2092:1: ( rule__AnyAssignmentLocator__Group__1__Impl )
+            // InternalIdioms.g:2093:2: rule__AnyAssignmentLocator__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AnyAssignmentLocator__Group__1__Impl();
@@ -7169,17 +7283,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyAssignmentLocator__Group__1__Impl"
-    // InternalIdioms.g:2068:1: rule__AnyAssignmentLocator__Group__1__Impl : ( 'any-assignment' ) ;
+    // InternalIdioms.g:2099:1: rule__AnyAssignmentLocator__Group__1__Impl : ( 'any-assignment' ) ;
     public final void rule__AnyAssignmentLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2072:1: ( ( 'any-assignment' ) )
-            // InternalIdioms.g:2073:1: ( 'any-assignment' )
+            // InternalIdioms.g:2103:1: ( ( 'any-assignment' ) )
+            // InternalIdioms.g:2104:1: ( 'any-assignment' )
             {
-            // InternalIdioms.g:2073:1: ( 'any-assignment' )
-            // InternalIdioms.g:2074:2: 'any-assignment'
+            // InternalIdioms.g:2104:1: ( 'any-assignment' )
+            // InternalIdioms.g:2105:2: 'any-assignment'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyAssignmentLocatorAccess().getAnyAssignmentKeyword_1());
@@ -7210,14 +7324,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyElementLocator__Group__0"
-    // InternalIdioms.g:2084:1: rule__AnyElementLocator__Group__0 : rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1 ;
+    // InternalIdioms.g:2115:1: rule__AnyElementLocator__Group__0 : rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1 ;
     public final void rule__AnyElementLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2088:1: ( rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1 )
-            // InternalIdioms.g:2089:2: rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1
+            // InternalIdioms.g:2119:1: ( rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1 )
+            // InternalIdioms.g:2120:2: rule__AnyElementLocator__Group__0__Impl rule__AnyElementLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_13);
             rule__AnyElementLocator__Group__0__Impl();
@@ -7248,23 +7362,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyElementLocator__Group__0__Impl"
-    // InternalIdioms.g:2096:1: rule__AnyElementLocator__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:2127:1: rule__AnyElementLocator__Group__0__Impl : ( () ) ;
     public final void rule__AnyElementLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2100:1: ( ( () ) )
-            // InternalIdioms.g:2101:1: ( () )
+            // InternalIdioms.g:2131:1: ( ( () ) )
+            // InternalIdioms.g:2132:1: ( () )
             {
-            // InternalIdioms.g:2101:1: ( () )
-            // InternalIdioms.g:2102:2: ()
+            // InternalIdioms.g:2132:1: ( () )
+            // InternalIdioms.g:2133:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyElementLocatorAccess().getAnyElementLocatorAction_0());
             }
-            // InternalIdioms.g:2103:2: ()
-            // InternalIdioms.g:2103:3:
+            // InternalIdioms.g:2134:2: ()
+            // InternalIdioms.g:2134:3:
             {
             }
 
@@ -7289,14 +7403,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyElementLocator__Group__1"
-    // InternalIdioms.g:2111:1: rule__AnyElementLocator__Group__1 : rule__AnyElementLocator__Group__1__Impl ;
+    // InternalIdioms.g:2142:1: rule__AnyElementLocator__Group__1 : rule__AnyElementLocator__Group__1__Impl ;
     public final void rule__AnyElementLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2115:1: ( rule__AnyElementLocator__Group__1__Impl )
-            // InternalIdioms.g:2116:2: rule__AnyElementLocator__Group__1__Impl
+            // InternalIdioms.g:2146:1: ( rule__AnyElementLocator__Group__1__Impl )
+            // InternalIdioms.g:2147:2: rule__AnyElementLocator__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AnyElementLocator__Group__1__Impl();
@@ -7322,17 +7436,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyElementLocator__Group__1__Impl"
-    // InternalIdioms.g:2122:1: rule__AnyElementLocator__Group__1__Impl : ( 'any-element' ) ;
+    // InternalIdioms.g:2153:1: rule__AnyElementLocator__Group__1__Impl : ( 'any-element' ) ;
     public final void rule__AnyElementLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2126:1: ( ( 'any-element' ) )
-            // InternalIdioms.g:2127:1: ( 'any-element' )
+            // InternalIdioms.g:2157:1: ( ( 'any-element' ) )
+            // InternalIdioms.g:2158:1: ( 'any-element' )
             {
-            // InternalIdioms.g:2127:1: ( 'any-element' )
-            // InternalIdioms.g:2128:2: 'any-element'
+            // InternalIdioms.g:2158:1: ( 'any-element' )
+            // InternalIdioms.g:2159:2: 'any-element'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyElementLocatorAccess().getAnyElementKeyword_1());
@@ -7363,14 +7477,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__0"
-    // InternalIdioms.g:2138:1: rule__AssignmentLocator__Group__0 : rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1 ;
+    // InternalIdioms.g:2169:1: rule__AssignmentLocator__Group__0 : rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1 ;
     public final void rule__AssignmentLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2142:1: ( rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1 )
-            // InternalIdioms.g:2143:2: rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1
+            // InternalIdioms.g:2173:1: ( rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1 )
+            // InternalIdioms.g:2174:2: rule__AssignmentLocator__Group__0__Impl rule__AssignmentLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__AssignmentLocator__Group__0__Impl();
@@ -7401,17 +7515,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__0__Impl"
-    // InternalIdioms.g:2150:1: rule__AssignmentLocator__Group__0__Impl : ( 'assignment' ) ;
+    // InternalIdioms.g:2181:1: rule__AssignmentLocator__Group__0__Impl : ( 'assignment' ) ;
     public final void rule__AssignmentLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2154:1: ( ( 'assignment' ) )
-            // InternalIdioms.g:2155:1: ( 'assignment' )
+            // InternalIdioms.g:2185:1: ( ( 'assignment' ) )
+            // InternalIdioms.g:2186:1: ( 'assignment' )
             {
-            // InternalIdioms.g:2155:1: ( 'assignment' )
-            // InternalIdioms.g:2156:2: 'assignment'
+            // InternalIdioms.g:2186:1: ( 'assignment' )
+            // InternalIdioms.g:2187:2: 'assignment'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getAssignmentKeyword_0());
@@ -7442,14 +7556,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__1"
-    // InternalIdioms.g:2165:1: rule__AssignmentLocator__Group__1 : rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2 ;
+    // InternalIdioms.g:2196:1: rule__AssignmentLocator__Group__1 : rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2 ;
     public final void rule__AssignmentLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2169:1: ( rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2 )
-            // InternalIdioms.g:2170:2: rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2
+            // InternalIdioms.g:2200:1: ( rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2 )
+            // InternalIdioms.g:2201:2: rule__AssignmentLocator__Group__1__Impl rule__AssignmentLocator__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__AssignmentLocator__Group__1__Impl();
@@ -7480,22 +7594,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__1__Impl"
-    // InternalIdioms.g:2177:1: rule__AssignmentLocator__Group__1__Impl : ( ( rule__AssignmentLocator__Group_1__0 )? ) ;
+    // InternalIdioms.g:2208:1: rule__AssignmentLocator__Group__1__Impl : ( ( rule__AssignmentLocator__Group_1__0 )? ) ;
     public final void rule__AssignmentLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2181:1: ( ( ( rule__AssignmentLocator__Group_1__0 )? ) )
-            // InternalIdioms.g:2182:1: ( ( rule__AssignmentLocator__Group_1__0 )? )
+            // InternalIdioms.g:2212:1: ( ( ( rule__AssignmentLocator__Group_1__0 )? ) )
+            // InternalIdioms.g:2213:1: ( ( rule__AssignmentLocator__Group_1__0 )? )
             {
-            // InternalIdioms.g:2182:1: ( ( rule__AssignmentLocator__Group_1__0 )? )
-            // InternalIdioms.g:2183:2: ( rule__AssignmentLocator__Group_1__0 )?
+            // InternalIdioms.g:2213:1: ( ( rule__AssignmentLocator__Group_1__0 )? )
+            // InternalIdioms.g:2214:2: ( rule__AssignmentLocator__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getGroup_1());
             }
-            // InternalIdioms.g:2184:2: ( rule__AssignmentLocator__Group_1__0 )?
+            // InternalIdioms.g:2215:2: ( rule__AssignmentLocator__Group_1__0 )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -7508,7 +7622,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt17) {
                 case 1 :
-                    // InternalIdioms.g:2184:3: rule__AssignmentLocator__Group_1__0
+                    // InternalIdioms.g:2215:3: rule__AssignmentLocator__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__AssignmentLocator__Group_1__0();
@@ -7546,14 +7660,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__2"
-    // InternalIdioms.g:2192:1: rule__AssignmentLocator__Group__2 : rule__AssignmentLocator__Group__2__Impl ;
+    // InternalIdioms.g:2223:1: rule__AssignmentLocator__Group__2 : rule__AssignmentLocator__Group__2__Impl ;
     public final void rule__AssignmentLocator__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2196:1: ( rule__AssignmentLocator__Group__2__Impl )
-            // InternalIdioms.g:2197:2: rule__AssignmentLocator__Group__2__Impl
+            // InternalIdioms.g:2227:1: ( rule__AssignmentLocator__Group__2__Impl )
+            // InternalIdioms.g:2228:2: rule__AssignmentLocator__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__Group__2__Impl();
@@ -7579,23 +7693,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group__2__Impl"
-    // InternalIdioms.g:2203:1: rule__AssignmentLocator__Group__2__Impl : ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) ) ;
+    // InternalIdioms.g:2234:1: rule__AssignmentLocator__Group__2__Impl : ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) ) ;
     public final void rule__AssignmentLocator__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2207:1: ( ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) ) )
-            // InternalIdioms.g:2208:1: ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) )
+            // InternalIdioms.g:2238:1: ( ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) ) )
+            // InternalIdioms.g:2239:1: ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) )
             {
-            // InternalIdioms.g:2208:1: ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) )
-            // InternalIdioms.g:2209:2: ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 )
+            // InternalIdioms.g:2239:1: ( ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 ) )
+            // InternalIdioms.g:2240:2: ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEStructuralFeatureAssignment_2());
             }
-            // InternalIdioms.g:2210:2: ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 )
-            // InternalIdioms.g:2210:3: rule__AssignmentLocator__EStructuralFeatureAssignment_2
+            // InternalIdioms.g:2241:2: ( rule__AssignmentLocator__EStructuralFeatureAssignment_2 )
+            // InternalIdioms.g:2241:3: rule__AssignmentLocator__EStructuralFeatureAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__EStructuralFeatureAssignment_2();
@@ -7630,14 +7744,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__0"
-    // InternalIdioms.g:2219:1: rule__AssignmentLocator__Group_1__0 : rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1 ;
+    // InternalIdioms.g:2250:1: rule__AssignmentLocator__Group_1__0 : rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1 ;
     public final void rule__AssignmentLocator__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2223:1: ( rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1 )
-            // InternalIdioms.g:2224:2: rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1
+            // InternalIdioms.g:2254:1: ( rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1 )
+            // InternalIdioms.g:2255:2: rule__AssignmentLocator__Group_1__0__Impl rule__AssignmentLocator__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__AssignmentLocator__Group_1__0__Impl();
@@ -7668,22 +7782,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__0__Impl"
-    // InternalIdioms.g:2231:1: rule__AssignmentLocator__Group_1__0__Impl : ( ( rule__AssignmentLocator__Group_1_0__0 )? ) ;
+    // InternalIdioms.g:2262:1: rule__AssignmentLocator__Group_1__0__Impl : ( ( rule__AssignmentLocator__Group_1_0__0 )? ) ;
     public final void rule__AssignmentLocator__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2235:1: ( ( ( rule__AssignmentLocator__Group_1_0__0 )? ) )
-            // InternalIdioms.g:2236:1: ( ( rule__AssignmentLocator__Group_1_0__0 )? )
+            // InternalIdioms.g:2266:1: ( ( ( rule__AssignmentLocator__Group_1_0__0 )? ) )
+            // InternalIdioms.g:2267:1: ( ( rule__AssignmentLocator__Group_1_0__0 )? )
             {
-            // InternalIdioms.g:2236:1: ( ( rule__AssignmentLocator__Group_1_0__0 )? )
-            // InternalIdioms.g:2237:2: ( rule__AssignmentLocator__Group_1_0__0 )?
+            // InternalIdioms.g:2267:1: ( ( rule__AssignmentLocator__Group_1_0__0 )? )
+            // InternalIdioms.g:2268:2: ( rule__AssignmentLocator__Group_1_0__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getGroup_1_0());
             }
-            // InternalIdioms.g:2238:2: ( rule__AssignmentLocator__Group_1_0__0 )?
+            // InternalIdioms.g:2269:2: ( rule__AssignmentLocator__Group_1_0__0 )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -7704,7 +7818,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt18) {
                 case 1 :
-                    // InternalIdioms.g:2238:3: rule__AssignmentLocator__Group_1_0__0
+                    // InternalIdioms.g:2269:3: rule__AssignmentLocator__Group_1_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__AssignmentLocator__Group_1_0__0();
@@ -7742,14 +7856,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__1"
-    // InternalIdioms.g:2246:1: rule__AssignmentLocator__Group_1__1 : rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2 ;
+    // InternalIdioms.g:2277:1: rule__AssignmentLocator__Group_1__1 : rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2 ;
     public final void rule__AssignmentLocator__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2250:1: ( rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2 )
-            // InternalIdioms.g:2251:2: rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2
+            // InternalIdioms.g:2281:1: ( rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2 )
+            // InternalIdioms.g:2282:2: rule__AssignmentLocator__Group_1__1__Impl rule__AssignmentLocator__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__AssignmentLocator__Group_1__1__Impl();
@@ -7780,23 +7894,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__1__Impl"
-    // InternalIdioms.g:2258:1: rule__AssignmentLocator__Group_1__1__Impl : ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) ) ;
+    // InternalIdioms.g:2289:1: rule__AssignmentLocator__Group_1__1__Impl : ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) ) ;
     public final void rule__AssignmentLocator__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2262:1: ( ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) ) )
-            // InternalIdioms.g:2263:1: ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) )
+            // InternalIdioms.g:2293:1: ( ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) ) )
+            // InternalIdioms.g:2294:1: ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) )
             {
-            // InternalIdioms.g:2263:1: ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) )
-            // InternalIdioms.g:2264:2: ( rule__AssignmentLocator__EClassAssignment_1_1 )
+            // InternalIdioms.g:2294:1: ( ( rule__AssignmentLocator__EClassAssignment_1_1 ) )
+            // InternalIdioms.g:2295:2: ( rule__AssignmentLocator__EClassAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEClassAssignment_1_1());
             }
-            // InternalIdioms.g:2265:2: ( rule__AssignmentLocator__EClassAssignment_1_1 )
-            // InternalIdioms.g:2265:3: rule__AssignmentLocator__EClassAssignment_1_1
+            // InternalIdioms.g:2296:2: ( rule__AssignmentLocator__EClassAssignment_1_1 )
+            // InternalIdioms.g:2296:3: rule__AssignmentLocator__EClassAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__EClassAssignment_1_1();
@@ -7831,14 +7945,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__2"
-    // InternalIdioms.g:2273:1: rule__AssignmentLocator__Group_1__2 : rule__AssignmentLocator__Group_1__2__Impl ;
+    // InternalIdioms.g:2304:1: rule__AssignmentLocator__Group_1__2 : rule__AssignmentLocator__Group_1__2__Impl ;
     public final void rule__AssignmentLocator__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2277:1: ( rule__AssignmentLocator__Group_1__2__Impl )
-            // InternalIdioms.g:2278:2: rule__AssignmentLocator__Group_1__2__Impl
+            // InternalIdioms.g:2308:1: ( rule__AssignmentLocator__Group_1__2__Impl )
+            // InternalIdioms.g:2309:2: rule__AssignmentLocator__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__Group_1__2__Impl();
@@ -7864,17 +7978,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1__2__Impl"
-    // InternalIdioms.g:2284:1: rule__AssignmentLocator__Group_1__2__Impl : ( '::' ) ;
+    // InternalIdioms.g:2315:1: rule__AssignmentLocator__Group_1__2__Impl : ( '::' ) ;
     public final void rule__AssignmentLocator__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2288:1: ( ( '::' ) )
-            // InternalIdioms.g:2289:1: ( '::' )
+            // InternalIdioms.g:2319:1: ( ( '::' ) )
+            // InternalIdioms.g:2320:1: ( '::' )
             {
-            // InternalIdioms.g:2289:1: ( '::' )
-            // InternalIdioms.g:2290:2: '::'
+            // InternalIdioms.g:2320:1: ( '::' )
+            // InternalIdioms.g:2321:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getColonColonKeyword_1_2());
@@ -7905,14 +8019,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1_0__0"
-    // InternalIdioms.g:2300:1: rule__AssignmentLocator__Group_1_0__0 : rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1 ;
+    // InternalIdioms.g:2331:1: rule__AssignmentLocator__Group_1_0__0 : rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1 ;
     public final void rule__AssignmentLocator__Group_1_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2304:1: ( rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1 )
-            // InternalIdioms.g:2305:2: rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1
+            // InternalIdioms.g:2335:1: ( rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1 )
+            // InternalIdioms.g:2336:2: rule__AssignmentLocator__Group_1_0__0__Impl rule__AssignmentLocator__Group_1_0__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__AssignmentLocator__Group_1_0__0__Impl();
@@ -7943,23 +8057,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1_0__0__Impl"
-    // InternalIdioms.g:2312:1: rule__AssignmentLocator__Group_1_0__0__Impl : ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) ) ;
+    // InternalIdioms.g:2343:1: rule__AssignmentLocator__Group_1_0__0__Impl : ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) ) ;
     public final void rule__AssignmentLocator__Group_1_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2316:1: ( ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) ) )
-            // InternalIdioms.g:2317:1: ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) )
+            // InternalIdioms.g:2347:1: ( ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) ) )
+            // InternalIdioms.g:2348:1: ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) )
             {
-            // InternalIdioms.g:2317:1: ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) )
-            // InternalIdioms.g:2318:2: ( rule__AssignmentLocator__EPackageAssignment_1_0_0 )
+            // InternalIdioms.g:2348:1: ( ( rule__AssignmentLocator__EPackageAssignment_1_0_0 ) )
+            // InternalIdioms.g:2349:2: ( rule__AssignmentLocator__EPackageAssignment_1_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEPackageAssignment_1_0_0());
             }
-            // InternalIdioms.g:2319:2: ( rule__AssignmentLocator__EPackageAssignment_1_0_0 )
-            // InternalIdioms.g:2319:3: rule__AssignmentLocator__EPackageAssignment_1_0_0
+            // InternalIdioms.g:2350:2: ( rule__AssignmentLocator__EPackageAssignment_1_0_0 )
+            // InternalIdioms.g:2350:3: rule__AssignmentLocator__EPackageAssignment_1_0_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__EPackageAssignment_1_0_0();
@@ -7994,14 +8108,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1_0__1"
-    // InternalIdioms.g:2327:1: rule__AssignmentLocator__Group_1_0__1 : rule__AssignmentLocator__Group_1_0__1__Impl ;
+    // InternalIdioms.g:2358:1: rule__AssignmentLocator__Group_1_0__1 : rule__AssignmentLocator__Group_1_0__1__Impl ;
     public final void rule__AssignmentLocator__Group_1_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2331:1: ( rule__AssignmentLocator__Group_1_0__1__Impl )
-            // InternalIdioms.g:2332:2: rule__AssignmentLocator__Group_1_0__1__Impl
+            // InternalIdioms.g:2362:1: ( rule__AssignmentLocator__Group_1_0__1__Impl )
+            // InternalIdioms.g:2363:2: rule__AssignmentLocator__Group_1_0__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AssignmentLocator__Group_1_0__1__Impl();
@@ -8027,17 +8141,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__Group_1_0__1__Impl"
-    // InternalIdioms.g:2338:1: rule__AssignmentLocator__Group_1_0__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:2369:1: rule__AssignmentLocator__Group_1_0__1__Impl : ( '::' ) ;
     public final void rule__AssignmentLocator__Group_1_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2342:1: ( ( '::' ) )
-            // InternalIdioms.g:2343:1: ( '::' )
+            // InternalIdioms.g:2373:1: ( ( '::' ) )
+            // InternalIdioms.g:2374:1: ( '::' )
             {
-            // InternalIdioms.g:2343:1: ( '::' )
-            // InternalIdioms.g:2344:2: '::'
+            // InternalIdioms.g:2374:1: ( '::' )
+            // InternalIdioms.g:2375:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getColonColonKeyword_1_0_1());
@@ -8068,14 +8182,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FinalLocator__Group__0"
-    // InternalIdioms.g:2354:1: rule__FinalLocator__Group__0 : rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1 ;
+    // InternalIdioms.g:2385:1: rule__FinalLocator__Group__0 : rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1 ;
     public final void rule__FinalLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2358:1: ( rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1 )
-            // InternalIdioms.g:2359:2: rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1
+            // InternalIdioms.g:2389:1: ( rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1 )
+            // InternalIdioms.g:2390:2: rule__FinalLocator__Group__0__Impl rule__FinalLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_15);
             rule__FinalLocator__Group__0__Impl();
@@ -8106,23 +8220,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FinalLocator__Group__0__Impl"
-    // InternalIdioms.g:2366:1: rule__FinalLocator__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:2397:1: rule__FinalLocator__Group__0__Impl : ( () ) ;
     public final void rule__FinalLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2370:1: ( ( () ) )
-            // InternalIdioms.g:2371:1: ( () )
+            // InternalIdioms.g:2401:1: ( ( () ) )
+            // InternalIdioms.g:2402:1: ( () )
             {
-            // InternalIdioms.g:2371:1: ( () )
-            // InternalIdioms.g:2372:2: ()
+            // InternalIdioms.g:2402:1: ( () )
+            // InternalIdioms.g:2403:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFinalLocatorAccess().getFinalLocatorAction_0());
             }
-            // InternalIdioms.g:2373:2: ()
-            // InternalIdioms.g:2373:3:
+            // InternalIdioms.g:2404:2: ()
+            // InternalIdioms.g:2404:3:
             {
             }
 
@@ -8147,14 +8261,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FinalLocator__Group__1"
-    // InternalIdioms.g:2381:1: rule__FinalLocator__Group__1 : rule__FinalLocator__Group__1__Impl ;
+    // InternalIdioms.g:2412:1: rule__FinalLocator__Group__1 : rule__FinalLocator__Group__1__Impl ;
     public final void rule__FinalLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2385:1: ( rule__FinalLocator__Group__1__Impl )
-            // InternalIdioms.g:2386:2: rule__FinalLocator__Group__1__Impl
+            // InternalIdioms.g:2416:1: ( rule__FinalLocator__Group__1__Impl )
+            // InternalIdioms.g:2417:2: rule__FinalLocator__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FinalLocator__Group__1__Impl();
@@ -8180,17 +8294,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FinalLocator__Group__1__Impl"
-    // InternalIdioms.g:2392:1: rule__FinalLocator__Group__1__Impl : ( 'final' ) ;
+    // InternalIdioms.g:2423:1: rule__FinalLocator__Group__1__Impl : ( 'final' ) ;
     public final void rule__FinalLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2396:1: ( ( 'final' ) )
-            // InternalIdioms.g:2397:1: ( 'final' )
+            // InternalIdioms.g:2427:1: ( ( 'final' ) )
+            // InternalIdioms.g:2428:1: ( 'final' )
             {
-            // InternalIdioms.g:2397:1: ( 'final' )
-            // InternalIdioms.g:2398:2: 'final'
+            // InternalIdioms.g:2428:1: ( 'final' )
+            // InternalIdioms.g:2429:2: 'final'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFinalLocatorAccess().getFinalKeyword_1());
@@ -8221,14 +8335,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__0"
-    // InternalIdioms.g:2408:1: rule__ReturnsLocator__Group__0 : rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1 ;
+    // InternalIdioms.g:2439:1: rule__ReturnsLocator__Group__0 : rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1 ;
     public final void rule__ReturnsLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2412:1: ( rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1 )
-            // InternalIdioms.g:2413:2: rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1
+            // InternalIdioms.g:2443:1: ( rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1 )
+            // InternalIdioms.g:2444:2: rule__ReturnsLocator__Group__0__Impl rule__ReturnsLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__ReturnsLocator__Group__0__Impl();
@@ -8259,17 +8373,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__0__Impl"
-    // InternalIdioms.g:2420:1: rule__ReturnsLocator__Group__0__Impl : ( 'returns' ) ;
+    // InternalIdioms.g:2451:1: rule__ReturnsLocator__Group__0__Impl : ( 'returns' ) ;
     public final void rule__ReturnsLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2424:1: ( ( 'returns' ) )
-            // InternalIdioms.g:2425:1: ( 'returns' )
+            // InternalIdioms.g:2455:1: ( ( 'returns' ) )
+            // InternalIdioms.g:2456:1: ( 'returns' )
             {
-            // InternalIdioms.g:2425:1: ( 'returns' )
-            // InternalIdioms.g:2426:2: 'returns'
+            // InternalIdioms.g:2456:1: ( 'returns' )
+            // InternalIdioms.g:2457:2: 'returns'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getReturnsKeyword_0());
@@ -8300,14 +8414,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__1"
-    // InternalIdioms.g:2435:1: rule__ReturnsLocator__Group__1 : rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2 ;
+    // InternalIdioms.g:2466:1: rule__ReturnsLocator__Group__1 : rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2 ;
     public final void rule__ReturnsLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2439:1: ( rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2 )
-            // InternalIdioms.g:2440:2: rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2
+            // InternalIdioms.g:2470:1: ( rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2 )
+            // InternalIdioms.g:2471:2: rule__ReturnsLocator__Group__1__Impl rule__ReturnsLocator__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__ReturnsLocator__Group__1__Impl();
@@ -8338,22 +8452,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__1__Impl"
-    // InternalIdioms.g:2447:1: rule__ReturnsLocator__Group__1__Impl : ( ( rule__ReturnsLocator__Group_1__0 )? ) ;
+    // InternalIdioms.g:2478:1: rule__ReturnsLocator__Group__1__Impl : ( ( rule__ReturnsLocator__Group_1__0 )? ) ;
     public final void rule__ReturnsLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2451:1: ( ( ( rule__ReturnsLocator__Group_1__0 )? ) )
-            // InternalIdioms.g:2452:1: ( ( rule__ReturnsLocator__Group_1__0 )? )
+            // InternalIdioms.g:2482:1: ( ( ( rule__ReturnsLocator__Group_1__0 )? ) )
+            // InternalIdioms.g:2483:1: ( ( rule__ReturnsLocator__Group_1__0 )? )
             {
-            // InternalIdioms.g:2452:1: ( ( rule__ReturnsLocator__Group_1__0 )? )
-            // InternalIdioms.g:2453:2: ( rule__ReturnsLocator__Group_1__0 )?
+            // InternalIdioms.g:2483:1: ( ( rule__ReturnsLocator__Group_1__0 )? )
+            // InternalIdioms.g:2484:2: ( rule__ReturnsLocator__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getGroup_1());
             }
-            // InternalIdioms.g:2454:2: ( rule__ReturnsLocator__Group_1__0 )?
+            // InternalIdioms.g:2485:2: ( rule__ReturnsLocator__Group_1__0 )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -8366,7 +8480,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalIdioms.g:2454:3: rule__ReturnsLocator__Group_1__0
+                    // InternalIdioms.g:2485:3: rule__ReturnsLocator__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ReturnsLocator__Group_1__0();
@@ -8404,14 +8518,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__2"
-    // InternalIdioms.g:2462:1: rule__ReturnsLocator__Group__2 : rule__ReturnsLocator__Group__2__Impl ;
+    // InternalIdioms.g:2493:1: rule__ReturnsLocator__Group__2 : rule__ReturnsLocator__Group__2__Impl ;
     public final void rule__ReturnsLocator__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2466:1: ( rule__ReturnsLocator__Group__2__Impl )
-            // InternalIdioms.g:2467:2: rule__ReturnsLocator__Group__2__Impl
+            // InternalIdioms.g:2497:1: ( rule__ReturnsLocator__Group__2__Impl )
+            // InternalIdioms.g:2498:2: rule__ReturnsLocator__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReturnsLocator__Group__2__Impl();
@@ -8437,23 +8551,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group__2__Impl"
-    // InternalIdioms.g:2473:1: rule__ReturnsLocator__Group__2__Impl : ( ( rule__ReturnsLocator__EClassAssignment_2 ) ) ;
+    // InternalIdioms.g:2504:1: rule__ReturnsLocator__Group__2__Impl : ( ( rule__ReturnsLocator__EClassAssignment_2 ) ) ;
     public final void rule__ReturnsLocator__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2477:1: ( ( ( rule__ReturnsLocator__EClassAssignment_2 ) ) )
-            // InternalIdioms.g:2478:1: ( ( rule__ReturnsLocator__EClassAssignment_2 ) )
+            // InternalIdioms.g:2508:1: ( ( ( rule__ReturnsLocator__EClassAssignment_2 ) ) )
+            // InternalIdioms.g:2509:1: ( ( rule__ReturnsLocator__EClassAssignment_2 ) )
             {
-            // InternalIdioms.g:2478:1: ( ( rule__ReturnsLocator__EClassAssignment_2 ) )
-            // InternalIdioms.g:2479:2: ( rule__ReturnsLocator__EClassAssignment_2 )
+            // InternalIdioms.g:2509:1: ( ( rule__ReturnsLocator__EClassAssignment_2 ) )
+            // InternalIdioms.g:2510:2: ( rule__ReturnsLocator__EClassAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEClassAssignment_2());
             }
-            // InternalIdioms.g:2480:2: ( rule__ReturnsLocator__EClassAssignment_2 )
-            // InternalIdioms.g:2480:3: rule__ReturnsLocator__EClassAssignment_2
+            // InternalIdioms.g:2511:2: ( rule__ReturnsLocator__EClassAssignment_2 )
+            // InternalIdioms.g:2511:3: rule__ReturnsLocator__EClassAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReturnsLocator__EClassAssignment_2();
@@ -8488,14 +8602,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group_1__0"
-    // InternalIdioms.g:2489:1: rule__ReturnsLocator__Group_1__0 : rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1 ;
+    // InternalIdioms.g:2520:1: rule__ReturnsLocator__Group_1__0 : rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1 ;
     public final void rule__ReturnsLocator__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2493:1: ( rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1 )
-            // InternalIdioms.g:2494:2: rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1
+            // InternalIdioms.g:2524:1: ( rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1 )
+            // InternalIdioms.g:2525:2: rule__ReturnsLocator__Group_1__0__Impl rule__ReturnsLocator__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__ReturnsLocator__Group_1__0__Impl();
@@ -8526,23 +8640,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group_1__0__Impl"
-    // InternalIdioms.g:2501:1: rule__ReturnsLocator__Group_1__0__Impl : ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) ) ;
+    // InternalIdioms.g:2532:1: rule__ReturnsLocator__Group_1__0__Impl : ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) ) ;
     public final void rule__ReturnsLocator__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2505:1: ( ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) ) )
-            // InternalIdioms.g:2506:1: ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) )
+            // InternalIdioms.g:2536:1: ( ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) ) )
+            // InternalIdioms.g:2537:1: ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) )
             {
-            // InternalIdioms.g:2506:1: ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) )
-            // InternalIdioms.g:2507:2: ( rule__ReturnsLocator__EPackageAssignment_1_0 )
+            // InternalIdioms.g:2537:1: ( ( rule__ReturnsLocator__EPackageAssignment_1_0 ) )
+            // InternalIdioms.g:2538:2: ( rule__ReturnsLocator__EPackageAssignment_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEPackageAssignment_1_0());
             }
-            // InternalIdioms.g:2508:2: ( rule__ReturnsLocator__EPackageAssignment_1_0 )
-            // InternalIdioms.g:2508:3: rule__ReturnsLocator__EPackageAssignment_1_0
+            // InternalIdioms.g:2539:2: ( rule__ReturnsLocator__EPackageAssignment_1_0 )
+            // InternalIdioms.g:2539:3: rule__ReturnsLocator__EPackageAssignment_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReturnsLocator__EPackageAssignment_1_0();
@@ -8577,14 +8691,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group_1__1"
-    // InternalIdioms.g:2516:1: rule__ReturnsLocator__Group_1__1 : rule__ReturnsLocator__Group_1__1__Impl ;
+    // InternalIdioms.g:2547:1: rule__ReturnsLocator__Group_1__1 : rule__ReturnsLocator__Group_1__1__Impl ;
     public final void rule__ReturnsLocator__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2520:1: ( rule__ReturnsLocator__Group_1__1__Impl )
-            // InternalIdioms.g:2521:2: rule__ReturnsLocator__Group_1__1__Impl
+            // InternalIdioms.g:2551:1: ( rule__ReturnsLocator__Group_1__1__Impl )
+            // InternalIdioms.g:2552:2: rule__ReturnsLocator__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReturnsLocator__Group_1__1__Impl();
@@ -8610,17 +8724,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__Group_1__1__Impl"
-    // InternalIdioms.g:2527:1: rule__ReturnsLocator__Group_1__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:2558:1: rule__ReturnsLocator__Group_1__1__Impl : ( '::' ) ;
     public final void rule__ReturnsLocator__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2531:1: ( ( '::' ) )
-            // InternalIdioms.g:2532:1: ( '::' )
+            // InternalIdioms.g:2562:1: ( ( '::' ) )
+            // InternalIdioms.g:2563:1: ( '::' )
             {
-            // InternalIdioms.g:2532:1: ( '::' )
-            // InternalIdioms.g:2533:2: '::'
+            // InternalIdioms.g:2563:1: ( '::' )
+            // InternalIdioms.g:2564:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getColonColonKeyword_1_1());
@@ -8651,14 +8765,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group__0"
-    // InternalIdioms.g:2543:1: rule__ReferredLocator__Group__0 : rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1 ;
+    // InternalIdioms.g:2574:1: rule__ReferredLocator__Group__0 : rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1 ;
     public final void rule__ReferredLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2547:1: ( rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1 )
-            // InternalIdioms.g:2548:2: rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1
+            // InternalIdioms.g:2578:1: ( rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1 )
+            // InternalIdioms.g:2579:2: rule__ReferredLocator__Group__0__Impl rule__ReferredLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__ReferredLocator__Group__0__Impl();
@@ -8689,22 +8803,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group__0__Impl"
-    // InternalIdioms.g:2555:1: rule__ReferredLocator__Group__0__Impl : ( ( rule__ReferredLocator__Group_0__0 )? ) ;
+    // InternalIdioms.g:2586:1: rule__ReferredLocator__Group__0__Impl : ( ( rule__ReferredLocator__Group_0__0 )? ) ;
     public final void rule__ReferredLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2559:1: ( ( ( rule__ReferredLocator__Group_0__0 )? ) )
-            // InternalIdioms.g:2560:1: ( ( rule__ReferredLocator__Group_0__0 )? )
+            // InternalIdioms.g:2590:1: ( ( ( rule__ReferredLocator__Group_0__0 )? ) )
+            // InternalIdioms.g:2591:1: ( ( rule__ReferredLocator__Group_0__0 )? )
             {
-            // InternalIdioms.g:2560:1: ( ( rule__ReferredLocator__Group_0__0 )? )
-            // InternalIdioms.g:2561:2: ( rule__ReferredLocator__Group_0__0 )?
+            // InternalIdioms.g:2591:1: ( ( rule__ReferredLocator__Group_0__0 )? )
+            // InternalIdioms.g:2592:2: ( rule__ReferredLocator__Group_0__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getGroup_0());
             }
-            // InternalIdioms.g:2562:2: ( rule__ReferredLocator__Group_0__0 )?
+            // InternalIdioms.g:2593:2: ( rule__ReferredLocator__Group_0__0 )?
             int alt20=2;
             int LA20_0 = input.LA(1);
 
@@ -8717,7 +8831,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt20) {
                 case 1 :
-                    // InternalIdioms.g:2562:3: rule__ReferredLocator__Group_0__0
+                    // InternalIdioms.g:2593:3: rule__ReferredLocator__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ReferredLocator__Group_0__0();
@@ -8755,14 +8869,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group__1"
-    // InternalIdioms.g:2570:1: rule__ReferredLocator__Group__1 : rule__ReferredLocator__Group__1__Impl ;
+    // InternalIdioms.g:2601:1: rule__ReferredLocator__Group__1 : rule__ReferredLocator__Group__1__Impl ;
     public final void rule__ReferredLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2574:1: ( rule__ReferredLocator__Group__1__Impl )
-            // InternalIdioms.g:2575:2: rule__ReferredLocator__Group__1__Impl
+            // InternalIdioms.g:2605:1: ( rule__ReferredLocator__Group__1__Impl )
+            // InternalIdioms.g:2606:2: rule__ReferredLocator__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredLocator__Group__1__Impl();
@@ -8788,23 +8902,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group__1__Impl"
-    // InternalIdioms.g:2581:1: rule__ReferredLocator__Group__1__Impl : ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) ) ;
+    // InternalIdioms.g:2612:1: rule__ReferredLocator__Group__1__Impl : ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) ) ;
     public final void rule__ReferredLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2585:1: ( ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) ) )
-            // InternalIdioms.g:2586:1: ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) )
+            // InternalIdioms.g:2616:1: ( ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) ) )
+            // InternalIdioms.g:2617:1: ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) )
             {
-            // InternalIdioms.g:2586:1: ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) )
-            // InternalIdioms.g:2587:2: ( rule__ReferredLocator__LocatorDeclarationAssignment_1 )
+            // InternalIdioms.g:2617:1: ( ( rule__ReferredLocator__LocatorDeclarationAssignment_1 ) )
+            // InternalIdioms.g:2618:2: ( rule__ReferredLocator__LocatorDeclarationAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getLocatorDeclarationAssignment_1());
             }
-            // InternalIdioms.g:2588:2: ( rule__ReferredLocator__LocatorDeclarationAssignment_1 )
-            // InternalIdioms.g:2588:3: rule__ReferredLocator__LocatorDeclarationAssignment_1
+            // InternalIdioms.g:2619:2: ( rule__ReferredLocator__LocatorDeclarationAssignment_1 )
+            // InternalIdioms.g:2619:3: rule__ReferredLocator__LocatorDeclarationAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredLocator__LocatorDeclarationAssignment_1();
@@ -8839,14 +8953,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group_0__0"
-    // InternalIdioms.g:2597:1: rule__ReferredLocator__Group_0__0 : rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1 ;
+    // InternalIdioms.g:2628:1: rule__ReferredLocator__Group_0__0 : rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1 ;
     public final void rule__ReferredLocator__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2601:1: ( rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1 )
-            // InternalIdioms.g:2602:2: rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1
+            // InternalIdioms.g:2632:1: ( rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1 )
+            // InternalIdioms.g:2633:2: rule__ReferredLocator__Group_0__0__Impl rule__ReferredLocator__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__ReferredLocator__Group_0__0__Impl();
@@ -8877,23 +8991,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group_0__0__Impl"
-    // InternalIdioms.g:2609:1: rule__ReferredLocator__Group_0__0__Impl : ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) ) ;
+    // InternalIdioms.g:2640:1: rule__ReferredLocator__Group_0__0__Impl : ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) ) ;
     public final void rule__ReferredLocator__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2613:1: ( ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) ) )
-            // InternalIdioms.g:2614:1: ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) )
+            // InternalIdioms.g:2644:1: ( ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) ) )
+            // InternalIdioms.g:2645:1: ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) )
             {
-            // InternalIdioms.g:2614:1: ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) )
-            // InternalIdioms.g:2615:2: ( rule__ReferredLocator__IdiomsModelAssignment_0_0 )
+            // InternalIdioms.g:2645:1: ( ( rule__ReferredLocator__IdiomsModelAssignment_0_0 ) )
+            // InternalIdioms.g:2646:2: ( rule__ReferredLocator__IdiomsModelAssignment_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getIdiomsModelAssignment_0_0());
             }
-            // InternalIdioms.g:2616:2: ( rule__ReferredLocator__IdiomsModelAssignment_0_0 )
-            // InternalIdioms.g:2616:3: rule__ReferredLocator__IdiomsModelAssignment_0_0
+            // InternalIdioms.g:2647:2: ( rule__ReferredLocator__IdiomsModelAssignment_0_0 )
+            // InternalIdioms.g:2647:3: rule__ReferredLocator__IdiomsModelAssignment_0_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredLocator__IdiomsModelAssignment_0_0();
@@ -8928,14 +9042,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group_0__1"
-    // InternalIdioms.g:2624:1: rule__ReferredLocator__Group_0__1 : rule__ReferredLocator__Group_0__1__Impl ;
+    // InternalIdioms.g:2655:1: rule__ReferredLocator__Group_0__1 : rule__ReferredLocator__Group_0__1__Impl ;
     public final void rule__ReferredLocator__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2628:1: ( rule__ReferredLocator__Group_0__1__Impl )
-            // InternalIdioms.g:2629:2: rule__ReferredLocator__Group_0__1__Impl
+            // InternalIdioms.g:2659:1: ( rule__ReferredLocator__Group_0__1__Impl )
+            // InternalIdioms.g:2660:2: rule__ReferredLocator__Group_0__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredLocator__Group_0__1__Impl();
@@ -8961,17 +9075,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__Group_0__1__Impl"
-    // InternalIdioms.g:2635:1: rule__ReferredLocator__Group_0__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:2666:1: rule__ReferredLocator__Group_0__1__Impl : ( '::' ) ;
     public final void rule__ReferredLocator__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2639:1: ( ( '::' ) )
-            // InternalIdioms.g:2640:1: ( '::' )
+            // InternalIdioms.g:2670:1: ( ( '::' ) )
+            // InternalIdioms.g:2671:1: ( '::' )
             {
-            // InternalIdioms.g:2640:1: ( '::' )
-            // InternalIdioms.g:2641:2: '::'
+            // InternalIdioms.g:2671:1: ( '::' )
+            // InternalIdioms.g:2672:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getColonColonKeyword_0_1());
@@ -9002,14 +9116,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__0"
-    // InternalIdioms.g:2651:1: rule__RuleLocator__Group__0 : rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1 ;
+    // InternalIdioms.g:2682:1: rule__RuleLocator__Group__0 : rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1 ;
     public final void rule__RuleLocator__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2655:1: ( rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1 )
-            // InternalIdioms.g:2656:2: rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1
+            // InternalIdioms.g:2686:1: ( rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1 )
+            // InternalIdioms.g:2687:2: rule__RuleLocator__Group__0__Impl rule__RuleLocator__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__RuleLocator__Group__0__Impl();
@@ -9040,17 +9154,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__0__Impl"
-    // InternalIdioms.g:2663:1: rule__RuleLocator__Group__0__Impl : ( 'rule' ) ;
+    // InternalIdioms.g:2694:1: rule__RuleLocator__Group__0__Impl : ( 'rule' ) ;
     public final void rule__RuleLocator__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2667:1: ( ( 'rule' ) )
-            // InternalIdioms.g:2668:1: ( 'rule' )
+            // InternalIdioms.g:2698:1: ( ( 'rule' ) )
+            // InternalIdioms.g:2699:1: ( 'rule' )
             {
-            // InternalIdioms.g:2668:1: ( 'rule' )
-            // InternalIdioms.g:2669:2: 'rule'
+            // InternalIdioms.g:2699:1: ( 'rule' )
+            // InternalIdioms.g:2700:2: 'rule'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getRuleKeyword_0());
@@ -9081,14 +9195,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__1"
-    // InternalIdioms.g:2678:1: rule__RuleLocator__Group__1 : rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2 ;
+    // InternalIdioms.g:2709:1: rule__RuleLocator__Group__1 : rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2 ;
     public final void rule__RuleLocator__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2682:1: ( rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2 )
-            // InternalIdioms.g:2683:2: rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2
+            // InternalIdioms.g:2713:1: ( rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2 )
+            // InternalIdioms.g:2714:2: rule__RuleLocator__Group__1__Impl rule__RuleLocator__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__RuleLocator__Group__1__Impl();
@@ -9119,22 +9233,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__1__Impl"
-    // InternalIdioms.g:2690:1: rule__RuleLocator__Group__1__Impl : ( ( rule__RuleLocator__Group_1__0 )? ) ;
+    // InternalIdioms.g:2721:1: rule__RuleLocator__Group__1__Impl : ( ( rule__RuleLocator__Group_1__0 )? ) ;
     public final void rule__RuleLocator__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2694:1: ( ( ( rule__RuleLocator__Group_1__0 )? ) )
-            // InternalIdioms.g:2695:1: ( ( rule__RuleLocator__Group_1__0 )? )
+            // InternalIdioms.g:2725:1: ( ( ( rule__RuleLocator__Group_1__0 )? ) )
+            // InternalIdioms.g:2726:1: ( ( rule__RuleLocator__Group_1__0 )? )
             {
-            // InternalIdioms.g:2695:1: ( ( rule__RuleLocator__Group_1__0 )? )
-            // InternalIdioms.g:2696:2: ( rule__RuleLocator__Group_1__0 )?
+            // InternalIdioms.g:2726:1: ( ( rule__RuleLocator__Group_1__0 )? )
+            // InternalIdioms.g:2727:2: ( rule__RuleLocator__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getGroup_1());
             }
-            // InternalIdioms.g:2697:2: ( rule__RuleLocator__Group_1__0 )?
+            // InternalIdioms.g:2728:2: ( rule__RuleLocator__Group_1__0 )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -9147,7 +9261,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt21) {
                 case 1 :
-                    // InternalIdioms.g:2697:3: rule__RuleLocator__Group_1__0
+                    // InternalIdioms.g:2728:3: rule__RuleLocator__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__RuleLocator__Group_1__0();
@@ -9185,14 +9299,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__2"
-    // InternalIdioms.g:2705:1: rule__RuleLocator__Group__2 : rule__RuleLocator__Group__2__Impl ;
+    // InternalIdioms.g:2736:1: rule__RuleLocator__Group__2 : rule__RuleLocator__Group__2__Impl ;
     public final void rule__RuleLocator__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2709:1: ( rule__RuleLocator__Group__2__Impl )
-            // InternalIdioms.g:2710:2: rule__RuleLocator__Group__2__Impl
+            // InternalIdioms.g:2740:1: ( rule__RuleLocator__Group__2__Impl )
+            // InternalIdioms.g:2741:2: rule__RuleLocator__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RuleLocator__Group__2__Impl();
@@ -9218,23 +9332,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group__2__Impl"
-    // InternalIdioms.g:2716:1: rule__RuleLocator__Group__2__Impl : ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) ) ;
+    // InternalIdioms.g:2747:1: rule__RuleLocator__Group__2__Impl : ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) ) ;
     public final void rule__RuleLocator__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2720:1: ( ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) ) )
-            // InternalIdioms.g:2721:1: ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) )
+            // InternalIdioms.g:2751:1: ( ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) ) )
+            // InternalIdioms.g:2752:1: ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) )
             {
-            // InternalIdioms.g:2721:1: ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) )
-            // InternalIdioms.g:2722:2: ( rule__RuleLocator__ReferredRuleAssignment_2 )
+            // InternalIdioms.g:2752:1: ( ( rule__RuleLocator__ReferredRuleAssignment_2 ) )
+            // InternalIdioms.g:2753:2: ( rule__RuleLocator__ReferredRuleAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredRuleAssignment_2());
             }
-            // InternalIdioms.g:2723:2: ( rule__RuleLocator__ReferredRuleAssignment_2 )
-            // InternalIdioms.g:2723:3: rule__RuleLocator__ReferredRuleAssignment_2
+            // InternalIdioms.g:2754:2: ( rule__RuleLocator__ReferredRuleAssignment_2 )
+            // InternalIdioms.g:2754:3: rule__RuleLocator__ReferredRuleAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RuleLocator__ReferredRuleAssignment_2();
@@ -9269,14 +9383,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group_1__0"
-    // InternalIdioms.g:2732:1: rule__RuleLocator__Group_1__0 : rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1 ;
+    // InternalIdioms.g:2763:1: rule__RuleLocator__Group_1__0 : rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1 ;
     public final void rule__RuleLocator__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2736:1: ( rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1 )
-            // InternalIdioms.g:2737:2: rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1
+            // InternalIdioms.g:2767:1: ( rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1 )
+            // InternalIdioms.g:2768:2: rule__RuleLocator__Group_1__0__Impl rule__RuleLocator__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__RuleLocator__Group_1__0__Impl();
@@ -9307,23 +9421,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group_1__0__Impl"
-    // InternalIdioms.g:2744:1: rule__RuleLocator__Group_1__0__Impl : ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) ) ;
+    // InternalIdioms.g:2775:1: rule__RuleLocator__Group_1__0__Impl : ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) ) ;
     public final void rule__RuleLocator__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2748:1: ( ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) ) )
-            // InternalIdioms.g:2749:1: ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) )
+            // InternalIdioms.g:2779:1: ( ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) ) )
+            // InternalIdioms.g:2780:1: ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) )
             {
-            // InternalIdioms.g:2749:1: ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) )
-            // InternalIdioms.g:2750:2: ( rule__RuleLocator__ReferredGrammarAssignment_1_0 )
+            // InternalIdioms.g:2780:1: ( ( rule__RuleLocator__ReferredGrammarAssignment_1_0 ) )
+            // InternalIdioms.g:2781:2: ( rule__RuleLocator__ReferredGrammarAssignment_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredGrammarAssignment_1_0());
             }
-            // InternalIdioms.g:2751:2: ( rule__RuleLocator__ReferredGrammarAssignment_1_0 )
-            // InternalIdioms.g:2751:3: rule__RuleLocator__ReferredGrammarAssignment_1_0
+            // InternalIdioms.g:2782:2: ( rule__RuleLocator__ReferredGrammarAssignment_1_0 )
+            // InternalIdioms.g:2782:3: rule__RuleLocator__ReferredGrammarAssignment_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RuleLocator__ReferredGrammarAssignment_1_0();
@@ -9358,14 +9472,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group_1__1"
-    // InternalIdioms.g:2759:1: rule__RuleLocator__Group_1__1 : rule__RuleLocator__Group_1__1__Impl ;
+    // InternalIdioms.g:2790:1: rule__RuleLocator__Group_1__1 : rule__RuleLocator__Group_1__1__Impl ;
     public final void rule__RuleLocator__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2763:1: ( rule__RuleLocator__Group_1__1__Impl )
-            // InternalIdioms.g:2764:2: rule__RuleLocator__Group_1__1__Impl
+            // InternalIdioms.g:2794:1: ( rule__RuleLocator__Group_1__1__Impl )
+            // InternalIdioms.g:2795:2: rule__RuleLocator__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RuleLocator__Group_1__1__Impl();
@@ -9391,17 +9505,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__Group_1__1__Impl"
-    // InternalIdioms.g:2770:1: rule__RuleLocator__Group_1__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:2801:1: rule__RuleLocator__Group_1__1__Impl : ( '::' ) ;
     public final void rule__RuleLocator__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2774:1: ( ( '::' ) )
-            // InternalIdioms.g:2775:1: ( '::' )
+            // InternalIdioms.g:2805:1: ( ( '::' ) )
+            // InternalIdioms.g:2806:1: ( '::' )
             {
-            // InternalIdioms.g:2775:1: ( '::' )
-            // InternalIdioms.g:2776:2: '::'
+            // InternalIdioms.g:2806:1: ( '::' )
+            // InternalIdioms.g:2807:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getColonColonKeyword_1_1());
@@ -9432,14 +9546,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__0"
-    // InternalIdioms.g:2786:1: rule__SegmentDeclaration__Group__0 : rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1 ;
+    // InternalIdioms.g:2817:1: rule__SegmentDeclaration__Group__0 : rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1 ;
     public final void rule__SegmentDeclaration__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2790:1: ( rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1 )
-            // InternalIdioms.g:2791:2: rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1
+            // InternalIdioms.g:2821:1: ( rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1 )
+            // InternalIdioms.g:2822:2: rule__SegmentDeclaration__Group__0__Impl rule__SegmentDeclaration__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__SegmentDeclaration__Group__0__Impl();
@@ -9470,17 +9584,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__0__Impl"
-    // InternalIdioms.g:2798:1: rule__SegmentDeclaration__Group__0__Impl : ( 'segment' ) ;
+    // InternalIdioms.g:2829:1: rule__SegmentDeclaration__Group__0__Impl : ( 'segment' ) ;
     public final void rule__SegmentDeclaration__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2802:1: ( ( 'segment' ) )
-            // InternalIdioms.g:2803:1: ( 'segment' )
+            // InternalIdioms.g:2833:1: ( ( 'segment' ) )
+            // InternalIdioms.g:2834:1: ( 'segment' )
             {
-            // InternalIdioms.g:2803:1: ( 'segment' )
-            // InternalIdioms.g:2804:2: 'segment'
+            // InternalIdioms.g:2834:1: ( 'segment' )
+            // InternalIdioms.g:2835:2: 'segment'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getSegmentKeyword_0());
@@ -9511,14 +9625,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__1"
-    // InternalIdioms.g:2813:1: rule__SegmentDeclaration__Group__1 : rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2 ;
+    // InternalIdioms.g:2844:1: rule__SegmentDeclaration__Group__1 : rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2 ;
     public final void rule__SegmentDeclaration__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2817:1: ( rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2 )
-            // InternalIdioms.g:2818:2: rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2
+            // InternalIdioms.g:2848:1: ( rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2 )
+            // InternalIdioms.g:2849:2: rule__SegmentDeclaration__Group__1__Impl rule__SegmentDeclaration__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_16);
             rule__SegmentDeclaration__Group__1__Impl();
@@ -9549,23 +9663,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__1__Impl"
-    // InternalIdioms.g:2825:1: rule__SegmentDeclaration__Group__1__Impl : ( ( rule__SegmentDeclaration__NameAssignment_1 ) ) ;
+    // InternalIdioms.g:2856:1: rule__SegmentDeclaration__Group__1__Impl : ( ( rule__SegmentDeclaration__NameAssignment_1 ) ) ;
     public final void rule__SegmentDeclaration__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2829:1: ( ( ( rule__SegmentDeclaration__NameAssignment_1 ) ) )
-            // InternalIdioms.g:2830:1: ( ( rule__SegmentDeclaration__NameAssignment_1 ) )
+            // InternalIdioms.g:2860:1: ( ( ( rule__SegmentDeclaration__NameAssignment_1 ) ) )
+            // InternalIdioms.g:2861:1: ( ( rule__SegmentDeclaration__NameAssignment_1 ) )
             {
-            // InternalIdioms.g:2830:1: ( ( rule__SegmentDeclaration__NameAssignment_1 ) )
-            // InternalIdioms.g:2831:2: ( rule__SegmentDeclaration__NameAssignment_1 )
+            // InternalIdioms.g:2861:1: ( ( rule__SegmentDeclaration__NameAssignment_1 ) )
+            // InternalIdioms.g:2862:2: ( rule__SegmentDeclaration__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getNameAssignment_1());
             }
-            // InternalIdioms.g:2832:2: ( rule__SegmentDeclaration__NameAssignment_1 )
-            // InternalIdioms.g:2832:3: rule__SegmentDeclaration__NameAssignment_1
+            // InternalIdioms.g:2863:2: ( rule__SegmentDeclaration__NameAssignment_1 )
+            // InternalIdioms.g:2863:3: rule__SegmentDeclaration__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SegmentDeclaration__NameAssignment_1();
@@ -9600,14 +9714,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__2"
-    // InternalIdioms.g:2840:1: rule__SegmentDeclaration__Group__2 : rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3 ;
+    // InternalIdioms.g:2871:1: rule__SegmentDeclaration__Group__2 : rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3 ;
     public final void rule__SegmentDeclaration__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2844:1: ( rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3 )
-            // InternalIdioms.g:2845:2: rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3
+            // InternalIdioms.g:2875:1: ( rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3 )
+            // InternalIdioms.g:2876:2: rule__SegmentDeclaration__Group__2__Impl rule__SegmentDeclaration__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__SegmentDeclaration__Group__2__Impl();
@@ -9638,23 +9752,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__2__Impl"
-    // InternalIdioms.g:2852:1: rule__SegmentDeclaration__Group__2__Impl : ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) ) ;
+    // InternalIdioms.g:2883:1: rule__SegmentDeclaration__Group__2__Impl : ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) ) ;
     public final void rule__SegmentDeclaration__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2856:1: ( ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) ) )
-            // InternalIdioms.g:2857:1: ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) )
+            // InternalIdioms.g:2887:1: ( ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) ) )
+            // InternalIdioms.g:2888:1: ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) )
             {
-            // InternalIdioms.g:2857:1: ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) )
-            // InternalIdioms.g:2858:2: ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 )
+            // InternalIdioms.g:2888:1: ( ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 ) )
+            // InternalIdioms.g:2889:2: ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getOwnedSegmentAssignment_2());
             }
-            // InternalIdioms.g:2859:2: ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 )
-            // InternalIdioms.g:2859:3: rule__SegmentDeclaration__OwnedSegmentAssignment_2
+            // InternalIdioms.g:2890:2: ( rule__SegmentDeclaration__OwnedSegmentAssignment_2 )
+            // InternalIdioms.g:2890:3: rule__SegmentDeclaration__OwnedSegmentAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SegmentDeclaration__OwnedSegmentAssignment_2();
@@ -9689,14 +9803,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__3"
-    // InternalIdioms.g:2867:1: rule__SegmentDeclaration__Group__3 : rule__SegmentDeclaration__Group__3__Impl ;
+    // InternalIdioms.g:2898:1: rule__SegmentDeclaration__Group__3 : rule__SegmentDeclaration__Group__3__Impl ;
     public final void rule__SegmentDeclaration__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2871:1: ( rule__SegmentDeclaration__Group__3__Impl )
-            // InternalIdioms.g:2872:2: rule__SegmentDeclaration__Group__3__Impl
+            // InternalIdioms.g:2902:1: ( rule__SegmentDeclaration__Group__3__Impl )
+            // InternalIdioms.g:2903:2: rule__SegmentDeclaration__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SegmentDeclaration__Group__3__Impl();
@@ -9722,17 +9836,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__Group__3__Impl"
-    // InternalIdioms.g:2878:1: rule__SegmentDeclaration__Group__3__Impl : ( ';' ) ;
+    // InternalIdioms.g:2909:1: rule__SegmentDeclaration__Group__3__Impl : ( ';' ) ;
     public final void rule__SegmentDeclaration__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2882:1: ( ( ';' ) )
-            // InternalIdioms.g:2883:1: ( ';' )
+            // InternalIdioms.g:2913:1: ( ( ';' ) )
+            // InternalIdioms.g:2914:1: ( ';' )
             {
-            // InternalIdioms.g:2883:1: ( ';' )
-            // InternalIdioms.g:2884:2: ';'
+            // InternalIdioms.g:2914:1: ( ';' )
+            // InternalIdioms.g:2915:2: ';'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getSemicolonKeyword_3());
@@ -9763,14 +9877,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CustomSegment__Group__0"
-    // InternalIdioms.g:2894:1: rule__CustomSegment__Group__0 : rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1 ;
+    // InternalIdioms.g:2925:1: rule__CustomSegment__Group__0 : rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1 ;
     public final void rule__CustomSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2898:1: ( rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1 )
-            // InternalIdioms.g:2899:2: rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1
+            // InternalIdioms.g:2929:1: ( rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1 )
+            // InternalIdioms.g:2930:2: rule__CustomSegment__Group__0__Impl rule__CustomSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__CustomSegment__Group__0__Impl();
@@ -9801,17 +9915,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CustomSegment__Group__0__Impl"
-    // InternalIdioms.g:2906:1: rule__CustomSegment__Group__0__Impl : ( 'custom' ) ;
+    // InternalIdioms.g:2937:1: rule__CustomSegment__Group__0__Impl : ( 'custom' ) ;
     public final void rule__CustomSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2910:1: ( ( 'custom' ) )
-            // InternalIdioms.g:2911:1: ( 'custom' )
+            // InternalIdioms.g:2941:1: ( ( 'custom' ) )
+            // InternalIdioms.g:2942:1: ( 'custom' )
             {
-            // InternalIdioms.g:2911:1: ( 'custom' )
-            // InternalIdioms.g:2912:2: 'custom'
+            // InternalIdioms.g:2942:1: ( 'custom' )
+            // InternalIdioms.g:2943:2: 'custom'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCustomSegmentAccess().getCustomKeyword_0());
@@ -9842,14 +9956,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CustomSegment__Group__1"
-    // InternalIdioms.g:2921:1: rule__CustomSegment__Group__1 : rule__CustomSegment__Group__1__Impl ;
+    // InternalIdioms.g:2952:1: rule__CustomSegment__Group__1 : rule__CustomSegment__Group__1__Impl ;
     public final void rule__CustomSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2925:1: ( rule__CustomSegment__Group__1__Impl )
-            // InternalIdioms.g:2926:2: rule__CustomSegment__Group__1__Impl
+            // InternalIdioms.g:2956:1: ( rule__CustomSegment__Group__1__Impl )
+            // InternalIdioms.g:2957:2: rule__CustomSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CustomSegment__Group__1__Impl();
@@ -9875,23 +9989,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CustomSegment__Group__1__Impl"
-    // InternalIdioms.g:2932:1: rule__CustomSegment__Group__1__Impl : ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) ) ;
+    // InternalIdioms.g:2963:1: rule__CustomSegment__Group__1__Impl : ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) ) ;
     public final void rule__CustomSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2936:1: ( ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) ) )
-            // InternalIdioms.g:2937:1: ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) )
+            // InternalIdioms.g:2967:1: ( ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) ) )
+            // InternalIdioms.g:2968:1: ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) )
             {
-            // InternalIdioms.g:2937:1: ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) )
-            // InternalIdioms.g:2938:2: ( rule__CustomSegment__SupportClassNameAssignment_1 )
+            // InternalIdioms.g:2968:1: ( ( rule__CustomSegment__SupportClassNameAssignment_1 ) )
+            // InternalIdioms.g:2969:2: ( rule__CustomSegment__SupportClassNameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCustomSegmentAccess().getSupportClassNameAssignment_1());
             }
-            // InternalIdioms.g:2939:2: ( rule__CustomSegment__SupportClassNameAssignment_1 )
-            // InternalIdioms.g:2939:3: rule__CustomSegment__SupportClassNameAssignment_1
+            // InternalIdioms.g:2970:2: ( rule__CustomSegment__SupportClassNameAssignment_1 )
+            // InternalIdioms.g:2970:3: rule__CustomSegment__SupportClassNameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CustomSegment__SupportClassNameAssignment_1();
@@ -9926,14 +10040,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HalfNewLineSegment__Group__0"
-    // InternalIdioms.g:2948:1: rule__HalfNewLineSegment__Group__0 : rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1 ;
+    // InternalIdioms.g:2979:1: rule__HalfNewLineSegment__Group__0 : rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1 ;
     public final void rule__HalfNewLineSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2952:1: ( rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1 )
-            // InternalIdioms.g:2953:2: rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1
+            // InternalIdioms.g:2983:1: ( rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1 )
+            // InternalIdioms.g:2984:2: rule__HalfNewLineSegment__Group__0__Impl rule__HalfNewLineSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_17);
             rule__HalfNewLineSegment__Group__0__Impl();
@@ -9964,23 +10078,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HalfNewLineSegment__Group__0__Impl"
-    // InternalIdioms.g:2960:1: rule__HalfNewLineSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:2991:1: rule__HalfNewLineSegment__Group__0__Impl : ( () ) ;
     public final void rule__HalfNewLineSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2964:1: ( ( () ) )
-            // InternalIdioms.g:2965:1: ( () )
+            // InternalIdioms.g:2995:1: ( ( () ) )
+            // InternalIdioms.g:2996:1: ( () )
             {
-            // InternalIdioms.g:2965:1: ( () )
-            // InternalIdioms.g:2966:2: ()
+            // InternalIdioms.g:2996:1: ( () )
+            // InternalIdioms.g:2997:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHalfNewLineSegmentAccess().getHalfNewLineSegmentAction_0());
             }
-            // InternalIdioms.g:2967:2: ()
-            // InternalIdioms.g:2967:3:
+            // InternalIdioms.g:2998:2: ()
+            // InternalIdioms.g:2998:3:
             {
             }
 
@@ -10005,14 +10119,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HalfNewLineSegment__Group__1"
-    // InternalIdioms.g:2975:1: rule__HalfNewLineSegment__Group__1 : rule__HalfNewLineSegment__Group__1__Impl ;
+    // InternalIdioms.g:3006:1: rule__HalfNewLineSegment__Group__1 : rule__HalfNewLineSegment__Group__1__Impl ;
     public final void rule__HalfNewLineSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2979:1: ( rule__HalfNewLineSegment__Group__1__Impl )
-            // InternalIdioms.g:2980:2: rule__HalfNewLineSegment__Group__1__Impl
+            // InternalIdioms.g:3010:1: ( rule__HalfNewLineSegment__Group__1__Impl )
+            // InternalIdioms.g:3011:2: rule__HalfNewLineSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__HalfNewLineSegment__Group__1__Impl();
@@ -10038,17 +10152,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HalfNewLineSegment__Group__1__Impl"
-    // InternalIdioms.g:2986:1: rule__HalfNewLineSegment__Group__1__Impl : ( 'half-new-line' ) ;
+    // InternalIdioms.g:3017:1: rule__HalfNewLineSegment__Group__1__Impl : ( 'half-new-line' ) ;
     public final void rule__HalfNewLineSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:2990:1: ( ( 'half-new-line' ) )
-            // InternalIdioms.g:2991:1: ( 'half-new-line' )
+            // InternalIdioms.g:3021:1: ( ( 'half-new-line' ) )
+            // InternalIdioms.g:3022:1: ( 'half-new-line' )
             {
-            // InternalIdioms.g:2991:1: ( 'half-new-line' )
-            // InternalIdioms.g:2992:2: 'half-new-line'
+            // InternalIdioms.g:3022:1: ( 'half-new-line' )
+            // InternalIdioms.g:3023:2: 'half-new-line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHalfNewLineSegmentAccess().getHalfNewLineKeyword_1());
@@ -10079,14 +10193,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NewLineSegment__Group__0"
-    // InternalIdioms.g:3002:1: rule__NewLineSegment__Group__0 : rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1 ;
+    // InternalIdioms.g:3033:1: rule__NewLineSegment__Group__0 : rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1 ;
     public final void rule__NewLineSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3006:1: ( rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1 )
-            // InternalIdioms.g:3007:2: rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1
+            // InternalIdioms.g:3037:1: ( rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1 )
+            // InternalIdioms.g:3038:2: rule__NewLineSegment__Group__0__Impl rule__NewLineSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_18);
             rule__NewLineSegment__Group__0__Impl();
@@ -10117,23 +10231,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NewLineSegment__Group__0__Impl"
-    // InternalIdioms.g:3014:1: rule__NewLineSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3045:1: rule__NewLineSegment__Group__0__Impl : ( () ) ;
     public final void rule__NewLineSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3018:1: ( ( () ) )
-            // InternalIdioms.g:3019:1: ( () )
+            // InternalIdioms.g:3049:1: ( ( () ) )
+            // InternalIdioms.g:3050:1: ( () )
             {
-            // InternalIdioms.g:3019:1: ( () )
-            // InternalIdioms.g:3020:2: ()
+            // InternalIdioms.g:3050:1: ( () )
+            // InternalIdioms.g:3051:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNewLineSegmentAccess().getNewLineSegmentAction_0());
             }
-            // InternalIdioms.g:3021:2: ()
-            // InternalIdioms.g:3021:3:
+            // InternalIdioms.g:3052:2: ()
+            // InternalIdioms.g:3052:3:
             {
             }
 
@@ -10158,14 +10272,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NewLineSegment__Group__1"
-    // InternalIdioms.g:3029:1: rule__NewLineSegment__Group__1 : rule__NewLineSegment__Group__1__Impl ;
+    // InternalIdioms.g:3060:1: rule__NewLineSegment__Group__1 : rule__NewLineSegment__Group__1__Impl ;
     public final void rule__NewLineSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3033:1: ( rule__NewLineSegment__Group__1__Impl )
-            // InternalIdioms.g:3034:2: rule__NewLineSegment__Group__1__Impl
+            // InternalIdioms.g:3064:1: ( rule__NewLineSegment__Group__1__Impl )
+            // InternalIdioms.g:3065:2: rule__NewLineSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NewLineSegment__Group__1__Impl();
@@ -10191,17 +10305,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NewLineSegment__Group__1__Impl"
-    // InternalIdioms.g:3040:1: rule__NewLineSegment__Group__1__Impl : ( 'new-line' ) ;
+    // InternalIdioms.g:3071:1: rule__NewLineSegment__Group__1__Impl : ( 'new-line' ) ;
     public final void rule__NewLineSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3044:1: ( ( 'new-line' ) )
-            // InternalIdioms.g:3045:1: ( 'new-line' )
+            // InternalIdioms.g:3075:1: ( ( 'new-line' ) )
+            // InternalIdioms.g:3076:1: ( 'new-line' )
             {
-            // InternalIdioms.g:3045:1: ( 'new-line' )
-            // InternalIdioms.g:3046:2: 'new-line'
+            // InternalIdioms.g:3076:1: ( 'new-line' )
+            // InternalIdioms.g:3077:2: 'new-line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNewLineSegmentAccess().getNewLineKeyword_1());
@@ -10231,17 +10345,170 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__NewLineSegment__Group__1__Impl"
 
 
+    // $ANTLR start "rule__NoNewLineSegment__Group__0"
+    // InternalIdioms.g:3087:1: rule__NoNewLineSegment__Group__0 : rule__NoNewLineSegment__Group__0__Impl rule__NoNewLineSegment__Group__1 ;
+    public final void rule__NoNewLineSegment__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+
+        try {
+            // InternalIdioms.g:3091:1: ( rule__NoNewLineSegment__Group__0__Impl rule__NoNewLineSegment__Group__1 )
+            // InternalIdioms.g:3092:2: rule__NoNewLineSegment__Group__0__Impl rule__NoNewLineSegment__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_19);
+            rule__NoNewLineSegment__Group__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__NoNewLineSegment__Group__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__NoNewLineSegment__Group__0"
+
+
+    // $ANTLR start "rule__NoNewLineSegment__Group__0__Impl"
+    // InternalIdioms.g:3099:1: rule__NoNewLineSegment__Group__0__Impl : ( () ) ;
+    public final void rule__NoNewLineSegment__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+
+        try {
+            // InternalIdioms.g:3103:1: ( ( () ) )
+            // InternalIdioms.g:3104:1: ( () )
+            {
+            // InternalIdioms.g:3104:1: ( () )
+            // InternalIdioms.g:3105:2: ()
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getNoNewLineSegmentAccess().getNoNewLineSegmentAction_0());
+            }
+            // InternalIdioms.g:3106:2: ()
+            // InternalIdioms.g:3106:3:
+            {
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getNoNewLineSegmentAccess().getNoNewLineSegmentAction_0());
+            }
+
+            }
+
+
+            }
+
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__NoNewLineSegment__Group__0__Impl"
+
+
+    // $ANTLR start "rule__NoNewLineSegment__Group__1"
+    // InternalIdioms.g:3114:1: rule__NoNewLineSegment__Group__1 : rule__NoNewLineSegment__Group__1__Impl ;
+    public final void rule__NoNewLineSegment__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+
+        try {
+            // InternalIdioms.g:3118:1: ( rule__NoNewLineSegment__Group__1__Impl )
+            // InternalIdioms.g:3119:2: rule__NoNewLineSegment__Group__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__NoNewLineSegment__Group__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__NoNewLineSegment__Group__1"
+
+
+    // $ANTLR start "rule__NoNewLineSegment__Group__1__Impl"
+    // InternalIdioms.g:3125:1: rule__NoNewLineSegment__Group__1__Impl : ( 'no-new-line' ) ;
+    public final void rule__NoNewLineSegment__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+
+        try {
+            // InternalIdioms.g:3129:1: ( ( 'no-new-line' ) )
+            // InternalIdioms.g:3130:1: ( 'no-new-line' )
+            {
+            // InternalIdioms.g:3130:1: ( 'no-new-line' )
+            // InternalIdioms.g:3131:2: 'no-new-line'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getNoNewLineSegmentAccess().getNoNewLineKeyword_1());
+            }
+            match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getNoNewLineSegmentAccess().getNoNewLineKeyword_1());
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__NoNewLineSegment__Group__1__Impl"
+
+
     // $ANTLR start "rule__NoSpaceSegment__Group__0"
-    // InternalIdioms.g:3056:1: rule__NoSpaceSegment__Group__0 : rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1 ;
+    // InternalIdioms.g:3141:1: rule__NoSpaceSegment__Group__0 : rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1 ;
     public final void rule__NoSpaceSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3060:1: ( rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1 )
-            // InternalIdioms.g:3061:2: rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1
+            // InternalIdioms.g:3145:1: ( rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1 )
+            // InternalIdioms.g:3146:2: rule__NoSpaceSegment__Group__0__Impl rule__NoSpaceSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_19);
+            pushFollow(FollowSets000.FOLLOW_20);
             rule__NoSpaceSegment__Group__0__Impl();
 
             state._fsp--;
@@ -10270,23 +10537,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NoSpaceSegment__Group__0__Impl"
-    // InternalIdioms.g:3068:1: rule__NoSpaceSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3153:1: rule__NoSpaceSegment__Group__0__Impl : ( () ) ;
     public final void rule__NoSpaceSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3072:1: ( ( () ) )
-            // InternalIdioms.g:3073:1: ( () )
+            // InternalIdioms.g:3157:1: ( ( () ) )
+            // InternalIdioms.g:3158:1: ( () )
             {
-            // InternalIdioms.g:3073:1: ( () )
-            // InternalIdioms.g:3074:2: ()
+            // InternalIdioms.g:3158:1: ( () )
+            // InternalIdioms.g:3159:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNoSpaceSegmentAccess().getNoSpaceSegmentAction_0());
             }
-            // InternalIdioms.g:3075:2: ()
-            // InternalIdioms.g:3075:3:
+            // InternalIdioms.g:3160:2: ()
+            // InternalIdioms.g:3160:3:
             {
             }
 
@@ -10311,14 +10578,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NoSpaceSegment__Group__1"
-    // InternalIdioms.g:3083:1: rule__NoSpaceSegment__Group__1 : rule__NoSpaceSegment__Group__1__Impl ;
+    // InternalIdioms.g:3168:1: rule__NoSpaceSegment__Group__1 : rule__NoSpaceSegment__Group__1__Impl ;
     public final void rule__NoSpaceSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3087:1: ( rule__NoSpaceSegment__Group__1__Impl )
-            // InternalIdioms.g:3088:2: rule__NoSpaceSegment__Group__1__Impl
+            // InternalIdioms.g:3172:1: ( rule__NoSpaceSegment__Group__1__Impl )
+            // InternalIdioms.g:3173:2: rule__NoSpaceSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NoSpaceSegment__Group__1__Impl();
@@ -10344,22 +10611,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NoSpaceSegment__Group__1__Impl"
-    // InternalIdioms.g:3094:1: rule__NoSpaceSegment__Group__1__Impl : ( 'no-space' ) ;
+    // InternalIdioms.g:3179:1: rule__NoSpaceSegment__Group__1__Impl : ( 'no-space' ) ;
     public final void rule__NoSpaceSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3098:1: ( ( 'no-space' ) )
-            // InternalIdioms.g:3099:1: ( 'no-space' )
+            // InternalIdioms.g:3183:1: ( ( 'no-space' ) )
+            // InternalIdioms.g:3184:1: ( 'no-space' )
             {
-            // InternalIdioms.g:3099:1: ( 'no-space' )
-            // InternalIdioms.g:3100:2: 'no-space'
+            // InternalIdioms.g:3184:1: ( 'no-space' )
+            // InternalIdioms.g:3185:2: 'no-space'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNoSpaceSegmentAccess().getNoSpaceKeyword_1());
             }
-            match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNoSpaceSegmentAccess().getNoSpaceKeyword_1());
             }
@@ -10385,16 +10652,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PopSegment__Group__0"
-    // InternalIdioms.g:3110:1: rule__PopSegment__Group__0 : rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1 ;
+    // InternalIdioms.g:3195:1: rule__PopSegment__Group__0 : rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1 ;
     public final void rule__PopSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3114:1: ( rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1 )
-            // InternalIdioms.g:3115:2: rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1
+            // InternalIdioms.g:3199:1: ( rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1 )
+            // InternalIdioms.g:3200:2: rule__PopSegment__Group__0__Impl rule__PopSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_20);
+            pushFollow(FollowSets000.FOLLOW_21);
             rule__PopSegment__Group__0__Impl();
 
             state._fsp--;
@@ -10423,23 +10690,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PopSegment__Group__0__Impl"
-    // InternalIdioms.g:3122:1: rule__PopSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3207:1: rule__PopSegment__Group__0__Impl : ( () ) ;
     public final void rule__PopSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3126:1: ( ( () ) )
-            // InternalIdioms.g:3127:1: ( () )
+            // InternalIdioms.g:3211:1: ( ( () ) )
+            // InternalIdioms.g:3212:1: ( () )
             {
-            // InternalIdioms.g:3127:1: ( () )
-            // InternalIdioms.g:3128:2: ()
+            // InternalIdioms.g:3212:1: ( () )
+            // InternalIdioms.g:3213:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPopSegmentAccess().getPopSegmentAction_0());
             }
-            // InternalIdioms.g:3129:2: ()
-            // InternalIdioms.g:3129:3:
+            // InternalIdioms.g:3214:2: ()
+            // InternalIdioms.g:3214:3:
             {
             }
 
@@ -10464,14 +10731,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PopSegment__Group__1"
-    // InternalIdioms.g:3137:1: rule__PopSegment__Group__1 : rule__PopSegment__Group__1__Impl ;
+    // InternalIdioms.g:3222:1: rule__PopSegment__Group__1 : rule__PopSegment__Group__1__Impl ;
     public final void rule__PopSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3141:1: ( rule__PopSegment__Group__1__Impl )
-            // InternalIdioms.g:3142:2: rule__PopSegment__Group__1__Impl
+            // InternalIdioms.g:3226:1: ( rule__PopSegment__Group__1__Impl )
+            // InternalIdioms.g:3227:2: rule__PopSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PopSegment__Group__1__Impl();
@@ -10497,22 +10764,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PopSegment__Group__1__Impl"
-    // InternalIdioms.g:3148:1: rule__PopSegment__Group__1__Impl : ( 'pop' ) ;
+    // InternalIdioms.g:3233:1: rule__PopSegment__Group__1__Impl : ( 'pop' ) ;
     public final void rule__PopSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3152:1: ( ( 'pop' ) )
-            // InternalIdioms.g:3153:1: ( 'pop' )
+            // InternalIdioms.g:3237:1: ( ( 'pop' ) )
+            // InternalIdioms.g:3238:1: ( 'pop' )
             {
-            // InternalIdioms.g:3153:1: ( 'pop' )
-            // InternalIdioms.g:3154:2: 'pop'
+            // InternalIdioms.g:3238:1: ( 'pop' )
+            // InternalIdioms.g:3239:2: 'pop'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPopSegmentAccess().getPopKeyword_1());
             }
-            match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPopSegmentAccess().getPopKeyword_1());
             }
@@ -10538,16 +10805,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostCommentSegment__Group__0"
-    // InternalIdioms.g:3164:1: rule__PostCommentSegment__Group__0 : rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1 ;
+    // InternalIdioms.g:3249:1: rule__PostCommentSegment__Group__0 : rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1 ;
     public final void rule__PostCommentSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3168:1: ( rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1 )
-            // InternalIdioms.g:3169:2: rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1
+            // InternalIdioms.g:3253:1: ( rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1 )
+            // InternalIdioms.g:3254:2: rule__PostCommentSegment__Group__0__Impl rule__PostCommentSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_21);
+            pushFollow(FollowSets000.FOLLOW_22);
             rule__PostCommentSegment__Group__0__Impl();
 
             state._fsp--;
@@ -10576,23 +10843,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostCommentSegment__Group__0__Impl"
-    // InternalIdioms.g:3176:1: rule__PostCommentSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3261:1: rule__PostCommentSegment__Group__0__Impl : ( () ) ;
     public final void rule__PostCommentSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3180:1: ( ( () ) )
-            // InternalIdioms.g:3181:1: ( () )
+            // InternalIdioms.g:3265:1: ( ( () ) )
+            // InternalIdioms.g:3266:1: ( () )
             {
-            // InternalIdioms.g:3181:1: ( () )
-            // InternalIdioms.g:3182:2: ()
+            // InternalIdioms.g:3266:1: ( () )
+            // InternalIdioms.g:3267:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostCommentSegmentAccess().getPostCommentSegmentAction_0());
             }
-            // InternalIdioms.g:3183:2: ()
-            // InternalIdioms.g:3183:3:
+            // InternalIdioms.g:3268:2: ()
+            // InternalIdioms.g:3268:3:
             {
             }
 
@@ -10617,14 +10884,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostCommentSegment__Group__1"
-    // InternalIdioms.g:3191:1: rule__PostCommentSegment__Group__1 : rule__PostCommentSegment__Group__1__Impl ;
+    // InternalIdioms.g:3276:1: rule__PostCommentSegment__Group__1 : rule__PostCommentSegment__Group__1__Impl ;
     public final void rule__PostCommentSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3195:1: ( rule__PostCommentSegment__Group__1__Impl )
-            // InternalIdioms.g:3196:2: rule__PostCommentSegment__Group__1__Impl
+            // InternalIdioms.g:3280:1: ( rule__PostCommentSegment__Group__1__Impl )
+            // InternalIdioms.g:3281:2: rule__PostCommentSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PostCommentSegment__Group__1__Impl();
@@ -10650,22 +10917,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostCommentSegment__Group__1__Impl"
-    // InternalIdioms.g:3202:1: rule__PostCommentSegment__Group__1__Impl : ( 'post-comment' ) ;
+    // InternalIdioms.g:3287:1: rule__PostCommentSegment__Group__1__Impl : ( 'post-comment' ) ;
     public final void rule__PostCommentSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3206:1: ( ( 'post-comment' ) )
-            // InternalIdioms.g:3207:1: ( 'post-comment' )
+            // InternalIdioms.g:3291:1: ( ( 'post-comment' ) )
+            // InternalIdioms.g:3292:1: ( 'post-comment' )
             {
-            // InternalIdioms.g:3207:1: ( 'post-comment' )
-            // InternalIdioms.g:3208:2: 'post-comment'
+            // InternalIdioms.g:3292:1: ( 'post-comment' )
+            // InternalIdioms.g:3293:2: 'post-comment'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostCommentSegmentAccess().getPostCommentKeyword_1());
             }
-            match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPostCommentSegmentAccess().getPostCommentKeyword_1());
             }
@@ -10691,16 +10958,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PreCommentSegment__Group__0"
-    // InternalIdioms.g:3218:1: rule__PreCommentSegment__Group__0 : rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1 ;
+    // InternalIdioms.g:3303:1: rule__PreCommentSegment__Group__0 : rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1 ;
     public final void rule__PreCommentSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3222:1: ( rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1 )
-            // InternalIdioms.g:3223:2: rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1
+            // InternalIdioms.g:3307:1: ( rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1 )
+            // InternalIdioms.g:3308:2: rule__PreCommentSegment__Group__0__Impl rule__PreCommentSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_22);
+            pushFollow(FollowSets000.FOLLOW_23);
             rule__PreCommentSegment__Group__0__Impl();
 
             state._fsp--;
@@ -10729,23 +10996,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PreCommentSegment__Group__0__Impl"
-    // InternalIdioms.g:3230:1: rule__PreCommentSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3315:1: rule__PreCommentSegment__Group__0__Impl : ( () ) ;
     public final void rule__PreCommentSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3234:1: ( ( () ) )
-            // InternalIdioms.g:3235:1: ( () )
+            // InternalIdioms.g:3319:1: ( ( () ) )
+            // InternalIdioms.g:3320:1: ( () )
             {
-            // InternalIdioms.g:3235:1: ( () )
-            // InternalIdioms.g:3236:2: ()
+            // InternalIdioms.g:3320:1: ( () )
+            // InternalIdioms.g:3321:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPreCommentSegmentAccess().getPreCommentSegmentAction_0());
             }
-            // InternalIdioms.g:3237:2: ()
-            // InternalIdioms.g:3237:3:
+            // InternalIdioms.g:3322:2: ()
+            // InternalIdioms.g:3322:3:
             {
             }
 
@@ -10770,14 +11037,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PreCommentSegment__Group__1"
-    // InternalIdioms.g:3245:1: rule__PreCommentSegment__Group__1 : rule__PreCommentSegment__Group__1__Impl ;
+    // InternalIdioms.g:3330:1: rule__PreCommentSegment__Group__1 : rule__PreCommentSegment__Group__1__Impl ;
     public final void rule__PreCommentSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3249:1: ( rule__PreCommentSegment__Group__1__Impl )
-            // InternalIdioms.g:3250:2: rule__PreCommentSegment__Group__1__Impl
+            // InternalIdioms.g:3334:1: ( rule__PreCommentSegment__Group__1__Impl )
+            // InternalIdioms.g:3335:2: rule__PreCommentSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PreCommentSegment__Group__1__Impl();
@@ -10803,22 +11070,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PreCommentSegment__Group__1__Impl"
-    // InternalIdioms.g:3256:1: rule__PreCommentSegment__Group__1__Impl : ( 'pre-comment' ) ;
+    // InternalIdioms.g:3341:1: rule__PreCommentSegment__Group__1__Impl : ( 'pre-comment' ) ;
     public final void rule__PreCommentSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3260:1: ( ( 'pre-comment' ) )
-            // InternalIdioms.g:3261:1: ( 'pre-comment' )
+            // InternalIdioms.g:3345:1: ( ( 'pre-comment' ) )
+            // InternalIdioms.g:3346:1: ( 'pre-comment' )
             {
-            // InternalIdioms.g:3261:1: ( 'pre-comment' )
-            // InternalIdioms.g:3262:2: 'pre-comment'
+            // InternalIdioms.g:3346:1: ( 'pre-comment' )
+            // InternalIdioms.g:3347:2: 'pre-comment'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPreCommentSegmentAccess().getPreCommentKeyword_1());
             }
-            match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPreCommentSegmentAccess().getPreCommentKeyword_1());
             }
@@ -10844,16 +11111,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PushSegment__Group__0"
-    // InternalIdioms.g:3272:1: rule__PushSegment__Group__0 : rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1 ;
+    // InternalIdioms.g:3357:1: rule__PushSegment__Group__0 : rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1 ;
     public final void rule__PushSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3276:1: ( rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1 )
-            // InternalIdioms.g:3277:2: rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1
+            // InternalIdioms.g:3361:1: ( rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1 )
+            // InternalIdioms.g:3362:2: rule__PushSegment__Group__0__Impl rule__PushSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_23);
+            pushFollow(FollowSets000.FOLLOW_24);
             rule__PushSegment__Group__0__Impl();
 
             state._fsp--;
@@ -10882,23 +11149,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PushSegment__Group__0__Impl"
-    // InternalIdioms.g:3284:1: rule__PushSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3369:1: rule__PushSegment__Group__0__Impl : ( () ) ;
     public final void rule__PushSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3288:1: ( ( () ) )
-            // InternalIdioms.g:3289:1: ( () )
+            // InternalIdioms.g:3373:1: ( ( () ) )
+            // InternalIdioms.g:3374:1: ( () )
             {
-            // InternalIdioms.g:3289:1: ( () )
-            // InternalIdioms.g:3290:2: ()
+            // InternalIdioms.g:3374:1: ( () )
+            // InternalIdioms.g:3375:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPushSegmentAccess().getPushSegmentAction_0());
             }
-            // InternalIdioms.g:3291:2: ()
-            // InternalIdioms.g:3291:3:
+            // InternalIdioms.g:3376:2: ()
+            // InternalIdioms.g:3376:3:
             {
             }
 
@@ -10923,14 +11190,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PushSegment__Group__1"
-    // InternalIdioms.g:3299:1: rule__PushSegment__Group__1 : rule__PushSegment__Group__1__Impl ;
+    // InternalIdioms.g:3384:1: rule__PushSegment__Group__1 : rule__PushSegment__Group__1__Impl ;
     public final void rule__PushSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3303:1: ( rule__PushSegment__Group__1__Impl )
-            // InternalIdioms.g:3304:2: rule__PushSegment__Group__1__Impl
+            // InternalIdioms.g:3388:1: ( rule__PushSegment__Group__1__Impl )
+            // InternalIdioms.g:3389:2: rule__PushSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PushSegment__Group__1__Impl();
@@ -10956,22 +11223,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PushSegment__Group__1__Impl"
-    // InternalIdioms.g:3310:1: rule__PushSegment__Group__1__Impl : ( 'push' ) ;
+    // InternalIdioms.g:3395:1: rule__PushSegment__Group__1__Impl : ( 'push' ) ;
     public final void rule__PushSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3314:1: ( ( 'push' ) )
-            // InternalIdioms.g:3315:1: ( 'push' )
+            // InternalIdioms.g:3399:1: ( ( 'push' ) )
+            // InternalIdioms.g:3400:1: ( 'push' )
             {
-            // InternalIdioms.g:3315:1: ( 'push' )
-            // InternalIdioms.g:3316:2: 'push'
+            // InternalIdioms.g:3400:1: ( 'push' )
+            // InternalIdioms.g:3401:2: 'push'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPushSegmentAccess().getPushKeyword_1());
             }
-            match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPushSegmentAccess().getPushKeyword_1());
             }
@@ -10997,16 +11264,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftNewLineSegment__Group__0"
-    // InternalIdioms.g:3326:1: rule__SoftNewLineSegment__Group__0 : rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1 ;
+    // InternalIdioms.g:3411:1: rule__SoftNewLineSegment__Group__0 : rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1 ;
     public final void rule__SoftNewLineSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3330:1: ( rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1 )
-            // InternalIdioms.g:3331:2: rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1
+            // InternalIdioms.g:3415:1: ( rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1 )
+            // InternalIdioms.g:3416:2: rule__SoftNewLineSegment__Group__0__Impl rule__SoftNewLineSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_24);
+            pushFollow(FollowSets000.FOLLOW_25);
             rule__SoftNewLineSegment__Group__0__Impl();
 
             state._fsp--;
@@ -11035,23 +11302,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftNewLineSegment__Group__0__Impl"
-    // InternalIdioms.g:3338:1: rule__SoftNewLineSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3423:1: rule__SoftNewLineSegment__Group__0__Impl : ( () ) ;
     public final void rule__SoftNewLineSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3342:1: ( ( () ) )
-            // InternalIdioms.g:3343:1: ( () )
+            // InternalIdioms.g:3427:1: ( ( () ) )
+            // InternalIdioms.g:3428:1: ( () )
             {
-            // InternalIdioms.g:3343:1: ( () )
-            // InternalIdioms.g:3344:2: ()
+            // InternalIdioms.g:3428:1: ( () )
+            // InternalIdioms.g:3429:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftNewLineSegmentAccess().getSoftNewLineSegmentAction_0());
             }
-            // InternalIdioms.g:3345:2: ()
-            // InternalIdioms.g:3345:3:
+            // InternalIdioms.g:3430:2: ()
+            // InternalIdioms.g:3430:3:
             {
             }
 
@@ -11076,14 +11343,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftNewLineSegment__Group__1"
-    // InternalIdioms.g:3353:1: rule__SoftNewLineSegment__Group__1 : rule__SoftNewLineSegment__Group__1__Impl ;
+    // InternalIdioms.g:3438:1: rule__SoftNewLineSegment__Group__1 : rule__SoftNewLineSegment__Group__1__Impl ;
     public final void rule__SoftNewLineSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3357:1: ( rule__SoftNewLineSegment__Group__1__Impl )
-            // InternalIdioms.g:3358:2: rule__SoftNewLineSegment__Group__1__Impl
+            // InternalIdioms.g:3442:1: ( rule__SoftNewLineSegment__Group__1__Impl )
+            // InternalIdioms.g:3443:2: rule__SoftNewLineSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SoftNewLineSegment__Group__1__Impl();
@@ -11109,22 +11376,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftNewLineSegment__Group__1__Impl"
-    // InternalIdioms.g:3364:1: rule__SoftNewLineSegment__Group__1__Impl : ( 'soft-new-line' ) ;
+    // InternalIdioms.g:3449:1: rule__SoftNewLineSegment__Group__1__Impl : ( 'soft-new-line' ) ;
     public final void rule__SoftNewLineSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3368:1: ( ( 'soft-new-line' ) )
-            // InternalIdioms.g:3369:1: ( 'soft-new-line' )
+            // InternalIdioms.g:3453:1: ( ( 'soft-new-line' ) )
+            // InternalIdioms.g:3454:1: ( 'soft-new-line' )
             {
-            // InternalIdioms.g:3369:1: ( 'soft-new-line' )
-            // InternalIdioms.g:3370:2: 'soft-new-line'
+            // InternalIdioms.g:3454:1: ( 'soft-new-line' )
+            // InternalIdioms.g:3455:2: 'soft-new-line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftNewLineSegmentAccess().getSoftNewLineKeyword_1());
             }
-            match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSoftNewLineSegmentAccess().getSoftNewLineKeyword_1());
             }
@@ -11150,16 +11417,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftSpaceSegment__Group__0"
-    // InternalIdioms.g:3380:1: rule__SoftSpaceSegment__Group__0 : rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1 ;
+    // InternalIdioms.g:3465:1: rule__SoftSpaceSegment__Group__0 : rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1 ;
     public final void rule__SoftSpaceSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3384:1: ( rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1 )
-            // InternalIdioms.g:3385:2: rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1
+            // InternalIdioms.g:3469:1: ( rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1 )
+            // InternalIdioms.g:3470:2: rule__SoftSpaceSegment__Group__0__Impl rule__SoftSpaceSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_25);
+            pushFollow(FollowSets000.FOLLOW_26);
             rule__SoftSpaceSegment__Group__0__Impl();
 
             state._fsp--;
@@ -11188,23 +11455,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftSpaceSegment__Group__0__Impl"
-    // InternalIdioms.g:3392:1: rule__SoftSpaceSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3477:1: rule__SoftSpaceSegment__Group__0__Impl : ( () ) ;
     public final void rule__SoftSpaceSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3396:1: ( ( () ) )
-            // InternalIdioms.g:3397:1: ( () )
+            // InternalIdioms.g:3481:1: ( ( () ) )
+            // InternalIdioms.g:3482:1: ( () )
             {
-            // InternalIdioms.g:3397:1: ( () )
-            // InternalIdioms.g:3398:2: ()
+            // InternalIdioms.g:3482:1: ( () )
+            // InternalIdioms.g:3483:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftSpaceSegmentAccess().getSoftSpaceSegmentAction_0());
             }
-            // InternalIdioms.g:3399:2: ()
-            // InternalIdioms.g:3399:3:
+            // InternalIdioms.g:3484:2: ()
+            // InternalIdioms.g:3484:3:
             {
             }
 
@@ -11229,14 +11496,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftSpaceSegment__Group__1"
-    // InternalIdioms.g:3407:1: rule__SoftSpaceSegment__Group__1 : rule__SoftSpaceSegment__Group__1__Impl ;
+    // InternalIdioms.g:3492:1: rule__SoftSpaceSegment__Group__1 : rule__SoftSpaceSegment__Group__1__Impl ;
     public final void rule__SoftSpaceSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3411:1: ( rule__SoftSpaceSegment__Group__1__Impl )
-            // InternalIdioms.g:3412:2: rule__SoftSpaceSegment__Group__1__Impl
+            // InternalIdioms.g:3496:1: ( rule__SoftSpaceSegment__Group__1__Impl )
+            // InternalIdioms.g:3497:2: rule__SoftSpaceSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SoftSpaceSegment__Group__1__Impl();
@@ -11262,22 +11529,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SoftSpaceSegment__Group__1__Impl"
-    // InternalIdioms.g:3418:1: rule__SoftSpaceSegment__Group__1__Impl : ( 'soft-space' ) ;
+    // InternalIdioms.g:3503:1: rule__SoftSpaceSegment__Group__1__Impl : ( 'soft-space' ) ;
     public final void rule__SoftSpaceSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3422:1: ( ( 'soft-space' ) )
-            // InternalIdioms.g:3423:1: ( 'soft-space' )
+            // InternalIdioms.g:3507:1: ( ( 'soft-space' ) )
+            // InternalIdioms.g:3508:1: ( 'soft-space' )
             {
-            // InternalIdioms.g:3423:1: ( 'soft-space' )
-            // InternalIdioms.g:3424:2: 'soft-space'
+            // InternalIdioms.g:3508:1: ( 'soft-space' )
+            // InternalIdioms.g:3509:2: 'soft-space'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSoftSpaceSegmentAccess().getSoftSpaceKeyword_1());
             }
-            match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSoftSpaceSegmentAccess().getSoftSpaceKeyword_1());
             }
@@ -11303,14 +11570,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__0"
-    // InternalIdioms.g:3434:1: rule__StringSegment__Group__0 : rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1 ;
+    // InternalIdioms.g:3519:1: rule__StringSegment__Group__0 : rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1 ;
     public final void rule__StringSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3438:1: ( rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1 )
-            // InternalIdioms.g:3439:2: rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1
+            // InternalIdioms.g:3523:1: ( rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1 )
+            // InternalIdioms.g:3524:2: rule__StringSegment__Group__0__Impl rule__StringSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__StringSegment__Group__0__Impl();
@@ -11341,22 +11608,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__0__Impl"
-    // InternalIdioms.g:3446:1: rule__StringSegment__Group__0__Impl : ( 'string' ) ;
+    // InternalIdioms.g:3531:1: rule__StringSegment__Group__0__Impl : ( 'string' ) ;
     public final void rule__StringSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3450:1: ( ( 'string' ) )
-            // InternalIdioms.g:3451:1: ( 'string' )
+            // InternalIdioms.g:3535:1: ( ( 'string' ) )
+            // InternalIdioms.g:3536:1: ( 'string' )
             {
-            // InternalIdioms.g:3451:1: ( 'string' )
-            // InternalIdioms.g:3452:2: 'string'
+            // InternalIdioms.g:3536:1: ( 'string' )
+            // InternalIdioms.g:3537:2: 'string'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getStringKeyword_0());
             }
-            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStringSegmentAccess().getStringKeyword_0());
             }
@@ -11382,16 +11649,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__1"
-    // InternalIdioms.g:3461:1: rule__StringSegment__Group__1 : rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2 ;
+    // InternalIdioms.g:3546:1: rule__StringSegment__Group__1 : rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2 ;
     public final void rule__StringSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3465:1: ( rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2 )
-            // InternalIdioms.g:3466:2: rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2
+            // InternalIdioms.g:3550:1: ( rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2 )
+            // InternalIdioms.g:3551:2: rule__StringSegment__Group__1__Impl rule__StringSegment__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_26);
+            pushFollow(FollowSets000.FOLLOW_27);
             rule__StringSegment__Group__1__Impl();
 
             state._fsp--;
@@ -11420,23 +11687,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__1__Impl"
-    // InternalIdioms.g:3473:1: rule__StringSegment__Group__1__Impl : ( ( rule__StringSegment__StringAssignment_1 ) ) ;
+    // InternalIdioms.g:3558:1: rule__StringSegment__Group__1__Impl : ( ( rule__StringSegment__StringAssignment_1 ) ) ;
     public final void rule__StringSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3477:1: ( ( ( rule__StringSegment__StringAssignment_1 ) ) )
-            // InternalIdioms.g:3478:1: ( ( rule__StringSegment__StringAssignment_1 ) )
+            // InternalIdioms.g:3562:1: ( ( ( rule__StringSegment__StringAssignment_1 ) ) )
+            // InternalIdioms.g:3563:1: ( ( rule__StringSegment__StringAssignment_1 ) )
             {
-            // InternalIdioms.g:3478:1: ( ( rule__StringSegment__StringAssignment_1 ) )
-            // InternalIdioms.g:3479:2: ( rule__StringSegment__StringAssignment_1 )
+            // InternalIdioms.g:3563:1: ( ( rule__StringSegment__StringAssignment_1 ) )
+            // InternalIdioms.g:3564:2: ( rule__StringSegment__StringAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getStringAssignment_1());
             }
-            // InternalIdioms.g:3480:2: ( rule__StringSegment__StringAssignment_1 )
-            // InternalIdioms.g:3480:3: rule__StringSegment__StringAssignment_1
+            // InternalIdioms.g:3565:2: ( rule__StringSegment__StringAssignment_1 )
+            // InternalIdioms.g:3565:3: rule__StringSegment__StringAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringSegment__StringAssignment_1();
@@ -11471,14 +11738,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__2"
-    // InternalIdioms.g:3488:1: rule__StringSegment__Group__2 : rule__StringSegment__Group__2__Impl ;
+    // InternalIdioms.g:3573:1: rule__StringSegment__Group__2 : rule__StringSegment__Group__2__Impl ;
     public final void rule__StringSegment__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3492:1: ( rule__StringSegment__Group__2__Impl )
-            // InternalIdioms.g:3493:2: rule__StringSegment__Group__2__Impl
+            // InternalIdioms.g:3577:1: ( rule__StringSegment__Group__2__Impl )
+            // InternalIdioms.g:3578:2: rule__StringSegment__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringSegment__Group__2__Impl();
@@ -11504,31 +11771,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__Group__2__Impl"
-    // InternalIdioms.g:3499:1: rule__StringSegment__Group__2__Impl : ( ( rule__StringSegment__PrintableAssignment_2 )? ) ;
+    // InternalIdioms.g:3584:1: rule__StringSegment__Group__2__Impl : ( ( rule__StringSegment__PrintableAssignment_2 )? ) ;
     public final void rule__StringSegment__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3503:1: ( ( ( rule__StringSegment__PrintableAssignment_2 )? ) )
-            // InternalIdioms.g:3504:1: ( ( rule__StringSegment__PrintableAssignment_2 )? )
+            // InternalIdioms.g:3588:1: ( ( ( rule__StringSegment__PrintableAssignment_2 )? ) )
+            // InternalIdioms.g:3589:1: ( ( rule__StringSegment__PrintableAssignment_2 )? )
             {
-            // InternalIdioms.g:3504:1: ( ( rule__StringSegment__PrintableAssignment_2 )? )
-            // InternalIdioms.g:3505:2: ( rule__StringSegment__PrintableAssignment_2 )?
+            // InternalIdioms.g:3589:1: ( ( rule__StringSegment__PrintableAssignment_2 )? )
+            // InternalIdioms.g:3590:2: ( rule__StringSegment__PrintableAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getPrintableAssignment_2());
             }
-            // InternalIdioms.g:3506:2: ( rule__StringSegment__PrintableAssignment_2 )?
+            // InternalIdioms.g:3591:2: ( rule__StringSegment__PrintableAssignment_2 )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==52) ) {
+            if ( (LA22_0==53) ) {
                 alt22=1;
             }
             switch (alt22) {
                 case 1 :
-                    // InternalIdioms.g:3506:3: rule__StringSegment__PrintableAssignment_2
+                    // InternalIdioms.g:3591:3: rule__StringSegment__PrintableAssignment_2
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__StringSegment__PrintableAssignment_2();
@@ -11566,16 +11833,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValueSegment__Group__0"
-    // InternalIdioms.g:3515:1: rule__ValueSegment__Group__0 : rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1 ;
+    // InternalIdioms.g:3600:1: rule__ValueSegment__Group__0 : rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1 ;
     public final void rule__ValueSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3519:1: ( rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1 )
-            // InternalIdioms.g:3520:2: rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1
+            // InternalIdioms.g:3604:1: ( rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1 )
+            // InternalIdioms.g:3605:2: rule__ValueSegment__Group__0__Impl rule__ValueSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_27);
+            pushFollow(FollowSets000.FOLLOW_28);
             rule__ValueSegment__Group__0__Impl();
 
             state._fsp--;
@@ -11604,23 +11871,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValueSegment__Group__0__Impl"
-    // InternalIdioms.g:3527:1: rule__ValueSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3612:1: rule__ValueSegment__Group__0__Impl : ( () ) ;
     public final void rule__ValueSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3531:1: ( ( () ) )
-            // InternalIdioms.g:3532:1: ( () )
+            // InternalIdioms.g:3616:1: ( ( () ) )
+            // InternalIdioms.g:3617:1: ( () )
             {
-            // InternalIdioms.g:3532:1: ( () )
-            // InternalIdioms.g:3533:2: ()
+            // InternalIdioms.g:3617:1: ( () )
+            // InternalIdioms.g:3618:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValueSegmentAccess().getValueSegmentAction_0());
             }
-            // InternalIdioms.g:3534:2: ()
-            // InternalIdioms.g:3534:3:
+            // InternalIdioms.g:3619:2: ()
+            // InternalIdioms.g:3619:3:
             {
             }
 
@@ -11645,14 +11912,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValueSegment__Group__1"
-    // InternalIdioms.g:3542:1: rule__ValueSegment__Group__1 : rule__ValueSegment__Group__1__Impl ;
+    // InternalIdioms.g:3627:1: rule__ValueSegment__Group__1 : rule__ValueSegment__Group__1__Impl ;
     public final void rule__ValueSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3546:1: ( rule__ValueSegment__Group__1__Impl )
-            // InternalIdioms.g:3547:2: rule__ValueSegment__Group__1__Impl
+            // InternalIdioms.g:3631:1: ( rule__ValueSegment__Group__1__Impl )
+            // InternalIdioms.g:3632:2: rule__ValueSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValueSegment__Group__1__Impl();
@@ -11678,22 +11945,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValueSegment__Group__1__Impl"
-    // InternalIdioms.g:3553:1: rule__ValueSegment__Group__1__Impl : ( 'value' ) ;
+    // InternalIdioms.g:3638:1: rule__ValueSegment__Group__1__Impl : ( 'value' ) ;
     public final void rule__ValueSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3557:1: ( ( 'value' ) )
-            // InternalIdioms.g:3558:1: ( 'value' )
+            // InternalIdioms.g:3642:1: ( ( 'value' ) )
+            // InternalIdioms.g:3643:1: ( 'value' )
             {
-            // InternalIdioms.g:3558:1: ( 'value' )
-            // InternalIdioms.g:3559:2: 'value'
+            // InternalIdioms.g:3643:1: ( 'value' )
+            // InternalIdioms.g:3644:2: 'value'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValueSegmentAccess().getValueKeyword_1());
             }
-            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValueSegmentAccess().getValueKeyword_1());
             }
@@ -11719,16 +11986,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapAnchorSegment__Group__0"
-    // InternalIdioms.g:3569:1: rule__WrapAnchorSegment__Group__0 : rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1 ;
+    // InternalIdioms.g:3654:1: rule__WrapAnchorSegment__Group__0 : rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1 ;
     public final void rule__WrapAnchorSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3573:1: ( rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1 )
-            // InternalIdioms.g:3574:2: rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1
+            // InternalIdioms.g:3658:1: ( rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1 )
+            // InternalIdioms.g:3659:2: rule__WrapAnchorSegment__Group__0__Impl rule__WrapAnchorSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_28);
+            pushFollow(FollowSets000.FOLLOW_29);
             rule__WrapAnchorSegment__Group__0__Impl();
 
             state._fsp--;
@@ -11757,23 +12024,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapAnchorSegment__Group__0__Impl"
-    // InternalIdioms.g:3581:1: rule__WrapAnchorSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3666:1: rule__WrapAnchorSegment__Group__0__Impl : ( () ) ;
     public final void rule__WrapAnchorSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3585:1: ( ( () ) )
-            // InternalIdioms.g:3586:1: ( () )
+            // InternalIdioms.g:3670:1: ( ( () ) )
+            // InternalIdioms.g:3671:1: ( () )
             {
-            // InternalIdioms.g:3586:1: ( () )
-            // InternalIdioms.g:3587:2: ()
+            // InternalIdioms.g:3671:1: ( () )
+            // InternalIdioms.g:3672:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapAnchorSegmentAccess().getWrapAnchorSegmentAction_0());
             }
-            // InternalIdioms.g:3588:2: ()
-            // InternalIdioms.g:3588:3:
+            // InternalIdioms.g:3673:2: ()
+            // InternalIdioms.g:3673:3:
             {
             }
 
@@ -11798,14 +12065,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapAnchorSegment__Group__1"
-    // InternalIdioms.g:3596:1: rule__WrapAnchorSegment__Group__1 : rule__WrapAnchorSegment__Group__1__Impl ;
+    // InternalIdioms.g:3681:1: rule__WrapAnchorSegment__Group__1 : rule__WrapAnchorSegment__Group__1__Impl ;
     public final void rule__WrapAnchorSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3600:1: ( rule__WrapAnchorSegment__Group__1__Impl )
-            // InternalIdioms.g:3601:2: rule__WrapAnchorSegment__Group__1__Impl
+            // InternalIdioms.g:3685:1: ( rule__WrapAnchorSegment__Group__1__Impl )
+            // InternalIdioms.g:3686:2: rule__WrapAnchorSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapAnchorSegment__Group__1__Impl();
@@ -11831,22 +12098,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapAnchorSegment__Group__1__Impl"
-    // InternalIdioms.g:3607:1: rule__WrapAnchorSegment__Group__1__Impl : ( 'wrap-anchor' ) ;
+    // InternalIdioms.g:3692:1: rule__WrapAnchorSegment__Group__1__Impl : ( 'wrap-anchor' ) ;
     public final void rule__WrapAnchorSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3611:1: ( ( 'wrap-anchor' ) )
-            // InternalIdioms.g:3612:1: ( 'wrap-anchor' )
+            // InternalIdioms.g:3696:1: ( ( 'wrap-anchor' ) )
+            // InternalIdioms.g:3697:1: ( 'wrap-anchor' )
             {
-            // InternalIdioms.g:3612:1: ( 'wrap-anchor' )
-            // InternalIdioms.g:3613:2: 'wrap-anchor'
+            // InternalIdioms.g:3697:1: ( 'wrap-anchor' )
+            // InternalIdioms.g:3698:2: 'wrap-anchor'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapAnchorSegmentAccess().getWrapAnchorKeyword_1());
             }
-            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWrapAnchorSegmentAccess().getWrapAnchorKeyword_1());
             }
@@ -11872,16 +12139,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginAllSegment__Group__0"
-    // InternalIdioms.g:3623:1: rule__WrapBeginAllSegment__Group__0 : rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1 ;
+    // InternalIdioms.g:3708:1: rule__WrapBeginAllSegment__Group__0 : rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1 ;
     public final void rule__WrapBeginAllSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3627:1: ( rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1 )
-            // InternalIdioms.g:3628:2: rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1
+            // InternalIdioms.g:3712:1: ( rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1 )
+            // InternalIdioms.g:3713:2: rule__WrapBeginAllSegment__Group__0__Impl rule__WrapBeginAllSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_29);
+            pushFollow(FollowSets000.FOLLOW_30);
             rule__WrapBeginAllSegment__Group__0__Impl();
 
             state._fsp--;
@@ -11910,23 +12177,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginAllSegment__Group__0__Impl"
-    // InternalIdioms.g:3635:1: rule__WrapBeginAllSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3720:1: rule__WrapBeginAllSegment__Group__0__Impl : ( () ) ;
     public final void rule__WrapBeginAllSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3639:1: ( ( () ) )
-            // InternalIdioms.g:3640:1: ( () )
+            // InternalIdioms.g:3724:1: ( ( () ) )
+            // InternalIdioms.g:3725:1: ( () )
             {
-            // InternalIdioms.g:3640:1: ( () )
-            // InternalIdioms.g:3641:2: ()
+            // InternalIdioms.g:3725:1: ( () )
+            // InternalIdioms.g:3726:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginAllSegmentAccess().getWrapBeginAllSegmentAction_0());
             }
-            // InternalIdioms.g:3642:2: ()
-            // InternalIdioms.g:3642:3:
+            // InternalIdioms.g:3727:2: ()
+            // InternalIdioms.g:3727:3:
             {
             }
 
@@ -11951,14 +12218,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginAllSegment__Group__1"
-    // InternalIdioms.g:3650:1: rule__WrapBeginAllSegment__Group__1 : rule__WrapBeginAllSegment__Group__1__Impl ;
+    // InternalIdioms.g:3735:1: rule__WrapBeginAllSegment__Group__1 : rule__WrapBeginAllSegment__Group__1__Impl ;
     public final void rule__WrapBeginAllSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3654:1: ( rule__WrapBeginAllSegment__Group__1__Impl )
-            // InternalIdioms.g:3655:2: rule__WrapBeginAllSegment__Group__1__Impl
+            // InternalIdioms.g:3739:1: ( rule__WrapBeginAllSegment__Group__1__Impl )
+            // InternalIdioms.g:3740:2: rule__WrapBeginAllSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapBeginAllSegment__Group__1__Impl();
@@ -11984,22 +12251,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginAllSegment__Group__1__Impl"
-    // InternalIdioms.g:3661:1: rule__WrapBeginAllSegment__Group__1__Impl : ( 'wrap-begin-all' ) ;
+    // InternalIdioms.g:3746:1: rule__WrapBeginAllSegment__Group__1__Impl : ( 'wrap-begin-all' ) ;
     public final void rule__WrapBeginAllSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3665:1: ( ( 'wrap-begin-all' ) )
-            // InternalIdioms.g:3666:1: ( 'wrap-begin-all' )
+            // InternalIdioms.g:3750:1: ( ( 'wrap-begin-all' ) )
+            // InternalIdioms.g:3751:1: ( 'wrap-begin-all' )
             {
-            // InternalIdioms.g:3666:1: ( 'wrap-begin-all' )
-            // InternalIdioms.g:3667:2: 'wrap-begin-all'
+            // InternalIdioms.g:3751:1: ( 'wrap-begin-all' )
+            // InternalIdioms.g:3752:2: 'wrap-begin-all'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginAllSegmentAccess().getWrapBeginAllKeyword_1());
             }
-            match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWrapBeginAllSegmentAccess().getWrapBeginAllKeyword_1());
             }
@@ -12025,16 +12292,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginSomeSegment__Group__0"
-    // InternalIdioms.g:3677:1: rule__WrapBeginSomeSegment__Group__0 : rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1 ;
+    // InternalIdioms.g:3762:1: rule__WrapBeginSomeSegment__Group__0 : rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1 ;
     public final void rule__WrapBeginSomeSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3681:1: ( rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1 )
-            // InternalIdioms.g:3682:2: rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1
+            // InternalIdioms.g:3766:1: ( rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1 )
+            // InternalIdioms.g:3767:2: rule__WrapBeginSomeSegment__Group__0__Impl rule__WrapBeginSomeSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_30);
+            pushFollow(FollowSets000.FOLLOW_31);
             rule__WrapBeginSomeSegment__Group__0__Impl();
 
             state._fsp--;
@@ -12063,23 +12330,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginSomeSegment__Group__0__Impl"
-    // InternalIdioms.g:3689:1: rule__WrapBeginSomeSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3774:1: rule__WrapBeginSomeSegment__Group__0__Impl : ( () ) ;
     public final void rule__WrapBeginSomeSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3693:1: ( ( () ) )
-            // InternalIdioms.g:3694:1: ( () )
+            // InternalIdioms.g:3778:1: ( ( () ) )
+            // InternalIdioms.g:3779:1: ( () )
             {
-            // InternalIdioms.g:3694:1: ( () )
-            // InternalIdioms.g:3695:2: ()
+            // InternalIdioms.g:3779:1: ( () )
+            // InternalIdioms.g:3780:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginSomeSegmentAccess().getWrapBeginSomeSegmentAction_0());
             }
-            // InternalIdioms.g:3696:2: ()
-            // InternalIdioms.g:3696:3:
+            // InternalIdioms.g:3781:2: ()
+            // InternalIdioms.g:3781:3:
             {
             }
 
@@ -12104,14 +12371,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginSomeSegment__Group__1"
-    // InternalIdioms.g:3704:1: rule__WrapBeginSomeSegment__Group__1 : rule__WrapBeginSomeSegment__Group__1__Impl ;
+    // InternalIdioms.g:3789:1: rule__WrapBeginSomeSegment__Group__1 : rule__WrapBeginSomeSegment__Group__1__Impl ;
     public final void rule__WrapBeginSomeSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3708:1: ( rule__WrapBeginSomeSegment__Group__1__Impl )
-            // InternalIdioms.g:3709:2: rule__WrapBeginSomeSegment__Group__1__Impl
+            // InternalIdioms.g:3793:1: ( rule__WrapBeginSomeSegment__Group__1__Impl )
+            // InternalIdioms.g:3794:2: rule__WrapBeginSomeSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapBeginSomeSegment__Group__1__Impl();
@@ -12137,22 +12404,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapBeginSomeSegment__Group__1__Impl"
-    // InternalIdioms.g:3715:1: rule__WrapBeginSomeSegment__Group__1__Impl : ( 'wrap-begin-some' ) ;
+    // InternalIdioms.g:3800:1: rule__WrapBeginSomeSegment__Group__1__Impl : ( 'wrap-begin-some' ) ;
     public final void rule__WrapBeginSomeSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3719:1: ( ( 'wrap-begin-some' ) )
-            // InternalIdioms.g:3720:1: ( 'wrap-begin-some' )
+            // InternalIdioms.g:3804:1: ( ( 'wrap-begin-some' ) )
+            // InternalIdioms.g:3805:1: ( 'wrap-begin-some' )
             {
-            // InternalIdioms.g:3720:1: ( 'wrap-begin-some' )
-            // InternalIdioms.g:3721:2: 'wrap-begin-some'
+            // InternalIdioms.g:3805:1: ( 'wrap-begin-some' )
+            // InternalIdioms.g:3806:2: 'wrap-begin-some'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapBeginSomeSegmentAccess().getWrapBeginSomeKeyword_1());
             }
-            match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWrapBeginSomeSegmentAccess().getWrapBeginSomeKeyword_1());
             }
@@ -12178,16 +12445,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapEndSegment__Group__0"
-    // InternalIdioms.g:3731:1: rule__WrapEndSegment__Group__0 : rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1 ;
+    // InternalIdioms.g:3816:1: rule__WrapEndSegment__Group__0 : rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1 ;
     public final void rule__WrapEndSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3735:1: ( rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1 )
-            // InternalIdioms.g:3736:2: rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1
+            // InternalIdioms.g:3820:1: ( rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1 )
+            // InternalIdioms.g:3821:2: rule__WrapEndSegment__Group__0__Impl rule__WrapEndSegment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_31);
+            pushFollow(FollowSets000.FOLLOW_32);
             rule__WrapEndSegment__Group__0__Impl();
 
             state._fsp--;
@@ -12216,23 +12483,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapEndSegment__Group__0__Impl"
-    // InternalIdioms.g:3743:1: rule__WrapEndSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3828:1: rule__WrapEndSegment__Group__0__Impl : ( () ) ;
     public final void rule__WrapEndSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3747:1: ( ( () ) )
-            // InternalIdioms.g:3748:1: ( () )
+            // InternalIdioms.g:3832:1: ( ( () ) )
+            // InternalIdioms.g:3833:1: ( () )
             {
-            // InternalIdioms.g:3748:1: ( () )
-            // InternalIdioms.g:3749:2: ()
+            // InternalIdioms.g:3833:1: ( () )
+            // InternalIdioms.g:3834:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapEndSegmentAccess().getWrapEndSegmentAction_0());
             }
-            // InternalIdioms.g:3750:2: ()
-            // InternalIdioms.g:3750:3:
+            // InternalIdioms.g:3835:2: ()
+            // InternalIdioms.g:3835:3:
             {
             }
 
@@ -12257,14 +12524,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapEndSegment__Group__1"
-    // InternalIdioms.g:3758:1: rule__WrapEndSegment__Group__1 : rule__WrapEndSegment__Group__1__Impl ;
+    // InternalIdioms.g:3843:1: rule__WrapEndSegment__Group__1 : rule__WrapEndSegment__Group__1__Impl ;
     public final void rule__WrapEndSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3762:1: ( rule__WrapEndSegment__Group__1__Impl )
-            // InternalIdioms.g:3763:2: rule__WrapEndSegment__Group__1__Impl
+            // InternalIdioms.g:3847:1: ( rule__WrapEndSegment__Group__1__Impl )
+            // InternalIdioms.g:3848:2: rule__WrapEndSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapEndSegment__Group__1__Impl();
@@ -12290,22 +12557,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapEndSegment__Group__1__Impl"
-    // InternalIdioms.g:3769:1: rule__WrapEndSegment__Group__1__Impl : ( 'wrap-end' ) ;
+    // InternalIdioms.g:3854:1: rule__WrapEndSegment__Group__1__Impl : ( 'wrap-end' ) ;
     public final void rule__WrapEndSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3773:1: ( ( 'wrap-end' ) )
-            // InternalIdioms.g:3774:1: ( 'wrap-end' )
+            // InternalIdioms.g:3858:1: ( ( 'wrap-end' ) )
+            // InternalIdioms.g:3859:1: ( 'wrap-end' )
             {
-            // InternalIdioms.g:3774:1: ( 'wrap-end' )
-            // InternalIdioms.g:3775:2: 'wrap-end'
+            // InternalIdioms.g:3859:1: ( 'wrap-end' )
+            // InternalIdioms.g:3860:2: 'wrap-end'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapEndSegmentAccess().getWrapEndKeyword_1());
             }
-            match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWrapEndSegmentAccess().getWrapEndKeyword_1());
             }
@@ -12331,14 +12598,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapHereSegment__Group__0"
-    // InternalIdioms.g:3785:1: rule__WrapHereSegment__Group__0 : rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1 ;
+    // InternalIdioms.g:3870:1: rule__WrapHereSegment__Group__0 : rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1 ;
     public final void rule__WrapHereSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3789:1: ( rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1 )
-            // InternalIdioms.g:3790:2: rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1
+            // InternalIdioms.g:3874:1: ( rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1 )
+            // InternalIdioms.g:3875:2: rule__WrapHereSegment__Group__0__Impl rule__WrapHereSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_16);
             rule__WrapHereSegment__Group__0__Impl();
@@ -12369,23 +12636,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapHereSegment__Group__0__Impl"
-    // InternalIdioms.g:3797:1: rule__WrapHereSegment__Group__0__Impl : ( () ) ;
+    // InternalIdioms.g:3882:1: rule__WrapHereSegment__Group__0__Impl : ( () ) ;
     public final void rule__WrapHereSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3801:1: ( ( () ) )
-            // InternalIdioms.g:3802:1: ( () )
+            // InternalIdioms.g:3886:1: ( ( () ) )
+            // InternalIdioms.g:3887:1: ( () )
             {
-            // InternalIdioms.g:3802:1: ( () )
-            // InternalIdioms.g:3803:2: ()
+            // InternalIdioms.g:3887:1: ( () )
+            // InternalIdioms.g:3888:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapHereSegmentAccess().getWrapHereSegmentAction_0());
             }
-            // InternalIdioms.g:3804:2: ()
-            // InternalIdioms.g:3804:3:
+            // InternalIdioms.g:3889:2: ()
+            // InternalIdioms.g:3889:3:
             {
             }
 
@@ -12410,14 +12677,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapHereSegment__Group__1"
-    // InternalIdioms.g:3812:1: rule__WrapHereSegment__Group__1 : rule__WrapHereSegment__Group__1__Impl ;
+    // InternalIdioms.g:3897:1: rule__WrapHereSegment__Group__1 : rule__WrapHereSegment__Group__1__Impl ;
     public final void rule__WrapHereSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3816:1: ( rule__WrapHereSegment__Group__1__Impl )
-            // InternalIdioms.g:3817:2: rule__WrapHereSegment__Group__1__Impl
+            // InternalIdioms.g:3901:1: ( rule__WrapHereSegment__Group__1__Impl )
+            // InternalIdioms.g:3902:2: rule__WrapHereSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__WrapHereSegment__Group__1__Impl();
@@ -12443,22 +12710,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WrapHereSegment__Group__1__Impl"
-    // InternalIdioms.g:3823:1: rule__WrapHereSegment__Group__1__Impl : ( 'wrap-here' ) ;
+    // InternalIdioms.g:3908:1: rule__WrapHereSegment__Group__1__Impl : ( 'wrap-here' ) ;
     public final void rule__WrapHereSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3827:1: ( ( 'wrap-here' ) )
-            // InternalIdioms.g:3828:1: ( 'wrap-here' )
+            // InternalIdioms.g:3912:1: ( ( 'wrap-here' ) )
+            // InternalIdioms.g:3913:1: ( 'wrap-here' )
             {
-            // InternalIdioms.g:3828:1: ( 'wrap-here' )
-            // InternalIdioms.g:3829:2: 'wrap-here'
+            // InternalIdioms.g:3913:1: ( 'wrap-here' )
+            // InternalIdioms.g:3914:2: 'wrap-here'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWrapHereSegmentAccess().getWrapHereKeyword_1());
             }
-            match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWrapHereSegmentAccess().getWrapHereKeyword_1());
             }
@@ -12484,14 +12751,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group__0"
-    // InternalIdioms.g:3839:1: rule__ReferredSegment__Group__0 : rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1 ;
+    // InternalIdioms.g:3924:1: rule__ReferredSegment__Group__0 : rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1 ;
     public final void rule__ReferredSegment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3843:1: ( rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1 )
-            // InternalIdioms.g:3844:2: rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1
+            // InternalIdioms.g:3928:1: ( rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1 )
+            // InternalIdioms.g:3929:2: rule__ReferredSegment__Group__0__Impl rule__ReferredSegment__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__ReferredSegment__Group__0__Impl();
@@ -12522,22 +12789,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group__0__Impl"
-    // InternalIdioms.g:3851:1: rule__ReferredSegment__Group__0__Impl : ( ( rule__ReferredSegment__Group_0__0 )? ) ;
+    // InternalIdioms.g:3936:1: rule__ReferredSegment__Group__0__Impl : ( ( rule__ReferredSegment__Group_0__0 )? ) ;
     public final void rule__ReferredSegment__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3855:1: ( ( ( rule__ReferredSegment__Group_0__0 )? ) )
-            // InternalIdioms.g:3856:1: ( ( rule__ReferredSegment__Group_0__0 )? )
+            // InternalIdioms.g:3940:1: ( ( ( rule__ReferredSegment__Group_0__0 )? ) )
+            // InternalIdioms.g:3941:1: ( ( rule__ReferredSegment__Group_0__0 )? )
             {
-            // InternalIdioms.g:3856:1: ( ( rule__ReferredSegment__Group_0__0 )? )
-            // InternalIdioms.g:3857:2: ( rule__ReferredSegment__Group_0__0 )?
+            // InternalIdioms.g:3941:1: ( ( rule__ReferredSegment__Group_0__0 )? )
+            // InternalIdioms.g:3942:2: ( rule__ReferredSegment__Group_0__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getGroup_0());
             }
-            // InternalIdioms.g:3858:2: ( rule__ReferredSegment__Group_0__0 )?
+            // InternalIdioms.g:3943:2: ( rule__ReferredSegment__Group_0__0 )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -12550,7 +12817,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt23) {
                 case 1 :
-                    // InternalIdioms.g:3858:3: rule__ReferredSegment__Group_0__0
+                    // InternalIdioms.g:3943:3: rule__ReferredSegment__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ReferredSegment__Group_0__0();
@@ -12588,14 +12855,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group__1"
-    // InternalIdioms.g:3866:1: rule__ReferredSegment__Group__1 : rule__ReferredSegment__Group__1__Impl ;
+    // InternalIdioms.g:3951:1: rule__ReferredSegment__Group__1 : rule__ReferredSegment__Group__1__Impl ;
     public final void rule__ReferredSegment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3870:1: ( rule__ReferredSegment__Group__1__Impl )
-            // InternalIdioms.g:3871:2: rule__ReferredSegment__Group__1__Impl
+            // InternalIdioms.g:3955:1: ( rule__ReferredSegment__Group__1__Impl )
+            // InternalIdioms.g:3956:2: rule__ReferredSegment__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredSegment__Group__1__Impl();
@@ -12621,23 +12888,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group__1__Impl"
-    // InternalIdioms.g:3877:1: rule__ReferredSegment__Group__1__Impl : ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) ) ;
+    // InternalIdioms.g:3962:1: rule__ReferredSegment__Group__1__Impl : ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) ) ;
     public final void rule__ReferredSegment__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3881:1: ( ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) ) )
-            // InternalIdioms.g:3882:1: ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) )
+            // InternalIdioms.g:3966:1: ( ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) ) )
+            // InternalIdioms.g:3967:1: ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) )
             {
-            // InternalIdioms.g:3882:1: ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) )
-            // InternalIdioms.g:3883:2: ( rule__ReferredSegment__SegmentDeclarationAssignment_1 )
+            // InternalIdioms.g:3967:1: ( ( rule__ReferredSegment__SegmentDeclarationAssignment_1 ) )
+            // InternalIdioms.g:3968:2: ( rule__ReferredSegment__SegmentDeclarationAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getSegmentDeclarationAssignment_1());
             }
-            // InternalIdioms.g:3884:2: ( rule__ReferredSegment__SegmentDeclarationAssignment_1 )
-            // InternalIdioms.g:3884:3: rule__ReferredSegment__SegmentDeclarationAssignment_1
+            // InternalIdioms.g:3969:2: ( rule__ReferredSegment__SegmentDeclarationAssignment_1 )
+            // InternalIdioms.g:3969:3: rule__ReferredSegment__SegmentDeclarationAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredSegment__SegmentDeclarationAssignment_1();
@@ -12672,14 +12939,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group_0__0"
-    // InternalIdioms.g:3893:1: rule__ReferredSegment__Group_0__0 : rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1 ;
+    // InternalIdioms.g:3978:1: rule__ReferredSegment__Group_0__0 : rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1 ;
     public final void rule__ReferredSegment__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3897:1: ( rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1 )
-            // InternalIdioms.g:3898:2: rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1
+            // InternalIdioms.g:3982:1: ( rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1 )
+            // InternalIdioms.g:3983:2: rule__ReferredSegment__Group_0__0__Impl rule__ReferredSegment__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__ReferredSegment__Group_0__0__Impl();
@@ -12710,23 +12977,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group_0__0__Impl"
-    // InternalIdioms.g:3905:1: rule__ReferredSegment__Group_0__0__Impl : ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) ) ;
+    // InternalIdioms.g:3990:1: rule__ReferredSegment__Group_0__0__Impl : ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) ) ;
     public final void rule__ReferredSegment__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3909:1: ( ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) ) )
-            // InternalIdioms.g:3910:1: ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) )
+            // InternalIdioms.g:3994:1: ( ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) ) )
+            // InternalIdioms.g:3995:1: ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) )
             {
-            // InternalIdioms.g:3910:1: ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) )
-            // InternalIdioms.g:3911:2: ( rule__ReferredSegment__IdiomsModelAssignment_0_0 )
+            // InternalIdioms.g:3995:1: ( ( rule__ReferredSegment__IdiomsModelAssignment_0_0 ) )
+            // InternalIdioms.g:3996:2: ( rule__ReferredSegment__IdiomsModelAssignment_0_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getIdiomsModelAssignment_0_0());
             }
-            // InternalIdioms.g:3912:2: ( rule__ReferredSegment__IdiomsModelAssignment_0_0 )
-            // InternalIdioms.g:3912:3: rule__ReferredSegment__IdiomsModelAssignment_0_0
+            // InternalIdioms.g:3997:2: ( rule__ReferredSegment__IdiomsModelAssignment_0_0 )
+            // InternalIdioms.g:3997:3: rule__ReferredSegment__IdiomsModelAssignment_0_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredSegment__IdiomsModelAssignment_0_0();
@@ -12761,14 +13028,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group_0__1"
-    // InternalIdioms.g:3920:1: rule__ReferredSegment__Group_0__1 : rule__ReferredSegment__Group_0__1__Impl ;
+    // InternalIdioms.g:4005:1: rule__ReferredSegment__Group_0__1 : rule__ReferredSegment__Group_0__1__Impl ;
     public final void rule__ReferredSegment__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3924:1: ( rule__ReferredSegment__Group_0__1__Impl )
-            // InternalIdioms.g:3925:2: rule__ReferredSegment__Group_0__1__Impl
+            // InternalIdioms.g:4009:1: ( rule__ReferredSegment__Group_0__1__Impl )
+            // InternalIdioms.g:4010:2: rule__ReferredSegment__Group_0__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferredSegment__Group_0__1__Impl();
@@ -12794,17 +13061,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__Group_0__1__Impl"
-    // InternalIdioms.g:3931:1: rule__ReferredSegment__Group_0__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:4016:1: rule__ReferredSegment__Group_0__1__Impl : ( '::' ) ;
     public final void rule__ReferredSegment__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3935:1: ( ( '::' ) )
-            // InternalIdioms.g:3936:1: ( '::' )
+            // InternalIdioms.g:4020:1: ( ( '::' ) )
+            // InternalIdioms.g:4021:1: ( '::' )
             {
-            // InternalIdioms.g:3936:1: ( '::' )
-            // InternalIdioms.g:3937:2: '::'
+            // InternalIdioms.g:4021:1: ( '::' )
+            // InternalIdioms.g:4022:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getColonColonKeyword_0_1());
@@ -12835,16 +13102,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__0"
-    // InternalIdioms.g:3947:1: rule__Idiom__Group__0 : rule__Idiom__Group__0__Impl rule__Idiom__Group__1 ;
+    // InternalIdioms.g:4032:1: rule__Idiom__Group__0 : rule__Idiom__Group__0__Impl rule__Idiom__Group__1 ;
     public final void rule__Idiom__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3951:1: ( rule__Idiom__Group__0__Impl rule__Idiom__Group__1 )
-            // InternalIdioms.g:3952:2: rule__Idiom__Group__0__Impl rule__Idiom__Group__1
+            // InternalIdioms.g:4036:1: ( rule__Idiom__Group__0__Impl rule__Idiom__Group__1 )
+            // InternalIdioms.g:4037:2: rule__Idiom__Group__0__Impl rule__Idiom__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_32);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__Idiom__Group__0__Impl();
 
             state._fsp--;
@@ -12873,31 +13140,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__0__Impl"
-    // InternalIdioms.g:3959:1: rule__Idiom__Group__0__Impl : ( ( rule__Idiom__MixinAssignment_0 )? ) ;
+    // InternalIdioms.g:4044:1: rule__Idiom__Group__0__Impl : ( ( rule__Idiom__MixinAssignment_0 )? ) ;
     public final void rule__Idiom__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3963:1: ( ( ( rule__Idiom__MixinAssignment_0 )? ) )
-            // InternalIdioms.g:3964:1: ( ( rule__Idiom__MixinAssignment_0 )? )
+            // InternalIdioms.g:4048:1: ( ( ( rule__Idiom__MixinAssignment_0 )? ) )
+            // InternalIdioms.g:4049:1: ( ( rule__Idiom__MixinAssignment_0 )? )
             {
-            // InternalIdioms.g:3964:1: ( ( rule__Idiom__MixinAssignment_0 )? )
-            // InternalIdioms.g:3965:2: ( rule__Idiom__MixinAssignment_0 )?
+            // InternalIdioms.g:4049:1: ( ( rule__Idiom__MixinAssignment_0 )? )
+            // InternalIdioms.g:4050:2: ( rule__Idiom__MixinAssignment_0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getMixinAssignment_0());
             }
-            // InternalIdioms.g:3966:2: ( rule__Idiom__MixinAssignment_0 )?
+            // InternalIdioms.g:4051:2: ( rule__Idiom__MixinAssignment_0 )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
-            if ( (LA24_0==53) ) {
+            if ( (LA24_0==54) ) {
                 alt24=1;
             }
             switch (alt24) {
                 case 1 :
-                    // InternalIdioms.g:3966:3: rule__Idiom__MixinAssignment_0
+                    // InternalIdioms.g:4051:3: rule__Idiom__MixinAssignment_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__MixinAssignment_0();
@@ -12935,14 +13202,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__1"
-    // InternalIdioms.g:3974:1: rule__Idiom__Group__1 : rule__Idiom__Group__1__Impl rule__Idiom__Group__2 ;
+    // InternalIdioms.g:4059:1: rule__Idiom__Group__1 : rule__Idiom__Group__1__Impl rule__Idiom__Group__2 ;
     public final void rule__Idiom__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3978:1: ( rule__Idiom__Group__1__Impl rule__Idiom__Group__2 )
-            // InternalIdioms.g:3979:2: rule__Idiom__Group__1__Impl rule__Idiom__Group__2
+            // InternalIdioms.g:4063:1: ( rule__Idiom__Group__1__Impl rule__Idiom__Group__2 )
+            // InternalIdioms.g:4064:2: rule__Idiom__Group__1__Impl rule__Idiom__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__Idiom__Group__1__Impl();
@@ -12973,22 +13240,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__1__Impl"
-    // InternalIdioms.g:3986:1: rule__Idiom__Group__1__Impl : ( 'idiom' ) ;
+    // InternalIdioms.g:4071:1: rule__Idiom__Group__1__Impl : ( 'idiom' ) ;
     public final void rule__Idiom__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:3990:1: ( ( 'idiom' ) )
-            // InternalIdioms.g:3991:1: ( 'idiom' )
+            // InternalIdioms.g:4075:1: ( ( 'idiom' ) )
+            // InternalIdioms.g:4076:1: ( 'idiom' )
             {
-            // InternalIdioms.g:3991:1: ( 'idiom' )
-            // InternalIdioms.g:3992:2: 'idiom'
+            // InternalIdioms.g:4076:1: ( 'idiom' )
+            // InternalIdioms.g:4077:2: 'idiom'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getIdiomKeyword_1());
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getIdiomKeyword_1());
             }
@@ -13014,16 +13281,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__2"
-    // InternalIdioms.g:4001:1: rule__Idiom__Group__2 : rule__Idiom__Group__2__Impl rule__Idiom__Group__3 ;
+    // InternalIdioms.g:4086:1: rule__Idiom__Group__2 : rule__Idiom__Group__2__Impl rule__Idiom__Group__3 ;
     public final void rule__Idiom__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4005:1: ( rule__Idiom__Group__2__Impl rule__Idiom__Group__3 )
-            // InternalIdioms.g:4006:2: rule__Idiom__Group__2__Impl rule__Idiom__Group__3
+            // InternalIdioms.g:4090:1: ( rule__Idiom__Group__2__Impl rule__Idiom__Group__3 )
+            // InternalIdioms.g:4091:2: rule__Idiom__Group__2__Impl rule__Idiom__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_33);
+            pushFollow(FollowSets000.FOLLOW_34);
             rule__Idiom__Group__2__Impl();
 
             state._fsp--;
@@ -13052,23 +13319,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__2__Impl"
-    // InternalIdioms.g:4013:1: rule__Idiom__Group__2__Impl : ( ( rule__Idiom__NameAssignment_2 ) ) ;
+    // InternalIdioms.g:4098:1: rule__Idiom__Group__2__Impl : ( ( rule__Idiom__NameAssignment_2 ) ) ;
     public final void rule__Idiom__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4017:1: ( ( ( rule__Idiom__NameAssignment_2 ) ) )
-            // InternalIdioms.g:4018:1: ( ( rule__Idiom__NameAssignment_2 ) )
+            // InternalIdioms.g:4102:1: ( ( ( rule__Idiom__NameAssignment_2 ) ) )
+            // InternalIdioms.g:4103:1: ( ( rule__Idiom__NameAssignment_2 ) )
             {
-            // InternalIdioms.g:4018:1: ( ( rule__Idiom__NameAssignment_2 ) )
-            // InternalIdioms.g:4019:2: ( rule__Idiom__NameAssignment_2 )
+            // InternalIdioms.g:4103:1: ( ( rule__Idiom__NameAssignment_2 ) )
+            // InternalIdioms.g:4104:2: ( rule__Idiom__NameAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getNameAssignment_2());
             }
-            // InternalIdioms.g:4020:2: ( rule__Idiom__NameAssignment_2 )
-            // InternalIdioms.g:4020:3: rule__Idiom__NameAssignment_2
+            // InternalIdioms.g:4105:2: ( rule__Idiom__NameAssignment_2 )
+            // InternalIdioms.g:4105:3: rule__Idiom__NameAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__NameAssignment_2();
@@ -13103,16 +13370,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__3"
-    // InternalIdioms.g:4028:1: rule__Idiom__Group__3 : rule__Idiom__Group__3__Impl rule__Idiom__Group__4 ;
+    // InternalIdioms.g:4113:1: rule__Idiom__Group__3 : rule__Idiom__Group__3__Impl rule__Idiom__Group__4 ;
     public final void rule__Idiom__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4032:1: ( rule__Idiom__Group__3__Impl rule__Idiom__Group__4 )
-            // InternalIdioms.g:4033:2: rule__Idiom__Group__3__Impl rule__Idiom__Group__4
+            // InternalIdioms.g:4117:1: ( rule__Idiom__Group__3__Impl rule__Idiom__Group__4 )
+            // InternalIdioms.g:4118:2: rule__Idiom__Group__3__Impl rule__Idiom__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_33);
+            pushFollow(FollowSets000.FOLLOW_34);
             rule__Idiom__Group__3__Impl();
 
             state._fsp--;
@@ -13141,31 +13408,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__3__Impl"
-    // InternalIdioms.g:4040:1: rule__Idiom__Group__3__Impl : ( ( rule__Idiom__Group_3__0 )? ) ;
+    // InternalIdioms.g:4125:1: rule__Idiom__Group__3__Impl : ( ( rule__Idiom__Group_3__0 )? ) ;
     public final void rule__Idiom__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4044:1: ( ( ( rule__Idiom__Group_3__0 )? ) )
-            // InternalIdioms.g:4045:1: ( ( rule__Idiom__Group_3__0 )? )
+            // InternalIdioms.g:4129:1: ( ( ( rule__Idiom__Group_3__0 )? ) )
+            // InternalIdioms.g:4130:1: ( ( rule__Idiom__Group_3__0 )? )
             {
-            // InternalIdioms.g:4045:1: ( ( rule__Idiom__Group_3__0 )? )
-            // InternalIdioms.g:4046:2: ( rule__Idiom__Group_3__0 )?
+            // InternalIdioms.g:4130:1: ( ( rule__Idiom__Group_3__0 )? )
+            // InternalIdioms.g:4131:2: ( rule__Idiom__Group_3__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getGroup_3());
             }
-            // InternalIdioms.g:4047:2: ( rule__Idiom__Group_3__0 )?
+            // InternalIdioms.g:4132:2: ( rule__Idiom__Group_3__0 )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
-            if ( (LA25_0==46) ) {
+            if ( (LA25_0==47) ) {
                 alt25=1;
             }
             switch (alt25) {
                 case 1 :
-                    // InternalIdioms.g:4047:3: rule__Idiom__Group_3__0
+                    // InternalIdioms.g:4132:3: rule__Idiom__Group_3__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__Group_3__0();
@@ -13203,16 +13470,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__4"
-    // InternalIdioms.g:4055:1: rule__Idiom__Group__4 : rule__Idiom__Group__4__Impl rule__Idiom__Group__5 ;
+    // InternalIdioms.g:4140:1: rule__Idiom__Group__4 : rule__Idiom__Group__4__Impl rule__Idiom__Group__5 ;
     public final void rule__Idiom__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4059:1: ( rule__Idiom__Group__4__Impl rule__Idiom__Group__5 )
-            // InternalIdioms.g:4060:2: rule__Idiom__Group__4__Impl rule__Idiom__Group__5
+            // InternalIdioms.g:4144:1: ( rule__Idiom__Group__4__Impl rule__Idiom__Group__5 )
+            // InternalIdioms.g:4145:2: rule__Idiom__Group__4__Impl rule__Idiom__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_33);
+            pushFollow(FollowSets000.FOLLOW_34);
             rule__Idiom__Group__4__Impl();
 
             state._fsp--;
@@ -13241,31 +13508,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__4__Impl"
-    // InternalIdioms.g:4067:1: rule__Idiom__Group__4__Impl : ( ( rule__Idiom__Group_4__0 )? ) ;
+    // InternalIdioms.g:4152:1: rule__Idiom__Group__4__Impl : ( ( rule__Idiom__Group_4__0 )? ) ;
     public final void rule__Idiom__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4071:1: ( ( ( rule__Idiom__Group_4__0 )? ) )
-            // InternalIdioms.g:4072:1: ( ( rule__Idiom__Group_4__0 )? )
+            // InternalIdioms.g:4156:1: ( ( ( rule__Idiom__Group_4__0 )? ) )
+            // InternalIdioms.g:4157:1: ( ( rule__Idiom__Group_4__0 )? )
             {
-            // InternalIdioms.g:4072:1: ( ( rule__Idiom__Group_4__0 )? )
-            // InternalIdioms.g:4073:2: ( rule__Idiom__Group_4__0 )?
+            // InternalIdioms.g:4157:1: ( ( rule__Idiom__Group_4__0 )? )
+            // InternalIdioms.g:4158:2: ( rule__Idiom__Group_4__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getGroup_4());
             }
-            // InternalIdioms.g:4074:2: ( rule__Idiom__Group_4__0 )?
+            // InternalIdioms.g:4159:2: ( rule__Idiom__Group_4__0 )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
-            if ( (LA26_0==47) ) {
+            if ( (LA26_0==48) ) {
                 alt26=1;
             }
             switch (alt26) {
                 case 1 :
-                    // InternalIdioms.g:4074:3: rule__Idiom__Group_4__0
+                    // InternalIdioms.g:4159:3: rule__Idiom__Group_4__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__Group_4__0();
@@ -13303,14 +13570,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__5"
-    // InternalIdioms.g:4082:1: rule__Idiom__Group__5 : rule__Idiom__Group__5__Impl ;
+    // InternalIdioms.g:4167:1: rule__Idiom__Group__5 : rule__Idiom__Group__5__Impl ;
     public final void rule__Idiom__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4086:1: ( rule__Idiom__Group__5__Impl )
-            // InternalIdioms.g:4087:2: rule__Idiom__Group__5__Impl
+            // InternalIdioms.g:4171:1: ( rule__Idiom__Group__5__Impl )
+            // InternalIdioms.g:4172:2: rule__Idiom__Group__5__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group__5__Impl();
@@ -13336,23 +13603,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group__5__Impl"
-    // InternalIdioms.g:4093:1: rule__Idiom__Group__5__Impl : ( ( rule__Idiom__Alternatives_5 ) ) ;
+    // InternalIdioms.g:4178:1: rule__Idiom__Group__5__Impl : ( ( rule__Idiom__Alternatives_5 ) ) ;
     public final void rule__Idiom__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4097:1: ( ( ( rule__Idiom__Alternatives_5 ) ) )
-            // InternalIdioms.g:4098:1: ( ( rule__Idiom__Alternatives_5 ) )
+            // InternalIdioms.g:4182:1: ( ( ( rule__Idiom__Alternatives_5 ) ) )
+            // InternalIdioms.g:4183:1: ( ( rule__Idiom__Alternatives_5 ) )
             {
-            // InternalIdioms.g:4098:1: ( ( rule__Idiom__Alternatives_5 ) )
-            // InternalIdioms.g:4099:2: ( rule__Idiom__Alternatives_5 )
+            // InternalIdioms.g:4183:1: ( ( rule__Idiom__Alternatives_5 ) )
+            // InternalIdioms.g:4184:2: ( rule__Idiom__Alternatives_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getAlternatives_5());
             }
-            // InternalIdioms.g:4100:2: ( rule__Idiom__Alternatives_5 )
-            // InternalIdioms.g:4100:3: rule__Idiom__Alternatives_5
+            // InternalIdioms.g:4185:2: ( rule__Idiom__Alternatives_5 )
+            // InternalIdioms.g:4185:3: rule__Idiom__Alternatives_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Alternatives_5();
@@ -13387,14 +13654,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__0"
-    // InternalIdioms.g:4109:1: rule__Idiom__Group_3__0 : rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1 ;
+    // InternalIdioms.g:4194:1: rule__Idiom__Group_3__0 : rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1 ;
     public final void rule__Idiom__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4113:1: ( rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1 )
-            // InternalIdioms.g:4114:2: rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1
+            // InternalIdioms.g:4198:1: ( rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1 )
+            // InternalIdioms.g:4199:2: rule__Idiom__Group_3__0__Impl rule__Idiom__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__Idiom__Group_3__0__Impl();
@@ -13425,22 +13692,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__0__Impl"
-    // InternalIdioms.g:4121:1: rule__Idiom__Group_3__0__Impl : ( 'for' ) ;
+    // InternalIdioms.g:4206:1: rule__Idiom__Group_3__0__Impl : ( 'for' ) ;
     public final void rule__Idiom__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4125:1: ( ( 'for' ) )
-            // InternalIdioms.g:4126:1: ( 'for' )
+            // InternalIdioms.g:4210:1: ( ( 'for' ) )
+            // InternalIdioms.g:4211:1: ( 'for' )
             {
-            // InternalIdioms.g:4126:1: ( 'for' )
-            // InternalIdioms.g:4127:2: 'for'
+            // InternalIdioms.g:4211:1: ( 'for' )
+            // InternalIdioms.g:4212:2: 'for'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForKeyword_3_0());
             }
-            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getForKeyword_3_0());
             }
@@ -13466,14 +13733,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__1"
-    // InternalIdioms.g:4136:1: rule__Idiom__Group_3__1 : rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2 ;
+    // InternalIdioms.g:4221:1: rule__Idiom__Group_3__1 : rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2 ;
     public final void rule__Idiom__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4140:1: ( rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2 )
-            // InternalIdioms.g:4141:2: rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2
+            // InternalIdioms.g:4225:1: ( rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2 )
+            // InternalIdioms.g:4226:2: rule__Idiom__Group_3__1__Impl rule__Idiom__Group_3__2
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__Idiom__Group_3__1__Impl();
@@ -13504,22 +13771,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__1__Impl"
-    // InternalIdioms.g:4148:1: rule__Idiom__Group_3__1__Impl : ( ( rule__Idiom__Group_3_1__0 )? ) ;
+    // InternalIdioms.g:4233:1: rule__Idiom__Group_3__1__Impl : ( ( rule__Idiom__Group_3_1__0 )? ) ;
     public final void rule__Idiom__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4152:1: ( ( ( rule__Idiom__Group_3_1__0 )? ) )
-            // InternalIdioms.g:4153:1: ( ( rule__Idiom__Group_3_1__0 )? )
+            // InternalIdioms.g:4237:1: ( ( ( rule__Idiom__Group_3_1__0 )? ) )
+            // InternalIdioms.g:4238:1: ( ( rule__Idiom__Group_3_1__0 )? )
             {
-            // InternalIdioms.g:4153:1: ( ( rule__Idiom__Group_3_1__0 )? )
-            // InternalIdioms.g:4154:2: ( rule__Idiom__Group_3_1__0 )?
+            // InternalIdioms.g:4238:1: ( ( rule__Idiom__Group_3_1__0 )? )
+            // InternalIdioms.g:4239:2: ( rule__Idiom__Group_3_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getGroup_3_1());
             }
-            // InternalIdioms.g:4155:2: ( rule__Idiom__Group_3_1__0 )?
+            // InternalIdioms.g:4240:2: ( rule__Idiom__Group_3_1__0 )?
             int alt27=2;
             int LA27_0 = input.LA(1);
 
@@ -13532,7 +13799,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt27) {
                 case 1 :
-                    // InternalIdioms.g:4155:3: rule__Idiom__Group_3_1__0
+                    // InternalIdioms.g:4240:3: rule__Idiom__Group_3_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Idiom__Group_3_1__0();
@@ -13570,14 +13837,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__2"
-    // InternalIdioms.g:4163:1: rule__Idiom__Group_3__2 : rule__Idiom__Group_3__2__Impl ;
+    // InternalIdioms.g:4248:1: rule__Idiom__Group_3__2 : rule__Idiom__Group_3__2__Impl ;
     public final void rule__Idiom__Group_3__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4167:1: ( rule__Idiom__Group_3__2__Impl )
-            // InternalIdioms.g:4168:2: rule__Idiom__Group_3__2__Impl
+            // InternalIdioms.g:4252:1: ( rule__Idiom__Group_3__2__Impl )
+            // InternalIdioms.g:4253:2: rule__Idiom__Group_3__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group_3__2__Impl();
@@ -13603,23 +13870,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3__2__Impl"
-    // InternalIdioms.g:4174:1: rule__Idiom__Group_3__2__Impl : ( ( rule__Idiom__ForEClassAssignment_3_2 ) ) ;
+    // InternalIdioms.g:4259:1: rule__Idiom__Group_3__2__Impl : ( ( rule__Idiom__ForEClassAssignment_3_2 ) ) ;
     public final void rule__Idiom__Group_3__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4178:1: ( ( ( rule__Idiom__ForEClassAssignment_3_2 ) ) )
-            // InternalIdioms.g:4179:1: ( ( rule__Idiom__ForEClassAssignment_3_2 ) )
+            // InternalIdioms.g:4263:1: ( ( ( rule__Idiom__ForEClassAssignment_3_2 ) ) )
+            // InternalIdioms.g:4264:1: ( ( rule__Idiom__ForEClassAssignment_3_2 ) )
             {
-            // InternalIdioms.g:4179:1: ( ( rule__Idiom__ForEClassAssignment_3_2 ) )
-            // InternalIdioms.g:4180:2: ( rule__Idiom__ForEClassAssignment_3_2 )
+            // InternalIdioms.g:4264:1: ( ( rule__Idiom__ForEClassAssignment_3_2 ) )
+            // InternalIdioms.g:4265:2: ( rule__Idiom__ForEClassAssignment_3_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEClassAssignment_3_2());
             }
-            // InternalIdioms.g:4181:2: ( rule__Idiom__ForEClassAssignment_3_2 )
-            // InternalIdioms.g:4181:3: rule__Idiom__ForEClassAssignment_3_2
+            // InternalIdioms.g:4266:2: ( rule__Idiom__ForEClassAssignment_3_2 )
+            // InternalIdioms.g:4266:3: rule__Idiom__ForEClassAssignment_3_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__ForEClassAssignment_3_2();
@@ -13654,14 +13921,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3_1__0"
-    // InternalIdioms.g:4190:1: rule__Idiom__Group_3_1__0 : rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1 ;
+    // InternalIdioms.g:4275:1: rule__Idiom__Group_3_1__0 : rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1 ;
     public final void rule__Idiom__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4194:1: ( rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1 )
-            // InternalIdioms.g:4195:2: rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1
+            // InternalIdioms.g:4279:1: ( rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1 )
+            // InternalIdioms.g:4280:2: rule__Idiom__Group_3_1__0__Impl rule__Idiom__Group_3_1__1
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__Idiom__Group_3_1__0__Impl();
@@ -13692,23 +13959,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3_1__0__Impl"
-    // InternalIdioms.g:4202:1: rule__Idiom__Group_3_1__0__Impl : ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) ) ;
+    // InternalIdioms.g:4287:1: rule__Idiom__Group_3_1__0__Impl : ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) ) ;
     public final void rule__Idiom__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4206:1: ( ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) ) )
-            // InternalIdioms.g:4207:1: ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) )
+            // InternalIdioms.g:4291:1: ( ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) ) )
+            // InternalIdioms.g:4292:1: ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) )
             {
-            // InternalIdioms.g:4207:1: ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) )
-            // InternalIdioms.g:4208:2: ( rule__Idiom__ForEPackageAssignment_3_1_0 )
+            // InternalIdioms.g:4292:1: ( ( rule__Idiom__ForEPackageAssignment_3_1_0 ) )
+            // InternalIdioms.g:4293:2: ( rule__Idiom__ForEPackageAssignment_3_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEPackageAssignment_3_1_0());
             }
-            // InternalIdioms.g:4209:2: ( rule__Idiom__ForEPackageAssignment_3_1_0 )
-            // InternalIdioms.g:4209:3: rule__Idiom__ForEPackageAssignment_3_1_0
+            // InternalIdioms.g:4294:2: ( rule__Idiom__ForEPackageAssignment_3_1_0 )
+            // InternalIdioms.g:4294:3: rule__Idiom__ForEPackageAssignment_3_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__ForEPackageAssignment_3_1_0();
@@ -13743,14 +14010,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3_1__1"
-    // InternalIdioms.g:4217:1: rule__Idiom__Group_3_1__1 : rule__Idiom__Group_3_1__1__Impl ;
+    // InternalIdioms.g:4302:1: rule__Idiom__Group_3_1__1 : rule__Idiom__Group_3_1__1__Impl ;
     public final void rule__Idiom__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4221:1: ( rule__Idiom__Group_3_1__1__Impl )
-            // InternalIdioms.g:4222:2: rule__Idiom__Group_3_1__1__Impl
+            // InternalIdioms.g:4306:1: ( rule__Idiom__Group_3_1__1__Impl )
+            // InternalIdioms.g:4307:2: rule__Idiom__Group_3_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group_3_1__1__Impl();
@@ -13776,17 +14043,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_3_1__1__Impl"
-    // InternalIdioms.g:4228:1: rule__Idiom__Group_3_1__1__Impl : ( '::' ) ;
+    // InternalIdioms.g:4313:1: rule__Idiom__Group_3_1__1__Impl : ( '::' ) ;
     public final void rule__Idiom__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4232:1: ( ( '::' ) )
-            // InternalIdioms.g:4233:1: ( '::' )
+            // InternalIdioms.g:4317:1: ( ( '::' ) )
+            // InternalIdioms.g:4318:1: ( '::' )
             {
-            // InternalIdioms.g:4233:1: ( '::' )
-            // InternalIdioms.g:4234:2: '::'
+            // InternalIdioms.g:4318:1: ( '::' )
+            // InternalIdioms.g:4319:2: '::'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getColonColonKeyword_3_1_1());
@@ -13817,14 +14084,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_4__0"
-    // InternalIdioms.g:4244:1: rule__Idiom__Group_4__0 : rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1 ;
+    // InternalIdioms.g:4329:1: rule__Idiom__Group_4__0 : rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1 ;
     public final void rule__Idiom__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4248:1: ( rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1 )
-            // InternalIdioms.g:4249:2: rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1
+            // InternalIdioms.g:4333:1: ( rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1 )
+            // InternalIdioms.g:4334:2: rule__Idiom__Group_4__0__Impl rule__Idiom__Group_4__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__Idiom__Group_4__0__Impl();
@@ -13855,22 +14122,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_4__0__Impl"
-    // InternalIdioms.g:4256:1: rule__Idiom__Group_4__0__Impl : ( 'in' ) ;
+    // InternalIdioms.g:4341:1: rule__Idiom__Group_4__0__Impl : ( 'in' ) ;
     public final void rule__Idiom__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4260:1: ( ( 'in' ) )
-            // InternalIdioms.g:4261:1: ( 'in' )
+            // InternalIdioms.g:4345:1: ( ( 'in' ) )
+            // InternalIdioms.g:4346:1: ( 'in' )
             {
-            // InternalIdioms.g:4261:1: ( 'in' )
-            // InternalIdioms.g:4262:2: 'in'
+            // InternalIdioms.g:4346:1: ( 'in' )
+            // InternalIdioms.g:4347:2: 'in'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getInKeyword_4_0());
             }
-            match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getInKeyword_4_0());
             }
@@ -13896,14 +14163,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_4__1"
-    // InternalIdioms.g:4271:1: rule__Idiom__Group_4__1 : rule__Idiom__Group_4__1__Impl ;
+    // InternalIdioms.g:4356:1: rule__Idiom__Group_4__1 : rule__Idiom__Group_4__1__Impl ;
     public final void rule__Idiom__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4275:1: ( rule__Idiom__Group_4__1__Impl )
-            // InternalIdioms.g:4276:2: rule__Idiom__Group_4__1__Impl
+            // InternalIdioms.g:4360:1: ( rule__Idiom__Group_4__1__Impl )
+            // InternalIdioms.g:4361:2: rule__Idiom__Group_4__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group_4__1__Impl();
@@ -13929,23 +14196,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_4__1__Impl"
-    // InternalIdioms.g:4282:1: rule__Idiom__Group_4__1__Impl : ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) ) ;
+    // InternalIdioms.g:4367:1: rule__Idiom__Group_4__1__Impl : ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) ) ;
     public final void rule__Idiom__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4286:1: ( ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) ) )
-            // InternalIdioms.g:4287:1: ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) )
+            // InternalIdioms.g:4371:1: ( ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) ) )
+            // InternalIdioms.g:4372:1: ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) )
             {
-            // InternalIdioms.g:4287:1: ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) )
-            // InternalIdioms.g:4288:2: ( rule__Idiom__InRuleRegexAssignment_4_1 )
+            // InternalIdioms.g:4372:1: ( ( rule__Idiom__InRuleRegexAssignment_4_1 ) )
+            // InternalIdioms.g:4373:2: ( rule__Idiom__InRuleRegexAssignment_4_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getInRuleRegexAssignment_4_1());
             }
-            // InternalIdioms.g:4289:2: ( rule__Idiom__InRuleRegexAssignment_4_1 )
-            // InternalIdioms.g:4289:3: rule__Idiom__InRuleRegexAssignment_4_1
+            // InternalIdioms.g:4374:2: ( rule__Idiom__InRuleRegexAssignment_4_1 )
+            // InternalIdioms.g:4374:3: rule__Idiom__InRuleRegexAssignment_4_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__InRuleRegexAssignment_4_1();
@@ -13980,16 +14247,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__0"
-    // InternalIdioms.g:4298:1: rule__Idiom__Group_5_1__0 : rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1 ;
+    // InternalIdioms.g:4383:1: rule__Idiom__Group_5_1__0 : rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1 ;
     public final void rule__Idiom__Group_5_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4302:1: ( rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1 )
-            // InternalIdioms.g:4303:2: rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1
+            // InternalIdioms.g:4387:1: ( rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1 )
+            // InternalIdioms.g:4388:2: rule__Idiom__Group_5_1__0__Impl rule__Idiom__Group_5_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_34);
+            pushFollow(FollowSets000.FOLLOW_35);
             rule__Idiom__Group_5_1__0__Impl();
 
             state._fsp--;
@@ -14018,22 +14285,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__0__Impl"
-    // InternalIdioms.g:4310:1: rule__Idiom__Group_5_1__0__Impl : ( '{' ) ;
+    // InternalIdioms.g:4395:1: rule__Idiom__Group_5_1__0__Impl : ( '{' ) ;
     public final void rule__Idiom__Group_5_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4314:1: ( ( '{' ) )
-            // InternalIdioms.g:4315:1: ( '{' )
+            // InternalIdioms.g:4399:1: ( ( '{' ) )
+            // InternalIdioms.g:4400:1: ( '{' )
             {
-            // InternalIdioms.g:4315:1: ( '{' )
-            // InternalIdioms.g:4316:2: '{'
+            // InternalIdioms.g:4400:1: ( '{' )
+            // InternalIdioms.g:4401:2: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getLeftCurlyBracketKeyword_5_1_0());
             }
-            match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getLeftCurlyBracketKeyword_5_1_0());
             }
@@ -14059,16 +14326,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__1"
-    // InternalIdioms.g:4325:1: rule__Idiom__Group_5_1__1 : rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2 ;
+    // InternalIdioms.g:4410:1: rule__Idiom__Group_5_1__1 : rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2 ;
     public final void rule__Idiom__Group_5_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4329:1: ( rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2 )
-            // InternalIdioms.g:4330:2: rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2
+            // InternalIdioms.g:4414:1: ( rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2 )
+            // InternalIdioms.g:4415:2: rule__Idiom__Group_5_1__1__Impl rule__Idiom__Group_5_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_34);
+            pushFollow(FollowSets000.FOLLOW_35);
             rule__Idiom__Group_5_1__1__Impl();
 
             state._fsp--;
@@ -14097,37 +14364,37 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__1__Impl"
-    // InternalIdioms.g:4337:1: rule__Idiom__Group_5_1__1__Impl : ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* ) ;
+    // InternalIdioms.g:4422:1: rule__Idiom__Group_5_1__1__Impl : ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* ) ;
     public final void rule__Idiom__Group_5_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4341:1: ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* ) )
-            // InternalIdioms.g:4342:1: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* )
+            // InternalIdioms.g:4426:1: ( ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* ) )
+            // InternalIdioms.g:4427:1: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* )
             {
-            // InternalIdioms.g:4342:1: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* )
-            // InternalIdioms.g:4343:2: ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )*
+            // InternalIdioms.g:4427:1: ( ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )* )
+            // InternalIdioms.g:4428:2: ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getOwnedSubIdiomsAssignment_5_1_1());
             }
-            // InternalIdioms.g:4344:2: ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )*
+            // InternalIdioms.g:4429:2: ( rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 )*
             loop28:
             do {
                 int alt28=2;
                 int LA28_0 = input.LA(1);
 
-                if ( (LA28_0==50) ) {
+                if ( (LA28_0==51) ) {
                     alt28=1;
                 }
 
 
                 switch (alt28) {
             	case 1 :
-            	    // InternalIdioms.g:4344:3: rule__Idiom__OwnedSubIdiomsAssignment_5_1_1
+            	    // InternalIdioms.g:4429:3: rule__Idiom__OwnedSubIdiomsAssignment_5_1_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_35);
+            	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__Idiom__OwnedSubIdiomsAssignment_5_1_1();
 
             	    state._fsp--;
@@ -14166,14 +14433,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__2"
-    // InternalIdioms.g:4352:1: rule__Idiom__Group_5_1__2 : rule__Idiom__Group_5_1__2__Impl ;
+    // InternalIdioms.g:4437:1: rule__Idiom__Group_5_1__2 : rule__Idiom__Group_5_1__2__Impl ;
     public final void rule__Idiom__Group_5_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4356:1: ( rule__Idiom__Group_5_1__2__Impl )
-            // InternalIdioms.g:4357:2: rule__Idiom__Group_5_1__2__Impl
+            // InternalIdioms.g:4441:1: ( rule__Idiom__Group_5_1__2__Impl )
+            // InternalIdioms.g:4442:2: rule__Idiom__Group_5_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Idiom__Group_5_1__2__Impl();
@@ -14199,22 +14466,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__Group_5_1__2__Impl"
-    // InternalIdioms.g:4363:1: rule__Idiom__Group_5_1__2__Impl : ( '}' ) ;
+    // InternalIdioms.g:4448:1: rule__Idiom__Group_5_1__2__Impl : ( '}' ) ;
     public final void rule__Idiom__Group_5_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4367:1: ( ( '}' ) )
-            // InternalIdioms.g:4368:1: ( '}' )
+            // InternalIdioms.g:4452:1: ( ( '}' ) )
+            // InternalIdioms.g:4453:1: ( '}' )
             {
-            // InternalIdioms.g:4368:1: ( '}' )
-            // InternalIdioms.g:4369:2: '}'
+            // InternalIdioms.g:4453:1: ( '}' )
+            // InternalIdioms.g:4454:2: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getRightCurlyBracketKeyword_5_1_2());
             }
-            match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getRightCurlyBracketKeyword_5_1_2());
             }
@@ -14240,16 +14507,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__0"
-    // InternalIdioms.g:4379:1: rule__SubIdiom__Group__0 : rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1 ;
+    // InternalIdioms.g:4464:1: rule__SubIdiom__Group__0 : rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1 ;
     public final void rule__SubIdiom__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4383:1: ( rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1 )
-            // InternalIdioms.g:4384:2: rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1
+            // InternalIdioms.g:4468:1: ( rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1 )
+            // InternalIdioms.g:4469:2: rule__SubIdiom__Group__0__Impl rule__SubIdiom__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_36);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__SubIdiom__Group__0__Impl();
 
             state._fsp--;
@@ -14278,22 +14545,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__0__Impl"
-    // InternalIdioms.g:4391:1: rule__SubIdiom__Group__0__Impl : ( 'at' ) ;
+    // InternalIdioms.g:4476:1: rule__SubIdiom__Group__0__Impl : ( 'at' ) ;
     public final void rule__SubIdiom__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4395:1: ( ( 'at' ) )
-            // InternalIdioms.g:4396:1: ( 'at' )
+            // InternalIdioms.g:4480:1: ( ( 'at' ) )
+            // InternalIdioms.g:4481:1: ( 'at' )
             {
-            // InternalIdioms.g:4396:1: ( 'at' )
-            // InternalIdioms.g:4397:2: 'at'
+            // InternalIdioms.g:4481:1: ( 'at' )
+            // InternalIdioms.g:4482:2: 'at'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getAtKeyword_0());
             }
-            match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubIdiomAccess().getAtKeyword_0());
             }
@@ -14319,16 +14586,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__1"
-    // InternalIdioms.g:4406:1: rule__SubIdiom__Group__1 : rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2 ;
+    // InternalIdioms.g:4491:1: rule__SubIdiom__Group__1 : rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2 ;
     public final void rule__SubIdiom__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4410:1: ( rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2 )
-            // InternalIdioms.g:4411:2: rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2
+            // InternalIdioms.g:4495:1: ( rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2 )
+            // InternalIdioms.g:4496:2: rule__SubIdiom__Group__1__Impl rule__SubIdiom__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_36);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__SubIdiom__Group__1__Impl();
 
             state._fsp--;
@@ -14357,31 +14624,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__1__Impl"
-    // InternalIdioms.g:4418:1: rule__SubIdiom__Group__1__Impl : ( ( rule__SubIdiom__Alternatives_1 )? ) ;
+    // InternalIdioms.g:4503:1: rule__SubIdiom__Group__1__Impl : ( ( rule__SubIdiom__Alternatives_1 )? ) ;
     public final void rule__SubIdiom__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4422:1: ( ( ( rule__SubIdiom__Alternatives_1 )? ) )
-            // InternalIdioms.g:4423:1: ( ( rule__SubIdiom__Alternatives_1 )? )
+            // InternalIdioms.g:4507:1: ( ( ( rule__SubIdiom__Alternatives_1 )? ) )
+            // InternalIdioms.g:4508:1: ( ( rule__SubIdiom__Alternatives_1 )? )
             {
-            // InternalIdioms.g:4423:1: ( ( rule__SubIdiom__Alternatives_1 )? )
-            // InternalIdioms.g:4424:2: ( rule__SubIdiom__Alternatives_1 )?
+            // InternalIdioms.g:4508:1: ( ( rule__SubIdiom__Alternatives_1 )? )
+            // InternalIdioms.g:4509:2: ( rule__SubIdiom__Alternatives_1 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getAlternatives_1());
             }
-            // InternalIdioms.g:4425:2: ( rule__SubIdiom__Alternatives_1 )?
+            // InternalIdioms.g:4510:2: ( rule__SubIdiom__Alternatives_1 )?
             int alt29=2;
             int LA29_0 = input.LA(1);
 
-            if ( (LA29_0==11||LA29_0==54) ) {
+            if ( (LA29_0==11||LA29_0==55) ) {
                 alt29=1;
             }
             switch (alt29) {
                 case 1 :
-                    // InternalIdioms.g:4425:3: rule__SubIdiom__Alternatives_1
+                    // InternalIdioms.g:4510:3: rule__SubIdiom__Alternatives_1
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__SubIdiom__Alternatives_1();
@@ -14419,16 +14686,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__2"
-    // InternalIdioms.g:4433:1: rule__SubIdiom__Group__2 : rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3 ;
+    // InternalIdioms.g:4518:1: rule__SubIdiom__Group__2 : rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3 ;
     public final void rule__SubIdiom__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4437:1: ( rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3 )
-            // InternalIdioms.g:4438:2: rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3
+            // InternalIdioms.g:4522:1: ( rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3 )
+            // InternalIdioms.g:4523:2: rule__SubIdiom__Group__2__Impl rule__SubIdiom__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_38);
             rule__SubIdiom__Group__2__Impl();
 
             state._fsp--;
@@ -14457,23 +14724,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__2__Impl"
-    // InternalIdioms.g:4445:1: rule__SubIdiom__Group__2__Impl : ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) ) ;
+    // InternalIdioms.g:4530:1: rule__SubIdiom__Group__2__Impl : ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) ) ;
     public final void rule__SubIdiom__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4449:1: ( ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) ) )
-            // InternalIdioms.g:4450:1: ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) )
+            // InternalIdioms.g:4534:1: ( ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) ) )
+            // InternalIdioms.g:4535:1: ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) )
             {
-            // InternalIdioms.g:4450:1: ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) )
-            // InternalIdioms.g:4451:2: ( rule__SubIdiom__OwnedLocatorAssignment_2 )
+            // InternalIdioms.g:4535:1: ( ( rule__SubIdiom__OwnedLocatorAssignment_2 ) )
+            // InternalIdioms.g:4536:2: ( rule__SubIdiom__OwnedLocatorAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getOwnedLocatorAssignment_2());
             }
-            // InternalIdioms.g:4452:2: ( rule__SubIdiom__OwnedLocatorAssignment_2 )
-            // InternalIdioms.g:4452:3: rule__SubIdiom__OwnedLocatorAssignment_2
+            // InternalIdioms.g:4537:2: ( rule__SubIdiom__OwnedLocatorAssignment_2 )
+            // InternalIdioms.g:4537:3: rule__SubIdiom__OwnedLocatorAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubIdiom__OwnedLocatorAssignment_2();
@@ -14508,16 +14775,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__3"
-    // InternalIdioms.g:4460:1: rule__SubIdiom__Group__3 : rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4 ;
+    // InternalIdioms.g:4545:1: rule__SubIdiom__Group__3 : rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4 ;
     public final void rule__SubIdiom__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4464:1: ( rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4 )
-            // InternalIdioms.g:4465:2: rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4
+            // InternalIdioms.g:4549:1: ( rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4 )
+            // InternalIdioms.g:4550:2: rule__SubIdiom__Group__3__Impl rule__SubIdiom__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_38);
             rule__SubIdiom__Group__3__Impl();
 
             state._fsp--;
@@ -14546,31 +14813,31 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__3__Impl"
-    // InternalIdioms.g:4472:1: rule__SubIdiom__Group__3__Impl : ( ( rule__SubIdiom__Group_3__0 )? ) ;
+    // InternalIdioms.g:4557:1: rule__SubIdiom__Group__3__Impl : ( ( rule__SubIdiom__Group_3__0 )? ) ;
     public final void rule__SubIdiom__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4476:1: ( ( ( rule__SubIdiom__Group_3__0 )? ) )
-            // InternalIdioms.g:4477:1: ( ( rule__SubIdiom__Group_3__0 )? )
+            // InternalIdioms.g:4561:1: ( ( ( rule__SubIdiom__Group_3__0 )? ) )
+            // InternalIdioms.g:4562:1: ( ( rule__SubIdiom__Group_3__0 )? )
             {
-            // InternalIdioms.g:4477:1: ( ( rule__SubIdiom__Group_3__0 )? )
-            // InternalIdioms.g:4478:2: ( rule__SubIdiom__Group_3__0 )?
+            // InternalIdioms.g:4562:1: ( ( rule__SubIdiom__Group_3__0 )? )
+            // InternalIdioms.g:4563:2: ( rule__SubIdiom__Group_3__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getGroup_3());
             }
-            // InternalIdioms.g:4479:2: ( rule__SubIdiom__Group_3__0 )?
+            // InternalIdioms.g:4564:2: ( rule__SubIdiom__Group_3__0 )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==51) ) {
+            if ( (LA30_0==52) ) {
                 alt30=1;
             }
             switch (alt30) {
                 case 1 :
-                    // InternalIdioms.g:4479:3: rule__SubIdiom__Group_3__0
+                    // InternalIdioms.g:4564:3: rule__SubIdiom__Group_3__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__SubIdiom__Group_3__0();
@@ -14608,14 +14875,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__4"
-    // InternalIdioms.g:4487:1: rule__SubIdiom__Group__4 : rule__SubIdiom__Group__4__Impl ;
+    // InternalIdioms.g:4572:1: rule__SubIdiom__Group__4 : rule__SubIdiom__Group__4__Impl ;
     public final void rule__SubIdiom__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4491:1: ( rule__SubIdiom__Group__4__Impl )
-            // InternalIdioms.g:4492:2: rule__SubIdiom__Group__4__Impl
+            // InternalIdioms.g:4576:1: ( rule__SubIdiom__Group__4__Impl )
+            // InternalIdioms.g:4577:2: rule__SubIdiom__Group__4__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubIdiom__Group__4__Impl();
@@ -14641,17 +14908,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group__4__Impl"
-    // InternalIdioms.g:4498:1: rule__SubIdiom__Group__4__Impl : ( ';' ) ;
+    // InternalIdioms.g:4583:1: rule__SubIdiom__Group__4__Impl : ( ';' ) ;
     public final void rule__SubIdiom__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4502:1: ( ( ';' ) )
-            // InternalIdioms.g:4503:1: ( ';' )
+            // InternalIdioms.g:4587:1: ( ( ';' ) )
+            // InternalIdioms.g:4588:1: ( ';' )
             {
-            // InternalIdioms.g:4503:1: ( ';' )
-            // InternalIdioms.g:4504:2: ';'
+            // InternalIdioms.g:4588:1: ( ';' )
+            // InternalIdioms.g:4589:2: ';'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getSemicolonKeyword_4());
@@ -14682,16 +14949,16 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group_3__0"
-    // InternalIdioms.g:4514:1: rule__SubIdiom__Group_3__0 : rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1 ;
+    // InternalIdioms.g:4599:1: rule__SubIdiom__Group_3__0 : rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1 ;
     public final void rule__SubIdiom__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4518:1: ( rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1 )
-            // InternalIdioms.g:4519:2: rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1
+            // InternalIdioms.g:4603:1: ( rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1 )
+            // InternalIdioms.g:4604:2: rule__SubIdiom__Group_3__0__Impl rule__SubIdiom__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_39);
             rule__SubIdiom__Group_3__0__Impl();
 
             state._fsp--;
@@ -14720,22 +14987,22 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group_3__0__Impl"
-    // InternalIdioms.g:4526:1: rule__SubIdiom__Group_3__0__Impl : ( 'do' ) ;
+    // InternalIdioms.g:4611:1: rule__SubIdiom__Group_3__0__Impl : ( 'do' ) ;
     public final void rule__SubIdiom__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4530:1: ( ( 'do' ) )
-            // InternalIdioms.g:4531:1: ( 'do' )
+            // InternalIdioms.g:4615:1: ( ( 'do' ) )
+            // InternalIdioms.g:4616:1: ( 'do' )
             {
-            // InternalIdioms.g:4531:1: ( 'do' )
-            // InternalIdioms.g:4532:2: 'do'
+            // InternalIdioms.g:4616:1: ( 'do' )
+            // InternalIdioms.g:4617:2: 'do'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getDoKeyword_3_0());
             }
-            match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubIdiomAccess().getDoKeyword_3_0());
             }
@@ -14761,14 +15028,14 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group_3__1"
-    // InternalIdioms.g:4541:1: rule__SubIdiom__Group_3__1 : rule__SubIdiom__Group_3__1__Impl ;
+    // InternalIdioms.g:4626:1: rule__SubIdiom__Group_3__1 : rule__SubIdiom__Group_3__1__Impl ;
     public final void rule__SubIdiom__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4545:1: ( rule__SubIdiom__Group_3__1__Impl )
-            // InternalIdioms.g:4546:2: rule__SubIdiom__Group_3__1__Impl
+            // InternalIdioms.g:4630:1: ( rule__SubIdiom__Group_3__1__Impl )
+            // InternalIdioms.g:4631:2: rule__SubIdiom__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubIdiom__Group_3__1__Impl();
@@ -14794,37 +15061,37 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__Group_3__1__Impl"
-    // InternalIdioms.g:4552:1: rule__SubIdiom__Group_3__1__Impl : ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* ) ;
+    // InternalIdioms.g:4637:1: rule__SubIdiom__Group_3__1__Impl : ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* ) ;
     public final void rule__SubIdiom__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4556:1: ( ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* ) )
-            // InternalIdioms.g:4557:1: ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* )
+            // InternalIdioms.g:4641:1: ( ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* ) )
+            // InternalIdioms.g:4642:1: ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* )
             {
-            // InternalIdioms.g:4557:1: ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* )
-            // InternalIdioms.g:4558:2: ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )*
+            // InternalIdioms.g:4642:1: ( ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )* )
+            // InternalIdioms.g:4643:2: ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getOwnedSegmentsAssignment_3_1());
             }
-            // InternalIdioms.g:4559:2: ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )*
+            // InternalIdioms.g:4644:2: ( rule__SubIdiom__OwnedSegmentsAssignment_3_1 )*
             loop31:
             do {
                 int alt31=2;
                 int LA31_0 = input.LA(1);
 
-                if ( (LA31_0==RULE_ID||(LA31_0>=28 && LA31_0<=44)) ) {
+                if ( (LA31_0==RULE_ID||(LA31_0>=28 && LA31_0<=45)) ) {
                     alt31=1;
                 }
 
 
                 switch (alt31) {
             	case 1 :
-            	    // InternalIdioms.g:4559:3: rule__SubIdiom__OwnedSegmentsAssignment_3_1
+            	    // InternalIdioms.g:4644:3: rule__SubIdiom__OwnedSegmentsAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_39);
+            	    pushFollow(FollowSets000.FOLLOW_40);
             	    rule__SubIdiom__OwnedSegmentsAssignment_3_1();
 
             	    state._fsp--;
@@ -14863,17 +15130,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__NamesAssignment_1"
-    // InternalIdioms.g:4568:1: rule__IdiomsModel__NamesAssignment_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4653:1: rule__IdiomsModel__NamesAssignment_1 : ( RULE_ID ) ;
     public final void rule__IdiomsModel__NamesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4572:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4573:2: ( RULE_ID )
+            // InternalIdioms.g:4657:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4658:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4573:2: ( RULE_ID )
-            // InternalIdioms.g:4574:3: RULE_ID
+            // InternalIdioms.g:4658:2: ( RULE_ID )
+            // InternalIdioms.g:4659:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getNamesIDTerminalRuleCall_1_0());
@@ -14904,17 +15171,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__NamesAssignment_2_1"
-    // InternalIdioms.g:4583:1: rule__IdiomsModel__NamesAssignment_2_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4668:1: rule__IdiomsModel__NamesAssignment_2_1 : ( RULE_ID ) ;
     public final void rule__IdiomsModel__NamesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4587:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4588:2: ( RULE_ID )
+            // InternalIdioms.g:4672:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4673:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4588:2: ( RULE_ID )
-            // InternalIdioms.g:4589:3: RULE_ID
+            // InternalIdioms.g:4673:2: ( RULE_ID )
+            // InternalIdioms.g:4674:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getNamesIDTerminalRuleCall_2_1_0());
@@ -14945,17 +15212,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedWithsAssignment_3_0"
-    // InternalIdioms.g:4598:1: rule__IdiomsModel__OwnedWithsAssignment_3_0 : ( ruleIdiomsImport ) ;
+    // InternalIdioms.g:4683:1: rule__IdiomsModel__OwnedWithsAssignment_3_0 : ( ruleIdiomsImport ) ;
     public final void rule__IdiomsModel__OwnedWithsAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4602:1: ( ( ruleIdiomsImport ) )
-            // InternalIdioms.g:4603:2: ( ruleIdiomsImport )
+            // InternalIdioms.g:4687:1: ( ( ruleIdiomsImport ) )
+            // InternalIdioms.g:4688:2: ( ruleIdiomsImport )
             {
-            // InternalIdioms.g:4603:2: ( ruleIdiomsImport )
-            // InternalIdioms.g:4604:3: ruleIdiomsImport
+            // InternalIdioms.g:4688:2: ( ruleIdiomsImport )
+            // InternalIdioms.g:4689:3: ruleIdiomsImport
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedWithsIdiomsImportParserRuleCall_3_0_0());
@@ -14990,17 +15257,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1"
-    // InternalIdioms.g:4613:1: rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 : ( ruleEPackageDeclaration ) ;
+    // InternalIdioms.g:4698:1: rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1 : ( ruleEPackageDeclaration ) ;
     public final void rule__IdiomsModel__OwnedImportDeclarationsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4617:1: ( ( ruleEPackageDeclaration ) )
-            // InternalIdioms.g:4618:2: ( ruleEPackageDeclaration )
+            // InternalIdioms.g:4702:1: ( ( ruleEPackageDeclaration ) )
+            // InternalIdioms.g:4703:2: ( ruleEPackageDeclaration )
             {
-            // InternalIdioms.g:4618:2: ( ruleEPackageDeclaration )
-            // InternalIdioms.g:4619:3: ruleEPackageDeclaration
+            // InternalIdioms.g:4703:2: ( ruleEPackageDeclaration )
+            // InternalIdioms.g:4704:3: ruleEPackageDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedImportDeclarationsEPackageDeclarationParserRuleCall_3_1_0());
@@ -15035,17 +15302,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2"
-    // InternalIdioms.g:4628:1: rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 : ( ruleGrammarDeclaration ) ;
+    // InternalIdioms.g:4713:1: rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2 : ( ruleGrammarDeclaration ) ;
     public final void rule__IdiomsModel__OwnedGrammarDeclarationsAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4632:1: ( ( ruleGrammarDeclaration ) )
-            // InternalIdioms.g:4633:2: ( ruleGrammarDeclaration )
+            // InternalIdioms.g:4717:1: ( ( ruleGrammarDeclaration ) )
+            // InternalIdioms.g:4718:2: ( ruleGrammarDeclaration )
             {
-            // InternalIdioms.g:4633:2: ( ruleGrammarDeclaration )
-            // InternalIdioms.g:4634:3: ruleGrammarDeclaration
+            // InternalIdioms.g:4718:2: ( ruleGrammarDeclaration )
+            // InternalIdioms.g:4719:3: ruleGrammarDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedGrammarDeclarationsGrammarDeclarationParserRuleCall_3_2_0());
@@ -15080,17 +15347,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0"
-    // InternalIdioms.g:4643:1: rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 : ( ruleLocatorDeclaration ) ;
+    // InternalIdioms.g:4728:1: rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0 : ( ruleLocatorDeclaration ) ;
     public final void rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4647:1: ( ( ruleLocatorDeclaration ) )
-            // InternalIdioms.g:4648:2: ( ruleLocatorDeclaration )
+            // InternalIdioms.g:4732:1: ( ( ruleLocatorDeclaration ) )
+            // InternalIdioms.g:4733:2: ( ruleLocatorDeclaration )
             {
-            // InternalIdioms.g:4648:2: ( ruleLocatorDeclaration )
-            // InternalIdioms.g:4649:3: ruleLocatorDeclaration
+            // InternalIdioms.g:4733:2: ( ruleLocatorDeclaration )
+            // InternalIdioms.g:4734:3: ruleLocatorDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_4_0_0());
@@ -15125,17 +15392,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1"
-    // InternalIdioms.g:4658:1: rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 : ( ruleSegmentDeclaration ) ;
+    // InternalIdioms.g:4743:1: rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1 : ( ruleSegmentDeclaration ) ;
     public final void rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4662:1: ( ( ruleSegmentDeclaration ) )
-            // InternalIdioms.g:4663:2: ( ruleSegmentDeclaration )
+            // InternalIdioms.g:4747:1: ( ( ruleSegmentDeclaration ) )
+            // InternalIdioms.g:4748:2: ( ruleSegmentDeclaration )
             {
-            // InternalIdioms.g:4663:2: ( ruleSegmentDeclaration )
-            // InternalIdioms.g:4664:3: ruleSegmentDeclaration
+            // InternalIdioms.g:4748:2: ( ruleSegmentDeclaration )
+            // InternalIdioms.g:4749:3: ruleSegmentDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_4_1_0());
@@ -15170,17 +15437,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsModel__OwnedIdiomsAssignment_4_2"
-    // InternalIdioms.g:4673:1: rule__IdiomsModel__OwnedIdiomsAssignment_4_2 : ( ruleIdiom ) ;
+    // InternalIdioms.g:4758:1: rule__IdiomsModel__OwnedIdiomsAssignment_4_2 : ( ruleIdiom ) ;
     public final void rule__IdiomsModel__OwnedIdiomsAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4677:1: ( ( ruleIdiom ) )
-            // InternalIdioms.g:4678:2: ( ruleIdiom )
+            // InternalIdioms.g:4762:1: ( ( ruleIdiom ) )
+            // InternalIdioms.g:4763:2: ( ruleIdiom )
             {
-            // InternalIdioms.g:4678:2: ( ruleIdiom )
-            // InternalIdioms.g:4679:3: ruleIdiom
+            // InternalIdioms.g:4763:2: ( ruleIdiom )
+            // InternalIdioms.g:4764:3: ruleIdiom
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsIdiomParserRuleCall_4_2_0());
@@ -15215,23 +15482,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__EPackageAssignment_1"
-    // InternalIdioms.g:4688:1: rule__EPackageDeclaration__EPackageAssignment_1 : ( ( RULE_STRING ) ) ;
+    // InternalIdioms.g:4773:1: rule__EPackageDeclaration__EPackageAssignment_1 : ( ( RULE_STRING ) ) ;
     public final void rule__EPackageDeclaration__EPackageAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4692:1: ( ( ( RULE_STRING ) ) )
-            // InternalIdioms.g:4693:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4777:1: ( ( ( RULE_STRING ) ) )
+            // InternalIdioms.g:4778:2: ( ( RULE_STRING ) )
             {
-            // InternalIdioms.g:4693:2: ( ( RULE_STRING ) )
-            // InternalIdioms.g:4694:3: ( RULE_STRING )
+            // InternalIdioms.g:4778:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4779:3: ( RULE_STRING )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getEPackageEPackageCrossReference_1_0());
             }
-            // InternalIdioms.g:4695:3: ( RULE_STRING )
-            // InternalIdioms.g:4696:4: RULE_STRING
+            // InternalIdioms.g:4780:3: ( RULE_STRING )
+            // InternalIdioms.g:4781:4: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getEPackageEPackageSTRINGTerminalRuleCall_1_0_1());
@@ -15268,17 +15535,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EPackageDeclaration__AsAssignment_2_1"
-    // InternalIdioms.g:4707:1: rule__EPackageDeclaration__AsAssignment_2_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4792:1: rule__EPackageDeclaration__AsAssignment_2_1 : ( RULE_ID ) ;
     public final void rule__EPackageDeclaration__AsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4711:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4712:2: ( RULE_ID )
+            // InternalIdioms.g:4796:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4797:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4712:2: ( RULE_ID )
-            // InternalIdioms.g:4713:3: RULE_ID
+            // InternalIdioms.g:4797:2: ( RULE_ID )
+            // InternalIdioms.g:4798:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEPackageDeclarationAccess().getAsIDTerminalRuleCall_2_1_0());
@@ -15309,23 +15576,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__GrammarAssignment_1"
-    // InternalIdioms.g:4722:1: rule__GrammarDeclaration__GrammarAssignment_1 : ( ( RULE_STRING ) ) ;
+    // InternalIdioms.g:4807:1: rule__GrammarDeclaration__GrammarAssignment_1 : ( ( RULE_STRING ) ) ;
     public final void rule__GrammarDeclaration__GrammarAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4726:1: ( ( ( RULE_STRING ) ) )
-            // InternalIdioms.g:4727:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4811:1: ( ( ( RULE_STRING ) ) )
+            // InternalIdioms.g:4812:2: ( ( RULE_STRING ) )
             {
-            // InternalIdioms.g:4727:2: ( ( RULE_STRING ) )
-            // InternalIdioms.g:4728:3: ( RULE_STRING )
+            // InternalIdioms.g:4812:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4813:3: ( RULE_STRING )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getGrammarGrammarCrossReference_1_0());
             }
-            // InternalIdioms.g:4729:3: ( RULE_STRING )
-            // InternalIdioms.g:4730:4: RULE_STRING
+            // InternalIdioms.g:4814:3: ( RULE_STRING )
+            // InternalIdioms.g:4815:4: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getGrammarGrammarSTRINGTerminalRuleCall_1_0_1());
@@ -15362,17 +15629,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__GrammarDeclaration__AsAssignment_2_1"
-    // InternalIdioms.g:4741:1: rule__GrammarDeclaration__AsAssignment_2_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4826:1: rule__GrammarDeclaration__AsAssignment_2_1 : ( RULE_ID ) ;
     public final void rule__GrammarDeclaration__AsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4745:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4746:2: ( RULE_ID )
+            // InternalIdioms.g:4830:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4831:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4746:2: ( RULE_ID )
-            // InternalIdioms.g:4747:3: RULE_ID
+            // InternalIdioms.g:4831:2: ( RULE_ID )
+            // InternalIdioms.g:4832:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGrammarDeclarationAccess().getAsIDTerminalRuleCall_2_1_0());
@@ -15403,23 +15670,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__IdiomsModelAssignment_1"
-    // InternalIdioms.g:4756:1: rule__IdiomsImport__IdiomsModelAssignment_1 : ( ( RULE_STRING ) ) ;
+    // InternalIdioms.g:4841:1: rule__IdiomsImport__IdiomsModelAssignment_1 : ( ( RULE_STRING ) ) ;
     public final void rule__IdiomsImport__IdiomsModelAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4760:1: ( ( ( RULE_STRING ) ) )
-            // InternalIdioms.g:4761:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4845:1: ( ( ( RULE_STRING ) ) )
+            // InternalIdioms.g:4846:2: ( ( RULE_STRING ) )
             {
-            // InternalIdioms.g:4761:2: ( ( RULE_STRING ) )
-            // InternalIdioms.g:4762:3: ( RULE_STRING )
+            // InternalIdioms.g:4846:2: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4847:3: ( RULE_STRING )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getIdiomsModelIdiomsModelCrossReference_1_0());
             }
-            // InternalIdioms.g:4763:3: ( RULE_STRING )
-            // InternalIdioms.g:4764:4: RULE_STRING
+            // InternalIdioms.g:4848:3: ( RULE_STRING )
+            // InternalIdioms.g:4849:4: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getIdiomsModelIdiomsModelSTRINGTerminalRuleCall_1_0_1());
@@ -15456,17 +15723,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IdiomsImport__AsAssignment_2_1"
-    // InternalIdioms.g:4775:1: rule__IdiomsImport__AsAssignment_2_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4860:1: rule__IdiomsImport__AsAssignment_2_1 : ( RULE_ID ) ;
     public final void rule__IdiomsImport__AsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4779:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4780:2: ( RULE_ID )
+            // InternalIdioms.g:4864:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4865:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4780:2: ( RULE_ID )
-            // InternalIdioms.g:4781:3: RULE_ID
+            // InternalIdioms.g:4865:2: ( RULE_ID )
+            // InternalIdioms.g:4866:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomsImportAccess().getAsIDTerminalRuleCall_2_1_0());
@@ -15497,17 +15764,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__NameAssignment_1"
-    // InternalIdioms.g:4790:1: rule__LocatorDeclaration__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:4875:1: rule__LocatorDeclaration__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__LocatorDeclaration__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4794:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:4795:2: ( RULE_ID )
+            // InternalIdioms.g:4879:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:4880:2: ( RULE_ID )
             {
-            // InternalIdioms.g:4795:2: ( RULE_ID )
-            // InternalIdioms.g:4796:3: RULE_ID
+            // InternalIdioms.g:4880:2: ( RULE_ID )
+            // InternalIdioms.g:4881:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getNameIDTerminalRuleCall_1_0());
@@ -15538,17 +15805,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocatorDeclaration__OwnedLocatorAssignment_2"
-    // InternalIdioms.g:4805:1: rule__LocatorDeclaration__OwnedLocatorAssignment_2 : ( ruleLocator ) ;
+    // InternalIdioms.g:4890:1: rule__LocatorDeclaration__OwnedLocatorAssignment_2 : ( ruleLocator ) ;
     public final void rule__LocatorDeclaration__OwnedLocatorAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4809:1: ( ( ruleLocator ) )
-            // InternalIdioms.g:4810:2: ( ruleLocator )
+            // InternalIdioms.g:4894:1: ( ( ruleLocator ) )
+            // InternalIdioms.g:4895:2: ( ruleLocator )
             {
-            // InternalIdioms.g:4810:2: ( ruleLocator )
-            // InternalIdioms.g:4811:3: ruleLocator
+            // InternalIdioms.g:4895:2: ( ruleLocator )
+            // InternalIdioms.g:4896:3: ruleLocator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocatorDeclarationAccess().getOwnedLocatorLocatorParserRuleCall_2_0());
@@ -15583,23 +15850,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__EPackageAssignment_1_0_0"
-    // InternalIdioms.g:4820:1: rule__AssignmentLocator__EPackageAssignment_1_0_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:4905:1: rule__AssignmentLocator__EPackageAssignment_1_0_0 : ( ( RULE_ID ) ) ;
     public final void rule__AssignmentLocator__EPackageAssignment_1_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4824:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4825:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4909:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:4910:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4825:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4826:3: ( RULE_ID )
+            // InternalIdioms.g:4910:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4911:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEPackageEPackageCrossReference_1_0_0_0());
             }
-            // InternalIdioms.g:4827:3: ( RULE_ID )
-            // InternalIdioms.g:4828:4: RULE_ID
+            // InternalIdioms.g:4912:3: ( RULE_ID )
+            // InternalIdioms.g:4913:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEPackageEPackageIDTerminalRuleCall_1_0_0_0_1());
@@ -15636,23 +15903,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__EClassAssignment_1_1"
-    // InternalIdioms.g:4839:1: rule__AssignmentLocator__EClassAssignment_1_1 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:4924:1: rule__AssignmentLocator__EClassAssignment_1_1 : ( ( RULE_ID ) ) ;
     public final void rule__AssignmentLocator__EClassAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4843:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4844:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4928:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:4929:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4844:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4845:3: ( RULE_ID )
+            // InternalIdioms.g:4929:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4930:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEClassEClassCrossReference_1_1_0());
             }
-            // InternalIdioms.g:4846:3: ( RULE_ID )
-            // InternalIdioms.g:4847:4: RULE_ID
+            // InternalIdioms.g:4931:3: ( RULE_ID )
+            // InternalIdioms.g:4932:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEClassEClassIDTerminalRuleCall_1_1_0_1());
@@ -15689,23 +15956,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AssignmentLocator__EStructuralFeatureAssignment_2"
-    // InternalIdioms.g:4858:1: rule__AssignmentLocator__EStructuralFeatureAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:4943:1: rule__AssignmentLocator__EStructuralFeatureAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__AssignmentLocator__EStructuralFeatureAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4862:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4863:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4947:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:4948:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4863:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4864:3: ( RULE_ID )
+            // InternalIdioms.g:4948:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4949:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEStructuralFeatureEStructuralFeatureCrossReference_2_0());
             }
-            // InternalIdioms.g:4865:3: ( RULE_ID )
-            // InternalIdioms.g:4866:4: RULE_ID
+            // InternalIdioms.g:4950:3: ( RULE_ID )
+            // InternalIdioms.g:4951:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentLocatorAccess().getEStructuralFeatureEStructuralFeatureIDTerminalRuleCall_2_0_1());
@@ -15742,17 +16009,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeywordLocator__StringAssignment"
-    // InternalIdioms.g:4877:1: rule__KeywordLocator__StringAssignment : ( RULE_STRING ) ;
+    // InternalIdioms.g:4962:1: rule__KeywordLocator__StringAssignment : ( RULE_STRING ) ;
     public final void rule__KeywordLocator__StringAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4881:1: ( ( RULE_STRING ) )
-            // InternalIdioms.g:4882:2: ( RULE_STRING )
+            // InternalIdioms.g:4966:1: ( ( RULE_STRING ) )
+            // InternalIdioms.g:4967:2: ( RULE_STRING )
             {
-            // InternalIdioms.g:4882:2: ( RULE_STRING )
-            // InternalIdioms.g:4883:3: RULE_STRING
+            // InternalIdioms.g:4967:2: ( RULE_STRING )
+            // InternalIdioms.g:4968:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordLocatorAccess().getStringSTRINGTerminalRuleCall_0());
@@ -15783,23 +16050,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__EPackageAssignment_1_0"
-    // InternalIdioms.g:4892:1: rule__ReturnsLocator__EPackageAssignment_1_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:4977:1: rule__ReturnsLocator__EPackageAssignment_1_0 : ( ( RULE_ID ) ) ;
     public final void rule__ReturnsLocator__EPackageAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4896:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4897:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4981:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:4982:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4897:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4898:3: ( RULE_ID )
+            // InternalIdioms.g:4982:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:4983:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEPackageEPackageCrossReference_1_0_0());
             }
-            // InternalIdioms.g:4899:3: ( RULE_ID )
-            // InternalIdioms.g:4900:4: RULE_ID
+            // InternalIdioms.g:4984:3: ( RULE_ID )
+            // InternalIdioms.g:4985:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEPackageEPackageIDTerminalRuleCall_1_0_0_1());
@@ -15836,23 +16103,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReturnsLocator__EClassAssignment_2"
-    // InternalIdioms.g:4911:1: rule__ReturnsLocator__EClassAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:4996:1: rule__ReturnsLocator__EClassAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__ReturnsLocator__EClassAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4915:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4916:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5000:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5001:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4916:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4917:3: ( RULE_ID )
+            // InternalIdioms.g:5001:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5002:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEClassEClassCrossReference_2_0());
             }
-            // InternalIdioms.g:4918:3: ( RULE_ID )
-            // InternalIdioms.g:4919:4: RULE_ID
+            // InternalIdioms.g:5003:3: ( RULE_ID )
+            // InternalIdioms.g:5004:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReturnsLocatorAccess().getEClassEClassIDTerminalRuleCall_2_0_1());
@@ -15889,23 +16156,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__IdiomsModelAssignment_0_0"
-    // InternalIdioms.g:4930:1: rule__ReferredLocator__IdiomsModelAssignment_0_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5015:1: rule__ReferredLocator__IdiomsModelAssignment_0_0 : ( ( RULE_ID ) ) ;
     public final void rule__ReferredLocator__IdiomsModelAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4934:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4935:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5019:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5020:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4935:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4936:3: ( RULE_ID )
+            // InternalIdioms.g:5020:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5021:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getIdiomsModelIdiomsModelCrossReference_0_0_0());
             }
-            // InternalIdioms.g:4937:3: ( RULE_ID )
-            // InternalIdioms.g:4938:4: RULE_ID
+            // InternalIdioms.g:5022:3: ( RULE_ID )
+            // InternalIdioms.g:5023:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getIdiomsModelIdiomsModelIDTerminalRuleCall_0_0_0_1());
@@ -15942,23 +16209,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredLocator__LocatorDeclarationAssignment_1"
-    // InternalIdioms.g:4949:1: rule__ReferredLocator__LocatorDeclarationAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5034:1: rule__ReferredLocator__LocatorDeclarationAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__ReferredLocator__LocatorDeclarationAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4953:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4954:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5038:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5039:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4954:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4955:3: ( RULE_ID )
+            // InternalIdioms.g:5039:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5040:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getLocatorDeclarationLocatorDeclarationCrossReference_1_0());
             }
-            // InternalIdioms.g:4956:3: ( RULE_ID )
-            // InternalIdioms.g:4957:4: RULE_ID
+            // InternalIdioms.g:5041:3: ( RULE_ID )
+            // InternalIdioms.g:5042:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredLocatorAccess().getLocatorDeclarationLocatorDeclarationIDTerminalRuleCall_1_0_1());
@@ -15995,23 +16262,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__ReferredGrammarAssignment_1_0"
-    // InternalIdioms.g:4968:1: rule__RuleLocator__ReferredGrammarAssignment_1_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5053:1: rule__RuleLocator__ReferredGrammarAssignment_1_0 : ( ( RULE_ID ) ) ;
     public final void rule__RuleLocator__ReferredGrammarAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4972:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4973:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5057:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5058:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4973:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4974:3: ( RULE_ID )
+            // InternalIdioms.g:5058:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5059:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredGrammarGrammarDeclarationCrossReference_1_0_0());
             }
-            // InternalIdioms.g:4975:3: ( RULE_ID )
-            // InternalIdioms.g:4976:4: RULE_ID
+            // InternalIdioms.g:5060:3: ( RULE_ID )
+            // InternalIdioms.g:5061:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredGrammarGrammarDeclarationIDTerminalRuleCall_1_0_0_1());
@@ -16048,23 +16315,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RuleLocator__ReferredRuleAssignment_2"
-    // InternalIdioms.g:4987:1: rule__RuleLocator__ReferredRuleAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5072:1: rule__RuleLocator__ReferredRuleAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__RuleLocator__ReferredRuleAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:4991:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:4992:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5076:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5077:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:4992:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:4993:3: ( RULE_ID )
+            // InternalIdioms.g:5077:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5078:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredRuleAbstractRuleCrossReference_2_0());
             }
-            // InternalIdioms.g:4994:3: ( RULE_ID )
-            // InternalIdioms.g:4995:4: RULE_ID
+            // InternalIdioms.g:5079:3: ( RULE_ID )
+            // InternalIdioms.g:5080:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRuleLocatorAccess().getReferredRuleAbstractRuleIDTerminalRuleCall_2_0_1());
@@ -16101,17 +16368,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__NameAssignment_1"
-    // InternalIdioms.g:5006:1: rule__SegmentDeclaration__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalIdioms.g:5091:1: rule__SegmentDeclaration__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__SegmentDeclaration__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5010:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:5011:2: ( RULE_ID )
+            // InternalIdioms.g:5095:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:5096:2: ( RULE_ID )
             {
-            // InternalIdioms.g:5011:2: ( RULE_ID )
-            // InternalIdioms.g:5012:3: RULE_ID
+            // InternalIdioms.g:5096:2: ( RULE_ID )
+            // InternalIdioms.g:5097:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getNameIDTerminalRuleCall_1_0());
@@ -16142,17 +16409,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SegmentDeclaration__OwnedSegmentAssignment_2"
-    // InternalIdioms.g:5021:1: rule__SegmentDeclaration__OwnedSegmentAssignment_2 : ( ruleSegment ) ;
+    // InternalIdioms.g:5106:1: rule__SegmentDeclaration__OwnedSegmentAssignment_2 : ( ruleSegment ) ;
     public final void rule__SegmentDeclaration__OwnedSegmentAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5025:1: ( ( ruleSegment ) )
-            // InternalIdioms.g:5026:2: ( ruleSegment )
+            // InternalIdioms.g:5110:1: ( ( ruleSegment ) )
+            // InternalIdioms.g:5111:2: ( ruleSegment )
             {
-            // InternalIdioms.g:5026:2: ( ruleSegment )
-            // InternalIdioms.g:5027:3: ruleSegment
+            // InternalIdioms.g:5111:2: ( ruleSegment )
+            // InternalIdioms.g:5112:3: ruleSegment
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSegmentDeclarationAccess().getOwnedSegmentSegmentParserRuleCall_2_0());
@@ -16187,17 +16454,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CustomSegment__SupportClassNameAssignment_1"
-    // InternalIdioms.g:5036:1: rule__CustomSegment__SupportClassNameAssignment_1 : ( RULE_STRING ) ;
+    // InternalIdioms.g:5121:1: rule__CustomSegment__SupportClassNameAssignment_1 : ( RULE_STRING ) ;
     public final void rule__CustomSegment__SupportClassNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5040:1: ( ( RULE_STRING ) )
-            // InternalIdioms.g:5041:2: ( RULE_STRING )
+            // InternalIdioms.g:5125:1: ( ( RULE_STRING ) )
+            // InternalIdioms.g:5126:2: ( RULE_STRING )
             {
-            // InternalIdioms.g:5041:2: ( RULE_STRING )
-            // InternalIdioms.g:5042:3: RULE_STRING
+            // InternalIdioms.g:5126:2: ( RULE_STRING )
+            // InternalIdioms.g:5127:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCustomSegmentAccess().getSupportClassNameSTRINGTerminalRuleCall_1_0());
@@ -16228,17 +16495,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__StringAssignment_1"
-    // InternalIdioms.g:5051:1: rule__StringSegment__StringAssignment_1 : ( RULE_STRING ) ;
+    // InternalIdioms.g:5136:1: rule__StringSegment__StringAssignment_1 : ( RULE_STRING ) ;
     public final void rule__StringSegment__StringAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5055:1: ( ( RULE_STRING ) )
-            // InternalIdioms.g:5056:2: ( RULE_STRING )
+            // InternalIdioms.g:5140:1: ( ( RULE_STRING ) )
+            // InternalIdioms.g:5141:2: ( RULE_STRING )
             {
-            // InternalIdioms.g:5056:2: ( RULE_STRING )
-            // InternalIdioms.g:5057:3: RULE_STRING
+            // InternalIdioms.g:5141:2: ( RULE_STRING )
+            // InternalIdioms.g:5142:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getStringSTRINGTerminalRuleCall_1_0());
@@ -16269,28 +16536,28 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringSegment__PrintableAssignment_2"
-    // InternalIdioms.g:5066:1: rule__StringSegment__PrintableAssignment_2 : ( ( 'printable' ) ) ;
+    // InternalIdioms.g:5151:1: rule__StringSegment__PrintableAssignment_2 : ( ( 'printable' ) ) ;
     public final void rule__StringSegment__PrintableAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5070:1: ( ( ( 'printable' ) ) )
-            // InternalIdioms.g:5071:2: ( ( 'printable' ) )
+            // InternalIdioms.g:5155:1: ( ( ( 'printable' ) ) )
+            // InternalIdioms.g:5156:2: ( ( 'printable' ) )
             {
-            // InternalIdioms.g:5071:2: ( ( 'printable' ) )
-            // InternalIdioms.g:5072:3: ( 'printable' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getStringSegmentAccess().getPrintablePrintableKeyword_2_0());
-            }
-            // InternalIdioms.g:5073:3: ( 'printable' )
-            // InternalIdioms.g:5074:4: 'printable'
+            // InternalIdioms.g:5156:2: ( ( 'printable' ) )
+            // InternalIdioms.g:5157:3: ( 'printable' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringSegmentAccess().getPrintablePrintableKeyword_2_0());
             }
-            match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            // InternalIdioms.g:5158:3: ( 'printable' )
+            // InternalIdioms.g:5159:4: 'printable'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getStringSegmentAccess().getPrintablePrintableKeyword_2_0());
+            }
+            match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStringSegmentAccess().getPrintablePrintableKeyword_2_0());
             }
@@ -16322,23 +16589,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__IdiomsModelAssignment_0_0"
-    // InternalIdioms.g:5085:1: rule__ReferredSegment__IdiomsModelAssignment_0_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5170:1: rule__ReferredSegment__IdiomsModelAssignment_0_0 : ( ( RULE_ID ) ) ;
     public final void rule__ReferredSegment__IdiomsModelAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5089:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:5090:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5174:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5175:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:5090:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:5091:3: ( RULE_ID )
+            // InternalIdioms.g:5175:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5176:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getIdiomsModelIdiomsModelCrossReference_0_0_0());
             }
-            // InternalIdioms.g:5092:3: ( RULE_ID )
-            // InternalIdioms.g:5093:4: RULE_ID
+            // InternalIdioms.g:5177:3: ( RULE_ID )
+            // InternalIdioms.g:5178:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getIdiomsModelIdiomsModelIDTerminalRuleCall_0_0_0_1());
@@ -16375,23 +16642,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferredSegment__SegmentDeclarationAssignment_1"
-    // InternalIdioms.g:5104:1: rule__ReferredSegment__SegmentDeclarationAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5189:1: rule__ReferredSegment__SegmentDeclarationAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__ReferredSegment__SegmentDeclarationAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5108:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:5109:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5193:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5194:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:5109:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:5110:3: ( RULE_ID )
+            // InternalIdioms.g:5194:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5195:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getSegmentDeclarationSegmentDeclarationCrossReference_1_0());
             }
-            // InternalIdioms.g:5111:3: ( RULE_ID )
-            // InternalIdioms.g:5112:4: RULE_ID
+            // InternalIdioms.g:5196:3: ( RULE_ID )
+            // InternalIdioms.g:5197:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferredSegmentAccess().getSegmentDeclarationSegmentDeclarationIDTerminalRuleCall_1_0_1());
@@ -16428,28 +16695,28 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__MixinAssignment_0"
-    // InternalIdioms.g:5123:1: rule__Idiom__MixinAssignment_0 : ( ( 'mixin' ) ) ;
+    // InternalIdioms.g:5208:1: rule__Idiom__MixinAssignment_0 : ( ( 'mixin' ) ) ;
     public final void rule__Idiom__MixinAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5127:1: ( ( ( 'mixin' ) ) )
-            // InternalIdioms.g:5128:2: ( ( 'mixin' ) )
+            // InternalIdioms.g:5212:1: ( ( ( 'mixin' ) ) )
+            // InternalIdioms.g:5213:2: ( ( 'mixin' ) )
             {
-            // InternalIdioms.g:5128:2: ( ( 'mixin' ) )
-            // InternalIdioms.g:5129:3: ( 'mixin' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getIdiomAccess().getMixinMixinKeyword_0_0());
-            }
-            // InternalIdioms.g:5130:3: ( 'mixin' )
-            // InternalIdioms.g:5131:4: 'mixin'
+            // InternalIdioms.g:5213:2: ( ( 'mixin' ) )
+            // InternalIdioms.g:5214:3: ( 'mixin' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getMixinMixinKeyword_0_0());
             }
-            match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            // InternalIdioms.g:5215:3: ( 'mixin' )
+            // InternalIdioms.g:5216:4: 'mixin'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getIdiomAccess().getMixinMixinKeyword_0_0());
+            }
+            match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIdiomAccess().getMixinMixinKeyword_0_0());
             }
@@ -16481,17 +16748,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__NameAssignment_2"
-    // InternalIdioms.g:5142:1: rule__Idiom__NameAssignment_2 : ( RULE_ID ) ;
+    // InternalIdioms.g:5227:1: rule__Idiom__NameAssignment_2 : ( RULE_ID ) ;
     public final void rule__Idiom__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5146:1: ( ( RULE_ID ) )
-            // InternalIdioms.g:5147:2: ( RULE_ID )
+            // InternalIdioms.g:5231:1: ( ( RULE_ID ) )
+            // InternalIdioms.g:5232:2: ( RULE_ID )
             {
-            // InternalIdioms.g:5147:2: ( RULE_ID )
-            // InternalIdioms.g:5148:3: RULE_ID
+            // InternalIdioms.g:5232:2: ( RULE_ID )
+            // InternalIdioms.g:5233:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getNameIDTerminalRuleCall_2_0());
@@ -16522,23 +16789,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__ForEPackageAssignment_3_1_0"
-    // InternalIdioms.g:5157:1: rule__Idiom__ForEPackageAssignment_3_1_0 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5242:1: rule__Idiom__ForEPackageAssignment_3_1_0 : ( ( RULE_ID ) ) ;
     public final void rule__Idiom__ForEPackageAssignment_3_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5161:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:5162:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5246:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5247:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:5162:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:5163:3: ( RULE_ID )
+            // InternalIdioms.g:5247:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5248:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEPackageEPackageCrossReference_3_1_0_0());
             }
-            // InternalIdioms.g:5164:3: ( RULE_ID )
-            // InternalIdioms.g:5165:4: RULE_ID
+            // InternalIdioms.g:5249:3: ( RULE_ID )
+            // InternalIdioms.g:5250:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEPackageEPackageIDTerminalRuleCall_3_1_0_0_1());
@@ -16575,23 +16842,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__ForEClassAssignment_3_2"
-    // InternalIdioms.g:5176:1: rule__Idiom__ForEClassAssignment_3_2 : ( ( RULE_ID ) ) ;
+    // InternalIdioms.g:5261:1: rule__Idiom__ForEClassAssignment_3_2 : ( ( RULE_ID ) ) ;
     public final void rule__Idiom__ForEClassAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5180:1: ( ( ( RULE_ID ) ) )
-            // InternalIdioms.g:5181:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5265:1: ( ( ( RULE_ID ) ) )
+            // InternalIdioms.g:5266:2: ( ( RULE_ID ) )
             {
-            // InternalIdioms.g:5181:2: ( ( RULE_ID ) )
-            // InternalIdioms.g:5182:3: ( RULE_ID )
+            // InternalIdioms.g:5266:2: ( ( RULE_ID ) )
+            // InternalIdioms.g:5267:3: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEClassEClassCrossReference_3_2_0());
             }
-            // InternalIdioms.g:5183:3: ( RULE_ID )
-            // InternalIdioms.g:5184:4: RULE_ID
+            // InternalIdioms.g:5268:3: ( RULE_ID )
+            // InternalIdioms.g:5269:4: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getForEClassEClassIDTerminalRuleCall_3_2_0_1());
@@ -16628,17 +16895,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__InRuleRegexAssignment_4_1"
-    // InternalIdioms.g:5195:1: rule__Idiom__InRuleRegexAssignment_4_1 : ( RULE_STRING ) ;
+    // InternalIdioms.g:5280:1: rule__Idiom__InRuleRegexAssignment_4_1 : ( RULE_STRING ) ;
     public final void rule__Idiom__InRuleRegexAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5199:1: ( ( RULE_STRING ) )
-            // InternalIdioms.g:5200:2: ( RULE_STRING )
+            // InternalIdioms.g:5284:1: ( ( RULE_STRING ) )
+            // InternalIdioms.g:5285:2: ( RULE_STRING )
             {
-            // InternalIdioms.g:5200:2: ( RULE_STRING )
-            // InternalIdioms.g:5201:3: RULE_STRING
+            // InternalIdioms.g:5285:2: ( RULE_STRING )
+            // InternalIdioms.g:5286:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getInRuleRegexSTRINGTerminalRuleCall_4_1_0());
@@ -16669,17 +16936,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__OwnedSubIdiomsAssignment_5_0"
-    // InternalIdioms.g:5210:1: rule__Idiom__OwnedSubIdiomsAssignment_5_0 : ( ruleSubIdiom ) ;
+    // InternalIdioms.g:5295:1: rule__Idiom__OwnedSubIdiomsAssignment_5_0 : ( ruleSubIdiom ) ;
     public final void rule__Idiom__OwnedSubIdiomsAssignment_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5214:1: ( ( ruleSubIdiom ) )
-            // InternalIdioms.g:5215:2: ( ruleSubIdiom )
+            // InternalIdioms.g:5299:1: ( ( ruleSubIdiom ) )
+            // InternalIdioms.g:5300:2: ( ruleSubIdiom )
             {
-            // InternalIdioms.g:5215:2: ( ruleSubIdiom )
-            // InternalIdioms.g:5216:3: ruleSubIdiom
+            // InternalIdioms.g:5300:2: ( ruleSubIdiom )
+            // InternalIdioms.g:5301:3: ruleSubIdiom
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getOwnedSubIdiomsSubIdiomParserRuleCall_5_0_0());
@@ -16714,17 +16981,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Idiom__OwnedSubIdiomsAssignment_5_1_1"
-    // InternalIdioms.g:5225:1: rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 : ( ruleSubIdiom ) ;
+    // InternalIdioms.g:5310:1: rule__Idiom__OwnedSubIdiomsAssignment_5_1_1 : ( ruleSubIdiom ) ;
     public final void rule__Idiom__OwnedSubIdiomsAssignment_5_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5229:1: ( ( ruleSubIdiom ) )
-            // InternalIdioms.g:5230:2: ( ruleSubIdiom )
+            // InternalIdioms.g:5314:1: ( ( ruleSubIdiom ) )
+            // InternalIdioms.g:5315:2: ( ruleSubIdiom )
             {
-            // InternalIdioms.g:5230:2: ( ruleSubIdiom )
-            // InternalIdioms.g:5231:3: ruleSubIdiom
+            // InternalIdioms.g:5315:2: ( ruleSubIdiom )
+            // InternalIdioms.g:5316:3: ruleSubIdiom
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIdiomAccess().getOwnedSubIdiomsSubIdiomParserRuleCall_5_1_1_0());
@@ -16759,28 +17026,28 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__AllAssignment_1_0"
-    // InternalIdioms.g:5240:1: rule__SubIdiom__AllAssignment_1_0 : ( ( 'all' ) ) ;
+    // InternalIdioms.g:5325:1: rule__SubIdiom__AllAssignment_1_0 : ( ( 'all' ) ) ;
     public final void rule__SubIdiom__AllAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5244:1: ( ( ( 'all' ) ) )
-            // InternalIdioms.g:5245:2: ( ( 'all' ) )
+            // InternalIdioms.g:5329:1: ( ( ( 'all' ) ) )
+            // InternalIdioms.g:5330:2: ( ( 'all' ) )
             {
-            // InternalIdioms.g:5245:2: ( ( 'all' ) )
-            // InternalIdioms.g:5246:3: ( 'all' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getSubIdiomAccess().getAllAllKeyword_1_0_0());
-            }
-            // InternalIdioms.g:5247:3: ( 'all' )
-            // InternalIdioms.g:5248:4: 'all'
+            // InternalIdioms.g:5330:2: ( ( 'all' ) )
+            // InternalIdioms.g:5331:3: ( 'all' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getAllAllKeyword_1_0_0());
             }
-            match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            // InternalIdioms.g:5332:3: ( 'all' )
+            // InternalIdioms.g:5333:4: 'all'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getSubIdiomAccess().getAllAllKeyword_1_0_0());
+            }
+            match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubIdiomAccess().getAllAllKeyword_1_0_0());
             }
@@ -16812,17 +17079,17 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__OwnedLocatorAssignment_2"
-    // InternalIdioms.g:5259:1: rule__SubIdiom__OwnedLocatorAssignment_2 : ( ruleLocator ) ;
+    // InternalIdioms.g:5344:1: rule__SubIdiom__OwnedLocatorAssignment_2 : ( ruleLocator ) ;
     public final void rule__SubIdiom__OwnedLocatorAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5263:1: ( ( ruleLocator ) )
-            // InternalIdioms.g:5264:2: ( ruleLocator )
+            // InternalIdioms.g:5348:1: ( ( ruleLocator ) )
+            // InternalIdioms.g:5349:2: ( ruleLocator )
             {
-            // InternalIdioms.g:5264:2: ( ruleLocator )
-            // InternalIdioms.g:5265:3: ruleLocator
+            // InternalIdioms.g:5349:2: ( ruleLocator )
+            // InternalIdioms.g:5350:3: ruleLocator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getOwnedLocatorLocatorParserRuleCall_2_0());
@@ -16857,23 +17124,23 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubIdiom__OwnedSegmentsAssignment_3_1"
-    // InternalIdioms.g:5274:1: rule__SubIdiom__OwnedSegmentsAssignment_3_1 : ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) ) ;
+    // InternalIdioms.g:5359:1: rule__SubIdiom__OwnedSegmentsAssignment_3_1 : ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) ) ;
     public final void rule__SubIdiom__OwnedSegmentsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
 
         try {
-            // InternalIdioms.g:5278:1: ( ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) ) )
-            // InternalIdioms.g:5279:2: ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) )
+            // InternalIdioms.g:5363:1: ( ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) ) )
+            // InternalIdioms.g:5364:2: ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) )
             {
-            // InternalIdioms.g:5279:2: ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) )
-            // InternalIdioms.g:5280:3: ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 )
+            // InternalIdioms.g:5364:2: ( ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 ) )
+            // InternalIdioms.g:5365:3: ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubIdiomAccess().getOwnedSegmentsAlternatives_3_1_0());
             }
-            // InternalIdioms.g:5281:3: ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 )
-            // InternalIdioms.g:5281:4: rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0
+            // InternalIdioms.g:5366:3: ( rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0 )
+            // InternalIdioms.g:5366:4: rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0();
@@ -16916,10 +17183,10 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00202000080E6000L});
+        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00404000080E6000L});
         public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000002002L});
         public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000064002L});
-        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0020200008080002L});
+        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0040400008080002L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000018000L});
         public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000007700030L});
@@ -16928,7 +17195,7 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000800000L});
         public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000001000000L});
-        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x00001FFFF0000000L});
+        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x00003FFFF0000000L});
         public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000020000000L});
         public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000040000000L});
         public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000080000000L});
@@ -16938,20 +17205,21 @@ public class InternalIdiomsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000800000000L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000001000000000L});
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000002000000000L});
-        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0010000000000000L});
-        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000008000000000L});
+        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000004000000000L});
+        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0020000000000000L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000010000000000L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000020000000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000040000000000L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000080000000000L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0020200008080000L});
-        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0005C00000000000L});
-        public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0006000000000000L});
-        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0004000000000002L});
-        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0040000007700830L});
-        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0008000000008000L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x00001FFFF0000010L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x00001FFFF0000012L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000100000000000L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0040400008080000L});
+        public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x000B800000000000L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x000C000000000000L});
+        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0008000000000002L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0080000007700830L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0010000000008000L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x00003FFFF0000010L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x00003FFFF0000012L});
     }
 
 

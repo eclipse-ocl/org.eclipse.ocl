@@ -643,7 +643,7 @@ public class SerializationRule implements Nameable
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		DiagnosticStringBuilder s = getDiagnosticStringBuilder();
 		s.append(getName());
 		s.append(": ");

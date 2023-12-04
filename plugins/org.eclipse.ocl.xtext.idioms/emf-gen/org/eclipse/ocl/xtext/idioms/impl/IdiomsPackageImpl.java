@@ -34,6 +34,7 @@ import org.eclipse.ocl.xtext.idioms.KeywordLocator;
 import org.eclipse.ocl.xtext.idioms.Locator;
 import org.eclipse.ocl.xtext.idioms.LocatorDeclaration;
 import org.eclipse.ocl.xtext.idioms.NewLineSegment;
+import org.eclipse.ocl.xtext.idioms.NoNewLineSegment;
 import org.eclipse.ocl.xtext.idioms.NoSpaceSegment;
 import org.eclipse.ocl.xtext.idioms.PopSegment;
 import org.eclipse.ocl.xtext.idioms.PostCommentSegment;
@@ -178,6 +179,13 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	private EClass newLineSegmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass noNewLineSegmentEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -856,6 +864,17 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
+	public EClass getNoNewLineSegment()
+	{
+		return noNewLineSegmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getNoSpaceSegment() {
 		return noSpaceSegmentEClass;
 	}
@@ -1323,64 +1342,66 @@ public class IdiomsPackageImpl
 
 		newLineSegmentEClass = createEClass(15);
 
-		noSpaceSegmentEClass = createEClass(16);
+		noNewLineSegmentEClass = createEClass(16);
 
-		popSegmentEClass = createEClass(17);
+		noSpaceSegmentEClass = createEClass(17);
 
-		postCommentSegmentEClass = createEClass(18);
+		popSegmentEClass = createEClass(18);
 
-		preCommentSegmentEClass = createEClass(19);
+		postCommentSegmentEClass = createEClass(19);
 
-		pushSegmentEClass = createEClass(20);
+		preCommentSegmentEClass = createEClass(20);
 
-		referredLocatorEClass = createEClass(21);
+		pushSegmentEClass = createEClass(21);
+
+		referredLocatorEClass = createEClass(22);
 		createEReference(referredLocatorEClass, 1);
 		createEReference(referredLocatorEClass, 2);
 
-		referredSegmentEClass = createEClass(22);
+		referredSegmentEClass = createEClass(23);
 		createEReference(referredSegmentEClass, 0);
 		createEReference(referredSegmentEClass, 1);
 
-		returnsLocatorEClass = createEClass(23);
+		returnsLocatorEClass = createEClass(24);
 		createEReference(returnsLocatorEClass, 1);
 		createEReference(returnsLocatorEClass, 2);
 
-		ruleLocatorEClass = createEClass(24);
+		ruleLocatorEClass = createEClass(25);
 		createEReference(ruleLocatorEClass, 1);
 		createEReference(ruleLocatorEClass, 2);
 
-		segmentEClass = createEClass(25);
+		segmentEClass = createEClass(26);
 
-		segmentDeclarationEClass = createEClass(26);
+		segmentDeclarationEClass = createEClass(27);
 		createEAttribute(segmentDeclarationEClass, 0);
 		createEReference(segmentDeclarationEClass, 1);
 		createEReference(segmentDeclarationEClass, 2);
 
-		softNewLineSegmentEClass = createEClass(27);
+		softNewLineSegmentEClass = createEClass(28);
 
-		softSpaceSegmentEClass = createEClass(28);
+		softSpaceSegmentEClass = createEClass(29);
 
-		stringSegmentEClass = createEClass(29);
+		stringSegmentEClass = createEClass(30);
 		createEAttribute(stringSegmentEClass, 0);
 		createEAttribute(stringSegmentEClass, 1);
 
-		subIdiomEClass = createEClass(30);
+		subIdiomEClass = createEClass(31);
 		createEAttribute(subIdiomEClass, 0);
 		createEReference(subIdiomEClass, 1);
 		createEReference(subIdiomEClass, 2);
 		createEReference(subIdiomEClass, 3);
 
-		valueSegmentEClass = createEClass(31);
+		valueSegmentEClass = createEClass(32);
 
-		wrapAnchorSegmentEClass = createEClass(32);
+		wrapAnchorSegmentEClass = createEClass(33);
 
-		wrapBeginSomeSegmentEClass = createEClass(33);
+		wrapBeginSomeSegmentEClass = createEClass(34);
 
-		wrapBeginAllSegmentEClass = createEClass(34);
+		wrapBeginAllSegmentEClass = createEClass(35);
 
-		wrapEndSegmentEClass = createEClass(35);
+		wrapEndSegmentEClass = createEClass(36);
 
-		wrapHereSegmentEClass = createEClass(36);
+		wrapHereSegmentEClass = createEClass(37);
 	}
 
 	/**
@@ -1430,6 +1451,7 @@ public class IdiomsPackageImpl
 		locatorEClass.getESuperTypes().add(this.getIdiomsElement());
 		locatorDeclarationEClass.getESuperTypes().add(this.getIdiomsElement());
 		newLineSegmentEClass.getESuperTypes().add(this.getSegment());
+		noNewLineSegmentEClass.getESuperTypes().add(this.getSegment());
 		noSpaceSegmentEClass.getESuperTypes().add(this.getSegment());
 		popSegmentEClass.getESuperTypes().add(this.getSegment());
 		postCommentSegmentEClass.getESuperTypes().add(this.getSegment());
@@ -1513,6 +1535,8 @@ public class IdiomsPackageImpl
 		initEReference(getLocatorDeclaration_OwningIdiomsModel(), this.getIdiomsModel(), this.getIdiomsModel_OwnedLocatorDeclarations(), "owningIdiomsModel", null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(newLineSegmentEClass, NewLineSegment.class, "NewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(noNewLineSegmentEClass, NoNewLineSegment.class, "NoNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(noSpaceSegmentEClass, NoSpaceSegment.class, "NoSpaceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

@@ -172,6 +172,15 @@ public interface IdiomsFactory
 	NewLineSegment createNewLineSegment();
 
 	/**
+	 * Returns a new object of class '<em>No New Line Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>No New Line Segment</em>'.
+	 * @generated
+	 */
+	NoNewLineSegment createNoNewLineSegment();
+
+	/**
 	 * Returns a new object of class '<em>No Space Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -69,7 +69,6 @@ import org.eclipse.ocl.xtext.base.serializer.SerializationStep.SerializationStep
 import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.SpacingSerializationSegment
 import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.ControlSerializationSegment
 import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.UserSerializationSegment
-import org.eclipse.ocl.pivot.utilities.StringUtil
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -715,6 +714,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		PreCommentSerializationSegment : return generateSerializationSegment_PreComment(segment)
 		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.HALF_NEW_LINE) : return generateSerializationSegment_HalfNewLine(segment)
 		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.NEW_LINE) : return generateSerializationSegment_NewLine(segment)
+		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.NO_NEW_LINE) : return generateSerializationSegment_NoNewLine(segment)
 		SpacingSerializationSegment case segment.getString().equals(SerializationBuilder.NO_SPACE) : return generateSerializationSegment_NoSpace(segment)
 		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.POP) : return generateSerializationSegment_Pop(segment)
 		ControlSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH) : return generateSerializationSegment_Push(segment)
@@ -742,6 +742,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationSegment_NewLine(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».NEW_LINE'''
+	}
+	
+	protected def generateSerializationSegment_NoNewLine(StringSerializationSegment segment) {
+		'''«newTypeReference(SerializationSegment)».NO_NEW_LINE'''
 	}
 	
 	protected def generateSerializationSegment_NoSpace(StringSerializationSegment segment) {

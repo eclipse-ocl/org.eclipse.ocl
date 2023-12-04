@@ -64,6 +64,7 @@ import org.eclipse.ocl.xtext.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.idioms.KeywordLocator;
 import org.eclipse.ocl.xtext.idioms.Locator;
 import org.eclipse.ocl.xtext.idioms.NewLineSegment;
+import org.eclipse.ocl.xtext.idioms.NoNewLineSegment;
 import org.eclipse.ocl.xtext.idioms.NoSpaceSegment;
 import org.eclipse.ocl.xtext.idioms.PopSegment;
 import org.eclipse.ocl.xtext.idioms.PostCommentSegment;
@@ -314,7 +315,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	protected @NonNull List<@NonNull Locator> analyzeIdioms() {
 		List<@NonNull Locator> dataTypeLocators = new ArrayList<>();
 		for (@NonNull Idiom idiom : getIdioms()) {
-			for (@NonNull SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
+			for (@NonNull SubIdiom subIdiom : IdiomsUtils.getOwnedSubIdioms(idiom)) {
 				Locator locator = subIdiom.getOwnedLocator();
 				while (locator instanceof ReferredLocator) {
 					locator = ((ReferredLocator)locator).getLocatorDeclaration().getOwnedLocator();
@@ -821,6 +822,9 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 			}
 			else if (segment instanceof NewLineSegment) {
 				serializationSegment = SerializationSegment.NEW_LINE;
+			}
+			else if (segment instanceof NoNewLineSegment) {
+				serializationSegment = SerializationSegment.NO_NEW_LINE;
 			}
 			else if (segment instanceof NoSpaceSegment) {
 				serializationSegment = SerializationSegment.NO_SPACE;

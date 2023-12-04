@@ -184,6 +184,11 @@
       <details key="documentation" value="A NewLineSegment contributes a new line to the overall output."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NoNewLineSegment" eSuperTypes="#//Segment">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A NoNewLineSegment suppresses a preceding soft-new-line"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NoSpaceSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A NoSpaceSegment inhibits the conversion of preceding of following soft spaces to&#xA;an actual space. A no-space is useful to prevent a space before for instance a semi-colon."/>

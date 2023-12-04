@@ -47,7 +47,7 @@ public abstract class AbstractCommentSerializationSegment extends SerializationS
 		}
 
 		@Override
-		public String toString() {
+		public @NonNull String toString() {
 			return "\"" + Strings.convertToJavaString(body) + "\"";
 		}
 	}

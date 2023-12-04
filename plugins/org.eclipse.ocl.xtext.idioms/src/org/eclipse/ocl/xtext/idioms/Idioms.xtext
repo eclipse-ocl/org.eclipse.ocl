@@ -60,8 +60,9 @@ SegmentDeclaration:
 	'segment' name=ID ownedSegment=Segment ';' ;
 
 Segment:
-	CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-	PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+	CustomSegment | HalfNewLineSegment | NewLineSegment | NoNewLineSegment | NoSpaceSegment |
+	PopSegment | PostCommentSegment | PreCommentSegment | PushSegment |
+	SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
 	WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
 
 CustomSegment:
@@ -72,6 +73,9 @@ HalfNewLineSegment:
 
 NewLineSegment:
 	{NewLineSegment} 'new-line';
+
+NoNewLineSegment:
+	{NoNewLineSegment} 'no-new-line';
 
 NoSpaceSegment:
 	{NoSpaceSegment} 'no-space';

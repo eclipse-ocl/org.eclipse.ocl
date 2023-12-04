@@ -214,6 +214,15 @@ public class IdiomsSwitch<@Nullable T>
 			}
 			case 16:
 			{
+				NoNewLineSegment noNewLineSegment = (NoNewLineSegment)theEObject;
+				T result = caseNoNewLineSegment(noNewLineSegment);
+				if (result == null) result = caseSegment(noNewLineSegment);
+				if (result == null) result = caseIdiomsElement(noNewLineSegment);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 17:
+			{
 				NoSpaceSegment noSpaceSegment = (NoSpaceSegment)theEObject;
 				T result = caseNoSpaceSegment(noSpaceSegment);
 				if (result == null) result = caseSegment(noSpaceSegment);
@@ -221,7 +230,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 17:
+			case 18:
 			{
 				PopSegment popSegment = (PopSegment)theEObject;
 				T result = casePopSegment(popSegment);
@@ -230,7 +239,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 18:
+			case 19:
 			{
 				PostCommentSegment postCommentSegment = (PostCommentSegment)theEObject;
 				T result = casePostCommentSegment(postCommentSegment);
@@ -239,7 +248,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 19:
+			case 20:
 			{
 				PreCommentSegment preCommentSegment = (PreCommentSegment)theEObject;
 				T result = casePreCommentSegment(preCommentSegment);
@@ -248,7 +257,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 20:
+			case 21:
 			{
 				PushSegment pushSegment = (PushSegment)theEObject;
 				T result = casePushSegment(pushSegment);
@@ -257,7 +266,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 21:
+			case 22:
 			{
 				ReferredLocator referredLocator = (ReferredLocator)theEObject;
 				T result = caseReferredLocator(referredLocator);
@@ -266,7 +275,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 22:
+			case 23:
 			{
 				ReferredSegment referredSegment = (ReferredSegment)theEObject;
 				T result = caseReferredSegment(referredSegment);
@@ -275,7 +284,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 23:
+			case 24:
 			{
 				ReturnsLocator returnsLocator = (ReturnsLocator)theEObject;
 				T result = caseReturnsLocator(returnsLocator);
@@ -284,7 +293,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 24:
+			case 25:
 			{
 				RuleLocator ruleLocator = (RuleLocator)theEObject;
 				T result = caseRuleLocator(ruleLocator);
@@ -293,7 +302,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 25:
+			case 26:
 			{
 				Segment segment = (Segment)theEObject;
 				T result = caseSegment(segment);
@@ -301,7 +310,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 26:
+			case 27:
 			{
 				SegmentDeclaration segmentDeclaration = (SegmentDeclaration)theEObject;
 				T result = caseSegmentDeclaration(segmentDeclaration);
@@ -309,7 +318,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 27:
+			case 28:
 			{
 				SoftNewLineSegment softNewLineSegment = (SoftNewLineSegment)theEObject;
 				T result = caseSoftNewLineSegment(softNewLineSegment);
@@ -318,7 +327,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 28:
+			case 29:
 			{
 				SoftSpaceSegment softSpaceSegment = (SoftSpaceSegment)theEObject;
 				T result = caseSoftSpaceSegment(softSpaceSegment);
@@ -327,7 +336,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 29:
+			case 30:
 			{
 				StringSegment stringSegment = (StringSegment)theEObject;
 				T result = caseStringSegment(stringSegment);
@@ -336,7 +345,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 30:
+			case 31:
 			{
 				SubIdiom subIdiom = (SubIdiom)theEObject;
 				T result = caseSubIdiom(subIdiom);
@@ -344,7 +353,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 31:
+			case 32:
 			{
 				ValueSegment valueSegment = (ValueSegment)theEObject;
 				T result = caseValueSegment(valueSegment);
@@ -353,7 +362,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 32:
+			case 33:
 			{
 				WrapAnchorSegment wrapAnchorSegment = (WrapAnchorSegment)theEObject;
 				T result = caseWrapAnchorSegment(wrapAnchorSegment);
@@ -362,7 +371,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 33:
+			case 34:
 			{
 				WrapBeginSomeSegment wrapBeginSomeSegment = (WrapBeginSomeSegment)theEObject;
 				T result = caseWrapBeginSomeSegment(wrapBeginSomeSegment);
@@ -371,7 +380,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 34:
+			case 35:
 			{
 				WrapBeginAllSegment wrapBeginAllSegment = (WrapBeginAllSegment)theEObject;
 				T result = caseWrapBeginAllSegment(wrapBeginAllSegment);
@@ -380,7 +389,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 35:
+			case 36:
 			{
 				WrapEndSegment wrapEndSegment = (WrapEndSegment)theEObject;
 				T result = caseWrapEndSegment(wrapEndSegment);
@@ -389,7 +398,7 @@ public class IdiomsSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 36:
+			case 37:
 			{
 				WrapHereSegment wrapHereSegment = (WrapHereSegment)theEObject;
 				T result = caseWrapHereSegment(wrapHereSegment);
@@ -641,6 +650,22 @@ public class IdiomsSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseNewLineSegment(NewLineSegment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>No New Line Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>No New Line Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNoNewLineSegment(NoNewLineSegment object)
+	{
 		return null;
 	}
 

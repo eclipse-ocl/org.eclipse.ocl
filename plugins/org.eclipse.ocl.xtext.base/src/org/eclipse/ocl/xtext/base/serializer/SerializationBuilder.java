@@ -45,6 +45,11 @@ public class SerializationBuilder
 	public static final @NonNull String NEW_LINE = new String("new-line");
 
 	/**
+	 * The virtual character/string to suppress new line separation.
+	 */
+	public static final @NonNull String NO_NEW_LINE = new String("no-new-line");
+
+	/**
 	 * The virtual character/string to suppress soft space separation.
 	 */
 	public static final @NonNull String NO_SPACE = new String("no-space");
@@ -447,7 +452,7 @@ public class SerializationBuilder
 		}
 
 		@Override
-		public String toString() {
+		public @NonNull String toString() {
 			String format = "R%03d %18.18s   %04d:%03d %04d:%03d +%03d:+%03d   +%02d:+%03d +%02d:+%03d +%02d:+%03d  +%03d,+%03d +%03d,+%03d   +%02d:+%03d\n";
 			AbstractContext context = currentContext != null ? currentContext : regionContext;
 			return String.format(format, regionContext.count, context.toString(),
@@ -914,7 +919,7 @@ public class SerializationBuilder
 		}
 
 		@Override
-		public String toString() {
+		public @NonNull String toString() {
 			return sOut.toString();
 		}
 	}
@@ -1237,6 +1242,7 @@ public class SerializationBuilder
 			else if (nextString == PUSH) traceString = "PUSH";
 			else if (nextString == POP) traceString = "POP";
 			else if (nextString == NEW_LINE) traceString = "NEW_LINE";
+			else if (nextString == NO_NEW_LINE) traceString = "NO_NEW_LINE";
 			else if (nextString == RAW_NEW_LINE) traceString = "RAW_NEW_LINE";
 			else if (nextString == HALF_NEW_LINE) traceString = "HALF_NEW_LINE";
 			else if (nextString == SOFT_NEW_LINE) traceString = "SOFT_NEW_LINE";
@@ -1269,6 +1275,10 @@ public class SerializationBuilder
 		else if (nextString == NEW_LINE) {
 			s.appendNewLine(false);
 			trailingStringState = NO_SPACE;
+			hasHalfNewLine = false;
+		}
+		else if (nextString == NO_NEW_LINE) {
+			trailingStringState = NO_SPACE;			// NO_NEW_LINE to propagate forwards
 			hasHalfNewLine = false;
 		}
 		else if (nextString == RAW_NEW_LINE) {

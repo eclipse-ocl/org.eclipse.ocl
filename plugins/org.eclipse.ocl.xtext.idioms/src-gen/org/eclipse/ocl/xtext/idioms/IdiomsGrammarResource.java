@@ -171,6 +171,7 @@ public class IdiomsGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_Locator = createParserRule("Locator", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.LOCATOR));
 		private static final @NonNull ParserRule PR_LocatorDeclaration = createParserRule("LocatorDeclaration", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.LOCATOR_DECLARATION));
 		private static final @NonNull ParserRule PR_NewLineSegment = createParserRule("NewLineSegment", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NEW_LINE_SEGMENT));
+		private static final @NonNull ParserRule PR_NoNewLineSegment = createParserRule("NoNewLineSegment", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NO_NEW_LINE_SEGMENT));
 		private static final @NonNull ParserRule PR_NoSpaceSegment = createParserRule("NoSpaceSegment", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NO_SPACE_SEGMENT));
 		private static final @NonNull ParserRule PR_PopSegment = createParserRule("PopSegment", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.POP_SEGMENT));
 		private static final @NonNull ParserRule PR_PostCommentSegment = createParserRule("PostCommentSegment", createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.POST_COMMENT_SEGMENT));
@@ -313,6 +314,10 @@ public class IdiomsGrammarResource extends AbstractGrammarResource
 				createGroup(
 					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NEW_LINE_SEGMENT)),
 					createKeyword("new-line")));
+			PR_NoNewLineSegment.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NO_NEW_LINE_SEGMENT)),
+					createKeyword("no-new-line")));
 			PR_NoSpaceSegment.setAlternatives(
 				createGroup(
 					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.idioms.IdiomsPackage.Literals.NO_SPACE_SEGMENT)),
@@ -372,6 +377,7 @@ public class IdiomsGrammarResource extends AbstractGrammarResource
 					createRuleCall(PR_CustomSegment),
 					createRuleCall(PR_HalfNewLineSegment),
 					createRuleCall(PR_NewLineSegment),
+					createRuleCall(PR_NoNewLineSegment),
 					createRuleCall(PR_NoSpaceSegment),
 					createRuleCall(PR_PopSegment),
 					createRuleCall(PR_PostCommentSegment),
@@ -476,6 +482,7 @@ public class IdiomsGrammarResource extends AbstractGrammarResource
 				rules.add(PR_CustomSegment);
 				rules.add(PR_HalfNewLineSegment);
 				rules.add(PR_NewLineSegment);
+				rules.add(PR_NoNewLineSegment);
 				rules.add(PR_NoSpaceSegment);
 				rules.add(PR_PopSegment);
 				rules.add(PR_PostCommentSegment);

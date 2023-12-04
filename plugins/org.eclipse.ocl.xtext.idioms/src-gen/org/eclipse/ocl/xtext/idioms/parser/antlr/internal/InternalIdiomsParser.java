@@ -34,7 +34,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'model'", "'.'", "'import'", "'as'", "';'", "'grammar'", "'with'", "'locator'", "'any-assignment'", "'any-element'", "'assignment'", "'::'", "'final'", "'returns'", "'rule'", "'segment'", "'custom'", "'half-new-line'", "'new-line'", "'no-space'", "'pop'", "'post-comment'", "'pre-comment'", "'push'", "'soft-new-line'", "'soft-space'", "'string'", "'printable'", "'value'", "'wrap-anchor'", "'wrap-begin-all'", "'wrap-begin-some'", "'wrap-end'", "'wrap-here'", "'mixin'", "'idiom'", "'for'", "'in'", "'{'", "'}'", "'at'", "'all'", "'each'", "'do'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'model'", "'.'", "'import'", "'as'", "';'", "'grammar'", "'with'", "'locator'", "'any-assignment'", "'any-element'", "'assignment'", "'::'", "'final'", "'returns'", "'rule'", "'segment'", "'custom'", "'half-new-line'", "'new-line'", "'no-new-line'", "'no-space'", "'pop'", "'post-comment'", "'pre-comment'", "'push'", "'soft-new-line'", "'soft-space'", "'string'", "'printable'", "'value'", "'wrap-anchor'", "'wrap-begin-all'", "'wrap-begin-some'", "'wrap-end'", "'wrap-here'", "'mixin'", "'idiom'", "'for'", "'in'", "'{'", "'}'", "'at'", "'all'", "'each'", "'do'"
     };
     public static final int T__50=50;
     public static final int T__19=19;
@@ -43,6 +43,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__11=11;
+    public static final int T__55=55;
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
@@ -469,8 +470,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     alt3=2;
                     }
                     break;
-                case 45:
                 case 46:
+                case 47:
                     {
                     alt3=3;
                     }
@@ -3137,7 +3138,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleSegment"
-    // InternalIdioms.g:1118:1: ruleSegment returns [EObject current=null] : (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoSpaceSegment_3= ruleNoSpaceSegment | this_PopSegment_4= rulePopSegment | this_PostCommentSegment_5= rulePostCommentSegment | this_PreCommentSegment_6= rulePreCommentSegment | this_PushSegment_7= rulePushSegment | this_SoftNewLineSegment_8= ruleSoftNewLineSegment | this_SoftSpaceSegment_9= ruleSoftSpaceSegment | this_StringSegment_10= ruleStringSegment | this_ValueSegment_11= ruleValueSegment | this_WrapAnchorSegment_12= ruleWrapAnchorSegment | this_WrapBeginAllSegment_13= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_14= ruleWrapBeginSomeSegment | this_WrapEndSegment_15= ruleWrapEndSegment | this_WrapHereSegment_16= ruleWrapHereSegment ) ;
+    // InternalIdioms.g:1118:1: ruleSegment returns [EObject current=null] : (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoNewLineSegment_3= ruleNoNewLineSegment | this_NoSpaceSegment_4= ruleNoSpaceSegment | this_PopSegment_5= rulePopSegment | this_PostCommentSegment_6= rulePostCommentSegment | this_PreCommentSegment_7= rulePreCommentSegment | this_PushSegment_8= rulePushSegment | this_SoftNewLineSegment_9= ruleSoftNewLineSegment | this_SoftSpaceSegment_10= ruleSoftSpaceSegment | this_StringSegment_11= ruleStringSegment | this_ValueSegment_12= ruleValueSegment | this_WrapAnchorSegment_13= ruleWrapAnchorSegment | this_WrapBeginAllSegment_14= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_15= ruleWrapBeginSomeSegment | this_WrapEndSegment_16= ruleWrapEndSegment | this_WrapHereSegment_17= ruleWrapHereSegment ) ;
     public final EObject ruleSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3147,44 +3148,46 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
         EObject this_NewLineSegment_2 = null;
 
-        EObject this_NoSpaceSegment_3 = null;
+        EObject this_NoNewLineSegment_3 = null;
 
-        EObject this_PopSegment_4 = null;
+        EObject this_NoSpaceSegment_4 = null;
 
-        EObject this_PostCommentSegment_5 = null;
+        EObject this_PopSegment_5 = null;
 
-        EObject this_PreCommentSegment_6 = null;
+        EObject this_PostCommentSegment_6 = null;
 
-        EObject this_PushSegment_7 = null;
+        EObject this_PreCommentSegment_7 = null;
 
-        EObject this_SoftNewLineSegment_8 = null;
+        EObject this_PushSegment_8 = null;
 
-        EObject this_SoftSpaceSegment_9 = null;
+        EObject this_SoftNewLineSegment_9 = null;
 
-        EObject this_StringSegment_10 = null;
+        EObject this_SoftSpaceSegment_10 = null;
 
-        EObject this_ValueSegment_11 = null;
+        EObject this_StringSegment_11 = null;
 
-        EObject this_WrapAnchorSegment_12 = null;
+        EObject this_ValueSegment_12 = null;
 
-        EObject this_WrapBeginAllSegment_13 = null;
+        EObject this_WrapAnchorSegment_13 = null;
 
-        EObject this_WrapBeginSomeSegment_14 = null;
+        EObject this_WrapBeginAllSegment_14 = null;
 
-        EObject this_WrapEndSegment_15 = null;
+        EObject this_WrapBeginSomeSegment_15 = null;
 
-        EObject this_WrapHereSegment_16 = null;
+        EObject this_WrapEndSegment_16 = null;
+
+        EObject this_WrapHereSegment_17 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalIdioms.g:1124:2: ( (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoSpaceSegment_3= ruleNoSpaceSegment | this_PopSegment_4= rulePopSegment | this_PostCommentSegment_5= rulePostCommentSegment | this_PreCommentSegment_6= rulePreCommentSegment | this_PushSegment_7= rulePushSegment | this_SoftNewLineSegment_8= ruleSoftNewLineSegment | this_SoftSpaceSegment_9= ruleSoftSpaceSegment | this_StringSegment_10= ruleStringSegment | this_ValueSegment_11= ruleValueSegment | this_WrapAnchorSegment_12= ruleWrapAnchorSegment | this_WrapBeginAllSegment_13= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_14= ruleWrapBeginSomeSegment | this_WrapEndSegment_15= ruleWrapEndSegment | this_WrapHereSegment_16= ruleWrapHereSegment ) )
-            // InternalIdioms.g:1125:2: (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoSpaceSegment_3= ruleNoSpaceSegment | this_PopSegment_4= rulePopSegment | this_PostCommentSegment_5= rulePostCommentSegment | this_PreCommentSegment_6= rulePreCommentSegment | this_PushSegment_7= rulePushSegment | this_SoftNewLineSegment_8= ruleSoftNewLineSegment | this_SoftSpaceSegment_9= ruleSoftSpaceSegment | this_StringSegment_10= ruleStringSegment | this_ValueSegment_11= ruleValueSegment | this_WrapAnchorSegment_12= ruleWrapAnchorSegment | this_WrapBeginAllSegment_13= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_14= ruleWrapBeginSomeSegment | this_WrapEndSegment_15= ruleWrapEndSegment | this_WrapHereSegment_16= ruleWrapHereSegment )
+            // InternalIdioms.g:1124:2: ( (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoNewLineSegment_3= ruleNoNewLineSegment | this_NoSpaceSegment_4= ruleNoSpaceSegment | this_PopSegment_5= rulePopSegment | this_PostCommentSegment_6= rulePostCommentSegment | this_PreCommentSegment_7= rulePreCommentSegment | this_PushSegment_8= rulePushSegment | this_SoftNewLineSegment_9= ruleSoftNewLineSegment | this_SoftSpaceSegment_10= ruleSoftSpaceSegment | this_StringSegment_11= ruleStringSegment | this_ValueSegment_12= ruleValueSegment | this_WrapAnchorSegment_13= ruleWrapAnchorSegment | this_WrapBeginAllSegment_14= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_15= ruleWrapBeginSomeSegment | this_WrapEndSegment_16= ruleWrapEndSegment | this_WrapHereSegment_17= ruleWrapHereSegment ) )
+            // InternalIdioms.g:1125:2: (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoNewLineSegment_3= ruleNoNewLineSegment | this_NoSpaceSegment_4= ruleNoSpaceSegment | this_PopSegment_5= rulePopSegment | this_PostCommentSegment_6= rulePostCommentSegment | this_PreCommentSegment_7= rulePreCommentSegment | this_PushSegment_8= rulePushSegment | this_SoftNewLineSegment_9= ruleSoftNewLineSegment | this_SoftSpaceSegment_10= ruleSoftSpaceSegment | this_StringSegment_11= ruleStringSegment | this_ValueSegment_12= ruleValueSegment | this_WrapAnchorSegment_13= ruleWrapAnchorSegment | this_WrapBeginAllSegment_14= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_15= ruleWrapBeginSomeSegment | this_WrapEndSegment_16= ruleWrapEndSegment | this_WrapHereSegment_17= ruleWrapHereSegment )
             {
-            // InternalIdioms.g:1125:2: (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoSpaceSegment_3= ruleNoSpaceSegment | this_PopSegment_4= rulePopSegment | this_PostCommentSegment_5= rulePostCommentSegment | this_PreCommentSegment_6= rulePreCommentSegment | this_PushSegment_7= rulePushSegment | this_SoftNewLineSegment_8= ruleSoftNewLineSegment | this_SoftSpaceSegment_9= ruleSoftSpaceSegment | this_StringSegment_10= ruleStringSegment | this_ValueSegment_11= ruleValueSegment | this_WrapAnchorSegment_12= ruleWrapAnchorSegment | this_WrapBeginAllSegment_13= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_14= ruleWrapBeginSomeSegment | this_WrapEndSegment_15= ruleWrapEndSegment | this_WrapHereSegment_16= ruleWrapHereSegment )
-            int alt16=17;
+            // InternalIdioms.g:1125:2: (this_CustomSegment_0= ruleCustomSegment | this_HalfNewLineSegment_1= ruleHalfNewLineSegment | this_NewLineSegment_2= ruleNewLineSegment | this_NoNewLineSegment_3= ruleNoNewLineSegment | this_NoSpaceSegment_4= ruleNoSpaceSegment | this_PopSegment_5= rulePopSegment | this_PostCommentSegment_6= rulePostCommentSegment | this_PreCommentSegment_7= rulePreCommentSegment | this_PushSegment_8= rulePushSegment | this_SoftNewLineSegment_9= ruleSoftNewLineSegment | this_SoftSpaceSegment_10= ruleSoftSpaceSegment | this_StringSegment_11= ruleStringSegment | this_ValueSegment_12= ruleValueSegment | this_WrapAnchorSegment_13= ruleWrapAnchorSegment | this_WrapBeginAllSegment_14= ruleWrapBeginAllSegment | this_WrapBeginSomeSegment_15= ruleWrapBeginSomeSegment | this_WrapEndSegment_16= ruleWrapEndSegment | this_WrapHereSegment_17= ruleWrapHereSegment )
+            int alt16=18;
             switch ( input.LA(1) ) {
             case 27:
                 {
@@ -3241,7 +3244,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                 alt16=11;
                 }
                 break;
-            case 39:
+            case 38:
                 {
                 alt16=12;
                 }
@@ -3269,6 +3272,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
             case 44:
                 {
                 alt16=17;
+                }
+                break;
+            case 45:
+                {
+                alt16=18;
                 }
                 break;
             default:
@@ -3362,7 +3370,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 4 :
-                    // InternalIdioms.g:1162:3: this_NoSpaceSegment_3= ruleNoSpaceSegment
+                    // InternalIdioms.g:1162:3: this_NoNewLineSegment_3= ruleNoNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3371,17 +3379,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_3());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getNoNewLineSegmentParserRuleCall_3());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_NoSpaceSegment_3=ruleNoSpaceSegment();
+                    this_NoNewLineSegment_3=ruleNoNewLineSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_NoSpaceSegment_3;
+                      			current = this_NoNewLineSegment_3;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3389,7 +3397,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 5 :
-                    // InternalIdioms.g:1174:3: this_PopSegment_4= rulePopSegment
+                    // InternalIdioms.g:1174:3: this_NoSpaceSegment_4= ruleNoSpaceSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3398,17 +3406,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_4());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_4());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_PopSegment_4=rulePopSegment();
+                    this_NoSpaceSegment_4=ruleNoSpaceSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_PopSegment_4;
+                      			current = this_NoSpaceSegment_4;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3416,7 +3424,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 6 :
-                    // InternalIdioms.g:1186:3: this_PostCommentSegment_5= rulePostCommentSegment
+                    // InternalIdioms.g:1186:3: this_PopSegment_5= rulePopSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3425,17 +3433,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_5());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_5());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_PostCommentSegment_5=rulePostCommentSegment();
+                    this_PopSegment_5=rulePopSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_PostCommentSegment_5;
+                      			current = this_PopSegment_5;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3443,7 +3451,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 7 :
-                    // InternalIdioms.g:1198:3: this_PreCommentSegment_6= rulePreCommentSegment
+                    // InternalIdioms.g:1198:3: this_PostCommentSegment_6= rulePostCommentSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3452,17 +3460,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_6());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_6());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_PreCommentSegment_6=rulePreCommentSegment();
+                    this_PostCommentSegment_6=rulePostCommentSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_PreCommentSegment_6;
+                      			current = this_PostCommentSegment_6;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3470,7 +3478,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 8 :
-                    // InternalIdioms.g:1210:3: this_PushSegment_7= rulePushSegment
+                    // InternalIdioms.g:1210:3: this_PreCommentSegment_7= rulePreCommentSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3479,17 +3487,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_7());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_7());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_PushSegment_7=rulePushSegment();
+                    this_PreCommentSegment_7=rulePreCommentSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_PushSegment_7;
+                      			current = this_PreCommentSegment_7;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3497,7 +3505,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 9 :
-                    // InternalIdioms.g:1222:3: this_SoftNewLineSegment_8= ruleSoftNewLineSegment
+                    // InternalIdioms.g:1222:3: this_PushSegment_8= rulePushSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3506,17 +3514,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_8());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_8());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_SoftNewLineSegment_8=ruleSoftNewLineSegment();
+                    this_PushSegment_8=rulePushSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_SoftNewLineSegment_8;
+                      			current = this_PushSegment_8;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3524,7 +3532,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 10 :
-                    // InternalIdioms.g:1234:3: this_SoftSpaceSegment_9= ruleSoftSpaceSegment
+                    // InternalIdioms.g:1234:3: this_SoftNewLineSegment_9= ruleSoftNewLineSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3533,17 +3541,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_9());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_9());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_SoftSpaceSegment_9=ruleSoftSpaceSegment();
+                    this_SoftNewLineSegment_9=ruleSoftNewLineSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_SoftSpaceSegment_9;
+                      			current = this_SoftNewLineSegment_9;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3551,7 +3559,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 11 :
-                    // InternalIdioms.g:1246:3: this_StringSegment_10= ruleStringSegment
+                    // InternalIdioms.g:1246:3: this_SoftSpaceSegment_10= ruleSoftSpaceSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3560,17 +3568,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_10());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_10());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_StringSegment_10=ruleStringSegment();
+                    this_SoftSpaceSegment_10=ruleSoftSpaceSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_StringSegment_10;
+                      			current = this_SoftSpaceSegment_10;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3578,7 +3586,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 12 :
-                    // InternalIdioms.g:1258:3: this_ValueSegment_11= ruleValueSegment
+                    // InternalIdioms.g:1258:3: this_StringSegment_11= ruleStringSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3587,17 +3595,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_11());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_11());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_ValueSegment_11=ruleValueSegment();
+                    this_StringSegment_11=ruleStringSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_ValueSegment_11;
+                      			current = this_StringSegment_11;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3605,7 +3613,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 13 :
-                    // InternalIdioms.g:1270:3: this_WrapAnchorSegment_12= ruleWrapAnchorSegment
+                    // InternalIdioms.g:1270:3: this_ValueSegment_12= ruleValueSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3614,17 +3622,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_12());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_12());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_WrapAnchorSegment_12=ruleWrapAnchorSegment();
+                    this_ValueSegment_12=ruleValueSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_WrapAnchorSegment_12;
+                      			current = this_ValueSegment_12;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3632,7 +3640,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 14 :
-                    // InternalIdioms.g:1282:3: this_WrapBeginAllSegment_13= ruleWrapBeginAllSegment
+                    // InternalIdioms.g:1282:3: this_WrapAnchorSegment_13= ruleWrapAnchorSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3641,17 +3649,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_13());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_13());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_WrapBeginAllSegment_13=ruleWrapBeginAllSegment();
+                    this_WrapAnchorSegment_13=ruleWrapAnchorSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_WrapBeginAllSegment_13;
+                      			current = this_WrapAnchorSegment_13;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3659,7 +3667,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 15 :
-                    // InternalIdioms.g:1294:3: this_WrapBeginSomeSegment_14= ruleWrapBeginSomeSegment
+                    // InternalIdioms.g:1294:3: this_WrapBeginAllSegment_14= ruleWrapBeginAllSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3668,17 +3676,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_14());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_14());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_WrapBeginSomeSegment_14=ruleWrapBeginSomeSegment();
+                    this_WrapBeginAllSegment_14=ruleWrapBeginAllSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_WrapBeginSomeSegment_14;
+                      			current = this_WrapBeginAllSegment_14;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3686,7 +3694,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 16 :
-                    // InternalIdioms.g:1306:3: this_WrapEndSegment_15= ruleWrapEndSegment
+                    // InternalIdioms.g:1306:3: this_WrapBeginSomeSegment_15= ruleWrapBeginSomeSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3695,17 +3703,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_15());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_15());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_WrapEndSegment_15=ruleWrapEndSegment();
+                    this_WrapBeginSomeSegment_15=ruleWrapBeginSomeSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_WrapEndSegment_15;
+                      			current = this_WrapBeginSomeSegment_15;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3713,7 +3721,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 17 :
-                    // InternalIdioms.g:1318:3: this_WrapHereSegment_16= ruleWrapHereSegment
+                    // InternalIdioms.g:1318:3: this_WrapEndSegment_16= ruleWrapEndSegment
                     {
                     if ( state.backtracking==0 ) {
 
@@ -3722,17 +3730,44 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_16());
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_16());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_WrapHereSegment_16=ruleWrapHereSegment();
+                    this_WrapEndSegment_16=ruleWrapEndSegment();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_WrapHereSegment_16;
+                      			current = this_WrapEndSegment_16;
+                      			afterParserOrEnumRuleCall();
+
+                    }
+
+                    }
+                    break;
+                case 18 :
+                    // InternalIdioms.g:1330:3: this_WrapHereSegment_17= ruleWrapHereSegment
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			/* */
+
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_17());
+
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_WrapHereSegment_17=ruleWrapHereSegment();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_WrapHereSegment_17;
                       			afterParserOrEnumRuleCall();
 
                     }
@@ -3764,7 +3799,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleCustomSegment"
-    // InternalIdioms.g:1333:1: entryRuleCustomSegment returns [EObject current=null] : iv_ruleCustomSegment= ruleCustomSegment EOF ;
+    // InternalIdioms.g:1345:1: entryRuleCustomSegment returns [EObject current=null] : iv_ruleCustomSegment= ruleCustomSegment EOF ;
     public final EObject entryRuleCustomSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3772,8 +3807,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1333:54: (iv_ruleCustomSegment= ruleCustomSegment EOF )
-            // InternalIdioms.g:1334:2: iv_ruleCustomSegment= ruleCustomSegment EOF
+            // InternalIdioms.g:1345:54: (iv_ruleCustomSegment= ruleCustomSegment EOF )
+            // InternalIdioms.g:1346:2: iv_ruleCustomSegment= ruleCustomSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCustomSegmentRule());
@@ -3804,7 +3839,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleCustomSegment"
-    // InternalIdioms.g:1340:1: ruleCustomSegment returns [EObject current=null] : (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) ) ;
+    // InternalIdioms.g:1352:1: ruleCustomSegment returns [EObject current=null] : (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleCustomSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3815,11 +3850,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1346:2: ( (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) ) )
-            // InternalIdioms.g:1347:2: (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) )
+            // InternalIdioms.g:1358:2: ( (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) ) )
+            // InternalIdioms.g:1359:2: (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) )
             {
-            // InternalIdioms.g:1347:2: (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) )
-            // InternalIdioms.g:1348:3: otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) )
+            // InternalIdioms.g:1359:2: (otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) ) )
+            // InternalIdioms.g:1360:3: otherlv_0= 'custom' ( (lv_supportClassName_1_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -3827,11 +3862,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
               			newLeafNode(otherlv_0, grammarAccess.getCustomSegmentAccess().getCustomKeyword_0());
 
             }
-            // InternalIdioms.g:1352:3: ( (lv_supportClassName_1_0= RULE_STRING ) )
-            // InternalIdioms.g:1353:4: (lv_supportClassName_1_0= RULE_STRING )
+            // InternalIdioms.g:1364:3: ( (lv_supportClassName_1_0= RULE_STRING ) )
+            // InternalIdioms.g:1365:4: (lv_supportClassName_1_0= RULE_STRING )
             {
-            // InternalIdioms.g:1353:4: (lv_supportClassName_1_0= RULE_STRING )
-            // InternalIdioms.g:1354:5: lv_supportClassName_1_0= RULE_STRING
+            // InternalIdioms.g:1365:4: (lv_supportClassName_1_0= RULE_STRING )
+            // InternalIdioms.g:1366:5: lv_supportClassName_1_0= RULE_STRING
             {
             lv_supportClassName_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -3882,7 +3917,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleHalfNewLineSegment"
-    // InternalIdioms.g:1374:1: entryRuleHalfNewLineSegment returns [EObject current=null] : iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF ;
+    // InternalIdioms.g:1386:1: entryRuleHalfNewLineSegment returns [EObject current=null] : iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF ;
     public final EObject entryRuleHalfNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3890,8 +3925,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1374:59: (iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF )
-            // InternalIdioms.g:1375:2: iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF
+            // InternalIdioms.g:1386:59: (iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF )
+            // InternalIdioms.g:1387:2: iv_ruleHalfNewLineSegment= ruleHalfNewLineSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getHalfNewLineSegmentRule());
@@ -3922,7 +3957,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleHalfNewLineSegment"
-    // InternalIdioms.g:1381:1: ruleHalfNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'half-new-line' ) ;
+    // InternalIdioms.g:1393:1: ruleHalfNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'half-new-line' ) ;
     public final EObject ruleHalfNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3932,14 +3967,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1387:2: ( ( () otherlv_1= 'half-new-line' ) )
-            // InternalIdioms.g:1388:2: ( () otherlv_1= 'half-new-line' )
+            // InternalIdioms.g:1399:2: ( ( () otherlv_1= 'half-new-line' ) )
+            // InternalIdioms.g:1400:2: ( () otherlv_1= 'half-new-line' )
             {
-            // InternalIdioms.g:1388:2: ( () otherlv_1= 'half-new-line' )
-            // InternalIdioms.g:1389:3: () otherlv_1= 'half-new-line'
+            // InternalIdioms.g:1400:2: ( () otherlv_1= 'half-new-line' )
+            // InternalIdioms.g:1401:3: () otherlv_1= 'half-new-line'
             {
-            // InternalIdioms.g:1389:3: ()
-            // InternalIdioms.g:1390:4:
+            // InternalIdioms.g:1401:3: ()
+            // InternalIdioms.g:1402:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -3987,7 +4022,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleNewLineSegment"
-    // InternalIdioms.g:1407:1: entryRuleNewLineSegment returns [EObject current=null] : iv_ruleNewLineSegment= ruleNewLineSegment EOF ;
+    // InternalIdioms.g:1419:1: entryRuleNewLineSegment returns [EObject current=null] : iv_ruleNewLineSegment= ruleNewLineSegment EOF ;
     public final EObject entryRuleNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -3995,8 +4030,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1407:55: (iv_ruleNewLineSegment= ruleNewLineSegment EOF )
-            // InternalIdioms.g:1408:2: iv_ruleNewLineSegment= ruleNewLineSegment EOF
+            // InternalIdioms.g:1419:55: (iv_ruleNewLineSegment= ruleNewLineSegment EOF )
+            // InternalIdioms.g:1420:2: iv_ruleNewLineSegment= ruleNewLineSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNewLineSegmentRule());
@@ -4027,7 +4062,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleNewLineSegment"
-    // InternalIdioms.g:1414:1: ruleNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'new-line' ) ;
+    // InternalIdioms.g:1426:1: ruleNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'new-line' ) ;
     public final EObject ruleNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4037,14 +4072,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1420:2: ( ( () otherlv_1= 'new-line' ) )
-            // InternalIdioms.g:1421:2: ( () otherlv_1= 'new-line' )
+            // InternalIdioms.g:1432:2: ( ( () otherlv_1= 'new-line' ) )
+            // InternalIdioms.g:1433:2: ( () otherlv_1= 'new-line' )
             {
-            // InternalIdioms.g:1421:2: ( () otherlv_1= 'new-line' )
-            // InternalIdioms.g:1422:3: () otherlv_1= 'new-line'
+            // InternalIdioms.g:1433:2: ( () otherlv_1= 'new-line' )
+            // InternalIdioms.g:1434:3: () otherlv_1= 'new-line'
             {
-            // InternalIdioms.g:1422:3: ()
-            // InternalIdioms.g:1423:4:
+            // InternalIdioms.g:1434:3: ()
+            // InternalIdioms.g:1435:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4091,8 +4126,113 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
     // $ANTLR end "ruleNewLineSegment"
 
 
+    // $ANTLR start "entryRuleNoNewLineSegment"
+    // InternalIdioms.g:1452:1: entryRuleNoNewLineSegment returns [EObject current=null] : iv_ruleNoNewLineSegment= ruleNoNewLineSegment EOF ;
+    public final EObject entryRuleNoNewLineSegment() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleNoNewLineSegment = null;
+
+
+        try {
+            // InternalIdioms.g:1452:57: (iv_ruleNoNewLineSegment= ruleNoNewLineSegment EOF )
+            // InternalIdioms.g:1453:2: iv_ruleNoNewLineSegment= ruleNoNewLineSegment EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getNoNewLineSegmentRule());
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleNoNewLineSegment=ruleNoNewLineSegment();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleNoNewLineSegment;
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleNoNewLineSegment"
+
+
+    // $ANTLR start "ruleNoNewLineSegment"
+    // InternalIdioms.g:1459:1: ruleNoNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'no-new-line' ) ;
+    public final EObject ruleNoNewLineSegment() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_1=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalIdioms.g:1465:2: ( ( () otherlv_1= 'no-new-line' ) )
+            // InternalIdioms.g:1466:2: ( () otherlv_1= 'no-new-line' )
+            {
+            // InternalIdioms.g:1466:2: ( () otherlv_1= 'no-new-line' )
+            // InternalIdioms.g:1467:3: () otherlv_1= 'no-new-line'
+            {
+            // InternalIdioms.g:1467:3: ()
+            // InternalIdioms.g:1468:4:
+            {
+            if ( state.backtracking==0 ) {
+
+              				/* */
+
+            }
+            if ( state.backtracking==0 ) {
+
+              				current = forceCreateModelElement(
+              					grammarAccess.getNoNewLineSegmentAccess().getNoNewLineSegmentAction_0(),
+              					current);
+
+            }
+
+            }
+
+            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_1, grammarAccess.getNoNewLineSegmentAccess().getNoNewLineKeyword_1());
+
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleNoNewLineSegment"
+
+
     // $ANTLR start "entryRuleNoSpaceSegment"
-    // InternalIdioms.g:1440:1: entryRuleNoSpaceSegment returns [EObject current=null] : iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF ;
+    // InternalIdioms.g:1485:1: entryRuleNoSpaceSegment returns [EObject current=null] : iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF ;
     public final EObject entryRuleNoSpaceSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4100,8 +4240,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1440:55: (iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF )
-            // InternalIdioms.g:1441:2: iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF
+            // InternalIdioms.g:1485:55: (iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF )
+            // InternalIdioms.g:1486:2: iv_ruleNoSpaceSegment= ruleNoSpaceSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNoSpaceSegmentRule());
@@ -4132,7 +4272,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleNoSpaceSegment"
-    // InternalIdioms.g:1447:1: ruleNoSpaceSegment returns [EObject current=null] : ( () otherlv_1= 'no-space' ) ;
+    // InternalIdioms.g:1492:1: ruleNoSpaceSegment returns [EObject current=null] : ( () otherlv_1= 'no-space' ) ;
     public final EObject ruleNoSpaceSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4142,14 +4282,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1453:2: ( ( () otherlv_1= 'no-space' ) )
-            // InternalIdioms.g:1454:2: ( () otherlv_1= 'no-space' )
+            // InternalIdioms.g:1498:2: ( ( () otherlv_1= 'no-space' ) )
+            // InternalIdioms.g:1499:2: ( () otherlv_1= 'no-space' )
             {
-            // InternalIdioms.g:1454:2: ( () otherlv_1= 'no-space' )
-            // InternalIdioms.g:1455:3: () otherlv_1= 'no-space'
+            // InternalIdioms.g:1499:2: ( () otherlv_1= 'no-space' )
+            // InternalIdioms.g:1500:3: () otherlv_1= 'no-space'
             {
-            // InternalIdioms.g:1455:3: ()
-            // InternalIdioms.g:1456:4:
+            // InternalIdioms.g:1500:3: ()
+            // InternalIdioms.g:1501:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4166,7 +4306,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getNoSpaceSegmentAccess().getNoSpaceKeyword_1());
@@ -4197,7 +4337,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRulePopSegment"
-    // InternalIdioms.g:1473:1: entryRulePopSegment returns [EObject current=null] : iv_rulePopSegment= rulePopSegment EOF ;
+    // InternalIdioms.g:1518:1: entryRulePopSegment returns [EObject current=null] : iv_rulePopSegment= rulePopSegment EOF ;
     public final EObject entryRulePopSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4205,8 +4345,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1473:51: (iv_rulePopSegment= rulePopSegment EOF )
-            // InternalIdioms.g:1474:2: iv_rulePopSegment= rulePopSegment EOF
+            // InternalIdioms.g:1518:51: (iv_rulePopSegment= rulePopSegment EOF )
+            // InternalIdioms.g:1519:2: iv_rulePopSegment= rulePopSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPopSegmentRule());
@@ -4237,7 +4377,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "rulePopSegment"
-    // InternalIdioms.g:1480:1: rulePopSegment returns [EObject current=null] : ( () otherlv_1= 'pop' ) ;
+    // InternalIdioms.g:1525:1: rulePopSegment returns [EObject current=null] : ( () otherlv_1= 'pop' ) ;
     public final EObject rulePopSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4247,14 +4387,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1486:2: ( ( () otherlv_1= 'pop' ) )
-            // InternalIdioms.g:1487:2: ( () otherlv_1= 'pop' )
+            // InternalIdioms.g:1531:2: ( ( () otherlv_1= 'pop' ) )
+            // InternalIdioms.g:1532:2: ( () otherlv_1= 'pop' )
             {
-            // InternalIdioms.g:1487:2: ( () otherlv_1= 'pop' )
-            // InternalIdioms.g:1488:3: () otherlv_1= 'pop'
+            // InternalIdioms.g:1532:2: ( () otherlv_1= 'pop' )
+            // InternalIdioms.g:1533:3: () otherlv_1= 'pop'
             {
-            // InternalIdioms.g:1488:3: ()
-            // InternalIdioms.g:1489:4:
+            // InternalIdioms.g:1533:3: ()
+            // InternalIdioms.g:1534:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4271,7 +4411,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getPopSegmentAccess().getPopKeyword_1());
@@ -4302,7 +4442,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRulePostCommentSegment"
-    // InternalIdioms.g:1506:1: entryRulePostCommentSegment returns [EObject current=null] : iv_rulePostCommentSegment= rulePostCommentSegment EOF ;
+    // InternalIdioms.g:1551:1: entryRulePostCommentSegment returns [EObject current=null] : iv_rulePostCommentSegment= rulePostCommentSegment EOF ;
     public final EObject entryRulePostCommentSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4310,8 +4450,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1506:59: (iv_rulePostCommentSegment= rulePostCommentSegment EOF )
-            // InternalIdioms.g:1507:2: iv_rulePostCommentSegment= rulePostCommentSegment EOF
+            // InternalIdioms.g:1551:59: (iv_rulePostCommentSegment= rulePostCommentSegment EOF )
+            // InternalIdioms.g:1552:2: iv_rulePostCommentSegment= rulePostCommentSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPostCommentSegmentRule());
@@ -4342,7 +4482,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "rulePostCommentSegment"
-    // InternalIdioms.g:1513:1: rulePostCommentSegment returns [EObject current=null] : ( () otherlv_1= 'post-comment' ) ;
+    // InternalIdioms.g:1558:1: rulePostCommentSegment returns [EObject current=null] : ( () otherlv_1= 'post-comment' ) ;
     public final EObject rulePostCommentSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4352,14 +4492,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1519:2: ( ( () otherlv_1= 'post-comment' ) )
-            // InternalIdioms.g:1520:2: ( () otherlv_1= 'post-comment' )
+            // InternalIdioms.g:1564:2: ( ( () otherlv_1= 'post-comment' ) )
+            // InternalIdioms.g:1565:2: ( () otherlv_1= 'post-comment' )
             {
-            // InternalIdioms.g:1520:2: ( () otherlv_1= 'post-comment' )
-            // InternalIdioms.g:1521:3: () otherlv_1= 'post-comment'
+            // InternalIdioms.g:1565:2: ( () otherlv_1= 'post-comment' )
+            // InternalIdioms.g:1566:3: () otherlv_1= 'post-comment'
             {
-            // InternalIdioms.g:1521:3: ()
-            // InternalIdioms.g:1522:4:
+            // InternalIdioms.g:1566:3: ()
+            // InternalIdioms.g:1567:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4376,7 +4516,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getPostCommentSegmentAccess().getPostCommentKeyword_1());
@@ -4407,7 +4547,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRulePreCommentSegment"
-    // InternalIdioms.g:1539:1: entryRulePreCommentSegment returns [EObject current=null] : iv_rulePreCommentSegment= rulePreCommentSegment EOF ;
+    // InternalIdioms.g:1584:1: entryRulePreCommentSegment returns [EObject current=null] : iv_rulePreCommentSegment= rulePreCommentSegment EOF ;
     public final EObject entryRulePreCommentSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4415,8 +4555,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1539:58: (iv_rulePreCommentSegment= rulePreCommentSegment EOF )
-            // InternalIdioms.g:1540:2: iv_rulePreCommentSegment= rulePreCommentSegment EOF
+            // InternalIdioms.g:1584:58: (iv_rulePreCommentSegment= rulePreCommentSegment EOF )
+            // InternalIdioms.g:1585:2: iv_rulePreCommentSegment= rulePreCommentSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPreCommentSegmentRule());
@@ -4447,7 +4587,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "rulePreCommentSegment"
-    // InternalIdioms.g:1546:1: rulePreCommentSegment returns [EObject current=null] : ( () otherlv_1= 'pre-comment' ) ;
+    // InternalIdioms.g:1591:1: rulePreCommentSegment returns [EObject current=null] : ( () otherlv_1= 'pre-comment' ) ;
     public final EObject rulePreCommentSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4457,14 +4597,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1552:2: ( ( () otherlv_1= 'pre-comment' ) )
-            // InternalIdioms.g:1553:2: ( () otherlv_1= 'pre-comment' )
+            // InternalIdioms.g:1597:2: ( ( () otherlv_1= 'pre-comment' ) )
+            // InternalIdioms.g:1598:2: ( () otherlv_1= 'pre-comment' )
             {
-            // InternalIdioms.g:1553:2: ( () otherlv_1= 'pre-comment' )
-            // InternalIdioms.g:1554:3: () otherlv_1= 'pre-comment'
+            // InternalIdioms.g:1598:2: ( () otherlv_1= 'pre-comment' )
+            // InternalIdioms.g:1599:3: () otherlv_1= 'pre-comment'
             {
-            // InternalIdioms.g:1554:3: ()
-            // InternalIdioms.g:1555:4:
+            // InternalIdioms.g:1599:3: ()
+            // InternalIdioms.g:1600:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4481,7 +4621,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getPreCommentSegmentAccess().getPreCommentKeyword_1());
@@ -4512,7 +4652,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRulePushSegment"
-    // InternalIdioms.g:1572:1: entryRulePushSegment returns [EObject current=null] : iv_rulePushSegment= rulePushSegment EOF ;
+    // InternalIdioms.g:1617:1: entryRulePushSegment returns [EObject current=null] : iv_rulePushSegment= rulePushSegment EOF ;
     public final EObject entryRulePushSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4520,8 +4660,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1572:52: (iv_rulePushSegment= rulePushSegment EOF )
-            // InternalIdioms.g:1573:2: iv_rulePushSegment= rulePushSegment EOF
+            // InternalIdioms.g:1617:52: (iv_rulePushSegment= rulePushSegment EOF )
+            // InternalIdioms.g:1618:2: iv_rulePushSegment= rulePushSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPushSegmentRule());
@@ -4552,7 +4692,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "rulePushSegment"
-    // InternalIdioms.g:1579:1: rulePushSegment returns [EObject current=null] : ( () otherlv_1= 'push' ) ;
+    // InternalIdioms.g:1624:1: rulePushSegment returns [EObject current=null] : ( () otherlv_1= 'push' ) ;
     public final EObject rulePushSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4562,14 +4702,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1585:2: ( ( () otherlv_1= 'push' ) )
-            // InternalIdioms.g:1586:2: ( () otherlv_1= 'push' )
+            // InternalIdioms.g:1630:2: ( ( () otherlv_1= 'push' ) )
+            // InternalIdioms.g:1631:2: ( () otherlv_1= 'push' )
             {
-            // InternalIdioms.g:1586:2: ( () otherlv_1= 'push' )
-            // InternalIdioms.g:1587:3: () otherlv_1= 'push'
+            // InternalIdioms.g:1631:2: ( () otherlv_1= 'push' )
+            // InternalIdioms.g:1632:3: () otherlv_1= 'push'
             {
-            // InternalIdioms.g:1587:3: ()
-            // InternalIdioms.g:1588:4:
+            // InternalIdioms.g:1632:3: ()
+            // InternalIdioms.g:1633:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4586,7 +4726,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getPushSegmentAccess().getPushKeyword_1());
@@ -4617,7 +4757,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleSoftNewLineSegment"
-    // InternalIdioms.g:1605:1: entryRuleSoftNewLineSegment returns [EObject current=null] : iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF ;
+    // InternalIdioms.g:1650:1: entryRuleSoftNewLineSegment returns [EObject current=null] : iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF ;
     public final EObject entryRuleSoftNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4625,8 +4765,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1605:59: (iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF )
-            // InternalIdioms.g:1606:2: iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF
+            // InternalIdioms.g:1650:59: (iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF )
+            // InternalIdioms.g:1651:2: iv_ruleSoftNewLineSegment= ruleSoftNewLineSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSoftNewLineSegmentRule());
@@ -4657,7 +4797,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleSoftNewLineSegment"
-    // InternalIdioms.g:1612:1: ruleSoftNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'soft-new-line' ) ;
+    // InternalIdioms.g:1657:1: ruleSoftNewLineSegment returns [EObject current=null] : ( () otherlv_1= 'soft-new-line' ) ;
     public final EObject ruleSoftNewLineSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4667,14 +4807,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1618:2: ( ( () otherlv_1= 'soft-new-line' ) )
-            // InternalIdioms.g:1619:2: ( () otherlv_1= 'soft-new-line' )
+            // InternalIdioms.g:1663:2: ( ( () otherlv_1= 'soft-new-line' ) )
+            // InternalIdioms.g:1664:2: ( () otherlv_1= 'soft-new-line' )
             {
-            // InternalIdioms.g:1619:2: ( () otherlv_1= 'soft-new-line' )
-            // InternalIdioms.g:1620:3: () otherlv_1= 'soft-new-line'
+            // InternalIdioms.g:1664:2: ( () otherlv_1= 'soft-new-line' )
+            // InternalIdioms.g:1665:3: () otherlv_1= 'soft-new-line'
             {
-            // InternalIdioms.g:1620:3: ()
-            // InternalIdioms.g:1621:4:
+            // InternalIdioms.g:1665:3: ()
+            // InternalIdioms.g:1666:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4691,7 +4831,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getSoftNewLineSegmentAccess().getSoftNewLineKeyword_1());
@@ -4722,7 +4862,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleSoftSpaceSegment"
-    // InternalIdioms.g:1638:1: entryRuleSoftSpaceSegment returns [EObject current=null] : iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF ;
+    // InternalIdioms.g:1683:1: entryRuleSoftSpaceSegment returns [EObject current=null] : iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF ;
     public final EObject entryRuleSoftSpaceSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4730,8 +4870,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1638:57: (iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF )
-            // InternalIdioms.g:1639:2: iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF
+            // InternalIdioms.g:1683:57: (iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF )
+            // InternalIdioms.g:1684:2: iv_ruleSoftSpaceSegment= ruleSoftSpaceSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSoftSpaceSegmentRule());
@@ -4762,7 +4902,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleSoftSpaceSegment"
-    // InternalIdioms.g:1645:1: ruleSoftSpaceSegment returns [EObject current=null] : ( () otherlv_1= 'soft-space' ) ;
+    // InternalIdioms.g:1690:1: ruleSoftSpaceSegment returns [EObject current=null] : ( () otherlv_1= 'soft-space' ) ;
     public final EObject ruleSoftSpaceSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4772,14 +4912,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1651:2: ( ( () otherlv_1= 'soft-space' ) )
-            // InternalIdioms.g:1652:2: ( () otherlv_1= 'soft-space' )
+            // InternalIdioms.g:1696:2: ( ( () otherlv_1= 'soft-space' ) )
+            // InternalIdioms.g:1697:2: ( () otherlv_1= 'soft-space' )
             {
-            // InternalIdioms.g:1652:2: ( () otherlv_1= 'soft-space' )
-            // InternalIdioms.g:1653:3: () otherlv_1= 'soft-space'
+            // InternalIdioms.g:1697:2: ( () otherlv_1= 'soft-space' )
+            // InternalIdioms.g:1698:3: () otherlv_1= 'soft-space'
             {
-            // InternalIdioms.g:1653:3: ()
-            // InternalIdioms.g:1654:4:
+            // InternalIdioms.g:1698:3: ()
+            // InternalIdioms.g:1699:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -4796,7 +4936,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getSoftSpaceSegmentAccess().getSoftSpaceKeyword_1());
@@ -4827,7 +4967,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleStringSegment"
-    // InternalIdioms.g:1671:1: entryRuleStringSegment returns [EObject current=null] : iv_ruleStringSegment= ruleStringSegment EOF ;
+    // InternalIdioms.g:1716:1: entryRuleStringSegment returns [EObject current=null] : iv_ruleStringSegment= ruleStringSegment EOF ;
     public final EObject entryRuleStringSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4835,8 +4975,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1671:54: (iv_ruleStringSegment= ruleStringSegment EOF )
-            // InternalIdioms.g:1672:2: iv_ruleStringSegment= ruleStringSegment EOF
+            // InternalIdioms.g:1716:54: (iv_ruleStringSegment= ruleStringSegment EOF )
+            // InternalIdioms.g:1717:2: iv_ruleStringSegment= ruleStringSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringSegmentRule());
@@ -4867,7 +5007,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleStringSegment"
-    // InternalIdioms.g:1678:1: ruleStringSegment returns [EObject current=null] : (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? ) ;
+    // InternalIdioms.g:1723:1: ruleStringSegment returns [EObject current=null] : (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? ) ;
     public final EObject ruleStringSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4879,23 +5019,23 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1684:2: ( (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? ) )
-            // InternalIdioms.g:1685:2: (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? )
+            // InternalIdioms.g:1729:2: ( (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? ) )
+            // InternalIdioms.g:1730:2: (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? )
             {
-            // InternalIdioms.g:1685:2: (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? )
-            // InternalIdioms.g:1686:3: otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )?
+            // InternalIdioms.g:1730:2: (otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )? )
+            // InternalIdioms.g:1731:3: otherlv_0= 'string' ( (lv_string_1_0= RULE_STRING ) ) ( (lv_printable_2_0= 'printable' ) )?
             {
-            otherlv_0=(Token)match(input,37,FollowSets000.FOLLOW_7); if (state.failed) return current;
+            otherlv_0=(Token)match(input,38,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getStringSegmentAccess().getStringKeyword_0());
 
             }
-            // InternalIdioms.g:1690:3: ( (lv_string_1_0= RULE_STRING ) )
-            // InternalIdioms.g:1691:4: (lv_string_1_0= RULE_STRING )
+            // InternalIdioms.g:1735:3: ( (lv_string_1_0= RULE_STRING ) )
+            // InternalIdioms.g:1736:4: (lv_string_1_0= RULE_STRING )
             {
-            // InternalIdioms.g:1691:4: (lv_string_1_0= RULE_STRING )
-            // InternalIdioms.g:1692:5: lv_string_1_0= RULE_STRING
+            // InternalIdioms.g:1736:4: (lv_string_1_0= RULE_STRING )
+            // InternalIdioms.g:1737:5: lv_string_1_0= RULE_STRING
             {
             lv_string_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_14); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4921,21 +5061,21 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:1708:3: ( (lv_printable_2_0= 'printable' ) )?
+            // InternalIdioms.g:1753:3: ( (lv_printable_2_0= 'printable' ) )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
-            if ( (LA17_0==38) ) {
+            if ( (LA17_0==39) ) {
                 alt17=1;
             }
             switch (alt17) {
                 case 1 :
-                    // InternalIdioms.g:1709:4: (lv_printable_2_0= 'printable' )
+                    // InternalIdioms.g:1754:4: (lv_printable_2_0= 'printable' )
                     {
-                    // InternalIdioms.g:1709:4: (lv_printable_2_0= 'printable' )
-                    // InternalIdioms.g:1710:5: lv_printable_2_0= 'printable'
+                    // InternalIdioms.g:1754:4: (lv_printable_2_0= 'printable' )
+                    // InternalIdioms.g:1755:5: lv_printable_2_0= 'printable'
                     {
-                    lv_printable_2_0=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_printable_2_0=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(lv_printable_2_0, grammarAccess.getStringSegmentAccess().getPrintablePrintableKeyword_2_0());
@@ -4983,7 +5123,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleValueSegment"
-    // InternalIdioms.g:1726:1: entryRuleValueSegment returns [EObject current=null] : iv_ruleValueSegment= ruleValueSegment EOF ;
+    // InternalIdioms.g:1771:1: entryRuleValueSegment returns [EObject current=null] : iv_ruleValueSegment= ruleValueSegment EOF ;
     public final EObject entryRuleValueSegment() throws RecognitionException {
         EObject current = null;
 
@@ -4991,8 +5131,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1726:53: (iv_ruleValueSegment= ruleValueSegment EOF )
-            // InternalIdioms.g:1727:2: iv_ruleValueSegment= ruleValueSegment EOF
+            // InternalIdioms.g:1771:53: (iv_ruleValueSegment= ruleValueSegment EOF )
+            // InternalIdioms.g:1772:2: iv_ruleValueSegment= ruleValueSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValueSegmentRule());
@@ -5023,7 +5163,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleValueSegment"
-    // InternalIdioms.g:1733:1: ruleValueSegment returns [EObject current=null] : ( () otherlv_1= 'value' ) ;
+    // InternalIdioms.g:1778:1: ruleValueSegment returns [EObject current=null] : ( () otherlv_1= 'value' ) ;
     public final EObject ruleValueSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5033,14 +5173,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1739:2: ( ( () otherlv_1= 'value' ) )
-            // InternalIdioms.g:1740:2: ( () otherlv_1= 'value' )
+            // InternalIdioms.g:1784:2: ( ( () otherlv_1= 'value' ) )
+            // InternalIdioms.g:1785:2: ( () otherlv_1= 'value' )
             {
-            // InternalIdioms.g:1740:2: ( () otherlv_1= 'value' )
-            // InternalIdioms.g:1741:3: () otherlv_1= 'value'
+            // InternalIdioms.g:1785:2: ( () otherlv_1= 'value' )
+            // InternalIdioms.g:1786:3: () otherlv_1= 'value'
             {
-            // InternalIdioms.g:1741:3: ()
-            // InternalIdioms.g:1742:4:
+            // InternalIdioms.g:1786:3: ()
+            // InternalIdioms.g:1787:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5057,7 +5197,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getValueSegmentAccess().getValueKeyword_1());
@@ -5088,7 +5228,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleWrapAnchorSegment"
-    // InternalIdioms.g:1759:1: entryRuleWrapAnchorSegment returns [EObject current=null] : iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF ;
+    // InternalIdioms.g:1804:1: entryRuleWrapAnchorSegment returns [EObject current=null] : iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF ;
     public final EObject entryRuleWrapAnchorSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5096,8 +5236,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1759:58: (iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF )
-            // InternalIdioms.g:1760:2: iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF
+            // InternalIdioms.g:1804:58: (iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF )
+            // InternalIdioms.g:1805:2: iv_ruleWrapAnchorSegment= ruleWrapAnchorSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWrapAnchorSegmentRule());
@@ -5128,7 +5268,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleWrapAnchorSegment"
-    // InternalIdioms.g:1766:1: ruleWrapAnchorSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-anchor' ) ;
+    // InternalIdioms.g:1811:1: ruleWrapAnchorSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-anchor' ) ;
     public final EObject ruleWrapAnchorSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5138,14 +5278,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1772:2: ( ( () otherlv_1= 'wrap-anchor' ) )
-            // InternalIdioms.g:1773:2: ( () otherlv_1= 'wrap-anchor' )
+            // InternalIdioms.g:1817:2: ( ( () otherlv_1= 'wrap-anchor' ) )
+            // InternalIdioms.g:1818:2: ( () otherlv_1= 'wrap-anchor' )
             {
-            // InternalIdioms.g:1773:2: ( () otherlv_1= 'wrap-anchor' )
-            // InternalIdioms.g:1774:3: () otherlv_1= 'wrap-anchor'
+            // InternalIdioms.g:1818:2: ( () otherlv_1= 'wrap-anchor' )
+            // InternalIdioms.g:1819:3: () otherlv_1= 'wrap-anchor'
             {
-            // InternalIdioms.g:1774:3: ()
-            // InternalIdioms.g:1775:4:
+            // InternalIdioms.g:1819:3: ()
+            // InternalIdioms.g:1820:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5162,7 +5302,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getWrapAnchorSegmentAccess().getWrapAnchorKeyword_1());
@@ -5193,7 +5333,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleWrapBeginAllSegment"
-    // InternalIdioms.g:1792:1: entryRuleWrapBeginAllSegment returns [EObject current=null] : iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF ;
+    // InternalIdioms.g:1837:1: entryRuleWrapBeginAllSegment returns [EObject current=null] : iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF ;
     public final EObject entryRuleWrapBeginAllSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5201,8 +5341,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1792:60: (iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF )
-            // InternalIdioms.g:1793:2: iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF
+            // InternalIdioms.g:1837:60: (iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF )
+            // InternalIdioms.g:1838:2: iv_ruleWrapBeginAllSegment= ruleWrapBeginAllSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWrapBeginAllSegmentRule());
@@ -5233,7 +5373,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleWrapBeginAllSegment"
-    // InternalIdioms.g:1799:1: ruleWrapBeginAllSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-begin-all' ) ;
+    // InternalIdioms.g:1844:1: ruleWrapBeginAllSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-begin-all' ) ;
     public final EObject ruleWrapBeginAllSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5243,14 +5383,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1805:2: ( ( () otherlv_1= 'wrap-begin-all' ) )
-            // InternalIdioms.g:1806:2: ( () otherlv_1= 'wrap-begin-all' )
+            // InternalIdioms.g:1850:2: ( ( () otherlv_1= 'wrap-begin-all' ) )
+            // InternalIdioms.g:1851:2: ( () otherlv_1= 'wrap-begin-all' )
             {
-            // InternalIdioms.g:1806:2: ( () otherlv_1= 'wrap-begin-all' )
-            // InternalIdioms.g:1807:3: () otherlv_1= 'wrap-begin-all'
+            // InternalIdioms.g:1851:2: ( () otherlv_1= 'wrap-begin-all' )
+            // InternalIdioms.g:1852:3: () otherlv_1= 'wrap-begin-all'
             {
-            // InternalIdioms.g:1807:3: ()
-            // InternalIdioms.g:1808:4:
+            // InternalIdioms.g:1852:3: ()
+            // InternalIdioms.g:1853:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5267,7 +5407,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getWrapBeginAllSegmentAccess().getWrapBeginAllKeyword_1());
@@ -5298,7 +5438,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleWrapBeginSomeSegment"
-    // InternalIdioms.g:1825:1: entryRuleWrapBeginSomeSegment returns [EObject current=null] : iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF ;
+    // InternalIdioms.g:1870:1: entryRuleWrapBeginSomeSegment returns [EObject current=null] : iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF ;
     public final EObject entryRuleWrapBeginSomeSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5306,8 +5446,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1825:61: (iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF )
-            // InternalIdioms.g:1826:2: iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF
+            // InternalIdioms.g:1870:61: (iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF )
+            // InternalIdioms.g:1871:2: iv_ruleWrapBeginSomeSegment= ruleWrapBeginSomeSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWrapBeginSomeSegmentRule());
@@ -5338,7 +5478,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleWrapBeginSomeSegment"
-    // InternalIdioms.g:1832:1: ruleWrapBeginSomeSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-begin-some' ) ;
+    // InternalIdioms.g:1877:1: ruleWrapBeginSomeSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-begin-some' ) ;
     public final EObject ruleWrapBeginSomeSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5348,14 +5488,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1838:2: ( ( () otherlv_1= 'wrap-begin-some' ) )
-            // InternalIdioms.g:1839:2: ( () otherlv_1= 'wrap-begin-some' )
+            // InternalIdioms.g:1883:2: ( ( () otherlv_1= 'wrap-begin-some' ) )
+            // InternalIdioms.g:1884:2: ( () otherlv_1= 'wrap-begin-some' )
             {
-            // InternalIdioms.g:1839:2: ( () otherlv_1= 'wrap-begin-some' )
-            // InternalIdioms.g:1840:3: () otherlv_1= 'wrap-begin-some'
+            // InternalIdioms.g:1884:2: ( () otherlv_1= 'wrap-begin-some' )
+            // InternalIdioms.g:1885:3: () otherlv_1= 'wrap-begin-some'
             {
-            // InternalIdioms.g:1840:3: ()
-            // InternalIdioms.g:1841:4:
+            // InternalIdioms.g:1885:3: ()
+            // InternalIdioms.g:1886:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5372,7 +5512,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getWrapBeginSomeSegmentAccess().getWrapBeginSomeKeyword_1());
@@ -5403,7 +5543,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleWrapEndSegment"
-    // InternalIdioms.g:1858:1: entryRuleWrapEndSegment returns [EObject current=null] : iv_ruleWrapEndSegment= ruleWrapEndSegment EOF ;
+    // InternalIdioms.g:1903:1: entryRuleWrapEndSegment returns [EObject current=null] : iv_ruleWrapEndSegment= ruleWrapEndSegment EOF ;
     public final EObject entryRuleWrapEndSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5411,8 +5551,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1858:55: (iv_ruleWrapEndSegment= ruleWrapEndSegment EOF )
-            // InternalIdioms.g:1859:2: iv_ruleWrapEndSegment= ruleWrapEndSegment EOF
+            // InternalIdioms.g:1903:55: (iv_ruleWrapEndSegment= ruleWrapEndSegment EOF )
+            // InternalIdioms.g:1904:2: iv_ruleWrapEndSegment= ruleWrapEndSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWrapEndSegmentRule());
@@ -5443,7 +5583,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleWrapEndSegment"
-    // InternalIdioms.g:1865:1: ruleWrapEndSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-end' ) ;
+    // InternalIdioms.g:1910:1: ruleWrapEndSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-end' ) ;
     public final EObject ruleWrapEndSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5453,14 +5593,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1871:2: ( ( () otherlv_1= 'wrap-end' ) )
-            // InternalIdioms.g:1872:2: ( () otherlv_1= 'wrap-end' )
+            // InternalIdioms.g:1916:2: ( ( () otherlv_1= 'wrap-end' ) )
+            // InternalIdioms.g:1917:2: ( () otherlv_1= 'wrap-end' )
             {
-            // InternalIdioms.g:1872:2: ( () otherlv_1= 'wrap-end' )
-            // InternalIdioms.g:1873:3: () otherlv_1= 'wrap-end'
+            // InternalIdioms.g:1917:2: ( () otherlv_1= 'wrap-end' )
+            // InternalIdioms.g:1918:3: () otherlv_1= 'wrap-end'
             {
-            // InternalIdioms.g:1873:3: ()
-            // InternalIdioms.g:1874:4:
+            // InternalIdioms.g:1918:3: ()
+            // InternalIdioms.g:1919:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5477,7 +5617,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getWrapEndSegmentAccess().getWrapEndKeyword_1());
@@ -5508,7 +5648,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleWrapHereSegment"
-    // InternalIdioms.g:1891:1: entryRuleWrapHereSegment returns [EObject current=null] : iv_ruleWrapHereSegment= ruleWrapHereSegment EOF ;
+    // InternalIdioms.g:1936:1: entryRuleWrapHereSegment returns [EObject current=null] : iv_ruleWrapHereSegment= ruleWrapHereSegment EOF ;
     public final EObject entryRuleWrapHereSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5516,8 +5656,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1891:56: (iv_ruleWrapHereSegment= ruleWrapHereSegment EOF )
-            // InternalIdioms.g:1892:2: iv_ruleWrapHereSegment= ruleWrapHereSegment EOF
+            // InternalIdioms.g:1936:56: (iv_ruleWrapHereSegment= ruleWrapHereSegment EOF )
+            // InternalIdioms.g:1937:2: iv_ruleWrapHereSegment= ruleWrapHereSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWrapHereSegmentRule());
@@ -5548,7 +5688,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleWrapHereSegment"
-    // InternalIdioms.g:1898:1: ruleWrapHereSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-here' ) ;
+    // InternalIdioms.g:1943:1: ruleWrapHereSegment returns [EObject current=null] : ( () otherlv_1= 'wrap-here' ) ;
     public final EObject ruleWrapHereSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5558,14 +5698,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1904:2: ( ( () otherlv_1= 'wrap-here' ) )
-            // InternalIdioms.g:1905:2: ( () otherlv_1= 'wrap-here' )
+            // InternalIdioms.g:1949:2: ( ( () otherlv_1= 'wrap-here' ) )
+            // InternalIdioms.g:1950:2: ( () otherlv_1= 'wrap-here' )
             {
-            // InternalIdioms.g:1905:2: ( () otherlv_1= 'wrap-here' )
-            // InternalIdioms.g:1906:3: () otherlv_1= 'wrap-here'
+            // InternalIdioms.g:1950:2: ( () otherlv_1= 'wrap-here' )
+            // InternalIdioms.g:1951:3: () otherlv_1= 'wrap-here'
             {
-            // InternalIdioms.g:1906:3: ()
-            // InternalIdioms.g:1907:4:
+            // InternalIdioms.g:1951:3: ()
+            // InternalIdioms.g:1952:4:
             {
             if ( state.backtracking==0 ) {
 
@@ -5582,7 +5722,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getWrapHereSegmentAccess().getWrapHereKeyword_1());
@@ -5613,7 +5753,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleReferredSegment"
-    // InternalIdioms.g:1924:1: entryRuleReferredSegment returns [EObject current=null] : iv_ruleReferredSegment= ruleReferredSegment EOF ;
+    // InternalIdioms.g:1969:1: entryRuleReferredSegment returns [EObject current=null] : iv_ruleReferredSegment= ruleReferredSegment EOF ;
     public final EObject entryRuleReferredSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5621,8 +5761,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1924:56: (iv_ruleReferredSegment= ruleReferredSegment EOF )
-            // InternalIdioms.g:1925:2: iv_ruleReferredSegment= ruleReferredSegment EOF
+            // InternalIdioms.g:1969:56: (iv_ruleReferredSegment= ruleReferredSegment EOF )
+            // InternalIdioms.g:1970:2: iv_ruleReferredSegment= ruleReferredSegment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferredSegmentRule());
@@ -5653,7 +5793,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleReferredSegment"
-    // InternalIdioms.g:1931:1: ruleReferredSegment returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) ) ;
+    // InternalIdioms.g:1976:1: ruleReferredSegment returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) ) ;
     public final EObject ruleReferredSegment() throws RecognitionException {
         EObject current = null;
 
@@ -5665,13 +5805,13 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1937:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) ) )
-            // InternalIdioms.g:1938:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) )
+            // InternalIdioms.g:1982:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) ) )
+            // InternalIdioms.g:1983:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) )
             {
-            // InternalIdioms.g:1938:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) )
-            // InternalIdioms.g:1939:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) )
+            // InternalIdioms.g:1983:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) ) )
+            // InternalIdioms.g:1984:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( (otherlv_2= RULE_ID ) )
             {
-            // InternalIdioms.g:1939:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
+            // InternalIdioms.g:1984:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -5684,13 +5824,13 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt18) {
                 case 1 :
-                    // InternalIdioms.g:1940:4: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::'
+                    // InternalIdioms.g:1985:4: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::'
                     {
-                    // InternalIdioms.g:1940:4: ( (otherlv_0= RULE_ID ) )
-                    // InternalIdioms.g:1941:5: (otherlv_0= RULE_ID )
+                    // InternalIdioms.g:1985:4: ( (otherlv_0= RULE_ID ) )
+                    // InternalIdioms.g:1986:5: (otherlv_0= RULE_ID )
                     {
-                    // InternalIdioms.g:1941:5: (otherlv_0= RULE_ID )
-                    // InternalIdioms.g:1942:6: otherlv_0= RULE_ID
+                    // InternalIdioms.g:1986:5: (otherlv_0= RULE_ID )
+                    // InternalIdioms.g:1987:6: otherlv_0= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -5728,11 +5868,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:1961:3: ( (otherlv_2= RULE_ID ) )
-            // InternalIdioms.g:1962:4: (otherlv_2= RULE_ID )
+            // InternalIdioms.g:2006:3: ( (otherlv_2= RULE_ID ) )
+            // InternalIdioms.g:2007:4: (otherlv_2= RULE_ID )
             {
-            // InternalIdioms.g:1962:4: (otherlv_2= RULE_ID )
-            // InternalIdioms.g:1963:5: otherlv_2= RULE_ID
+            // InternalIdioms.g:2007:4: (otherlv_2= RULE_ID )
+            // InternalIdioms.g:2008:5: otherlv_2= RULE_ID
             {
             if ( state.backtracking==0 ) {
 
@@ -5783,7 +5923,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleIdiom"
-    // InternalIdioms.g:1981:1: entryRuleIdiom returns [EObject current=null] : iv_ruleIdiom= ruleIdiom EOF ;
+    // InternalIdioms.g:2026:1: entryRuleIdiom returns [EObject current=null] : iv_ruleIdiom= ruleIdiom EOF ;
     public final EObject entryRuleIdiom() throws RecognitionException {
         EObject current = null;
 
@@ -5791,8 +5931,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:1981:46: (iv_ruleIdiom= ruleIdiom EOF )
-            // InternalIdioms.g:1982:2: iv_ruleIdiom= ruleIdiom EOF
+            // InternalIdioms.g:2026:46: (iv_ruleIdiom= ruleIdiom EOF )
+            // InternalIdioms.g:2027:2: iv_ruleIdiom= ruleIdiom EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIdiomRule());
@@ -5823,7 +5963,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleIdiom"
-    // InternalIdioms.g:1988:1: ruleIdiom returns [EObject current=null] : ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) ) ;
+    // InternalIdioms.g:2033:1: ruleIdiom returns [EObject current=null] : ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) ) ;
     public final EObject ruleIdiom() throws RecognitionException {
         EObject current = null;
 
@@ -5847,27 +5987,27 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:1994:2: ( ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) ) )
-            // InternalIdioms.g:1995:2: ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) )
+            // InternalIdioms.g:2039:2: ( ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) ) )
+            // InternalIdioms.g:2040:2: ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) )
             {
-            // InternalIdioms.g:1995:2: ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) )
-            // InternalIdioms.g:1996:3: ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) )
+            // InternalIdioms.g:2040:2: ( ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) ) )
+            // InternalIdioms.g:2041:3: ( (lv_mixin_0_0= 'mixin' ) )? otherlv_1= 'idiom' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )? (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )? ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) )
             {
-            // InternalIdioms.g:1996:3: ( (lv_mixin_0_0= 'mixin' ) )?
+            // InternalIdioms.g:2041:3: ( (lv_mixin_0_0= 'mixin' ) )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( (LA19_0==45) ) {
+            if ( (LA19_0==46) ) {
                 alt19=1;
             }
             switch (alt19) {
                 case 1 :
-                    // InternalIdioms.g:1997:4: (lv_mixin_0_0= 'mixin' )
+                    // InternalIdioms.g:2042:4: (lv_mixin_0_0= 'mixin' )
                     {
-                    // InternalIdioms.g:1997:4: (lv_mixin_0_0= 'mixin' )
-                    // InternalIdioms.g:1998:5: lv_mixin_0_0= 'mixin'
+                    // InternalIdioms.g:2042:4: (lv_mixin_0_0= 'mixin' )
+                    // InternalIdioms.g:2043:5: lv_mixin_0_0= 'mixin'
                     {
-                    lv_mixin_0_0=(Token)match(input,45,FollowSets000.FOLLOW_15); if (state.failed) return current;
+                    lv_mixin_0_0=(Token)match(input,46,FollowSets000.FOLLOW_15); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(lv_mixin_0_0, grammarAccess.getIdiomAccess().getMixinMixinKeyword_0_0());
@@ -5890,17 +6030,17 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            otherlv_1=(Token)match(input,46,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            otherlv_1=(Token)match(input,47,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getIdiomAccess().getIdiomKeyword_1());
 
             }
-            // InternalIdioms.g:2014:3: ( (lv_name_2_0= RULE_ID ) )
-            // InternalIdioms.g:2015:4: (lv_name_2_0= RULE_ID )
+            // InternalIdioms.g:2059:3: ( (lv_name_2_0= RULE_ID ) )
+            // InternalIdioms.g:2060:4: (lv_name_2_0= RULE_ID )
             {
-            // InternalIdioms.g:2015:4: (lv_name_2_0= RULE_ID )
-            // InternalIdioms.g:2016:5: lv_name_2_0= RULE_ID
+            // InternalIdioms.g:2060:4: (lv_name_2_0= RULE_ID )
+            // InternalIdioms.g:2061:5: lv_name_2_0= RULE_ID
             {
             lv_name_2_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_16); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -5926,24 +6066,24 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:2032:3: (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )?
+            // InternalIdioms.g:2077:3: (otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) ) )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
-            if ( (LA21_0==47) ) {
+            if ( (LA21_0==48) ) {
                 alt21=1;
             }
             switch (alt21) {
                 case 1 :
-                    // InternalIdioms.g:2033:4: otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) )
+                    // InternalIdioms.g:2078:4: otherlv_3= 'for' ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )? ( (otherlv_6= RULE_ID ) )
                     {
-                    otherlv_3=(Token)match(input,47,FollowSets000.FOLLOW_3); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,48,FollowSets000.FOLLOW_3); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_3, grammarAccess.getIdiomAccess().getForKeyword_3_0());
 
                     }
-                    // InternalIdioms.g:2037:4: ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )?
+                    // InternalIdioms.g:2082:4: ( ( (otherlv_4= RULE_ID ) ) otherlv_5= '::' )?
                     int alt20=2;
                     int LA20_0 = input.LA(1);
 
@@ -5956,13 +6096,13 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     switch (alt20) {
                         case 1 :
-                            // InternalIdioms.g:2038:5: ( (otherlv_4= RULE_ID ) ) otherlv_5= '::'
+                            // InternalIdioms.g:2083:5: ( (otherlv_4= RULE_ID ) ) otherlv_5= '::'
                             {
-                            // InternalIdioms.g:2038:5: ( (otherlv_4= RULE_ID ) )
-                            // InternalIdioms.g:2039:6: (otherlv_4= RULE_ID )
+                            // InternalIdioms.g:2083:5: ( (otherlv_4= RULE_ID ) )
+                            // InternalIdioms.g:2084:6: (otherlv_4= RULE_ID )
                             {
-                            // InternalIdioms.g:2039:6: (otherlv_4= RULE_ID )
-                            // InternalIdioms.g:2040:7: otherlv_4= RULE_ID
+                            // InternalIdioms.g:2084:6: (otherlv_4= RULE_ID )
+                            // InternalIdioms.g:2085:7: otherlv_4= RULE_ID
                             {
                             if ( state.backtracking==0 ) {
 
@@ -6000,11 +6140,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                     }
 
-                    // InternalIdioms.g:2059:4: ( (otherlv_6= RULE_ID ) )
-                    // InternalIdioms.g:2060:5: (otherlv_6= RULE_ID )
+                    // InternalIdioms.g:2104:4: ( (otherlv_6= RULE_ID ) )
+                    // InternalIdioms.g:2105:5: (otherlv_6= RULE_ID )
                     {
-                    // InternalIdioms.g:2060:5: (otherlv_6= RULE_ID )
-                    // InternalIdioms.g:2061:6: otherlv_6= RULE_ID
+                    // InternalIdioms.g:2105:5: (otherlv_6= RULE_ID )
+                    // InternalIdioms.g:2106:6: otherlv_6= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -6036,28 +6176,28 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:2076:3: (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )?
+            // InternalIdioms.g:2121:3: (otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) ) )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==48) ) {
+            if ( (LA22_0==49) ) {
                 alt22=1;
             }
             switch (alt22) {
                 case 1 :
-                    // InternalIdioms.g:2077:4: otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) )
+                    // InternalIdioms.g:2122:4: otherlv_7= 'in' ( (lv_inRuleRegex_8_0= RULE_STRING ) )
                     {
-                    otherlv_7=(Token)match(input,48,FollowSets000.FOLLOW_7); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,49,FollowSets000.FOLLOW_7); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_7, grammarAccess.getIdiomAccess().getInKeyword_4_0());
 
                     }
-                    // InternalIdioms.g:2081:4: ( (lv_inRuleRegex_8_0= RULE_STRING ) )
-                    // InternalIdioms.g:2082:5: (lv_inRuleRegex_8_0= RULE_STRING )
+                    // InternalIdioms.g:2126:4: ( (lv_inRuleRegex_8_0= RULE_STRING ) )
+                    // InternalIdioms.g:2127:5: (lv_inRuleRegex_8_0= RULE_STRING )
                     {
-                    // InternalIdioms.g:2082:5: (lv_inRuleRegex_8_0= RULE_STRING )
-                    // InternalIdioms.g:2083:6: lv_inRuleRegex_8_0= RULE_STRING
+                    // InternalIdioms.g:2127:5: (lv_inRuleRegex_8_0= RULE_STRING )
+                    // InternalIdioms.g:2128:6: lv_inRuleRegex_8_0= RULE_STRING
                     {
                     lv_inRuleRegex_8_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_18); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -6089,14 +6229,14 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:2100:3: ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) )
+            // InternalIdioms.g:2145:3: ( ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) ) | (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' ) )
             int alt24=2;
             int LA24_0 = input.LA(1);
 
-            if ( (LA24_0==51) ) {
+            if ( (LA24_0==52) ) {
                 alt24=1;
             }
-            else if ( (LA24_0==49) ) {
+            else if ( (LA24_0==50) ) {
                 alt24=2;
             }
             else {
@@ -6108,13 +6248,13 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt24) {
                 case 1 :
-                    // InternalIdioms.g:2101:4: ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) )
+                    // InternalIdioms.g:2146:4: ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) )
                     {
-                    // InternalIdioms.g:2101:4: ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) )
-                    // InternalIdioms.g:2102:5: (lv_ownedSubIdioms_9_0= ruleSubIdiom )
+                    // InternalIdioms.g:2146:4: ( (lv_ownedSubIdioms_9_0= ruleSubIdiom ) )
+                    // InternalIdioms.g:2147:5: (lv_ownedSubIdioms_9_0= ruleSubIdiom )
                     {
-                    // InternalIdioms.g:2102:5: (lv_ownedSubIdioms_9_0= ruleSubIdiom )
-                    // InternalIdioms.g:2103:6: lv_ownedSubIdioms_9_0= ruleSubIdiom
+                    // InternalIdioms.g:2147:5: (lv_ownedSubIdioms_9_0= ruleSubIdiom )
+                    // InternalIdioms.g:2148:6: lv_ownedSubIdioms_9_0= ruleSubIdiom
                     {
                     if ( state.backtracking==0 ) {
 
@@ -6149,34 +6289,34 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:2121:4: (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' )
+                    // InternalIdioms.g:2166:4: (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' )
                     {
-                    // InternalIdioms.g:2121:4: (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' )
-                    // InternalIdioms.g:2122:5: otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}'
+                    // InternalIdioms.g:2166:4: (otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}' )
+                    // InternalIdioms.g:2167:5: otherlv_10= '{' ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )* otherlv_12= '}'
                     {
-                    otherlv_10=(Token)match(input,49,FollowSets000.FOLLOW_19); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,50,FollowSets000.FOLLOW_19); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_10, grammarAccess.getIdiomAccess().getLeftCurlyBracketKeyword_5_1_0());
 
                     }
-                    // InternalIdioms.g:2126:5: ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )*
+                    // InternalIdioms.g:2171:5: ( (lv_ownedSubIdioms_11_0= ruleSubIdiom ) )*
                     loop23:
                     do {
                         int alt23=2;
                         int LA23_0 = input.LA(1);
 
-                        if ( (LA23_0==51) ) {
+                        if ( (LA23_0==52) ) {
                             alt23=1;
                         }
 
 
                         switch (alt23) {
                     	case 1 :
-                    	    // InternalIdioms.g:2127:6: (lv_ownedSubIdioms_11_0= ruleSubIdiom )
+                    	    // InternalIdioms.g:2172:6: (lv_ownedSubIdioms_11_0= ruleSubIdiom )
                     	    {
-                    	    // InternalIdioms.g:2127:6: (lv_ownedSubIdioms_11_0= ruleSubIdiom )
-                    	    // InternalIdioms.g:2128:7: lv_ownedSubIdioms_11_0= ruleSubIdiom
+                    	    // InternalIdioms.g:2172:6: (lv_ownedSubIdioms_11_0= ruleSubIdiom )
+                    	    // InternalIdioms.g:2173:7: lv_ownedSubIdioms_11_0= ruleSubIdiom
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -6213,7 +6353,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                         }
                     } while (true);
 
-                    otherlv_12=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_12=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_12, grammarAccess.getIdiomAccess().getRightCurlyBracketKeyword_5_1_2());
@@ -6253,7 +6393,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleSubIdiom"
-    // InternalIdioms.g:2155:1: entryRuleSubIdiom returns [EObject current=null] : iv_ruleSubIdiom= ruleSubIdiom EOF ;
+    // InternalIdioms.g:2200:1: entryRuleSubIdiom returns [EObject current=null] : iv_ruleSubIdiom= ruleSubIdiom EOF ;
     public final EObject entryRuleSubIdiom() throws RecognitionException {
         EObject current = null;
 
@@ -6261,8 +6401,8 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalIdioms.g:2155:49: (iv_ruleSubIdiom= ruleSubIdiom EOF )
-            // InternalIdioms.g:2156:2: iv_ruleSubIdiom= ruleSubIdiom EOF
+            // InternalIdioms.g:2200:49: (iv_ruleSubIdiom= ruleSubIdiom EOF )
+            // InternalIdioms.g:2201:2: iv_ruleSubIdiom= ruleSubIdiom EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSubIdiomRule());
@@ -6293,7 +6433,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleSubIdiom"
-    // InternalIdioms.g:2162:1: ruleSubIdiom returns [EObject current=null] : (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' ) ;
+    // InternalIdioms.g:2207:1: ruleSubIdiom returns [EObject current=null] : (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' ) ;
     public final EObject ruleSubIdiom() throws RecognitionException {
         EObject current = null;
 
@@ -6313,39 +6453,39 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         	enterRule();
 
         try {
-            // InternalIdioms.g:2168:2: ( (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' ) )
-            // InternalIdioms.g:2169:2: (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' )
+            // InternalIdioms.g:2213:2: ( (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' ) )
+            // InternalIdioms.g:2214:2: (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' )
             {
-            // InternalIdioms.g:2169:2: (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' )
-            // InternalIdioms.g:2170:3: otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';'
+            // InternalIdioms.g:2214:2: (otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';' )
+            // InternalIdioms.g:2215:3: otherlv_0= 'at' ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )? ( (lv_ownedLocator_3_0= ruleLocator ) ) (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )? otherlv_6= ';'
             {
-            otherlv_0=(Token)match(input,51,FollowSets000.FOLLOW_20); if (state.failed) return current;
+            otherlv_0=(Token)match(input,52,FollowSets000.FOLLOW_20); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getSubIdiomAccess().getAtKeyword_0());
 
             }
-            // InternalIdioms.g:2174:3: ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )?
+            // InternalIdioms.g:2219:3: ( ( (lv_all_1_0= 'all' ) ) | otherlv_2= 'each' )?
             int alt25=3;
             int LA25_0 = input.LA(1);
 
-            if ( (LA25_0==52) ) {
+            if ( (LA25_0==53) ) {
                 alt25=1;
             }
-            else if ( (LA25_0==53) ) {
+            else if ( (LA25_0==54) ) {
                 alt25=2;
             }
             switch (alt25) {
                 case 1 :
-                    // InternalIdioms.g:2175:4: ( (lv_all_1_0= 'all' ) )
+                    // InternalIdioms.g:2220:4: ( (lv_all_1_0= 'all' ) )
                     {
-                    // InternalIdioms.g:2175:4: ( (lv_all_1_0= 'all' ) )
-                    // InternalIdioms.g:2176:5: (lv_all_1_0= 'all' )
+                    // InternalIdioms.g:2220:4: ( (lv_all_1_0= 'all' ) )
+                    // InternalIdioms.g:2221:5: (lv_all_1_0= 'all' )
                     {
-                    // InternalIdioms.g:2176:5: (lv_all_1_0= 'all' )
-                    // InternalIdioms.g:2177:6: lv_all_1_0= 'all'
+                    // InternalIdioms.g:2221:5: (lv_all_1_0= 'all' )
+                    // InternalIdioms.g:2222:6: lv_all_1_0= 'all'
                     {
-                    lv_all_1_0=(Token)match(input,52,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    lv_all_1_0=(Token)match(input,53,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       						newLeafNode(lv_all_1_0, grammarAccess.getSubIdiomAccess().getAllAllKeyword_1_0_0());
@@ -6369,9 +6509,9 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:2190:4: otherlv_2= 'each'
+                    // InternalIdioms.g:2235:4: otherlv_2= 'each'
                     {
-                    otherlv_2=(Token)match(input,53,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,54,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getSubIdiomAccess().getEachKeyword_1_1());
@@ -6383,11 +6523,11 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:2195:3: ( (lv_ownedLocator_3_0= ruleLocator ) )
-            // InternalIdioms.g:2196:4: (lv_ownedLocator_3_0= ruleLocator )
+            // InternalIdioms.g:2240:3: ( (lv_ownedLocator_3_0= ruleLocator ) )
+            // InternalIdioms.g:2241:4: (lv_ownedLocator_3_0= ruleLocator )
             {
-            // InternalIdioms.g:2196:4: (lv_ownedLocator_3_0= ruleLocator )
-            // InternalIdioms.g:2197:5: lv_ownedLocator_3_0= ruleLocator
+            // InternalIdioms.g:2241:4: (lv_ownedLocator_3_0= ruleLocator )
+            // InternalIdioms.g:2242:5: lv_ownedLocator_3_0= ruleLocator
             {
             if ( state.backtracking==0 ) {
 
@@ -6418,46 +6558,46 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalIdioms.g:2214:3: (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )?
+            // InternalIdioms.g:2259:3: (otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )* )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
-            if ( (LA28_0==54) ) {
+            if ( (LA28_0==55) ) {
                 alt28=1;
             }
             switch (alt28) {
                 case 1 :
-                    // InternalIdioms.g:2215:4: otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )*
+                    // InternalIdioms.g:2260:4: otherlv_4= 'do' ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )*
                     {
-                    otherlv_4=(Token)match(input,54,FollowSets000.FOLLOW_22); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,55,FollowSets000.FOLLOW_22); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getSubIdiomAccess().getDoKeyword_3_0());
 
                     }
-                    // InternalIdioms.g:2219:4: ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )*
+                    // InternalIdioms.g:2264:4: ( ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) ) )*
                     loop27:
                     do {
                         int alt27=2;
                         int LA27_0 = input.LA(1);
 
-                        if ( (LA27_0==RULE_ID||(LA27_0>=27 && LA27_0<=37)||(LA27_0>=39 && LA27_0<=44)) ) {
+                        if ( (LA27_0==RULE_ID||(LA27_0>=27 && LA27_0<=38)||(LA27_0>=40 && LA27_0<=45)) ) {
                             alt27=1;
                         }
 
 
                         switch (alt27) {
                     	case 1 :
-                    	    // InternalIdioms.g:2220:5: ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) )
+                    	    // InternalIdioms.g:2265:5: ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) )
                     	    {
-                    	    // InternalIdioms.g:2220:5: ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) )
-                    	    // InternalIdioms.g:2221:6: (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment )
+                    	    // InternalIdioms.g:2265:5: ( (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment ) )
+                    	    // InternalIdioms.g:2266:6: (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment )
                     	    {
-                    	    // InternalIdioms.g:2221:6: (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment )
+                    	    // InternalIdioms.g:2266:6: (lv_ownedSegments_5_1= ruleSegment | lv_ownedSegments_5_2= ruleReferredSegment )
                     	    int alt26=2;
                     	    int LA26_0 = input.LA(1);
 
-                    	    if ( ((LA26_0>=27 && LA26_0<=37)||(LA26_0>=39 && LA26_0<=44)) ) {
+                    	    if ( ((LA26_0>=27 && LA26_0<=38)||(LA26_0>=40 && LA26_0<=45)) ) {
                     	        alt26=1;
                     	    }
                     	    else if ( (LA26_0==RULE_ID) ) {
@@ -6472,7 +6612,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     	    }
                     	    switch (alt26) {
                     	        case 1 :
-                    	            // InternalIdioms.g:2222:7: lv_ownedSegments_5_1= ruleSegment
+                    	            // InternalIdioms.g:2267:7: lv_ownedSegments_5_1= ruleSegment
                     	            {
                     	            if ( state.backtracking==0 ) {
 
@@ -6501,7 +6641,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
                     	            }
                     	            break;
                     	        case 2 :
-                    	            // InternalIdioms.g:2238:7: lv_ownedSegments_5_2= ruleReferredSegment
+                    	            // InternalIdioms.g:2283:7: lv_ownedSegments_5_2= ruleReferredSegment
                     	            {
                     	            if ( state.backtracking==0 ) {
 
@@ -6589,25 +6729,25 @@ public class InternalIdiomsParser extends org.eclipse.ocl.xtext.base.utilities.C
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000600004073002L});
-        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000600004072002L});
-        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000600004040002L});
+        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000C00004073002L});
+        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000C00004072002L});
+        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000C00004040002L});
         public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x000000000000C002L});
         public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000008002L});
         public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000003B80030L});
         public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000008000L});
         public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00001FBFF8000000L});
-        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000004000000002L});
-        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000400000000000L});
-        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x000B800000000000L});
-        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x000B000000000000L});
-        public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x000A000000000000L});
-        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x000C000000000000L});
-        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0030000003B80030L});
-        public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0040000000008000L});
-        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x00001FBFF8008010L});
+        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00003F7FF8000000L});
+        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000008000000002L});
+        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000800000000000L});
+        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0017000000000000L});
+        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0016000000000000L});
+        public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0014000000000000L});
+        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0018000000000000L});
+        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0060000003B80030L});
+        public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0080000000008000L});
+        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x00003F7FF8008010L});
     }
 
 

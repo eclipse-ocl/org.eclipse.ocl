@@ -159,6 +159,11 @@ public class IdiomsAdapterFactory
 				return createNewLineSegmentAdapter();
 			}
 			@Override
+			public Adapter caseNoNewLineSegment(NoNewLineSegment object)
+			{
+				return createNoNewLineSegmentAdapter();
+			}
+			@Override
 			public Adapter caseNoSpaceSegment(NoSpaceSegment object)
 			{
 				return createNoSpaceSegmentAdapter();
@@ -506,6 +511,21 @@ public class IdiomsAdapterFactory
 	 * @generated
 	 */
 	public Adapter createNewLineSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.idioms.NoNewLineSegment <em>No New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.idioms.NoNewLineSegment
+	 * @generated
+	 */
+	public Adapter createNoNewLineSegmentAdapter()
+	{
 		return null;
 	}
 

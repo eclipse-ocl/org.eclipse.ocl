@@ -72,6 +72,7 @@ public class IdiomsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCustomSegmentAccess().getGroup(), "rule__CustomSegment__Group__0");
 			builder.put(grammarAccess.getHalfNewLineSegmentAccess().getGroup(), "rule__HalfNewLineSegment__Group__0");
 			builder.put(grammarAccess.getNewLineSegmentAccess().getGroup(), "rule__NewLineSegment__Group__0");
+			builder.put(grammarAccess.getNoNewLineSegmentAccess().getGroup(), "rule__NoNewLineSegment__Group__0");
 			builder.put(grammarAccess.getNoSpaceSegmentAccess().getGroup(), "rule__NoSpaceSegment__Group__0");
 			builder.put(grammarAccess.getPopSegmentAccess().getGroup(), "rule__PopSegment__Group__0");
 			builder.put(grammarAccess.getPostCommentSegmentAccess().getGroup(), "rule__PostCommentSegment__Group__0");

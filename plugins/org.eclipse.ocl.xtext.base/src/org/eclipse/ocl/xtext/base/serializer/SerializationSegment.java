@@ -25,6 +25,7 @@ public abstract class SerializationSegment
 {
 	public static final @NonNull SerializationSegment HALF_NEW_LINE = new SpacingSerializationSegment(SerializationBuilder.HALF_NEW_LINE);
 	public static final @NonNull SerializationSegment NEW_LINE = new SpacingSerializationSegment(SerializationBuilder.NEW_LINE);
+	public static final @NonNull SerializationSegment NO_NEW_LINE = new SpacingSerializationSegment(SerializationBuilder.NO_NEW_LINE);
 	public static final @NonNull SerializationSegment NO_SPACE = new SpacingSerializationSegment(SerializationBuilder.NO_SPACE);
 	public static final @NonNull SerializationSegment POP = new ControlSerializationSegment(SerializationBuilder.POP);
 	public static final @NonNull SerializationSegment POST_COMMENT = new PostCommentSerializationSegment();

@@ -83,26 +83,27 @@ public class IdiomsFactoryImpl
 			case 12: return createKeywordLocator();
 			case 14: return createLocatorDeclaration();
 			case 15: return createNewLineSegment();
-			case 16: return createNoSpaceSegment();
-			case 17: return createPopSegment();
-			case 18: return createPostCommentSegment();
-			case 19: return createPreCommentSegment();
-			case 20: return createPushSegment();
-			case 21: return createReferredLocator();
-			case 22: return createReferredSegment();
-			case 23: return createReturnsLocator();
-			case 24: return createRuleLocator();
-			case 26: return createSegmentDeclaration();
-			case 27: return createSoftNewLineSegment();
-			case 28: return createSoftSpaceSegment();
-			case 29: return createStringSegment();
-			case 30: return createSubIdiom();
-			case 31: return createValueSegment();
-			case 32: return createWrapAnchorSegment();
-			case 33: return createWrapBeginSomeSegment();
-			case 34: return createWrapBeginAllSegment();
-			case 35: return createWrapEndSegment();
-			case 36: return createWrapHereSegment();
+			case 16: return createNoNewLineSegment();
+			case 17: return createNoSpaceSegment();
+			case 18: return createPopSegment();
+			case 19: return createPostCommentSegment();
+			case 20: return createPreCommentSegment();
+			case 21: return createPushSegment();
+			case 22: return createReferredLocator();
+			case 23: return createReferredSegment();
+			case 24: return createReturnsLocator();
+			case 25: return createRuleLocator();
+			case 27: return createSegmentDeclaration();
+			case 28: return createSoftNewLineSegment();
+			case 29: return createSoftSpaceSegment();
+			case 30: return createStringSegment();
+			case 31: return createSubIdiom();
+			case 32: return createValueSegment();
+			case 33: return createWrapAnchorSegment();
+			case 34: return createWrapBeginSomeSegment();
+			case 35: return createWrapBeginAllSegment();
+			case 36: return createWrapEndSegment();
+			case 37: return createWrapHereSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -262,6 +263,18 @@ public class IdiomsFactoryImpl
 	public @NonNull NewLineSegment createNewLineSegment() {
 		NewLineSegmentImpl newLineSegment = new NewLineSegmentImpl();
 		return newLineSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NoNewLineSegment createNoNewLineSegment()
+	{
+		NoNewLineSegmentImpl noNewLineSegment = new NoNewLineSegmentImpl();
+		return noNewLineSegment;
 	}
 
 	/**

@@ -663,29 +663,32 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cCustomSegmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cHalfNewLineSegmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cNewLineSegmentParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cNoSpaceSegmentParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cPopSegmentParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cPostCommentSegmentParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cPreCommentSegmentParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cPushSegmentParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cSoftNewLineSegmentParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cSoftSpaceSegmentParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cStringSegmentParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
-		private final RuleCall cValueSegmentParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
-		private final RuleCall cWrapAnchorSegmentParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
-		private final RuleCall cWrapBeginAllSegmentParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
-		private final RuleCall cWrapBeginSomeSegmentParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
-		private final RuleCall cWrapEndSegmentParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
-		private final RuleCall cWrapHereSegmentParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
+		private final RuleCall cNoNewLineSegmentParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cNoSpaceSegmentParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cPopSegmentParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cPostCommentSegmentParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cPreCommentSegmentParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cPushSegmentParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cSoftNewLineSegmentParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cSoftSpaceSegmentParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cStringSegmentParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cValueSegmentParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		private final RuleCall cWrapAnchorSegmentParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
+		private final RuleCall cWrapBeginAllSegmentParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
+		private final RuleCall cWrapBeginSomeSegmentParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
+		private final RuleCall cWrapEndSegmentParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
+		private final RuleCall cWrapHereSegmentParserRuleCall_17 = (RuleCall)cAlternatives.eContents().get(17);
 
 		//Segment:
-		//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-		//    PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+		//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoNewLineSegment | NoSpaceSegment |
+		//    PopSegment | PostCommentSegment | PreCommentSegment | PushSegment |
+		//    SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
 		//    WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
 		@Override public ParserRule getRule() { return rule; }
 
-		//CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-		//PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+		//CustomSegment | HalfNewLineSegment | NewLineSegment | NoNewLineSegment | NoSpaceSegment |
+		//PopSegment | PostCommentSegment | PreCommentSegment | PushSegment |
+		//SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
 		//WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -698,47 +701,50 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//NewLineSegment
 		public RuleCall getNewLineSegmentParserRuleCall_2() { return cNewLineSegmentParserRuleCall_2; }
 
+		//NoNewLineSegment
+		public RuleCall getNoNewLineSegmentParserRuleCall_3() { return cNoNewLineSegmentParserRuleCall_3; }
+
 		//NoSpaceSegment
-		public RuleCall getNoSpaceSegmentParserRuleCall_3() { return cNoSpaceSegmentParserRuleCall_3; }
+		public RuleCall getNoSpaceSegmentParserRuleCall_4() { return cNoSpaceSegmentParserRuleCall_4; }
 
 		//PopSegment
-		public RuleCall getPopSegmentParserRuleCall_4() { return cPopSegmentParserRuleCall_4; }
+		public RuleCall getPopSegmentParserRuleCall_5() { return cPopSegmentParserRuleCall_5; }
 
 		//PostCommentSegment
-		public RuleCall getPostCommentSegmentParserRuleCall_5() { return cPostCommentSegmentParserRuleCall_5; }
+		public RuleCall getPostCommentSegmentParserRuleCall_6() { return cPostCommentSegmentParserRuleCall_6; }
 
 		//PreCommentSegment
-		public RuleCall getPreCommentSegmentParserRuleCall_6() { return cPreCommentSegmentParserRuleCall_6; }
+		public RuleCall getPreCommentSegmentParserRuleCall_7() { return cPreCommentSegmentParserRuleCall_7; }
 
 		//PushSegment
-		public RuleCall getPushSegmentParserRuleCall_7() { return cPushSegmentParserRuleCall_7; }
+		public RuleCall getPushSegmentParserRuleCall_8() { return cPushSegmentParserRuleCall_8; }
 
 		//SoftNewLineSegment
-		public RuleCall getSoftNewLineSegmentParserRuleCall_8() { return cSoftNewLineSegmentParserRuleCall_8; }
+		public RuleCall getSoftNewLineSegmentParserRuleCall_9() { return cSoftNewLineSegmentParserRuleCall_9; }
 
 		//SoftSpaceSegment
-		public RuleCall getSoftSpaceSegmentParserRuleCall_9() { return cSoftSpaceSegmentParserRuleCall_9; }
+		public RuleCall getSoftSpaceSegmentParserRuleCall_10() { return cSoftSpaceSegmentParserRuleCall_10; }
 
 		//StringSegment
-		public RuleCall getStringSegmentParserRuleCall_10() { return cStringSegmentParserRuleCall_10; }
+		public RuleCall getStringSegmentParserRuleCall_11() { return cStringSegmentParserRuleCall_11; }
 
 		//ValueSegment
-		public RuleCall getValueSegmentParserRuleCall_11() { return cValueSegmentParserRuleCall_11; }
+		public RuleCall getValueSegmentParserRuleCall_12() { return cValueSegmentParserRuleCall_12; }
 
 		//WrapAnchorSegment
-		public RuleCall getWrapAnchorSegmentParserRuleCall_12() { return cWrapAnchorSegmentParserRuleCall_12; }
+		public RuleCall getWrapAnchorSegmentParserRuleCall_13() { return cWrapAnchorSegmentParserRuleCall_13; }
 
 		//WrapBeginAllSegment
-		public RuleCall getWrapBeginAllSegmentParserRuleCall_13() { return cWrapBeginAllSegmentParserRuleCall_13; }
+		public RuleCall getWrapBeginAllSegmentParserRuleCall_14() { return cWrapBeginAllSegmentParserRuleCall_14; }
 
 		//WrapBeginSomeSegment
-		public RuleCall getWrapBeginSomeSegmentParserRuleCall_14() { return cWrapBeginSomeSegmentParserRuleCall_14; }
+		public RuleCall getWrapBeginSomeSegmentParserRuleCall_15() { return cWrapBeginSomeSegmentParserRuleCall_15; }
 
 		//WrapEndSegment
-		public RuleCall getWrapEndSegmentParserRuleCall_15() { return cWrapEndSegmentParserRuleCall_15; }
+		public RuleCall getWrapEndSegmentParserRuleCall_16() { return cWrapEndSegmentParserRuleCall_16; }
 
 		//WrapHereSegment
-		public RuleCall getWrapHereSegmentParserRuleCall_16() { return cWrapHereSegmentParserRuleCall_16; }
+		public RuleCall getWrapHereSegmentParserRuleCall_17() { return cWrapHereSegmentParserRuleCall_17; }
 	}
 	public class CustomSegmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.idioms.Idioms.CustomSegment");
@@ -800,6 +806,25 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 
 		//'new-line'
 		public Keyword getNewLineKeyword_1() { return cNewLineKeyword_1; }
+	}
+	public class NoNewLineSegmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.idioms.Idioms.NoNewLineSegment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cNoNewLineSegmentAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cNoNewLineKeyword_1 = (Keyword)cGroup.eContents().get(1);
+
+		//NoNewLineSegment:
+		//    {NoNewLineSegment} 'no-new-line';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{NoNewLineSegment} 'no-new-line'
+		public Group getGroup() { return cGroup; }
+
+		//{NoNewLineSegment}
+		public Action getNoNewLineSegmentAction_0() { return cNoNewLineSegmentAction_0; }
+
+		//'no-new-line'
+		public Keyword getNoNewLineKeyword_1() { return cNoNewLineKeyword_1; }
 	}
 	public class NoSpaceSegmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.idioms.Idioms.NoSpaceSegment");
@@ -1331,6 +1356,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final CustomSegmentElements pCustomSegment;
 	private final HalfNewLineSegmentElements pHalfNewLineSegment;
 	private final NewLineSegmentElements pNewLineSegment;
+	private final NoNewLineSegmentElements pNoNewLineSegment;
 	private final NoSpaceSegmentElements pNoSpaceSegment;
 	private final PopSegmentElements pPopSegment;
 	private final PostCommentSegmentElements pPostCommentSegment;
@@ -1380,6 +1406,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pCustomSegment = new CustomSegmentElements();
 		this.pHalfNewLineSegment = new HalfNewLineSegmentElements();
 		this.pNewLineSegment = new NewLineSegmentElements();
+		this.pNoNewLineSegment = new NoNewLineSegmentElements();
 		this.pNoSpaceSegment = new NoSpaceSegmentElements();
 		this.pPopSegment = new PopSegmentElements();
 		this.pPostCommentSegment = new PostCommentSegmentElements();
@@ -1580,8 +1607,9 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//Segment:
-	//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-	//    PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+	//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoNewLineSegment | NoSpaceSegment |
+	//    PopSegment | PostCommentSegment | PreCommentSegment | PushSegment |
+	//    SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
 	//    WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
 	public SegmentElements getSegmentAccess() {
 		return pSegment;
@@ -1619,6 +1647,16 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 
 	public ParserRule getNewLineSegmentRule() {
 		return getNewLineSegmentAccess().getRule();
+	}
+
+	//NoNewLineSegment:
+	//    {NoNewLineSegment} 'no-new-line';
+	public NoNewLineSegmentElements getNoNewLineSegmentAccess() {
+		return pNoNewLineSegment;
+	}
+
+	public ParserRule getNoNewLineSegmentRule() {
+		return getNoNewLineSegmentAccess().getRule();
 	}
 
 	//NoSpaceSegment:

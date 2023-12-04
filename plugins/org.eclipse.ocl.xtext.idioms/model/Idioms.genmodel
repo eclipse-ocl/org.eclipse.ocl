@@ -72,6 +72,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Idioms.ecore#//LocatorDeclaration/owningIdiomsModel"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//NewLineSegment"/>
+    <genClasses ecoreClass="Idioms.ecore#//NoNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//NoSpaceSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//PopSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//PostCommentSegment"/>

@@ -55,7 +55,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		}
 
 		@Override
-		public String toString() {
+		public @NonNull String toString() {
 			return element.toString();
 		}
 	}

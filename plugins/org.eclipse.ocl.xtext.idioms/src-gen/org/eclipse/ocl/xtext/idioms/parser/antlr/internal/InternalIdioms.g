@@ -1163,11 +1163,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_3());
+			newCompositeNode(grammarAccess.getSegmentAccess().getNoNewLineSegmentParserRuleCall_3());
 		}
-		this_NoSpaceSegment_3=ruleNoSpaceSegment
+		this_NoNewLineSegment_3=ruleNoNewLineSegment
 		{
-			$current = $this_NoSpaceSegment_3.current;
+			$current = $this_NoNewLineSegment_3.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1175,11 +1175,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_4());
+			newCompositeNode(grammarAccess.getSegmentAccess().getNoSpaceSegmentParserRuleCall_4());
 		}
-		this_PopSegment_4=rulePopSegment
+		this_NoSpaceSegment_4=ruleNoSpaceSegment
 		{
-			$current = $this_PopSegment_4.current;
+			$current = $this_NoSpaceSegment_4.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1187,11 +1187,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_5());
+			newCompositeNode(grammarAccess.getSegmentAccess().getPopSegmentParserRuleCall_5());
 		}
-		this_PostCommentSegment_5=rulePostCommentSegment
+		this_PopSegment_5=rulePopSegment
 		{
-			$current = $this_PostCommentSegment_5.current;
+			$current = $this_PopSegment_5.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1199,11 +1199,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_6());
+			newCompositeNode(grammarAccess.getSegmentAccess().getPostCommentSegmentParserRuleCall_6());
 		}
-		this_PreCommentSegment_6=rulePreCommentSegment
+		this_PostCommentSegment_6=rulePostCommentSegment
 		{
-			$current = $this_PreCommentSegment_6.current;
+			$current = $this_PostCommentSegment_6.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1211,11 +1211,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_7());
+			newCompositeNode(grammarAccess.getSegmentAccess().getPreCommentSegmentParserRuleCall_7());
 		}
-		this_PushSegment_7=rulePushSegment
+		this_PreCommentSegment_7=rulePreCommentSegment
 		{
-			$current = $this_PushSegment_7.current;
+			$current = $this_PreCommentSegment_7.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1223,11 +1223,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_8());
+			newCompositeNode(grammarAccess.getSegmentAccess().getPushSegmentParserRuleCall_8());
 		}
-		this_SoftNewLineSegment_8=ruleSoftNewLineSegment
+		this_PushSegment_8=rulePushSegment
 		{
-			$current = $this_SoftNewLineSegment_8.current;
+			$current = $this_PushSegment_8.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1235,11 +1235,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_9());
+			newCompositeNode(grammarAccess.getSegmentAccess().getSoftNewLineSegmentParserRuleCall_9());
 		}
-		this_SoftSpaceSegment_9=ruleSoftSpaceSegment
+		this_SoftNewLineSegment_9=ruleSoftNewLineSegment
 		{
-			$current = $this_SoftSpaceSegment_9.current;
+			$current = $this_SoftNewLineSegment_9.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1247,11 +1247,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_10());
+			newCompositeNode(grammarAccess.getSegmentAccess().getSoftSpaceSegmentParserRuleCall_10());
 		}
-		this_StringSegment_10=ruleStringSegment
+		this_SoftSpaceSegment_10=ruleSoftSpaceSegment
 		{
-			$current = $this_StringSegment_10.current;
+			$current = $this_SoftSpaceSegment_10.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1259,11 +1259,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_11());
+			newCompositeNode(grammarAccess.getSegmentAccess().getStringSegmentParserRuleCall_11());
 		}
-		this_ValueSegment_11=ruleValueSegment
+		this_StringSegment_11=ruleStringSegment
 		{
-			$current = $this_ValueSegment_11.current;
+			$current = $this_StringSegment_11.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1271,11 +1271,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_12());
+			newCompositeNode(grammarAccess.getSegmentAccess().getValueSegmentParserRuleCall_12());
 		}
-		this_WrapAnchorSegment_12=ruleWrapAnchorSegment
+		this_ValueSegment_12=ruleValueSegment
 		{
-			$current = $this_WrapAnchorSegment_12.current;
+			$current = $this_ValueSegment_12.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1283,11 +1283,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_13());
+			newCompositeNode(grammarAccess.getSegmentAccess().getWrapAnchorSegmentParserRuleCall_13());
 		}
-		this_WrapBeginAllSegment_13=ruleWrapBeginAllSegment
+		this_WrapAnchorSegment_13=ruleWrapAnchorSegment
 		{
-			$current = $this_WrapBeginAllSegment_13.current;
+			$current = $this_WrapAnchorSegment_13.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1295,11 +1295,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_14());
+			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginAllSegmentParserRuleCall_14());
 		}
-		this_WrapBeginSomeSegment_14=ruleWrapBeginSomeSegment
+		this_WrapBeginAllSegment_14=ruleWrapBeginAllSegment
 		{
-			$current = $this_WrapBeginSomeSegment_14.current;
+			$current = $this_WrapBeginAllSegment_14.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1307,11 +1307,11 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_15());
+			newCompositeNode(grammarAccess.getSegmentAccess().getWrapBeginSomeSegmentParserRuleCall_15());
 		}
-		this_WrapEndSegment_15=ruleWrapEndSegment
+		this_WrapBeginSomeSegment_15=ruleWrapBeginSomeSegment
 		{
-			$current = $this_WrapEndSegment_15.current;
+			$current = $this_WrapBeginSomeSegment_15.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1319,11 +1319,23 @@ ruleSegment returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_16());
+			newCompositeNode(grammarAccess.getSegmentAccess().getWrapEndSegmentParserRuleCall_16());
 		}
-		this_WrapHereSegment_16=ruleWrapHereSegment
+		this_WrapEndSegment_16=ruleWrapEndSegment
 		{
-			$current = $this_WrapHereSegment_16.current;
+			$current = $this_WrapEndSegment_16.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getSegmentAccess().getWrapHereSegmentParserRuleCall_17());
+		}
+		this_WrapHereSegment_17=ruleWrapHereSegment
+		{
+			$current = $this_WrapHereSegment_17.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -1432,6 +1444,39 @@ ruleNewLineSegment returns [EObject current=null]
 		otherlv_1='new-line'
 		{
 			newLeafNode(otherlv_1, grammarAccess.getNewLineSegmentAccess().getNewLineKeyword_1());
+		}
+	)
+;
+
+// Entry rule entryRuleNoNewLineSegment
+entryRuleNoNewLineSegment returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getNoNewLineSegmentRule()); }
+	iv_ruleNoNewLineSegment=ruleNoNewLineSegment
+	{ $current=$iv_ruleNoNewLineSegment.current; }
+	EOF;
+
+// Rule NoNewLineSegment
+ruleNoNewLineSegment returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getNoNewLineSegmentAccess().getNoNewLineSegmentAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='no-new-line'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getNoNewLineSegmentAccess().getNoNewLineKeyword_1());
 		}
 	)
 ;

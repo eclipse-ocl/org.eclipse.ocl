@@ -87,7 +87,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getSegment()
 	 * @generated
 	 */
-	int SEGMENT = 25;
+	int SEGMENT = 26;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.LocatorImpl <em>Locator</em>}' class.
@@ -230,6 +230,16 @@ public interface IdiomsPackage
 	int NEW_LINE_SEGMENT = 15;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.NoNewLineSegmentImpl <em>No New Line Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.idioms.impl.NoNewLineSegmentImpl
+	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getNoNewLineSegment()
+	 * @generated
+	 */
+	int NO_NEW_LINE_SEGMENT = 16;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -237,7 +247,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getNoSpaceSegment()
 	 * @generated
 	 */
-	int NO_SPACE_SEGMENT = 16;
+	int NO_SPACE_SEGMENT = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.PopSegmentImpl <em>Pop Segment</em>}' class.
@@ -247,7 +257,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getPopSegment()
 	 * @generated
 	 */
-	int POP_SEGMENT = 17;
+	int POP_SEGMENT = 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.ReferredLocatorImpl <em>Referred Locator</em>}' class.
@@ -257,7 +267,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getReferredLocator()
 	 * @generated
 	 */
-	int REFERRED_LOCATOR = 21;
+	int REFERRED_LOCATOR = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.ReferredSegmentImpl <em>Referred Segment</em>}' class.
@@ -267,7 +277,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getReferredSegment()
 	 * @generated
 	 */
-	int REFERRED_SEGMENT = 22;
+	int REFERRED_SEGMENT = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.ReturnsLocatorImpl <em>Returns Locator</em>}' class.
@@ -277,7 +287,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getReturnsLocator()
 	 * @generated
 	 */
-	int RETURNS_LOCATOR = 23;
+	int RETURNS_LOCATOR = 24;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.RuleLocatorImpl <em>Rule Locator</em>}' class.
@@ -287,7 +297,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getRuleLocator()
 	 * @generated
 	 */
-	int RULE_LOCATOR = 24;
+	int RULE_LOCATOR = 25;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.PushSegmentImpl <em>Push Segment</em>}' class.
@@ -297,7 +307,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getPushSegment()
 	 * @generated
 	 */
-	int PUSH_SEGMENT = 20;
+	int PUSH_SEGMENT = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.SegmentDeclarationImpl <em>Segment Declaration</em>}' class.
@@ -307,7 +317,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getSegmentDeclaration()
 	 * @generated
 	 */
-	int SEGMENT_DECLARATION = 26;
+	int SEGMENT_DECLARATION = 27;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
@@ -317,7 +327,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getSoftNewLineSegment()
 	 * @generated
 	 */
-	int SOFT_NEW_LINE_SEGMENT = 27;
+	int SOFT_NEW_LINE_SEGMENT = 28;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.SoftSpaceSegmentImpl <em>Soft Space Segment</em>}' class.
@@ -327,7 +337,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getSoftSpaceSegment()
 	 * @generated
 	 */
-	int SOFT_SPACE_SEGMENT = 28;
+	int SOFT_SPACE_SEGMENT = 29;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.StringSegmentImpl <em>String Segment</em>}' class.
@@ -337,7 +347,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getStringSegment()
 	 * @generated
 	 */
-	int STRING_SEGMENT = 29;
+	int STRING_SEGMENT = 30;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.HalfNewLineSegmentImpl <em>Half New Line Segment</em>}' class.
@@ -357,7 +367,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getPostCommentSegment()
 	 * @generated
 	 */
-	int POST_COMMENT_SEGMENT = 18;
+	int POST_COMMENT_SEGMENT = 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.PreCommentSegmentImpl <em>Pre Comment Segment</em>}' class.
@@ -367,7 +377,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getPreCommentSegment()
 	 * @generated
 	 */
-	int PRE_COMMENT_SEGMENT = 19;
+	int PRE_COMMENT_SEGMENT = 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.SubIdiomImpl <em>Sub Idiom</em>}' class.
@@ -377,7 +387,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getSubIdiom()
 	 * @generated
 	 */
-	int SUB_IDIOM = 30;
+	int SUB_IDIOM = 31;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.ValueSegmentImpl <em>Value Segment</em>}' class.
@@ -387,7 +397,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getValueSegment()
 	 * @generated
 	 */
-	int VALUE_SEGMENT = 31;
+	int VALUE_SEGMENT = 32;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.WrapAnchorSegmentImpl <em>Wrap Anchor Segment</em>}' class.
@@ -397,7 +407,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getWrapAnchorSegment()
 	 * @generated
 	 */
-	int WRAP_ANCHOR_SEGMENT = 32;
+	int WRAP_ANCHOR_SEGMENT = 33;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.WrapBeginSomeSegmentImpl <em>Wrap Begin Some Segment</em>}' class.
@@ -407,7 +417,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getWrapBeginSomeSegment()
 	 * @generated
 	 */
-	int WRAP_BEGIN_SOME_SEGMENT = 33;
+	int WRAP_BEGIN_SOME_SEGMENT = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.WrapBeginAllSegmentImpl <em>Wrap Begin All Segment</em>}' class.
@@ -417,7 +427,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getWrapBeginAllSegment()
 	 * @generated
 	 */
-	int WRAP_BEGIN_ALL_SEGMENT = 34;
+	int WRAP_BEGIN_ALL_SEGMENT = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.WrapEndSegmentImpl <em>Wrap End Segment</em>}' class.
@@ -427,7 +437,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getWrapEndSegment()
 	 * @generated
 	 */
-	int WRAP_END_SEGMENT = 35;
+	int WRAP_END_SEGMENT = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.idioms.impl.WrapHereSegmentImpl <em>Wrap Here Segment</em>}' class.
@@ -437,7 +447,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getWrapHereSegment()
 	 * @generated
 	 */
-	int WRAP_HERE_SEGMENT = 36;
+	int WRAP_HERE_SEGMENT = 37;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.idioms.AnyAssignmentLocator <em>Any Assignment Locator</em>}'.
@@ -917,6 +927,16 @@ public interface IdiomsPackage
 	 * @generated
 	 */
 	EClass getNewLineSegment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.idioms.NoNewLineSegment <em>No New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>No New Line Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.idioms.NoNewLineSegment
+	 * @generated
+	 */
+	EClass getNoNewLineSegment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.idioms.NoSpaceSegment <em>No Space Segment</em>}'.
@@ -1729,6 +1749,16 @@ public interface IdiomsPackage
 		 * @generated
 		 */
 		EClass NEW_LINE_SEGMENT = eINSTANCE.getNewLineSegment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.idioms.impl.NoNewLineSegmentImpl <em>No New Line Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.idioms.impl.NoNewLineSegmentImpl
+		 * @see org.eclipse.ocl.xtext.idioms.impl.IdiomsPackageImpl#getNoNewLineSegment()
+		 * @generated
+		 */
+		EClass NO_NEW_LINE_SEGMENT = eINSTANCE.getNoNewLineSegment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
