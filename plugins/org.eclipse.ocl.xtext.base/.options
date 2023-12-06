@@ -12,7 +12,10 @@ org.eclipse.ocl.xtext.base/continuation=false
 # Turn on debug retry of failed lookups
 org.eclipse.ocl.xtext.base/debug/retry=false
 
-# Turn on tracing of each fragment contributing to frormatting
+# Turn on tracing of each node/semanticElement/grammarElement contributing to formatting
+org.eclipse.ocl.xtext.base/formatter/elements=false
+
+# Turn on tracing of each fragment contributing to formatting
 org.eclipse.ocl.xtext.base/formatter/fragments=false
 
 # Turn on tracing of each segment concatenated by the serializer

@@ -12,15 +12,19 @@ package org.eclipse.ocl.xtext.base.serializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
@@ -33,6 +37,7 @@ import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.formatting.impl.AbstractNodeModelFormatter;
@@ -44,6 +49,7 @@ import org.eclipse.xtext.nodemodel.impl.RootNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.Strings;
 
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
 /**
@@ -53,6 +59,7 @@ import com.google.inject.Inject;
  */
 public class DeclarativeFormatter extends AbstractNodeModelFormatter
 {
+	public static final @NonNull TracingOption FORMATTER_ELEMENTS = new TracingOption(BasePlugin.PLUGIN_ID, "formatter/elements");
 	public static final @NonNull TracingOption FORMATTER_FRAGMENTS = new TracingOption(BasePlugin.PLUGIN_ID, "formatter/fragments");
 
 	enum Darkness {
@@ -110,6 +117,47 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 		@Override
 		public @NonNull String toString() {
 			return lineNumber + ":" + columnNumber;
+		}
+	}
+
+	/**
+	 * ReAction helps co-ordinate the compensation for a current = action.
+	 *
+	 * The 'Action' composite node needs to use the Assignment from its child to the semantic element of its parent.
+	 * The child composite node uses the Action's feature to assign to its child semantic element.
+	 */
+	protected static class ReAction
+	{
+		protected final @NonNull EObject parentSemanticElement;
+		protected final @NonNull EObject semanticElement;
+		protected final @NonNull Action action;
+		protected final @NonNull EStructuralFeature eActionFeature;
+		private /*@LazyNonNull*/ Assignment assignment;
+		private /*@LazyNonNull*/ EStructuralFeature eAssignmentFeature;
+
+		public ReAction(@NonNull EObject parentSemanticElement, @NonNull EObject semanticElement, @NonNull Action action) {
+			this.parentSemanticElement = parentSemanticElement;
+			this.semanticElement = semanticElement;
+			this.action = action;
+			this.eActionFeature = SerializationUtils.getEStructuralFeature(action);
+			EClass eClass = eActionFeature.getEContainingClass();
+			assert eClass.isInstance(semanticElement);
+		}
+
+		public @NonNull Action getAction() {
+			return action;
+		}
+
+		public @NonNull Assignment getAssignment() {
+			assert assignment != null;
+			return assignment;
+		}
+
+		public void setAssignment(Assignment assignment) {
+			this.assignment = assignment;
+			this.eAssignmentFeature = SerializationUtils.getEStructuralFeature(assignment);
+			EClass eClass = eAssignmentFeature.getEContainingClass();
+			assert eClass.isInstance(parentSemanticElement);
 		}
 	}
 
@@ -630,6 +678,7 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 	private int extendedSelectEnd;			// Index within the rootText of the end of the extended selected range.
 	private Boundary start;
 	private Boundary end;
+	private @Nullable Map<@NonNull EObject, @NonNull ReAction> semanticElement2reAction = null;		// Action compensations
 
 	private @NonNull Boundary createEndBoundary(@NonNull ICompositeNode rootNode, int selectIndex) {
 		assert selectIndex <= rootNode.getTotalEndOffset();
@@ -745,22 +794,43 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		return new FormattedRegion(selectStart, selectEnd - selectStart, newNewText);
 	}
 
-	protected void formatCompositeNode(final @NonNull ICompositeNode compositeNode, final int indent) {
-		boolean isTracing = FORMATTER_FRAGMENTS.isActive();
+	protected void formatCompositeNode(final @NonNull ICompositeNode compositeNode) {
+		boolean isTracingElements = FORMATTER_ELEMENTS.isActive();
+		boolean isTracingFragments = FORMATTER_FRAGMENTS.isActive();
 		String text = compositeNode.getText();
 		assert text != null;
 		EObject semanticElement = compositeNode.getSemanticElement();
 		assert semanticElement != null;
-		if (semanticElement.eClass().getName().equals("MappingCS")) {
-			getClass();		// XXX
-		}
 		AbstractElement formattedGrammarElement = getFormattedGrammarElement(compositeNode);
+		if (isTracingElements) {
+			StringBuilder s = new StringBuilder();
+			s.append(modelAnalysis.getIndent());
+			s.append(compositeNode.getClass().getSimpleName());
+			s.append(" - \"");
+			s.append(LabelUtil.getLabel(semanticElement));
+			s.append("\":");
+			s.append(NameUtil.debugSimpleName(semanticElement));
+			s.append(" - ");
+			s.append(LabelUtil.getLabel(formattedGrammarElement));
+			s.append("@");
+			s.append(Integer.toHexString(System.identityHashCode(formattedGrammarElement)));
+			s.append(" ");
+			if (formattedGrammarElement instanceof Assignment) {
+				s.append(((Assignment)formattedGrammarElement).getFeature());
+				s.append(((Assignment)formattedGrammarElement).getOperator());
+			}
+			else if (formattedGrammarElement instanceof RuleCall) {
+				s.append(((RuleCall)formattedGrammarElement).getRule().getName());
+				s.append(":");
+			}
+			s.append("'");
+			s.append(StringUtil.convertToOCLString(text ));
+			s.append("'");
+			FORMATTER_ELEMENTS.println(s.toString());
+		}
 		EList<?> assignedCollection = getAssignedCollection(compositeNode);
 		UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(compositeNode, formattedGrammarElement, semanticElement);
-		if (isTracing) {
-			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "composite: " + semanticElement.eClass().getName() + " \"" + LabelUtil.getLabel(semanticElement) + "\" " + LabelUtil.getLabel(formattedGrammarElement) + " '" + StringUtil.convertToOCLString(text )+ "'");
-			modelAnalysis.pushDepth();
-		}
+		modelAnalysis.pushDepth();
 //		System.out.println(getIndent(indent) + "formatCompositeNode compositeNode: " + compositeNode.getTotalOffset() + "-" + compositeNode.getOffset() + " .. " +  + compositeNode.getEndOffset() + "-" + compositeNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(compositeNode) + " '" + Strings.convertToJavaString(text) + "'");
 		//
 		//	Different previous assigned collection requires outer head formatting.
@@ -781,21 +851,21 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 				if ((assignedCollection == null) || (assignedCollection != prevAssignedCollection)) {
 					boolean isFormatting = isFormatting(firstChild);
 					@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
-					if (isTracing) {
+					if (isTracingFragments) {
 //						StringBuilder s = new StringBuilder();
 //						Arrays.t
-//						s.append(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+//						s.append(modelAnalysis.getIndent() + "outer: " + formattingSegment);
 //						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
-						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()-1) + " outers: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(outerFormattingSegments));
+						FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent(-1) + " outers: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(outerFormattingSegments));
 					}
-				//	FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + " " + LabelUtil.getLabel(compoundedGrammarElement) + " " + outerFormattingSegments);
+				//	FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + " " + LabelUtil.getLabel(compoundedGrammarElement) + " " + outerFormattingSegments);
 					for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
 						if (formattingSegment.isValue()) {
 							break;
 						}
 						if (isFormatting || formattingSegment.isControl()) {					// PUSH/POP even when not started
-							if (isTracing) {
-								FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+							if (isTracingFragments) {
+								FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "outer: " + formattingSegment);
 							}
 							formattingSegment.format(elementFormatter, serializationBuilder);
 						}
@@ -815,25 +885,47 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 			}
 		}
 		@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
-		if (isTracing) {
-			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
-			modelAnalysis.pushDepth();
+		if (isTracingFragments) {
+			FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
 		}
+		modelAnalysis.pushDepth();
 		for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
 			if (formattingSegment.isValue()) {
 				//	hasValue = true;
+			//	Assignment childAssignment = null;
 				for (@NonNull INode childNode : SerializationUtils.getChildren(compositeNode)) {
+				/*	if (childAssignment != null) {
+						System.out.println(modelAnalysis.getIndent() + "Premature assignment tail for " +
+							childAssignment.getFeature() + childAssignment.getOperator() +
+							"'" + Strings.convertToJavaString(text) + "'");
+					} */
 					if (isEpilog(childNode)) {
 						break;
 					}
-					if (isTracing) {
-						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
-						modelAnalysis.pushDepth();
+					if (isTracingFragments) {
+						FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "inner: " + formattingSegment);
 					}
-					formatNode(childNode, indent + 1);
-					if (isTracing) {
-						modelAnalysis.popDepth();
+					modelAnalysis.pushDepth();
+				//	EObject grammarElement = childNode.getGrammarElement();
+				//	assert grammarElement != null;
+				//	assert !(grammarElement instanceof CompoundElement);
+					if (childNode instanceof ICompositeNode) {
+						/*Assignment nodeAssignment =*/ formatCompositeNode((ICompositeNode)childNode);
+					//	if ((nodeAssignment != null) && (childAssignment == null)){
+					//		//	assert childAssignment == null;
+					//			childAssignment = nodeAssignment;
+					//		}
 					}
+					else {
+						ILeafNode leafNode = (ILeafNode)childNode;
+						if (leafNode.isHidden()) {
+							formatHiddenLeafNode(leafNode);
+						}
+						else {
+							formatLeafNode(leafNode);
+						}
+					}
+					modelAnalysis.popDepth();
 				//	int totalOffset = childNode.getTotalOffset();
 				//	boolean hasEnded = selectEnd <= totalOffset;
 				//	if (hasEnded) { //(childNode)) {
@@ -842,15 +934,13 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 				}
 			}
 			else if ((!hasProlog && isFormatting) || formattingSegment.isControl()) {		// only if >= VALUE
-				if (isTracing) {
-					FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
+				if (isTracingFragments) {
+					FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "inner: " + formattingSegment);
 				}
 				formattingSegment.format(elementFormatter, serializationBuilder);
 			}
 		}
-		if (isTracing) {
-			modelAnalysis.popDepth();
-		}
+		modelAnalysis.popDepth();
 		//
 		//	Different next assigned collection requires outer tail formatting.
 		//
@@ -871,19 +961,18 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 					}
 				}
 				else if (isFormatting || formattingSegment.isControl()) {
-					if (isTracing) {
-						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "outer: " + formattingSegment);
+					if (isTracingFragments) {
+						FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "outer: " + formattingSegment);
 					}
 					formattingSegment.format(elementFormatter, serializationBuilder);
 				}
 			}
 		}
-		if (isTracing) {
-			modelAnalysis.popDepth();
-		}
+		modelAnalysis.popDepth();
 	}
 
-	protected void formatDocumentationNode(@NonNull ILeafNode leafNode, int indent) {
+	protected void formatDocumentationNode(@NonNull ILeafNode leafNode) {
+		assert leafNode.isHidden();
 		CommentSegmentSupport commentSegmentSupport = modelAnalysis.getCommentSegmentSupport();
 		if (commentSegmentSupport != null) {
 			String body = ElementUtil.getCommentBody(leafNode);
@@ -891,106 +980,150 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		}
 	}
 
-	protected void formatLeafNode(@NonNull ILeafNode leafNode, int indent) {
-		boolean isTracing = FORMATTER_FRAGMENTS.isActive();
+	protected void formatHiddenLeafNode(@NonNull ILeafNode leafNode) {
+		assert leafNode.isHidden();
+		boolean isTracingElements = FORMATTER_ELEMENTS.isActive();
+		boolean isTracingFragments = FORMATTER_FRAGMENTS.isActive();
 		String text = leafNode.getText();
 		assert text != null;
 //		System.out.println(getIndent(indent) + "formatLeafNode compositeNode: " + leafNode.getTotalOffset() + "-" + leafNode.getOffset() + " .. " +  + leafNode.getEndOffset() + "-" + leafNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(leafNode) + " '" + Strings.convertToJavaString(text) + "'");
-		if (isTracing) {
-			FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "leaf: '" + StringUtil.convertToOCLString(leafNode.getText())+ "'");
+		EObject semanticElement = leafNode.getSemanticElement();
+		EObject grammarElement = leafNode.getGrammarElement();
+		assert grammarElement instanceof TerminalRule;
+		if (isTracingElements) {
+			StringBuilder s = new StringBuilder();
+			s.append(modelAnalysis.getIndent());
+			s.append(leafNode.getClass().getSimpleName());
+			s.append(" - \"");
+			s.append(LabelUtil.getLabel(semanticElement));
+			s.append("\":");
+			s.append(NameUtil.debugSimpleName(semanticElement));
+			s.append(" - ");
+			s.append(LabelUtil.getLabel(grammarElement));
+			s.append("@");
+			s.append(Integer.toHexString(System.identityHashCode(grammarElement)));
+			s.append(" ");
+			s.append(((TerminalRule)grammarElement).getName());
+			s.append(":");
+			s.append("'");
+			s.append(StringUtil.convertToOCLString(text ));
+			s.append("'");
+			FORMATTER_ELEMENTS.println(s.toString());
 		}
-		if (!leafNode.isHidden()) {
-			EObject semanticElement = leafNode.getSemanticElement();
-			assert semanticElement != null;
-			AbstractElement formattedGrammarElement = getFormattedGrammarElement(leafNode);
-			UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(leafNode, formattedGrammarElement, semanticElement);
-			//
-			//	Different previous grammar element requires outer head formatting.
-			//
-			for (INode prevSibling = leafNode.getPreviousSibling(); (prevSibling == null) || (prevSibling instanceof ILeafNode); prevSibling = prevSibling.getPreviousSibling()) {
-				if ((prevSibling == null) || !((ILeafNode)prevSibling).isHidden()) {
-					AbstractElement prevCompoundedGrammarElement = prevSibling != null ? getFormattedGrammarElement(prevSibling) : null;
-					if (formattedGrammarElement != prevCompoundedGrammarElement) {
-						@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
-						for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
-							if (formattingSegment.isValue()) {
-								break;
-							}
-							formattingSegment.format(elementFormatter, serializationBuilder);
-						}
-					}
-					break;
-				}
-			}
-			//
-			//	Inner formatting of the specific node.
-			//
-			boolean isFormatting = isFormatting(leafNode);
-			@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
-			if (isTracing) {
-				FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
-				modelAnalysis.pushDepth();
-			}
-			for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
-				if (isFormatting || formattingSegment.isControl()) {					// PUSH/POP even when not started
-					if (isTracing) {
-						FORMATTER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "inner: " + formattingSegment);
-					}
-					formattingSegment.format(elementFormatter, serializationBuilder);
-					if (formattingSegment.isValue()) {				// no point tracking the less stable hidden nodes
-						int index = serializationBuilder.length();
-						start.setLeafNodeAt(leafNode, index);
-						end.setLeafNodeAt(leafNode, index);
-					}
-				}
-			}
-			if (isTracing) {
-				modelAnalysis.popDepth();
-			}
-			//
-			//	Different next grammar element requires outer tail formatting.
-			//
-			for (INode nextSibling = leafNode.getNextSibling(); (nextSibling == null) || (nextSibling instanceof ILeafNode); nextSibling = nextSibling.getNextSibling()) {
-				if ((nextSibling == null) || !((ILeafNode)nextSibling).isHidden()) {
-					AbstractElement nextFormattedGrammarElement = nextSibling != null ? getFormattedGrammarElement(nextSibling) : null;
-					if (formattedGrammarElement != nextFormattedGrammarElement) {
-						boolean isTail = false;
-						@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
-						for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
-							if (!isTail) {
-								if (formattingSegment.isValue()) {
-									isTail = true;;
-								}
-							}
-							else {
-								formattingSegment.format(elementFormatter, serializationBuilder);
-							}
-						}
-					}
-					break;
-				}
-			}
+		if (isTracingFragments) {
+			FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "leaf: '" + StringUtil.convertToOCLString(leafNode.getText())+ "'");
+		}
+		if (isDocumentation(leafNode)){
+			formatDocumentationNode(leafNode);
 		}
 	}
 
-	protected void formatNode(@NonNull INode childNode, int indent) {
-		EObject grammarElement = childNode.getGrammarElement();
-		assert grammarElement != null;
-		assert !(grammarElement instanceof CompoundElement);
-		if (childNode instanceof ICompositeNode) {
-			formatCompositeNode((ICompositeNode)childNode, indent);
+	protected void formatLeafNode(@NonNull ILeafNode leafNode) {
+		assert !leafNode.isHidden();
+		boolean isTracingElements = FORMATTER_ELEMENTS.isActive();
+		boolean isTracingFragments = FORMATTER_FRAGMENTS.isActive();
+		String text = leafNode.getText();
+		assert text != null;
+//		System.out.println(getIndent(indent) + "formatLeafNode compositeNode: " + leafNode.getTotalOffset() + "-" + leafNode.getOffset() + " .. " +  + leafNode.getEndOffset() + "-" + leafNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(leafNode) + " '" + Strings.convertToJavaString(text) + "'");
+		EObject semanticElement = leafNode.getSemanticElement();
+		EObject grammarElement = leafNode.getGrammarElement();
+	//	assert grammarElement instanceof TerminalRule;
+		AbstractElement formattedGrammarElement = getFormattedGrammarElement(leafNode);
+		if (isTracingElements) {
+			StringBuilder s = new StringBuilder();
+			s.append(modelAnalysis.getIndent());
+			s.append(leafNode.getClass().getSimpleName());
+			s.append(" - \"");
+			s.append(LabelUtil.getLabel(semanticElement));
+			s.append("\":");
+			s.append(NameUtil.debugSimpleName(semanticElement));
+			s.append(" - ");
+			s.append(LabelUtil.getLabel(formattedGrammarElement));
+			s.append("@");
+			s.append(Integer.toHexString(System.identityHashCode(formattedGrammarElement)));
+			s.append(" ");
+			if (formattedGrammarElement instanceof Assignment) {
+				s.append(((Assignment)formattedGrammarElement).getFeature());
+				s.append(((Assignment)formattedGrammarElement).getOperator());
+			}
+			else if (formattedGrammarElement instanceof RuleCall) {
+				s.append(((RuleCall)formattedGrammarElement).getRule().getName());
+				s.append(":");
+			}
+			s.append("'");
+			s.append(StringUtil.convertToOCLString(text ));
+			s.append("'");
+			FORMATTER_ELEMENTS.println(s.toString());
 		}
-		else {
-			ILeafNode leafNode = (ILeafNode)childNode;
-			if (!leafNode.isHidden()) {
-				formatLeafNode(leafNode, indent);
+		if (isTracingFragments) {
+			FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "leaf: '" + StringUtil.convertToOCLString(leafNode.getText())+ "'");
+		}
+	//	EObject semanticElement = leafNode.getSemanticElement();
+		assert semanticElement != null;
+	//	AbstractElement formattedGrammarElement = getFormattedGrammarElement(leafNode);
+		UserElementFormatter elementFormatter = modelAnalysis.createUserElementFormatter(leafNode, formattedGrammarElement, semanticElement);
+		//
+		//	Different previous grammar element requires outer head formatting.
+		//
+		for (INode prevSibling = leafNode.getPreviousSibling(); (prevSibling == null) || (prevSibling instanceof ILeafNode); prevSibling = prevSibling.getPreviousSibling()) {
+			if ((prevSibling == null) || !((ILeafNode)prevSibling).isHidden()) {
+				AbstractElement prevCompoundedGrammarElement = prevSibling != null ? getFormattedGrammarElement(prevSibling) : null;
+				if (formattedGrammarElement != prevCompoundedGrammarElement) {
+					@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
+					for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
+						if (formattingSegment.isValue()) {
+							break;
+						}
+						formattingSegment.format(elementFormatter, serializationBuilder);
+					}
+				}
+				break;
 			}
-			else if (isDocumentation(leafNode)){
-				formatDocumentationNode(leafNode, indent);
+		}
+		//
+		//	Inner formatting of the specific node.
+		//
+		boolean isFormatting = isFormatting(leafNode);
+		@NonNull SerializationSegment[] innerFormattingSegments = elementFormatter.getInnerFormattingSegments();
+		if (isTracingFragments) {
+			FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "inners: " + debugContext(semanticElement, formattedGrammarElement) + " " + Arrays.toString(innerFormattingSegments));
+		}
+		modelAnalysis.pushDepth();
+		for (@NonNull SerializationSegment formattingSegment : innerFormattingSegments) {
+			if (isFormatting || formattingSegment.isControl()) {					// PUSH/POP even when not started
+				if (isTracingFragments) {
+					FORMATTER_FRAGMENTS.println(modelAnalysis.getIndent() + "inner: " + formattingSegment);
+				}
+				formattingSegment.format(elementFormatter, serializationBuilder);
+				if (formattingSegment.isValue()) {				// no point tracking the less stable hidden nodes
+					int index = serializationBuilder.length();
+					start.setLeafNodeAt(leafNode, index);
+					end.setLeafNodeAt(leafNode, index);
+				}
 			}
-			else {
-	//			String childNodeText = childNode.getText();
-	//			System.out.println(getIndent(indent) + "formatNode childNode: " + childNode.getTotalOffset() + "-" + childNode.getOffset() + " .. " +  + childNode.getEndOffset() + "-" + childNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(childNode) + " '" + Strings.convertToJavaString(childNodeText) + "'");
+		}
+		modelAnalysis.popDepth();
+		//
+		//	Different next grammar element requires outer tail formatting.
+		//
+		for (INode nextSibling = leafNode.getNextSibling(); (nextSibling == null) || (nextSibling instanceof ILeafNode); nextSibling = nextSibling.getNextSibling()) {
+			if ((nextSibling == null) || !((ILeafNode)nextSibling).isHidden()) {
+				AbstractElement nextFormattedGrammarElement = nextSibling != null ? getFormattedGrammarElement(nextSibling) : null;
+				if (formattedGrammarElement != nextFormattedGrammarElement) {
+					boolean isTail = false;
+					@NonNull SerializationSegment [] outerFormattingSegments = elementFormatter.getOuterFormattingSegments();
+					for (@NonNull SerializationSegment formattingSegment : outerFormattingSegments) {
+						if (!isTail) {
+							if (formattingSegment.isValue()) {
+								isTail = true;;
+							}
+						}
+						else {
+							formattingSegment.format(elementFormatter, serializationBuilder);
+						}
+					}
+				}
+				break;
 			}
 		}
 	}
@@ -999,7 +1132,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		EObject eObject = rootNode.getSemanticElement();
 		assert eObject != null;
 		modelAnalysis.analyze(eObject);
-		formatCompositeNode(rootNode, 0);
+		formatCompositeNode(rootNode);
 	}
 
 	/**
@@ -1013,8 +1146,10 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		Assignment assignment = (Assignment)formattedGrammarElement;
 		EStructuralFeature eStructuralFeature = SerializationUtils.getEStructuralFeature(assignment);
 		if (!eStructuralFeature.isMany()) {
+			assert "=".equals(assignment.getOperator());
 			return null;
 		}
+		assert "+=".equals(assignment.getOperator());
 	/*	EClass eFeatureClass = eStructuralFeature.getEContainingClass();
 		StringBuilder s = new StringBuilder();
 		s.append(eFeatureClass.getName() + "::" + eStructuralFeature.getName()); // + " " + assignment.getFeature() + " " + assignment.getTerminal());
@@ -1055,19 +1190,6 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 	}
 
 	/**
-	 * Return the assignment if node is assigned.
-	 */
-	protected @Nullable Assignment zgetAssignment(@NonNull INode node) {
-		AbstractElement assignment2 = getFormattedGrammarElement(node);
-		if (assignment2 instanceof Assignment) {
-			return (Assignment) assignment2;
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
 	 * Return the grammar element that provides the formatting for node.
 	 */
 	protected @NonNull AbstractElement getFormattedGrammarElement(@NonNull INode node) {
@@ -1075,13 +1197,16 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		//
 		//	root
 		//
-		if (grammarElement instanceof AbstractRule) {
+		if (grammarElement instanceof ParserRule) {
 			INode parentNode = node;
 			while (((parentNode = parentNode.getParent()) != null) && !(parentNode instanceof RootNode)) {
 				assert !parentNode.hasDirectSemanticElement();
 			}
 			return SerializationUtils.getAlternatives(((AbstractRule)grammarElement));
 		}
+	//	else if (grammarElement instanceof TerminalRule) {
+	//		return SerializationUtils.getAlternatives(((TerminalRule)grammarElement));
+	//	}
 		//
 		//	Assignment
 		//
@@ -1097,8 +1222,44 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		//
 		//	Regular rule term
 		//
+		EObject semanticElement = node.getSemanticElement();
+		assert semanticElement != null;
+		Map<@NonNull EObject, @NonNull ReAction> semanticElement2reAction2 = semanticElement2reAction;
+		if (semanticElement2reAction2 != null) {
+			ReAction reAction = semanticElement2reAction2.get(semanticElement);
+			if (reAction != null) {
+				return grammarElement instanceof Action ? reAction.getAssignment() : reAction.getAction();
+			}
+		}
+		//
+		//	A current= must invert the child and self 'assignments'
+		//
 		if (grammarElement instanceof Action) {
-			// Action is not formattable so may be we could return null and accelerate
+			Action action = (Action)grammarElement;
+			if (action.getFeature() != null) {
+				assert node instanceof ICompositeNode;
+				if (Iterables.contains(((ICompositeNode)node).getChildren(), node)) {	// Skip SyntheticCompositeNode 	// FIXME This is empirical - find a better way
+					EObject parentSemanticElement = node.getParent().getSemanticElement();
+					assert parentSemanticElement != null;
+					ReAction reAction = new ReAction(parentSemanticElement, semanticElement, action);
+					if (semanticElement2reAction2 == null) {
+						semanticElement2reAction = semanticElement2reAction2 = new HashMap<>();
+					}
+					ReAction old = semanticElement2reAction2.put(semanticElement, reAction);
+					assert old == null;
+					for (@NonNull INode childNode : SerializationUtils.getChildren((ICompositeNode)node)) {
+						EObject childSemanticElement = childNode.getSemanticElement();
+						if (childSemanticElement == semanticElement) {
+							AbstractElement childFormattedGrammarElement = getFormattedGrammarElement(childNode);
+							if (childFormattedGrammarElement instanceof Assignment) {
+								reAction.setAssignment((Assignment)childFormattedGrammarElement);
+								break;
+							}
+						}
+					}
+					return reAction.getAssignment();
+				}
+			}
 		}
 		return (AbstractElement)grammarElement;
 	}

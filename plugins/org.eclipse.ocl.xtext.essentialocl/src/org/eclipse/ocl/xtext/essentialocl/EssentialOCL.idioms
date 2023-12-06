@@ -34,6 +34,11 @@ idiom LETEXP_SPACING for essentialoclcs::LetExpCS {
 	at "in" do soft-space pop value soft-new-line;
 }
 
+idiom NESTED_EXP_SPACING for essentialoclcs::NestedExpCS {
+	at "(" do value no-space;
+	at ")" do no-space value;
+}
+
 idiom TUPLELITERALEXP_BRACES {
 	at "{" do soft-space value push soft-new-line;
 	at "}" do pop soft-new-line value soft-new-line;

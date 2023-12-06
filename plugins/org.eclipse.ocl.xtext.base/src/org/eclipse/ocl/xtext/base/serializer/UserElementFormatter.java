@@ -34,7 +34,7 @@ public class UserElementFormatter
 		this.elementAnalysis = modelAnalysis.getElementAnalysis(element);
 		this.serializationMetaData = elementAnalysis.getSerializationMetaData();
 	//	System.out.println("UserElementFormatter init " + NameUtil.debugSimpleName(node) + " for " + NameUtil.debugSimpleName(formattedGrammarElement)
-	//	+ " and " + NameUtil.debugSimpleName(element) + "\n\t'" + Strings.convertToJavaString(node.getText()) + "'");	// XXX
+	//	+ " and " + NameUtil.debugSimpleName(element) + "\n\t'" + Strings.convertToJavaString(node.getText()) + "'");
 	//	assert (compoundedGrammarElement instanceof Assignment) || (compoundedGrammarElement instanceof Group) || (compoundedGrammarElement instanceof Keyword) || (compoundedGrammarElement instanceof RuleCall);
 	}
 

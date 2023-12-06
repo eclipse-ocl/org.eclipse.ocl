@@ -391,6 +391,10 @@ public class SerializationUtils
 		return ClassUtil.nonNullState(eClass.getEStructuralFeature(featureName));
 	}
 
+	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull Action action) {
+		return getEStructuralFeature(getEClassScope(action), getFeature(action));
+	}
+
 	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull Assignment assignment) {
 		return getEStructuralFeature(getEClassScope(assignment), getFeature(assignment));
 	}

@@ -161,11 +161,11 @@ public abstract class SerializationStep
 			Object object = serializer.consumeNext(eStructuralFeature);
 			if (!isBoolean) {
 				serializationBuilder.append(String.valueOf(object));
-				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "assign: " + String.valueOf(object));
+				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "assign: " + String.valueOf(object));
 			}
 			else if (object == Boolean.TRUE){
 				serializationBuilder.append(enumerationValue.getName());
-				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "assign: " + enumerationValue.getName());
+				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "assign: " + enumerationValue.getName());
 			}
 		}
 
@@ -288,7 +288,7 @@ public abstract class SerializationStep
 				for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
 					if (serializationSegment instanceof ValueSerializationSegment) {
 						serializationBuilder.append(value);
-						DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "assign: " + value);
+						DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "assign: " + value);
 					}
 					else {
 						serializationSegment.serialize(i, serializer, serializationBuilder);
@@ -299,7 +299,7 @@ public abstract class SerializationStep
 			else {
 				String val = modelAnalysis.getValueConverterService().toString(eGet, grammarRuleValue.getRuleName());
 				serializationBuilder.append(String.valueOf(val));
-				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "assign: " + String.valueOf(val));
+				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "assign: " + String.valueOf(val));
 			}
 		}
 
@@ -507,7 +507,7 @@ public abstract class SerializationStep
 				serializationBuilder.appendError("Failed to convert " + eObject.eClass().getName() + ": '" + String.valueOf(object) + "'");
 			}
 			// else {}		-- null never happens
-			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "assigns: ???");
+			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(modelAnalysis.getIndent(1) + "assigns: ???");
 		}
 
 		@Override
@@ -626,7 +626,7 @@ public abstract class SerializationStep
 			EObject context = serializer.getElement();
 			String string = serializer.getModelAnalysis().getCrossReferenceSerializer().serializeCrossRef(context, crossReference, eGet, null, null);
 			serializationBuilder.append(string);
-			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "xref ???: ");
+			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "xref ???: ");
 		}
 
 		@Override
@@ -707,7 +707,7 @@ public abstract class SerializationStep
 		@Override
 		public void serializeInnerValue(int thisSerializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 			serializationBuilder.append(keyword);
-			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()+1) + "keyword: \'" + keyword + "\'");
+			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent(1) + "keyword: \'" + keyword + "\'");
 		}
 
 		@Override
@@ -858,7 +858,7 @@ public abstract class SerializationStep
 				for (int index = startIndex; index < endIndex; ) {
 					SerializationStep serializationStep = serializationSteps[index];
 					if (isTracing) {
-						DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()) + "sub-step: " + serializationStep); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+						DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent() + "sub-step: " + serializationStep); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
 					}
 					index = serializationStep.serializeOuterValue(index, serializer, serializationBuilder);
 				}
@@ -948,7 +948,7 @@ public abstract class SerializationStep
 			for (int index = 1; index < serializationSteps.length; ) {
 				SerializationStep serializationStep = serializationSteps[index];
 				if (isTracing) {
-					DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()) + "step: " + serializationStep); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+					DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(serializer.getModelAnalysis().getIndent() + "step: " + serializationStep); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
 				}
 				index = serializationStep.serializeOuterValue(index, serializer, serializationBuilder);
 			}
@@ -1091,19 +1091,16 @@ public abstract class SerializationStep
 	 */
 	public int serializeOuterValue(int thisSerializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		assert serializer.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+		UserModelAnalysis modelAnalysis = serializer.getModelAnalysis();
 		boolean isTracing = DeclarativeSerializer.SERIALIZER_FRAGMENTS.isActive();
-		if (isTracing) {
-			serializer.getModelAnalysis().pushDepth();
-		}
+		modelAnalysis.pushDepth();
 		for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
 			if (isTracing) {
-				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(serializer.getModelAnalysis().getDepth()) + "segment: " + serializationSegment); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+				DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(modelAnalysis.getIndent() + "segment: " + serializationSegment); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
 			}
 			serializationSegment.serialize(thisSerializationStepIndex, serializer, serializationBuilder);
 		}
-		if (isTracing) {
-			serializer.getModelAnalysis().popDepth();
-		}
+		modelAnalysis.popDepth();
 		return thisSerializationStepIndex+1;
 	}
 

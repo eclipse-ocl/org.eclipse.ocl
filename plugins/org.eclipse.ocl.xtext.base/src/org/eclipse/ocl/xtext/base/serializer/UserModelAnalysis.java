@@ -146,15 +146,19 @@ public class UserModelAnalysis
 		return crossReferenceSerializer;
 	}
 
-	public int getDepth() {
-		return depth;
-	}
-
 	/**
 	 * Return the analysis of a user model element.
 	 */
 	public @NonNull UserElementAnalysis getElementAnalysis(@NonNull EObject element) {
 		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
+	}
+
+	public @NonNull String getIndent() {
+		return getIndent(0);
+	}
+
+	public @NonNull String  getIndent(int extraDepth) {
+		return SerializationUtils.getIndent(depth + extraDepth);
 	}
 
 	public @NonNull SerializationMetaData getSerializationMetaData() {

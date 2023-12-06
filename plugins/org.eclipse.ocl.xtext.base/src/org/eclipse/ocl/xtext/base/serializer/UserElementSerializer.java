@@ -110,7 +110,7 @@ public class UserElementSerializer
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		if (DeclarativeSerializer.SERIALIZER_FRAGMENTS.isActive()) {
-			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(SerializationUtils.getIndent(modelAnalysis.getDepth()) + "rule: " + serializationRule); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
+			DeclarativeSerializer.SERIALIZER_FRAGMENTS.println(modelAnalysis.getIndent() + "rule: " + serializationRule); //serializer.getElement().eClass().getName() + " : " + LabelUtil.getLabel(serializer.getElement()));
 		}
 		serializationRule.serialize(this, serializationBuilder);
 	}

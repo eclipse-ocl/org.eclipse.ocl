@@ -1253,9 +1253,6 @@ public class SerializationBuilder
 			}
 			SERIALIZATION.println(traceString);
 		}
-		if ("map".equals(nextString)) {
-			getClass();		// XXX
-		}
 		if (nextString == null) {
 			/* ignore */;
 		}
