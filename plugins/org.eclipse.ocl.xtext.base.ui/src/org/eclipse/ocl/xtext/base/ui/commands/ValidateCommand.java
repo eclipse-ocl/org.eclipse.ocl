@@ -54,6 +54,10 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 
 public class ValidateCommand extends ValidateAction
 {
+	public ValidateCommand() {
+		setEnabled(true);
+	}
+
 	@Override
 	protected Diagnostician createDiagnostician(AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		ResourceSet resourceSet = ClassUtil.nonNullEMF(domain.getResourceSet());

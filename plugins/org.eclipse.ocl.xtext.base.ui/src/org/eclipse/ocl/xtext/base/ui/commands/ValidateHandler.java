@@ -336,7 +336,7 @@ public final class ValidateHandler implements IHandler2
 	public final String toString() {
 		final StringBuffer buffer = new StringBuffer();
 
-		buffer.append("ActionHandler("); //$NON-NLS-1$
+		buffer.append("ValidateHandler("); //$NON-NLS-1$
 		buffer.append(action);
 		buffer.append(')');
 
