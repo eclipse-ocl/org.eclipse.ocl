@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -727,7 +728,9 @@ public class PivotTestCase extends TestCase
 			ProjectManager projectManager = environmentFactory.getProjectManager();
 			projectManager.unload(resourceSet);
 		}
-		for (Resource resource : resourceSet.getResources()) {
+		EList<@NonNull Resource> resources = resourceSet.getResources();
+		for (int i = 0; i < resources.size(); i++) {		// Avoid rare CME - see Bug 582925
+			Resource resource = resources.get(i);
 			resource.unload();
 		}
 		resourceSet.eAdapters().clear();
