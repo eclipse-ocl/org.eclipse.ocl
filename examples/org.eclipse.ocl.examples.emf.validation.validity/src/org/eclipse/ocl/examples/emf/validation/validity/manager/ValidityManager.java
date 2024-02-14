@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.BasicMonitor;
@@ -41,6 +43,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
+import org.eclipse.ocl.examples.emf.validation.validity.LeafConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultSet;
@@ -267,6 +270,16 @@ public class ValidityManager
 		return model2.getConstrainingNode(eObject);
 	}
 
+	private @NonNull List<@NonNull ConstrainingNode> getConstrainingNodeAncestors(@NonNull ConstrainingNode constraining) {
+		ConstrainingNode ancestor = constraining.getParent();
+		List<@NonNull ConstrainingNode> ancestors = new ArrayList<>();
+		while (ancestor != null) {
+			ancestors.add(ancestor);
+			ancestor = ancestor.getParent();
+		}
+		return ancestors;
+	}
+
 	public @NonNull List<@NonNull Result> getConstrainingNodeResults(@NonNull ConstrainingNode element) {
 		List<@NonNull Result> results = new ArrayList<>();
 		if (element.getLabel().startsWith("EOperation")) {
@@ -450,7 +463,7 @@ public class ValidityManager
 
 	} */
 
-	protected @Nullable List<@NonNull Result> installResultSet(@NonNull ResultSet resultSet, @NonNull IProgressMonitor monitor) {
+	protected @Nullable List<@NonNull Result> installResultSet(@NonNull ResultSet resultSet, @Nullable IProgressMonitor monitor) {
 		lastResultSet = resultSet;
 		resultsMap.clear();
 		RootNode rootNode = getRootNode();
@@ -464,7 +477,7 @@ public class ValidityManager
 			ResultValidatableNode resultValidatableNode = result.getResultValidatableNode();
 			assert resultValidatableNode != null;
 			resultsMap.put(resultValidatableNode, result);
-			if (monitor.isCanceled()) {
+			if ((monitor != null) && monitor.isCanceled()) {
 				return null;
 			}
 		}
@@ -496,6 +509,87 @@ public class ValidityManager
 		for (@NonNull AbstractNode node : new ArrayList<>(nodes)) {
 			resetResults(ClassUtil.nullFree(node.getChildren()));
 			node.setWorstResult(null);
+		}
+	}
+
+	public /*@NonNull*/ IStatus runValidation(@Nullable Set<@NonNull ResultConstrainingNode> selectedNodes, @Nullable IProgressMonitor monitor) {
+		final ResultSet resultSet = createResultSet(monitor);
+		if (resultSet == null) {
+			return Status.CANCEL_STATUS;
+		}
+		List<@NonNull Result> results = installResultSet(resultSet, monitor);
+		if (results == null) {
+			return Status.CANCEL_STATUS;
+		}
+		Monitor emfMonitor = monitor != null ? BasicMonitor.toMonitor(monitor) : null;
+		try {
+			if (monitor != null) {
+				monitor.beginTask("Constraint Validation", results.size());
+			}
+			int i = 0;
+			for (@NonNull Result result : results) {
+				if ((monitor != null) && monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				if ((selectedNodes == null) || selectedNodes.contains(result.getResultConstrainingNode())) {
+					boolean refreshLabels = (i % 100) == 0;
+					try {
+						ValidatableNode validatable = result.getValidatableNode();
+						if ((monitor != null) && refreshLabels) {
+							monitor.setTaskName(i + "/" + results.size() + ": " + validatable.toString());
+						}
+						ValidatableNode validatableParent = validatable.getParent();
+						LeafConstrainingNode constraint = result.getLeafConstrainingNode();
+
+						if (constraint != null) {
+							List<@NonNull ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
+
+							boolean isConstrainingNodeEnabled = true;
+							for (@NonNull ConstrainingNode constrainingAncestor : constrainingAncestors) {
+								if (!constrainingAncestor.isEnabled()) {
+									isConstrainingNodeEnabled = false;
+									break;
+								}
+							}
+
+							boolean isEnabledForValidation = false;
+							if (isConstrainingNodeEnabled) {
+								if (validatable instanceof ResultValidatableNode) {
+									if (validatableParent != null && validatableParent.isEnabled()) {
+										isEnabledForValidation = true;
+									}
+								} else {
+									isEnabledForValidation = true;
+								}
+							}
+
+							if (isEnabledForValidation) {
+								ConstraintLocator constraintLocator = constraint.getConstraintLocator();
+								constraintLocator.validate(result, this, emfMonitor);
+							} else {
+								result.setSeverity(Severity.UNKNOWN);
+							}
+						} else {
+							result.setSeverity(Severity.UNKNOWN);
+						}
+					} catch (Exception e) {
+						result.setException(e);
+						result.setSeverity(Severity.FATAL);
+					}
+					finally {
+						if ((monitor != null) && refreshLabels) {
+							monitor.worked(100);
+						}
+						i++;
+					}
+				}
+			}
+			return Status.OK_STATUS;
+		}
+		finally {
+			if (monitor != null) {
+				monitor.done();
+			}
 		}
 	}
 

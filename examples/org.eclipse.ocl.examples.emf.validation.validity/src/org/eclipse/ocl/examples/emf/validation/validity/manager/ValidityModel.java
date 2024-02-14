@@ -201,7 +201,7 @@ public class ValidityModel
 					}
 					ePackageResources.add(resource);
 					String nsURI = ePackage.getNsURI();
-					if (nsURI !=null) {
+					if (nsURI != null) {
 						ValidityManager.ANALYZE_RESOURCE.println(" -> " + nsURI);
 						Iterable<@NonNull ConstraintLocator> list = getConstraintLocators(nsURI);
 						if (list != null) {
@@ -810,8 +810,13 @@ public class ValidityModel
 										assert someConstraints != null;
 										typeConstraints.addAll(someConstraints);
 										int newSize = typeConstraints.size();
-										if (newSize > oldSize) {
-											ValidityManager.LOCATE_RESOURCE.println((newSize-oldSize) + " constraints for ConstrainingURI \"" + validityManager.getConstrainingURI(constrainedType) + "\"");
+										if ((newSize > oldSize) && ValidityManager.LOCATE_RESOURCE.isActive()) {
+											StringBuilder s = new StringBuilder();
+											s.append((newSize-oldSize) + " constraints for ConstrainingURI \"" + validityManager.getConstrainingURI(constrainedType) + "\"");
+											for (LeafConstrainingNode typeConstraint : typeConstraints) {
+												s.append("\n\t" + typeConstraint.getConstraintLocator().getClass().getSimpleName() + " : " + typeConstraint);
+											}
+											ValidityManager.LOCATE_RESOURCE.println(s.toString());
 										}
 									}
 								}

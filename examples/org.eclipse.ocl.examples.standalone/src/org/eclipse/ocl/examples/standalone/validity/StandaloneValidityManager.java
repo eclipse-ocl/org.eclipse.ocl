@@ -13,15 +13,8 @@ package org.eclipse.ocl.examples.standalone.validity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.LeafConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.Result;
-import org.eclipse.ocl.examples.emf.validation.validity.ResultSet;
-import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
-import org.eclipse.ocl.examples.emf.validation.validity.Severity;
-import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.EClassConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.EClassifierConstraintLocator;
@@ -94,51 +87,9 @@ public class StandaloneValidityManager extends ValidityManager
 		return Iterables.filter(super.getActiveConstraintLocators(nsURI), isActivePredicate);
 	}
 
+	@Deprecated /* @deprecated pass null monitor */
 	public void runValidation() {
-		final ResultSet resultSet = createResultSet(new NullProgressMonitor());
-		List<Result> results = installResultSet(resultSet, new NullProgressMonitor());
-		for (Result result : results) {
-			try {
-				ValidatableNode validatable = result.getValidatableNode();
-				ValidatableNode validatableParent = validatable.getParent();
-				LeafConstrainingNode constraint = result.getLeafConstrainingNode();
-
-				if (constraint != null) {
-					List<ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
-
-					boolean isConstrainingNodeEnabled = true;
-					for (ConstrainingNode constrainingAncestor : constrainingAncestors) {
-						if (!constrainingAncestor.isEnabled()) {
-							isConstrainingNodeEnabled = false;
-							break;
-						}
-					}
-
-					boolean isEnabledForValidation = false;
-					if (isConstrainingNodeEnabled) {
-						if (validatable instanceof ResultValidatableNode) {
-							if (validatableParent != null && validatableParent.isEnabled()) {
-								isEnabledForValidation = true;
-							}
-						} else {
-							isEnabledForValidation = true;
-						}
-					}
-
-					if (isEnabledForValidation) {
-						ConstraintLocator constraintLocator = constraint.getConstraintLocator();
-						constraintLocator.validate(result, StandaloneValidityManager.this, null);
-					} else {
-						result.setSeverity(Severity.UNKNOWN);
-					}
-				} else {
-					result.setSeverity(Severity.UNKNOWN);
-				}
-			} catch (Exception e) {
-				result.setException(e);
-				result.setSeverity(Severity.FATAL);
-			}
-		}
+		runValidation(null, null);
 	}
 
 	public void setRunJavaConstraints(boolean runJavaConstraints) {

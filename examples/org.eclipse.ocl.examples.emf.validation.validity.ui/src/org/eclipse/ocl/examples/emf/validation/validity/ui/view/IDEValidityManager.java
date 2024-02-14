@@ -18,28 +18,21 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.BasicMonitor;
-import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.LeafConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.ResultSet;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
-import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.pivot.Model;
@@ -87,9 +80,9 @@ public class IDEValidityManager extends ValidityManager
 	private class ValidityViewJob extends Job
 	{
 		protected final @NonNull ValidityView validityView;
-		protected final @Nullable Set<ResultConstrainingNode> selectedNodes;
+		protected final @Nullable Set<@NonNull ResultConstrainingNode> selectedNodes;
 
-		private ValidityViewJob(@NonNull ValidityView validityView, @Nullable Set<ResultConstrainingNode> selectedNodes) {
+		private ValidityViewJob(@NonNull ValidityView validityView, @Nullable Set<@NonNull ResultConstrainingNode> selectedNodes) {
 			super("Validity View Validation");
 			this.validityView = validityView;
 			this.selectedNodes = selectedNodes;
@@ -98,100 +91,9 @@ public class IDEValidityManager extends ValidityManager
 		@Override
 		protected IStatus run(final /*@NonNull*/ IProgressMonitor monitor) {
 			assert monitor != null;
-			Set<ResultConstrainingNode> selectedNodes2 = selectedNodes;
-			try {
-				final ResultSet resultSet = createResultSet(monitor);
-				if (resultSet == null) {
-					return Status.CANCEL_STATUS;
-				}
-				List<Result> results = installResultSet(resultSet, monitor);
-				if (results == null) {
-					return Status.CANCEL_STATUS;
-				}
-				try {
-					monitor.beginTask("Constraint Validation", results.size());
-					Monitor emfMonitor = monitor != null ? BasicMonitor.toMonitor(monitor) : null;
-					int i = 0;
-					for (Result result : results) {
-						if (monitor.isCanceled()) {
-							return Status.CANCEL_STATUS;
-						}
-						if ((selectedNodes2 == null) || selectedNodes2.contains(result.getResultConstrainingNode())) {
-							boolean refreshLabels = (i % 100) == 0;
-							try {
-								ValidatableNode validatable = result.getValidatableNode();
-								if (refreshLabels) {
-									monitor.setTaskName(i + "/" + results.size() + ": " + validatable.toString());
-								}
-								ValidatableNode validatableParent = validatable.getParent();
-								LeafConstrainingNode constraint = result.getLeafConstrainingNode();
-
-								if (constraint !=null) {
-									List<ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
-
-									boolean isConstrainingNodeEnabled = true;
-									for (ConstrainingNode constrainingAncestor: constrainingAncestors){
-										if (!constrainingAncestor.isEnabled()){
-											isConstrainingNodeEnabled = false;
-											break;
-										}
-									}
-
-									boolean isEnabledForValidation = false;
-									if (isConstrainingNodeEnabled) {
-										if (validatable instanceof ResultValidatableNode) {
-											if (validatableParent != null && validatableParent.isEnabled()) {
-												isEnabledForValidation = true;
-											}
-										} else {
-											isEnabledForValidation = true;
-										}
-									}
-
-									if (isEnabledForValidation){
-										ConstraintLocator constraintLocator = constraint.getConstraintLocator();
-										constraintLocator.validate(result, IDEValidityManager.this, emfMonitor);
-									} else {
-										result.setSeverity(Severity.UNKNOWN);
-									}
-								} else {
-									result.setSeverity(Severity.UNKNOWN);
-								}
-							}
-							catch (Exception e) {
-								result.setException(e);
-								result.setSeverity(Severity.FATAL);
-							}
-							finally {
-								if (refreshLabels) {
-									monitor.worked(100);
-								}
-								i++;
-							}
-						}
-					}
-					return Status.OK_STATUS;
-				}
-				finally {
-					validityView.redraw();
-					monitor.done();
-				}
-			}
-			finally {
-				synchronized (validityJobs) {
-					validityJobs.remove(this);
-				}
-			}
-		}
-
-		private  @NonNull List<@NonNull ConstrainingNode> getConstrainingNodeAncestors(@NonNull ConstrainingNode constraining) {
-			ConstrainingNode ancestor = constraining.getParent();
-			List<@NonNull ConstrainingNode> ancestors = new ArrayList<@NonNull ConstrainingNode>();
-			while (ancestor != null) {
-				ancestors.add(ancestor);
-				ancestor = ancestor.getParent();
-			}
-			return ancestors;
+			IStatus status = runValidation(selectedNodes, monitor);
+			validityView.redraw();
+			return status;
 		}
 	}
 

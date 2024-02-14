@@ -416,7 +416,9 @@ public class ValidateCommand extends StandaloneCommand
 
 		if (validityManager != null) {
 			// run the validation
-			validate(validityManager);
+			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
+			validityManager.runValidation(null, null);
+			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
 
 			// export results
 			File outputFile = outputToken.getOutputFile();
@@ -536,14 +538,5 @@ public class ValidateCommand extends StandaloneCommand
 		helper.installPackages();
 		helper.dispose();
 		return allOk;
-	}
-
-	/**
-	 * Runs the validation
-	 */
-	private void validate(@NonNull StandaloneValidityManager validityManager) {
-		//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
-		validityManager.runValidation();
-		//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
 	}
 }
