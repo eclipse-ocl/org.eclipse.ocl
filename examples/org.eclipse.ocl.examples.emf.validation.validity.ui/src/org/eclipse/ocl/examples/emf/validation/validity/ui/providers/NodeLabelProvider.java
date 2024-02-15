@@ -49,7 +49,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		private int errors = 0;
 		private int fatals = 0;
 		private int defaults = 0;
-		
+
 		public void accumulate(@NonNull EObject eObject) {
 			Result worstResult = null;
 			if (eObject instanceof ResultValidatableNode) {
@@ -70,7 +70,8 @@ public class NodeLabelProvider extends ColumnLabelProvider
 				}
 			}
 		}
-		
+
+		@Override
 		public @NonNull String toString() {
 			String separator = ", "; //"\n";
 			StringBuilder s = new StringBuilder();
@@ -93,7 +94,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 			return s.toString();
 		}
 	}
-	
+
 	private final @NonNull ILabelProvider labelProvider;
 	private final Color validatableColor;
 	private final Color constrainingNodeColor;
@@ -127,10 +128,12 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		}
 	}
 
+	@Override
 	public Color getBackground(Object element) {
 		return null;
 	}
 
+	@Override
 	public Font getFont(Object element) {
 		if (element instanceof ResultConstrainingNode) {
 			return null;
@@ -146,6 +149,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		}
 	}
 
+	@Override
 	public Color getForeground(Object element) {
 		if (element instanceof ResultConstrainingNode) {
 			return validatableColor;
@@ -212,7 +216,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 			s.append("\n" + exception.getClass().getName() + ":\n");
 			StringWriter sw = new StringWriter();
 			sw.append(s.toString());
-			exception.printStackTrace(new PrintWriter(sw));	
+			exception.printStackTrace(new PrintWriter(sw));
 		}
 		return s.toString();
 	}
@@ -268,30 +272,30 @@ public class NodeLabelProvider extends ColumnLabelProvider
 	private String getLeafConstrainingNodeHover(LeafConstrainingNode leafConstrainingNode, boolean withDiagnosisMessage) {
 		StringBuilder s = new StringBuilder();
 		Resource resource = leafConstrainingNode.getConstraintResource();
-		s.append("Location: ");
+		if (withDiagnosisMessage) {
+			s.append("Result: ");
+			s.append(getResultToolTip(leafConstrainingNode.getWorstResult()));
+			s.append("\n");
+		}
+		String expression = leafConstrainingNode.getConstraintString();
+		if (expression != null) {
+			s.append(expression.trim());
+		} else {
+			s.append(ValidityMessages.ValidityView_Constraints_LabelProvider_ExpressionNotAvailable);
+		}
+		s.append("\nLocation: ");
 		if (resource != null) {
 			s.append(resource.getURI().toString());
 		} else {
 			s.append(ValidityMessages.ValidityView_Constraints_LabelProvider_NonExistentResource);
 		}
-		
-		String expression = leafConstrainingNode.getConstraintString();
-		s.append("\nExpression: ");
-		if (expression != null) {
-			s.append(expression);
-		} else {
-			s.append(ValidityMessages.ValidityView_Constraints_LabelProvider_ExpressionNotAvailable);
-		}
-		
-		if (withDiagnosisMessage) {
-			s.append("\nEvaluation Result: ");
-			s.append(getResultToolTip(leafConstrainingNode.getWorstResult()));
-		}
+
 		s.append("\n");
 		s.append(getSummaryToolTip(leafConstrainingNode));
 		return s.toString();
 	}
 
+	@Override
 	public int getToolTipTimeDisplayed(Object object) {
 		return 15000;
 	}
