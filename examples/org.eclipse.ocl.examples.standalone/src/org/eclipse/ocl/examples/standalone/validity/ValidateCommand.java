@@ -325,6 +325,31 @@ public class ValidateCommand extends StandaloneCommand
 	}
 
 	/**
+	 * ValidationRunnable support validation in a distinct thread so that standalone execution emulates
+	 * plugin execution.
+	 */
+	protected class ValidationRunnable implements Runnable
+	{
+		private final StandaloneValidityManager validityManager;
+
+		protected ValidationRunnable(StandaloneValidityManager validityManager) {
+			this.validityManager = validityManager;
+		}
+
+		@Override
+		public void run() {
+			try {
+				validityManager.runValidation(null, null);
+			}
+			finally {
+				synchronized (this) {
+					this.notify();
+				}
+			}
+		}
+	}
+
+	/**
 	 * Gets an URI from a file Path.
 	 *
 	 * @param filePath
@@ -417,7 +442,23 @@ public class ValidateCommand extends StandaloneCommand
 		if (validityManager != null) {
 			// run the validation
 			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
-			validityManager.runValidation(null, null);
+
+			Thread validationThread = new Thread(new ValidationRunnable(validityManager), "Standalone Validation");
+			validationThread.start();
+			synchronized (validationThread) {
+				try {
+					validationThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+				} catch (InterruptedException e) {
+					// Don't care -- e.printStackTrace();
+				}
+			//	if (DEBUG_GC) {
+			//		System.gc();
+			//		System.runFinalization();
+			//	}
+			//	if (validationThread.throwable != null) {
+			//		throw validationThread.throwable;
+			//	}
+			}
 			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
 
 			// export results

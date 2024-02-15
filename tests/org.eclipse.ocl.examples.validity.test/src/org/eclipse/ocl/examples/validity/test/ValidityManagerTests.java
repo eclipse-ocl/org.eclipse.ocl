@@ -43,6 +43,7 @@ public class ValidityManagerTests extends AbstractValidityTestCase
 		}
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -56,6 +57,7 @@ public class ValidityManagerTests extends AbstractValidityTestCase
 		initValidityManager(new TestValidityManager());
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
