@@ -52,14 +52,12 @@ public abstract class AbstractPivotConstraintLocator extends AbstractConstraintL
 		ValidityManager.addConstraintLocator(null, DelegateUIConstraintLocator.INSTANCE);
 	}
 
-	protected static abstract class AbstractConstraintLocator extends AbstractConstraintEvaluator<Diagnostic>
+	protected static abstract class AbstractConstraintEvaluatorWithContext extends AbstractConstraintEvaluator<Diagnostic>
 	{
-		protected final @NonNull PivotMetamodelManager metamodelManager;
 		protected final @Nullable Object object;
 
-		protected AbstractConstraintLocator(@NonNull PivotMetamodelManager metamodelManager, @NonNull ExpressionInOCL expression, @Nullable Object object) {
+		protected AbstractConstraintEvaluatorWithContext(@NonNull ExpressionInOCL expression, @Nullable Object object) {
 			super(expression);
-			this.metamodelManager = metamodelManager;
 			this.object = object;
 		}
 
@@ -92,6 +90,24 @@ public abstract class AbstractPivotConstraintLocator extends AbstractConstraintL
 		@Override
 		protected Diagnostic handleSuccessResult() {
 			return null;
+		}
+	}
+
+	@Deprecated /* @deprecated not used - confusing class name */
+	protected static abstract class AbstractConstraintLocator extends AbstractConstraintEvaluatorWithContext
+	{
+		@Deprecated /* @deprecated metamodelManager not used */
+		protected final PivotMetamodelManager metamodelManager;
+
+		protected AbstractConstraintLocator(@NonNull ExpressionInOCL expression, @Nullable Object object) {
+			super(expression, object);
+			this.metamodelManager = null;
+		}
+
+		@Deprecated /* @deprecated metamodelManager not used */
+		protected AbstractConstraintLocator(@NonNull PivotMetamodelManager metamodelManager, @NonNull ExpressionInOCL expression, @Nullable Object object) {
+			super(expression, object);
+			this.metamodelManager = metamodelManager;
 		}
 	}
 

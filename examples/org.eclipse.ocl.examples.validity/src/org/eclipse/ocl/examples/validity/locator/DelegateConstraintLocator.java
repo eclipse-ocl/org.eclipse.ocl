@@ -203,7 +203,7 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 			final Constraint finalConstraint = asConstraint;
 			ExpressionInOCL query = getQuery(metamodelManager, asConstraint);
 			EvaluationVisitor evaluationVisitor = createEvaluationVisitor(environmentFactory, query, constrainedObject, monitor);
-			AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintLocator(metamodelManager, query, constrainedObject)
+			AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluatorWithContext(query, constrainedObject)
 			{
 				@Override
 				protected String getObjectLabel() {
