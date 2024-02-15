@@ -284,7 +284,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			}
 
 			Label helpLabel = new Label(createDialogArea, SWT.CENTER);
-		    helpLabel.setText("You may Drag and Drop from an Eclipse or Operating System Explorer.");
+		    helpLabel.setText("You may multi-Drag and Drop from an Eclipse or Operating System Explorer.");
 		    {
 		      FormData data = new FormData();
 		      data.top = new FormAttachment(uriField, 2 * CONTROL_OFFSET);	// Separator is at 1 * CONTROL_OFFSET
