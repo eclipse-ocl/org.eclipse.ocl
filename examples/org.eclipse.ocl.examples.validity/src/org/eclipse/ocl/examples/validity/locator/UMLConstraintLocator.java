@@ -249,7 +249,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 	}
 
 	@Override
-	public @Nullable TypeURI getTypeURI(@NonNull EObject eObject) {
+	public @Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject eObject) {
 		EObject eContainer = eObject;
 		for ( ; true; eContainer = eContainer.eContainer()) {
 			if (eContainer == null) {

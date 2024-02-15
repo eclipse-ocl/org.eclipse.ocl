@@ -55,6 +55,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.utilities.SeveritiesVisi
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class ValidityModel
 {
@@ -632,6 +633,10 @@ public class ValidityModel
 
 	protected @NonNull Iterable<@NonNull ConstraintLocator> getConstraintLocators(@NonNull String nsURI) {
 		return validityManager.getActiveConstraintLocators(nsURI);
+	}
+
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return validityManager.getEnvironmentFactory();
 	}
 
 	/**

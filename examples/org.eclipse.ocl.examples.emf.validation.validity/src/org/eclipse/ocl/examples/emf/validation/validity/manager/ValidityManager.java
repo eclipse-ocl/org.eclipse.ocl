@@ -54,9 +54,13 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.examples.emf.validation.validity.utilities.IVisibilityFilter;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -242,6 +246,12 @@ public class ValidityManager
 		resultsMap.clear();
 	}
 
+	public void forceRefresh() {
+		this.forceRefresh = true;
+		setInput(lastInput, new BasicMonitor());
+		this.forceRefresh = false;
+	}
+
 	protected @Nullable Set<@NonNull ConstraintLocator> gatherConstraintLocators(@Nullable Set<@NonNull ConstraintLocator> set, @NonNull List<@NonNull ConstraintLocator> list) {
 		if (set == null) {
 			set = new HashSet<>();
@@ -256,6 +266,36 @@ public class ValidityManager
 
 	public @NonNull AdapterFactory getAdapterFactory() {
 		return adapterFactory;
+	}
+
+	private void getAllConstrainingNodeResults(@NonNull List<@NonNull Result> results, @NonNull ConstrainingNode element) {
+		if (element instanceof ResultConstrainingNode) {
+			ResultValidatableNode resultValidatableNode = ((ResultConstrainingNode)element).getResultValidatableNode();
+			Result result = resultsMap.get(resultValidatableNode);
+			if (result != null) {
+				results.add(result);
+			}
+		}
+		else {
+			for (@NonNull ConstrainingNode child : ClassUtil.nullFree(element.getChildren())) {
+				getAllConstrainingNodeResults(results, child);
+			}
+		}
+	}
+
+	private void getAllValidatableNodeResults(@NonNull List<@NonNull Result> results, @NonNull ValidatableNode element) {
+		if (element instanceof ResultValidatableNode) {
+			ResultValidatableNode resultValidatableNode = (ResultValidatableNode)element;
+			Result result = resultsMap.get(resultValidatableNode);
+			if (result != null) {
+				results.add(result);
+			}
+		}
+		else {
+			for (@NonNull ValidatableNode child : ClassUtil.nullFree(element.getChildren())) {
+				getAllValidatableNodeResults(results, child);
+			}
+		}
 	}
 
 	/**
@@ -309,41 +349,19 @@ public class ValidityManager
 		return new ConstrainingURI(uri);
 	}
 
-	private void getAllConstrainingNodeResults(@NonNull List<@NonNull Result> results, @NonNull ConstrainingNode element) {
-		if (element instanceof ResultConstrainingNode) {
-			ResultValidatableNode resultValidatableNode = ((ResultConstrainingNode)element).getResultValidatableNode();
-			Result result = resultsMap.get(resultValidatableNode);
-			if (result != null) {
-				results.add(result);
-			}
-		}
-		else {
-			for (@NonNull ConstrainingNode child : ClassUtil.nullFree(element.getChildren())) {
-				getAllConstrainingNodeResults(results, child);
-			}
-		}
-	}
-
-	private void getAllValidatableNodeResults(@NonNull List<@NonNull Result> results, @NonNull ValidatableNode element) {
-		if (element instanceof ResultValidatableNode) {
-			ResultValidatableNode resultValidatableNode = (ResultValidatableNode)element;
-			Result result = resultsMap.get(resultValidatableNode);
-			if (result != null) {
-				results.add(result);
-			}
-		}
-		else {
-			for (@NonNull ValidatableNode child : ClassUtil.nullFree(element.getChildren())) {
-				getAllValidatableNodeResults(results, child);
-			}
-		}
-	}
-
 	public @NonNull String getConstrainingLabel(@NonNull EObject eObject) {
 		StringBuilder s = new StringBuilder();
 		s.append(ILabelGenerator.Registry.INSTANCE.labelFor(eObject, LABEL_OPTIONS));
 		appendResourceURI(s, eObject);
 		return s.toString();
+	}
+
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
+		}
+		return environmentFactory;
 	}
 
 	public @Nullable ValidityModel getModel() {
@@ -382,7 +400,7 @@ public class ValidityManager
 					List<@NonNull ConstraintLocator> constraintLocators = getConstraintLocators(nsURI);
 					if (constraintLocators != null) {
 						for (@NonNull ConstraintLocator constraintLocator : constraintLocators) {
-							TypeURI uri = constraintLocator.getTypeURI(constrainingObject);
+							TypeURI uri = constraintLocator.getTypeURI(this, constrainingObject);
 							if (uri != null) {
 								return uri;
 							}
@@ -439,11 +457,7 @@ public class ValidityManager
 		return new ValidatableURI(uri);
 	}
 
-	public void forceRefresh() {
-		this.forceRefresh = true;
-		setInput(lastInput, new BasicMonitor());
-		this.forceRefresh = false;
-	}
+
 
 	/*	public void refreshModel(List<AbstractNode> grayedValidatableNodes,
 			List<AbstractNode> grayedConstrainingNodes) {

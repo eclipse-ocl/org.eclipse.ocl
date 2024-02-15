@@ -30,11 +30,10 @@ import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocato
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -52,22 +51,20 @@ public class CompleteOCLCSConstraintLocator extends PivotConstraintLocator
 				return null;
 			}
 			if (resource instanceof CSResource) {
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-				if (environmentFactory != null) {
-					for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-						if (monitor.isCanceled()) {
-							return null;
-						}
-						EObject eObject = tit.next();
-						if (eObject instanceof ConstraintCS) {
-							ConstraintCS csConstraint = (ConstraintCS)eObject;
-							Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csConstraint);
-							if (asConstraint != null) {
-								EObject esObject = getConstrainedESObject(environmentFactory, asConstraint);
-								if (esObject != null) {
-									@NonNull String label = String.valueOf(asConstraint.getName());
-									map = createLeafConstrainingNode(map, validityModel, esObject, csConstraint, label);
-								}
+				EnvironmentFactory environmentFactory = validityModel.getEnvironmentFactory();
+				for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
+					if (monitor.isCanceled()) {
+						return null;
+					}
+					EObject eObject = tit.next();
+					if (eObject instanceof ConstraintCS) {
+						ConstraintCS csConstraint = (ConstraintCS)eObject;
+						Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csConstraint);
+						if (asConstraint != null) {
+							EObject esObject = getConstrainedESObject(environmentFactory, asConstraint);
+							if (esObject != null) {
+								@NonNull String label = String.valueOf(asConstraint.getName());
+								map = createLeafConstrainingNode(map, validityModel, esObject, csConstraint, label);
 							}
 						}
 					}

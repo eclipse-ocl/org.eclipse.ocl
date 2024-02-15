@@ -57,7 +57,7 @@ public interface ConstraintLocator
 	@NonNull EObject getConstrainingType(@NonNull EObject constrainedType, @NonNull Object constrainingObject);
 
 	/**
-	 * Return the URI that provides a distinct identity for a constraining element in the constraining elements view. 
+	 * Return the URI that provides a distinct identity for a constraining element in the constraining elements view.
 	 */
 	@Nullable ConstrainingURI getConstrainingURI(@NonNull EObject eObject);
 
@@ -108,16 +108,28 @@ public interface ConstraintLocator
 	 * This is not necessarily unique in the constraining elements view since multiple constraining models may contribute
 	 * constraints to the same type.
 	 */
-	@Nullable TypeURI getTypeURI(@NonNull EObject eObject);
+	@Deprecated /* @deprecated pass validityManager */
+	default @Nullable TypeURI getTypeURI(@NonNull EObject eObject) {
+		return null;
+	}
+
+	/**
+	 * Return the URI that provides a distinct identity for a constraining element when applied to a validatable element.
+	 * This is not necessarily unique in the constraining elements view since multiple constraining models may contribute
+	 * constraints to the same type.
+	 */
+	default @Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject eObject) {
+		return getTypeURI(eObject);
+	}
 
 	/**
 	 * Return the type URIs of all 'types' that provide constraints for validatableObject.
 	 */
 	@Nullable Set<@NonNull TypeURI> getTypeURIs(@NonNull ValidityManager validityManager, @NonNull EObject validatableObject);
-	
+
 	/**
 	 * Update the validation result to include the verdict of the validation using validityManager to provide shared services.
-	 * @param monitor 
+	 * @param monitor
 	 */
 	void validate(@NonNull Result result, @NonNull ValidityManager validityManager, @Nullable Monitor monitor);
 }

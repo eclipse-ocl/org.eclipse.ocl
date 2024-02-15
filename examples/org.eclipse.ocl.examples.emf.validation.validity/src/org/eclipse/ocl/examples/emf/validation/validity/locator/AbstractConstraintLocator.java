@@ -178,7 +178,7 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 	}
 
 	@Override
-	public @Nullable TypeURI getTypeURI(@NonNull EObject eObject) {
+	public @Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject eObject) {
 		Resource resource = eObject.eResource();
 		if (resource == null) {
 			return null;

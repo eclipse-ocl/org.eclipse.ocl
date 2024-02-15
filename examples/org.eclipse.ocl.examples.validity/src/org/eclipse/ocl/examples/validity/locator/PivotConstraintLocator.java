@@ -39,12 +39,10 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 
@@ -54,23 +52,18 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 
 	@Override
 	public @NonNull Set<@NonNull TypeURI> getAllTypes(@NonNull ValidityManager validityManager, @NonNull EObject constrainingObject) {
-	//	if (constrainingObject instanceof org.eclipse.ocl.pivot.Class) {
-			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {
-				Set<@NonNull TypeURI> allTypes = new HashSet<@NonNull TypeURI>();
-				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainingObject);
-				for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
-					for (org.eclipse.ocl.pivot.Class partialClass : superCompleteClass.getPartialClasses()) {
-						EObject eTarget = partialClass.getESObject();
-						if (eTarget != null) {
-							allTypes.add(validityManager.getTypeURI(eTarget));
-						}
-					}
+		EnvironmentFactory environmentFactory = validityManager.getEnvironmentFactory();
+		Set<@NonNull TypeURI> allTypes = new HashSet<@NonNull TypeURI>();
+		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainingObject);
+		for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+			for (org.eclipse.ocl.pivot.Class partialClass : superCompleteClass.getPartialClasses()) {
+				EObject eTarget = partialClass.getESObject();
+				if (eTarget != null) {
+					allTypes.add(validityManager.getTypeURI(eTarget));
 				}
-				return allTypes;
 			}
-	//	}
-		return super.getAllTypes(validityManager, constrainingObject);
+		}
+		return allTypes;
 	}
 
 	protected EObject getConstrainedESObject(@NonNull EnvironmentFactory environmentFactory, @NonNull Constraint asConstraint) {
@@ -104,20 +97,18 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 				asResource = (ASResource) resource;
 			}
 			if (asResource != null) {
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-				if (environmentFactory != null) {
-					for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-						if (monitor.isCanceled()) {
-							return null;
-						}
-						EObject eObject = tit.next();
-						if (eObject instanceof Constraint) {
-							Constraint asConstraint = (Constraint)eObject;
-							EObject esObject = getConstrainedESObject(environmentFactory, asConstraint);
-							if (esObject != null) {
-								@NonNull String label = String.valueOf(asConstraint.getName());
-								map = createLeafConstrainingNode(map, validityModel, esObject, asConstraint, label);
-							}
+				EnvironmentFactory environmentFactory = validityModel.getEnvironmentFactory();
+				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+					if (monitor.isCanceled()) {
+						return null;
+					}
+					EObject eObject = tit.next();
+					if (eObject instanceof Constraint) {
+						Constraint asConstraint = (Constraint)eObject;
+						EObject esObject = getConstrainedESObject(environmentFactory, asConstraint);
+						if (esObject != null) {
+							@NonNull String label = String.valueOf(asConstraint.getName());
+							map = createLeafConstrainingNode(map, validityModel, esObject, asConstraint, label);
 						}
 					}
 				}
@@ -172,25 +163,21 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 	}
 
 	@Override
-	public @Nullable TypeURI getTypeURI(@NonNull EObject constrainedObject) {
-	//	if (constrainedObject instanceof org.eclipse.ocl.pivot.Class) {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {
-				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainedObject);
-				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
-					EObject eTarget = partialClass.getESObject();
-					if (eTarget != null) {
-						return super.getTypeURI(eTarget);
-					}
-				}
-				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				EObject eTarget = metamodelManager.getEcoreOfPivot(EObject.class, (org.eclipse.ocl.pivot.Class)constrainedObject);
-				if (eTarget != null) {
-					return super.getTypeURI(eTarget);
-				}
+	public @Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject constrainedObject) {
+		EnvironmentFactory environmentFactory = validityManager.getEnvironmentFactory();
+		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainedObject);
+		for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+			EObject eTarget = partialClass.getESObject();
+			if (eTarget != null) {
+				return super.getTypeURI(validityManager, eTarget);
 			}
-	//	}
-		return super.getTypeURI(constrainedObject);
+		}
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		EObject eTarget = metamodelManager.getEcoreOfPivot(EObject.class, (org.eclipse.ocl.pivot.Class)constrainedObject);
+		if (eTarget != null) {
+			return super.getTypeURI(validityManager, eTarget);
+		}
+		return super.getTypeURI(validityManager, constrainedObject);
 	}
 
 	@Override
