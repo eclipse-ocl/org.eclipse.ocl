@@ -62,7 +62,7 @@ public class ComposedEValidator implements EValidator
 	 * Install a ComposedEValidator for ePackage displacing the prevailing validationRegistry
 	 * entry and adding it as the first ComposedEValidator child.
 	 *
-	 * @since 1.19
+	 * @since 1.20
 	 */
 	public static synchronized @NonNull ComposedEValidator install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage) {
 		synchronized (validationRegistry) {
@@ -90,7 +90,7 @@ public class ComposedEValidator implements EValidator
 	}
 
 	/**
-	 * @since 1.19
+	 * @since 1.20
 	 */
 	public static void install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage, @NonNull EValidator additionalEValidator) {
 		ComposedEValidator composedEValidator = install(validationRegistry, ePackage);

@@ -124,7 +124,7 @@ public class NameUtil
 		}
 
 		/**
-		 * @since 1.19
+		 * @since 1.20
 		 */
 		protected @NonNull String getString(@NonNull T o) {
 			String string = object2string.get(o);

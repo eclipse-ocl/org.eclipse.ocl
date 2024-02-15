@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -123,7 +122,7 @@ public class ThreadLocalExecutor
 	/**
 	 * Return the prevailing thread-unique name surrounded by square brackets.
 	 *
-	 * @since 1.19
+	 * @since 1.20
 	 */
 	public static @NonNull String getBracketedThreadName() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();

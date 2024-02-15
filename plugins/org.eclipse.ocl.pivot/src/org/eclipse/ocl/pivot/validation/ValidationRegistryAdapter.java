@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
  * Unfortunately this is a retrofit so the standard Diagnostician API as used by the Sample Ecore Editor is unaffected.
  * To use the local ValidationRegistry, it is necessary to pass the local ValidationRegistry to the Diagnostician copnstructor
  * which the getDiagnostician() convenien ce does.
- * @since 1.19
+ * @since 1.20
  */
 public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements Adapter.Internal
 {

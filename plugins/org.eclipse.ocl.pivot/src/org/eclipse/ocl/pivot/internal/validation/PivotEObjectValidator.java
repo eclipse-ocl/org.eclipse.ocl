@@ -145,7 +145,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Install Pivot-defined validation support for ePackage in validationRegistry. If complementingModels is non-null,
 	 * only constraints within complementingModels are validated to avoid double validation wrt a regular EObjectValidator.
 	 *
-	 * @since 1.19
+	 * @since 1.20
 	 */
 	public static synchronized void install(EValidator.@NonNull Registry validationRegistry, @NonNull EPackage ePackage, @Nullable List<@NonNull Model> complementingModels) {
 		PivotEObjectValidator complementingEValidator;

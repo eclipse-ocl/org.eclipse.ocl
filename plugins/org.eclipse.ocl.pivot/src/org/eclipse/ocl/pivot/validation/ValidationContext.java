@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 /**
  * ValidationContext reifies the Map<Object,Object> context argument for the EValidator API.
  *
- * @since 1.19
+ * @since 1.20
  */
 public class ValidationContext extends HashMap<Object,Object>
 {
