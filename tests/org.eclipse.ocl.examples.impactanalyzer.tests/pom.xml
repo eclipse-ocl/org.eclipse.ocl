@@ -44,7 +44,7 @@
               <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
               <useUIHarness>false</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+              <argLine>-DtestNameSuffix="tycho" ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/with TracebackSteps</reportsDirectory>
             </configuration>
           </execution>
@@ -57,7 +57,7 @@
               <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
               <useUIHarness>false</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho-withUnusedChecks" -DunusedCheckIA=true -ea</argLine>
+              <argLine>-DtestNameSuffix="tycho-withUnusedChecks" -DunusedCheckIA=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/with Traceback+UnusedChecks</reportsDirectory>
             </configuration>
          </execution>
@@ -70,7 +70,7 @@
              <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
              <useUIHarness>false</useUIHarness>
              <useUIThread>true</useUIThread>
-             <argLine>-DtestNameSuffix="tycho-withNavigationSteps" -DnavigationStepIA=true -ea</argLine>
+             <argLine>-DtestNameSuffix="tycho-withNavigationSteps" -DnavigationStepIA=true ${argLineTail}</argLine>
              <reportsDirectory>${project.build.directory}/surefire-reports/with NavigationSteps</reportsDirectory>
            </configuration>
          </execution>

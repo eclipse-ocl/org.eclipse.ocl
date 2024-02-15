@@ -72,6 +72,8 @@
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
+    <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>
+
   </properties>
   
   <modules>

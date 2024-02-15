@@ -35,7 +35,7 @@
           <testClass>org.eclipse.ocl.examples.eventmanager.tests.EventManagerTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+          <argLine>-DtestNameSuffix="tycho" ${argLineTail}</argLine>
        </configuration>
       </plugin>
     </plugins>

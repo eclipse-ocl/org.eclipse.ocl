@@ -71,6 +71,8 @@
     <maven-surefire-version>3.0.0-M5</maven-surefire-version>
     <tycho-version>2.7.5</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
+
+    <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>
   </properties>
 
   <build>
@@ -141,7 +143,7 @@
               <includes>
                 <include>**/CodegenTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>

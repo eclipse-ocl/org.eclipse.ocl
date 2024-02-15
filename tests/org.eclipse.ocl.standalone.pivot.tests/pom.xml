@@ -117,7 +117,7 @@
               <includes>
                 <include>**/StandalonePivotTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>

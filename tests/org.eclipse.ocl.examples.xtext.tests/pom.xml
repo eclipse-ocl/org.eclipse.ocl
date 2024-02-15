@@ -41,7 +41,7 @@
               <includes>
                 <include>**/AllXtextTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
@@ -56,7 +56,7 @@
           <testClass>org.eclipse.ocl.examples.test.xtext.AllXtextTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true</argLine>
+          <argLine>-DtestNameSuffix="tycho" -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true ${argLineTail}</argLine>
           <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
         </configuration>
       </plugin>

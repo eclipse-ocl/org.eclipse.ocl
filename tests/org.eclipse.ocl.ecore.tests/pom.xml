@@ -41,7 +41,7 @@
               <includes>
                 <include>**/AllTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -55,7 +55,7 @@
               <includes>
                 <include>**/AllTestsBacktracking.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking" -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/standaloneBacktracking</reportsDirectory>
             </configuration>
           </execution>
@@ -68,7 +68,7 @@
           <testClass>org.eclipse.ocl.ecore.tests.AllTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+          <argLine>-DtestNameSuffix="tycho" -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
           <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
         </configuration>
       </plugin>

@@ -41,7 +41,7 @@
               <includes>
                 <include>**/AllExamplesTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
@@ -55,7 +55,7 @@
           <testClass>org.eclipse.ocl.examples.test.AllExamplesTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
-          <argLine>-DtestNameSuffix="tycho" -ea</argLine>
+          <argLine>-DtestNameSuffix="tycho" ${argLineTail}</argLine>
           <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
         </configuration>
       </plugin>

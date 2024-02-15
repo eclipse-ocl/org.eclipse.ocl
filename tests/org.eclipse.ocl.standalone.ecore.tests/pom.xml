@@ -137,7 +137,7 @@
               <includes>
                 <include>**/StandaloneEcoreTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -151,7 +151,7 @@
               <includes>
                 <include>**/StandaloneEcoreBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone-backtracking</reportsDirectory>
             </configuration>
           </execution>

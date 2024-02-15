@@ -76,6 +76,7 @@
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
+    <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>
   </properties>
   
   <!--modules>
@@ -221,7 +222,7 @@
               <includes>
                 <include>**/CompatibilityEcoreTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -235,7 +236,7 @@
               <includes>
                 <include>**/CompatibilityEcoreBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -249,7 +250,7 @@
               <includes>
                 <include>**/CompatibilityUMLTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -263,7 +264,7 @@
               <includes>
                 <include>**/CompatibilityUMLBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -277,7 +278,7 @@
               <includes>
                 <include>**/CompatibilityPivotTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -ea</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
@@ -298,7 +299,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin</reportsDirectory>
             </configuration>
           </execution>
@@ -312,7 +313,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreBacktrackingTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -ea</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin-backtracking</reportsDirectory>
             </configuration>
           </execution>
