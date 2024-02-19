@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.emf.validation.validity.export;
 
@@ -44,9 +44,10 @@ public class TextExporter extends AbstractExporter
 				+ "\n");
 		}
 		s.append("\t\t\t Invariant: " + node.getLabel() + "\n");
-		
+
 		String expression = node.getConstraintString();
 		if (expression != null) {
+			expression = expression.replaceAll("\\s+", " ");
 			s.append("\t\t\t Expression: " + expression + "\n");
 		} else {
 			s.append("\t\t\t Expression: "
@@ -61,8 +62,8 @@ public class TextExporter extends AbstractExporter
 	/**
 	 * Returns a stream containing the initial contents to be given to new
 	 * exported validation results file resource instances.
-	 * 
-	 * @throws IOException 
+	 *
+	 * @throws IOException
 	 */
 	@Override
 	public void createContents(@NonNull Appendable text, @NonNull RootNode rootNode, @Nullable String exportedFileName) throws IOException {
@@ -87,7 +88,7 @@ public class TextExporter extends AbstractExporter
 		text.append("\n");
 		text.append("\n");
 		text.append("==== METRICS ====\n");
-		
+
 		int total = getConstraintCount();
 		text.append("Total number of evaluated constraints: " + total + "\n");
 		text.append("- Number of Success: " + validationSuccess.size() + "\n");
@@ -98,7 +99,7 @@ public class TextExporter extends AbstractExporter
 		text.append("\n");
 		text.append("\n");
 		text.append("==== LOGS ====\n");
-		
+
 		if (validationSuccess.size() == total) {
 			text.append("No log to display: models has been successfully validated.\n");
 		} else {
@@ -137,7 +138,8 @@ public class TextExporter extends AbstractExporter
 			}
 		}
 	}
-	
+
+	@Override
 	public @NonNull String getExporterType() { return EXPORTER_TYPE; }
 
 	@Override
