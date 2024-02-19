@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -58,7 +59,7 @@ public class HTMLExporter extends AbstractExporter
 
 		String expression = node.getConstraintString();
 		if (expression != null) {
-			s.append("\t\t\t\t<td>" + expression + "</td>\n");
+			s.append("\t\t\t\t<td style=\"white-space:pre\">" + expression + "</td>\n");
 		} else {
 			s.append("\t\t\t\t<td>"
 				+ ValidityMessages.ValidityView_Constraints_LabelProvider_ExpressionNotAvailable
