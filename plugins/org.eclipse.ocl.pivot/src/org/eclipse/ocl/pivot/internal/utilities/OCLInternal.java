@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import java.util.List;
-
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,13 +20,13 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class OCLInternal extends OCL
 {
+	@SuppressWarnings("null")
 	public static @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
+	/*	List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter == null) {
 			ProjectManager projectMap = null;
@@ -50,7 +47,8 @@ public class OCLInternal extends OCL
 			assert adapter != null;
 			assert adapter.getEnvironmentFactory() == environmentFactory;
 		}
-		return adapter;
+		return adapter; */
+		return (@NonNull EnvironmentFactoryAdapter)null;				// XXX demonstrating EnvironmentFactoryAdapter obsolescence
 	}
 
 	public static @NonNull OCLInternal newInstance() {

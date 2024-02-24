@@ -204,9 +204,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
+	/*	List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
 			if (adapter.getEnvironmentFactory() != this) {
@@ -217,7 +218,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
 		}
-		return adapter;
+		return adapter; */
+		return (@NonNull EnvironmentFactoryAdapter)null;					// XXX demonstrating EnvironmentFactoryAdapter obsolescence
 	}
 
 	@Override

@@ -63,6 +63,7 @@ public class EnvironmentFactoryAdapter implements Adapter.Internal
 	public EnvironmentFactoryAdapter(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Notifier notifier) {
 		this.environmentFactory = environmentFactory;
 		this.notifier = notifier;
+		throw new UnsupportedOperationException();		// XXX demonstrating EnvironmentFactoryAdapter obsolescence
 	}
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {

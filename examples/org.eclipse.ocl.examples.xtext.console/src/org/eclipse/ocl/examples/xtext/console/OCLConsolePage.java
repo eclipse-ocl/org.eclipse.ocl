@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.options.PivotConsoleOptions;
@@ -534,7 +533,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		return ret;
 	}
 
-	protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
+	protected @Nullable EnvironmentFactory/*Adapter*/ createEditor(Composite s1) {
 		Composite client = s1; //new Composite(s1, SWT.NULL);
 		Injector injector = XtextConsolePlugin.getInstance().getInjector(EssentialOCLPlugin.LANGUAGE_ID);
 		Composite editorComposite = client; //new Composite(client, SWT.NULL);
@@ -579,7 +578,8 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		editorComposite.setLayoutData(data);
 
 		ResourceSet resourceSet = editor.getResourceSet();
-		return resourceSet != null ? EnvironmentFactoryAdapter.find(resourceSet) : null;
+	//	return resourceSet != null ? EnvironmentFactoryAdapter.find(resourceSet) : null;
+		return ThreadLocalExecutor.getEnvironmentFactory();
 	}
 
 	/**

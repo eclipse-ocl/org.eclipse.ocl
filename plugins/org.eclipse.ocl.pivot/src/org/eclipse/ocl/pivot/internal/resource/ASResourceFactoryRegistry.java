@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -133,12 +134,16 @@ public class ASResourceFactoryRegistry
 	 * Create a new EnvironmentFactory appropriate to the resources in ResourceSet.
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		if (externalResourceSet != null) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return environmentFactory;
+		}
+	/*	if (externalResourceSet != null) {
 			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(externalResourceSet);
 			if (environmentFactoryAdapter != null) {
 				return environmentFactoryAdapter.getEnvironmentFactory();
 			}
-		}
+		} */
 		return new PivotEnvironmentFactory(projectManager, externalResourceSet, null);
 	}
 

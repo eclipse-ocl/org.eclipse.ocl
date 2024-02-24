@@ -73,9 +73,8 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -83,6 +82,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
@@ -760,8 +760,9 @@ public class OCLinEcoreTablesUtils
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
-		EnvironmentFactoryAdapter resourceSetAdapter = OCLInternal.adapt(genModelResourceSet);
-		return resourceSetAdapter.getMetamodelManager();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ThreadLocalExecutor.getEnvironmentFactory(); // adapter.getEnvironmentFactory();
+	//	EnvironmentFactoryAdapter resourceSetAdapter = OCLInternal.adapt(genModelResourceSet);
+		return environmentFactory.getMetamodelManager();
 	}
 
 	protected final boolean useNullAnnotations;
@@ -783,9 +784,11 @@ public class OCLinEcoreTablesUtils
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
-		this.metamodelManager = getMetamodelManager(genPackage);
+		this.environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+	//	this.metamodelManager = getMetamodelManager(genPackage);
 		this.s = new CodeGenString(metamodelManager, useNullAnnotations);
-		this.environmentFactory = metamodelManager.getEnvironmentFactory();
+	//	this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.nonNullModel(getPivotPackage(genPackage));

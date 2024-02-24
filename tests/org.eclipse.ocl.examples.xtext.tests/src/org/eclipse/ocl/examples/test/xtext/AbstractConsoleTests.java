@@ -29,10 +29,10 @@ import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
@@ -117,7 +117,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		}
 
 		@Override
-		protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
+		protected @Nullable EnvironmentFactory/*Adapter*/ createEditor(Composite s1) {
 			EnvironmentFactoryInternal testEnvironmentFactory = new TestEnvironmentFactory();
 			ThreadLocalExecutor.attachEnvironmentFactory(testEnvironmentFactory);
 			return super.createEditor(s1);
