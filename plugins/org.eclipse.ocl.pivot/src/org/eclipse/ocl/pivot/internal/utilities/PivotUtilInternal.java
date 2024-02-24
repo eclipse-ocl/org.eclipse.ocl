@@ -253,10 +253,6 @@ public class PivotUtilInternal //extends PivotUtil
 			ResourceSet asResourceSet = null;
 			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
 				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
-			//	PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-			//	if (metamodelManager != null) {								// The metamodelManager may be missing if a *.oclas is opened by EMF
-			//		return metamodelManager.getEnvironmentFactory();
-			//	}
 				projectManager = ProjectMap.findAdapter(asResourceSet);
 			}
 			if (projectManager == null) {

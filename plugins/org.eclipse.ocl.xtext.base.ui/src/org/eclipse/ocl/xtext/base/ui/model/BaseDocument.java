@@ -31,10 +31,12 @@ import org.eclipse.ocl.pivot.internal.context.EObjectContext;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
+import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -51,10 +53,16 @@ import com.google.inject.Inject;
 public class BaseDocument extends XtextDocument implements ConsoleContext
 {
 	/**
-	 * The derived BaseDocumentLocker assigns the prevailing EnvironmentFactory to the current worker thread.
+	 * The derived BaseDocumentLocker assigns the EnvironmentFactory from the prevailing part thread
+	 * to the current worker thread.
 	 */
 	protected class BaseDocumentLocker extends XtextDocumentLocker
 	{
+		/**
+		 * The part thread on which the BaseEditor created the BaseDocument.
+		 */
+		private @Nullable ThreadLocalExecutor partThread = null;
+		@Deprecated
 		private EnvironmentFactoryInternal environmentFactory = null;
 
 		protected BaseDocumentLocker() {
@@ -62,53 +70,81 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		}
 
 		public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
-			return environmentFactory;
+			return environmentFactory != null ? environmentFactory : partThread != null ? partThread.localBasicGetEnvironmentFactory() : null;
 		}
 
+		@Deprecated
 		public void initEnvironmentFactory(@Nullable EnvironmentFactoryInternal environmentFactory) {
+			assert this.environmentFactory == environmentFactory;
 			this.environmentFactory = environmentFactory;
+		}
+
+		public void initPartThread(@NonNull ThreadLocalExecutor partThread) {
+			this.partThread = partThread;
+			this.environmentFactory = null;
 		}
 
 		@Override
 		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
 		//	System.out.println("[" + Thread.currentThread().getName() + "] modify " + NameUtil.debugSimpleName(this));
-			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
-			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-				if (oldEnvironmentFactory != null) {
-					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
-				}
-				ThreadLocalExecutor.attachEnvironmentFactory(newEnvironmentFactory);
+			ThreadLocalExecutor partThread2 = partThread;
+			ThreadLocalExecutorUI.NeedsInit needsInit;
+			if ((partThread2 != null) && ((needsInit = ThreadLocalExecutorUI.needsInit(partThread2)) != ThreadLocalExecutorUI.NeedsInit.AS_IS)) {
+				InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
+				{
+					protected @Nullable T result = null;
+
+					@SuppressWarnings("null")
+					@Override
+					public T getResult() {
+						return result;
+					}
+
+					@Override
+					public void run() {
+						result = BaseDocumentLocker.super.modify(work);
+					}
+				};
+				ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
+				return callBack.getResult();
 			}
-			try {
+			else {
 				return super.modify(work);
-			}
-			finally {
-				if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
-				}
 			}
 		}
 
 		@Override
 		public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
 		//	System.out.println("[" + Thread.currentThread().getName() + "] readOnly " + NameUtil.debugSimpleName(this));
-			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
-			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-				if (oldEnvironmentFactory != null) {
-					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
-				}
-				ThreadLocalExecutor.attachEnvironmentFactory(newEnvironmentFactory);
+			ThreadLocalExecutor partThread2 = partThread;
+			ThreadLocalExecutorUI.NeedsInit needsInit;
+			if ((partThread2 != null) && ((needsInit = ThreadLocalExecutorUI.needsInit(partThread2)) != ThreadLocalExecutorUI.NeedsInit.AS_IS)) {
+				InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
+				{
+					protected @Nullable T result = null;
+
+					@SuppressWarnings("null")
+					@Override
+					public T getResult() {
+						return result;
+					}
+
+					@Override
+					public void run() {
+						result = BaseDocumentLocker.super.readOnly(work);
+					}
+				};
+				ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
+				return callBack.getResult();
 			}
-			try {
+			else {
 				return super.readOnly(work);
 			}
-			finally {
-				if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
-				}
-			}
+		}
+
+		public void resetPartThread() {
+			this.partThread = null;
+			this.environmentFactory = null;
 		}
 	}
 
@@ -150,27 +186,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		}
 	}
 
-	/*	@Override
-	public void disposeInput() { -- should happen via BaseDocumentProvider.disconnected
-		MetamodelManager metamodelManager = readOnly(new IUnitOfWork<MetamodelManager, XtextResource>()
-			{
-				@Override
-				public MetamodelManager exec(@Nullable XtextResource resource) throws Exception {
-					if (resource != null) {
-						EnvironmentFactoryAdapter adapter = EnvironmentFactoryAdapter.find(resource);
-						if (adapter != null) {
-							return adapter.getMetamodelManager();
-						}
-					}
-					return null;
-				}
-			});
-		if (metamodelManager != null) {
-			metamodelManager.dispose();
-		}
-		super.disposeInput();
-	} */
-
 	@Override
 	protected XtextDocumentLocker createDocumentLocker() {
 		baseStateAccess = new BaseDocumentLocker();
@@ -180,7 +195,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	@Override
 	public void disposeInput() {
 		if (baseStateAccess != null) {
-			baseStateAccess.initEnvironmentFactory(null);
+			baseStateAccess.resetPartThread();
 			baseStateAccess = null;
 		}
 		super.disposeInput();
@@ -227,13 +242,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			public RootCSAttribution exec(@Nullable XtextResource resource) throws Exception {
 				if ((resource != null) && !resource.getContents().isEmpty()) {
 					ElementCS csElement = (ElementCS) resource.getContents().get(0);
-					//					if (csElement != null) {
-					//						@SuppressWarnings("unused")
-					//							Attribution attribution = PivotUtilInternal.getAttribution(csElement);
-					//							if (attribution != null) {
 					return ElementUtil.getDocumentAttribution(csElement);
-					//							}
-					//					}
 				}
 				return null;
 			}
@@ -298,9 +307,10 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		assert baseStateAccess != null;
 		EnvironmentFactoryInternal environmentFactory = baseStateAccess.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			assert environmentFactory != null;
-			baseStateAccess.initEnvironmentFactory(environmentFactory);
+			ThreadLocalExecutor partThread = ThreadLocalExecutorUI.basicGetPartThread();
+			if (partThread != null) {
+				baseStateAccess.initPartThread(partThread);
+			}
 		}
 		super.setInput(resource);
 	}

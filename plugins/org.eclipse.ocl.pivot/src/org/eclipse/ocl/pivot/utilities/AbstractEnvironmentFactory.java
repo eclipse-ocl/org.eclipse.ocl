@@ -168,7 +168,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
-			PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this)
+			PivotUtilInternal.debugPrintln("Create " + toDebugString()
 			+ " " + NameUtil.debugSimpleName(externalResourceSet) + " " + NameUtil.debugSimpleName(asResourceSet));
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
@@ -194,7 +194,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(externalResourceSet));
+			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet));
 		}
 		adapt(externalResourceSet);
 		this.completeEnvironment = createCompleteEnvironment();
@@ -298,18 +298,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public synchronized void attach(@NonNull Object attachOwner) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		assert (environmentFactory == null) || (environmentFactory == this) : ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " should be " + NameUtil.debugSimpleName(environmentFactory);
+	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	assert (environmentFactory == null) || (environmentFactory == this) : ThreadLocalExecutor.getBracketedThreadName() + " " + toDebugString() + " should be " + NameUtil.debugSimpleName(environmentFactory);
 		if (isDisposed()) {
 			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-				ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
+				ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Attach(" + attachCount + ") " + toDebugString() + " " + NameUtil.debugSimpleName(attachOwner));
 			}
 			throw new IllegalStateException(getClass().getName() + " disposed");
 		}
 		attachCount++;
 		attachOwners.add(System.identityHashCode(attachOwner));
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Attach(" + (attachCount-1) + ":" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
+			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Attach(" + (attachCount-1) + ":" + attachCount + ") " + toDebugString() + " " + NameUtil.debugSimpleName(attachOwner));
 		}
 	}
 
@@ -635,7 +635,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public synchronized void detach(@NonNull Object attachOwner) {
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
+			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Detach(" + attachCount + ":" + (attachCount-1) + ") " + toDebugString() + " " + NameUtil.debugSimpleName(attachOwner));
 		}
 		if (isDisposed()) {
 			return;					// Ignore detach after dispose
@@ -643,8 +643,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (attachCount == 0) {
 			throw new IllegalStateException(getClass().getName() + " not attached");
 		}
+		@SuppressWarnings("unused")
 		boolean wasRemoved = attachOwners.remove(Integer.valueOf(System.identityHashCode(attachOwner)));
-		assert wasRemoved;
+	// assert wasRemoved;
 		if (--attachCount <= 0) {
 			dispose();
 		}
@@ -660,7 +661,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void dispose() {
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Dispose(" + attachCount + ") " + NameUtil.debugSimpleName(this));
+			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Dispose(" + attachCount + ") " + toDebugString());
 		}
 		if (isDisposed()) {
 			throw new IllegalStateException(getClass().getName() + " already disposed");
@@ -743,7 +744,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	//	standardLibrary = null;
 	//	completeModel = null;
 		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-		//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
+		//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
 		//		}
 
 		projectManager.unload(asResourceSet);
@@ -756,9 +757,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	protected void finalize() throws Throwable {
-//		PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+//		PivotUtilInternal.debugPrintln("Finalize " + toDebugString());
 		if (liveEnvironmentFactories != null) {
-	PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+			PivotUtilInternal.debugPrintln("Finalize " + toDebugString());
 			List<@NonNull EnvironmentFactory> keySet = new ArrayList<>(liveEnvironmentFactories.keySet());
 			if (!keySet.isEmpty()) {
 				StringBuilder s = new StringBuilder();
@@ -1060,5 +1061,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();
 		}
 		return validationKey2severity2.put(validationKey, severity);
+	}
+
+	/**
+	 * @since 1.20
+	 */
+	public Object toDebugString() {
+		return NameUtil.debugSimpleName(this) + "(" + attachCount + ")";
 	}
 }

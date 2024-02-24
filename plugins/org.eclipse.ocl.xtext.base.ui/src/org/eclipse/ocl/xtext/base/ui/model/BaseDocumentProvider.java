@@ -20,11 +20,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
-import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
 
@@ -56,10 +53,10 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 	}
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			return (EnvironmentFactoryInternal) environmentFactory;
-		}
+	//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	if (environmentFactory != null) {
+	//		return (EnvironmentFactoryInternal) environmentFactory;
+	//	}
 		return getOCL().getEnvironmentFactory();
 	}
 
@@ -72,9 +69,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 	}
 
 	public void initOCL(@NonNull BaseEditor baseEditor) {
-		ThreadLocalExecutorUI.initPart(baseEditor, null);
-		OCLInternal ocl = getOCL();
-		ThreadLocalExecutorUI.initPart(baseEditor, ocl.getEnvironmentFactory());
+		getOCL();
 	}
 
 	@Override

@@ -11,11 +11,12 @@
 package org.eclipse.ocl.xtext.base.ui.utilities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -27,52 +28,105 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * The ThreadLocalExecutorUI enhances ThreadLocalExecutor to maintain a distinct ThreadLocal context for each
- * active open WorkbenchPart.
+ * The ThreadLocalExecutorUI enhances ThreadLocalExecutor to support the main/UI thread and delegate to a
+ * a distinct ThreadLocalExecutor context for each WorkbenchPart. If there is no known WorkbenchPart
+ * the inherited just-a-thread functionality is used.
  *
  * @since 1.14
  */
 public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartListener
 {
 	/**
-	 * Establish the initActivePart to initEnvironmentfactory at a time when the initActivePart may not be consistently
-	 * activated; i.e. while responding to an action in another part.
-	 *
-	 * If initActivePart is null the prevailing activePart is used to provide support for OCL-blind applications
-	 * such as the Sample Ecore Editor.
-	 *
-	 * If initEnvironmentfactory is null a new activePart will be defining a new initEnvironmentfactory later.
+	 * The null part thread for use when no part has been opened.
 	 */
-	public static void initPart(@Nullable IWorkbenchPart initActivePart, @Nullable EnvironmentFactoryInternal initEnvironmentfactory) {
-		assert (initActivePart != null) || (initEnvironmentfactory != null);
+	private static final @Nullable ThreadLocalExecutor NOT_A_PART_THREAD = null;
+
+	/**
+	 * Return the ThreadLocalExecutor for the activePart. Returns null if on a worker thread or if
+	 * no IWorkbenchPart is active.
+	 */
+	public static @Nullable ThreadLocalExecutor basicGetPartThread() {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		if (threadLocalExecutor instanceof ThreadLocalExecutorUI) {
-			((ThreadLocalExecutorUI)threadLocalExecutor).localInitPart(initActivePart, initEnvironmentfactory);
+			return ((ThreadLocalExecutorUI)threadLocalExecutor).activePartThread;
 		}
+		return null;
 	}
 
-	private @Nullable IWorkbenchPart activePart = null;;
-
 	/**
-	 * An IWorkbenchPart to EnvironmentFactoryInternal binding is present for every OCL-using IWorkbenchPart.
-	 * The binding is explicitly established for OCL-aware IWorkbenchParts by calls of initPart and destroyed by partClosed.
-	 * The binding is implicitly established for OCL-blind IWorkbenchParts by calls of initPart from lazy OCL creation and destroyed by a partClosed.
-	 */
-	protected final @NonNull Map<@NonNull IWorkbenchPart, @NonNull EnvironmentFactoryInternal> part2environmentFactory = new HashMap<>();
-
-	public ThreadLocalExecutorUI() {}
-
-	/**
-	 * Close all editors using EnvironmentFactory instances. THs method is intended solely for use at the end of tests
+	 * Close all editors using EnvironmentFactory instances. This method is intended solely for use at the end of tests
 	 * for which an auto-editor created by the debugger may be hard to locate.
 	 */
 	public static void closeEditors() {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		((ThreadLocalExecutorUI)threadLocalExecutor).localCloseEditors();
 	}
+
+	/**
+	 * Initialize the partThread for initPart to ensure that an EnvironmentFactory created by the callBack is
+	 * attached to the initPart rather than the activePart. This is typically invoked by an OCL-aware part such
+	 * as the BaseEditor to configure its EnvironmentFactory while executing on behalf of whichever part provides
+	 * the trigger such as an Open OCL Editor menu action.
+	 */
+	public static void init(@NonNull IWorkbenchPart initPart, @NonNull InitWrapperCallBack<?,?> callBack) {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		((ThreadLocalExecutorUI)threadLocalExecutor).localInit(initPart, callBack);
+	}
+	/**
+	 * Execute the callBack after establishing that the initPartThread is for the active thread. This is typically
+	 * invoked by an OCL-aware part such as the BaseEditor to establish the relevant init EnvironmentFactory after
+	 * construction of the initPartThread has commenced but before it is activated.
+	 * @param needsInit
+	 */
+	public static void init(@NonNull ThreadLocalExecutor initPartThread, @NonNull InitWrapperCallBack<?,?> callBack, @NonNull NeedsInit needsInit) {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		threadLocalExecutor.localInit(initPartThread, callBack, needsInit);
+	}
+
+	/**
+	 * Return true if OCL activity for partThread requires wrapping to enforce partThread
+	 * as the prevailing context. If the current thread has no EnvironmentFactory, it is inferred
+	 * from the partThread.
+	 */
+	public static @NonNull NeedsInit needsInit(@NonNull ThreadLocalExecutor partThread) {
+		ThreadLocalExecutor threadLocalExecutor = ThreadLocalExecutorUI.get();
+		if (!(threadLocalExecutor instanceof ThreadLocalExecutorUI)) {							// Ordinary worker thread
+			return NeedsInit.ATTACH_FROM_PART_THREAD;
+		}
+		else if (((ThreadLocalExecutorUI)threadLocalExecutor).activePartThread == partThread) {	// Current part thread
+			return NeedsInit.AS_IS;
+		}
+		else {
+			return NeedsInit.WRAP_WITH_PART_THREAD;
+		}
+	}
+
+	/**
+	 * The overriding active part established by init() for the duration of an initialization such as
+	 * openEditor before the relevant editor part is opened. null when no override in place.
+	 */
+	private @Nullable ThreadLocalExecutor initPartThread = null;
+
+	/**
+	 * The most recently partActivated(), null if partDeactivated.
+	 */
+	private @Nullable ThreadLocalExecutor activatedPartThread = NOT_A_PART_THREAD;
+
+	/**
+	 * The currently active part which is initPart else activatedPart.
+	 */
+	private @Nullable ThreadLocalExecutor activePartThread = NOT_A_PART_THREAD;
+
+	/**
+	 * An IWorkbenchPart to EnvironmentFactoryInternal binding is present for every OCL-using IWorkbenchPart.
+	 * The binding is explicitly established for OCL-aware IWorkbenchParts by calls of initPart and destroyed by partClosed.
+	 * The binding is implicitly established for OCL-blind IWorkbenchParts by calls of initPart from lazy OCL creation and destroyed by a partClosed.
+	 */
+	protected final @NonNull Map<@NonNull IWorkbenchPart, @NonNull ThreadLocalExecutor> part2partThread = new WeakHashMap<>();	// Weak needed in case part never opened
 
 	@Override
 	protected @NonNull ThreadLocalExecutor createInstance() {
@@ -85,18 +139,102 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 			IPartService partService = activeWorkbenchWindow.getPartService();
 			if (partService != null) {
 				partService.addPartListener(this);
+				IWorkbenchPart activePart = partService.getActivePart();
+				if (activePart != null) {
+					partActivated(activePart);
+				}
 			}
 		}
+	//	debugState();
 		return this;
+	}
+
+/*	@Override
+	protected void debugState(@NonNull StringBuilder s) {
+		super.debugState(s);
+		s.append("\n\tinitPartThread = " + String.valueOf(initPartThread));
+		s.append("\n\tactivatedPartThread = " + String.valueOf(activatedPartThread));
+		s.append("\n\tactivePartThread = " + String.valueOf(activePartThread));
+		for (Entry<@NonNull IWorkbenchPart, @NonNull ThreadLocalExecutorPart> entry : part2partThread.entrySet()) {
+			IWorkbenchPart part = entry.getKey();
+			ThreadLocalExecutorPart partThread = entry.getValue();
+			s.append("\n\t" + NameUtil.debugSimpleName(part) + " => " + partThread.toString());
+		}
+	} */
+
+	protected synchronized @NonNull ThreadLocalExecutor getPartThread(@NonNull IWorkbenchPart part) {
+		ThreadLocalExecutor partThread = part2partThread.get(part);
+		if (partThread == null) {
+			String threadName = "[" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(part) + "]";
+			partThread = new ThreadLocalExecutor(threadName) {
+			/*	@Override
+				public void debugState(@NonNull StringBuilder s) {
+				//	super.debugState(s);
+				} */
+			};
+			part2partThread.put(part, partThread);
+		}
+		return partThread;
 	}
 
 	@Override
 	protected @NonNull String getThreadName() {
-		return "[" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(activePart) + "]";
+		StringBuilder s = new StringBuilder();
+		if (activatedPartThread != null) {
+			s.append(activatedPartThread.getName());
+		}
+		else {
+			s.append("[");
+			s.append(Thread.currentThread().getName());
+			s.append("]");
+		}
+		return s.toString();
+	}
+
+	@Override
+	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+		if (activePartThread != null) {
+			activePartThread.localAttachEnvironmentFactory(newEnvironmentFactory);
+		//	debugState();
+		}
+		else {
+			super.localAttachEnvironmentFactory(newEnvironmentFactory);
+		}
+	}
+
+	@Override
+	public @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
+		if (activePartThread != null) {
+			return activePartThread.localBasicGetEnvironmentFactory();
+		}
+		else {
+			return super.localBasicGetEnvironmentFactory();
+		}
+	}
+
+	@Override
+	public @Nullable Executor localBasicGetExecutor() {
+		if (activePartThread != null) {
+			return activePartThread.localBasicGetExecutor();
+		}
+		else {
+			return super.localBasicGetExecutor();
+		}
+	}
+
+	@Override
+	public void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		if (activePartThread != null) {
+			activePartThread.localDetachEnvironmentFactory(environmentFactory);
+		}
+		else {
+			super.localDetachEnvironmentFactory(environmentFactory);
+		}
 	}
 
 	private void localCloseEditors() {
-		for (@NonNull IWorkbenchPart part : new ArrayList<>(part2environmentFactory.keySet())) {
+		assert initPartThread == null;
+		for (@NonNull IWorkbenchPart part : new ArrayList<>(part2partThread.keySet())) {
 			if (part instanceof IEditorPart) {
 				IEditorPart editorPart = (IEditorPart)part;
 				editorPart.getSite().getPage().closeEditor(editorPart, false);
@@ -104,107 +242,138 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		}
 	}
 
-	protected void localInitPart(@Nullable IWorkbenchPart initActivePart, @Nullable EnvironmentFactoryInternal initEnvironmentfactory) {
-		if (initEnvironmentfactory != basicGetEnvironmentFactory()) {			// == if a late not-active init
-			setEnvironmentFactory(null);
+	/**
+	 * Initialize the initPart after ensuring that an EnvironmentFactory created by the callBack is attached
+	 * to the initPart rather than the activePart. THis is typically invoked by an OCL-aware part such as the
+	 * BaseEditor to configure its EnvironmentFactory while executing on behalf of whichever part provides
+	 * the trigger such as an Open OCL Editor menu action.
+	 * @throws PartInitException
+	 */
+	public void localInit(@NonNull IWorkbenchPart initPart, @NonNull InitWrapperCallBack<?,?> callBack) {//throws PartInitException {
+		ThreadLocalExecutor initPartThread = getPartThread(initPart);
+		localInit(initPartThread, callBack, NeedsInit.WRAP_WITH_PART_THREAD);
+	}
+	@Override
+	public void localInit(@NonNull ThreadLocalExecutor initPartThread, @NonNull InitWrapperCallBack<?,?> callBack, @NonNull NeedsInit needsInit) {
+	//	assert activePart != NOT_A_PART_THREAD;			// First init is from NOT_A_PART_THREAD
+		if (needsInit == NeedsInit.WRAP_WITH_PART_THREAD) {
+			assert this.activePartThread == this.activatedPartThread;
+			ThreadLocalExecutor savedActivePartThread = this.activePartThread;
+			this.activePartThread = this.initPartThread = initPartThread;
+			//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+			callBack.run();
+			this.initPartThread = null;
+			this.activePartThread = savedActivePartThread;
+		//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
 		}
-		if (initActivePart == null) {			// If implicit OCL-bland init
-			initActivePart = this.activePart;
-			assert initActivePart != null;
-		}
-		if (initEnvironmentfactory != null) {
-			EnvironmentFactoryInternal oldEnvironmentFactory = part2environmentFactory.put(initActivePart, initEnvironmentfactory);
-			assert oldEnvironmentFactory == null;
-			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Init [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(initActivePart) + "] " + toString());
-			}
+		else {
+			super.localInit(initPartThread, callBack, needsInit);
 		}
 	}
 
 	@Override
-	protected void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
-		super.localAttachEnvironmentFactory(newEnvironmentFactory);
-		if (Display.getCurrent() != null) {
-			getClass();
+	public void localRemoveEnvironmentFactory() {
+		if (activePartThread != null) {
+			activePartThread.localRemoveEnvironmentFactory();
+		}
+		else {
+			super.localRemoveEnvironmentFactory();
 		}
 	}
 
 	@Override
-	protected void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
-		super.localDetachEnvironmentFactory(environmentFactory);
-		if (Display.getCurrent() != null) {
-			getClass();
+	public synchronized void localReset() {
+		if (activePartThread != null) {
+			activePartThread.localReset();
+		}
+		else {
+			super.localReset();
 		}
 	}
 
 	@Override
-	protected synchronized void localReset() {
-		IWorkbenchPart activePart2 = activePart;
-		if (activePart2 != null) {
-			part2environmentFactory.remove(activePart2);
+	public void localSetExecutor(@Nullable Executor executor) {
+		if (activePartThread != null) {
+			activePartThread.localSetExecutor(executor);
 		}
-		super.localReset();
+		else {
+			super.localSetExecutor(executor);
+		}
 	}
 
 	@Override
 	public void partActivated(IWorkbenchPart newActivePart) {
+		assert initPartThread == null;
 		assert newActivePart != null;
-		EnvironmentFactoryInternal environmentFactory = part2environmentFactory.get(newActivePart);
-		setEnvironmentFactory(environmentFactory);
-		EnvironmentFactory partEnvironmentFactory = newActivePart.getAdapter(EnvironmentFactory.class);
-		if ((partEnvironmentFactory == null) && (environmentFactory != null)) {		// OCL-blind editor
-			environmentFactory.detach(this);
-		}
+		ThreadLocalExecutor newPartThread = getPartThread(newActivePart);
+		assert newPartThread != null;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partActivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(newActivePart) + "] " + toString());
 		}
-		activePart = newActivePart;
+		this.activatedPartThread = newPartThread;
+		this.activePartThread = newPartThread;
+	//	debugState();
 	}
 
 	@Override
 	public void partBroughtToTop(IWorkbenchPart part) {
+		assert initPartThread == null;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partBroughtToTop [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(part) + "] " + toString());
 		}
+	//	debugState();
 	}
 
 	@Override
 	public void partClosed(IWorkbenchPart oldOpenPart) {
+		assert initPartThread == null;
 		assert oldOpenPart != null;
-		assert oldOpenPart != activePart;
+		assert oldOpenPart != activatedPartThread;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partClosed [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(oldOpenPart) + "] " + toString());
 		}
 		@SuppressWarnings("unused")
-		EnvironmentFactoryInternal oldEnvironmentFactory = part2environmentFactory.remove(oldOpenPart);
+		ThreadLocalExecutor oldPartThread = part2partThread.remove(oldOpenPart);
+	//	assert oldPartThread != null;				-- may not have been observed to open e.g. ProblemsView
+		activePartThread = activatedPartThread;
+	//	debugState();
 	}
 
 	@Override
 	public void partDeactivated(IWorkbenchPart oldActivePart) {
+		assert initPartThread == null;
 		assert oldActivePart != null;
+	//	assert activePartThread != NOT_A_PART_THREAD;
+		if (activePartThread != NOT_A_PART_THREAD) {		// May never have been activated
+			assert activePartThread == part2partThread.get(oldActivePart);
+		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partDeactivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(oldActivePart) + "] " + toString());
 		}
-		EnvironmentFactoryInternal environmentFactory = localBasicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			EnvironmentFactory partEnvironmentFactory = oldActivePart.getAdapter(EnvironmentFactory.class);
-			part2environmentFactory.put(oldActivePart, environmentFactory);    // part2environmentFactory persists for an activate
-			if (partEnvironmentFactory == null) {		// OCL-blind editor
-				environmentFactory.attach(this);
-			}
-		}
-		else {
-			part2environmentFactory.remove(oldActivePart);
-		}
-		activePart = null;
-		setEnvironmentFactory(null);
-
+		this.activatedPartThread = NOT_A_PART_THREAD;
+		this.activePartThread = NOT_A_PART_THREAD;
+	//	debugState();
 	}
 
 	@Override
 	public void partOpened(IWorkbenchPart newOpenPart) {
+		assert newOpenPart != null;
+		assert initPartThread == null;
+		getPartThread(newOpenPart);
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partOpened [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(newOpenPart) + "] " + toString());
+		}
+	//	debugState();
+	}
+
+	@Override
+	public void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
+		assert initPartThread == null;
+		if (activePartThread != null) {
+			activePartThread.setEnvironmentFactory(newEnvironmentFactory);
+		}
+		else {
+			super.setEnvironmentFactory(newEnvironmentFactory);
 		}
 	}
 }
