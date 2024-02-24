@@ -238,7 +238,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	protected FilteredCheckboxTree filteredValidatableNodesTree;
 	protected FilteredCheckboxTree filteredConstrainingNodesTree;
 
-	private final @NonNull ValidityViewRefreshJob refreshJob = new ValidityViewRefreshJob();
+//	private final @NonNull ValidityViewRefreshJob refreshJob = new ValidityViewRefreshJob();
 
 	protected final @NonNull IDEValidityManager validityManager;
 
@@ -320,7 +320,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private @Nullable ChangeSelectionJob setInputJob = null;
 
 	public ValidityView() {
-		validityManager = new IDEValidityManager(refreshJob);
+		validityManager = new IDEValidityManager();
 		modelResourceSet = new ResourceSetImpl();
 	}
 
@@ -547,6 +547,9 @@ public class ValidityView extends ViewPart implements ISelectionListener
 				selectionChanged(activeEditor, selectionFromProvider);
 			}
 		}
+
+		@NonNull ValidityViewRefreshJob refreshJob = new ValidityViewRefreshJob();
+		validityManager.setRefreshJob(refreshJob);
 		refreshJob.initViewers(this, validatableNodesViewer, constrainingNodesViewer);
 		Dialog.applyDialogFont(parent);
 

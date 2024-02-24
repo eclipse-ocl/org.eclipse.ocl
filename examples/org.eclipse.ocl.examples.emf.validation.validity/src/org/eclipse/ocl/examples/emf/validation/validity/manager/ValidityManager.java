@@ -359,7 +359,7 @@ public class ValidityManager
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, lastInput instanceof ResourceSet ? (ResourceSet)lastInput : null);
 		}
 		return environmentFactory;
 	}
@@ -621,6 +621,7 @@ public class ValidityManager
 		lastInput = newInput;
 
 		if (newInput == null) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
 			oldResources.clear();
 			model = null;
 			return;
@@ -672,6 +673,7 @@ public class ValidityManager
 			return;
 		}
 
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		monitor.worked(ValidityModel.WORK_FOR_CLEAN_UP);
 		monitor.setTaskName("Creating model");
 		ValidityModel model2 = model = createModel(newResources);

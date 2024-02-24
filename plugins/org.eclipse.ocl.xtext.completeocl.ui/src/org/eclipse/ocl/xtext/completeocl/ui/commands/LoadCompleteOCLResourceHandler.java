@@ -152,8 +152,9 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				ThreadLocalExecutor.resetEnvironmentFactory();		// Reset in case last thread user (validation job) not yet finalized
-				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+			//	ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 				processedResourcesReturn = processResources();
+			//	ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				Display.getDefault().asyncExec(new Runnable()
 				{
 					@Override
@@ -161,12 +162,12 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 						okPressed();
 					}
 				});
-				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+			//	ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				return Status.OK_STATUS;
 			}
 
 			protected boolean processResources() {
-			//	OCLAdapter oclAdapter = OCLAdapter.getAdapter(resourceSet);
+				// Use EnvironmentFactory created on main part-thread
 				CompleteOCLLoader helper = new CompleteOCLLoader(environmentFactory) {
 					@Override
 					protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
@@ -181,33 +182,38 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					}
 				};
 
-				if (!helper.loadMetamodels()) {
-					return false;
-				}
-				//
-				//	Load all the documents
-				//
-				for (URI oclURI : uris) {
-					assert oclURI != null;
-					try {
-						if (!helper.loadDocument(oclURI)) {
-							return false;
-						};
-					}
-					catch (Throwable e) {
-						IStatus status = new Status(IStatus.ERROR, CompleteOCLUiModule.PLUGIN_ID, e.getLocalizedMessage(), e);
-						Display.getDefault().asyncExec(new Runnable()
-						{
-							@Override
-							public void run() {
-								ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "'", status);
-							}
-						});
+				try {
+					if (!helper.loadMetamodels()) {
 						return false;
 					}
+					//
+					//	Load all the documents
+					//
+					for (URI oclURI : uris) {
+						assert oclURI != null;
+						try {
+							if (!helper.loadDocument(oclURI)) {
+								return false;
+							};
+						}
+						catch (Throwable e) {
+							IStatus status = new Status(IStatus.ERROR, CompleteOCLUiModule.PLUGIN_ID, e.getLocalizedMessage(), e);
+							Display.getDefault().asyncExec(new Runnable()
+							{
+								@Override
+								public void run() {
+									ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "'", status);
+								}
+							});
+							return false;
+						}
+					}
+					helper.installPackages();
+					return true;
 				}
-				helper.installPackages();
-				return true;
+				finally {
+					helper.dispose();
+				}
 			}
 
 			public boolean getProcessedResourcesReturn() {
@@ -226,7 +232,8 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			super(parent, domain);
 			this.parent = parent;
 			this.resourceSet = resourceSet;
-			// Ensure EnvironmentFactory created on main thread (Bug 574041)
+			// Ensure EnvironmentFactory created on main part-thread (Bug 574041) so that load resources remain loaded
+			//  until invoking EMF application terminates.
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);

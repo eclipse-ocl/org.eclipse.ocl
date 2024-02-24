@@ -101,22 +101,25 @@ public class IDEValidityManager extends ValidityManager
 	{
 		@Override
 		public void notifyChanged(Notification notification) {
-			Object target = notification.getNotifier();
-			if (target instanceof AbstractNode) {
-				int event = notification.getEventType();
-				Object feature = notification.getFeature();
-				if (event == Notification.SET) {
-					if (feature == ValidityPackage.Literals.ABSTRACT_NODE__ENABLED) {
-						refreshJob.add((AbstractNode) target);
-					}
-					else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__GRAYED) {
-						refreshJob.add((AbstractNode) target);
-					}
-					else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__WORST_RESULT) {
-						refreshJob.add((AbstractNode) target);
-					}
-					else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__LABEL) {
-						refreshJob.add((AbstractNode) target);
+			ValidityViewRefreshJob refreshJob2 = refreshJob;
+			if (refreshJob2 != null) {
+				Object target = notification.getNotifier();
+				if (target instanceof AbstractNode) {
+					int event = notification.getEventType();
+					Object feature = notification.getFeature();
+					if (event == Notification.SET) {
+						if (feature == ValidityPackage.Literals.ABSTRACT_NODE__ENABLED) {
+							refreshJob2.add((AbstractNode) target);
+						}
+						else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__GRAYED) {
+							refreshJob2.add((AbstractNode) target);
+						}
+						else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__WORST_RESULT) {
+							refreshJob2.add((AbstractNode) target);
+						}
+						else if (feature == ValidityPackage.Literals.ABSTRACT_NODE__LABEL) {
+							refreshJob2.add((AbstractNode) target);
+						}
 					}
 				}
 			}
@@ -127,27 +130,30 @@ public class IDEValidityManager extends ValidityManager
 	{
 		@Override
 		public void notifyChanged(Notification notification) {
-			Object target = notification.getNotifier();
-			if (target instanceof Result) {
-				Result result = (Result)target;
-				int event = notification.getEventType();
-				Object feature = notification.getFeature();
-				if (event == Notification.SET) {
-					if (feature == ValidityPackage.Literals.RESULT__SEVERITY) {
-						ResultConstrainingNode resultConstrainingNode = result.getResultConstrainingNode();
-						if (resultConstrainingNode != null) {
-							refreshJob.add(resultConstrainingNode);
-							ConstrainingNode parent = resultConstrainingNode.getParent();
-							if (parent != null) {
-								refreshJob.add(parent);
+			ValidityViewRefreshJob refreshJob2 = refreshJob;
+			if (refreshJob2 != null) {
+				Object target = notification.getNotifier();
+				if (target instanceof Result) {
+					Result result = (Result)target;
+					int event = notification.getEventType();
+					Object feature = notification.getFeature();
+					if (event == Notification.SET) {
+						if (feature == ValidityPackage.Literals.RESULT__SEVERITY) {
+							ResultConstrainingNode resultConstrainingNode = result.getResultConstrainingNode();
+							if (resultConstrainingNode != null) {
+								refreshJob2.add(resultConstrainingNode);
+								ConstrainingNode parent = resultConstrainingNode.getParent();
+								if (parent != null) {
+									refreshJob2.add(parent);
+								}
 							}
-						}
-						ResultValidatableNode resultValidatableNode = result.getResultValidatableNode();
-						if (resultValidatableNode != null) {
-							refreshJob.add(resultValidatableNode);
-							ValidatableNode parent = resultValidatableNode.getParent();
-							if (parent != null) {
-								refreshJob.add(parent);
+							ResultValidatableNode resultValidatableNode = result.getResultValidatableNode();
+							if (resultValidatableNode != null) {
+								refreshJob2.add(resultValidatableNode);
+								ValidatableNode parent = resultValidatableNode.getParent();
+								if (parent != null) {
+									refreshJob2.add(parent);
+								}
 							}
 						}
 					}
@@ -158,10 +164,9 @@ public class IDEValidityManager extends ValidityManager
 
 	private final @NonNull AbstractNodeAdapter nodeAdapter = new AbstractNodeAdapter();
 	private final @NonNull ResultAdapter resultAdapter = new ResultAdapter();
-	private final @NonNull ValidityViewRefreshJob refreshJob;
+	private @Nullable ValidityViewRefreshJob refreshJob = null;
 
-	public IDEValidityManager(@NonNull ValidityViewRefreshJob refreshJob) {
-		this.refreshJob = refreshJob;
+	public IDEValidityManager() {
 		//		CREATE_CONSTRAINING.setState(true);
 		//		CREATE_RESULT.setState(true);
 		//		CREATE_VALIDATABLE.setState(true);
@@ -201,7 +206,14 @@ public class IDEValidityManager extends ValidityManager
 		validationJob.schedule();
 	}
 
-	public void redraw() {
-		refreshJob.add(null);
+	public void redraw() {				// confusing name for schedule validation
+		ValidityViewRefreshJob refreshJob2 = refreshJob;
+		if (refreshJob2 != null) {
+			refreshJob2.add(null);
+		}
+	}
+
+	public void setRefreshJob(@NonNull ValidityViewRefreshJob refreshJob) {
+		this.refreshJob = refreshJob;
 	}
 }

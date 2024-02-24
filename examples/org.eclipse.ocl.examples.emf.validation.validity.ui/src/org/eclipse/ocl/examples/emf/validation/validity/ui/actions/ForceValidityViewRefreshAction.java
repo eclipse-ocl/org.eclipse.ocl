@@ -25,7 +25,7 @@ public class ForceValidityViewRefreshAction extends Action
 	protected final @NonNull IDEValidityManager validityManager;
 
 	protected final @NonNull ValidityView validityView;
-	
+
 	public ForceValidityViewRefreshAction(@NonNull IDEValidityManager validityManager, @NonNull ValidityView validityView) {
 		super(ValidityUIMessages.ValidityView_Action_ForceRefresh_Title);
 		this.validityManager = validityManager;
@@ -38,6 +38,7 @@ public class ForceValidityViewRefreshAction extends Action
 	@Override
 	public void run() {
 		validityManager.forceRefresh();
+		validityManager.redraw();
 //		validityView.getConstrainingNodesViewer().refresh();
 //		validityView.getValidatableNodesViewer().refresh();
 	}

@@ -261,7 +261,9 @@ public abstract class AbstractValidityTestCase extends TestCase
 
 	protected void initValidityManager(@Nullable ValidityManager validityManager) {
 		if (validityManager == null) {
-			validityManager = new IDEValidityManager(new ValidityViewRefreshJob());
+			IDEValidityManager ideValidityManager = new IDEValidityManager();
+			ideValidityManager.setRefreshJob(new ValidityViewRefreshJob());
+			validityManager = ideValidityManager;
 		}
 		this.validityManager = validityManager;
 		validityManager.setInput(ocl.getResourceSet());
