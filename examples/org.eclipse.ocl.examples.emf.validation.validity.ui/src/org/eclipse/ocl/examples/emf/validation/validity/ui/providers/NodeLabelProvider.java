@@ -283,7 +283,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		} else {
 			s.append(ValidityMessages.ValidityView_Constraints_LabelProvider_ExpressionNotAvailable);
 		}
-		s.append("\nLocation: ");
+		s.append("\n");
 		if (resource != null) {
 			s.append(resource.getURI().toString());
 		} else {
