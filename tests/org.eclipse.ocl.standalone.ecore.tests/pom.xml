@@ -57,6 +57,8 @@
     <maven-clean-version>2.5</maven-clean-version>
     <maven-surefire-version>2.17</maven-surefire-version>
     <maven-toolchains-version>1.1</maven-toolchains-version>
+
+    <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>
   </properties>
 
   <build>
