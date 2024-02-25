@@ -12,8 +12,27 @@
     <repository location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.emf.transaction" version="0.0.0"/>
+    <!--repository location="https://download.eclipse.org/modeling/emf/validation/updates/interim"/-->
+    <repository location="https://download.eclipse.org/modeling/emf/transaction/updates/releases/R202208110935"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.validation" version="0.0.0"/>
     <repository location="https://download.eclipse.org/modeling/emf/validation/updates/releases/R202305230712"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.draw2d" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/tools/gef/classic/releases/latest"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.gmf.runtime.notation.sdk.feature.group" version="0.0.0"/>
+    <!--repository location="https://download.eclipse.org/modeling/emf/validation/updates/interim"/-->
+    <repository location="https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202211151334"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.gmf.feature.group" version="0.0.0"/>
+    <!--repository location="https://download.eclipse.org/modeling/emf/validation/updates/interim"/-->
+    <repository location="https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202311130907"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
@@ -22,8 +41,8 @@
     <repository location="https://download.eclipse.org/modeling/mdt/uml2/updates/releases/latest"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-    <unit id="org.eclipse.draw2d" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/tools/gef/classic/releases/latest"/>
+    <unit id="org.eclipse.sirius.runtime.feature.group" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/sirius/updates/releases/7.3.0/2023-03"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>

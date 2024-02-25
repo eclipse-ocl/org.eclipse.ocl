@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
@@ -73,6 +74,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.18
 	 */
 	public static boolean SKIP_CHECK_BAD_REFERENCES = false;
+
+	private static final Logger logger = Logger.getLogger(ASResourceImpl.class);
 
 	/**
 	 * An adapter implementation for tracking resource modification. This is only in use if the
@@ -277,11 +280,28 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	/**
 	 * Overridden to ensure that the ResourceFactoryRegistry ExtensionToFactoryMap entries for AS file extensions
-	 * have ASResourceFactory instnaces that are able to fall back from AS extension to CS extension using the
+	 * have ASResourceFactory instances that are able to fall back from AS extension to CS extension using the
 	 * resourceSet as the AS ResourceSet for OCL parsing.
+	 * <.P
+	 * As a workaround for Sirius issues wrt Bug 582958, addition of an ASResource to a ResourceSet
+	 * containing a *.aird file is suppressed and an explanatory note added to the error log.
 	 */
 	@Override
 	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+		if (resourceSet != null) {
+			for (Resource resource : resourceSet.getResources()) {
+				if (!(resource instanceof ASResource)) {
+					URI resourceURI = resource.getURI();
+					if ((resourceURI != null) && "aird".equals(resourceURI.fileExtension())) {
+						resourceSet.getResources().remove(this);
+						logger.warn("Excluded " + resource.getClass().getSimpleName() + " \"" + uri + "\" from Sirius ResourceSet.\n" +
+						" To prevent repeated occurrence, open \"" + resourceURI + "\" with a text editor\n" +
+						" and delete the <semanticResources> line for \"" + uri + "\".");
+						return notifications;
+					}
+				}
+			}
+		}
 		NotificationChain notificationChain = super.basicSetResourceSet(resourceSet, notifications);
 		if (resourceSet != null) {
 			String fileExtension = getURI().fileExtension();

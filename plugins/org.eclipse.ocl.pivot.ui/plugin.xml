@@ -144,4 +144,7 @@
       <factory uri="http://www.eclipse.org/OCL/Import"
             class="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory$Reflective"/>
    </extension>
+   <extension point="org.eclipse.sirius.resourceStrategy">
+      <resourceStrategy class="org.eclipse.ocl.pivot.ui.OCLNotAResourceStrategyImpl"/>
+   </extension>
 </plugin>
