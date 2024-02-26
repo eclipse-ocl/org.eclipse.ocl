@@ -27,6 +27,10 @@ public class PivotMessages
 	 */
 	public static String AmbiguousModelType;
 	public static String AmbiguousOperation;
+	/**
+	 * @since 1.20
+	 */
+	public static String BadASResourceForSirius;
 	public static String ConvertibleValueRequired;
 	public static String EObjectRequired;
 	public static String EmptyCollection;

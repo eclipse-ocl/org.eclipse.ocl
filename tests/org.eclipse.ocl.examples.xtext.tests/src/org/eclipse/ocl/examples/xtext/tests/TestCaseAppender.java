@@ -18,7 +18,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
 /**
- * If a TestCaseAppender is installed duiring a test, any console output causes a test failure.
+ * If a TestCaseAppender is installed during a test, any console output causes a test failure.
  */
 public final class TestCaseAppender extends ConsoleAppender
 {
@@ -26,12 +26,12 @@ public final class TestCaseAppender extends ConsoleAppender
 	public static TestCaseAppender INSTANCE = new TestCaseAppender();
 
 	private boolean installed = false;
-	
+
 	private TestCaseAppender() {
-		super(new SimpleLayout(), SYSTEM_OUT); 
+		super(new SimpleLayout(), SYSTEM_OUT);
 		setName("TestCaseAppender");
 	}
-	
+
 	@Override
 	public void append(LoggingEvent event) {
 		if (event.getLevel().isGreaterOrEqual(Level.INFO)) {
@@ -42,14 +42,14 @@ public final class TestCaseAppender extends ConsoleAppender
 		}
 //		super.append(event);
 	}
-	
+
 	public void install() {
 		if (!installed) {
 			rootLogger.addAppender(this);
 			installed = true;
 		}
 	}
-	
+
 	public void uninstall() {
 		rootLogger.removeAppender(this);
 		installed = false;

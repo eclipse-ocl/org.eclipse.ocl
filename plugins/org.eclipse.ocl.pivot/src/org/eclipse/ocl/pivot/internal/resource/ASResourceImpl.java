@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -42,9 +43,11 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -294,9 +297,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					URI resourceURI = resource.getURI();
 					if ((resourceURI != null) && "aird".equals(resourceURI.fileExtension())) {
 						resourceSet.getResources().remove(this);
-						logger.warn("Excluded " + resource.getClass().getSimpleName() + " \"" + uri + "\" from Sirius ResourceSet.\n" +
-						" To prevent repeated occurrence, open \"" + resourceURI + "\" with a text editor\n" +
-						" and delete the <semanticResources> line for \"" + uri + "\".");
+						String message = StringUtil.bind(PivotMessages.BadASResourceForSirius, getClass().getSimpleName(), resourceURI.toString(), uri.toString());
+						logger.error(message);
+						resource.getErrors().add(new XMIException(message));
 						return notifications;
 					}
 				}

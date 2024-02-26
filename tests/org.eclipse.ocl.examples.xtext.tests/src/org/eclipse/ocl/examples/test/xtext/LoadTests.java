@@ -17,7 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Appender;
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -34,6 +36,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
@@ -57,10 +60,12 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -692,6 +697,14 @@ public class LoadTests extends XtextTestCase
 		return csResource;
 	}
 
+	public Resource doLoad_URI(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
+		Resource resource = ocl.getResourceSet().getResource(inputURI, true);
+		assertNoResourceErrors("Load failed", resource);
+		assertNoUnresolvedProxies("Unresolved proxies", resource);
+		assertNoValidationErrors("Validation errors", resource.getContents().get(0));
+		return resource;
+	}
+
 	protected void initializeExtraURIMappings(@NonNull ResourceSet resourceSet) {
 	}
 
@@ -1240,6 +1253,67 @@ public class LoadTests extends XtextTestCase
 		UMLPackage.eINSTANCE.getClass();
 		doLoad(ocl, getTestModelURI("models/uml/Bug580143uml.ocl"));
 		ocl.dispose();
+	}
+
+	/**
+	 * Verifies that adding an ASREsource to an aird-containing EsourceSt fails with REsource and log errors.
+	 * @throws IOException
+	 */
+	public void testLoad_Bug582958() throws IOException {
+		OCL ocl = createOCLWithProjectMap();
+		String testEcoreContents =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n"
+				+ "    name=\"p\" nsURI=\"p\" nsPrefix=\"p\"/>\n"
+				+ "\n";
+		InputStream ecoreStream = new URIConverter.ReadableInputStream(testEcoreContents, "UTF-8");
+		URI ecoreFileURI = getTestFileURI("Bug582958.ecore", ecoreStream);
+		String testOCLContents =
+				"import 'Bug582958.ecore'\n"
+				+ "package p\n"
+				+ "endpackage\n";
+		InputStream oclStream = new URIConverter.ReadableInputStream(testOCLContents, "UTF-8");
+		URI oclFileURI = getTestFileURI("Bug582958.ocl", oclStream);
+		String testOCLasContents =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "<!DOCTYPE pivot:Model [\n"
+				+ "<!ENTITY _0 \"Bug582958.ecore.oclas\">\n"
+				+ "]>\n"
+				+ "<pivot:Model xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:pivot=\"http://www.eclipse.org/ocl/2015/Pivot\"\n"
+				+ "    xsi:schemaLocation=\"http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage\" xmi:id=\"AAAAA\" name=\"Bug582958.ocl\" externalURI=\"platform:/resource/Bug582958/Bug582958.ocl\" xmiidVersion=\"1\">\n"
+				+ "  <ownedImports importedNamespace=\"pivot:Model &_0;#AAAAA\" xmiidVersion=\"1\"/>\n"
+				+ "  <ownedPackages xmi:id=\"qHh3I\" name=\"p\" URI=\"p\"/>\n"
+				+ "</pivot:Model>\n";
+		InputStream oclasStream = new URIConverter.ReadableInputStream(testOCLasContents, "UTF-8");
+		URI oclasFileURI = getTestFileURI("Bug582958.ocl.oclas", oclasStream);
+		String testAirdContents =	// 0.0.0.0 seems to suppress migration diagnostic
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "<viewpoint:DAnalysis xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:viewpoint=\"http://www.eclipse.org/sirius/1.1.0\" uid=\"_4Vj5cNO1Ee6OOqXtF7xr6g\" version=\"0.0.0.0\">\n"
+				+ "  <semanticResources>" + ecoreFileURI + "</semanticResources>\n"
+				+ "  <semanticResources>" + oclFileURI + "</semanticResources>\n"
+				+ "  <semanticResources>" + oclasFileURI + "</semanticResources>\n"
+				+ "</viewpoint:DAnalysis>\n";
+		InputStream inputStream = new URIConverter.ReadableInputStream(testAirdContents, "UTF-8");
+		URI airdFileURI = getTestFileURI("Bug582958.aird", inputStream);
+		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
+		try {
+			String message = StringUtil.bind(PivotMessages.BadASResourceForSirius, ASResourceImpl.class.getSimpleName(), airdFileURI.toString(), oclasFileURI.toString());
+			ResourceSet resourceSet = ocl.getResourceSet();
+			Resource resource = resourceSet.getResource(airdFileURI, true);
+			assertNoResourceErrors("Load failed", resource);
+			assertNoUnresolvedProxies("Unresolved proxies", resource);
+			assertResourceErrors("Load failed", resource, message);
+			assertNoValidationErrors("Validation errors", resource.getContents().get(0));
+			EList<@NonNull Resource> resources = resourceSet.getResources();
+			assertEquals("Expected ResourceSet resources count", 3, resources.size());
+			assertEquals(airdFileURI, resources.get(0).getURI());
+			assertEquals(ecoreFileURI, resources.get(1).getURI());
+			assertEquals(oclFileURI, resources.get(2).getURI());
+			String logMessage = TestCaseLogger.INSTANCE.get();
+			assertEquals("Expected error log message", message, logMessage);
+		} finally {
+			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
+		}
 	}
 
 	public void testLoad_Fruit_ocl() throws IOException, InterruptedException {
