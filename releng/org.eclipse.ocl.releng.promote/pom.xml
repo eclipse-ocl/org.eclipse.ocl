@@ -25,8 +25,7 @@
 		<BUILD_PROMOTE>${org.eclipse.justj.p2.manager.build.url}</BUILD_PROMOTE>
 		<BUILD_REMOTE>-remote genie.ocl@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/modeling.mdt/ocl</BUILD_REMOTE>
 		<BUILD_ROOT>${project.build.directory}/justj-sync</BUILD_ROOT>
-		<BUILD_TIMESTAMP></BUILD_TIMESTAMP>
-		<!--BUILD_TIMESTAMP>-timestamp ${build.timestamp}</BUILD_TIMESTAMP-->
+		<BUILD_TIMESTAMP>-timestamp ${build.timestamp}</BUILD_TIMESTAMP>
 		<BUILD_TYPE>${build.type}</BUILD_TYPE>
 		
 		
