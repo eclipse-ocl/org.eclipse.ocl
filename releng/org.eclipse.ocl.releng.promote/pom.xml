@@ -88,7 +88,8 @@
                               -build-url ${org.eclipse.justj.p2.manager.build.url}
                               -root ${BUILD_ROOT}
                               -relative builds
-                              -version-iu org.eclipse.ocl.examples.feature.group
+                              -version-iu-pattern org\.eclipse\.ocl\.master\.feature.*
+                              -primary-iu-filter-pattern org\.eclipse\.ocl\.master\.feature.*|org\.eclipse\.ocl\.examples\.classic\.feature.*|org\.eclipse\.ocl\.examples\.unified\.feature.*
                               ${BUILD_COMMIT}
                               -target-url https://download.eclipse.org/modeling/mdt/ocl
                               -promote ${BUILD_PROMOTE}
@@ -96,6 +97,8 @@
                               -type ${BUILD_TYPE}
                               -breadcrumb "OCL https://projects.eclipse.org/projects/modeling.mdt.ocl"
                               -mapping ocl->OCL
+                              -archive "P2 repos https://archive.eclipse.org/modeling/mdt/ocl/updates/releases"
+                              -archive "zips/drops https://archive.eclipse.org/modeling/mdt/ocl/downloads/drops"
                               ${org.eclipse.justj.p2.manager.extra.args}
 							</appArgLine>
 						</configuration>
