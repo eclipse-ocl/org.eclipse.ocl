@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,10 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -727,6 +731,28 @@ public class LoadTests extends XtextTestCase
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 	}
 
+	protected boolean siriusHasUID() {
+		try {
+			Class<?> jClass = Class.forName("org.eclipse.sirius.viewpoint.ViewpointPackage");
+			Field fPackage = jClass.getDeclaredField("eINSTANCE");
+			if (fPackage == null) {
+				return false;
+			}
+			Object ePackage = fPackage.get(null);
+			if (!(ePackage instanceof EPackage)) {
+				return false;
+			}
+			EClassifier eClass = ((EPackage)ePackage).getEClassifier("IdentifiedElement");	// ViewpointPackage.Literals.IDENTIFIED_ELEMENT
+			if (!(eClass instanceof EClass)) {
+				return false;
+			}
+			return ((EClass)eClass).getEStructuralFeature("uid") != null;		// ViewpointPackage.Literals.IDENTIFIED_ELEMENT__UID
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
@@ -1256,10 +1282,14 @@ public class LoadTests extends XtextTestCase
 	}
 
 	/**
-	 * Verifies that adding an ASREsource to an aird-containing EsourceSt fails with REsource and log errors.
+	 * Verifies that adding an ASResource to an aird-containing ResourceSt fails with Resource and log errors.
 	 * @throws IOException
 	 */
 	public void testLoad_Bug582958() throws IOException {
+		if (!siriusHasUID()) {
+			System.err.println(getName() + " has been disabled - prevailing Sirius version lacks IdentifiedElement.uid");
+			return;
+		}
 		OCL ocl = createOCLWithProjectMap();
 		String testEcoreContents =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
