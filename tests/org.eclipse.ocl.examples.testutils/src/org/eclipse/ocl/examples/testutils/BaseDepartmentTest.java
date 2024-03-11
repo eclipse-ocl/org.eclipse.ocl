@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 
 import company.CompanyFactory;
 import company.CompanyPackage;
@@ -37,8 +36,8 @@ import company.impl.FreelanceImpl;
 /**
  * This is the super class for all tests based on the Department model.
  */
-@Ignore
-public class BaseDepartmentTest extends BaseTest {
+//@Ignore
+public abstract class BaseDepartmentTest extends BaseTest {
 
 	protected ResourceSet rs = null;
 	/**
