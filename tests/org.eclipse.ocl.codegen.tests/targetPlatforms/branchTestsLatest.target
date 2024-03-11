@@ -14,7 +14,7 @@
     <unit id="org.eclipse.ocl.master.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.ocl.tests.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.ocl.examples.tests.feature.group" version="0.0.0"/>
-    <repository location="https://ci.eclipse.org/ocl/job/ocl-branch-tests/lastSuccessfulBuild/artifact/targetPlatform/"/>
+    <repository location="https://ci.eclipse.org/ocl/job/ocl-branch-tests/lastSuccessfulBuild/artifact/releng/org.eclipse.ocl.releng.build-site/target/repository/"/>
     <!--repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest"/-->
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">

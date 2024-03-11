@@ -22,7 +22,7 @@
 		The "JustJ for OCL" Eclipse launch supports regular Java debugging."
 		-->
 		<BUILD_COMMIT>-commit https://git.eclipse.org/r/ocl/org.eclipse.ocl.git/commit/?id=${env.GIT_COMMIT}</BUILD_COMMIT>
-		<BUILD_PROMOTE>https://ci.eclipse.org/ocl/job/ocl-master/lastSuccessfulBuild/artifact/targetPlatform</BUILD_PROMOTE>
+		<BUILD_PROMOTE>https://ci.eclipse.org/ocl/job/ocl-master/lastSuccessfulBuild/artifact/releng/org.eclipse.ocl.releng.build-site/target/repository</BUILD_PROMOTE>
 		<BUILD_REMOTE>-remote genie.ocl@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/modeling.mdt/ocl</BUILD_REMOTE>
 		<BUILD_ROOT>${project.build.directory}/justj-sync</BUILD_ROOT>
 		<BUILD_TIMESTAMP>-timestamp ${build.timestamp}</BUILD_TIMESTAMP>
