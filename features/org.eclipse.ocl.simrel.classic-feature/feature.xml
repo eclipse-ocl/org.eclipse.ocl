@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.simrel.classic"
       label="%featureName"
-      version="5.19.0.qualifier"
+      version="5.21.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.all"
       license-feature="org.eclipse.license"
@@ -35,30 +35,18 @@
 
    <plugin
          id="org.eclipse.ocl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.ocl.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.ocl.ecore"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.ocl.uml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

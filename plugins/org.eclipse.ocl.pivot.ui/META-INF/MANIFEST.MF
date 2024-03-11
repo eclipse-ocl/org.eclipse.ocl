@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.ocl.pivot.ui;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext.ui;bundle-version="[2.9.0,3.0.0)";visibility:=reexport,
  org.eclipse.xtext.ui.shared;bundle-version="[2.9.0,3.0.0)";visibility:=reexport,
