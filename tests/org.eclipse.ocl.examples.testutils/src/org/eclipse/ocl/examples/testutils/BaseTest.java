@@ -10,16 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.testutils;
 
-import org.junit.Ignore;
-
 import junit.framework.TestCase;
 
 
 /**
  * This is the super class for all impact analyzer tests.
  */
-@Ignore
-public class BaseTest extends TestCase
+//@Ignore
+public abstract class BaseTest extends TestCase
 {
 	protected void debugPrint(Object object) {
 		//        System.out.print(object);
