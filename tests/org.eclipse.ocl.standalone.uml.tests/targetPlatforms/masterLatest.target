@@ -31,7 +31,7 @@
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="https://ci.eclipse.org/ocl/job/ocl-master/lastSuccessfulBuild/artifact/targetPlatform/"/>
+    <repository location="https://ci.eclipse.org/ocl/job/ocl-master/lastSuccessfulBuild/artifact/releng/org.eclipse.ocl.releng.build-site/target/repository/"/>
   </location>
 </locations>
 </target>
