@@ -45,6 +45,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -273,7 +274,13 @@ public class StandaloneProjectMap implements ProjectManager
 					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
-			packageRegistry.put(uri.toString(), this);		// ?? exploit an existing already resolved content
+			Object ePackage = packageRegistry.get(uri.toString());
+			if (ePackage instanceof EPackage) {					//  exploit an existing already resolved content
+				packageLoadStatus.setEPackage((EPackage)ePackage);
+			}
+			else {
+				packageRegistry.put(uri.toString(), this);
+			}
 			if (PROJECT_MAP_INSTALL.isActive()) {
 				PROJECT_MAP_INSTALL.println(toString());
 			}
@@ -2772,6 +2779,39 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public synchronized void initializePackageRegistry(@Nullable ResourceSet resourceSet) {
 		getProjectDescriptors();
+
+		if (resourceSet != null) {
+			Set<@NonNull EPackage> ePackages = new HashSet<>();
+			for (@NonNull Resource resource : resourceSet.getResources()) {
+				for (@NonNull EObject eContent : resource.getContents()) {
+					EClass eClass = eContent.eClass();
+					EPackage ePackage = eClass.getEPackage();
+					ePackages.add(ePackage);
+				}
+			}
+			for (@NonNull EPackage ePackage : ePackages) {
+				String nsURI = ePackage.getNsURI();
+				Resource eResource = ePackage.eResource();
+				URI uri = eResource.getURI();
+
+				resourceSet.getPackageRegistry().put(nsURI, ePackage);
+
+			/*	IPackageDescriptor packageDescriptor = getPackageDescriptor(URI.createURI(nsURI));
+				if (packageDescriptor != null) {
+					IResourceDescriptor resourceDescriptor = packageDescriptor.getResourceDescriptor();
+					IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
+					IPackageLoadStatus packageLoadStatus = resourceLoadStatus.getPackageLoadStatus(packageDescriptor);
+					if (packageLoadStatus != null) {
+						packageLoadStatus.setEPackage(ePackage);
+					}
+				//	packageDescriptor.configure(resourceSet, LoadDynamicResourceStrategy.INSTANCE, MapToFirstConflictHandler.INSTANCE);
+				} */
+
+			}
+		}
+
+
+
 		for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
 			Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
