@@ -45,9 +45,9 @@ import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.utilities.PDEUtils;
 import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
@@ -152,9 +152,9 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				ThreadLocalExecutor.resetEnvironmentFactory();		// Reset in case last thread user (validation job) not yet finalized
-			//	ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 				processedResourcesReturn = processResources();
-			//	ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				Display.getDefault().asyncExec(new Runnable()
 				{
 					@Override
@@ -162,7 +162,6 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 						okPressed();
 					}
 				});
-			//	ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				return Status.OK_STATUS;
 			}
 
@@ -239,7 +238,9 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			if (environmentFactory == null) {
 				ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
 				if (projectManager == null) {
-					projectManager = OCL.CLASS_PATH;
+					// Ensure ProjectManager uses Resources as loaded in the resourceSet (Bug 583043) to avoid metamodel schizophrenia.
+					projectManager = BasicProjectManager.createDefaultProjectManager();
+					projectManager.initializeResourceSet(resourceSet);
 				}
 				environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
 			}
