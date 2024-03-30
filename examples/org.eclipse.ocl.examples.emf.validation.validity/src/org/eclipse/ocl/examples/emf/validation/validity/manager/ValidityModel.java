@@ -404,6 +404,9 @@ public class ValidityModel
 							}
 						}
 					}
+					else {
+						getValidatableNode(validatableObject);
+					}
 				}
 				monitorStep.workedFraction(resourcesCount);
 			}
