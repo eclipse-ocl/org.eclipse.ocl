@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Tree;
 
 /**
  * The ValidationViewRefreshJob provides a delayed refresh of the Validation View trees
- * avoiding the heavy UI thrashing that might occur if each model change updated imeediately.
+ * avoiding the heavy UI thrashing that might occur if each model change updated immediately.
  */
 public class ValidityViewRefreshJob extends Job
 {
@@ -53,6 +53,9 @@ public class ValidityViewRefreshJob extends Job
 //			System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw start\n", (System.currentTimeMillis() - start) * 0.001);
 			assert monitor != null;
 			try {
+				Object[] expandedConstrainingElements = constrainingNodesViewer.getExpandedElements();
+				Object[] expandedValidatableElements = validatableNodesViewer.getExpandedElements();
+			//	System.out.println("DisplayRefresh.run start: expandedConstrainingElements.length = " + expandedValidatableElements.length);
 				final @SuppressWarnings("null")@NonNull Monitor emfMonitor = BasicMonitor.toMonitor(monitor);
 				if (!emfMonitor.isCanceled()) {
 //					System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw refresh ConstrainingNodes\n", (System.currentTimeMillis() - start) * 0.001);
@@ -64,21 +67,15 @@ public class ValidityViewRefreshJob extends Job
 				}
 				if (!emfMonitor.isCanceled() && (grayedConstrainingNodes != null)) {
 //					System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw setGrayed ConstrainingNodes\n", (System.currentTimeMillis() - start) * 0.001);
-					constrainingNodesViewer.setGrayedElements(grayedConstrainingNodes);
+					constrainingNodesViewer.setGrayedElements((Object[])grayedConstrainingNodes);
 				}
 				if (!emfMonitor.isCanceled() && (grayedValidatableNodes != null)) {
 //					System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw setGrayed ValidatableNodes\n", (System.currentTimeMillis() - start) * 0.001);
-					validatableNodesViewer.setGrayedElements(grayedValidatableNodes);
+					validatableNodesViewer.setGrayedElements((Object[])grayedValidatableNodes);
 				}
 //				System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw done\n", (System.currentTimeMillis() - start) * 0.001);
-
-
-
-//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - DisplayRefresh.start");
-//			try {
-//				// For large models intelligent selective update is costly so just do a full refresh
-//				validatableNodesViewer.refresh();
-//				constrainingNodesViewer.refresh();
+				constrainingNodesViewer.setExpandedElements(expandedConstrainingElements);
+				validatableNodesViewer.setExpandedElements(expandedValidatableElements);
 			}
 			finally {
 				displayRefresh = null;
@@ -123,38 +120,42 @@ public class ValidityViewRefreshJob extends Job
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-//		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.start");
-		if (displayRefresh != null) {
-//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.skip");
-			return Status.CANCEL_STATUS;
-		}
-		if (monitor.isCanceled()) {
-//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.abort");
-			return Status.CANCEL_STATUS;
-		}
-		if ((validatableNodesViewer == null) || (constrainingNodesViewer == null)) {
-//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob viewers not-ready");
-			return Status.CANCEL_STATUS;
-		}
-		ValidityModel model = validityView.getValidityManager().getModel();
-		if (model == null) {
-//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob model not-ready");
-			return Status.CANCEL_STATUS;
-		}
-		synchronized (refreshQueue) {
-			refreshQueue.clear();
-		}
+	//	long start = System.currentTimeMillis();
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.start");
+	//	try {
+			if (displayRefresh != null) {
+	//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.skip");
+				return Status.CANCEL_STATUS;
+			}
+			if (monitor.isCanceled()) {
+	//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.abort");
+				return Status.CANCEL_STATUS;
+			}
+			if ((validatableNodesViewer == null) || (constrainingNodesViewer == null)) {
+	//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob viewers not-ready");
+				return Status.CANCEL_STATUS;
+			}
+			ValidityModel model = validityView.getValidityManager().getModel();
+			if (model == null) {
+	//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob model not-ready");
+				return Status.CANCEL_STATUS;
+			}
+			synchronized (refreshQueue) {
+				refreshQueue.clear();
+			}
+			List<@NonNull AbstractNode> grayedValidatableNodes = new ArrayList<>();
+			List<@NonNull AbstractNode> grayedConstrainingNodes = new ArrayList<>();
+			model.refreshModel(grayedValidatableNodes, grayedConstrainingNodes);
 
-		List<@NonNull AbstractNode> grayedValidatableNodes = new ArrayList<>();
-		List<@NonNull AbstractNode> grayedConstrainingNodes = new ArrayList<>();
-		model.refreshModel(grayedValidatableNodes, grayedConstrainingNodes);
-
-		displayRefresh = new DisplayRefresh(monitor, grayedValidatableNodes, grayedConstrainingNodes);
-		Tree tree = validatableNodesViewer.getTree();
-		if (!tree.isDisposed()) {
-			tree.getDisplay().asyncExec(displayRefresh);
-		}
-//		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.done");
-		return Status.OK_STATUS;
+			displayRefresh = new DisplayRefresh(monitor, grayedValidatableNodes, grayedConstrainingNodes);
+			Tree tree = validatableNodesViewer.getTree();
+			if (!tree.isDisposed()) {
+				tree.getDisplay().asyncExec(displayRefresh);
+			}
+			return Status.OK_STATUS;
+	//	}
+	//	finally {
+	//		System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " - RefreshJob.done -  %3.3f \n", (System.currentTimeMillis() - start) * 0.001);
+	//	}
 	}
 }
