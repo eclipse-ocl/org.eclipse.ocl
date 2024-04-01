@@ -10,41 +10,42 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.emf.validation.validity.ui.filters;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
+import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.utilities.IVisibilityFilter;
 
 public class UnusedNodesVisibilityFilter implements IVisibilityFilter
 {
 	@Override
 	public boolean isVisible(@NonNull AbstractNode abstractNode) {
-		if ((abstractNode instanceof ResultConstrainingNode) || (abstractNode instanceof ResultValidatableNode)) {
-			return abstractNode.isEnabled(); //(parent != null) && parent.isEnabled();
-		}
-		if (abstractNode.isEnabled()) {
-			return true;
-		}
-		for (@SuppressWarnings("null")@NonNull AbstractNode child : abstractNode.getChildren()) {
-			if (isUsed(child)) {
-				return true;
-			}
-		}
-		return false;
+		return isUsed(abstractNode);
 	}
 
-	
 	protected boolean isUsed(@NonNull AbstractNode node) {
-		if ((node instanceof ResultConstrainingNode) || (node instanceof ResultValidatableNode)) {
-			return false;
-		}
-		for (AbstractNode child : node.getVisibleChildren()) {
-			if (child.isEnabled()) {
-				return true;
+		for (EObject eContainer = node; (eContainer = eContainer.eContainer()) != null; ) {
+			if (eContainer instanceof AbstractNode) {
+				if (!((AbstractNode)eContainer).isEnabled()) {
+					return false;		// Not used if an ancestor disabled.
+				}
 			}
 		}
-		return false;
+		if (!node.isEnabled() || (node.eContainer() == null) || (node.eContainer() instanceof RootNode)) {
+			return true;				// root-most disabled node is visible.
+		}
+		if ((node instanceof ResultConstrainingNode) || (node instanceof ResultValidatableNode)) {
+			return true;				// (leaf) Constraint is used (and visible)
+		}
+		for (AbstractNode child : node.getChildren()) {
+			assert child != null;
+			if (isUsed(child)) {
+				return true;			// intermediate node used (and visible) if a child is
+			}
+		}
+		return false;					// not used even if enabled
 	}
 
 }
