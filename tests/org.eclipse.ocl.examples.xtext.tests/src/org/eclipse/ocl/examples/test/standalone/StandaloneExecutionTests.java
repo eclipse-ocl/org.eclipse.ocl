@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.ModelExporter;
@@ -305,25 +304,16 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-public void testStandaloneExecution_execute_model_self_relative() throws Exception {
+	public void testStandaloneExecution_execute_model_self_relative() throws Exception {
 		try {
 			StandaloneApplication standaloneApplication = new StandaloneApplication();
 			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore", true);
 			InputStream inputStream = standaloneApplication.getURIConverter().createInputStream(inputURI);
 			assert inputStream != null;
 			TestProject testProject = getTestProject();
-			testProject.getOutputFile("EcoreTestFile.ecore", inputStream);
+			TestFile outputFile = testProject.getOutputFile("EcoreTestFile.ecore", inputStream);
 			String logFileName = getXMLLogFileName();
-			String testPath;
-			if (CGUtil.isMavenSurefire()) {
-				testPath = "../../../" + PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore#//BadClass";
-			}
-			else if (CGUtil.isTychoSurefire()) {
-				testPath = "../" + PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore#//BadClass";
-			}
-			else {
-				testPath = testProject.getName() + "/EcoreTestFile.ecore#//BadClass";
-			}
+			String testPath = outputFile.getFileString() + "#//BadClass";
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"execute",
 				"-query", "self",
 				"-self", testPath,
