@@ -404,7 +404,7 @@ public class ValidityModel
 							}
 						}
 					}
-					else {
+					else if (!validityManager.isIgnoreConstraintlessValidatableNodes()) {
 						getValidatableNode(validatableObject);
 					}
 				}
