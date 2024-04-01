@@ -11,7 +11,9 @@
 package org.eclipse.ocl.examples.emf.validation.validity.ui.actions;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.filters.UnusedNodesVisibilityFilter;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
@@ -19,6 +21,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
 public final class DisableAllUnusedNodesAction extends AbstractFilterAction
 {
 	private @NonNull UnusedNodesVisibilityFilter filter = new UnusedNodesVisibilityFilter();
+	private Object @Nullable [] expandedElements = null;
 
 	public DisableAllUnusedNodesAction(@NonNull ValidityView validityView, boolean isValidatableFilterAction) {
 		super(ValidityUIMessages.ValidityView_Action_ShowHideUnusedNodes_Title,
@@ -47,7 +50,14 @@ public final class DisableAllUnusedNodesAction extends AbstractFilterAction
 
 	@Override
 	public void setChecked(boolean isChecked) {
+		CheckboxTreeViewer treeViewer = isValidatableAction ? validityView.getValidatableNodesViewer() : validityView.getConstrainingNodesViewer();
+		if (isChecked) {
+			expandedElements  = treeViewer.getExpandedElements();
+		}
 		super.setChecked(isChecked);
 		refreshChecked();
+		if (!isChecked && (expandedElements != null)) {
+			 treeViewer.setExpandedElements(expandedElements);
+		}
 	}
 }
