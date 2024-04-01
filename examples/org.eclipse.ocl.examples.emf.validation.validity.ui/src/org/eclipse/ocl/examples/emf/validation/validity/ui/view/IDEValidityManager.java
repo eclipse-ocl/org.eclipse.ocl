@@ -170,6 +170,7 @@ public class IDEValidityManager extends ValidityManager
 		//		CREATE_CONSTRAINING.setState(true);
 		//		CREATE_RESULT.setState(true);
 		//		CREATE_VALIDATABLE.setState(true);
+		setIgnoreConstraintlessValidatableNodes(false);		// IDE provides hide options
 	}
 
 	@Override

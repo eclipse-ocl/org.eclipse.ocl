@@ -262,6 +262,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected void initValidityManager(@Nullable ValidityManager validityManager) {
 		if (validityManager == null) {
 			IDEValidityManager ideValidityManager = new IDEValidityManager();
+			ideValidityManager.setIgnoreConstraintlessValidatableNodes(true);
 			ideValidityManager.setRefreshJob(new ValidityViewRefreshJob());
 			validityManager = ideValidityManager;
 		}

@@ -162,6 +162,7 @@ public class ValidityManager
 	protected @Nullable ResultSet lastResultSet = null;
 	private boolean forceRefresh = false;
 	private @Nullable Object lastInput = null;
+	private boolean ignoreConstraintlessValidatableNodes = true;
 
 	public ValidityManager() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
@@ -498,6 +499,10 @@ public class ValidityManager
 		return results;
 	}
 
+	public boolean isIgnoreConstraintlessValidatableNodes() {
+		return ignoreConstraintlessValidatableNodes;
+	}
+
 	public void removeConstrainingFilter(@NonNull IVisibilityFilter filter) {
 		ValidityModel model2 = model;
 		if (model2 != null) {
@@ -605,6 +610,10 @@ public class ValidityManager
 				monitor.done();
 			}
 		}
+	}
+
+	public void setIgnoreConstraintlessValidatableNodes(boolean ignoreConstraintlessValidatableNodes) {
+		this.ignoreConstraintlessValidatableNodes = ignoreConstraintlessValidatableNodes;
 	}
 
 	public void setInput(Object newInput) {
