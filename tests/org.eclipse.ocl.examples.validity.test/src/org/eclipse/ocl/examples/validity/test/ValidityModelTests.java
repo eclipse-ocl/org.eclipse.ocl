@@ -123,6 +123,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		return (ResultValidatableNode) containedValidatableNode;
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -130,6 +131,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		initValidityManager(EMFPlugin.IS_ECLIPSE_RUNNING ? null : new ValidityManager());
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
@@ -196,7 +198,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 
 		final ValidatableNode _ecoreTest2__Eclass5 = assertHasValidatableNodeByLabel(_ecoreTest2, VALIDATABLE_E_CLASS5, EClass.class);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5, CONSTRAINABLE_ECLASS_CONSTRAINT);
-		
+
 		final ValidatableNode _ecoreTest2__Eclass5__eAttribute5 = assertHasValidatableNodeByLabel(_ecoreTest2__Eclass5, TITLE_E_ATTRIBUTE5_E_STRING, EAttribute.class);
 		assertHasValidatableNodes(_ecoreTest2__Eclass5__eAttribute5, 9/*1*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5__eAttribute5, CONSTRAINABLE_EATTRIBUTE_CONSTRAINT);
@@ -224,7 +226,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		assertHasConstrainingNodes(_ecore__EClass, 8);
 		final ConstrainingNode _ecore__EPackage = assertHasConstrainingNodeByLabel(_ecore, "EPackage", EClass.class);
 		assertHasConstrainingNodes(_ecore__EPackage, 5);
-		
+
 		final ConstrainingNode _ecore_ocl = assertHasConstrainingNodeByLabel(rootNode, CONSTRAINABLE_ECORE_OCL_ECORE, CompleteOCLDocumentCS.class);
 		assertHasConstrainingNodes(_ecore_ocl, 1);
 		final ConstrainingNode _ecore_ocl_ecore = assertHasConstrainingNodeByLabel(_ecore_ocl, "ecore", PackageDeclarationCS.class);
