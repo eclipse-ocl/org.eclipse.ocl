@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.emf.validation.validity.ui.providers;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -31,9 +33,12 @@ import org.eclipse.ocl.examples.emf.validation.validity.LeafConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
+import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.messages.ValidityMessages;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.plugin.ValidityUIPlugin;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.view.SeveritiesDecorator;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -188,9 +193,21 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		else if (element instanceof ValidatableNode) {
 			return labelProvider.getImage(((ValidatableNode)element).getConstrainedObject());
 		}
-		else {
-			return labelProvider.getImage(element);
+		else if (element instanceof RootNode) {
+			String imagePath = null;
+			if (element == AbstractNodeContentProvider.refreshWelcomeNode) {
+				imagePath = ValidityUIMessages.ValidityView_Action_ForceRefresh_ImageLocation;
+			}
+			else if (element == AbstractNodeContentProvider.showWelcomeNode) {
+				imagePath = ValidityUIMessages.ValidityView_Action_HideUnusedNodes_ImageLocation;
+			}
+			if (imagePath != null) {
+				URL image = (URL) ValidityUIPlugin.INSTANCE.getImage(imagePath);
+				ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(image);
+				return ExtendedImageRegistry.INSTANCE.getImage(imageDescriptor);
+			}
 		}
+		return labelProvider.getImage(element);
 	}
 
 	protected @NonNull String getResultToolTip(@Nullable Result result) {
@@ -233,6 +250,17 @@ public class NodeLabelProvider extends ColumnLabelProvider
 
 	@Override
 	public String getText(Object element) {
+		if (element instanceof RootNode) {
+			if (element == AbstractNodeContentProvider.refreshWelcomeNode) {
+				return "refreshes the Validity View to the prevailing editor/view selection.";
+			}
+			else if (element == AbstractNodeContentProvider.showWelcomeNode) {
+				return "excludes unconstrained elements from the display.";
+			}
+			else {
+				return "unknown.";
+			}
+		}
 		return ((AbstractNode)element).getLabel();
 	}
 

@@ -15,13 +15,13 @@ import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 
 public class NodeCheckStateProvider implements ICheckStateProvider
 {
+	@Override
 	public boolean isChecked(Object element) {
-		AbstractNode node = (AbstractNode) element;
-		return node.isEnabled();
+		return (element instanceof AbstractNode) && ((AbstractNode)element).isEnabled();
 	}
 
+	@Override
 	public boolean isGrayed(Object element) {
-		AbstractNode node = (AbstractNode) element;
-		return node.isGrayed();
+		return (element instanceof AbstractNode) && ((AbstractNode)element).isGrayed();
 	}
 }

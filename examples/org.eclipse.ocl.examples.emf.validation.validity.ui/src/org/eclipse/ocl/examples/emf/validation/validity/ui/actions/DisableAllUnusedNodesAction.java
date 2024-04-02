@@ -26,7 +26,7 @@ public final class DisableAllUnusedNodesAction extends AbstractFilterAction
 	public DisableAllUnusedNodesAction(@NonNull ValidityView validityView, boolean isValidatableFilterAction) {
 		super(ValidityUIMessages.ValidityView_Action_ShowHideUnusedNodes_Title,
 				IAction.AS_CHECK_BOX, validityView, isValidatableFilterAction);
-		setChecked(false);
+		setChecked(true);
 	}
 
 	public void refreshChecked() {
