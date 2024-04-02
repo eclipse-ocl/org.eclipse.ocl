@@ -26,6 +26,9 @@ import org.eclipse.swt.graphics.Image;
 public class SeveritiesDecorator extends SideBySideImageDecorator
 {
 	public static Object getSeverityImage(Object element) {
+		if (!(element instanceof AbstractNode)) {
+			return null;			// e.g. RootNode welcome
+		}
 		String imageName = "query.gif";
 		Result worstResult = ((AbstractNode)element).getWorstResult();
 		Severity worst = worstResult != null ? worstResult.getSeverity() : Severity.UNKNOWN;
@@ -43,15 +46,16 @@ public class SeveritiesDecorator extends SideBySideImageDecorator
 	}
 
 	protected final @NonNull IDEValidityManager validityManager;
-	
+
 	public SeveritiesDecorator(@NonNull IDEValidityManager validityManager) {
 		super(1);
 		this.validityManager = validityManager;
 	}
 
+	@Override
 	public Image decorateImage(Image image, Object element) {
 		Object image2 = getSeverityImage(element);
-		return composeImages(image, image2);
+		return image2 != null ? composeImages(image, image2) : image;
 	}
 
 	public List<Result> getResults(Object element) {
