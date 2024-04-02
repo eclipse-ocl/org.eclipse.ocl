@@ -18,11 +18,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
+import org.eclipse.ocl.examples.emf.validation.validity.ValidityFactory;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 
 public abstract class AbstractNodeContentProvider implements ITreeContentProvider
 {
-	public static final @NonNull Object @NonNull [] NO_OBJECTS = new @NonNull Object[0];
+	public static final @NonNull RootNode refreshWelcomeNode = ValidityFactory.eINSTANCE.createRootNode();
+	public static final @NonNull RootNode showWelcomeNode = ValidityFactory.eINSTANCE.createRootNode();
+	public static final @NonNull Object @NonNull [] NO_OBJECTS = new @NonNull Object[] { refreshWelcomeNode, showWelcomeNode };
 
 	private final @NonNull ValidityManager validityManager;
 
@@ -63,8 +66,7 @@ public abstract class AbstractNodeContentProvider implements ITreeContentProvide
 
 	@Override
 	public boolean hasChildren(Object element) {
-		AbstractNode[] validatableNodes = ((AbstractNode)element).getVisibleChildren();
-		return validatableNodes.length > 0;
+		return (element instanceof AbstractNode) && (((AbstractNode)element).getVisibleChildren().length > 0);
 	}
 
 	@Override
