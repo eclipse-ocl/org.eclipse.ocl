@@ -16,7 +16,7 @@ import org.eclipse.osgi.util.NLS;
  * An accessor class for externalized strings.
  */
 public class ValidityUIMessages
-{	
+{
 	static {
 		NLS.initializeMessages(ValidityUIMessages.class.getName(), ValidityUIMessages.class);
 	}
@@ -24,7 +24,7 @@ public class ValidityUIMessages
 	public static String ValidityView_viewTitle;
 	public static String ValidityView_validatableNodesSectionName;
 	public static String ValidityView_constrainingNodesSectionName;
-	
+
 	public static String ValidityView_Messages_NoModelElement;
 	public static String ValidityView_Messages_NoConstraints;
 	public static String ValidityView_Messages_NoSelection;
@@ -44,7 +44,7 @@ public class ValidityUIMessages
 	public static String ValidityView_Action_DebugValidity_Title;
 	public static String ValidityView_Action_DebugValidity_ImageLocation;
 	public static String ValidityView_Action_DebugValidity_ToolTipText;
-	
+
 	public static String ValidityView_Action_ExportResult_Title;
 	public static String ValidityView_Action_ExportResult_ImageLocation;
 	public static String ValidityView_Action_ExportResult_ToolTipText;
@@ -61,14 +61,14 @@ public class ValidityUIMessages
 	public static String ValidityView_Action_ExpandAllNodes_ToolTipText;
 	public static String ValidityView_Action_ExpandAllConstrainingNodes_ToolTipText;
 	public static String ValidityView_Action_ExpandAllValidatableNodes_ToolTipText;
-	
+
 
 	public static String ValidityView_Action_CollapseAllNodes_Title;
 	public static String ValidityView_Action_CollapseAllNodes_ImageLocation;
 	public static String ValidityView_Action_CollapseAllNodes_ToolTipText;
 	public static String ValidityView_Action_CollapseAllConstrainingNodes_ToolTipText;
 	public static String ValidityView_Action_CollapseAllValidatableNodes_ToolTipText;
-	
+
 	public static String ValidityView_Action_SelectAllNodes_Title;
 	public static String ValidityView_Action_SelectAllConstrainingNodes_ToolTipText;
 	public static String ValidityView_Action_SelectAllValidatableNodes_ToolTipText;
@@ -78,7 +78,7 @@ public class ValidityUIMessages
 	public static String ValidityView_Action_DeselectAllConstrainingNodes_ToolTipText;
 	public static String ValidityView_Action_DeselectAllValidatableNodes_ToolTipText;
 	public static String ValidityView_Action_DeselectAllNodes_ImageLocation;
-	
+
 	public static String ValidityView_Action_ShowHideUnusedNodes_Title;
 	public static String ValidityView_Action_HideUnusedConstrainingNodes_ToolTipText;
 	public static String ValidityView_Action_HideUnusedValidatableNodes_ToolTipText;
@@ -101,7 +101,7 @@ public class ValidityUIMessages
 	public static String ValidityView_Action_ShowNodesByKind_Kind_OK;
 	public static String ValidityView_Action_ShowNodesByKind_ToolTipText;
 	public static String ValidityView_Action_ShowFailedElementsNodes_ToolTipText;
-	
+
 	// Export Validation Results
 	public static String ExportValidationResultsDialog_title;
 	public static String ExportValidationResultsDialog_fileNameLabel;
@@ -109,14 +109,14 @@ public class ValidityUIMessages
 	public static String ExportValidationResultsDialog_exportedFileContextId;
 	public static String ExportValidationResultsDialog_file;
 	public static String ExportValidationResultsDialog_warningMessage;
-	
+
 	public static String ResourceContainerGroupDestination_label;
 	public static String ResourceContainerGroupSelection_message;
-	
-	// source IDEWorkbenchMessages	
+
+	// source IDEWorkbenchMessages
 	public static String ContainerGroup_message;
 	public static String ContainerGroup_selectFolder;
-	
+
 	public static String NewWizardPage_errorTitle;
 	public static String NewWizardPage_internalErrorTitle;
 	public static String NewWizardPage_file;
@@ -135,7 +135,7 @@ public class ValidityUIMessages
 
 	public static String NewWizardPage_exists;
 	public static String NewWizardPage_overwrite;
-	
+
 	public static String ResourceGroup_resource;
 	public static String ResourceGroup_nameExists;
 	public static String ResourceGroup_folderEmpty;
