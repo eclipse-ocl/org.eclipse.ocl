@@ -37,8 +37,9 @@ public class ForceValidityViewRefreshAction extends Action
 
 	@Override
 	public void run() {
-		validityManager.forceRefresh();
-		validityManager.redraw();
+		validityView.reselect();
+	//	validityManager.forceRefresh();
+	//	validityManager.redraw();
 //		validityView.getConstrainingNodesViewer().refresh();
 //		validityView.getValidatableNodesViewer().refresh();
 	}
