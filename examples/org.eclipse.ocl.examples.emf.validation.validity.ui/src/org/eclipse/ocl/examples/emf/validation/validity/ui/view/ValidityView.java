@@ -78,7 +78,6 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ExpandAllNode
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ExportValidationResultAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.FilterValidationResultAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ForceValidityViewRefreshAction;
-import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.LockValidatableNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.RunValidityAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ShowElementInEditorAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
@@ -302,7 +301,6 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private Action runConstrainingAction;
 	private Action debugValidatableResultAction;
 	private Action debugConstrainingResultAction;
-	private Action lockValidatableNodesAction;
 	private Action forceValidityViewRefreshAction;
 	private Action exportValidationResultAction;
 	private IAction filterValidationResultAction;
@@ -670,7 +668,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(expandAllNodesAction);
 		manager.add(collapseAllNodesAction);
 		manager.add(new Separator());
-		manager.add(lockValidatableNodesAction);
+//		manager.add(lockValidatableNodesAction);
 		manager.add(forceValidityViewRefreshAction);
 		manager.add(runValidationAction);
 //		manager.add(debugValidationAction);
@@ -800,7 +798,6 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	}
 
 	private void makeActions() {
-		lockValidatableNodesAction = new LockValidatableNodesAction();
 		forceValidityViewRefreshAction = new ForceValidityViewRefreshAction(validityManager, this);
 		showValidatableElementInEditorAction = new ShowElementInEditorAction(validityManager, getValidatableNodesViewer());
 		showConstrainingElementInEditorAction = new ShowElementInEditorAction(validityManager, getConstrainingNodesViewer());
@@ -977,9 +974,6 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		currentPart = part;
 		currentSelection = selection;
-		if (lockValidatableNodesAction.isChecked()) {
-			return;
-		}
 		if (part instanceof EditorPart){
 			Notifier input = SelectionUtil.getNotifierSelection(selection, part);
 			if (input instanceof EObject) {
