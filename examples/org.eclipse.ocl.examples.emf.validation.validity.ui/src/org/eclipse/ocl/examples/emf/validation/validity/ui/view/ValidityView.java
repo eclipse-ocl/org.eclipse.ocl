@@ -12,6 +12,10 @@
 package org.eclipse.ocl.examples.emf.validation.validity.ui.view;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -59,10 +63,12 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Severity;
+import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.CollapseAllNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.DebugValidityAction;
@@ -97,6 +103,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
@@ -189,6 +196,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 							public void run() {
 //								long start = System.currentTimeMillis();
 								RootNode rootNode = validityManager.getRootNode();
+								Object[] expandedConstrainingElements = getConstrainingNodesViewer().getExpandedElements();
+								Object[] expandedValidatableElements = getValidatableNodesViewer().getExpandedElements();
 								Object validatableNodesViewerInput = getValidatableNodesViewer().getInput();
 								if (validatableNodesViewerInput == null || !validatableNodesViewerInput.equals(rootNode)) {
 									if (!emfMonitor.isCanceled()) {
@@ -203,6 +212,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 //										System.out.format(Thread.currentThread().getName() + " %3.3f set validationRootChanged input\n", (System.currentTimeMillis() - start) * 0.001);
 										filteredValidatableNodesTree.resetFilter();
 										filteredConstrainingNodesTree.resetFilter();
+										getConstrainingNodesViewer().setExpandedElements(expandedConstrainingElements);
+										getValidatableNodesViewer().setExpandedElements(expandedValidatableElements);
 										validationRootChanged(rootNode);
 									}
 								}
@@ -278,11 +289,11 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	protected ResourceSet modelResourceSet;
 
-	/**Context Menu.*/
+	/** Context Menu.*/
 	private ShowElementInEditorAction showValidatableElementInEditorAction;
 	private ShowElementInEditorAction showConstrainingElementInEditorAction;
 
-	/**Local Tool Bar.*/
+	/** Local Tool Bar.*/
 	private Action expandAllNodesAction;
 	private Action collapseAllNodesAction;
 	private Action runValidationAction;
@@ -295,14 +306,14 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private Action exportValidationResultAction;
 	private IAction filterValidationResultAction;
 
-	/**Validatable Tool Bar.*/
+	/** Validatable Tool Bar.*/
 	private Action expandAllValidatableNodesAction;
 	private Action collapseAllValidatableNodesAction;
 	private Action enableAllValidatableNodesAction;
 	private Action disableAllValidatableNodesAction;
 	private DisableAllUnusedNodesAction disableAllUnusedValidatableNodesAction;
 
-	/**Constraining Tool Bar.*/
+	/** Constraining Tool Bar.*/
 	private Action expandAllConstrainingNodesAction;
 	private Action collapseAllConstrainingNodesAction;
 	private Action enableAllConstrainingNodesAction;
@@ -318,6 +329,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private @Nullable ISelection currentSelection;
 	private @Nullable Notifier selection = null;
 	private @Nullable ChangeSelectionJob setInputJob = null;
+	private boolean createPartControlDone = false;	// Inhibit jobs while creating
+	private @Nullable Notifier pendingInput = null;
 
 	public ValidityView() {
 		validityManager = new IDEValidityManager();
@@ -397,6 +410,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	    Composite sash = new SashForm(parent, SWT.HORIZONTAL);
 		formToolkit = new FormToolkit(sash.getDisplay());
 		createValidityViewForm(formToolkit, sash);
+		createPartControlDone = true;
 	}
 
 	/**
@@ -813,7 +827,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		disableAllConstrainingNodesAction = new EnableDisableAllNodesAction(this, false, false);
 		disableAllUnusedConstrainingNodesAction = new DisableAllUnusedNodesAction(this, false);
 
-		/*Double Click actions*/
+		/* Double Click actions*/
 		constrainingNodesDoubleClickAction = new Action() {
 			@Override
 			public void run() {
@@ -859,7 +873,9 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	 * Schedule a redraw of validatable and constraining trees.
 	 */
 	public synchronized void redraw() {
-		validityManager.redraw();
+		if (createPartControlDone) {
+			validityManager.redraw();
+		}
 	}
 
 	public void removeFilter(boolean isValidatableFilterAction, @NonNull IVisibilityFilter filter) {
@@ -875,6 +891,82 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	public void removeFilteredSeverity(@NonNull Severity severity) {
 		validityManager.removeFilteredSeverity(severity);
 		redraw();
+	}
+
+	public void reselect() {
+		//
+		//	Cache the old visible expanded elements
+		//
+		Set<@NonNull EObject> oldVisibleExpandedConstrainedObjects = null;
+		Set<@NonNull Object> oldVisibleExpandedConstrainingObjects = null;
+		if (selection == pendingInput) {
+			for (Object expandedElement : getConstrainingNodesViewer().getVisibleExpandedElements()) {
+				if (expandedElement instanceof ConstrainingNode) {
+					Object constrainingObject = ((ConstrainingNode)expandedElement).getConstrainingObject();
+					if (constrainingObject != null) {
+						if (oldVisibleExpandedConstrainingObjects == null) {
+							oldVisibleExpandedConstrainingObjects = new HashSet<>();
+						}
+						oldVisibleExpandedConstrainingObjects.add(constrainingObject);
+					}
+				}
+			}
+			for (Object expandedElement : getValidatableNodesViewer().getVisibleExpandedElements()) {
+				if (expandedElement instanceof ValidatableNode) {
+					EObject constrainedObject = ((ValidatableNode)expandedElement).getConstrainedObject();
+					if (constrainedObject != null) {
+						if (oldVisibleExpandedConstrainedObjects == null) {
+							oldVisibleExpandedConstrainedObjects = new HashSet<>();
+						}
+						oldVisibleExpandedConstrainedObjects.add(constrainedObject);
+					}
+				}
+			}
+		}
+		//
+		//	Force the reselection
+		//
+		selection = null;
+		setSelection(pendingInput);
+		//
+		//	Restore the old visible expanded elements
+		//
+		if (oldVisibleExpandedConstrainingObjects != null) {
+			List<@NonNull Object> expandedNodes = null;
+			for (TreeItem treeItem : getConstrainingNodesViewer().getTree().getItems()) {
+				Object data = treeItem.getData();
+				if (data instanceof ConstrainingNode) {
+					Object constrainingObject = ((ConstrainingNode)data).getConstrainingObject();
+					if (oldVisibleExpandedConstrainingObjects.contains(constrainingObject)) {
+						if (expandedNodes == null) {
+							expandedNodes = new ArrayList<>();
+						}
+						expandedNodes.add(data);
+					}
+				}
+			}
+			if (expandedNodes != null) {
+				getConstrainingNodesViewer().setExpandedElements(expandedNodes.toArray());
+			}
+		}
+		if (oldVisibleExpandedConstrainedObjects != null) {
+			List<@NonNull Object> expandedNodes = null;
+			for (TreeItem treeItem : getValidatableNodesViewer().getTree().getItems()) {
+				Object data = treeItem.getData();
+				if (data instanceof ValidatableNode) {
+					EObject constrainedObject = ((ValidatableNode)data).getConstrainedObject();
+					if (oldVisibleExpandedConstrainedObjects.contains(constrainedObject)) {
+						if (expandedNodes == null) {
+							expandedNodes = new ArrayList<>();
+						}
+						expandedNodes.add(data);
+					}
+				}
+			}
+			if (expandedNodes != null) {
+				getValidatableNodesViewer().setExpandedElements(expandedNodes.toArray());
+			}
+		}
 	}
 
 	@Override
@@ -898,20 +990,22 @@ public class ValidityView extends ViewPart implements ISelectionListener
 					input = resourceSet;
 				}
 			}
-			setSelection(input);
+			pendingInput = input;
 		}
 	}
 
 	protected synchronized void setSelection(final Notifier newSelection) {
 		if (newSelection != selection) {
 			selection = newSelection;
-			ChangeSelectionJob oldJob = setInputJob;
-			ChangeSelectionJob newJob = setInputJob = new ChangeSelectionJob(newSelection);
-			if (oldJob != null) {
-				oldJob.cancelThenSchedule(newJob);
-			}
-			else {
-				newJob.schedule();
+			if (createPartControlDone) {
+				ChangeSelectionJob oldJob = setInputJob;
+				ChangeSelectionJob newJob = setInputJob = new ChangeSelectionJob(newSelection);
+				if (oldJob != null) {
+					oldJob.cancelThenSchedule(newJob);
+				}
+				else {
+					newJob.schedule();
+				}
 			}
 		}
 	}
