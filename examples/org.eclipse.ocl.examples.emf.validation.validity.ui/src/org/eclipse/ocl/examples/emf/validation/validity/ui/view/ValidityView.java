@@ -82,6 +82,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.LockValidatab
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.RunValidityAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ShowElementInEditorAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.AbstractNodeContentProvider;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.ConstrainingNodeContentProvider;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.NodeCheckStateProvider;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.NodeLabelProvider;
@@ -202,11 +203,11 @@ public class ValidityView extends ViewPart implements ISelectionListener
 								if (validatableNodesViewerInput == null || !validatableNodesViewerInput.equals(rootNode)) {
 									if (!emfMonitor.isCanceled()) {
 //										System.out.format(Thread.currentThread().getName() + " %3.3f set ValidatableNodes input\n", (System.currentTimeMillis() - start) * 0.001);
-										getValidatableNodesViewer().setInput(rootNode);
+										getValidatableNodesViewer().setInput(rootNode != null ? rootNode : AbstractNodeContentProvider.refreshWelcomeNode);
 									}
 									if (!emfMonitor.isCanceled()) {
 //										System.out.format(Thread.currentThread().getName() + " %3.3f set ConstrainingNodes input\n", (System.currentTimeMillis() - start) * 0.001);
-										getConstrainingNodesViewer().setInput(rootNode);
+										getConstrainingNodesViewer().setInput(rootNode != null ? rootNode : AbstractNodeContentProvider.showWelcomeNode);
 									}
 									if (!emfMonitor.isCanceled()) {
 //										System.out.format(Thread.currentThread().getName() + " %3.3f set validationRootChanged input\n", (System.currentTimeMillis() - start) * 0.001);
@@ -544,6 +545,9 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		hookConstrainingNodesDoubleClickAction();
 		hookValidatableNodesDoubleClickAction();
 		contributeToActionBars();
+
+		validatableNodesViewer.setInput(AbstractNodeContentProvider.refreshWelcomeNode);	// Dummy not-used primer
+		constrainingNodesViewer.setInput(AbstractNodeContentProvider.showWelcomeNode);		// Dummy not-used primer
 
 		IWorkbenchPage page = getSite().getPage();
 		assert page != null;
@@ -995,7 +999,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	}
 
 	protected synchronized void setSelection(final Notifier newSelection) {
-		if (newSelection != selection) {
+	//	if (newSelection != selection) {
 			selection = newSelection;
 			if (createPartControlDone) {
 				ChangeSelectionJob oldJob = setInputJob;
@@ -1007,7 +1011,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 					newJob.schedule();
 				}
 			}
-		}
+	//	}
 	}
 
 	private void validationRootChanged(RootNode rootNode) {
