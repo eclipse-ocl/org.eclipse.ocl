@@ -922,7 +922,7 @@ public class PivotUtil
 			List<?> datas = diagnostic.getData();
 			if (datas != null) {
 				for (Object data : datas) {
-					if (data instanceof Throwable)  {
+					if (data instanceof Throwable)  {		// FIXME use diagnostic.getException()
 						Throwable cause = ((Throwable)data).getCause();
 					//	if ((cause != null) && (cause != data)) {
 							s.append(newLine + "\t" + (cause != null ? cause : data).toString());
