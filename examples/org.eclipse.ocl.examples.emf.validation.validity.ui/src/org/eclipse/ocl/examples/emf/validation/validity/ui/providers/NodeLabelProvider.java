@@ -120,7 +120,7 @@ public class NodeLabelProvider extends ColumnLabelProvider
 		boolean isFirst = true;
 		List<Diagnostic> children = diagnostic.getChildren();
 		if (!children.isEmpty()) {
-			for (Diagnostic child : diagnostic.getChildren()) {
+			for (Diagnostic child : children) {
 				if (isFirst) {
 					s.append(child.getMessage());
 					isFirst = false;
@@ -130,6 +130,11 @@ public class NodeLabelProvider extends ColumnLabelProvider
 			}
 		} else {
 			s.append(diagnostic.getMessage());
+		}
+		Throwable exception = diagnostic.getException();
+		if (exception != null) {
+			s.append("\n -- ");
+			s.append(exception.getLocalizedMessage());
 		}
 	}
 

@@ -322,7 +322,7 @@ public class PivotEObjectValidator implements EValidator
 			protected Diagnostic handleInvalidResult(@NonNull InvalidValueException e) {
 				String message = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,
 					getConstraintTypeName(), getConstraintName(), getObjectLabel(), e.getLocalizedMessage());
-				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object, e.getCause() });
 			}
 
 			@Override
