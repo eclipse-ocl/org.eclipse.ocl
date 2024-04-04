@@ -222,7 +222,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 				for (Diagnostic child : children) {
 					severity = child.getSeverity();
 					@SuppressWarnings("unchecked") List<Object> data = (List<Object>) child.getData();
-					Throwable throwable = null;
+					Throwable throwable = null;		// FIXME use child.getException()
 					String message;
 					if ((data.size() == 1) && (data.get(0) instanceof Throwable)) {
 						throwable = (Throwable) data.get(0);
