@@ -398,12 +398,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		catch (Exception e) {
 			// This is a backstop. Library operations should catch their own exceptions
 			//  and produce a better reason as a result.
-			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValue, navigationCallExp);
+			String sourceValueLabel = ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue);
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValueLabel, navigationCallExp);
 		}
 		catch (AssertionError e) {
 			// This is a backstop. Library operations should catch their own exceptions
 			//  and produce a better reason as a result.
-			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValue, navigationCallExp);
+			String sourceValueLabel = ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue);
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValueLabel, navigationCallExp);
 		}
 	}
 
