@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.tools"
       label="%featureName"
-      version="3.19.0.qualifier"
+      version="3.20.1.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.ecore"
       license-feature="org.eclipse.license"
@@ -23,9 +23,6 @@
 
    <plugin
          id="lpg.runtime.java"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>
