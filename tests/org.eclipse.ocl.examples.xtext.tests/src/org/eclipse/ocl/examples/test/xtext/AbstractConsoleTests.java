@@ -218,20 +218,21 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		} */
 	}
 
-	protected @NonNull TestConsolePage openConsole() {
+	protected TestConsolePage openConsole() {
 		TestUIUtil.closeIntro();
 		TestUIUtil.flushEvents();
 		TestConsole console = TestConsole.getInstance();
 		IConsoleManager mgr = ConsolePlugin.getDefault().getConsoleManager();
 		mgr.showConsoleView(console);
-		TestUIUtil.flushEvents();
-		@Nullable TestConsolePage consolePage = console.getPage();
-		for (int i = 0; (consolePage == null) && (i < 100000); i++) {
-			TestUIUtil.flushEvents();
-			consolePage = console.getPage();
+		for (int i = 0; i < 10; i++) {
+			TestUIUtil.wait(250);			// wait for 200 ms ShowConsoleJob to schedule
+			TestConsolePage consolePage = console.getPage();
+			if (consolePage != null) {
+				return consolePage;
+			}
 		}
-		assert consolePage != null;
-		return consolePage;
+		assert false;
+		return null;
 	}
 
 	@Override
