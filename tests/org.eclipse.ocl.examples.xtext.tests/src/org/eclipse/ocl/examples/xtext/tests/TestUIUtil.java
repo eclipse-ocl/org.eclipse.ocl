@@ -192,10 +192,11 @@ public class TestUIUtil
 	}
 
 	public static void wait(int delayTimeInMilliseconds) {
-		for (int i = 0; i < delayTimeInMilliseconds; i += 100) {
+		int sleepQuantum = 50;
+		for (int i = 0; i < delayTimeInMilliseconds; i += sleepQuantum) {
 			flushEvents();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(sleepQuantum);
 			} catch (InterruptedException e) {}
 		}
 	}
