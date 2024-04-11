@@ -25,8 +25,8 @@ public final class ExpandAllNodesAction extends Action
 	private final @NonNull ValidityView validityView;
 	private final boolean isValidatableExpandAction;
 	private final boolean isConstrainingExpandAction;
-	
-	public ExpandAllNodesAction(@NonNull ValidityView validityView, 
+
+	public ExpandAllNodesAction(@NonNull ValidityView validityView,
 			boolean isValidatableExpandAction, boolean isConstrainingExpandAction) {
 		super(ValidityUIMessages.ValidityView_Action_ExpandAllNodes_Title);
 		this.validityView = validityView;
@@ -39,7 +39,7 @@ public final class ExpandAllNodesAction extends Action
 		} else if (isConstrainingExpandAction) {
 			setToolTipText(ValidityUIMessages.ValidityView_Action_ExpandAllConstrainingNodes_ToolTipText);
 		}
-		
+
 		URL image = (URL) ValidityUIPlugin.INSTANCE.getImage(ValidityUIMessages.ValidityView_Action_ExpandAllNodes_ImageLocation);
 		setImageDescriptor(ImageDescriptor.createFromURL(image));
 	}
@@ -49,10 +49,10 @@ public final class ExpandAllNodesAction extends Action
 		RootNode rootNode = validityView.getValidityManager().getRootNode();
 		if (rootNode != null) {
 			if (isValidatableExpandAction) {
-				validityView.getValidatableNodesViewer().expandAll();
+				validityView.expandAll(true);
 			}
 			if (isConstrainingExpandAction) {
-				validityView.getConstrainingNodesViewer().expandAll();
+				validityView.expandAll(false);
 			}
 		}
 	}
