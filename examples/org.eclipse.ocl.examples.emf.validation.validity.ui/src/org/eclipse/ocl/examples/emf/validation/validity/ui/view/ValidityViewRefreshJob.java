@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.swt.widgets.Tree;
 
 /**
@@ -49,13 +50,15 @@ public class ValidityViewRefreshJob extends Job
 
 		@Override
 		public void run() {
+//			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - DisplayRefresh start");
 //			long start = System.currentTimeMillis();
 //			System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw start\n", (System.currentTimeMillis() - start) * 0.001);
 			assert monitor != null;
 			try {
-				Object[] expandedConstrainingElements = constrainingNodesViewer.getExpandedElements();
-				Object[] expandedValidatableElements = validatableNodesViewer.getExpandedElements();
-			//	System.out.println("DisplayRefresh.run start: expandedConstrainingElements.length = " + expandedValidatableElements.length);
+			//	Set<@NonNull Object> expandedConstrainingElements = validityView.getExpandedConstrainingNodes();
+				Set<@NonNull AbstractNode> expandedValidatableNodes = validityView.getExpandedNodes(true);
+//				System.out.println("DisplayRefresh.run start: expandedValidatableNodes.size() = " + expandedValidatableNodes.size()); // + ", " + getExpandedElements(validatableNodesViewer).size());
+			//	showExpandedElements(expandedValidatableElements);
 				final @SuppressWarnings("null")@NonNull Monitor emfMonitor = BasicMonitor.toMonitor(monitor);
 				if (!emfMonitor.isCanceled()) {
 //					System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw refresh ConstrainingNodes\n", (System.currentTimeMillis() - start) * 0.001);
@@ -74,14 +77,17 @@ public class ValidityViewRefreshJob extends Job
 					validatableNodesViewer.setGrayedElements((Object[])grayedValidatableNodes);
 				}
 //				System.out.format(ThreadLocalExecutor.getBracketedThreadName() + " %3.3f Redraw done\n", (System.currentTimeMillis() - start) * 0.001);
-				constrainingNodesViewer.setExpandedElements(expandedConstrainingElements);
-				validatableNodesViewer.setExpandedElements(expandedValidatableElements);
+				validityView.setExpandedNodes(false);
+				validityView.setExpandedNodes(true);
 			}
 			finally {
 				displayRefresh = null;
-//				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - DisplayRefresh.end");
+			//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - DisplayRefresh end");
+//				System.out.println("DisplayRefresh end: expandedValidatableElements.length = " + validatableNodesViewer.getExpandedElements().length); // + ", " + getExpandedElements(validatableNodesViewer).size());
+			//	showExpandedElements(validatableNodesViewer.getExpandedElements());
 				synchronized (refreshQueue) {
 					if (!refreshQueue.isEmpty()) {
+						System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " - DisplayRefresh SLOW_REFRESH_DELAY");
 						schedule(IDEValidityManager.SLOW_REFRESH_DELAY);
 					}
 				}
