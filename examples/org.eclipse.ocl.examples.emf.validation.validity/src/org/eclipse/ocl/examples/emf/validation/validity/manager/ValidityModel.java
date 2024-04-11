@@ -333,7 +333,7 @@ public class ValidityModel
 
 	/**
 	 * Create the ResultValidatableNode,ResultConstrainingNode cross-linkage for
-	 * all validateableObject,constraint pairs.
+	 * all validatableObject,constraint pairs.
 	 *
 	 * @param resources
 	 *            the resources
