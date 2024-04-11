@@ -26,7 +26,7 @@ public final class CollapseAllNodesAction extends Action
 	private final boolean isValidatableCollapseAction;
 	private final boolean isConstrainingCollapseAction;
 
-	public CollapseAllNodesAction(@NonNull ValidityView validityView, 
+	public CollapseAllNodesAction(@NonNull ValidityView validityView,
 			boolean isValidatableCollapseAction, boolean isConstrainingCollapseAction) {
 		super(ValidityUIMessages.ValidityView_Action_CollapseAllNodes_Title);
 		this.validityView = validityView;
@@ -48,13 +48,11 @@ public final class CollapseAllNodesAction extends Action
 	public void run() {
 		RootNode rootNode = validityView.getValidityManager().getRootNode();
 		if (rootNode != null) {
-			if (isValidatableCollapseAction && isConstrainingCollapseAction) {
-				validityView.getValidatableNodesViewer().collapseAll();
-				validityView.getConstrainingNodesViewer().collapseAll();
-			} else if (isValidatableCollapseAction) {
-				validityView.getValidatableNodesViewer().collapseAll();
-			} else if (isConstrainingCollapseAction) {
-				validityView.getConstrainingNodesViewer().collapseAll();
+			if (isValidatableCollapseAction) {
+				validityView.collapseAll(true);
+			}
+			if (isConstrainingCollapseAction) {
+				validityView.collapseAll(false);
 			}
 		}
 	}
