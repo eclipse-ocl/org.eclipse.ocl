@@ -170,7 +170,14 @@ public abstract class CompleteOCLLoader
 		CompleteOCLStandaloneSetup.init();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
-			xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+			Resource resource = resourceSet.getResource(oclURI, true);
+			if (resource instanceof CSResource) {
+				xtextResource = (CSResource) resource;
+			}
+			else {
+				error("Failed to load '" + oclURI + "' as an OCL document.", "An " + resource.getClass().getName() + " loaded rather than the required CSResource.");
+				return null;
+			}
 		}
 		catch (WrappedException e) {
 			URI retryURI = null;
@@ -184,7 +191,14 @@ public abstract class CompleteOCLLoader
 				}
 			}
 			if (retryURI != null) {
-				xtextResource = (CSResource) resourceSet.getResource(retryURI, true);
+				Resource resource = resourceSet.getResource(retryURI, true);
+				if (resource instanceof CSResource) {
+					xtextResource = (CSResource) resource;
+				}
+				else {
+					error("Failed to load '" + retryURI + "' as an OCL document.", "An " + resource.getClass().getName() + " loaded rather than the required CSResource.");
+					return null;
+				}
 			}
 			else {
 				throw e;
@@ -194,7 +208,7 @@ public abstract class CompleteOCLLoader
 		assert errors != null;
 		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			error("Failed to load '" + oclURI, message);
+			error("Failed to load '" + oclURI + "' as an OCL document.", message);
 			return null;
 		}
 		Resource asResource = xtextResource.getASResource();
@@ -202,7 +216,7 @@ public abstract class CompleteOCLLoader
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			error("Failed to load Pivot from '" + oclURI, message);
+			error("Failed to load '" + oclURI + "' as an OCL document.", message);
 			return null;
 		}
 		return asResource;
