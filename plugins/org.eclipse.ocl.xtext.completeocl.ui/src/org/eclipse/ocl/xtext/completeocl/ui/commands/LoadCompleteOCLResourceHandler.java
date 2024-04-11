@@ -202,7 +202,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 							{
 								@Override
 								public void run() {
-									ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "'", status);
+									ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "' as an OCL document.", status);
 								}
 							});
 							return false;
