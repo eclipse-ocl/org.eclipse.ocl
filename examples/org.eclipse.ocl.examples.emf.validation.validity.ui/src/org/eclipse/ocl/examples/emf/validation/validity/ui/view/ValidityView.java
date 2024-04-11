@@ -62,7 +62,10 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeExpansionEvent;
+import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode;
@@ -156,6 +159,31 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		}
 	}
 
+	protected class ModelElementsTreeListener implements ITreeViewerListener
+	{
+		protected final boolean isValidatableAction;
+
+		public ModelElementsTreeListener(boolean isValidatableAction) {
+			this.isValidatableAction = isValidatableAction;
+		}
+
+		@Override
+		public void treeCollapsed(TreeExpansionEvent event) {
+			Object node = event.getElement();
+			if (node instanceof AbstractNode) {
+				setExpanded((AbstractNode)node, false, isValidatableAction);
+			}
+		}
+
+		@Override
+		public void treeExpanded(TreeExpansionEvent event) {
+			Object node = event.getElement();
+			if (node instanceof AbstractNode) {
+				setExpanded((AbstractNode)node, true, isValidatableAction);
+			}
+		}
+	}
+
 	/**
 	 * The ChangeSelectionJob performs the work for a setSelection() without clogging up the UI. Multiple chnages are maintained
 	 * in a linked list so that the earlier jobs complete cancelation before another starts.
@@ -181,6 +209,11 @@ public class ValidityView extends ViewPart implements ISelectionListener
 			assert monitor != null;
 			try {
 				final @SuppressWarnings("null")@NonNull Monitor emfMonitor = BasicMonitor.toMonitor(monitor);
+				//
+				//	Cache the old visible expanded elements
+				//
+				Set<@NonNull Object> expandedConstrainingElements = getElements(expandedConstrainingNodes);
+				Set<@NonNull Object> expandedValidatableElements = getElements(expandedValidatableNodes);
 				validityManager.setInput(newSelection, emfMonitor);
 				if (!monitor.isCanceled()) {
 					initializeFilters();
@@ -196,8 +229,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 							public void run() {
 //								long start = System.currentTimeMillis();
 								RootNode rootNode = validityManager.getRootNode();
-								Object[] expandedConstrainingElements = getConstrainingNodesViewer().getExpandedElements();
-								Object[] expandedValidatableElements = getValidatableNodesViewer().getExpandedElements();
+//								System.out.println("ChangeSelectionJob.run start: expandedValidatableElements.length = " + getValidatableNodesViewer().getExpandedElements().length);
 								Object validatableNodesViewerInput = getValidatableNodesViewer().getInput();
 								if (validatableNodesViewerInput == null || !validatableNodesViewerInput.equals(rootNode)) {
 									if (!emfMonitor.isCanceled()) {
@@ -212,12 +244,55 @@ public class ValidityView extends ViewPart implements ISelectionListener
 //										System.out.format(Thread.currentThread().getName() + " %3.3f set validationRootChanged input\n", (System.currentTimeMillis() - start) * 0.001);
 										filteredValidatableNodesTree.resetFilter();
 										filteredConstrainingNodesTree.resetFilter();
-										getConstrainingNodesViewer().setExpandedElements(expandedConstrainingElements);
-										getValidatableNodesViewer().setExpandedElements(expandedValidatableElements);
+										//
+										//	Restore the old visible expanded elements
+										//
+										expandedConstrainingNodes = gatherNodes(getConstrainingNodesViewer().getTree().getItems(), new HashSet<>(), expandedConstrainingElements);			// XXX too soon move to ChangeSelectionJob
+										expandedValidatableNodes = gatherNodes(getValidatableNodesViewer().getTree().getItems(), new HashSet<>(), expandedValidatableElements);
+										setExpandedNodes(true);
+										setExpandedNodes(false);
 										validationRootChanged(rootNode);
 									}
 								}
 //								System.out.format(Thread.currentThread().getName() + " %3.3f done\n", (System.currentTimeMillis() - start) * 0.001);
+//								System.out.println("ChangeSelectionJob.run done: expandedValidatableElements.length = " + getValidatableNodesViewer().getExpandedElements().length);
+							}
+
+							private void setExpandedElements(@NonNull CheckboxTreeViewer viewer, @NonNull Set<@NonNull Object> expandedNodes) {
+								List<Object> newExpandedElements = new ArrayList<>();
+								if (expandedNodes.size() > 0) {
+									Set<@NonNull Object> oldExpandedElements = new HashSet<>();
+									for (Object expandedNode : expandedNodes) {
+										if (expandedNode instanceof ConstrainingNode) {
+											Object constrainingObject = ((ConstrainingNode)expandedNode).getConstrainingObject();
+											if (constrainingObject != null) {
+												oldExpandedElements.add(constrainingObject);
+											}
+										}
+										else if (expandedNode instanceof ValidatableNode) {
+											Object constrainedObject = ((ValidatableNode)expandedNode).getConstrainedObject();
+											if (constrainedObject != null) {
+												oldExpandedElements.add(constrainedObject);
+											}
+										}
+									}
+									for (TreeItem treeItem : viewer.getTree().getItems()) {
+										Object newElement = treeItem.getData();
+										if (newElement instanceof ConstrainingNode) {
+											Object constrainingObject = ((ConstrainingNode)newElement).getConstrainingObject();
+											if (oldExpandedElements.contains(constrainingObject)) {
+												newExpandedElements.add(newElement);
+											}
+										}
+										else if (newElement instanceof ValidatableNode) {
+											Object constrainedObject = ((ValidatableNode)newElement).getConstrainedObject();
+											if (oldExpandedElements.contains(constrainedObject)) {
+												newExpandedElements.add(newElement);
+											}
+										}
+									}
+								}
+								expandedNodes.addAll(newExpandedElements);
 							}
 						});
 					}
@@ -263,7 +338,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private FormMessageManager messageManager;
 
 	/** Form that will contain the Validatable column View. */
-	private SashForm validateableElementsForm;
+	private SashForm validatableElementsForm;
 
 	/** Form that will contain the Constraining column View. */
 	private SashForm constrainingElementsForm;
@@ -272,7 +347,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private SashForm formBody;
 
 	/**
-	 * Keeps a reference to the "validateable Elements" section of the Validity view form.
+	 * Keeps a reference to the "validatable Elements" section of the Validity view form.
 	 */
 	private Section validatableNodesSection;
 
@@ -330,6 +405,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private @Nullable ChangeSelectionJob setInputJob = null;
 	private boolean createPartControlDone = false;	// Inhibit jobs while creating
 	private @Nullable Notifier pendingInput = null;
+	private @NonNull Set<@NonNull AbstractNode> expandedConstrainingNodes = new HashSet<>();	// Explicit state to support restore after hide
+	private @NonNull Set<@NonNull AbstractNode> expandedValidatableNodes = new HashSet<>();
 
 	public ValidityView() {
 		validityManager = new IDEValidityManager();
@@ -349,6 +426,17 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	public void addFilteredSeverity(@NonNull Severity severity) {
 		validityManager.addFilteredSeverity(severity);
 		redraw();
+	}
+
+	public void collapseAll(boolean isValidatableViewer) {
+		if (isValidatableViewer) {
+			getValidatableNodesViewer().collapseAll();
+			expandedValidatableNodes.clear();
+		}
+		else {
+			getConstrainingNodesViewer().collapseAll();
+			expandedConstrainingNodes.clear();
+		}
 	}
 
 	private void contributeToActionBars() {
@@ -445,10 +533,10 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		toolkit.adapt(formBody);
 		formBody.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		validateableElementsForm = new SashForm(formBody, SWT.VERTICAL | SWT.SMOOTH);
-		toolkit.adapt(validateableElementsForm);
+		validatableElementsForm = new SashForm(formBody, SWT.VERTICAL | SWT.SMOOTH);
+		toolkit.adapt(validatableElementsForm);
 
-		validatableNodesSection = toolkit.createSection(validateableElementsForm, ExpandableComposite.TITLE_BAR);
+		validatableNodesSection = toolkit.createSection(validatableElementsForm, ExpandableComposite.TITLE_BAR);
 		validatableNodesSection.setText(ValidityUIMessages.ValidityView_validatableNodesSectionName);
 
 		CheckboxTreeViewer validatableNodesViewer;
@@ -522,18 +610,19 @@ public class ValidityView extends ViewPart implements ISelectionListener
 			toolkit.paintBordersFor(constrainingNodesSectionBody);
 			constrainingNodesSection.setClient(constrainingNodesSectionBody);
 		}
+
 		ICheckStateListener nodeCheckStateListener = new ValidityNodeCheckStateListener(this);
 		validatableNodesViewer.setContentProvider(validatableContentProvider);
 		validatableNodesViewer.setLabelProvider(nodeDecoratingLabelProvider);
 		validatableNodesViewer.setCheckStateProvider(nodeCheckStateProvider);
 		validatableNodesViewer.addCheckStateListener(nodeCheckStateListener);
-//		validatableNodesViewer.addFilter(validatableNodesFilterByKind);
+		validatableNodesViewer.addTreeListener(new ModelElementsTreeListener(true));
 
 		constrainingNodesViewer.setContentProvider(constrainingNodeContentProvider);
 		constrainingNodesViewer.setLabelProvider(nodeDecoratingLabelProvider);
 		constrainingNodesViewer.setCheckStateProvider(nodeCheckStateProvider);
 		constrainingNodesViewer.addCheckStateListener(nodeCheckStateListener);
-//		constrainingNodesViewer.addFilter(constrainingNodesFilterByKind);
+		constrainingNodesViewer.addTreeListener(new ModelElementsTreeListener(false));
 
 		formBody.setWeights(new int[] {1, 1, });
 
@@ -571,6 +660,34 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 		ColumnViewerToolTipSupport.enableFor(validatableNodesViewer);
 		ColumnViewerToolTipSupport.enableFor(constrainingNodesViewer);
+	}
+
+	@Override
+	public void dispose() {
+		ISelectionService service = getSite().getService(ISelectionService.class);
+		if (service != null) {
+			service.removeSelectionListener(this);
+		}
+		filteredValidatableNodesTree.dispose();
+		filteredConstrainingNodesTree.dispose();
+		super.dispose();
+	}
+
+	public void expandAll(boolean isValidatableViewer) {
+		CheckboxTreeViewer viewer = getNodesViewer(isValidatableViewer);
+		Set<@NonNull AbstractNode> expandedNodes = getExpandedNodes(isValidatableViewer);
+		viewer.expandAll();
+		expandedNodes.clear();
+		expandAllInternal(viewer.getTree().getItems(), expandedNodes);
+	}
+	private void expandAllInternal(TreeItem[] treeItems, @NonNull Set<@NonNull AbstractNode> expandedNodes) {
+		for (TreeItem treeItem : treeItems) {
+			Object data = treeItem.getData();
+			if (data instanceof AbstractNode) {
+				expandedNodes.add((AbstractNode)data);
+			}
+			expandAllInternal(treeItem.getItems(), expandedNodes);
+		}
 	}
 
 	/**
@@ -620,17 +737,6 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	 */
 	protected Form getForm() {
 		return validityViewForm;
-	}
-
-	@Override
-	public void dispose() {
-		ISelectionService service = getSite().getService(ISelectionService.class);
-		if (service != null) {
-			service.removeSelectionListener(this);
-		}
-		filteredValidatableNodesTree.dispose();
-		filteredConstrainingNodesTree.dispose();
-		super.dispose();
 	}
 
 	private void fillConstrainingColumnToolBar(IContributionManager manager) {
@@ -711,6 +817,21 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(showValidatableElementInEditorAction);
 	}
 
+	private @NonNull Set<@NonNull AbstractNode> gatherNodes(TreeItem[] items, @NonNull Set<@NonNull AbstractNode> newExpandedNodes, @NonNull Set<@NonNull Object> oldExpandedElements) {
+		for (TreeItem treeItem : items) {
+			Object data = treeItem.getData();
+			if (data instanceof AbstractNode) {
+				AbstractNode node = (AbstractNode)data;
+				Object element = getElement(node);
+				if (oldExpandedElements.contains(element)) {
+					newExpandedNodes.add(node);
+				}
+			}
+			newExpandedNodes = gatherNodes(treeItem.getItems(), newExpandedNodes, oldExpandedElements);
+		}
+		return newExpandedNodes;
+	}
+
 	/**
 	 * gets the Constraining Nodes Viewer
 	 *
@@ -721,6 +842,37 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		// a filtered tree never has a null viewer
 		assert viewer != null;
 		return viewer;
+	}
+
+	public @Nullable Object getElement(@NonNull AbstractNode node) {
+		if (node instanceof ConstrainingNode) {
+			return ((ConstrainingNode)node).getConstrainingObject();
+		}
+		else if (node instanceof ValidatableNode) {
+			return ((ValidatableNode)node).getConstrainedObject();
+		}
+		else {
+			return null;
+		}
+	}
+
+	private @NonNull Set<@NonNull Object> getElements(@NonNull Set<@NonNull AbstractNode> expandedNodes) {
+		Set<@NonNull Object> elements = new HashSet<>();
+		for (@NonNull AbstractNode node : expandedNodes) {
+			Object element = getElement(node);
+			if (element != null) {
+				elements.add(element);
+			}
+		}
+		return elements;
+	}
+
+	public @NonNull Set<@NonNull AbstractNode> getExpandedNodes(boolean isValidatableViewer) {
+		return isValidatableViewer ? expandedValidatableNodes : expandedConstrainingNodes;
+	}
+
+	public @NonNull CheckboxTreeViewer getNodesViewer(boolean isValidatableViewer) {
+		return isValidatableViewer ? getValidatableNodesViewer() : getConstrainingNodesViewer();
 	}
 
 	/**
@@ -895,79 +1047,13 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	}
 
 	public void reselect() {
-		//
-		//	Cache the old visible expanded elements
-		//
-		Set<@NonNull EObject> oldVisibleExpandedConstrainedObjects = null;
-		Set<@NonNull Object> oldVisibleExpandedConstrainingObjects = null;
-		if (selection == pendingInput) {
-			for (Object expandedElement : getConstrainingNodesViewer().getVisibleExpandedElements()) {
-				if (expandedElement instanceof ConstrainingNode) {
-					Object constrainingObject = ((ConstrainingNode)expandedElement).getConstrainingObject();
-					if (constrainingObject != null) {
-						if (oldVisibleExpandedConstrainingObjects == null) {
-							oldVisibleExpandedConstrainingObjects = new HashSet<>();
-						}
-						oldVisibleExpandedConstrainingObjects.add(constrainingObject);
-					}
-				}
-			}
-			for (Object expandedElement : getValidatableNodesViewer().getVisibleExpandedElements()) {
-				if (expandedElement instanceof ValidatableNode) {
-					EObject constrainedObject = ((ValidatableNode)expandedElement).getConstrainedObject();
-					if (constrainedObject != null) {
-						if (oldVisibleExpandedConstrainedObjects == null) {
-							oldVisibleExpandedConstrainedObjects = new HashSet<>();
-						}
-						oldVisibleExpandedConstrainedObjects.add(constrainedObject);
-					}
-				}
-			}
-		}
+//		System.out.println("reselect start: expandedValidatableElements.length = " + getValidatableNodesViewer().getExpandedElements().length);
 		//
 		//	Force the reselection
 		//
 		selection = null;
 		setSelection(pendingInput);
-		//
-		//	Restore the old visible expanded elements
-		//
-		if (oldVisibleExpandedConstrainingObjects != null) {
-			List<@NonNull Object> expandedNodes = null;
-			for (TreeItem treeItem : getConstrainingNodesViewer().getTree().getItems()) {
-				Object data = treeItem.getData();
-				if (data instanceof ConstrainingNode) {
-					Object constrainingObject = ((ConstrainingNode)data).getConstrainingObject();
-					if (oldVisibleExpandedConstrainingObjects.contains(constrainingObject)) {
-						if (expandedNodes == null) {
-							expandedNodes = new ArrayList<>();
-						}
-						expandedNodes.add(data);
-					}
-				}
-			}
-			if (expandedNodes != null) {
-				getConstrainingNodesViewer().setExpandedElements(expandedNodes.toArray());
-			}
-		}
-		if (oldVisibleExpandedConstrainedObjects != null) {
-			List<@NonNull Object> expandedNodes = null;
-			for (TreeItem treeItem : getValidatableNodesViewer().getTree().getItems()) {
-				Object data = treeItem.getData();
-				if (data instanceof ValidatableNode) {
-					EObject constrainedObject = ((ValidatableNode)data).getConstrainedObject();
-					if (oldVisibleExpandedConstrainedObjects.contains(constrainedObject)) {
-						if (expandedNodes == null) {
-							expandedNodes = new ArrayList<>();
-						}
-						expandedNodes.add(data);
-					}
-				}
-			}
-			if (expandedNodes != null) {
-				getValidatableNodesViewer().setExpandedElements(expandedNodes.toArray());
-			}
-		}
+//		System.out.println("reselect done: expandedValidatableNodes.size() = " + expandedValidatableNodes.size());
 	}
 
 	@Override
@@ -990,6 +1076,38 @@ public class ValidityView extends ViewPart implements ISelectionListener
 			}
 			pendingInput = input;
 		}
+	}
+
+	protected void setExpanded(@NonNull AbstractNode node, boolean isExpanded, boolean isValidatableViewer) {
+	//	System.out.println("setExpanded = " + isExpanded + " " + labelProvider.getText(object));
+	//	if (object instanceof AbstractNode) {			// Skip Notifier
+			Set<@NonNull AbstractNode> expandedNodes = getExpandedNodes(isValidatableViewer);
+	//		AbstractNode eObject = (AbstractNode)object;
+			if (isExpanded) {
+				expandedNodes.add(node);
+			}
+			else {
+				expandedNodes.remove(node);
+			}
+	//	}
+	}
+
+	public void setExpandedNodes(boolean isValidatableViewer) {
+		CheckboxTreeViewer nodesViewer = getNodesViewer(isValidatableViewer);
+		Set<@NonNull AbstractNode> expandedNodes = getExpandedNodes(isValidatableViewer);
+		nodesViewer.setExpandedElements(expandedNodes.toArray());
+	}
+
+	/**
+	 * Passing the focus request to the viewer's control. This will Refresh the
+	 * viewers contents.
+	 */
+	@Override
+	public void setFocus() {
+		getValidatableNodesViewer().getControl().setFocus();
+		// Refresh the view
+		filteredValidatableNodesTree.resetFilter();
+		filteredConstrainingNodesTree.resetFilter();
 	}
 
 	protected synchronized void setSelection(final Notifier newSelection) {
@@ -1045,18 +1163,5 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		if (currentMessagekey != null) {
 			messageManager.addMessage(currentMessagekey, currentMessageText, currentStatus, getForm());
 		}
-	}
-
-	/**
-	 * Passing the focus request to the viewer's control. This will Refresh the
-	 * viewers contents.
-	 */
-	@Override
-	public void setFocus() {
-		getValidatableNodesViewer().getControl().setFocus();
-
-		// Refresh the view
-		filteredValidatableNodesTree.resetFilter();
-		filteredConstrainingNodesTree.resetFilter();
 	}
 }
