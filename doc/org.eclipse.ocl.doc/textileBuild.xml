@@ -52,8 +52,8 @@
 	<echo>download.dir "${download.dir}" </echo>
 	<path id="xslt.classpath">
 		<pathelement path="${java.class.path}"/>
-		<pathelement path="${target.location}/plugins/org.apache.xalan_2.7.2.v20201124-1837.jar"/>
-		<pathelement path="${target.location}/plugins/org.apache.xml.serializer_2.7.1.v201005080400.jar"/>
+		<pathelement path="${target.location}/plugins/org.apache.xalan_2.7.2.v20230928-1302.jar"/>
+		<pathelement path="${target.location}/plugins/org.apache.xml.serializer_2.7.2.v20230928-1302.jar"/>
 		<!--pathelement path="${target.location}/plugins/com.google.guava_10.0.1.v201203051515.jar"/-->
 	</path>
 
