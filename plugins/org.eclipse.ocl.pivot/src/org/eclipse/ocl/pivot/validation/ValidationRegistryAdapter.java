@@ -40,6 +40,10 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ValidationRegistryAdapter.class);
+	/**
+	 * The ValidationRegistryAdapter used when a Resource / EObject has no ResourceSet. Typically for an installed EPackage.
+	 */
+	private static @Nullable ValidationRegistryAdapter ORPHAN_INSTANCE = null;
 
 	/**
 	 * Return any ValidationRegistryAdapter already adapting this notifier, which may be an EObject or REsource or ResourceSet.
@@ -67,7 +71,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	}
 
 	/**
-	 * Return and if necessary create a ValidationRegistryAdapter adapting this notifier, which may be an EObject or REsource or ResourceSet.
+	 * Return and if necessary create a ValidationRegistryAdapter adapting this notifier, which may be an EObject or Resource or ResourceSet.
 	 */
 	public static @NonNull ValidationRegistryAdapter getAdapter(@NonNull Notifier notifier) {
 		Resource resource = notifier instanceof EObject ? ((EObject)notifier).eResource() : notifier instanceof Resource ? (Resource)notifier : null;
@@ -76,7 +80,11 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 			if (!(resource instanceof ImmutableResource)) {
 				logger.error("No ResourceSet available for ValidationRegistryAdapter.getAdapter()");
 			}
-			return new ValidationRegistryAdapter();
+			ValidationRegistryAdapter ORPHAN_INSTANCE2 = ORPHAN_INSTANCE;
+			if (ORPHAN_INSTANCE2 == null) {
+				ORPHAN_INSTANCE2 = ORPHAN_INSTANCE = new ValidationRegistryAdapter();
+			}
+			return ORPHAN_INSTANCE2;
 		}
 		return getAdapter(resourceSet);
 	}
