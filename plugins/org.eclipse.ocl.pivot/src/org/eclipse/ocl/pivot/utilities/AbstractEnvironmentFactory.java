@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -111,6 +112,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
+	private @Nullable ResourceSet extraResourceSet = null;
 	private final @NonNull ResourceSet asResourceSet;
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
@@ -202,6 +204,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+		System.out.println(Diagnostician.getBracketedThreadName() + " EnvironmentFactory.ctor " + Diagnostician.debugSimpleName(this) + " es " + Diagnostician.debugSimpleName(externalResourceSet) + " as " + Diagnostician.debugSimpleName(asResourceSet));
 	}
 
 	@Override
@@ -871,6 +874,19 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			return "OCLstdlibStandaloneSetup.doSetup()";
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public @NonNull ResourceSet getExtraResourceSet() {
+		ResourceSet extraResourceSet2 = extraResourceSet;
+		if (extraResourceSet2 == null) {
+			extraResourceSet2 = extraResourceSet = new ResourceSetImpl() {};
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, extraResourceSet2);
+		}
+		return extraResourceSet2;
 	}
 
 	@Override

@@ -91,8 +91,8 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
 		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
 		try {
-			ResourceSet resourceSet = environmentFactory.getResourceSet();
-			Resource resource = resourceSet.createResource(uri);
+			ResourceSet extraResourceSet = environmentFactory.getExtraResourceSet();
+			Resource resource = extraResourceSet.createResource(uri);
 			if (resource == null) {
 				throw new ParserException("Failed to load '" + uri + "'" + getDoSetupMessage());
 			}
