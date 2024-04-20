@@ -111,6 +111,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
+	private @Nullable ResourceSet extraResourceSet = null;
 	private final @NonNull ResourceSet asResourceSet;
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
@@ -202,6 +203,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
 	}
 
 	@Override
@@ -871,6 +873,19 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			return "OCLstdlibStandaloneSetup.doSetup()";
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public @NonNull ResourceSet getExtraResourceSet() {
+		ResourceSet extraResourceSet2 = extraResourceSet;
+		if (extraResourceSet2 == null) {
+			extraResourceSet2 = extraResourceSet = new ResourceSetImpl() {};
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, extraResourceSet2);
+		}
+		return extraResourceSet2;
 	}
 
 	@Override

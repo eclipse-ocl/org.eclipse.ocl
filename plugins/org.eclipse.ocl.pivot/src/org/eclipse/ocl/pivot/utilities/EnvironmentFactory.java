@@ -181,6 +181,17 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull CompleteModel getCompleteModel();
 
 	/**
+	 * Return an additional external ResourceSet used to hold dynamically created External Syntax (e.g. Ecore or UML)
+	 * and/or Concrete Syntax model representations that should not affect the creator of the regular external REsourceSEt.
+	 * The internal ResoutrceSet used for Abstract Syntax resources is available by invoking getMetamodelmanager().getASResourceSet().
+	 *
+	 * @since 1.21
+	 */
+	default @NonNull ResourceSet getExtraResourceSet() {
+		return getResourceSet();
+	}
+
+	/**
 	 * Return the IdResolver that performs the resolution of the lightweight usage-independent Ids of types and packages
 	 * into the full usage-specific equivalents.
 	 */
