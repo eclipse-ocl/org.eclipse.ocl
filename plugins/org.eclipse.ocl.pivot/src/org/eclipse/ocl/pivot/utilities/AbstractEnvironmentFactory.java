@@ -160,6 +160,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
+	/*
+	 * True once dispose() has started.
+	 */
+	private boolean isDisposing = false;
+
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
 	 *
@@ -700,7 +705,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (isDisposed()) {
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
-		attachCount = -1;
+	//	attachCount = -1;
+		isDisposing = true;
 		disposeInternal();
 	}
 
@@ -717,7 +723,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	protected void disposeInternal() {
-		assert isDisposed();
+		assert !isDisposed() && isDisposing();
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
@@ -727,6 +733,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		else {
 			disposeExternalState();
 		}
+		attachCount = -1;		// Wait in isDisposing() sgtate while unload proxifies
 		EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
 		if (externalResourceSetWasNull || isGlobal) {
 			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
@@ -999,6 +1006,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public boolean isDisposed() {
 		return attachCount < 0;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	public boolean isDisposing() {
+		return isDisposing;
 	}
 
 	/**
