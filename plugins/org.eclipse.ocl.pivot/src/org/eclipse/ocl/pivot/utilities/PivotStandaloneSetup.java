@@ -91,9 +91,9 @@ public class PivotStandaloneSetup //implements ISetup
 	public Injector createInjectorAndDoEMFRegistration() {
 		init();
 		// register default ePackages
-		if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))
+		if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey(PivotConstants.ECORE_FILE_EXTENSION))
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-				"ecore", new org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl());
+				PivotConstants.ECORE_FILE_EXTENSION, new org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl());
 		if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
 				"xmi", new org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl());
@@ -108,8 +108,8 @@ public class PivotStandaloneSetup //implements ISetup
 	public void register(Injector injector) {
 		//		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		//		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-		//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", resourceFactory);
-		//		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", serviceProvider);
+		//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION, resourceFactory);
+		//		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION, serviceProvider);
 	}
 }
 

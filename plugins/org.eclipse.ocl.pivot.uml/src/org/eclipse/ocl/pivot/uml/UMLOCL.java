@@ -21,11 +21,12 @@ import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Convenient subclass of the <code>OCL</code> fa&ccedil;ade that provides
  * adduitional UML-specific functionality.
- * 
+ *
  * @see OCL
  */
 @Deprecated // Adds no value to OCL
@@ -34,11 +35,11 @@ public class UMLOCL extends OCL
 	/**
 	 * Initialize registries to support OCL and Ecore usage. This method is
 	 * intended for initialization of standalone behaviors for which plugin extension
-	 * registrations have not been applied. 
-	 *<p> 
+	 * registrations have not been applied.
+	 *<p>
 	 * A null resourceSet may be provided to initialize the global package registry
 	 * and global URI mapping registry.
-	 *<p> 
+	 *<p>
 	 * A non-null resourceSet may be provided to identify a specific package registry.
 	 *<p>
 	 * This method is used to configure the ResourceSet used to load the OCL Standard Library.
@@ -51,33 +52,33 @@ public class UMLOCL extends OCL
 			? resourceSet.getResourceFactoryRegistry()
 			: Resource.Factory.Registry.INSTANCE;
 		resourceFactoryRegistry.getExtensionToFactoryMap().put(
-			"ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
+			PivotConstants.ECORE_FILE_EXTENSION, new EcoreResourceFactoryImpl());
 		return null;
 	}
     /**
      * Creates a new <code>OCL</code> using the specified Ecore package registry.
      * This automatically creates an new EnvironmentFactory and MetamodelManager.
      */
-	public static @NonNull UMLOCL newInstance() {	
+	public static @NonNull UMLOCL newInstance() {
 		return newInstance((ProjectManager)null);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified Ecore package registry.
      * This automatically creates an new EnvironmentFactory and MetamodelManager.
      */
-	public static @NonNull UMLOCL newInstance(@Nullable ProjectManager projectManager) {	
+	public static @NonNull UMLOCL newInstance(@Nullable ProjectManager projectManager) {
 		if (projectManager == null) {
 			projectManager = BasicProjectManager.createDefaultProjectManager();
 		}
 		return newInstance(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null));
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified Ecore environment
      * factory.
      */
-	public static @NonNull UMLOCL newInstance(@NonNull EnvironmentFactory environmentFactory) {	
+	public static @NonNull UMLOCL newInstance(@NonNull EnvironmentFactory environmentFactory) {
 		return new UMLOCL((EnvironmentFactoryInternal) environmentFactory);
 	}
 

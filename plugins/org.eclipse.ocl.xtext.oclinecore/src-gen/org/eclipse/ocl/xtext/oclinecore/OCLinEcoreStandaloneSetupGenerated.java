@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 @SuppressWarnings("all")
 public class OCLinEcoreStandaloneSetupGenerated implements ISetup {
@@ -40,7 +42,7 @@ public class OCLinEcoreStandaloneSetupGenerated implements ISetup {
 		IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
 		IResourceServiceProvider serviceProvider = injector.getInstance(IResourceServiceProvider.class);
 
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("oclinecore", resourceFactory);
-		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("oclinecore", serviceProvider);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCLINECORE_FILE_EXTENSION, resourceFactory);
+		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCLINECORE_FILE_EXTENSION, serviceProvider);
 	}
 }

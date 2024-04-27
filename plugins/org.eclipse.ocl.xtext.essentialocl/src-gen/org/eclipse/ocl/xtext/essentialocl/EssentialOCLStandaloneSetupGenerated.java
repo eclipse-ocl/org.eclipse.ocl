@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 @SuppressWarnings("all")
 public class EssentialOCLStandaloneSetupGenerated implements ISetup {
@@ -40,7 +42,7 @@ public class EssentialOCLStandaloneSetupGenerated implements ISetup {
 		IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
 		IResourceServiceProvider serviceProvider = injector.getInstance(IResourceServiceProvider.class);
 
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", resourceFactory);
-		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", serviceProvider);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION, resourceFactory);
+		IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION, serviceProvider);
 	}
 }

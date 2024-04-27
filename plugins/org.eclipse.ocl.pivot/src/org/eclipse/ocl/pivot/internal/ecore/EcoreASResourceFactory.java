@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public final class EcoreASResourceFactory extends AbstractASResourceFactory
 {
@@ -43,7 +44,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 			INSTANCE = new EcoreASResourceFactory();										// Create our own singleton
 			//			}
 			assert INSTANCE != null;
-			INSTANCE.install("ecore", null);
+			INSTANCE.install(PivotConstants.ECORE_FILE_EXTENSION, null);
 		}
 		assert INSTANCE != null;
 		return INSTANCE;

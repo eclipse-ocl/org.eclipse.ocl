@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.OCLProjectHelper;
 import org.eclipse.ocl.xtext.base.ui.builder.AbstractBuildSelector;
@@ -44,13 +45,13 @@ public class OCLBuilder extends AbstractValidatingBuilder
 		@Override
 		protected @NonNull String getMarkerId(@NonNull IFile iFile) {
 			String fileExtension = iFile.getFileExtension();
-			if ("ocl".equals(fileExtension)) {
+			if (PivotConstants.OCL_FILE_EXTENSION.equals(fileExtension)) {
 				return "org.eclipse.ocl.xtext.completeocl.ui.Marker"; //CompleteOCLUiModule.MARKER_ID;
 			}
-			else if ("oclinecore".equals(fileExtension)) {
+			else if (PivotConstants.OCLINECORE_FILE_EXTENSION.equals(fileExtension)) {
 				return "org.eclipse.ocl.xtext.oclinecore.ui.Marker"; //OCLinEcoreUiModule.MARKER_ID;
 			}
-			else if ("oclstdlib".equals(fileExtension)) {
+			else if (PivotConstants.OCLSTDLIB_FILE_EXTENSION.equals(fileExtension)) {
 				return "org.eclipse.ocl.xtext.oclstdlib.ui.Marker"; //OCLstdlibUiModule.MARKER_ID;
 			}
 			return super.getMarkerId(iFile);

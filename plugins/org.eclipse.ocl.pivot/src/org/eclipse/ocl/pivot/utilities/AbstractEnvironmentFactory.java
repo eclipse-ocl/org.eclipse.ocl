@@ -192,8 +192,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			projectManager.initializeResourceSet(externalResourceSet);
 			StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
 			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
-			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+			extensionToFactoryMap.put(PivotConstants.ECORE_FILE_EXTENSION, new EcoreResourceFactoryImpl());
+			extensionToFactoryMap.put(PivotConstants.EMOF_FILE_EXTENSION, new EMOFResourceFactoryImpl());
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
