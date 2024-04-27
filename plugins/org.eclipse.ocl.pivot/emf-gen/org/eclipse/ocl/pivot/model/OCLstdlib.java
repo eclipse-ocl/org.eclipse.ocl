@@ -269,7 +269,7 @@ public class OCLstdlib extends ASResourceImpl
 	 */
 	private OCLstdlib(@NonNull String asURI, @NonNull Model libraryModel) {
 		super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
-		assert PivotUtilInternal.isASURI(asURI);
+		assert PivotUtilInternal.isASURI(uri);
 		getContents().add(libraryModel);
 	}
 
