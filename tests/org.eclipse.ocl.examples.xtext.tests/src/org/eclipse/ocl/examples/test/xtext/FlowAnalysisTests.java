@@ -129,7 +129,7 @@ public class FlowAnalysisTests extends XtextTestCase
 
 		protected FlowAnalysis getFlowAnalysis(@NonNull OCLExpression asExpression) {
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(asExpression);
+			return metamodelManager.getFlowAnalysis(asExpression);
 		}
 	}
 

@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -364,7 +364,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNonNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
+		MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal)executor.getMetamodelManager();
 		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
 		return flowAnalysis.isNonNull(this);
 	}
@@ -383,7 +383,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
+		MetamodelManagerInternal metamodelManager = (MetamodelManagerInternal)executor.getMetamodelManager();
 		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
 	}
