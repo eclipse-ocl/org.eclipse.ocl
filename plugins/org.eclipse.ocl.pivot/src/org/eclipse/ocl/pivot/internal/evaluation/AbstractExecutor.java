@@ -392,7 +392,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		if (navigationCallExp.isIsSafe() && (sourceValue == null)) {
 			return null;
 		}
-		MetamodelManagerInternal.MetamodelManagerInternalExtension metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
 		LibraryProperty.LibraryPropertyExtension implementation = (LibraryProperty.LibraryPropertyExtension)metamodelManager.getImplementation(navigationCallExp, sourceValue, referredProperty);
 		try {
 			return implementation.evaluate(this, navigationCallExp.getTypeId(), sourceValue);

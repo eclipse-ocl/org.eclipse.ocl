@@ -42,21 +42,14 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	/**
 	 * @since 1.1
 	 */
-	public interface MetamodelManagerInternalExtension extends MetamodelManagerInternal
-	{
-		@NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
-	}
+	@Deprecated /* @deprecated all functionality folded into MetamodelManagerInternal */
+	public interface MetamodelManagerInternalExtension extends MetamodelManagerInternal {}
 
 	/**
 	 * @since 1.3
 	 */
-	public interface MetamodelManagerInternalExtension2 extends MetamodelManagerInternalExtension
-	{
-		@NonNull FinalAnalysis getFinalAnalysis();
-		@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
-		void resetFinalAnalysis();
-		void resetFlowAnalysis();
-	}
+	@Deprecated /* @deprecated all functionality folded into MetamodelManagerInternal */
+	public interface MetamodelManagerInternalExtension2 extends MetamodelManagerInternalExtension {}
 
 	void addClassLoader(@NonNull ClassLoader classLoader);
 
@@ -90,8 +83,28 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@Override
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 
+	/**
+	 * @since 1.21
+	 */
+	default @NonNull FinalAnalysis getFinalAnalysis() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	default @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
 
+	/**
+	 * @since 1.21
+	 */
+	default @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
+		throw new UnsupportedOperationException();
+	}
 
 	org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath);
 
@@ -101,4 +114,14 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	void installRoot(@NonNull Model pivotModel);
 
 	@Nullable Element loadResource(@NonNull URI uri, String alias, @Nullable ResourceSet resourceSet) throws ParserException;
+
+	/**
+	 * @since 1.21
+	 */
+	default void resetFinalAnalysis() {}
+
+	/**
+	 * @since 1.21
+	 */
+	default void resetFlowAnalysis() {}
 }
