@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -306,12 +306,14 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				@NonNull URI oclASURI = constraintURI.trimFragment();
 				URI oclNonASURI = PivotUtilInternal.getNonASURI(oclASURI);
 				oclPath.setText(String.valueOf(oclNonASURI));
-				EObject eObject = getEnvironmentFactory().getMetamodelManager().getASResourceSet().getEObject(constraintURI, true);
+				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+				EObject eObject = environmentFactory.getMetamodelManager().getASResourceSet().getEObject(constraintURI, true);
 				if (eObject instanceof Constraint) {
 					LanguageExpression specification = ((Constraint) eObject).getOwnedSpecification();
 					if (specification != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)getEnvironmentFactory()).parseSpecification(specification);
+							EnvironmentFactoryInternal environmentFactory2 = getEnvironmentFactory();
+							ExpressionInOCL query = environmentFactory2.parseSpecification(specification);
 							String displayString = getDisplayString(query);
 							int index = expressionCombo.indexOf(displayString);
 							expressionCombo.select(index);
@@ -326,7 +328,8 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 			if (contextUri.length() > 0) {
 				URI contextURI = URI.createURI(contextUri);
 				modelPath.setText(String.valueOf(contextURI.trimFragment()));
-				EObject eObject = getEnvironmentFactory().getResourceSet().getEObject(contextURI, true);
+				EnvironmentFactoryInternal environmentFactory3 = getEnvironmentFactory();
+				EObject eObject = environmentFactory3.getResourceSet().getEObject(contextURI, true);
 				if (eObject  != null) {
 					String displayString = LabelUtil.getLabel(eObject);
 					int index = elementCombo.indexOf(displayString);

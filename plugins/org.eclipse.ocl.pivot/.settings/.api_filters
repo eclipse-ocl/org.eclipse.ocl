@@ -2024,6 +2024,34 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/AbstractExecutor.java" type="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor">
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
+                <message_argument value="AbstractExecutor(EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
+                <message_argument value="AbstractExecutor(EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension, ModelManager)"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
+                <message_argument value="environmentFactory"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/BasicOCLExecutor.java" type="org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor">
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor"/>
+                <message_argument value="BasicOCLExecutor(EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension, ModelManager)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/executor/ExecutorMapType.java" type="org.eclipse.ocl.pivot.internal.executor.ExecutorMapType">
         <filter id="336658481">
             <message_arguments>
@@ -2140,6 +2168,14 @@
             <message_arguments>
                 <message_argument value="Technology"/>
                 <message_argument value="AbstractTechnology"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="createTemplateParameterSubstitutionVisitor(Type, Type)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2365,7 +2401,43 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="createExecutor(ModelManager)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="createParserContext(Element)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="getASClass(String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="getASOf(Class&lt;T&gt;, EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="getExtraResourceSet()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="isEvaluationTracingEnabled()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="parseSpecification(LanguageExpression)"/>
             </message_arguments>
         </filter>
     </resource>

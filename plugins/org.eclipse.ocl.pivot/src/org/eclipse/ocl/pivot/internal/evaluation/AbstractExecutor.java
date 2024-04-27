@@ -68,7 +68,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	// this is the same as HashMap's default load factor
 	private static final float DEFAULT_REGEX_CACHE_LOAD_FACTOR = 0.75f;
 
-	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	/**
 	 * @deprecated implement modelManager in derived class
 	 */
@@ -105,7 +105,10 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+	/**
+	 * @since 1.21
+	 */
+	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = null;
@@ -115,9 +118,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	/**
 	 * @deprecated implement modelManager in derived class
+	 *
+	 * @since 1.21
 	 */
 	@Deprecated
-	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ModelManager modelManager) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.modelManager = modelManager;

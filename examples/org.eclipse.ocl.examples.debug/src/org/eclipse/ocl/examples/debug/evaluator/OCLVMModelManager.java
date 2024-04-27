@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  */
 public class OCLVMModelManager extends AbstractModelManager
 {
-	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	/**
 	 * The types upon which execution of the transformation may invoke allInstances().
 	 */
@@ -44,7 +44,7 @@ public class OCLVMModelManager extends AbstractModelManager
 	 * instances of the middle model and the middle model EFactory.
 	 */
 	public OCLVMModelManager(@NonNull MetamodelManagerInternal metamodelManager) {
-		this.environmentFactory = (EnvironmentFactoryInternalExtension) metamodelManager.getEnvironmentFactory();
+		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		//	    super(metamodelManager);
 		//	    this.allInstancesTypes = transformationAnalysis.getAllInstancesTypes();
 	}

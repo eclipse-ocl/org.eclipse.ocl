@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -322,7 +322,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 		if (umlConstraint == null) {
 			return;
 		}
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(umlConstraint);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlConstraint);
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Severity severity = Severity.UNKNOWN;
 		try {

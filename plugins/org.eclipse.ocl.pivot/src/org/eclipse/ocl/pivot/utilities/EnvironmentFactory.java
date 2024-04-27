@@ -54,51 +54,14 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * @since 1.1
 	 */
-	public interface EnvironmentFactoryExtension extends EnvironmentFactory
-	{
-		/**
-		 * Create an Executor for OCL evaluation. For derived languages, consumers are expected to create the appropriate
-		 * Executor directly.
-		 */
-		@NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager);
-
-		boolean isEvaluationTracingEnabled();
-	}
+	@Deprecated /* @deprecated all functionality folded into EnvironmentFactory */
+	public interface EnvironmentFactoryExtension extends EnvironmentFactory { }
 
 	/**
 	 * @since 1.4
 	 */
-	public interface EnvironmentFactoryExtension2 extends EnvironmentFactoryExtension
-	{
-		/**
-		 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element,
-		 * which may be the type defining the 'self' context, or an ExpressionInOCL whose ancestor defines
-		 * the 'self' context.
-		 *
-		 * Returns null if parsing of OCL for an element is not supported.
-		 *
-		 * This method is primarily intended for internal use. The parseSpecification method
-		 * provides the additional functionality of maintaining the ExpressionInOCL parsed
-		 * expression cache.
-		 *
-		 * @since 1.4
-		 */
-		@Nullable ParserContext createParserContext(@NonNull Element element);
-
-		/**
-		 * Return the pivot model class for className with the Pivot Model.
-		 */
-		org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-
-		@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
-
-		/**
-		 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
-		 * Throws a ParserException if conversion fails.
-		 * @since 1.4
-		 */
-		@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
-	}
+	@Deprecated /* @deprecated all functionality folded into EnvironmentFactory */
+	public interface EnvironmentFactoryExtension2 extends EnvironmentFactoryExtension {}
 
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
@@ -130,6 +93,16 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return the new evaluation visitor
 	 */
 	@NonNull EvaluationVisitor createEvaluationVisitor(@NonNull EvaluationEnvironment evalEnv);
+
+	/**
+	 * Create an Executor for OCL evaluation. For derived languages, consumers are expected to create the appropriate
+	 * Executor directly.
+	 *
+	 * @since 1.21
+	 */
+	default @NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Return a Helper that provides a variety of useful API facilities.
@@ -168,6 +141,39 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return a new {@link OCL} instance attached to this {@link EnvironmentFactory}
 	 */
 	@NonNull OCL createOCL();
+
+	/**
+	 * Return a ParserContext suitable for parsing OCL expressions in the context of a pivot element,
+	 * which may be the type defining the 'self' context, or an ExpressionInOCL whose ancestor defines
+	 * the 'self' context.
+	 *
+	 * Returns null if parsing of OCL for an element is not supported.
+	 *
+	 * This method is primarily intended for internal use. The parseSpecification method
+	 * provides the additional functionality of maintaining the ExpressionInOCL parsed
+	 * expression cache.
+	 *
+	 * @since 1.21
+	 */
+	default @Nullable ParserContext createParserContext(@NonNull Element element) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Return the pivot model class for className with the Pivot Model.
+	 *
+	 * @since 1.21
+	 */
+	default org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	default @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
@@ -232,6 +238,21 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 1.14
 	 */
 	default boolean isDisposed() { return false; }
+
+	/**
+	 * @since 1.21
+	 */
+	default boolean isEvaluationTracingEnabled() { return false; }
+
+	/**
+	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
+	 * Throws a ParserException if conversion fails.
+	 *
+	 * @since 1.21
+	 */
+	default @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Give finalizers a chance to detach trivially so that a subsequent call to detach() can be the ultimate dispose().
