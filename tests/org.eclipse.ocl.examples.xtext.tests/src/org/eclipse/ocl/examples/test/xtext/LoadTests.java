@@ -927,7 +927,7 @@ public class LoadTests extends XtextTestCase
 		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		//		checkMonikers(asResource);
-		String ecoreName = "oclstdlib" + ".saved.ecore";
+		String ecoreName = PivotConstants.OCLSTDLIB_FILE_EXTENSION + ".saved.ecore";
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");

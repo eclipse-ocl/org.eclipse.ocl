@@ -185,7 +185,7 @@ public class PivotTestCase extends TestCase
 		//		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
 		//		csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		//		Resource csResource = csResourceSet.createResource(uri);
-		//		URI oclinecoreURI = ecoreResource.getURI().appendFileExtension("oclinecore");
+		//		URI oclinecoreURI = ecoreResource.getURI().appendFileExtension(PivotConstants.OCLINECORE_FILE_EXTENSION);
 		ocl.as2cs(asResource, (CSResource) xtextResource);
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		//		csResource.save(null);

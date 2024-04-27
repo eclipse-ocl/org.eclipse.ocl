@@ -78,8 +78,8 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 			if (pivot instanceof Model) {
 				String uri = ((Model)pivot).getExternalURI();
 				if (uri != null) {
-					if (uri.endsWith("oclinecore")) {
-						uri = uri.substring(0, uri.length()-10) + "ecore";
+					if (uri.endsWith(PivotConstants.OCLINECORE_FILE_EXTENSION)) {
+						uri = uri.substring(0, uri.length()-10) + PivotConstants.ECORE_FILE_EXTENSION;
 					}
 					return URI.createURI(uri);
 				}

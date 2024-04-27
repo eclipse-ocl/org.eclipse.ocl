@@ -156,7 +156,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();
-			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("oclstdlib", "oclas");
+			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace(PivotConstants.OCLSTDLIB_FILE_EXTENSION, "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
 		//	log.info("Loading '" + saveURI + "'");
 			log.info("Saving '" + saveURI + "'");

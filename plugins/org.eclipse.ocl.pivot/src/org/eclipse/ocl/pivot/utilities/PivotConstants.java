@@ -52,6 +52,14 @@ public interface PivotConstants
 	 * @since 1.3
 	 */
 	static final @NonNull String AS_EXTENSION_SUFFIX = "as";
+	/**
+	 * @since 1.21
+	 */
+	static final @NonNull String ECORE_FILE_EXTENSION = "ecore";
+	/**
+	 * @since 1.21
+	 */
+	static final @NonNull String EMOF_FILE_EXTENSION = "emof";
 	static final @NonNull String ESSENTIAL_OCL_FILE_EXTENSION = "essentialocl";
 	static final @NonNull String OCL_FILE_EXTENSION = "ocl";
 	static final @NonNull String OCLINECORE_FILE_EXTENSION = "oclinecore";

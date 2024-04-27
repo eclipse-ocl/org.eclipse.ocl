@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.model.BaseCSorASDocumentProvider;
@@ -154,7 +155,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 
 	@Override
 	protected @NonNull String getFileExtension() {
-		return "oclinecore";
+		return PivotConstants.OCLINECORE_FILE_EXTENSION;
 	}
 
 	@Override

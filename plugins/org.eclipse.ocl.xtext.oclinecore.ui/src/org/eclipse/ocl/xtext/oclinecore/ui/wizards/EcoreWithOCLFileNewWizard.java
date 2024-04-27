@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -47,7 +48,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 	public @NonNull
 	String getInitialContentsAsString(@NonNull IFile newFile, @NonNull AbstractFileDialog dialog) {
 		URI ecoreURI = URI.createPlatformResourceURI(newFile.getFullPath().toString(), true);
-		URI oclInEcoreURI = ecoreURI.trimFileExtension().appendFileExtension("oclinecore");
+		URI oclInEcoreURI = ecoreURI.trimFileExtension().appendFileExtension(PivotConstants.OCLINECORE_FILE_EXTENSION);
 		String initialContentsAsString = super.getInitialContentsAsString(newFile, dialog);
 		@SuppressWarnings("null") OCL ocl = OCL.newInstance(EPackage.Registry.INSTANCE);
 		ResourceSet resourceSet2 = ocl.getResourceSet();
@@ -72,7 +73,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 
 	@Override
 	public @NonNull String getNewFileExtension() {
-		return "ecore";
+		return PivotConstants.ECORE_FILE_EXTENSION;
 	}
 
 	@SuppressWarnings("null")

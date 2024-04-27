@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.services;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.xtext.resource.impl.DefaultResourceServiceProvider;
 
 /**
@@ -28,7 +29,7 @@ public class PivotResourceServiceProvider extends DefaultResourceServiceProvider
 		if (PivotUtilInternal.isASURI(uri)) {
 			return true;
 		}
-		else if ("oclstdlib".equals(uri.fileExtension())) {		// FIXME Use rather than fight Xtext
+		else if (PivotConstants.OCLSTDLIB_FILE_EXTENSION.equals(uri.fileExtension())) {		// FIXME Use rather than fight Xtext
 			return true;
 		}
 		else {

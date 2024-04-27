@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
@@ -49,7 +50,7 @@ public class OCLinEcoreFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 
 	@Override
 	public @NonNull String getNewFileExtension() {
-		return "oclinecore";
+		return PivotConstants.OCLINECORE_FILE_EXTENSION;
 	}
 
 	@SuppressWarnings("null")

@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizard;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
@@ -54,7 +55,7 @@ public class OCLstdlibFileNewWizard extends AbstractFileNewWizard
 
 	@Override
 	public @NonNull String getNewFileExtension() {
-		return "oclstdlib";
+		return PivotConstants.OCLSTDLIB_FILE_EXTENSION;
 	}
 
 	@SuppressWarnings("null")

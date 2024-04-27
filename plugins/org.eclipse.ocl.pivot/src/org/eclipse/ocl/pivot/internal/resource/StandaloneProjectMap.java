@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProject
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.w3c.dom.Document;
@@ -832,7 +833,7 @@ public class StandaloneProjectMap implements ProjectManager
 			ResourceSet resourceSet2 = resourceSet;
 			if (resourceSet2 != null) {
 				Collection<PackageLoadStatus> packageLoadStatuses = nsURI2packageLoadStatus.values();
-				@NonNull URI uri = resourceDescriptor.getGenModelURI().appendFileExtension("ecore");
+				@NonNull URI uri = resourceDescriptor.getGenModelURI().appendFileExtension(PivotConstants.ECORE_FILE_EXTENSION);
 				Resource resource;
 				if (packageLoadStatuses.size() == 1) {
 					@SuppressWarnings("null")@NonNull PackageLoadStatus packageLoadStatus = packageLoadStatuses.iterator().next();

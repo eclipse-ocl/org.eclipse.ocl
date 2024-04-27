@@ -95,8 +95,8 @@ public class FlowAnalysisTests extends XtextTestCase
 							"  }\n" +
 							"}";
 			String fileName = "FlowAnalysis_" + invariantName;
-			createOCLinEcoreFile(fileName + ".oclinecore", testContext);
-			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
+			createOCLinEcoreFile(fileName + "." + PivotConstants.OCLINECORE_FILE_EXTENSION, testContext);
+			Resource asResource = doLoad_Concrete(fileName, PivotConstants.OCLINECORE_FILE_EXTENSION);
 			Model model = PivotUtil.getModel(asResource);
 			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
 			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));

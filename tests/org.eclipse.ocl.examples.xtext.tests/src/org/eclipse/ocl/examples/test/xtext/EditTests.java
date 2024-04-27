@@ -785,7 +785,7 @@ public class EditTests extends XtextTestCase
 			loadPivotContent.add(eObject);
 		}
 		{
-			BaseCSResource xtextResource1 = (BaseCSResource) ocl1.getResourceSet().createResource(ecoreURI.appendFileExtension("oclinecore"), OCLinEcoreCSPackage.eCONTENT_TYPE);
+			BaseCSResource xtextResource1 = (BaseCSResource) ocl1.getResourceSet().createResource(ecoreURI.appendFileExtension(PivotConstants.OCLINECORE_FILE_EXTENSION), OCLinEcoreCSPackage.eCONTENT_TYPE);
 			xtextResource1.setURI(ecoreURI);
 			ocl1.as2cs(asResource, xtextResource1);
 			assertNoResourceErrors("Xtext load", xtextResource1);
@@ -826,7 +826,7 @@ public class EditTests extends XtextTestCase
 		assertEquals(loadPivotContent.size(), newPivotContent.size());
 		assertEquals(loadPivotContent, newPivotContent);
 		{
-			BaseCSResource xtextResource2 = (BaseCSResource) ocl1.getResourceSet().createResource(ecoreURI.appendFileExtension("oclinecore"), OCLinEcoreCSPackage.eCONTENT_TYPE);
+			BaseCSResource xtextResource2 = (BaseCSResource) ocl1.getResourceSet().createResource(ecoreURI.appendFileExtension(PivotConstants.OCLINECORE_FILE_EXTENSION), OCLinEcoreCSPackage.eCONTENT_TYPE);
 			xtextResource2.setURI(ecoreURI);
 			ocl1.as2cs(asResource, xtextResource2);
 			assertNoResourceErrors("Xtext load", xtextResource2);

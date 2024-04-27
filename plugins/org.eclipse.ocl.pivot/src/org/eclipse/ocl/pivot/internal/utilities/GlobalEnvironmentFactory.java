@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 import com.google.common.collect.MapMaker;
 
@@ -103,7 +104,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
 		ConcurrentMap<URI, Resource> weakMap = new MapMaker().weakValues().makeMap();
 		resourceSet.setURIResourceMap(weakMap);	// Must use weak values to allow garbage collection of stale models
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.EMOF_FILE_EXTENSION, new EMOFResourceFactoryImpl());
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, resourceSet);
 		return resourceSet;
 	}
