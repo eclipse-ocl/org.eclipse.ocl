@@ -21,7 +21,10 @@ public class BasicOCLExecutor extends AbstractExecutor implements OCLExecutor
 {
 	protected final @NonNull ModelManager modelManager;
 
-	public BasicOCLExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+	/**
+	 * @since 1.21
+	 */
+	public BasicOCLExecutor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ModelManager modelManager) {
 		super(environmentFactory);
 		this.modelManager = modelManager;
 	}

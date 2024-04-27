@@ -72,7 +72,6 @@ import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.options.PivotConsoleOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -826,7 +825,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					}
 					EObject instanceContext = contextObject;
 					if ((instanceContext != null) && !(instanceContext instanceof Element)) {
-						instanceContext = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, instanceContext);
+						instanceContext = environmentFactory.getASOf(Element.class, instanceContext);
 					}
 					parserContext = new ClassContext(environmentFactory, null, contextType, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
 					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;

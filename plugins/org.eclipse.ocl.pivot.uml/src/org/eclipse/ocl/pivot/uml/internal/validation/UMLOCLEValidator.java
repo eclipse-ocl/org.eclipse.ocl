@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
@@ -319,10 +320,10 @@ public class UMLOCLEValidator implements EValidator
 				if (umlStereotypeApplications.size() > 0) {
 					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 					if (umlResource != null) {
-						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ThreadLocalExecutor.basicGetEnvironmentFactory();
+						EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 						if (environmentFactory == null) {
 							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
-							environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+							environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 						}
 						External2AS external2as = UML2AS.findAdapter(umlResource, environmentFactory);
 						if (external2as == null) {

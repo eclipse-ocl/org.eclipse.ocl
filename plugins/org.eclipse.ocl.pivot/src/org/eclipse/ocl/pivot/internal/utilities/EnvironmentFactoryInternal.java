@@ -63,15 +63,8 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	/**
 	 * @since 1.1
 	 */
-	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2
-	{
-		/**
-		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
-		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-		 * this alternative creation mechanism is available via an EnvironmentFactory override.
-		 */
-		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
-	}
+	@Deprecated /* @deprecated all functionality folded into EnvironmentFactoryInternal */
+	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2 {}
 
 	void addExternal2AS(@NonNull External2AS external2as);
 
@@ -145,6 +138,17 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 */
 	@Deprecated /* @deprecated not used - evolving towards createParserContext(@NonNull Element) */
 	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
+
+	/**
+	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+	 * this alternative creation mechanism is available via an EnvironmentFactory override.
+	 *
+	 * @since 1.21
+	 */
+	default @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue) {
+		throw new UnsupportedOperationException();
+	}
 
 	void detach(@NonNull Object attachOwner);
 
