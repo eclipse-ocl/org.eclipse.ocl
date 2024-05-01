@@ -702,7 +702,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					throw new NullPointerException("No ResourceSet for genmodel");
 				}
 				MetamodelManagerInternal metamodelManager = stateAdapter.getMetamodelManager();
-				metamodelManager.getStandardLibrary().getOclAnyType();
+				metamodelManager.getASlibrary();
 				for (GenPackage genPackage : genModel.getGenPackages()) {
 					EPackage ecorePackage = genPackage.getEcorePackage();
 					org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);

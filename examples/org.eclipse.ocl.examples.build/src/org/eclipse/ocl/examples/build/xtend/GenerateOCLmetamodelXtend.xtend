@@ -154,7 +154,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 
 				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
-					Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
+					Package standardLibraryPackage = standardLibrary.getPackage();
 					assert standardLibraryPackage != null;
 					Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
 					Model model = contents.getModel();

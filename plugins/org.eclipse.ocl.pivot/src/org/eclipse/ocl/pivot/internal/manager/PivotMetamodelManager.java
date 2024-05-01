@@ -40,7 +40,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -778,17 +777,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return es2as.getCreated(pivotClass, eObject);
 	}
 
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.Package getASlibrary() {
+		return standardLibrary.getPackage();
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
 		if ((asMetamodel == null) && autoLoadASmetamodel) {
-			org.eclipse.ocl.pivot.Package stdlibPackage = null;
-			AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
-		//	if (!asLibraries.isEmpty()) {
-		//		stdlibPackage = asLibraries.get(0);
-		//	}
-		//	if (stdlibPackage == null) {
-				stdlibPackage = oclAnyType.getOwningPackage();
-		//	}
+			org.eclipse.ocl.pivot.Package stdlibPackage = getASlibrary();
 			if (stdlibPackage != null) {
 				loadASmetamodel(stdlibPackage);
 			}
@@ -1484,7 +1484,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@SuppressWarnings("null")
 	public @NonNull PrecedenceManager getPrecedenceManager() {
 		if (precedenceManager == null) {
-			standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
+			getASlibrary();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
 			synchronized (this) {
 				if (precedenceManager == null) {
 					synchronized (this) {
@@ -1840,7 +1840,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 		}
 		if (!libraryLoadInProgress && (asLibraryResource == null) && (asResource instanceof OCLstdlib) && (asLibraries.size() > 0)) {
-			standardLibrary.getOclAnyType();
+			getASlibrary();
 		}
 	}
 
@@ -2012,7 +2012,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					return null;
 				}
 			}
-			installResource(asLibraryResource2);
+			if (asLibraryResource2 instanceof ASResource) {		// Model2tablesGenerator uses a non-ASResource when synthesizing a library
+				installResource((ASResource)asLibraryResource2);
+			}
 			if (!asLibraries.isEmpty()) {
 				for (@NonNull Library asLibrary : asLibraries) {
 					installLibraryContents(asLibrary);

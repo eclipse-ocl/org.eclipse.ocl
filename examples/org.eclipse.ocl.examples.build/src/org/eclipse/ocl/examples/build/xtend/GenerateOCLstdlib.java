@@ -122,7 +122,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			if (useOCLstdlib) {
-				environmentFactory.getStandardLibrary().getOclAnyType();
+				environmentFactory.getStandardLibrary().getPackage();
 			}
 			BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(fileURI, true);
 			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");

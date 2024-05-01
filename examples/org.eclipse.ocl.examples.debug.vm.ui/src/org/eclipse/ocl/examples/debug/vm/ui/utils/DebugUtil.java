@@ -56,7 +56,7 @@ public class DebugUtil
 			if (containingRoot == null) {
 				externalURI = URI.createURI(contextPackage.getURI());
 			}
-			else if (containingRoot != PivotUtil.getContainingModel(environmentFactory.getStandardLibrary().getOclAnyType())) {
+			else if (containingRoot != PivotUtil.getContainingModel(environmentFactory.getStandardLibrary().getPackage())) {
 				externalURI = URI.createURI(containingRoot.getExternalURI());
 				externalURI = URIUtil.getNonASURI(externalURI);
 			}
