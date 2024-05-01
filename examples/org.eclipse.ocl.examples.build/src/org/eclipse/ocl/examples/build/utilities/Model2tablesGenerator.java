@@ -108,7 +108,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 
 				@Override
 				public @NonNull Resource getResource() {
-					return new ResourceImpl(URI.createURI("dummy-library"));
+					return new ResourceImpl(URI.createURI("dummy-library")); // XXX An ASResource would ensure that StandardLibraryContribution.getResource is ASResource
 				}
 			});
 		}

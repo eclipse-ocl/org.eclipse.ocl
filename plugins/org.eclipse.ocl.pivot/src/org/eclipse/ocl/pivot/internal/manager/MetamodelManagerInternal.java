@@ -67,6 +67,18 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@Deprecated /* @deprecated use EnvironmentFactory.createParserContext() */
 	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) throws ParserException;
 
+	/**
+	 * Return the OCL Standard Library package. This has the important side effect of loading it if necessary.
+	 *
+	 * @since 1.21
+	 */
+	default org.eclipse.ocl.pivot.Package getASlibrary() {
+		return getStandardLibrary().getOclAnyType().getOwningPackage();
+	}
+
+	/**
+	 * Return the OCL Metamodel package. This has the important side effect of loading it, and the OCL Standard Library, if necessary.
+	 */
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
 
 	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
