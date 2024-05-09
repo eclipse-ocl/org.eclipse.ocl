@@ -3,15 +3,15 @@ import 'Validate.oclinecore'
 package Validate
 
 context Level1
-inv V1: l1.size() = 2
+inv L1_size: l1.size() = 2
 
 context Level2a
-inv V2a: l2a.size() = 2
+inv L2a_size: l2a.size() = 2
 
 context Level2b
-inv V2b: l2b.size() = 2
+inv L2b_size: l2b.size() = 2
 
 context Level3
-inv V3: l3.size() = 2
+inv L3_size: l3.size() = 2
 
 endpackage
