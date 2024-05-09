@@ -559,10 +559,10 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l3", "yyy");
 			objectLabel = LabelUtil.getLabel(testInstance1);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template, "Level1::V1", objectLabel),
-				StringUtil.bind(template, "Level2a::V2a", objectLabel),
-				StringUtil.bind(template, "Level2b::V2b", objectLabel),
-				StringUtil.bind(template, "Level3::V3", objectLabel));
+				StringUtil.bind(template, "Level1::L1_size", objectLabel),
+				StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
+				StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
+				StringUtil.bind(template, "Level3::L3_size", objectLabel));
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	One CompleteOCl and one OCLinEcore
@@ -580,11 +580,11 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l3", "ok");
 			objectLabel = LabelUtil.getLabel(testInstance1);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template,  "Level2a::L2a", objectLabel),
-				StringUtil.bind(template,  "Level2a::V2a", objectLabel));
+				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel),
+				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel));
 			objectLabel = LabelUtil.getLabel(testInstance2);
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind(VIOLATED_TEMPLATE, "L2a", "Level3 ok", objectLabel));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3 ok", objectLabel));
 		}
 		finally {
 			ocl0.dispose();
@@ -744,20 +744,20 @@ public class ValidateTests extends AbstractValidateTests
 		try {
 			String template = EcorePlugin.INSTANCE.getString("_UI_GenericConstraint_diagnostic");
 			checkValidationDiagnostics(testInstance, Diagnostic.ERROR,
-				StringUtil.bind(template,  "L1", objectLabel),
-				StringUtil.bind(template,  "L2a", objectLabel),
+				StringUtil.bind(template,  "L1_text", objectLabel),
+				StringUtil.bind(template,  "L2a_text", objectLabel),
 				//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
-				StringUtil.bind(template,  "L3", objectLabel));
+				StringUtil.bind(template,  "L3_text", objectLabel));
 			//
 			//	Check OCLinEcoreEObjectValidator warnings and distinct message
 			//
 			ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage, new OCLinEcoreEObjectValidator());
 			template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
-				StringUtil.bind(template, "Level1::L1", objectLabel),
-				StringUtil.bind(template, "Level2a::L2a", objectLabel),
-				//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
-				StringUtil.bind(template, "Level3::L3", objectLabel));
+				StringUtil.bind(template, "Level1::L1_text", objectLabel),
+				StringUtil.bind(template, "Level2a::L2a_text", objectLabel),
+				//BUG355184		ClassUtil.bind(template,  "L2b_text", objectLabel),
+				StringUtil.bind(template, "Level3::L3_text", objectLabel));
 			//
 			//	No errors
 			//
@@ -778,7 +778,7 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance, "l3", "ok");
 			objectLabel = LabelUtil.getLabel(testInstance);
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
-				StringUtil.bind(template, "Level1::L1", objectLabel));
+				StringUtil.bind(template, "Level1::L1_text", objectLabel));
 		} finally {
 			ocl1.dispose();
 		}
