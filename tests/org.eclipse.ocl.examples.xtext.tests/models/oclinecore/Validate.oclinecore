@@ -4,21 +4,21 @@ package Validate : val = 'valid'
 	{
 		property ref : String;
 		property l1 : String;
-		invariant L1 : ref = l1;
+		invariant L1_text : ref = l1;
 	}
 	class Level2a extends Level1
 	{
 		property l2a : String;
-		invariant L2a : ref = l2a;
+		invariant L2a_text : ref = l2a;
 	}
 	class Level2b extends Level1
 	{
 		property l2b : String;
-		invariant L2b : ref = l2b;
+		invariant L2b_text : ref = l2b;
 	}
 	class Level3 extends Level2a,Level2b
 	{
 		property l3 : String;
-		invariant L3 : ref = l3;
+		invariant L3_text : ref = l3;
 	}
 }
