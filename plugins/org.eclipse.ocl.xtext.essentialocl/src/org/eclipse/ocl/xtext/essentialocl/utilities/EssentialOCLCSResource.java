@@ -84,6 +84,7 @@ import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.Triple;
 
@@ -438,6 +439,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	public final @NonNull ASResource getASResource() {
 		CS2AS cs2as = getCS2AS();
 		ASResource asResource = cs2as.getASResource();
+		if (!asResource.isLoaded()) {
+			ListBasedDiagnosticConsumer diagnosticsConsumer = new ListBasedDiagnosticConsumer();
+			cs2as.update(diagnosticsConsumer);					// XXX do errors get lost ??
+		}
 		return asResource;
 	}
 
@@ -470,7 +475,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
-		ASResource asResource = createASResource(asResourceSet);
+		ASResource asResource = createASResource(asResourceSet);		// empty AS Resource
 		CS2AS cs2as = null;
 		if (parserContext instanceof ExtendedParserContext) {
 			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
