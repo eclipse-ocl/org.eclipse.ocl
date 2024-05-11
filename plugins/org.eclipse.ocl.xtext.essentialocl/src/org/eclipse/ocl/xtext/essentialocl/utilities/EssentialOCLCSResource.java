@@ -77,6 +77,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
 import org.eclipse.xtext.diagnostics.AbstractDiagnostic;
 import org.eclipse.xtext.diagnostics.DiagnosticMessage;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.linking.impl.XtextLinkingDiagnostic;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.nodemodel.INode;
@@ -441,7 +442,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		ASResource asResource = cs2as.getASResource();
 		if (!asResource.isLoaded()) {
 			ListBasedDiagnosticConsumer diagnosticsConsumer = new ListBasedDiagnosticConsumer();
-			cs2as.update(diagnosticsConsumer);					// XXX do errors get lost ??
+			cs2as.update(diagnosticsConsumer);
+			asResource.getErrors().addAll(diagnosticsConsumer.getResult(Severity.ERROR));
+			asResource.getWarnings().addAll(diagnosticsConsumer.getResult(Severity.WARNING));
 		}
 		return asResource;
 	}

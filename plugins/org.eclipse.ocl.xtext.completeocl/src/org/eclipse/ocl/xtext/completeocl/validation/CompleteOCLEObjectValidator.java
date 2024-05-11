@@ -138,7 +138,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
 			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
-			return allOk || (diagnostics != null);
+			return allOk /*|| (diagnostics != null)*/;
 		}
 		return true;
 	}

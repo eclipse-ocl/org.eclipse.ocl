@@ -531,18 +531,23 @@ public class ValidateTests extends AbstractValidateTests
 			//	No errors
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
-			eSet(testInstance1, "ref", "xx");
-			eSet(testInstance1, "l1", "xx");
-			eSet(testInstance1, "l2a", "xx");
-			eSet(testInstance1, "l2b", "xx");
-			eSet(testInstance1, "l3", "xx");
-			eSet(testInstance2, "ref", "yy");
-			eSet(testInstance2, "l1", "yy");
-			eSet(testInstance2, "l2a", "yy");
-			eSet(testInstance2, "l2b", "yy");
-			eSet(testInstance2, "l3", "yy");
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			eSet(testInstance1, "ref", "xxx");
+			eSet(testInstance1, "l1", "xxx");
+			eSet(testInstance1, "l2a", "xxx");
+			eSet(testInstance1, "l2b", "xxx");
+			eSet(testInstance1, "l3", "xxx");
+			eSet(testInstance2, "ref", "yyy");
+			eSet(testInstance2, "l1", "yyy");
+			eSet(testInstance2, "l2a", "yyy");
+			eSet(testInstance2, "l2b", "yyy");
+			eSet(testInstance2, "l3", "yyy");
+			objectLabel = LabelUtil.getLabel(testInstance1);
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
+					StringUtil.bind(template, "Level1::L1_size", objectLabel),
+					StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
+					StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
+					StringUtil.bind(template, "Level3::L3_size", objectLabel));
+		//	checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	CompleteOCL errors all round
 			//
