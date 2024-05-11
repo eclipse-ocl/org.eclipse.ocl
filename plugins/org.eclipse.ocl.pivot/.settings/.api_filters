@@ -2151,6 +2151,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/ICSI2ASMapping.java" type="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
+                <message_argument value="getCSElement(PivotObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/LUSSIDs.java" type="org.eclipse.ocl.pivot.internal.resource.LUSSIDs">
         <filter id="336658481">
             <message_arguments>
