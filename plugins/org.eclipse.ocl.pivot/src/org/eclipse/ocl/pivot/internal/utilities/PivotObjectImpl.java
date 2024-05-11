@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -21,7 +22,7 @@ import org.eclipse.ocl.pivot.utilities.PivotObject;
 
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
-	private @Nullable EObject esObject;
+	private @Nullable Notifier esObject;		// Model may map to Resource
 
 	@Override
 	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
@@ -46,12 +47,12 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	public @Nullable EObject getESObject() {
-		return esObject;
+		return (EObject)esObject;
 	}
 
 	@Deprecated // Use getESObject()
 	public @Nullable EObject getETarget() {
-		return esObject;
+		return (EObject)esObject;
 	}
 
 	@Override
@@ -59,9 +60,16 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return null;
 	}
 
+	/**
+	 * @since 1.21
+	 */
+	public @Nullable Notifier getNotifier() {
+		return esObject;
+	}
+
 	@Deprecated // Use getESObject()
 	public @Nullable EObject getTarget() {
-		return esObject;
+		return (EObject)esObject;
 	}
 
 	@Override
@@ -70,6 +78,13 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	public void setESObject(@Nullable EObject newTarget) {
+		esObject = newTarget;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	public void setNotifier(@Nullable Notifier newTarget) {
 		esObject = newTarget;
 	}
 

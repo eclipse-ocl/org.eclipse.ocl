@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -138,4 +139,9 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	 */
 	@Deprecated
 	EObject getETarget();
+
+	/**
+	 * @since 1.21
+	 */
+	Notifier getNotifier();
 } // Element

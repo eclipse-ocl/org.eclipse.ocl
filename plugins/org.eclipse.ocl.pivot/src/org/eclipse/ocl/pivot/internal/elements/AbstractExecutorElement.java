@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
@@ -153,6 +154,11 @@ public class AbstractExecutorElement implements Element
 
 	@Override
 	public EObject getETarget() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Notifier getNotifier() {
 		throw new UnsupportedOperationException();
 	}
 
