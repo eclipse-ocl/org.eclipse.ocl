@@ -11,14 +11,20 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
@@ -44,6 +50,35 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			}
 		}
 		return super.eObjectForURIFragmentSegment(uriFragmentSegment);
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+	//	System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		if (PivotUtilInternal.isASURI(uri)) {
+			if (esObject instanceof EObject) {
+				uri = EcoreUtil.getURI((EObject)esObject);
+				System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-es " + uri);
+			}
+			else if (esObject instanceof Resource) {
+				uri = ((Resource)esObject).getURI();			// XXX assert == Model.externalURI
+				System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-es " + uri);
+			}
+			else {
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				if (environmentFactory != null) {
+					ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+					if (csi2asMapping != null) {
+						EObject csElement = csi2asMapping.getCSElement(this);
+						if (csElement != null) {
+							uri = EcoreUtil.getURI(csElement);
+							System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-cs " + uri);
+						}
+					}
+				}
+			}
+		}
+		super.eSetProxyURI(uri);
 	}
 
 	public @Nullable EObject getESObject() {

@@ -14,6 +14,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
@@ -92,6 +94,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		Element oldPivot = pivot;
 		pivot = newPivot;
+		  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " setPivot " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newPivot));
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPivot, pivot));
 	}

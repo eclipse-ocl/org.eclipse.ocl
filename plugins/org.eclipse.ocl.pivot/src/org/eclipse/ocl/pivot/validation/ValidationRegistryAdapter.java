@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * The ValidationRegistryAdapter supports a local ResourceSet ValidationRegistry that delegates to the global ValidationRegistry
@@ -132,6 +134,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 		this();
 		this.resourceSet = resourceSet;
 		resourceSet.eAdapters().add(this);
+		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ValidationRegistryAdapter.ctor " + NameUtil.debugSimpleName(this)  + " rs " + NameUtil.debugSimpleName(resourceSet));
 	}
 
 	public void add(@NonNull EPackage ePackage, @NonNull EValidator extraEValidator) {

@@ -31,7 +31,9 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
@@ -86,6 +88,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	 * overheads up front.
 	 */
 	public boolean initialize(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " CompleteOCLEObjectValidator.initialize " + NameUtil.debugSimpleName(this) + " ef " + NameUtil.debugSimpleName(environmentFactory));
 		Resource ecoreResource = ePackage.eResource();
 		if (ecoreResource == null) {
 			return false;
@@ -112,6 +115,17 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			return false;
 		}
 		CSResource xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+//		Resource asResource = xtextResource != null ? xtextResource.getASResource() : null;		// If empty need Xtext CS2AS
+//		xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+//		xtextResource.load(resourceSet.getLoadOptions());
+//	    try
+//	    {
+//	    	resourceSet.demandLoad(xtextResource);
+//	    }
+//	    catch (IOException exception)
+//	    {
+//	    	resourceSet.handleDemandLoadException(xtextResource, exception);
+//	    }
 		errors = xtextResource.getErrors();
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
@@ -119,7 +133,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			logger.error("Failed to load '" + oclURI + message);
 			return false;
 		}
-		Resource asResource = xtextResource.getASResource();
+		Resource asResource = xtextResource.getASResource();		// If empty need Xtext CS2AS
 		errors = asResource.getErrors();
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
@@ -133,10 +147,12 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
+		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " CompleteOCLEObjectValidator.validatePivot1 " + NameUtil.debugSimpleName(this) + " object " + NameUtil.debugSimpleName(object));
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
 		initialize(environmentFactory);
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
+			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " CompleteOCLEObjectValidator.validatePivot2 " + NameUtil.debugSimpleName(this) + " object " + NameUtil.debugSimpleName(object));
 			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 			return allOk /*|| (diagnostics != null)*/;
 		}

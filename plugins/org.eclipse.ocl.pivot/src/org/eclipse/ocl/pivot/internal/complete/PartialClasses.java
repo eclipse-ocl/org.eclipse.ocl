@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
@@ -251,6 +252,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
 		}
+		if (partialClass.getName().contains("Level2b")) {
+		  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didAdd " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName());
+		}
 		((ClassImpl)partialClass).addClassListener(this);
 		if (partialClass.getUnspecializedElement() == null) {
 			getCompleteModel().didAddClass(partialClass, getCompleteClass());
@@ -270,6 +274,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didRemove " + this + " " + partialClass);
 		}
+		if (partialClass.getName().contains("Level2b")) {
+			  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didRemove " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName());
+			}
 		super.didRemove(index, partialClass);
 		((ClassImpl)partialClass).removeClassListener(this);
 		dispose();			// Force lazy recomputation
