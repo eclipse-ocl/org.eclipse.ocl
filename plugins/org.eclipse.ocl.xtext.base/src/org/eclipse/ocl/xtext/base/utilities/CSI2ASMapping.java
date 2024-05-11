@@ -427,7 +427,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				}
 			}
 		}
-		return map;
+		return map;		// XXX ?? Add Resource-to-Model to allow Model lookup
 	}
 
 	@Override
@@ -524,6 +524,10 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			as2cs = as2cs2 = computeAS2CSMap();
 		}
 		ModelElementCS modelElementCS = as2cs2.get(pivotElement);
+		if (modelElementCS == null) {
+			getClass();
+	//		environmentFactory.getCompleteModel().getCompleteClass(null)
+		}
 		for (EObject csContainer = modelElementCS; csContainer instanceof ModelElementCS; csContainer = csContainer.eContainer()) {
 			if (((ModelElementCS)csContainer).getPivot() != pivotElement) {
 				break;

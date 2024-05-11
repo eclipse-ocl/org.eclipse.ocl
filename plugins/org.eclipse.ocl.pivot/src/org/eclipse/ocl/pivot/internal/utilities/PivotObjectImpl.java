@@ -53,8 +53,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	@Override
-	public void eSetProxyURI(URI uri) {
-		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+	public void eSetProxyURI(URI uri) {		// XXX Move override to unloaded
+	//	System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
 		if (PivotUtilInternal.isASURI(uri)) {
 			if (esObject instanceof EObject) {
 				uri = EcoreUtil.getURI((EObject)esObject);
@@ -66,11 +66,22 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			}
 			else {
 				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-				if (environmentFactory != null) {
+				if (environmentFactory == null) {
+					System.err.println("No EnvironmentFactory when proxifying '" + uri + "' for " + NameUtil.debugSimpleName(this));
+				}
+				else {
 					ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-					if (csi2asMapping != null) {
-						EObject csElement = csi2asMapping.getCSElement(this);
-						if (csElement != null) {
+					if (csi2asMapping == null) {
+						System.err.println("No CSI2ASMapping when proxifying '" + uri + "' for " + NameUtil.debugSimpleName(this));
+					}
+					else {
+						EObject csElement = csi2asMapping.getCSElement(this);		// XXX alternate logic for Model -> Resource
+						if (csElement == null) {
+							System.err.println("No CSElement when proxifying '" + uri + "' for " + NameUtil.debugSimpleName(this));
+							csElement = csi2asMapping.getCSElement(this);		// XXX alternate logic for Model -> Resource
+							getClass();		// XXX
+						}
+						else {
 							uri = EcoreUtil.getURI(csElement);
 							System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-cs " + uri);
 						}
@@ -113,6 +124,10 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	public void setESObject(@Nullable EObject newTarget) {
+		System.out.println("setESObject " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newTarget));
+		if (newTarget == null) {
+			getClass();		// XXX
+		}
 		esObject = newTarget;
 	}
 
@@ -125,10 +140,12 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 
 	@Deprecated // Use setESObject()
 	public void setTarget(@Nullable EObject newTarget) {
+		System.out.println("setTarget " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newTarget));
 		esObject = newTarget;
 	}
 
 	public void unloaded(@NonNull ASResource asResource) {
+		System.out.println("unloaded " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(null));
 		esObject = null;
 	}
 }
