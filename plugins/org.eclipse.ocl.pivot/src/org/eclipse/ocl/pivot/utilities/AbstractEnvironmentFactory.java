@@ -17,19 +17,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -43,6 +45,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -75,6 +78,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -94,6 +98,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
@@ -108,6 +113,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.4
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
+
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
@@ -145,6 +152,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * Configuration of validation preferences.
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
+
+	/**
+	 * Map of URI to external resource converter.
+	 */
+	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
+
+	private @Nullable Map<Resource,External2AS> es2ases = null;
 
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
@@ -204,7 +218,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
-		System.out.println(Diagnostician.getBracketedThreadName() + " EnvironmentFactory.ctor " + Diagnostician.debugSimpleName(this) + " es " + Diagnostician.debugSimpleName(externalResourceSet) + " as " + Diagnostician.debugSimpleName(asResourceSet));
+	//	System.out.println(Diagnostician.getBracketedThreadName() + " EnvironmentFactory.ctor " + Diagnostician.debugSimpleName(this) + " es " + Diagnostician.debugSimpleName(externalResourceSet) + " as " + Diagnostician.debugSimpleName(asResourceSet));
 	}
 
 	@Override
@@ -230,7 +244,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ResourceSet externalResourceSet2 = getResourceSet();
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}
-		getMetamodelManager().addExternal2AS(external2as);
+		addExternal2ASNew(external2as);
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public void addExternal2ASNew(@NonNull External2AS es2as) {
+		Map<Resource, External2AS> es2ases2 = es2ases;
+		if (es2ases2 == null){
+			es2ases = es2ases2 = new HashMap<>();
+		}
+		Resource resource = es2as.getResource();
+		URI uri = es2as.getURI();
+		External2AS oldES2AS = es2ases2.put(resource, es2as);
+		assert oldES2AS == null;
+		oldES2AS = external2asMap.put(uri, es2as);
+		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
 	}
 
 	/**
@@ -673,6 +704,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		disposeInternal();
 	}
 
+	@Override
+	public void disposeExternalState() {
+		external2asMap.clear();
+		Map<Resource, External2AS> es2ases2 = es2ases;
+		if (es2ases2 != null) {
+			for (External2AS es2as : es2ases2.values()) {
+				es2as.dispose();
+			}
+			es2ases = null;
+		}
+	}
+
 	protected void disposeInternal() {
 		assert isDisposed();
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
@@ -680,6 +723,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (metamodelManager != null) {
 			metamodelManager.dispose();
 			metamodelManager = null;
+		}
+		else {
+			disposeExternalState();
 		}
 		EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
 		if (externalResourceSetWasNull || isGlobal) {
@@ -743,13 +789,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			csi2asMapping.dispose();
 			csi2asMapping = null;
 		}
-	//	completeEnvironment = null;
-	//	standardLibrary = null;
-	//	completeModel = null;
-		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-		//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
-		//		}
-
 		projectManager.unload(asResourceSet);
 		projectManager.unload(externalResourceSet);
 
@@ -880,6 +919,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.21
 	 */
 	@Override
+	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
+		return es2ases != null ? es2ases.get(esResource) : null;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
 	public @NonNull ResourceSet getExtraResourceSet() {
 		ResourceSet extraResourceSet2 = extraResourceSet;
 		if (extraResourceSet2 == null) {
@@ -945,6 +992,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public void installResource(@NonNull ASResource asResource) {
+		metamodelManager.installResource(asResource);
+	}
+
+	@Override
 	public boolean isDisposed() {
 		return attachCount < 0;
 	}
@@ -973,8 +1025,125 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return externalResourceSet.getPackageRegistry().getEPackage(ePackage.getNsURI());
 	}
 
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public @Nullable Element loadExternalElement(@NonNull URI uri) throws ParserException {
+		assert !PivotUtilInternal.isASURI(uri);
+		Resource resource = null;
+		String fragment = uri.fragment();
+		URI resourceURI;
+		//
+		if (fragment == null) {
+			Element asElement = loadExternalModel(uri);
+			if (asElement != null) {
+				assert asElement instanceof Namespace;
+				return asElement;
+			}
+			resourceURI = uri;
+		}
+		else {
+			resourceURI = uri.trimFragment();
+			String uriString = resourceURI.toString();
+			//
+			//	fragment-full URI may have a registered package to mark the unfragmented name
+			//
+			EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
+			EPackage ePackage = packageRegistry.getEPackage(uriString);
+			if (ePackage != null) {
+				Resource eResource = ePackage.eResource();
+				if (eResource instanceof XMLResource) {
+					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
+					if (eObject != null) {
+						Element asElement = getASOf(Element.class, eObject);
+						if (asElement != null) {
+							return asElement;
+						}
+					}
+				}
+			}
+		}
+		if (resource == null) {
+			External2AS external2as = external2asMap.get(resourceURI);
+			if (external2as != null) {
+				resource = external2as.getResource();
+			}
+			else {
+				resource = externalResourceSet.getResource(resourceURI, true);
+				if (resource != null) {
+					for (Resource.Diagnostic diagnostic : resource.getErrors()) {
+						if (diagnostic instanceof WrappedException) {
+							throw (WrappedException)diagnostic;
+						}
+					}
+				}
+			}
+		}
+		if (resource != null) {
+			return loadResource(resource, uri);
+		}
+		logger.warn("Cannot load package with URI '" + uri + "'");
+		return null;
+	}
+
+	/**
+	 * Load a fragment-less URI.
+	 */
+	private @Nullable Element loadExternalModel(@NonNull URI uri) throws ParserException {
+		assert !PivotUtilInternal.isASURI(uri);
+		assert uri.fragment() == null;
+		String uriString = uri.toString();
+		//
+		//	fragment-less URI may be explicit namespace URI
+		//
+		EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
+		EPackage ePackage = packageRegistry.getEPackage(uriString);
+		if (ePackage != null) {
+			Element asElement = getASOf(Element.class, ePackage);
+			return asElement;
+		}
+		//
+		//	fragment-less URI may be an OCL Standard Library
+		//
+		if (uriString.equals(standardLibrary.getDefaultStandardLibraryURI())) {
+			PivotMetamodelManager metamodelManager = getMetamodelManager();
+			Resource asResource = metamodelManager.getLibraryResource();
+			if (asResource == null) {
+				asResource = standardLibrary.loadDefaultLibrary(uriString);
+			}
+			if (asResource != null) {
+				Element asElement = loadResource(asResource, uri);
+				return asElement;
+			}
+		}
+		else {
+			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uriString);
+			if (contribution != null) {
+				Resource asResource = contribution.getResource();
+				Element asElement = loadResource(asResource, uri);
+				return asElement;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public @Nullable Element loadImportedElement(@NonNull URI uri) throws ParserException {
+		if (PivotUtilInternal.isASURI(uri)) {
+			return getMetamodelManager().getASElement(uri);
+		}
+		else {
+			return loadExternalElement(uri);
+		}
+	}
+
 	@Override
 	public @Nullable Element loadResource(@NonNull Resource resource, @Nullable URI uri) throws ParserException {
+		assert !(resource instanceof ASResource);
 		ASResourceFactory bestFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(resource);
 		if (bestFactory != null) {
 			ResourceSet resourceSet = resource.getResourceSet();
@@ -1025,6 +1194,27 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {}
+		}
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public void removeExternalResource(@NonNull External2AS external2as) {
+		external2asMap.remove(external2as.getURI());
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public void removeExternalResource(@NonNull Resource esResource) {
+		if (es2ases != null) {
+			External2AS es2as = es2ases.remove(esResource);
+			if (es2as != null) {
+				es2as.dispose();
+			}
 		}
 	}
 

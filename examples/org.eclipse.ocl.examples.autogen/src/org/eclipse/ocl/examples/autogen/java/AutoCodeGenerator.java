@@ -130,9 +130,9 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected org.eclipse.ocl.pivot.@NonNull Package createASPackage(@NonNull String packageName) {
 		String nsURI = "java://"+packageName;		// java: has no significance other than diagnostic readability
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.createPackage(packageName, "viz", nsURI, IdManager.getRootPackageId(nsURI));
-		Model asRoot = PivotUtil.createModel(nsURI + ".java");
-		asRoot.getOwnedPackages().add(asPackage);
-		metamodelManager.installRoot(asRoot);
+		Model asModel = PivotUtil.createModel(nsURI + ".java");
+		asModel.getOwnedPackages().add(asPackage);
+		metamodelManager.installModel(asModel);		// FIXME use installResource.
 		return asPackage;
 	}
 

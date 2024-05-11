@@ -53,6 +53,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 
 	void addClassLoader(@NonNull ClassLoader classLoader);
 
+	@Deprecated /* @deprecated moved to AbstractEnvironmentFactory */
 	void addExternal2AS(@NonNull External2AS external2as);
 
 	void addGenModel(@NonNull GenModel genModel);
@@ -123,7 +124,15 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@Override
 	@NonNull StandardLibraryInternal getStandardLibrary();
 
-	void installRoot(@NonNull Model pivotModel);
+	/**
+	 * @since 1.21
+	 */
+	default void installModel(@NonNull Model asModel) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Deprecated /* @deprecated use EnvironmentFactory facade to installModel */
+	void installRoot(@NonNull Model asModel);
 
 	@Nullable Element loadResource(@NonNull URI uri, String alias, @Nullable ResourceSet resourceSet) throws ParserException;
 

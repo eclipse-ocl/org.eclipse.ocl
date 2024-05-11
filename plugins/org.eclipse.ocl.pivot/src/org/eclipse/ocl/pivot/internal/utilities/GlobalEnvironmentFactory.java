@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
@@ -69,10 +68,7 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 		@Override
 		public void unsetTarget(Notifier oldTarget) {
 			assert oldTarget instanceof Resource;
-			PivotMetamodelManager metamodelManager = basicGetMetamodelManager();
-			if (metamodelManager != null) {
-				metamodelManager.removeExternalResource((Resource)oldTarget);
-			}
+			removeExternalResource((Resource)oldTarget);
 			ResourceSet externalResourceSet2 = getResourceSet();
 			if (externalResourceSet2 instanceof ResourceSetImpl) {
 				List<URI> deadKeys = new ArrayList<URI>();

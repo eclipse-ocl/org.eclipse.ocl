@@ -612,9 +612,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		TestOCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		UML2AS.initialize(resourceSet);
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		URI uri = getTestModelURI("models/uml/Fruit.uml");
-		Element element = ClassUtil.nonNullState(metamodelManager.loadResource(uri, null, resourceSet));
+		Element element = ClassUtil.nonNullState(ocl.getEnvironmentFactory().loadExternalElement(uri));
 		org.eclipse.ocl.pivot.Package fruitPackage = ((Model)element).getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class treeClass = NameUtil.getNameable(fruitPackage.getOwnedClasses(), "Tree");
 		ExpressionInOCL query = ocl.createQuery(treeClass, "self.height>20");

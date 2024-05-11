@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
 	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		External2AS es2as = environmentFactory.getMetamodelManager().getES2AS(resource);
+		External2AS es2as = environmentFactory.getES2AS(resource);
 		return es2as;
 	}
 
@@ -79,7 +79,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);
 			metamodelManager.getASResourceSet().getResources().remove(asResource);
 		}
-		metamodelManager.removeExternalResource(this);
+		environmentFactory.removeExternalResource(this);
 	}
 
 	public abstract void error(@NonNull String message);

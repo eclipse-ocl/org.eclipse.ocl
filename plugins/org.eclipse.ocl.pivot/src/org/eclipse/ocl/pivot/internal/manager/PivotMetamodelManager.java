@@ -28,16 +28,13 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -102,7 +99,6 @@ import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
@@ -127,7 +123,6 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -285,11 +280,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	private final @NonNull Set<Type> globalTypes = new HashSet<>();
 
 	/**
-	 * Map of URI to external resource converter.
-	 */
-	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
-
-	/**
 	 * Elements protected from garbage collection
 	 */
 	private @Nullable EAnnotation lockingAnnotation = null;
@@ -307,8 +297,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
-
-	private @Nullable Map<Resource,External2AS> es2ases = null;
 
 	/**
 	 * Construct a MetamodelManager that will use environmentFactory to create its artefacts
@@ -339,18 +327,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		implementationManager.addClassLoader(classLoader);
 	}
 
+	@Deprecated /* @deprecated moved to AbstractEnvironmentFactory */
 	@Override
 	public void addExternal2AS(@NonNull External2AS es2as) {
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 == null){
-			es2ases = es2ases2 = new HashMap<>();
-		}
-		Resource resource = es2as.getResource();
-		URI uri = es2as.getURI();
-		External2AS oldES2AS = es2ases2.put(resource, es2as);
-		assert oldES2AS == null;
-		oldES2AS = external2asMap.put(uri, es2as);
-		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
+		environmentFactory.addExternal2ASNew(es2as);
 	}
 
 	@Override
@@ -689,14 +669,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		} */
 		globalNamespaces.clear();
 		globalTypes.clear();
-		external2asMap.clear();
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 != null) {
-			for (External2AS es2as : es2ases2.values()) {
-				es2as.dispose();
-			}
-			es2ases = null;
-		}
+		environmentFactory.disposeExternalState();		// FIXME The timing of this is very fragile. WIBNIF in caller.
 		lockingAnnotation = null;
 		completeModel.dispose();
 		if (precedenceManager != null) {
@@ -1149,8 +1122,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return thisPackage;
 	}
 
+	@Deprecated /* @deprecated moved to AbstractEnvironmentFactory */
 	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
-		return es2ases != null ? es2ases.get(esResource) : null;
+		return environmentFactory.getES2AS(esResource);
 	}
 
 	@Override
@@ -1683,7 +1657,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	public @NonNull ASResource getResource(@NonNull URI uri, @Nullable String contentType) {
+	/**
+	 * Return the AS Resource for the AS uri.
+	 * If necessary create an empty AS Resource using contentType to select the ASResourceFactory.
+	 * The caller should update the return to correspond to a CS/ES Resource.
+	 */
+	public @NonNull ASResource getResource(@NonNull URI uri, @NonNull String contentType) {
+		assert PivotUtilInternal.isASURI(uri);
 		Resource asResource = asResourceSet.getResource(uri, false);
 		if (asResource == null) {
 			Object asResourceFactory = asResourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().get(contentType);
@@ -1718,6 +1698,19 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public ResourceSet getTarget() {
 		return asResourceSet;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	protected void installImport(@NonNull Import asImport) {
+		Namespace asNamespace = asImport.getImportedNamespace();
+		if (asNamespace != null) {
+			Model asModel = PivotUtil.getContainingModel(asNamespace);
+			if ((asModel != null) && !completeModel.getPartialModels().contains(asModel)) {
+				installModel(asModel);
+			}
+		}
 	}
 
 	/**
@@ -1769,8 +1762,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Create an implicit opposite property if there is no explicit opposite.
+	 * @since 1.21
 	 */
-	public void installPropertyDeclaration(@NonNull Property thisProperty) {
+	public void installPropertyDeclaration(@NonNull Property thisProperty) {		// XXX protected
 		// We cannot detect ambiguous opposites reliably since a later Property might invalidate previously ok derived opposites
 		//		if ((thisProperty.isIsTransient() || thisProperty.isIsVolatile()) && !thisProperty.isIsDerived()) {		// FIXME Are any exclusions justified?
 		//			return;
@@ -1833,10 +1827,45 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		thisProperty.setOpposite(newOpposite);
 	}
 
-	public void installResource(@NonNull Resource asResource) {
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public void installModel(@NonNull Model asModel) {
+		if (completeModel.getPartialModels().contains(asModel)) {
+			return;
+		}
+		if (INSTALL_MODEL.isActive()) {
+			INSTALL_MODEL.println(NameUtil.debugSimpleName(this) + " " + asModel);
+		}
+		List<org.eclipse.ocl.pivot.Package> ownedPackages = asModel.getOwnedPackages();
+		List<Import> ownedImports = asModel.getOwnedImports();
+		if (ownedPackages.isEmpty() && ownedImports.isEmpty()) {
+			return;				// Don't install "/* Please wait */" in case we're editing a pivot MM
+		}
+		completeModel.getPartialModels().add(asModel);
+		for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages) {
+			if (asPackage instanceof Library) {
+				installLibrary((Library)asPackage);
+			}
+		}
+		for (Import asImport : ownedImports) {
+			installImport(asImport);
+		}
+	}
+
+	@Deprecated /* @deprecated use ASResource */
+	public void installResource(@NonNull Resource resource) {
+		installResource((ASResource)resource);
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	public void installResource(@NonNull ASResource asResource) {	// XXX protected
 		for (EObject eObject : asResource.getContents()) {
 			if (eObject instanceof Model) {
-				installRoot((Model)eObject);
+				installModel((Model)eObject);
 			}
 		}
 		if (!libraryLoadInProgress && (asLibraryResource == null) && (asResource instanceof OCLstdlib) && (asLibraries.size() > 0)) {
@@ -1844,34 +1873,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	@Override
-	public void installRoot(@NonNull Model pivotModel) {
-		if (completeModel.getPartialModels().contains(pivotModel)) {
-			return;
-		}
-		if (INSTALL_MODEL.isActive()) {
-			INSTALL_MODEL.println(NameUtil.debugSimpleName(this) + " " + pivotModel);
-		}
-		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
-		List<Import> ownedImports = pivotModel.getOwnedImports();
-		if (ownedPackages.isEmpty() && ownedImports.isEmpty()) {
-			return;				// Don't install "/* Please wait */" in case we're editing a pivot MM
-		}
-		completeModel.getPartialModels().add(pivotModel);
-		for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages) {
-			if (asPackage instanceof Library) {
-				installLibrary((Library)asPackage);
-			}
-		}
-		for (Import asImport : ownedImports) {
-			Namespace asNamespace = asImport.getImportedNamespace();
-			if (asNamespace != null) {
-				Model asModel = PivotUtil.getContainingModel(asNamespace);
-				if ((asModel != null) && !completeModel.getPartialModels().contains(asModel)) {
-					installRoot(asModel);
-				}
-			}
-		}
+	@Deprecated @Override
+	public void installRoot(@NonNull Model asModel) {
+		installModel(asModel);
 	}
 
 	@Override
@@ -1972,7 +1976,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			asPackage = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 			asModel = (Model)asPackage.eContainer();
 		}
-		Resource asResource = asModel.eResource();
+		ASResource asResource = (ASResource)asModel.eResource();
 		assert asResource != null;
 		asResourceSet.getResources().add(asResource);
 		setASmetamodel(asPackage);		// Standard meta-model
@@ -2028,157 +2032,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	@Override
-	public @Nullable Element loadResource(@NonNull URI uri, String zzalias, @Nullable ResourceSet resourceSet) throws ParserException {
-		// FIXME alias not used
-		URI resourceURI = uri.trimFragment();
-		if (PivotUtilInternal.isASURI(resourceURI)) {
-			Element asElement = getASElement(uri);
-			if (asElement instanceof Model) {
-				for (EObject eObject : ((Model)asElement).getOwnedPackages()) {
-					if (eObject instanceof Library) {
-						if (asLibraries.isEmpty() && (asLibraryResource == null)) {
-							asLibraryResource = asElement.eResource();
-							installLibrary((Library)eObject);
-						}
-					}
-				}
-			}
-			return asElement;
-		}
-		// if (EPackage.Registry.INSTANCE.containsKey(resourceOrNsURI))
-		// return EPackage.Registry.INSTANCE.getEPackage(resourceOrNsURI);
-		ResourceSet externalResourceSet = resourceSet != null ? resourceSet : environmentFactory.getResourceSet();
-		EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
-		String uriString = resourceURI.toString();
-		Resource resource = null;
-		String fragment = uri.fragment();
-		if (fragment == null) {
-			//
-			//	fragment-less URI may be explicit namespace URI
-			//
-			EPackage ePackage = packageRegistry.getEPackage(uriString);
-			if (ePackage != null) {
-				return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, ePackage);
-			}
-			//
-			//	fragment-less URI may be an OCL Standard Library
-			//
-			if (uriString.equals(standardLibrary.getDefaultStandardLibraryURI())) {
-				if (asLibraryResource != null) {
-					resource = asLibraryResource;
-				}
-				else {
-					resource = standardLibrary.loadDefaultLibrary(uriString);
-				}
-			}
-			else {
-				StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uriString);
-				if (contribution != null) {
-					resource = contribution.getResource();
-				}
-			}
-		}
-		else {
-			//
-			//	fragment-full URI may have a registered package to mark the unfragmented name
-			//
-			EPackage ePackage = packageRegistry.getEPackage(uriString);
-			if (ePackage != null) {
-				Resource eResource = ePackage.eResource();
-				if (eResource instanceof XMLResource) {
-					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
-					if (eObject != null) {
-						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
-						if (asElement != null) {
-							return asElement;
-						}
-					}
-				}
-			}
-		}
-		if (resource == null) {
-			External2AS external2as = external2asMap.get(resourceURI);
-			if (external2as != null) {
-				resource = external2as.getResource();
-			}
-			else {
-				//				try {
-				resource = externalResourceSet.getResource(resourceURI, true);
-				//				}
-				//				catch (RuntimeException e) {
-				//					resource = externalResourceSet.getResource(resourceURI, false);
-				//					if (resource != null) {
-				////						externalResourceSet.getResources().remove(resource);
-				//						resource = null;
-				//					}
-				//					throw e;
-				//				}
-				if (resource != null) {
-					for (Resource.Diagnostic diagnostic : resource.getErrors()) {
-						if (diagnostic instanceof WrappedException) {
-							throw (WrappedException)diagnostic;
-						}
-					}
-				}
-				//				if (resource != null) {
-				//					if (externalResources == null) {
-				//						externalResources = new HashMap<URI, Resource>();
-				//					}
-				//					externalResources.put(uri, resource);
-				//				}
-				//
-				//	If this resource already loaded under its internal URI reuse old one
-				//
-				if (resource != null) {
-					if (resource instanceof StandaloneProjectMap.DelegatedSinglePackageResource) {
-						resource = ((StandaloneProjectMap.DelegatedSinglePackageResource)resource).getResource();
-					}
-					List<@NonNull EObject> contents = resource.getContents();
-					if (contents.size() > 0) {
-						EObject firstContent = contents.get(0);
-						for (ASResourceFactory resourceFactory : ASResourceFactoryRegistry.INSTANCE.getLoadedResourceFactories()) {
-							URI packageURI = resourceFactory.getPackageURI(firstContent);
-							if (packageURI != null) {
-								External2AS external2as2 = external2asMap.get(packageURI);
-								if (external2as2 != null) {
-									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {
-										for (EObject eContent : resource.getContents()) {
-											if (eContent instanceof Pivotable) {
-												Element pivot = ((Pivotable)firstContent).getPivot();
-												if (pivot instanceof Model) {
-													Model root = (Model)pivot;
-													completeModel.getPartialModels().remove(root);
-													ASResource asResource = (ASResource) root.eResource();
-													if (asResource != null) {
-														boolean wasUpdating = asResource.setUpdating(true);
-														asResourceSet.getResources().remove(asResource);
-														asResource.unload();
-														asResource.setUpdating(wasUpdating);
-													}
-												}
-											}
-										}
-										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {
-											logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
-										}
-										//											resource.unload();
-										resource.getResourceSet().getResources().remove(resource);
-										resource = knownResource;
-									}
-								}
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		if (resource != null) {
-			return environmentFactory.loadResource(resource, uri);
-		}
-		logger.warn("Cannot load package with URI '" + uri + "'");
-		return null;
+	@Deprecated
+	public @Nullable Element loadResource(@NonNull URI uri, String alias, @Nullable ResourceSet resourceSet) throws ParserException {
+		return environmentFactory.loadImportedElement(uri);
 	}
 
 	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation dynamicOperation) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
@@ -2200,17 +2056,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 	}
 
+	@Deprecated
 	public void removeExternalResource(@NonNull External2AS external2as) {
-		external2asMap.remove(external2as.getURI());
+		environmentFactory.removeExternalResource(external2as);
 	}
 
+	@Deprecated
 	public void removeExternalResource(@NonNull Resource esResource) {
-		if (es2ases != null) {
-			External2AS es2as = es2ases.remove(esResource);
-			if (es2as != null) {
-				es2as.dispose();
-			}
-		}
+		environmentFactory.removeExternalResource(esResource);
 	}
 
 	/**

@@ -658,7 +658,7 @@ public class Ecore2AS extends AbstractExternal2AS
 						}
 						try {
 							assert uri != null;
-							Element importedObject = metamodelManager.loadResource(uri, null, ecoreResource.getResourceSet());
+							Element importedObject = environmentFactory.loadExternalElement(uri);
 							if (importedObject instanceof Namespace) {
 								Import anImport = PivotFactory.eINSTANCE.createImport();
 								anImport.setName(key);

@@ -787,7 +787,7 @@ public class EnvironmentView
 		if (name != null) {
 			@NonNull URI uri = URI.createURI(name).resolve(baseURI);
 			try {
-				Element importedElement = environmentFactory.getMetamodelManager().loadResource(uri, null, null);
+				Element importedElement = environmentFactory.loadImportedElement(uri);
 				if (importedElement != null) {
 					addElement(name, importedElement);
 				}
