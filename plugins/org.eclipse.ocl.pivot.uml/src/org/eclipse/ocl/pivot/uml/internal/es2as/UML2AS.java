@@ -381,7 +381,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			Model pivotModel2 = pivotModel;
 			if (pivotModel2 == null) {
 				pivotModel2 = root.getASModel();
-				Resource asResource = pivotModel.eResource();
+				ASResource asResource = (ASResource)pivotModel.eResource();
 				if (asResource == null) {
 					throw new IllegalStateException("Missing containing resource");
 				}

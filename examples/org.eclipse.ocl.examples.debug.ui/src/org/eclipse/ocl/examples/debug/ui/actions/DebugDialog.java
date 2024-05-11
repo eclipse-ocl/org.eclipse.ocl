@@ -29,7 +29,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -64,16 +63,15 @@ public class DebugDialog extends Dialog
 				URI selectedURI = constraintsText2resourceURI.get(selectedText);
 				if (selectedURI != null) {
 					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(selectedObject);
-					MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
-					Element resource = null;
+					Element asElement = null;
 					try {
-						resource = metamodelManager.loadResource(selectedURI, null, null);
+						asElement = environmentFactory.loadImportedElement(selectedURI);
 					} catch (ParserException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					if (resource != null) {
-						for (TreeIterator<EObject> tit = resource.eAllContents(); tit.hasNext(); ) {
+					if (asElement != null) {
+						for (TreeIterator<EObject> tit = asElement.eAllContents(); tit.hasNext(); ) {
 							EObject eObject = tit.next();
 							if (eObject instanceof Constraint) {
 								String constraintText = eObject.toString();

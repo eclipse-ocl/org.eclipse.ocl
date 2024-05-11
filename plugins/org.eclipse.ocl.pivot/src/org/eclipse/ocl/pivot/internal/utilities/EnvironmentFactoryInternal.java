@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -74,6 +75,13 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * @since 1.21
 	 */
 	default void addExternalResource(@NonNull Resource externalResource) {}
+
+	/**
+	 * @since 1.21
+	 */
+	default void addExternal2ASNew(@NonNull External2AS es2as) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Add all resources in ResourceSet to the externalResourceSet.
@@ -161,6 +169,11 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 
 	void dispose();
 
+	/**
+	 * @since 1.21
+	 */
+	void disposeExternalState();
+
 	@Nullable ICSI2ASMapping getCSI2ASMapping();
 
 	@Override
@@ -171,6 +184,13 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 
 	@Nullable String getDoSetupName(@NonNull URI uri);
 
+	/**
+	 * @since 1.21
+	 */
+	default @Nullable External2AS getES2AS(@NonNull Resource esResource) {
+		return null;
+	}
+
 	@Override
 	@NonNull PivotMetamodelManager getMetamodelManager();
 
@@ -180,11 +200,52 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull Technology getTechnology();
 
 	/**
+	 * @since 1.21
+	 */
+	void installResource(@NonNull ASResource asResource);
+
+	/**
 	 * Ensure that EPackage has been loaded in the externalResourceSet PackageRegistry.
 	 */
 	EPackage loadEPackage(@NonNull EPackage ePackage);
 
+	/**
+	 * Load an External Syntax Element using the external ResourceSet to load uri. The corresponding AS element is returned.
+	 *
+	 * @since 1.21
+	 */
+	default @Nullable Element loadExternalElement(@NonNull URI uri) throws ParserException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Load an Element using the ResourceSet appropriate to an AS on non-AS URI; typically when resolving an arbitrary AS/CS/ES URI import.
+	 *
+	 * @since 1.21
+	 */
+	default @Nullable Element loadImportedElement(@NonNull URI uri) throws ParserException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Locate/create and install the AS resource corresponding to the CS/ES resource and optionally register uri as its external URI.
+	 * Returns the AS Model if uri is null or fragment-less, else the AS Element corresponding to the CS/ES uri fragment.
+	 */
 	@Nullable Element loadResource(@NonNull Resource resource, @Nullable URI uri) throws ParserException;
+
+	/**
+	 * @since 1.21
+	 */
+	default void removeExternalResource(@NonNull External2AS external2as) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	default void removeExternalResource(@NonNull Resource esResource) {
+		throw new UnsupportedOperationException();
+	}
 
 	void setCSI2ASMapping(ICSI2ASMapping csi2asMapping);
 

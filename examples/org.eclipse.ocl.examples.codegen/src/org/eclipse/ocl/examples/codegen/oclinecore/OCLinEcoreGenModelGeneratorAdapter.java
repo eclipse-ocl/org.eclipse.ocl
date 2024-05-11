@@ -708,7 +708,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 					assert asPackage != null;
 				}
-				metamodelManager.installRoot(CGLibrary.getDefaultModel());
+				metamodelManager.getEnvironmentFactory().installResource(CGLibrary.getDefault());
 				stateAdapter.convertConstraintsToOperations(metamodelManager);
 				Map<@NonNull String, @NonNull String> results = stateAdapter.createFeatureBodies(genModel);
 				for (String key : results.keySet()) {

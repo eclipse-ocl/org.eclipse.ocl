@@ -800,7 +800,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public void installRootElement(@NonNull BaseCSResource csResource, @NonNull Element pivotElement) {
-		Resource asResource = converter.getASResource();
+		ASResource asResource = converter.getASResource();
 		asResource.getContents().add(pivotElement);
 		metamodelManager.installResource(asResource);
 	}

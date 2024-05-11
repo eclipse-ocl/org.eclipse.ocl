@@ -2073,6 +2073,12 @@
                 <message_argument value="getASlibrary()"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal"/>
+                <message_argument value="installModel(Model)"/>
+            </message_arguments>
+        </filter>
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal"/>
@@ -2095,6 +2101,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal"/>
                 <message_argument value="getImplementation(Element, Object, Property)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal"/>
+                <message_argument value="installModel(Model)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -2227,6 +2239,12 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="disposeExternalState()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="installResource(ASResource)"/>
             </message_arguments>
         </filter>
@@ -2234,6 +2252,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="addExternalResource(Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="addExternal2ASNew(External2AS)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="createTemplateParameterSubstitutionVisitor(Type, Type)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">

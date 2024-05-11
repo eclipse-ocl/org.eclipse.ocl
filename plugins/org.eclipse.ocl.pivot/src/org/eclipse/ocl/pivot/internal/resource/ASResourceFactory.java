@@ -177,8 +177,10 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@Nullable String getResourceClassName();
 
 	/**
-	 * Return the root element in the Pivot resource resulting from import of the available
-	 * resource.
+	 * Return the AS element in the Pivot resource resulting from import of the available resource.
+	 * If uri is not-null, the fragment is used to locate a returned element within the resource and the
+	 * non-fragment is set as the external URI.
+	 *
 	 * @throws ParserException
 	 */
 	@Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource resource, @Nullable URI uri) throws ParserException;
