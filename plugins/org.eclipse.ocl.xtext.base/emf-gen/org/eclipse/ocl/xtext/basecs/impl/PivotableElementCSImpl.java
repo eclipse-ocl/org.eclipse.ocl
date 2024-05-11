@@ -95,7 +95,10 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		Element oldPivot = pivot;
 		pivot = newPivot;
 		  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " setPivot " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newPivot));
-		if (eNotificationRequired())
+		  if ("CompleteOCLDocumentCS".equals(eClass().getName())) {
+			  getClass();		// XXX
+		  }
+		  if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPivot, pivot));
 	}
 

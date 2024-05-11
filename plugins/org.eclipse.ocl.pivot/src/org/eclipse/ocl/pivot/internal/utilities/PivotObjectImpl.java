@@ -54,7 +54,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 
 	@Override
 	public void eSetProxyURI(URI uri) {
-	//	System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
 		if (PivotUtilInternal.isASURI(uri)) {
 			if (esObject instanceof EObject) {
 				uri = EcoreUtil.getURI((EObject)esObject);

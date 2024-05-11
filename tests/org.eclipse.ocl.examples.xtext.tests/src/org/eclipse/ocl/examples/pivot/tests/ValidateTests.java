@@ -504,19 +504,25 @@ public class ValidateTests extends AbstractValidateTests
 		//	1 - the evolving complemented type system under test
 		//	2 - the stable complemented type system under test
 		//
+		System.out.println("---- OCL ocl1 = createOCL()");
 		OCL ocl1 = createOCL();
 		URI inputURI = getTestFile("Validate.oclinecore", ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Validate.ecore").getFileURI();
-		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
+		System.out.println("---- Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI)");
+		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);			// XXX why load both oclinecore and ecore ?? ocl1a / ocl1b
 		EPackage validatePackage1 = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
 		ThreadLocalExecutor.resetEnvironmentFactory();
+		System.out.println("---- OCL ocl2 = createOCL()");
 		OCL ocl2 = createOCL();
+		System.out.println("---- Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI)");
 		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI);
 		EPackage validatePackage2 = ClassUtil.nonNullState((EPackage) ecoreResource2.getContents().get(0));
 		ThreadLocalExecutor.resetEnvironmentFactory();
+		System.out.println("---- OCL ocl0 = createOCL()");
 		OCL ocl0 = createOCL();
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
+		System.out.println("---- ResourceSet testResourceSet = new ResourceSetImpl()");
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage1, completeOCLEObjectValidator);
 		try {
@@ -530,6 +536,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	No errors
 			//
+			System.out.println("----1 ThreadLocalExecutor.resetEnvironmentFactory()");
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
@@ -542,15 +549,20 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2b", "yyy");
 			eSet(testInstance2, "l3", "yyy");
 			objectLabel = LabelUtil.getLabel(testInstance1);
+			System.out.println("----1 checkValidationDiagnostics(testInstance1, Diagnostic.WARNING)");
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 					StringUtil.bind(template, "Level1::L1_size", objectLabel),
 					StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
 					StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
 					StringUtil.bind(template, "Level3::L3_size", objectLabel));
+		//	System.out.println("----1 checkValidationDiagnostics(testInstance2, Diagnostic.WARNING)");
+			//	ecore-ok: all attributes same
+			//	no-ocl:
 		//	checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	CompleteOCL errors all round
 			//
+			System.out.println("----2 ThreadLocalExecutor.resetEnvironmentFactory()");
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
@@ -563,15 +575,22 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2b", "yyy");
 			eSet(testInstance2, "l3", "yyy");
 			objectLabel = LabelUtil.getLabel(testInstance1);
+			System.out.println("----2 checkValidationDiagnostics(testInstance1, Diagnostic.WARNING)");
+			//	ecore-ok: all attributes same
+			//	ocl-bad: all attributes are not two character
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1_size", objectLabel),
 				StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel));
+			System.out.println("----2 checkValidationDiagnostics(testInstance2, Diagnostic.WARNING)");
+			//	ecore-ok: all attributes same
+			//	no-ocl:
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	One CompleteOCl and one OCLinEcore
 			//
+			System.out.println("----3 ThreadLocalExecutor.resetEnvironmentFactory()");
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "ok");
 			eSet(testInstance1, "l1", "ok");
@@ -584,10 +603,14 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2b", "ok");
 			eSet(testInstance2, "l3", "ok");
 			objectLabel = LabelUtil.getLabel(testInstance1);
+			System.out.println("----3 checkValidationDiagnostics(testInstance1, Diagnostic.WARNING)");
+			//	ecore-1-bad: one attribute wrong
+			//	ocl-1-bad: one attributes is not two character
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel),
 				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel));
 			objectLabel = LabelUtil.getLabel(testInstance2);
+			System.out.println("----3 checkValidationDiagnostics(testInstance2, Diagnostic.WARNING)");
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
 				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3 ok", objectLabel));
 		}
