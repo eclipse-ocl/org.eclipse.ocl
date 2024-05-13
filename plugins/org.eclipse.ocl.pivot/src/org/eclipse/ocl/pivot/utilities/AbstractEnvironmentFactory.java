@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,12 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -41,6 +45,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -102,6 +107,8 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
+
+import com.google.common.collect.Lists;
 
 /**
  * Partial implementation of the {@link EnvironmentFactoryInternal} interface, useful
@@ -727,6 +734,49 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
+			if (!externalResourceSetWasNull) {
+				Map<EObject, Collection<Setting>> map = new EcoreUtil.CrossReferencer(Lists.newArrayList(asResourceSet, externalResourceSet)) {
+					{super.crossReference();}
+
+					@Override
+					protected boolean containment(EObject eObject) {
+						if (eObject instanceof Import) {
+							getClass();		// XXX
+						}
+						return super.containment(eObject);
+					}
+				};
+				if (map != null) {
+					for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+						EObject target = entry.getKey();
+						if (target instanceof Import) {
+							getClass();		// XXX
+						}
+						Resource targetResource = target.eResource();
+						if (targetResource != null) {			// null for statics such as LEAF_PRECEDENCE
+							ResourceSet targetResourceSet = targetResource.getResourceSet();
+							if (targetResourceSet == asResourceSet) {		// null for shared resources
+								Collection<Setting> settings = entry.getValue();
+								for (Setting setting : settings) {
+									EObject source = setting.getEObject();
+									EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+									Resource sourceResource = source.eResource();
+									ResourceSet sourceResourceSet = sourceResource.getResourceSet();
+									if (sourceResourceSet == asResourceSet) {
+									//	System.out.println("Proxify " + eStructuralFeature.getName());
+									}
+									else if (sourceResourceSet == externalResourceSet) {
+										System.out.println("Proxify1 " + NameUtil.debugSimpleName(source)  + " . " + eStructuralFeature.getName() + " in " + sourceResource.getURI());
+									}
+									else {
+										System.out.println("Proxify2" + NameUtil.debugSimpleName(source)  + " . " + eStructuralFeature.getName() + " in " + sourceResource.getURI());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			metamodelManager.dispose();
 			metamodelManager = null;
 		}

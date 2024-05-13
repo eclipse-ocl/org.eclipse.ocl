@@ -253,7 +253,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
 		}
 		if (partialClass.getName().contains("Level2b")) {
-		  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didAdd " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName());
+		  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didAdd " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName() + " for " + partialClass.eResource().getURI());
 		}
 		((ClassImpl)partialClass).addClassListener(this);
 		if (partialClass.getUnspecializedElement() == null) {
@@ -275,7 +275,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			PARTIAL_CLASSES.println("Do-didRemove " + this + " " + partialClass);
 		}
 		if (partialClass.getName().contains("Level2b")) {
-			  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didRemove " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName());
+			  System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PartialClasses.didRemove " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) + " " + partialClass.getName()); // + " for " + partialClass.eResource().getURI());
 			}
 		super.didRemove(index, partialClass);
 		((ClassImpl)partialClass).removeClassListener(this);

@@ -1121,6 +1121,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	protected void resetPivotMappings(@NonNull BaseCSResource csResource) {
 		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
+			if ("TopLevelCS".equals(eObject.eClass().getName())) {
+				getClass();			// XXX
+			}
 			if (eObject instanceof Pivotable) {
 				Pivotable pivotable = (Pivotable)eObject;
 				//				Element pivot = pivotable.getPivot();

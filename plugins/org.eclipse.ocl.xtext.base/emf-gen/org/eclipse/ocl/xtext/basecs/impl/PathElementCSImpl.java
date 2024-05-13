@@ -17,10 +17,12 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
@@ -358,12 +360,24 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		{
 			InternalEObject oldReferredElement = (InternalEObject)referredElement;
 			EObject resolvedProxy = eResolveProxy(oldReferredElement);
+		/*	if (resolvedProxy instanceof Pivotable) {
+				Resource resource = resolvedProxy.eResource();
+				if (resource instanceof CSResource) {
+					((CSResource)resource).getASResource();
+				}
+				resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+			} */
+			referredElement = (Element)resolvedProxy;
+		/* XXX	EObject resolvedProxy = eResolveProxy(oldReferredElement);
 			if (resolvedProxy instanceof Pivotable) {
 				resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+				if (resolvedProxy != null && resolvedProxy.eIsProxy()) {
+					resolvedProxy = eResolveProxy((InternalEObject)resolvedProxy);
+				}
 			}
 			if (resolvedProxy instanceof Element) {
 				referredElement = (Element)resolvedProxy;
-			}
+			} */
 			if (referredElement != oldReferredElement)
 			{
 				if (eNotificationRequired())

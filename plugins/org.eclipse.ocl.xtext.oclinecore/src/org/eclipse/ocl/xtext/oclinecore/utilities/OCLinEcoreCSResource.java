@@ -62,6 +62,23 @@ public class OCLinEcoreCSResource extends EssentialOCLCSResource
 		return OCLinEcoreASResourceFactory.getInstance();
 	}
 
+/*	@Override
+	public synchronized EObject getEObject(String uriFragment) {
+		if (getEncoder().isCrossLinkFragment(this, uriFragment)) {
+			return super.getEObject(uriFragment);				// Standard Xtext fragment resolution
+		}
+		else {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+			try {
+				return environmentFactory.loadImportedElement(URI.createURI(uriFragment));
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;		// XXX
+			}
+		}
+	} */
+
 	@Override
 	public @NonNull String getEditorName() {
 		return "OCL in Ecore";

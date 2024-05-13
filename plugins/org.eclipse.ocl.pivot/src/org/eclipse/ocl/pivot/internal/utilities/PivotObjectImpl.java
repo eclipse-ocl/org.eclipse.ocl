@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -62,6 +63,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			}
 			else if (esObject instanceof Resource) {
 				uri = ((Resource)esObject).getURI();			// XXX assert == Model.externalURI
+				URI uri2 = URI.createURI(((Model)this).getExternalURI());
+				assert uri.equals(uri2);			// Fails for Pivot.ecore / Pivot.genmodel.ecore in testLoad_MiniPivot_ocl
 				System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-es " + uri);
 			}
 			else {
@@ -76,8 +79,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 					}
 					else {
 						EObject csElement = csi2asMapping.getCSElement(this);		// XXX alternate logic for Model -> Resource
-						if (csElement == null) {
-							System.err.println("No CSElement when proxifying '" + uri + "' for " + NameUtil.debugSimpleName(this));
+						if (csElement == null) {		// e.g. Constraint / OCLExpression
+						//	System.err.println("No CSElement when proxifying '" + uri + "' for " + NameUtil.debugSimpleName(this));
 							csElement = csi2asMapping.getCSElement(this);		// XXX alternate logic for Model -> Resource
 							getClass();		// XXX
 						}
@@ -135,6 +138,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.21
 	 */
 	public void setNotifier(@Nullable Notifier newTarget) {
+		System.out.println("setNotifier " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newTarget));
 		esObject = newTarget;
 	}
 

@@ -878,7 +878,7 @@ public class PivotUtil
 		System.out.println(s.toString());
 	}
 
-	public static boolean debugWellContainedness(Type type) {
+	public static boolean debugWellContainedness(Element type) {
 		if (type.eResource() == null) {
 			debugObjectUsage("Badly contained ", type);
 			return false;
