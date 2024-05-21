@@ -43,6 +43,7 @@ import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 
@@ -331,17 +332,21 @@ public class ValidateCommand extends StandaloneCommand
 	protected class ValidationRunnable implements Runnable
 	{
 		private final StandaloneValidityManager validityManager;
+		private @NonNull EnvironmentFactoryInternal environmentFactory;
 
-		protected ValidationRunnable(StandaloneValidityManager validityManager) {
+		protected ValidationRunnable(StandaloneValidityManager validityManager, @NonNull EnvironmentFactoryInternal environmentFactory) {
 			this.validityManager = validityManager;
+			this.environmentFactory = environmentFactory;
 		}
 
 		@Override
 		public void run() {
 			try {
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 				validityManager.runValidation(null, null);
 			}
 			finally {
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				synchronized (this) {
 					this.notify();
 				}
@@ -433,7 +438,8 @@ public class ValidateCommand extends StandaloneCommand
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}
-		if (ThreadLocalExecutor.basicGetEnvironmentFactory() == null) {
+		final @Nullable EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}
@@ -443,7 +449,7 @@ public class ValidateCommand extends StandaloneCommand
 			// run the validation
 			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
 
-			Thread validationThread = new Thread(new ValidationRunnable(validityManager), "Standalone Validation");
+			Thread validationThread = new Thread(new ValidationRunnable(validityManager, environmentFactory), "Standalone Validation");
 			validationThread.start();
 			synchronized (validationThread) {
 				try {
