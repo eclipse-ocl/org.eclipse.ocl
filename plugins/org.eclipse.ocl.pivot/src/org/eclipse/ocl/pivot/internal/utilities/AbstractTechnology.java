@@ -36,7 +36,7 @@ public abstract class AbstractTechnology implements Technology
 	@Override
 	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
-		return new ExplicitNavigationProperty(property);
+		return new ExplicitNavigationProperty(property);					// XXX ignores sourceValue.eClass in different ResourceSet to property.esObject
 	}
 
 	@Override

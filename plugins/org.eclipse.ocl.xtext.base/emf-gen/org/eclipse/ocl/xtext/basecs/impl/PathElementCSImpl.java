@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -22,8 +23,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -396,6 +401,44 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	public Element basicGetReferredElement()
 	{
 		return referredElement;
+	}
+
+	@Override
+	public EObject eResolveProxy(InternalEObject proxy) {
+		System.out.println("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+	//	Resource resource = eResource();
+	//	if ((resource instanceof LazyLinkingResource) && ((LazyLinkingResource)resource).getEncoder().isCrossLinkFragment(resource, proxy.eProxyURI().toString())) {
+	//		return super.eResolveProxy(proxy);				// Standard Xtext fragment resolution
+	//	}
+		// TODO Auto-generated method stub
+		EObject resolvedProxy = super.eResolveProxy(proxy);
+		System.out.println(" => " + NameUtil.debugSimpleName(resolvedProxy));
+		if (!(resolvedProxy instanceof Element)) {
+			if (resolvedProxy instanceof Pivotable) {
+				Resource resource = resolvedProxy.eResource();
+				if (resource instanceof CSResource) {
+					((CSResource)resource).getASResource();
+				}
+				resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+				System.out.println(" ==> " + NameUtil.debugSimpleName(resolvedProxy));
+			}
+			else if (resolvedProxy instanceof ENamedElement) {
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				if (environmentFactory != null) {
+					try {
+						resolvedProxy = environmentFactory.getASOf(Element.class, resolvedProxy);
+						System.out.println(" ==> " + NameUtil.debugSimpleName(resolvedProxy));
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			else {
+				assert false;
+			}
+		}
+		return resolvedProxy;
 	}
 
 	/**

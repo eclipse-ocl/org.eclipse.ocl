@@ -738,15 +738,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				Map<EObject, Collection<Setting>> map = new EcoreUtil.CrossReferencer(Lists.newArrayList(asResourceSet, externalResourceSet)) {
 					{super.crossReference();}
 
-					@Override
-					protected boolean containment(EObject eObject) {
-						if (eObject instanceof Import) {
-							getClass();		// XXX
-						}
-						return super.containment(eObject);
-					}
+				//	@Override
+				//	protected boolean containment(EObject eObject) {
+				//		if (eObject instanceof Import) {
+				//			getClass();		// XXX
+				//		}
+				//		return super.containment(eObject);
+				//	}
 				};
-				if (map != null) {
+			//	if (map != null) {
 					for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
 						EObject target = entry.getKey();
 						if (target instanceof Import) {
@@ -775,7 +775,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 							}
 						}
 					}
-				}
+		//		}
 			}
 			metamodelManager.dispose();
 			metamodelManager = null;

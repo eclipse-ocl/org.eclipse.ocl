@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.internal.library;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -72,6 +74,15 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			TemplateableElement rawType = ((TemplateableElement)eObject).getUnspecializedElement();
 			if (rawType != null) {
 				eObject = rawType;
+			}
+		}
+		Resource resource = eFeature2.eResource();
+		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet != null) {
+		//	assert resourceSet == executor.getEnvironmentFactory().getResourceSet();
+			if (resourceSet != executor.getEnvironmentFactory().getResourceSet()) {
+				System.out.println("Bad ResourceSet");
+				throw new UnsupportedOperationException("Bad ResourceSet");
 			}
 		}
 		Object eValue = eObject.eGet(eFeature2, true);
