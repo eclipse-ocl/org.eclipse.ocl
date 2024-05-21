@@ -149,7 +149,12 @@ public class ASResourceFactoryRegistry
 		if (csResourceSet != null) {
 			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
 			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
+				// The determination of EnvironmentFactory from a ResourceSet has been replaced by determination from the
+				// current thread using ThreadLocalExecutor. However EnvironmentFactoryAdapter are retained for 'API compatibility'
+				// While the retention might help unknown usages, it allows a stale EnvironmentFactory to be discovered after
+				// a ThreadLocalExecutor.resetEnvironmentFactory() in test_umlValidation_Bug434356
+				throw new UnsupportedOperationException();
+			//	return environmentFactoryAdapter.getEnvironmentFactory();
 			}
 		}
 		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
