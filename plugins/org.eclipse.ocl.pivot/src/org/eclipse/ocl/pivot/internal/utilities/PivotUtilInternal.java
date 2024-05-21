@@ -17,6 +17,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -75,6 +78,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
@@ -942,6 +946,35 @@ public class PivotUtilInternal //extends PivotUtil
 					Object objects = eContainer.eGet(eContainingFeature);
 					if (objects instanceof List<?>) {
 						((List<?>)objects).remove(eObject);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Reset the environmentFactory for the current thread and remove any EnvironmentFactoryAdapter on
+	 * notifiers that use the current environmentFactory.
+	 *
+	 * @since 1.21
+	 */
+	public static void resetEnvironmentFactory(@NonNull Notifier... notifiers) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		if ((environmentFactory != null) && (notifiers != null)) {
+			for (Notifier notifier : notifiers) {
+				EList<Adapter> eAdapters = notifier.eAdapters();
+				if (eAdapters != null) {
+					synchronized(notifier) {
+						for (int i = eAdapters.size(); --i >= 0; ) {
+							Adapter eAdapter = eAdapters.get(i);
+							if (eAdapter instanceof EnvironmentFactoryAdapter) {
+								EnvironmentFactoryAdapter environmentFactoryAdapter =(EnvironmentFactoryAdapter)eAdapter;
+								if (environmentFactory == environmentFactoryAdapter.getEnvironmentFactory()) {
+									eAdapters.remove(i);
+								}
+							}
+						}
 					}
 				}
 			}

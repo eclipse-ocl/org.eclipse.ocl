@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -736,7 +737,7 @@ public class ValidateTests extends AbstractValidateTests
 		eSet(testInstance, "l3", "l3");
 		testResource.getContents().add(testInstance);
 		String objectLabel = LabelUtil.getLabel(testInstance);
-		ThreadLocalExecutor.resetEnvironmentFactory();
+		PivotUtilInternal.resetEnvironmentFactory(ecoreResource.getResourceSet());
 		//
 		//	Check EObjectValidator errors
 		//
