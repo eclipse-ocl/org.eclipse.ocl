@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 
-/** 
+/**
  * An EcoreLibraryProperty provides the LibraryProperty to implement a
  * PropertyCallExp using an EStructuralFeature.
  */
@@ -34,10 +34,11 @@ public class EcoreLibraryProperty extends AbstractProperty
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		EObject eObject = asNavigableObject(sourceValue, eFeature, executor);
+		assert executor.getEnvironmentFactory().checkEModelIsKnown(eFeature);
 		Object eValue = eObject.eGet(eFeature);
 		return eValue != null ? executor.getIdResolver().boxedValueOf(eValue, eFeature, returnTypeId) : null;
 	}
-	
+
 	public @NonNull EStructuralFeature getEFeature() {
 		return eFeature;
 	}

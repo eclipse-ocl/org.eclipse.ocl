@@ -300,6 +300,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	public void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		if (pivotElement instanceof PivotObjectImpl) {
 			((PivotObjectImpl)pivotElement).setESObject(eObject);
+			assert environmentFactory.checkEModelIsKnown((EModelElement) eObject);
 		}
 		Element pivotElement1 = pivotElement;
 		if (eObject instanceof EDataType) {

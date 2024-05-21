@@ -23,6 +23,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -334,6 +335,32 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	public boolean checkEModelIsKnown(@NonNull EModelElement eModelElement) {
+		Resource resource = eModelElement.eResource();
+		ResourceSet resourceSet = resource.getResourceSet();
+		if ((resourceSet != null) && (resourceSet != externalResourceSet)) {
+			Resource knownResource = externalResourceSet.getResource(resource.getURI(), false);
+			if (resource != knownResource) {
+			/*	EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
+				for (EObject eObject = eModelElement; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof EPackage) {
+						if (packageRegistry.containsKey(((EPackage)eObject).getNsURI())) {
+							return true;			// XXX is this really known ??
+						}
+					}
+				} */
+				System.out.println("Bad ResourceSet");
+				throw new UnsupportedOperationException("Bad ResourceSet");
+			//	return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

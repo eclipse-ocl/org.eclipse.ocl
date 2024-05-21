@@ -57,6 +57,7 @@ public class StereotypeProperty extends ConstrainedProperty
 						EClass eClass = umlStereotypeApplication.eClass();
 						EStructuralFeature eStructuralFeature = NameUtil.getENamedElement(eClass.getEAllStructuralFeatures(), propertyName);
 						if (eStructuralFeature != null) {
+							assert executor.getEnvironmentFactory().checkEModelIsKnown(eStructuralFeature);
 							defaultValue = idResolver.boxedValueOf(umlStereotypeApplication.eGet(eStructuralFeature));
 							gotIt = true;
 						}
@@ -123,6 +124,7 @@ public class StereotypeProperty extends ConstrainedProperty
 			EClass eClass = eObject.eClass();
 			EStructuralFeature eFeature = NameUtil.getENamedElement(eClass.getEAllStructuralFeatures(), property.getName());
 			if (eFeature != null) {
+				assert executor.getEnvironmentFactory().checkEModelIsKnown(eFeature);
 				Object value = eObject.eGet(eFeature);
 				boxedValue = value != null ? idResolver.boxedValueOf(value, eFeature, returnTypeId) : null;
 			}

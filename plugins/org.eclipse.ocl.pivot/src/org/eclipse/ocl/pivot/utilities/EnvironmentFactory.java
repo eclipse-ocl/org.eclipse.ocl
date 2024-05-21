@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
@@ -101,6 +102,16 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	}
 
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
+
+	/**
+	 * Return true if eModelElement is part of an Ecore metamodel that is known to this EnvironmentFactory
+	 * either by being globally installed or by being dynamically installedin the externalResourceSet.
+	 * If false evaluation may well fail as EMF encounters an IllegalArgumentException for incompatible
+	 * model elements.
+	 *
+	 * @since 1.21
+	 */
+	default boolean checkEModelIsKnown(@NonNull EModelElement eModelElement) { return true; }
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in

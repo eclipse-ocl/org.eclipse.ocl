@@ -74,6 +74,7 @@ public class ExplicitNavigationProperty extends AbstractProperty
 				eObject = rawType;
 			}
 		}
+		assert executor.getEnvironmentFactory().checkEModelIsKnown(eFeature2);
 		Object eValue = eObject.eGet(eFeature2, true);
 		if (eValue != null) {
 			return executor.getIdResolver().boxedValueOf(eValue, eFeature2, returnTypeId);

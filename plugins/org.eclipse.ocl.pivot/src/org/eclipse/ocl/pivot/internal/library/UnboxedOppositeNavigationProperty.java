@@ -77,6 +77,7 @@ public class UnboxedOppositeNavigationProperty extends AbstractProperty
 					EClass eClass = modelManager2.eClass(eObject);
 					EStructuralFeature eFeature = eClass.getEStructuralFeature(oppositeProperty.getName());
 					assert eFeature != null;
+					assert executor.getEnvironmentFactory().checkEModelIsKnown(eFeature);
 					Object eGet = modelManager2.eGet(eObject, eFeature);
 					if (eGet == sourceValue) {
 						results.add(eObject);
