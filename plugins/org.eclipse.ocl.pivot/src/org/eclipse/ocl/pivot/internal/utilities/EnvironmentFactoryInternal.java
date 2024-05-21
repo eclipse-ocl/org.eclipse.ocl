@@ -76,12 +76,19 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	void addExternal2AS(@NonNull External2AS external2as);
 
 	/**
+	 * Make externalResource accessible from the externalResourceSet even if contained elsewhere.
+	 *
+	 * @since 1.21
+	 */
+	default void addExternalResource(@NonNull Resource externalResource) {}
+
+	/**
 	 * Add all resources in ResourceSet to the externalResourceSet.
 	 */
 	void addExternalResources(@NonNull ResourceSet externalResourceSet);
 
 	/**
-	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
+	 * Analyze all OCL functionality below eRootObject,typically a pivot Package, to populate the
 	 * allInstancesCompleteClasses and implicitOppositeProperties with the identies of all
 	 * Classes that source an allInstances() call and all unidirectional Properties that are
 	 * opposite navigated.

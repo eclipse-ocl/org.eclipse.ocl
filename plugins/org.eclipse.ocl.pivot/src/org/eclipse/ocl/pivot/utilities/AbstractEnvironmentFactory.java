@@ -189,6 +189,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			this.externalResourceSetWasNull = true;
 			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
 			projectManager.initializeResourceSet(externalResourceSet);
+			StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
 			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
 			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
 			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
@@ -230,6 +231,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}
 		getMetamodelManager().addExternal2AS(external2as);
+	}
+
+	@Override
+	public void addExternalResource(@NonNull Resource resource) {
+		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet != null) {
+			if ((resourceSet != externalResourceSet) && (externalResourceSet instanceof ResourceSetImpl)) {
+				ResourceSetImpl externalResourceSetImpl = (ResourceSetImpl)externalResourceSet;
+				Map<URI, Resource> uriResourceMap = externalResourceSetImpl.getURIResourceMap();
+				if (uriResourceMap == null) {
+					StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+					uriResourceMap = externalResourceSetImpl.getURIResourceMap();
+				}
+				uriResourceMap.put(resource.getURI(), resource);
+			}
+		}
 	}
 
 	/**

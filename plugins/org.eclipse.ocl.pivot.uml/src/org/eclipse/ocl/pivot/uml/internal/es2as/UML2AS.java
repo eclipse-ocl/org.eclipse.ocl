@@ -1005,6 +1005,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		this.umlResource = umlResource;
 		//		umlResource.eAdapters().add(this);
 		environmentFactory.addExternal2AS(this);
+		environmentFactory.addExternalResource(umlResource);
 		//		metamodelManager.addListener(this);
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		completeModel.addPackageURI2completeURI(ClassUtil.nonNullEMF(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);

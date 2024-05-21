@@ -2143,6 +2143,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="addExternalResource(Resource)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
         <filter id="403984517">
             <message_arguments>
