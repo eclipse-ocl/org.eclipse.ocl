@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -75,7 +76,15 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		}
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(testInstance);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
+/*	//	Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
+		Diagnostician diagnostician = Diagnostician.INSTANCE;
+		Map<Object, Object> defaultContext = diagnostician.createDefaultContext();
+	//    put(EValidator.class, diagnostician);
+	//    put(EValidator.Registry.class, validationRegistry);
+	//	put(EValidator.SubstitutionLabelProvider.class, diagnostician);
+	//	put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
+		Diagnostic diagnostics = diagnostician.validate(testInstance, defaultContext);
+*/		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {
 			//			assertEquals(severity, diagnostic.getSeverity());

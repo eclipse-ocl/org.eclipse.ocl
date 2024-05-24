@@ -12,27 +12,39 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+
+import com.google.common.collect.Lists;
 
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
@@ -143,5 +155,64 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			return allOk || (diagnostics != null);
 		}
 		return true;
+	}
+
+	public void initializeDelegation(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		Resource ecoreResource = ePackage.eResource();
+		if (ecoreResource == null) {
+			return;// false;
+		}
+		boolean needsDelegate = false;
+		org.eclipse.ocl.pivot.Package asPackage = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Package.class, ePackage);
+		assert asPackage != null;
+		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(asPackage);
+		for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
+			EClass eClass = null;
+			for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+				EObject esObject = partialClass.getESObject();
+				if (esObject != null) {
+					eClass = (EClass)esObject;
+					break;
+				}
+			}
+			if (eClass != null) {
+				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+					EObject esObject = partialClass.getESObject();
+					if (esObject == null) {
+						needsDelegate = true;
+						for (Constraint asConstraint : partialClass.getOwnedInvariants()) {
+							String constraintName = /*"$$" +*/ asConstraint.getName();
+							EAnnotation eClassAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+							if (eClassAnnotation == null) {
+								EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, "constraints", constraintName);
+							}
+							else {
+								boolean gotIt = false;
+								String constraints = eClassAnnotation.getDetails().get("constraints");
+								for (StringTokenizer stringTokenizer = new StringTokenizer(constraints); stringTokenizer.hasMoreTokens();) {
+									String constraint = stringTokenizer.nextToken();
+									if (constraint.equals(constraintName)) {
+										gotIt = true;
+										break;
+									}
+								}
+								if (!gotIt) {
+									eClassAnnotation.getDetails().put("constraints", constraints + " " + constraintName);
+								}
+							}
+							EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, constraintName, "$$complete-ocl$$");		// XXX toString
+						}
+					}
+				}
+			}
+		}
+		if (needsDelegate) {
+			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
+			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+				validationDelegates = Lists.newArrayList(validationDelegates);
+				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
+			}
+		}
 	}
 }
