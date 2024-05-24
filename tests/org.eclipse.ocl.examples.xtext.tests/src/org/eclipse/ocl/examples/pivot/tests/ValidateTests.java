@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
@@ -40,12 +42,14 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
+import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -115,7 +119,76 @@ public class ValidateTests extends AbstractValidateTests
 		super.tearDown();
 	}
 
+	public void testValidate_Simple_oclinecore() throws IOException, InterruptedException {
+		EPackage ecoreEPackage = EcorePackage.eINSTANCE;
+		EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
+		//
+		//	Create model
+		//
+		OCL ocl1 = createOCL();
+		URI inputURI = getTestFile("Simple.oclinecore", ocl1, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
+		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
+		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
+		ThreadLocalExecutor.resetEnvironmentFactory();
+
+
+
+
+		OCL ocl = createOCL();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
+	//	Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Simple.oclinecore"));
+	//	EPackage simplePackage = (EPackage) ecoreResource.getContents().get(0);
+
+		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
+		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(simplePackage, oclURI);
+		completeOCLEObjectValidator.initialize(environmentFactory);
+		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
+
+		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
+		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, new OCLValidationDelegateFactory.CompleteOCL());
+		}
+
+
+	//	ThreadLocalExecutor.resetEnvironmentFactory();
+
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
+		EObject testInstance = eCreate(simplePackage, "Simple");
+		testResource.getContents().add(testInstance);
+
+		//
+		//	Basic validation - just OCLinEcore
+		//
+		String template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
+		String objectLabel = LabelUtil.getLabel(testInstance);
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel),
+			StringUtil.bind(template, "CompleteOCLAlwaysFalse", objectLabel));
+
+	//	ThreadLocalExecutor.resetEnvironmentFactory();
+
+	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+	//	completeOCLEObjectValidator.initialize(environmentFactory);
+	//	ResourceSet testResourceSet = new ResourceSetImpl();
+	//	ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
+
+		//
+		//	Basic revalidation - just OCLinEcore active, CompleteOCL quiescent
+		//
+		template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
+		objectLabel = LabelUtil.getLabel(testInstance);
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel));
+
+
+		ocl.dispose();
+	}
+
 	public void testValidate_Bug366229_oclinecore() throws IOException, InterruptedException {
+	//	EPackage ecoreEPackage = EcorePackage.eINSTANCE;
+	//	EcoreUtil.setAnnotation(ecoreEPackage, "xyzzy", "key", "value");
 		//
 		//	Create model
 		//
@@ -518,7 +591,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
 		ResourceSet testResourceSet = new ResourceSetImpl();
-		ValidationRegistryAdapter.getAdapter(testResourceSet).put(validatePackage1, completeOCLEObjectValidator);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
 		try {
 			EObject testInstance1 = eCreate(validatePackage1, "Level3");
 			EObject testInstance2 = eCreate(validatePackage2, "Level3");
