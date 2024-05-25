@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -137,13 +139,13 @@ public class ValidateTests extends AbstractValidateTests
 
 		OCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
-	//	Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Simple.oclinecore"));
-	//	EPackage simplePackage = (EPackage) ecoreResource.getContents().get(0);
 
 		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(simplePackage, oclURI);
-		completeOCLEObjectValidator.initialize(environmentFactory);
-		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
+		ASResource asResource = environmentFactory.loadCompleteOCLResource(simplePackage, oclURI);
+		assert asResource != null;
+		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
+		delegateInstaller.installCompleteOCLDelegates(simplePackage, asResource);
 
 		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {

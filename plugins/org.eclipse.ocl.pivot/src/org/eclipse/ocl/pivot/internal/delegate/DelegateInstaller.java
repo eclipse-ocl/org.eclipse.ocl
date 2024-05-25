@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -46,18 +47,23 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+
+import com.google.common.collect.Lists;
 
 public class DelegateInstaller
 {
@@ -287,6 +293,68 @@ public class DelegateInstaller
 	//	public @NonNull MetamodelManager getMetamodelManager() {
 	//		return metamodelManager;
 	//	}
+
+
+	/**
+	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations into ePackage to
+	 * convert the Constraints in asResource into a formthat the regular Diagnostician supports..
+	 *
+	 * @since 1.22
+	 */
+	public void installCompleteOCLDelegates(@NonNull EPackage ePackage, @NonNull ASResource asResource) {
+		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		boolean needsDelegate = false;
+		for (EObject eObject : new TreeIterable(asResource)) {
+			if (eObject instanceof Constraint) {
+				Constraint asConstraint = (Constraint)eObject;
+				EStructuralFeature eContainingFeature = eObject.eContainingFeature();
+				if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject.eContainer();
+					assert asClass != null;
+					CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+					EClass eClass = null;
+					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+						EObject esObject = partialClass.getESObject();
+						if (esObject != null) {
+							eClass = (EClass)esObject;
+							break;
+						}
+					}
+					if (eClass != null) {
+						needsDelegate = true;
+						String constraintName = asConstraint.getName();
+						EAnnotation eClassAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+						if (eClassAnnotation == null) {
+							EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, "constraints", constraintName);
+						}
+						else {
+							boolean gotIt = false;
+							String constraints = eClassAnnotation.getDetails().get("constraints");
+							for (StringTokenizer stringTokenizer = new StringTokenizer(constraints); stringTokenizer.hasMoreTokens();) {
+								String constraint = stringTokenizer.nextToken();
+								if (constraint.equals(constraintName)) {
+									gotIt = true;
+									break;
+								}
+							}
+							if (!gotIt) {
+								eClassAnnotation.getDetails().put("constraints", constraints + " " + constraintName);
+							}
+						}
+						EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, constraintName, "$$complete-ocl$$");		// XXX toString
+					}
+				}
+			}
+		}
+		if (needsDelegate) {
+			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
+			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+				validationDelegates = Lists.newArrayList(validationDelegates);
+				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
+			}
+		}
+	}
 
 	/**
 	 * Install all Constraints from pivotPackage and its nestedPackages as OCL Delegates.
