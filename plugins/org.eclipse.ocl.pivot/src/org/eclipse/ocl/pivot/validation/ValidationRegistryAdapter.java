@@ -45,14 +45,14 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 {
 	/**
 	 * A DelegatingEValidator instance displaces a global EValidator.Registry.INSTANCE to redirect validations for
-	 * EPackages associated with REsoureceSets with loval ValidationRegistryAdapters to use the local adapter.
+	 * EPackages associated with ResourceSets with local ValidationRegistryAdapters to use the local adapter.
 	 *
 	 * @since 1.22
 	 */
 	protected static class DelegatingEValidator implements EValidator
 	{
 		/**
-		 * Map from ResourceSet with a local ValidationREgistryAdapter to its local validator.
+		 * Map from ResourceSet with a local ValidationRegistryAdapter to its local validator.
 		 * null key maps all other ResourceSets to the displaced validator.
 		 * WeakHashMap should ensure that stale ResourceSets vanish.
 		 */
@@ -237,7 +237,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 		ResourceSet resourceSet = getTarget();
 		EValidator oldEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 		DelegatingEValidator delegatingEValidator;
-		if (oldEValidator instanceof DelegatingEValidator) {
+		if (oldEValidator instanceof DelegatingEValidator) {				// XXX Composed/Composite/...
 			delegatingEValidator = (DelegatingEValidator)oldEValidator;
 		}
 		else {

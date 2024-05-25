@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -70,6 +73,7 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -83,6 +87,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -93,6 +98,8 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
@@ -108,6 +115,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
 
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
+
 	/**
 	 * @since 1.22
 	 */
@@ -121,6 +130,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			System.out.println(s.toString());
 		}
 	}
+
+	/**
+	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 *
+	 * @since 1.14
+	 */
+	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
+
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
@@ -162,20 +183,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * True once dispose() has started.
 	 */
 	private boolean isDisposing = false;
-
-	/**
-	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
-	 * Beware, stale EnvironmentFactory instances may live on beyond a test until GC catches up. To ensure
-	 * timely GC, set DEBUG_GC (and probably DEBUG_ID) true in the PivotTestCase static initialization.
-	 *
-	 * @since 1.14
-	 */
-	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
-
-	/**
-	 * @since 1.7
-	 */
-	public static int CONSTRUCTION_COUNT = 0;
 
 	@Deprecated /* @deprecated supply null asResourceSet argument */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
@@ -975,6 +982,57 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public boolean isEvaluationTracingEnabled() {
 		return traceEvaluation;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) {
+		Resource ecoreResource = ePackage.eResource();
+		if (ecoreResource == null) {
+			return null;
+		}
+		Ecore2AS ecore2as = Ecore2AS.basicGetAdapter(ecoreResource, this);
+		if (ecore2as != null) {
+			Model asModel = ecore2as.getASModel();
+			return (ASResource)asModel.eResource();
+		}
+		ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+		List<Diagnostic> errors = ecoreResource.getErrors();
+		assert errors != null;
+		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			logger.error("Failed to load Ecore '" + ecoreResource.getURI() + message);
+			return null;
+		}
+		Model asModel2 = ecore2as.getASModel();
+		Model pivotModel = asModel2;
+		errors = pivotModel.eResource().getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			logger.error("Failed to load Pivot from '" + ecoreResource.getURI() + message);
+			return null;
+		}
+		CSResource xtextResource = (CSResource)externalResourceSet.getResource(oclURI, true);
+		errors = xtextResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			logger.error("Failed to load '" + oclURI + message);
+			return null;
+		}
+		ICS2AS cs2as = xtextResource.getCS2AS(this);
+		ASResource asResource = cs2as.getASResource();
+		errors = asResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			logger.error("Failed to load Pivot from '" + oclURI + message);
+			return null;
+		}
+		return asResource;
 	}
 
 	@Override
