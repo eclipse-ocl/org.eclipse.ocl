@@ -145,7 +145,7 @@ public class ValidateTests extends AbstractValidateTests
 		ASResource asResource = environmentFactory.loadCompleteOCLResource(simplePackage, oclURI);
 		assert asResource != null;
 		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
-		delegateInstaller.installCompleteOCLDelegates(simplePackage, asResource);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
 
 		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
@@ -674,6 +674,7 @@ public class ValidateTests extends AbstractValidateTests
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		//
 		URI ecoreURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.ecore");
 		URI xmiURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi");

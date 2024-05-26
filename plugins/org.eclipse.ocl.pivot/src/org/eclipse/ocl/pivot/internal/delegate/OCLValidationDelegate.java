@@ -130,7 +130,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	/**
 	 * @since 1.22
 	 */
-	public static class CompleteOCLValidationDelegate extends OCLValidationDelegate
+	public static class CompleteOCLValidationDelegate extends OCLValidationDelegate		// XXX
 	{
 		public CompleteOCLValidationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier classifier) {
 			super(delegateDomain, classifier);
@@ -299,11 +299,11 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 			@Override
 			protected Boolean handleFailureResult(@Nullable Object result) {
-				if (result == null) {
-					String message = getConstraintResultMessage(result);
-					EvaluationException cause = new EvaluationException(message);
-					throw new OCLDelegateException(cause);
-				}
+			//	if (result == null) {
+			//		String message = getConstraintResultMessage(result);
+			//		EvaluationException cause = new EvaluationException(message);
+			//		throw new OCLDelegateException(cause);
+			//	}
 				if (diagnostics != null) {
 					String message = getConstraintResultMessage(result);
 					int severity = getConstraintResultSeverity(result);

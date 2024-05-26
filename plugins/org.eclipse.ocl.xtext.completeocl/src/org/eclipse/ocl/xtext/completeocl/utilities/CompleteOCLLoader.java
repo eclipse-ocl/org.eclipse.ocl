@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -237,17 +239,27 @@ public abstract class CompleteOCLLoader
 		else {
 			message2 = "An " + resource.getClass().getName() + " loaded rather than the required BaseCSResource.";
 		}
+	/*	ASResource asResource = xtextResource.getASResource();
+		errors = asResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			error("Failed to load '" + oclURI + "' as an OCL document.", message);
+			return null;
+		} */
 		if ((xtextResource != null) && (message2 == null)) {
 			List<Resource.@NonNull Diagnostic> errors = xtextResource.getErrors();
 			assert errors != null;
 			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 			if (message2 == null) {
 				CS2AS cs2as = xtextResource.getCS2AS(getEnvironmentFactory());
-				Resource asResource = cs2as.getASResource();
+				ASResource asResource = cs2as.getASResource();
 				errors = asResource.getErrors();
 				assert errors != null;
 				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 				if (message2 == null) {
+					DelegateInstaller delegateInstaller = new DelegateInstaller(ocl.getEnvironmentFactory(), null);
+					delegateInstaller.installCompleteOCLDelegates(asResource);
 					return asResource;
 				}
 			}
