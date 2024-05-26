@@ -230,6 +230,19 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
+		if (!externalResourceSetWasNull) {
+			EList<@NonNull Resource> externalResources = externalResourceSet.getResources();
+			for (int i = 0; i < externalResources.size(); i++) {
+				Resource esResource = externalResources.get(i);
+				if (esResource instanceof CSResource) {
+					ASResource asResource = ((CSResource)esResource).getASResource();
+				}
+				else {
+					// XXX Ecore
+				}
+			}
+		}
 	}
 
 	@Override

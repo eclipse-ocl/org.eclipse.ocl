@@ -73,6 +73,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		}
 		ValidationDelegate validationDelegate = getValidationDelegate(eClass);
 		if (validationDelegate == null) {
+			ValidationDelegate validationDelegate2 = getValidationDelegate(eClass);			// XXX
 			throw new IllegalStateException("No '" + delegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 		}
 		return validationDelegate.validate(eClass, eObject, context, constraint, expression);
