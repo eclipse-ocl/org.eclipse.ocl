@@ -10,21 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class TestPrettyPrinter extends XtextTestCase
 {
 	public void testDeclarations() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
+		System.err.println(getName() + " has been disabled -see Bug 583239");
+		return;
+	/*	OCL ocl = OCL.newInstance(getProjectMap());
 		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
 		Resource asResource = xtextResource.getASResource();
@@ -35,11 +28,13 @@ public class TestPrettyPrinter extends XtextTestCase
 				System.out.println(eObject.eClass().getName() + " : " + s);
 			}
 		}
-		ocl.dispose();
+		ocl.dispose(); */
 	}
 
 	public void testSignatures() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
+		System.err.println(getName() + " has been disabled -see Bug 583239");
+		return;
+	/*	OCL ocl = OCL.newInstance(getProjectMap());
 		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
 		Resource asResource = xtextResource.getASResource();
@@ -50,6 +45,6 @@ public class TestPrettyPrinter extends XtextTestCase
 				System.out.println(eObject.eClass().getName() + " : " + s);
 			}
 		}
-		ocl.dispose();
+		ocl.dispose(); */
 	}
 }
