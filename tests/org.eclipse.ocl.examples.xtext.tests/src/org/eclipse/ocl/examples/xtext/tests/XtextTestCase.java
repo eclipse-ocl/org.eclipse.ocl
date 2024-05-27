@@ -583,6 +583,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	@Override
 	protected void tearDown() throws Exception {
+		TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	}
 }

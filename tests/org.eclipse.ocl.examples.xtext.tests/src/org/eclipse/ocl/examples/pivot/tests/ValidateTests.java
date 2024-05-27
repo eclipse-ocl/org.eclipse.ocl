@@ -668,47 +668,51 @@ public class ValidateTests extends AbstractValidateTests
 
 	public void testValidate_Validate_completeocl_loadresource() throws IOException, InterruptedException {
 		OCL ocl = createOCL();
-		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		//
-		URI ecoreURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.ecore");
-		URI xmiURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi");
-		//		URI oclURI = getTestModelURI("ExtraOCLinEcoreTutorial.ocl");
-		String testDocument =
-				"import '" + ecoreURI.toString() + "'\n" +
-						"package tutorial\n" +
-						"context Book\n" +
-						"inv ExactlyOneCopy: copies=1\n" +
-						"endpackage\n";
-		TestFile testFile = createFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
-		//
-		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
-		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
-			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3")));
-		//
-		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
-			@Override
-			protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-				TestCase.fail(primaryMessage + "\n\t" + detailMessage);
-				return false;
-			}
-		};
-		assertTrue(helper.loadMetamodels());
-		assertTrue(helper.loadDocument(testFile.getFileURI()));
-		helper.installPackages();
+		try {
+			CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+			ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
+			org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+			OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+			//
+			URI ecoreURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.ecore");
+			URI xmiURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi");
+			//		URI oclURI = getTestModelURI("ExtraOCLinEcoreTutorial.ocl");
+			String testDocument =
+					"import '" + ecoreURI.toString() + "'\n" +
+							"package tutorial\n" +
+							"context Book\n" +
+							"inv ExactlyOneCopy: copies=1\n" +
+							"endpackage\n";
+			TestFile testFile = createFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
+			//
+			Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
+			assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3")));
+			//
+			CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
+				@Override
+				protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
+					TestCase.fail(primaryMessage + "\n\t" + detailMessage);
+					return false;
+				}
+			};
+			assertTrue(helper.loadMetamodels());
+			assertTrue(helper.loadDocument(testFile.getFileURI()));
+			helper.installPackages();
 
-		assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
-			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2")));
-		//		disposeResourceSet(resourceSet);
-		helper.dispose();
-		ocl.dispose();
+			assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
+				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2")));
+			//		disposeResourceSet(resourceSet);
+			helper.dispose();
+		}
+		finally {
+			ocl.dispose();
+		}
 	}
 
 	public void testValidate_Validate_completeocl_Bug422583() throws IOException, InterruptedException {
