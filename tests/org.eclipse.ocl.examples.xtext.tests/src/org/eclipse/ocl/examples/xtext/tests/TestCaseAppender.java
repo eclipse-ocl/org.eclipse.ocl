@@ -43,6 +43,10 @@ public final class TestCaseAppender extends ConsoleAppender
 //		super.append(event);
 	}
 
+	public void assertNotInstalled() {
+		assert rootLogger.getAppender("TestCaseAppender") == null : "The custom TestCaseAppender is still installed.";
+	}
+
 	public void install() {
 		if (!installed) {
 			rootLogger.addAppender(this);
