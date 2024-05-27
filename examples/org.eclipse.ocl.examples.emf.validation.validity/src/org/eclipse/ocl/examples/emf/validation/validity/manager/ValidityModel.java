@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ValidityModel
 {
@@ -783,7 +784,8 @@ public class ValidityModel
 		MonitorStep monitorStep = new MonitorStep(monitor, worked);
 		try {
 			Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> allConstraints = new HashMap<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>>();
-			Set<@NonNull EPackage> ePackages = ePackage2resources.keySet();
+			List<@NonNull EPackage> ePackages = new ArrayList<>(ePackage2resources.keySet());
+			Collections.sort(ePackages, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			int ePackagesCount = ePackages.size();
 			for (@NonNull EPackage ePackage : ePackages) {
 				if (monitor.isCanceled()) {
