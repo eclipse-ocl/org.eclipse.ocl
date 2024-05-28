@@ -85,6 +85,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 		@Override
 		public ValidationDelegate getValidationDelegate(String uri) {
+			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(uri);
 			return OCLValidationDelegateFactory.Global.INSTANCE;
 		}
 	}
@@ -245,7 +246,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			}
 			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				validationRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory.Global());
+				validationRegistry.put(oclDelegateURI, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(oclDelegateURI) ? new OCLValidationDelegateFactory.CompleteOCL() : new OCLValidationDelegateFactory.Global());
 			}
 			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
 			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {

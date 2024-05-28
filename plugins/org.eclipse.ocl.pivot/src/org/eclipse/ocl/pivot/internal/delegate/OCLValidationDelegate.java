@@ -127,6 +127,22 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 	}
 
+	/**
+	 * @since 1.21
+	 */
+	public static class CompleteOCLValidationDelegate extends OCLValidationDelegate		// XXX
+	{
+		public CompleteOCLValidationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier classifier) {
+			super(delegateDomain, classifier);
+		}
+
+		@Override
+		protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
+				Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
+			return super.validatePivot(eClassifier, value, diagnostics, context, constraintName, source, code);
+		}
+	}
+
 	protected final @NonNull OCLDelegateDomain delegateDomain;
 	protected final @NonNull EClassifier eClassifier;
 
@@ -283,11 +299,11 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 			@Override
 			protected Boolean handleFailureResult(@Nullable Object result) {
-				if (result == null) {
-					String message = getConstraintResultMessage(result);
-					EvaluationException cause = new EvaluationException(message);
-					throw new OCLDelegateException(cause);
-				}
+			//	if (result == null) {
+			//		String message = getConstraintResultMessage(result);
+			//		EvaluationException cause = new EvaluationException(message);
+			//		throw new OCLDelegateException(cause);
+			//	}
 				if (diagnostics != null) {
 					String message = getConstraintResultMessage(result);
 					int severity = getConstraintResultSeverity(result);

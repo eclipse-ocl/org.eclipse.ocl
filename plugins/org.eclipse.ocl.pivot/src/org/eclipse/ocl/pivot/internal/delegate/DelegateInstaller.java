@@ -11,26 +11,38 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
@@ -46,28 +58,251 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+
+import com.google.common.collect.Lists;
 
 public class DelegateInstaller
 {
+	/**
+	 * DelegatingEPackage is an EPackage that delegates everythbing, except hash() and equals() to another EPackage.
+	 * It is therefore a distinct not-equals object that behaves identically. If therefore breaks the "==" test
+	 * in EObjectValidator.
+	 */
+	private static final class DelegatingEPackage implements EPackage
+	{
+		private final @NonNull EPackage delegate;
+
+		public DelegatingEPackage(@NonNull EPackage delegate) {
+			this.delegate = delegate;
+		}
+
+		@Override
+		public EList<Adapter> eAdapters() {
+			return delegate.eAdapters();
+		}
+
+		@Override
+		public TreeIterator<@NonNull EObject> eAllContents() {
+			return delegate.eAllContents();
+		}
+
+		@Override
+		public EClass eClass() {
+			return delegate.eClass();
+		}
+
+		@Override
+		public EObject eContainer() {
+			return delegate.eContainer();
+		}
+
+		@Override
+		public EStructuralFeature eContainingFeature() {
+			return delegate.eContainingFeature();
+		}
+
+		@Override
+		public EReference eContainmentFeature() {
+			return delegate.eContainmentFeature();
+		}
+
+		@Override
+		public EList<EObject> eContents() {
+			return delegate.eContents();
+		}
+
+		@Override
+		public EList<EObject> eCrossReferences() {
+			return delegate.eCrossReferences();
+		}
+
+		@Override
+		public boolean eDeliver() {
+			return delegate.eDeliver();
+		}
+
+		@Override
+		public Object eGet(EStructuralFeature feature) {
+			return delegate.eGet(feature);
+		}
+
+		@Override
+		public Object eGet(EStructuralFeature feature, boolean resolve) {
+			return delegate.eGet(feature, resolve);
+		}
+
+		@Override
+		public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException {
+			return delegate.eInvoke(operation, arguments);
+		}
+
+		@Override
+		public boolean eIsProxy() {
+			return delegate.eIsProxy();
+		}
+
+		@Override
+		public boolean eIsSet(EStructuralFeature feature) {
+			return delegate.eIsSet(feature);
+		}
+
+		@Override
+		public void eNotify(Notification notification) {
+			delegate.eNotify(notification);
+		}
+
+		@Override
+		public Resource eResource() {
+			return delegate.eResource();
+		}
+
+		@Override
+		public void eSet(EStructuralFeature feature, Object newValue) {
+			delegate.eSet(feature, newValue);
+		}
+
+		@Override
+		public void eSetDeliver(boolean deliver) {
+			delegate.eSetDeliver(deliver);
+		}
+
+		@Override
+		public void eUnset(EStructuralFeature feature) {
+			delegate.eUnset(feature);
+		}
+
+		@Override
+		public EAnnotation getEAnnotation(String source) {
+			return delegate.getEAnnotation(source);
+		}
+
+		@Override
+		public EList<EAnnotation> getEAnnotations() {
+			return delegate.getEAnnotations();
+		}
+
+		@Override
+		public EClassifier getEClassifier(String name) {
+			return delegate.getEClassifier(name);
+		}
+
+		@Override
+		public EList<EClassifier> getEClassifiers() {
+			return delegate.getEClassifiers();
+		}
+
+		@Override
+		public EFactory getEFactoryInstance() {
+			return delegate.getEFactoryInstance();
+		}
+
+		@Override
+		public EList<EPackage> getESubpackages() {
+			return delegate.getESubpackages();
+		}
+
+		@Override
+		public EPackage getESuperPackage() {
+			return delegate.getESuperPackage();
+		}
+
+		@Override
+		public String getName() {
+			return delegate.getName();
+		}
+
+		@Override
+		public String getNsPrefix() {
+			return delegate.getNsPrefix();
+		}
+
+		@Override
+		public String getNsURI() {
+			return delegate.getNsURI();
+		}
+
+		@Override
+		public void setNsURI(String value) {
+			delegate.setNsURI(value);
+		}
+
+		@Override
+		public void setEFactoryInstance(EFactory value) {
+			delegate.setEFactoryInstance(value);
+		}
+
+		@Override
+		public void setName(String value) {
+			delegate.setName(value);
+		}
+
+		@Override
+		public void setNsPrefix(String value) {
+			delegate.setNsPrefix(value);
+		}
+	}
+
+	/**
+	 * DynamicEcoreValidator displaces the regular EcoreValidator to force the EcoreValidator to use
+	 * dynamic validation and so support additional constraints supported by validation delegates.
+	 */
+	private static final class DynamicEcoreValidator extends EcoreValidator
+	{
+		private static @Nullable DynamicEcoreValidator INSTANCE = null;
+
+		public static @NonNull EValidator get(@NonNull EnvironmentFactory environmentFactory) {
+			DynamicEcoreValidator instance = INSTANCE;
+			if (instance == null) {
+				instance = INSTANCE = new DynamicEcoreValidator();
+			}
+			instance.add(environmentFactory);
+			return instance;
+		}
+
+		private final @NonNull EPackage delegate = new DelegatingEPackage(EcorePackage.eINSTANCE);
+		private final @NonNull WeakHashMap<@NonNull EnvironmentFactory, @NonNull DynamicEcoreValidator> setOfEnvironmentFactory = new WeakHashMap<>();
+
+		private void add(@NonNull EnvironmentFactory environmentFactory) {
+			setOfEnvironmentFactory.put(environmentFactory, this);
+		}
+
+		@Override
+		protected EPackage getEPackage() {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if ((environmentFactory != null) && setOfEnvironmentFactory.containsKey(environmentFactory)) {
+				return delegate;
+			}
+			else {
+				return EcorePackage.eINSTANCE;
+			}
+		}
+	}
+
 	/**
 	 * True to apply result = () wrapper to invariant body.
 	 */
 	public static final @NonNull String OPTION_BOOLEAN_INVARIANTS = "booleanInvariants";
 
 	/**
-	 * True to omit the setting delegates declaration. Useful for matching UML2Ecore behaviour.
+	 * True to omit the setting delegates declaration. Useful for matching UML2Ecore behavior.
 	 */
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
@@ -287,6 +522,103 @@ public class DelegateInstaller
 	//	public @NonNull MetamodelManager getMetamodelManager() {
 	//		return metamodelManager;
 	//	}
+
+
+	/**
+	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations
+	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
+	 *
+	 * @since 1.21
+	 */
+	public void installCompleteOCLDelegates(@NonNull ASResource asResource) {
+		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		//
+		//	Determine AS Constraints per EClass and the containing EPackages.
+		//
+		List<@NonNull EPackage> ePackages = new UniqueList<>();
+		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
+		for (EObject eObject : new TreeIterable(asResource)) {
+			if (eObject instanceof Constraint) {
+				Constraint asConstraint = (Constraint)eObject;
+				EStructuralFeature eContainingFeature = eObject.eContainingFeature();
+				if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject.eContainer();
+					assert asClass != null;
+					CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+						EObject esObject = partialClass.getESObject();
+						if (esObject instanceof EClass) {			// XXX ignores UML's Class
+							EClass eClass = (EClass)esObject;
+							EPackage ePackage = eClass.getEPackage();
+							ePackages.add(ePackage);
+							UniqueList<@NonNull Constraint> constraints = eClass2constraints.get(eClass);
+							if (constraints == null) {
+								constraints = new UniqueList<>();
+								eClass2constraints.put(eClass, constraints);
+							}
+							constraints.add(asConstraint);
+							break;
+						}
+					}
+				}
+			}
+		}
+		//
+		//	Install EClass EAnnotations for AS Constraints.
+		//
+		for (Map.Entry<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> entry : eClass2constraints.entrySet()) {
+			EClass eClass = entry.getKey();
+			UniqueList<@NonNull Constraint> asConstraints = entry.getValue();
+			Collections.sort(asConstraints, NameUtil.NAMEABLE_COMPARATOR);
+			List<@NonNull String> newConstraintNames = new UniqueList<>();
+			EAnnotation eClassAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+			if (eClassAnnotation != null) {
+				String oldConstraintNames = eClassAnnotation.getDetails().get("constraints");
+				StringTokenizer stringTokenizer = new StringTokenizer(oldConstraintNames);
+				while (stringTokenizer.hasMoreTokens()) {
+					String oldConstraintName = stringTokenizer.nextToken();
+					assert oldConstraintName != null;
+					newConstraintNames.add(oldConstraintName);
+				}
+			}
+			for (@NonNull Constraint asConstraint : asConstraints) {
+				String constraintName = asConstraint.getName();
+				if (constraintName == null) {
+					constraintName = "";
+				}
+				newConstraintNames.add(constraintName);			// XXX bad name
+				EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, constraintName, "$$complete-ocl$$");		// XXX toString
+			}
+			Collections.sort(newConstraintNames);
+			String splicedConstraintNames = StringUtil.splice(newConstraintNames, " ");
+			if (eClassAnnotation == null) {
+				EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, "constraints", splicedConstraintNames);
+			}
+			else {
+				eClassAnnotation.getDetails().put("constraints", splicedConstraintNames);
+			}
+		}
+		//
+		//	Install EPackage EAnnotations.
+		//
+		for (EPackage ePackage : ePackages) {
+			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
+			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+				validationDelegates = Lists.newArrayList(validationDelegates);
+				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
+				DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(ePackage);
+				if (adapter != null) {
+					adapter.getDelegateDomains(true);			// XXX Force recomputation with additional delegateURI
+				}
+			}
+			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+			if (eValidator instanceof EcoreValidator) {
+				eValidator = DynamicEcoreValidator.get(environmentFactory);
+				EValidator.Registry.INSTANCE.put(ePackage, eValidator);
+			}
+		}
+	}
 
 	/**
 	 * Install all Constraints from pivotPackage and its nestedPackages as OCL Delegates.

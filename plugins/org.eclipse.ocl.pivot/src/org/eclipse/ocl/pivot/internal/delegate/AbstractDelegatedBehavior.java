@@ -46,7 +46,7 @@ implements DelegatedBehavior<E, R, F> {
 		//  Factory, Registry supertype for a user-defined fourth behavior)
 		List<DelegatedBehavior<?, ?, ?>> delegatedBehaviors2 = delegatedBehaviors;
 		if (delegatedBehaviors2 == null) {
-			delegatedBehaviors2 = delegatedBehaviors = new ArrayList<DelegatedBehavior<?, ?, ?>>();
+			delegatedBehaviors2 = delegatedBehaviors = new ArrayList<>();
 			delegatedBehaviors2.add(InvocationBehavior.INSTANCE);
 			delegatedBehaviors2.add(SettingBehavior.INSTANCE);
 			delegatedBehaviors2.add(ValidationBehavior.INSTANCE);
@@ -67,7 +67,7 @@ implements DelegatedBehavior<E, R, F> {
 	public List<DelegateDomain> getDelegateDomains(@NonNull E eObject) {
 		EPackage ePackage = getEPackage(eObject);
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
-		List<DelegateDomain> delegateDomains = new ArrayList<DelegateDomain>();
+		List<DelegateDomain> delegateDomains = new ArrayList<>();
 		for (DelegateDomain delegateDomain : adapter.getAllDelegateDomains()) {
 			String uri = delegateDomain.getURI();
 			if (hasDelegateAnnotation(eObject, ePackage, uri)) {
@@ -81,7 +81,7 @@ implements DelegatedBehavior<E, R, F> {
 	public @NonNull List<F> getFactories(@NonNull E eObject) {
 		EPackage ePackage = getEPackage(eObject);
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
-		List<F> factories = new ArrayList<F>();
+		List<F> factories = new ArrayList<>();
 		for (DelegateDomain delegateDomain : adapter.getAllDelegateDomains()) {
 			String uri = delegateDomain.getURI();
 			if (hasDelegateAnnotation(eObject, ePackage, uri)) {

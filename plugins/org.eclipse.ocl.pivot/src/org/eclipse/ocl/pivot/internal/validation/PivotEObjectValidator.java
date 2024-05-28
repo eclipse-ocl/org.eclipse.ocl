@@ -219,7 +219,7 @@ public class PivotEObjectValidator implements EValidator
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
 			for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
-				if (constraint !=  null) {
+				if (constraint != null) {
 					if (complementingModels != null) {
 						Model containingModel = PivotUtil.getContainingModel(constraint);
 						if (!complementingModels.contains(containingModel)) {

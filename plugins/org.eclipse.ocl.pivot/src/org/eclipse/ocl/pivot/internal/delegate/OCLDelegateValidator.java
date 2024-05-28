@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink (CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -47,7 +47,7 @@ public class OCLDelegateValidator extends EObjectValidator
 
 	public OCLDelegateValidator(@Nullable EObjectValidator eValidator) {
 		this.eValidator = eValidator;
-//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));	
+//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	protected void reportWrappedException(@Nullable Object object, @NonNull DiagnosticChain diagnostics, Map<Object, Object> context,
@@ -83,7 +83,7 @@ public class OCLDelegateValidator extends EObjectValidator
 
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-//		PivotUtilInternal.debugPrintln("Validating " + LabelUtil.getLabel(eClass));	
+//		PivotUtilInternal.debugPrintln("Validating " + LabelUtil.getLabel(eClass));
 		assert eClass != null;
 		assert eObject != null;
 		boolean result = validateDelegatedInvariants(eClass, eObject, diagnostics, context);
@@ -98,7 +98,7 @@ public class OCLDelegateValidator extends EObjectValidator
 						: validate(eSuperTypes.get(0), eObject, diagnostics, context);
 			}
 		}
-//		PivotUtilInternal.debugPrintln("Validated " + LabelUtil.getLabel(eClass));	
+//		PivotUtilInternal.debugPrintln("Validated " + LabelUtil.getLabel(eClass));
 		return result;
 	}
 
@@ -159,12 +159,12 @@ public class OCLDelegateValidator extends EObjectValidator
 						reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraint, severity, source, code);
 					return false;
 				}
-			} 
+			}
 			catch (WrappedException e) {
 				if (diagnostics != null) {
 					reportWrappedException(eObject, diagnostics, context, severity, source, code, e);
 				}
-			} 
+			}
 			catch (Throwable throwable) {
 				if (diagnostics != null) {
 					reportConstraintDelegateException(eClass, eObject, diagnostics, context, constraint, severity, source, code, throwable);
@@ -197,7 +197,7 @@ public class OCLDelegateValidator extends EObjectValidator
 				if (diagnostics != null) {
 					reportWrappedException(value, diagnostics, context, severity, source, code, e);
 				}
-			} 
+			}
 			catch (Throwable throwable) {
 				if (diagnostics != null) {
 					reportConstraintDelegateException(eDataType, value, diagnostics, context, constraint, severity, source, code, throwable);

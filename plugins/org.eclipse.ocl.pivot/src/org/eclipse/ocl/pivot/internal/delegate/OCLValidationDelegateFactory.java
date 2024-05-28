@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegate.CompleteOCLValidationDelegate;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -72,6 +73,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		}
 		ValidationDelegate validationDelegate = getValidationDelegate(eClass);
 		if (validationDelegate == null) {
+			ValidationDelegate validationDelegate2 = getValidationDelegate(eClass);			// XXX
 			throw new IllegalStateException("No '" + delegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 		}
 		return validationDelegate.validate(eClass, eObject, context, constraint, expression);
@@ -131,7 +133,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLValidationDelegateFactory
 	{
 		public static final @NonNull Global INSTANCE = new Global();
-		
+
 		public Global() {
 			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
@@ -147,6 +149,37 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 			return super.createValidationDelegate(classifier);
-		}	
+		}
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	public static class CompleteOCL extends OCLValidationDelegateFactory
+	{
+		public static final @NonNull CompleteOCL INSTANCE = new CompleteOCL();
+
+		public CompleteOCL() {
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		}
+
+		@Override
+		public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
+			Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
+			ValidationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(classifier, castClass, null);
+			if (localRegistry != null) {
+				ValidationDelegate.Factory factory = localRegistry.getValidationDelegate(delegateURI);
+				if (factory != null) {
+					return factory.createValidationDelegate(classifier);
+				}
+			}
+		//	return super.createValidationDelegate(classifier);
+			EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
+			OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
+			if (delegateDomain == null) {
+				return null;
+			}
+			return new CompleteOCLValidationDelegate(delegateDomain, classifier);
+		}
 	}
 }
