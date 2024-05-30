@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -443,11 +444,21 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
+	@Override
+	public @Nullable EObject getESObject() {
+		throw new IllegalStateException("Model has an External Syntax Resource URI rather than EObject");
+	}
+
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
 		ModelListeners<ModelListeners.IModelListener> rootListeners2 = rootListeners;
 		if ((rootListeners2 != null) && rootListeners2.removeListener(rootListener)) {
 			rootListeners = null;
 		}
+	}
+
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		throw new IllegalStateException("Model has an External Syntax Resource URI rather than EObject");
 	}
 
 	@Override
