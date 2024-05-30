@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -46,6 +47,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	public @Nullable EObject getESObject() {
+		assert !(this instanceof Model) : "no ESObject for Model";
 		return esObject;
 	}
 
@@ -69,7 +71,17 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return toString();
 	}
 
-	public void setESObject(@Nullable EObject newTarget) {
+	/**
+	 * @since 1.22
+	 */
+	public void resetStaleESObject() {
+		if ((esObject != null) && eIsProxy()) {
+			esObject = null;
+		}
+	}
+
+	public void setESObject(@NonNull EObject newTarget) {
+		assert !(this instanceof Model) : "no ESObject for Model";
 		esObject = newTarget;
 	}
 
