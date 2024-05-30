@@ -12,8 +12,10 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -131,11 +133,18 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor);
 
-	EObject getESObject();
+	/**
+	 * @since 1.22
+	 */
+	default @Nullable Notifier getESNotifier() {
+		return getESObject();
+	}
+
+	/*@Nullable*/ EObject getESObject();
 
 	/**
 	 * @deprecated use getESObject
 	 */
 	@Deprecated
-	EObject getETarget();
+	@Nullable EObject getETarget();
 } // Element
