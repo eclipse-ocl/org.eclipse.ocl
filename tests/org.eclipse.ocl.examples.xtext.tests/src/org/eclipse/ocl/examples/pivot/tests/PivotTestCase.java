@@ -923,10 +923,7 @@ public class PivotTestCase extends TestCase
 				EObject eObject = tit.next();
 				if (eObject instanceof PivotObjectImpl) {
 					PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-					EObject eTarget = asObject.getESObject();
-					if ((eTarget != null) && eTarget.eIsProxy()) {
-						asObject.setESObject(null);
-					}
+					asObject.resetStaleESObject();
 				}
 			}
 		}

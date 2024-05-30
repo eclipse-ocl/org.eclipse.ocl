@@ -231,7 +231,9 @@ public abstract class AbstractContents extends PivotUtil
 			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
 		}
 		pivotLibrary.setURI(nsURI);
-		((PivotObjectImpl)pivotLibrary).setESObject(ePackage);
+		if (ePackage != null) {
+			((PivotObjectImpl)pivotLibrary).setESObject(ePackage);
+		}
 		return pivotLibrary;
 	}
 
@@ -322,7 +324,9 @@ public abstract class AbstractContents extends PivotUtil
 			((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
 		}
 		pivotPackage.setURI(nsURI);
-		((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+		if (ePackage != null) {
+			((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+		}
 		return pivotPackage;
 	}
 
