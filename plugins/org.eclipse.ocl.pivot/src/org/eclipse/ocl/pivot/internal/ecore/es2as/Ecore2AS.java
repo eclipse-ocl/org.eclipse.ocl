@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -528,6 +529,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		if (pivotModel2 == null) {
 			pivotModel2 = pivotModel = PivotUtil.createModel(uri.toString());
+			((ModelImpl)pivotModel2).setESResource(ecoreResource);
 		}
 		pivotModel = pivotModel2;
 		//			installImports();
