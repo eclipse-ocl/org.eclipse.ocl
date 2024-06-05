@@ -497,6 +497,12 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return ownedImports;
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected void resetESObject() {}
+
 	@Override
 	public void setName(String newName) {		// FIXME BUG 421716 remove Namedspace/NamedElement inheritance
 		// name is a cached optimization of externalURI

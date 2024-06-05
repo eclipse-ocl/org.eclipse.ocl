@@ -890,7 +890,6 @@ implements Constraint {
 		return getContext() != null;
 	}
 
-
 	@Override
 	public String toString()
 	{
