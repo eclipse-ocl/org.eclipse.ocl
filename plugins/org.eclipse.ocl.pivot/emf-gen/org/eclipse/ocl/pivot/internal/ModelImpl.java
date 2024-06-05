@@ -444,11 +444,6 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
-	@Override
-	public @Nullable EObject getESObject() {
-		throw new IllegalStateException("Model has an External Syntax Resource rather than EObject");
-	}
-
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
 		ModelListeners<ModelListeners.IModelListener> rootListeners2 = rootListeners;
 		if ((rootListeners2 != null) && rootListeners2.removeListener(rootListener)) {
@@ -458,7 +453,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 
 	@Override
 	public void setESObject(@NonNull EObject newTarget) {
-		throw new IllegalStateException("Model has an External Syntax Resource rather than EObject");
+		throw new IllegalStateException("Model has an External URI rather than EObject");
 	}
 
 	@Override
