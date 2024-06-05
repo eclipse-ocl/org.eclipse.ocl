@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -426,7 +427,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				}
 			}
 		}
-		return map;
+		return map;		// XXX ?? Add Resource-to-Model to allow Model lookup
 	}
 
 	@Override
@@ -507,12 +508,26 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		return cs2asResourceMap.keySet();
 	}
 
+	@Override
+	public @Nullable ModelElementCS getCSElement(@NonNull PivotObject pivotElement) {	// FIXME alternative outer/inner match options
+		if (pivotElement instanceof Element) {
+			return getCSElement((Element)pivotElement);
+		}
+		else {
+			return null;
+		}
+	}
+
 	public @Nullable ModelElementCS getCSElement(@NonNull Element pivotElement) {	// FIXME alternative outer/inner match options
 		Map<@NonNull Element, @NonNull ModelElementCS> as2cs2 = as2cs;
 		if (as2cs2 == null) {
 			as2cs = as2cs2 = computeAS2CSMap();
 		}
 		ModelElementCS modelElementCS = as2cs2.get(pivotElement);
+		if (modelElementCS == null) {
+			getClass();
+	//		environmentFactory.getCompleteModel().getCompleteClass(null)
+		}
 		for (EObject csContainer = modelElementCS; csContainer instanceof ModelElementCS; csContainer = csContainer.eContainer()) {
 			if (((ModelElementCS)csContainer).getPivot() != pivotElement) {
 				break;
