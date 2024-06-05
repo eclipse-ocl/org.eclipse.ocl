@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -426,7 +427,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				}
 			}
 		}
-		return map;
+		return map;		// XXX ?? Add Resource-to-Model to allow Model lookup
 	}
 
 	@Override
@@ -505,6 +506,16 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	public @NonNull Set<@NonNull BaseCSResource> getCSResources() {
 		return cs2asResourceMap.keySet();
+	}
+
+	@Override
+	public @Nullable ModelElementCS getCSElement(@NonNull PivotObject pivotElement) {	// FIXME alternative outer/inner match options
+		if (pivotElement instanceof Element) {
+			return getCSElement((Element)pivotElement);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public @Nullable ModelElementCS getCSElement(@NonNull Element pivotElement) {	// FIXME alternative outer/inner match options

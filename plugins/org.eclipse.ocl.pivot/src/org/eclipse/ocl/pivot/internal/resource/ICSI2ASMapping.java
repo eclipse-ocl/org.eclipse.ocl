@@ -10,15 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.PivotObject;
+
 /**
  * The ICSI2ASMapping maintains the mapping between CS elements or rather their CSIs
  * that remain stable after recreation and the AS elements. This mapping may be used
  * repeatedly while editing (CS2AS conversions) to associate changing CS elements with
  * stable Pivot elements.
  * The mapping is also created during a AS2CS conversion to allow subsequent CS2AS
- * conversions to reuse the original AS elements.  
+ * conversions to reuse the original AS elements.
  */
 public interface ICSI2ASMapping
 {
 	void dispose();
+
+	/**
+	 * @since 1.22
+	 */
+	default @Nullable EObject getCSElement(@NonNull PivotObject asElement) {
+		return null;
+	}
 }
