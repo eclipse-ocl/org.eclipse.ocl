@@ -96,6 +96,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/ICSI2ASMapping.java" type="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
+                <message_argument value="getCSElement(PivotObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
