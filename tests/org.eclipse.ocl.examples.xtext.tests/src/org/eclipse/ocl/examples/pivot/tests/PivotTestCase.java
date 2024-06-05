@@ -875,6 +875,7 @@ public class PivotTestCase extends TestCase
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
+		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
 		ThreadLocalExecutor.reset();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			TestUIUtil.closeIntro();			// Ensure that the default part is a stable PackageExplorerPart
@@ -898,36 +899,41 @@ public class PivotTestCase extends TestCase
 
 	@Override
 	protected void tearDown() throws Exception {
-		//		if (DEBUG_ID) {
-		//			PivotUtilInternal.debugPrintln("==> Done " + getName());
-		//		}
-		ThreadLocalExecutor.reset();
-		if (DEBUG_GC) {
-			uninstall();
-			makeCopyOfGlobalState.restoreGlobalState();
-			makeCopyOfGlobalState = null;
-			System.gc();
-			System.runFinalization();
-			//			MetamodelManagerResourceAdapter.INSTANCES.show();
-		}
-		if (DEBUG_ID) {
-			PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
-		}
-		/**
-		 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
-		 * and which might be resolved using the wrong strategy in another test.
-		 */
-		OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
-		if (oclstdlib != null) {
-			for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof PivotObjectImpl) {
-					PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-					asObject.resetStaleESObject();
+		try {
+			//		if (DEBUG_ID) {
+			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
+			//		}
+			ThreadLocalExecutor.reset();
+			if (DEBUG_GC) {
+				uninstall();
+				makeCopyOfGlobalState.restoreGlobalState();
+				makeCopyOfGlobalState = null;
+				System.gc();
+				System.runFinalization();
+				//			MetamodelManagerResourceAdapter.INSTANCES.show();
+			}
+			if (DEBUG_ID) {
+				PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
+			}
+			/**
+			 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
+			 * and which might be resolved using the wrong strategy in another test.
+			 */
+			OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
+			if (oclstdlib != null) {
+				for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
+					EObject eObject = tit.next();
+					if (eObject instanceof PivotObjectImpl) {
+						PivotObjectImpl asObject = (PivotObjectImpl)eObject;
+						asObject.resetStaleESObject();
+					}
 				}
 			}
+			super.tearDown();
 		}
-		super.tearDown();
+		finally {
+			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : getName() + " failed to detach EnvironmentFactory.";
+		}
 	}
 
 	protected void uninstall() {
