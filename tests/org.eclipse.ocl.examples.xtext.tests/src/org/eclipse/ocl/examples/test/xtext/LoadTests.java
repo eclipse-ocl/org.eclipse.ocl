@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -1366,6 +1367,21 @@ public class LoadTests extends XtextTestCase
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoadOCL(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
+		ocl.dispose();
+	}
+
+	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
+		ASResourceImpl.PROXIES.setState(true);
+		OCL ocl = createOCLWithProjectMap();
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		BaseCSResource csResource = doLoadOCL(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		ResourceSet asResourceSet = environmentFactory.getMetamodelManager().getASResourceSet();
+		for (Resource asResource : asResourceSet.getResources()) {
+			asResource.unload();
+		}
+		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+		EcoreUtil.resolveAll(externalResourceSet);
 		ocl.dispose();
 	}
 
