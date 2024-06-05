@@ -680,86 +680,90 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		assert !isDisposed() && isDisposing();
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
-		if (metamodelManager != null) {
-			metamodelManager.dispose();
-			metamodelManager = null;
-		}
-		attachCount = -1;		// Wait in isDisposing() state while unload proxifies
-		EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
-		if (externalResourceSetWasNull || isGlobal) {
-			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
-			projectManager.unload(externalResourceSet);
-			externalResourceSetAdapters.remove(projectManager);
-			//			StandaloneProjectMap.dispose(externalResourceSet2);
-			externalResourceSet.setPackageRegistry(null);
-			externalResourceSet.setResourceFactoryRegistry(null);
-			externalResourceSet.setURIConverter(null);
-			if (externalResourceSet instanceof ResourceSetImpl) {
-				((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
+		try {
+			if (metamodelManager != null) {
+				metamodelManager.dispose();
+				metamodelManager = null;
 			}
-			for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
-				if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
-					// This guard is needed to ensure that clear doesn't make the resource become loaded.
-					//
-					if (!resource.getContents().isEmpty())
-					{
-						resource.getContents().clear();
+			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
+			EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
+			if (externalResourceSetWasNull || isGlobal) {
+				//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
+				projectManager.unload(externalResourceSet);
+				externalResourceSetAdapters.remove(projectManager);
+				//			StandaloneProjectMap.dispose(externalResourceSet2);
+				externalResourceSet.setPackageRegistry(null);
+				externalResourceSet.setResourceFactoryRegistry(null);
+				externalResourceSet.setURIConverter(null);
+				if (externalResourceSet instanceof ResourceSetImpl) {
+					((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
+				}
+				for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
+					if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
+						// This guard is needed to ensure that clear doesn't make the resource become loaded.
+						//
+						if (!resource.getContents().isEmpty())
+						{
+							resource.getContents().clear();
+						}
+						resource.getErrors().clear();
+						resource.getWarnings().clear();
+						/*				    if (idToEObjectMap != null)
+					    {
+					      idToEObjectMap.clear();
+					    }
+
+					    if (eObjectToIDMap != null)
+					    {
+					      eObjectToIDMap.clear();
+					    }
+
+					    if (eObjectToExtensionMap != null)
+					    {
+					      eObjectToExtensionMap.clear();
+					    } */
+
 					}
-					resource.getErrors().clear();
-					resource.getWarnings().clear();
-					/*				    if (idToEObjectMap != null)
-				    {
-				      idToEObjectMap.clear();
-				    }
-
-				    if (eObjectToIDMap != null)
-				    {
-				      eObjectToIDMap.clear();
-				    }
-
-				    if (eObjectToExtensionMap != null)
-				    {
-				      eObjectToExtensionMap.clear();
-				    } */
-
+					else {
+						resource.unload();
+					}
+					resource.eAdapters().clear();
 				}
-				else {
-					resource.unload();
-				}
-				resource.eAdapters().clear();
+				externalResourceSetAdapters.clear();
+				//			externalResourceSet = null;
 			}
-			externalResourceSetAdapters.clear();
-			//			externalResourceSet = null;
-		}
-		else {
-			for (Adapter adapter : externalResourceSetAdapters) {
-				if ((adapter instanceof EnvironmentFactoryAdapter) && (((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory() == this)) {
-					externalResourceSetAdapters.remove(adapter);
-					break;
+			else {
+				for (Adapter adapter : externalResourceSetAdapters) {
+					if ((adapter instanceof EnvironmentFactoryAdapter) && (((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory() == this)) {
+						externalResourceSetAdapters.remove(adapter);
+						break;
+					}
 				}
 			}
-		}
-		if (idResolver != null) {
-			idResolver.dispose();
-			idResolver = null;
-		}
-		if (csi2asMapping != null) {
-			csi2asMapping.dispose();
-			csi2asMapping = null;
-		}
-	//	completeEnvironment = null;
-	//	standardLibrary = null;
-	//	completeModel = null;
-		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-		//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
-		//		}
+			if (idResolver != null) {
+				idResolver.dispose();
+				idResolver = null;
+			}
+			if (csi2asMapping != null) {
+				csi2asMapping.dispose();
+				csi2asMapping = null;
+			}
+		//	completeEnvironment = null;
+		//	standardLibrary = null;
+		//	completeModel = null;
+			//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
+			//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
+			//		}
 
-		projectManager.unload(asResourceSet);
-		projectManager.unload(externalResourceSet);
-
-		ThreadLocalExecutor.detachEnvironmentFactory(this);
-	//	System.gc();
-	//	System.runFinalization();
+			projectManager.unload(asResourceSet);
+			projectManager.unload(externalResourceSet);
+		}
+		finally {
+			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
+			ThreadLocalExecutor.detachEnvironmentFactory(this);
+		//	System.gc();
+		//	System.runFinalization();
+		}
 	}
 
 	@Override
