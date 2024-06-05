@@ -70,6 +70,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public static final TracingOption CHECK_IMMUTABILITY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/checkImmutability"); //$NON-NLS-1$
 
 	/**
+	 * If PROXIES is set active, the proxification and deproxification of the PivotEObjectImpl.esObject is traced.
+	 *
+	 * @since 1.22
+	 */
+	public static final TracingOption PROXIES = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/proxies"); //$NON-NLS-1$
+
+	/**
 	 * QVTd JUnit tests may set this false to load the saved XMI as text for validation that it is free of
 	 * references to undeclared xmi:ids. The OCL JUnit tests do not have sufficient referential complexity to have problems.
 	 * See Bug 578030.
