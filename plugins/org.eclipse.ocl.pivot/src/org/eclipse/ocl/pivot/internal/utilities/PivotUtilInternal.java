@@ -404,9 +404,7 @@ public class PivotUtilInternal //extends PivotUtil
 				s.append("#/");
 			}
 			else {
-				@SuppressWarnings("null")
-				@NonNull EObject eContainer2 = eContainer;
-				getNsURI(s, eContainer2);
+				getNsURI(s, eContainer);
 			}
 		}
 		else if (eContainer instanceof EPackage) {
@@ -700,12 +698,24 @@ public class PivotUtilInternal //extends PivotUtil
 		return type2;
 	}
 
+	@Deprecated /* @deprecated use URI argument that support fragments */
 	public static boolean isASURI(@Nullable String uri) {
-		return (uri != null) && uri.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
+		if (uri == null) {
+			return false;
+		}
+		assert !uri.contains("#");
+		return uri.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 	}
 
 	public static boolean isASURI(@Nullable URI uri) {
-		return (uri != null) && isASURI(uri.toString());
+		if (uri == null) {
+			return false;
+		}
+		String fileExtension = uri.fileExtension();
+		if (fileExtension == null) {
+			return false;
+		}
+		return fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 	}
 
 	/**
