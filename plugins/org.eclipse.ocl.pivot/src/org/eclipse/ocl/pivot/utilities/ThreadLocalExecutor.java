@@ -538,8 +538,9 @@ public class ThreadLocalExecutor implements Nameable
 		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
-				this.environmentFactory = null;
+			//	this.environmentFactory = null;
 				oldEnvironmentFactory.detach(this);
+				this.environmentFactory = null;
 				if (usesFinalizer) {
 				//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
 					System.gc();
