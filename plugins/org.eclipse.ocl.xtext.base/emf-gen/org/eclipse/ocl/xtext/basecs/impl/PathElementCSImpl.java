@@ -12,14 +12,26 @@ package org.eclipse.ocl.xtext.basecs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -345,17 +357,72 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		return visitor.visitPathElementCS(this);
 	}
 
+	@Override
+	public EObject eResolveProxy(InternalEObject proxy) {
+		StringBuilder s = null;
+		if (ASResourceImpl.PROXIES.isActive()) {
+			s = new StringBuilder();
+			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+		}
+		EObject resolvedProxy = super.eResolveProxy(proxy);
+		if (resolvedProxy instanceof Pivotable) {
+			Resource resource = resolvedProxy.eResource();
+			if (resource instanceof CSResource) {
+				((CSResource)resource).getASResource();
+			}
+			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+		}
+		else if (resolvedProxy instanceof EModelElement) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				try {
+					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		if (s != null) {
+			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
+			ASResourceImpl.PROXIES.println(s.toString());
+		}
+		return resolvedProxy;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Element getReferredElement() {
 		if (referredElement != null && referredElement.eIsProxy())
 		{
 			InternalEObject oldReferredElement = (InternalEObject)referredElement;
-			referredElement = (Element)eResolveProxy(oldReferredElement);
+			URI eProxyURI = oldReferredElement.eProxyURI();
+			if ("file:/E:/Development/Workspace/_OCL_ValidateTests__testValidate_Validate_completeocl/Validate.ecore#//Level1".equals(eProxyURI.toString())) {
+				getClass();			// XXX
+			}
+			EObject resolvedProxy = eResolveProxy(oldReferredElement);
+		/*	if (resolvedProxy instanceof Pivotable) {
+				Resource resource = resolvedProxy.eResource();
+				if (resource instanceof CSResource) {
+					((CSResource)resource).getASResource();
+				}
+				resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+			} */
+			referredElement = (Element)resolvedProxy;
+		/* XXX	EObject resolvedProxy = eResolveProxy(oldReferredElement);
+			if (resolvedProxy instanceof Pivotable) {
+				resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+				if (resolvedProxy != null && resolvedProxy.eIsProxy()) {
+					resolvedProxy = eResolveProxy((InternalEObject)resolvedProxy);
+				}
+			}
+			if (resolvedProxy instanceof Element) {
+				referredElement = (Element)resolvedProxy;
+			} */
 			if (referredElement != oldReferredElement)
 			{
 				if (eNotificationRequired())
