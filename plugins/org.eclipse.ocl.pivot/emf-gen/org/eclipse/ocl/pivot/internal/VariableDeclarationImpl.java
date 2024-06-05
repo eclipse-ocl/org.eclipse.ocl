@@ -438,5 +438,4 @@ implements VariableDeclaration {
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitVariableDeclaration(this);
 	}
-
 } //VariableDeclarationImpl

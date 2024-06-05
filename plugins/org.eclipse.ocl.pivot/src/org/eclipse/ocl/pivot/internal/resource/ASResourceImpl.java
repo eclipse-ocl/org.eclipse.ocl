@@ -26,7 +26,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -359,6 +358,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
+			for (EObject eObject : getContents()) {
+				if (eObject instanceof PivotObjectImpl) {
+					((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+				}
+			}
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -436,7 +440,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	public @NonNull Model getModel() {
-		EList<EObject> contents = getContents();
+		EList<@NonNull EObject> contents = getContents();
 		if (contents.size() <= 0) {
 			throw new IllegalStateException("No Model at root of empty '" + getURI() + "'");
 		}
@@ -590,14 +594,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	protected String superGetURIFragment(EObject eObject) {
 		return super.getURIFragment(eObject);		// Bypass assignIds for use by OrphanResource
-	}
-
-	@Override
-	protected void unloaded(InternalEObject internalEObject) {
-		if (internalEObject instanceof PivotObjectImpl) {
-			((PivotObjectImpl)internalEObject).unloaded(this);
-		}
-		super.unloaded(internalEObject);
 	}
 
 	@Override

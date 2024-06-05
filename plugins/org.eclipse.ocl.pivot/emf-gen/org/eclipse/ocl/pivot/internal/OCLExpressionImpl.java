@@ -33,10 +33,12 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -386,6 +388,16 @@ implements OCLExpression {
 		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
 		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public void preUnload() {
+	    assert eResource() != null;
+		assert getESObject() == null;
+		ASResourceImpl.PROXIES.println("No proxy needed for " + NameUtil.debugSimpleName(this));
 	}
 } //OCLExpressionImpl
 
