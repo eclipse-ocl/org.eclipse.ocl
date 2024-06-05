@@ -15,13 +15,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -419,7 +417,6 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return eDynamicIsSet(featureID);
 	}
 
-	private @Nullable Resource esResource = null;
 	private @Nullable ModelListeners<ModelListeners.IModelListener> rootListeners = null;
 
 	@Override
@@ -447,26 +444,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
-	/**
-	 * @since 1.21
-	 */
-	@Override
-	public @Nullable Notifier getESNotifier() {
-		return esResource;
-	}
-
 	@Override
 	public @Nullable EObject getESObject() {
 		throw new IllegalStateException("Model has an External Syntax Resource rather than EObject");
-	}
-
-	/**
-	 * @since 1.21
-	 */
-	@Override
-	public @Nullable Resource getESResource() {
-		assert getESNotifier() == null;
-		return esResource;
 	}
 
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
@@ -476,27 +456,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
-	/**
-	 * @since 1.21
-	 */
-	@Override
-	public void resetStaleESObject() {
-		if ((esResource != null) && eIsProxy()) {
-			esResource = null;
-		}
-	}
-
 	@Override
 	public void setESObject(@NonNull EObject newTarget) {
 		throw new IllegalStateException("Model has an External Syntax Resource rather than EObject");
-	}
-
-	/**
-	 * @since 1.22
-	 */
-	public void setESResource(@NonNull Resource newTarget) {
-		assert getESNotifier() == null;
-		esResource = newTarget;
 	}
 
 	@Override

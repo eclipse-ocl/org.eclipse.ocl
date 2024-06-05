@@ -12,9 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * <!-- begin-user-doc -->
@@ -123,10 +121,4 @@ public interface Model extends Namespace
 	 * @generated
 	 */
 	@NonNull List<Import> getOwnedImports();
-
-	/**
-	 * @since 1.22
-	 */
-	@Nullable Resource getESResource();
-
 } // Root
