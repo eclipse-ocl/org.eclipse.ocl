@@ -1061,7 +1061,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		URI ecoreURI;
 		String externalUri = root.getExternalURI();
 		URI externalURI = URI.createURI(externalUri);
-		if (PivotUtilInternal.isASURI(externalUri)) {
+		if (PivotUtilInternal.isASURI(externalURI)) {
 			ecoreURI = ClassUtil.nonNullEMF(externalURI.trimFileExtension());
 		}
 		else {

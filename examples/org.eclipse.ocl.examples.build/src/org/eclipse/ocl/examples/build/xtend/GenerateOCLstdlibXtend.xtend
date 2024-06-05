@@ -351,7 +351,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 */
 				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
 					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
-					assert PivotUtilInternal.isASURI(asURI);
+					assert PivotUtilInternal.isASURI(uri);
 					getContents().add(libraryModel);
 				}
 			
