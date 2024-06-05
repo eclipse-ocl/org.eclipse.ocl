@@ -1766,9 +1766,13 @@ implements Property {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 1.22
+	 */
 	@Override
-	public void unloaded(@NonNull ASResource asResource) {
-		super.unloaded(asResource);
+	protected void resetESObject() {
+		ASResource asResource = (ASResource)eResource();
+		super.resetESObject();
 		Property asOpposite = basicGetOpposite();
 		if (asOpposite != null) {
 			Resource eResource = asOpposite.eResource();
