@@ -8,99 +8,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="StandardLibraryInternal"/>
-                <message_argument value="StandardLibraryImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/impl/LookupPackageImpl.java" type="org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="LookupPackage"/>
-                <message_argument value="LookupPackageImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="AbstractDelegatingVisitor&lt;R, C, D&gt;"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractExtendingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractExtendingVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="AbstractExtendingVisitor&lt;R, C&gt;"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractMergedVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractMergedVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="AbstractMergedVisitor&lt;R, C&gt;"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="AbstractVisitor&lt;R, C&gt;"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractWrappingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractWrappingVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/evaluation/EvaluationVisitor.java" type="org.eclipse.ocl.pivot.evaluation.EvaluationVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Visitor&lt;R&gt;"/>
-                <message_argument value="EvaluationVisitor"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/context/AbstractParserContext.java" type="org.eclipse.ocl.pivot.internal.context.AbstractParserContext">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="ParserContext"/>
-                <message_argument value="AbstractParserContext"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="Ecore2Moniker"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/es2as/AbstractExternal2AS.java" type="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="AbstractExternal2AS"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceImpl.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl">
-        <filter id="576725006">
+        <filter id="336658481">
             <message_arguments>
-                <message_argument value="ASResource"/>
-                <message_argument value="ASResourceImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
+                <message_argument value="PROXIES"/>
             </message_arguments>
         </filter>
     </resource>
@@ -109,70 +21,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
                 <message_argument value="getCSElement(PivotObject)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="ProjectManager"/>
-                <message_argument value="StandaloneProjectMap"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AS2Moniker.java" type="org.eclipse.ocl.pivot.internal.utilities.AS2Moniker">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="AS2Moniker"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AbstractTechnology.java" type="org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Technology"/>
-                <message_argument value="AbstractTechnology"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/logical/BooleanAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/oclinvalid/OclInvalidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/oclvoid/OclVoidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="ProjectManager"/>
-                <message_argument value="BasicProjectManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/AS2MonikerVisitor.java" type="org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="AS2MonikerVisitor"/>
             </message_arguments>
         </filter>
     </resource>
