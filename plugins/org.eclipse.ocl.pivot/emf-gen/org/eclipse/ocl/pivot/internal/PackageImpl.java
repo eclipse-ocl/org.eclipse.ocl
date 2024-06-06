@@ -29,6 +29,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -746,6 +748,21 @@ implements org.eclipse.ocl.pivot.Package {
 		if ((packageListeners2 != null) && packageListeners2.removeListener(packageListener)) {
 			packageListeners = null;
 		}
+	}
+
+	/**
+	 * @since 1.21
+	 */
+	@Override
+	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		CompletePackage completePackage = completeModel.getCompletePackage(this);
+		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+			EObject esObject = asPackage.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		return null;
 	}
 
 	public void setIgnoreInvariants(boolean ignoreInvariants) {
