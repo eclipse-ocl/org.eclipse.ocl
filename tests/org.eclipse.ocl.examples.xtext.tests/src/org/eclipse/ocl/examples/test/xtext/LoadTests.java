@@ -1371,7 +1371,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.PROXIES.setState(true);
+	//	ASResourceImpl.PROXIES.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		BaseCSResource csResource = doLoadOCL(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));

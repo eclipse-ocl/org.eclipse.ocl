@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,7 +105,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	protected ImportImpl()
 	{
 		super();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
+	// XXX	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	public void setImportedNamespace(Namespace newImportedNamespace)
 	{
-		System.out.println("setImportedNamespace " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newImportedNamespace) + " " + String.valueOf(newImportedNamespace));
+	// XXX	System.out.println("setImportedNamespace " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newImportedNamespace) + " " + String.valueOf(newImportedNamespace));
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
@@ -346,7 +345,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		Namespace namespace = basicGetImportedNamespace();
-		System.out.println("resolveESNotifier " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(namespace));
+	// XXX	System.out.println("resolveESNotifier " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(namespace));
 		if ((namespace != null) && !namespace.eIsProxy()) {
 			if (namespace instanceof Model) {
 				EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();
