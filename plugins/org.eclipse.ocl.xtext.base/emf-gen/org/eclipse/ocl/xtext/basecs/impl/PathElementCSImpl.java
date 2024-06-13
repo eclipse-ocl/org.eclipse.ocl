@@ -401,7 +401,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		{
 			InternalEObject oldReferredElement = (InternalEObject)referredElement;
 			URI eProxyURI = oldReferredElement.eProxyURI();
-			if ("file:/E:/Development/Workspace/_OCL_ValidateTests__testValidate_Validate_completeocl/Validate.ecore#//Level1".equals(eProxyURI.toString())) {
+			if ("platform:/resource/org.eclipse.qvtd.cs2as.compiler.tests/models/Source2Target/Source2TargetLookup.ocl#|2".equals(eProxyURI.toString())) {
 				getClass();			// XXX
 			}
 			EObject resolvedProxy = eResolveProxy(oldReferredElement);
