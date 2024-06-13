@@ -947,6 +947,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.22
 	 */
+	@Override
 	public boolean isDisposing() {
 		return isDisposing;
 	}

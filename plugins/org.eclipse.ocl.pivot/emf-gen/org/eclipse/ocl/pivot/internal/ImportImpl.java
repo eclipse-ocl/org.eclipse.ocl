@@ -341,7 +341,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	}
 
 	/**
-	 * @since 1.21
+	 * @since 1.22
 	 */
 	@Override
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {

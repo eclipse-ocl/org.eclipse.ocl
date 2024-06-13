@@ -751,7 +751,7 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	/**
-	 * @since 1.21
+	 * @since 1.22
 	 */
 	@Override
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {

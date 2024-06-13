@@ -21,6 +21,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -100,6 +102,7 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -153,6 +156,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	public static String toString(@NonNull Element asElement) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			assert !environmentFactory.isDisposed() : "Use of ToStringVisitor while disposed";
+			assert !environmentFactory.isDisposing() : "Use of ToStringVisitor while disposing";	// See Bug 583347
+		}
 		Resource resource = asElement.eResource();
 		if (resource instanceof ASResource) {
 			StringBuilder s = new StringBuilder();
