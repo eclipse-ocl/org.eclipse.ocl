@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -105,6 +106,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	protected ImportImpl()
 	{
 		super();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -157,6 +159,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	public void setImportedNamespace(Namespace newImportedNamespace)
 	{
+		System.out.println("setImportedNamespace " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newImportedNamespace) + " " + String.valueOf(newImportedNamespace));
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
@@ -343,26 +346,29 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		Namespace namespace = basicGetImportedNamespace();
-		if (namespace instanceof Model) {
-			EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();
-			URI externalURI = URI.createURI(((Model)namespace).getExternalURI());
-			return environmentFactory.getResourceSet().getResource(externalURI, false);
-		}
-		else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
-			CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
-			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-				EObject esObject = asPackage.getESObject();
-				if (esObject != null) {
-					return esObject;
+		System.out.println("resolveESNotifier " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(namespace));
+		if ((namespace != null) && !namespace.eIsProxy()) {
+			if (namespace instanceof Model) {
+				EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();
+				URI externalURI = URI.createURI(((Model)namespace).getExternalURI());
+				return environmentFactory.getResourceSet().getResource(externalURI, false);
+			}
+			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
+				CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
+				for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+					EObject esObject = asPackage.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
 				}
 			}
-		}
-		else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
-			CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
-			for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-				EObject esObject = asClass.getESObject();
-				if (esObject != null) {
-					return esObject;
+			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
+				CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
+				for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+					EObject esObject = asClass.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
 				}
 			}
 		}
