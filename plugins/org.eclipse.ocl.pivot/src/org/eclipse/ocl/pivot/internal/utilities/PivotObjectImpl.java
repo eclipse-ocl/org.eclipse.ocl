@@ -142,6 +142,9 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.22
 	 */
 	protected void resetESObject() {
+		if ("my::AType::referenced() : my::BType[?]".equals(toString())) {
+			getClass();				// XX
+		}
 	    InternalEObject result = eInternalContainer();
 	    assert result != null;
 		Notifier esNotifier = getESObject();
@@ -159,7 +162,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 				else {
 					EObject csElement = csi2asMapping.getCSElement(this);
 					if (csElement != null) {		// XXX never happens CS is never externally referenced
-						esObject = csElement;
+						esNotifier = csElement;
 					//	ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-cs " + uri);
 					}
 				}
