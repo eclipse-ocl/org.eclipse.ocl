@@ -142,9 +142,9 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.22
 	 */
 	protected void resetESObject() {
-		if ("my::AType::referenced() : my::BType[?]".equals(toString())) {
-			getClass();				// XX
-		}
+	//	if ("my::AType::referenced() : my::BType[?]".equals(toString())) {
+	//		getClass();				// XXX
+	//	}
 	    InternalEObject result = eInternalContainer();
 	    assert result != null;
 		Notifier esNotifier = getESObject();

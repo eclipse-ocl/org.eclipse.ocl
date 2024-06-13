@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -358,9 +360,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
+			List<@NonNull EObject> contents2 = new ArrayList<>(getContents());		// XXX
+			EList<@NonNull EObject> contents3;
 			for (EObject eObject : getContents()) {
 				if (eObject instanceof PivotObjectImpl) {
 					((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+					contents3 = getContents();
+					assert contents2.equals(contents3);
 				}
 			}
 			super.doUnload();

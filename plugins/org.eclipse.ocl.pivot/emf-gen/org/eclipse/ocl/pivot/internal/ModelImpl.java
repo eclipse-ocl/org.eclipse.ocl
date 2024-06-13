@@ -459,6 +459,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public void setExternalURI(String newExternalURI)
 	{
+		if ("pathmap://UML_METAMODELS/UML.metamodel.uml.oclas".equals(newExternalURI)) {
+			getClass();		// XXX
+		}
 		setExternalURIGen(newExternalURI);
 		String newName;
 		if (externalURI != null) {
