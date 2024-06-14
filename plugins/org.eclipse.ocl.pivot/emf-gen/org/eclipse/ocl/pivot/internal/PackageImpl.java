@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -825,5 +826,11 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public URI eProxyURI() {
+		// TODO Auto-generated method stub
+		return super.eProxyURI();
 	}
 } //PackageImpl

@@ -89,6 +89,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.XMICSResourceImpl;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -195,7 +196,9 @@ public class LoadTests extends XtextTestCase
 		finally {
 		//		csResource.dispose();					// XXX too early for ongoing testLoadUnloadReload_OCLTest_ocl usage
 		}
-		Resource xmiResource = ocl.getResourceSet().createResource(xmiOutputURI);
+	//	Resource xmiResource = ocl.getResourceSet().createResource(xmiOutputURI);
+		Resource xmiResource = new XMICSResourceImpl(xmiOutputURI);
+		ocl.getResourceSet().getResources().add(xmiResource);
 		xmiResource.getContents().addAll(csResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		xmiResource.save(null);
@@ -1394,7 +1397,7 @@ public class LoadTests extends XtextTestCase
 
 		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		OCL ocl2 = createOCLWithProjectMap();
-		Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
+		Resource xmiResource = ocl2.getResourceSet().createResource(xmiOutputURI);
 		assertNoResourceErrors("CS load", xmiResource);
 		assertNoUnresolvedProxies("CS load", xmiResource);
 		// XXX AS checks
