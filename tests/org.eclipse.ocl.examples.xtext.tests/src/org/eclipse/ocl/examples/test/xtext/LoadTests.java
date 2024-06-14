@@ -162,14 +162,10 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public @NonNull BaseCSResource doLoadOCL(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
-		String extension = inputURI.fileExtension();
-		String stem = inputURI.trimFileExtension().lastSegment();
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
-		String xmiOutputName = stem + "." + extension + ".xmi";
-		String savedOutputName = stem + ".saved." + extension;
-		URI xmiOutputURI = getTestFileURI(xmiOutputName);
-		URI savedOutputURI = getTestFileURI(savedOutputName);
+		URI xmiOutputURI = getXMIoutputURI(inputURI);
+		URI oclOutputURI = getOCLoutputURI(inputURI);
 		BaseCSResource csResource = null;
 		try {
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
@@ -189,7 +185,7 @@ public class LoadTests extends XtextTestCase
 			}
 			//			if (doSave) {
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-			csResource.setURI(savedOutputURI);
+			csResource.setURI(oclOutputURI);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			csResource.save(XMIUtil.createSaveOptions());
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
@@ -215,12 +211,8 @@ public class LoadTests extends XtextTestCase
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		String extension = inputURI.fileExtension();
-		String stem = inputURI.trimFileExtension().lastSegment();
-		String outputName = stem + "." + extension + ".xmi";
-		String output2Name = stem + ".saved." + extension;
-		URI outputURI = getTestFileURI(outputName);
-		URI output2URI = getTestFileURI(output2Name);
+		URI xmiOutputURI = getXMIoutputURI(inputURI);
+		URI oclOutputURI = getOCLoutputURI(inputURI);
 		BaseCSResource xtextResource = null;
 		try {
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
@@ -232,7 +224,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
 			assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-			xtextResource.setURI(output2URI);
+			xtextResource.setURI(oclOutputURI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 			xtextResource.save(XMIUtil.createSaveOptions());
@@ -253,7 +245,7 @@ public class LoadTests extends XtextTestCase
 			unloadResourceSet(resourceSet);
 		}
 		assert xtextResource != null;
-		Resource xmiResource = resourceSet.createResource(outputURI);
+		Resource xmiResource = resourceSet.createResource(xmiOutputURI);
 		xmiResource.getContents().addAll(xtextResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		//		xmiResource.save(null);
@@ -269,12 +261,7 @@ public class LoadTests extends XtextTestCase
 	public void doLoadEcore(@NonNull OCL ocl, @NonNull ResourceSet resourceSet, URI inputURI) throws IOException {
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
-		String extension = inputURI.fileExtension();
-		String stem = inputURI.trimFileExtension().lastSegment();
-		//		String outputName = stem + "." + extension + ".xmi";
-		String output2Name = stem + ".saved." + extension;
-		//		URI outputURI = getProjectFileURI(outputName);
-		URI output2URI = getTestFileURI(output2Name);
+		URI oclOutputURI = getOCLoutputURI(inputURI);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		Resource ecoreResource = resourceSet.getResource(inputURI, true);
 		EcoreUtil.resolveAll(ecoreResource);
@@ -288,7 +275,7 @@ public class LoadTests extends XtextTestCase
 			assertNoValidationErrors("Validation errors", contents.get(0));
 		}
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-		ecoreResource.setURI(output2URI);
+		ecoreResource.setURI(oclOutputURI);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		ecoreResource.save(XMIUtil.createSaveOptions());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
@@ -351,13 +338,9 @@ public class LoadTests extends XtextTestCase
 
 	public Model doLoadUML(@Nullable TestOCL externalOCL, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		UMLStandaloneSetup.init();
-		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
-		//		String outputName = stem + "." + extension + ".xmi";
-		String output2Name = stem + ".saved." + extension;
 		String oclName = stem + ".ocl";
-		//		URI outputURI = getProjectFileURI(outputName);
-		URI output2URI = getTestFileURI(output2Name);		// NB getTestProject() may activate PackageExplorerPart
+		URI oclOutputURI = getOCLoutputURI(inputURI);		// NB getTestProject() may activate PackageExplorerPart
 		URI oclURI = getTestFileURI(oclName);
 		OCLInternal internalOCL = externalOCL != null ? externalOCL : createOCLWithProjectMap();
 	//	UMLASResourceFactory.getInstance();
@@ -390,7 +373,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
 			//			assertNoValidationErrors("Validation errors", umlResource.getContents().get(0));
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-			umlResource.setURI(output2URI);
+			umlResource.setURI(oclOutputURI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			umlResource.save(XMIUtil.createSaveOptions());
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
@@ -584,22 +567,21 @@ public class LoadTests extends XtextTestCase
 		}
 		return xtextResource;
 	}
+
 	protected Resource doLoad_Concrete2(@NonNull BaseCSResource xtextResource, @NonNull URI inputURI) throws IOException {
 		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String inputName = stem + "." + extension;
-		String cstName = inputName + ".xmi";
 		String pivotName = inputName + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-		String savedName = stem + ".saved." + extension;
-		URI cstURI = getTestFileURI(cstName);
+		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		URI pivotURI = getTestFileURI(pivotName);
-		URI savedURI = getTestFileURI(savedName);
+		URI oclOutputURI = getOCLoutputURI(inputURI);
 		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-		xtextResource.setURI(savedURI);
+		xtextResource.setURI(oclOutputURI);
 		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
 		saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 		saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
@@ -608,7 +590,7 @@ public class LoadTests extends XtextTestCase
 		debugTimestamp.log("Serialization save done");
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
-		saveAsXMI(xtextResource, cstURI);
+		saveAsXMI(xtextResource, xmiOutputURI);
 		assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
 		if (asResource.isSaveable()) {
 			asResource.setURI(pivotURI);
@@ -622,11 +604,7 @@ public class LoadTests extends XtextTestCase
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		String inputName = stem + "." + extension;
-		//		String outputName = stem + "." + extension + ".xmi";
-		//		String output2Name = stem + ".saved." + extension;
 		URI inputURI = getProjectFileURI(inputName);
-		//		URI outputURI = getProjectFileURI(outputName);
-		//		URI output2URI = getProjectFileURI(output2Name);
 		Resource asResource = null;
 		try {
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
@@ -697,6 +675,20 @@ public class LoadTests extends XtextTestCase
 		assertNoUnresolvedProxies("Unresolved proxies", resource);
 		assertNoValidationErrors("Validation errors", resource.getContents().get(0));
 		return resource;
+	}
+
+	protected @NonNull URI getOCLoutputURI(@NonNull URI inputURI) {
+		String extension = inputURI.fileExtension();
+		String stem = inputURI.trimFileExtension().lastSegment();
+		String savedOutputName = stem + ".saved." + extension;
+		return getTestFileURI(savedOutputName);
+	}
+
+	protected @NonNull URI getXMIoutputURI(@NonNull URI inputURI) {
+		String extension = inputURI.fileExtension();
+		String stem = inputURI.trimFileExtension().lastSegment();
+		String xmiOutputName = stem + "." + extension + ".xmi";
+		return getTestFileURI(xmiOutputName);
 	}
 
 	protected void initializeExtraURIMappings(@NonNull ResourceSet resourceSet) {
@@ -1383,6 +1375,30 @@ public class LoadTests extends XtextTestCase
 		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 		EcoreUtil.resolveAll(externalResourceSet);
 		ocl.dispose();
+	}
+
+	public void testLoadSaveAsCSLoad_OCLTest_ocl() throws IOException, InterruptedException {
+		URI inputURI = getTestModelURI("models/ecore/OCLTest.ocl");
+	//	ASResourceImpl.PROXIES.setState(true);
+		OCL ocl1 = createOCLWithProjectMap();
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		BaseCSResource csResource = doLoadOCL(ocl1, inputURI);
+	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+	//	ResourceSet asResourceSet = environmentFactory.getMetamodelManager().getASResourceSet();
+	//	for (Resource asResource : asResourceSet.getResources()) {
+	//		asResource.unload();
+	//	}
+	//	ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+	//	EcoreUtil.resolveAll(externalResourceSet);
+		ocl1.dispose();
+
+		URI xmiOutputURI = getXMIoutputURI(inputURI);
+		OCL ocl2 = createOCLWithProjectMap();
+		Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
+		assertNoResourceErrors("CS load", xmiResource);
+		assertNoUnresolvedProxies("CS load", xmiResource);
+		// XXX AS checks
+		ocl2.dispose();
 	}
 
 	public void testLoad_Pivot_ocl() throws IOException, InterruptedException {
