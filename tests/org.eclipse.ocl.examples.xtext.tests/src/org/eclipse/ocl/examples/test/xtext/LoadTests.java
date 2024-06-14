@@ -89,7 +89,8 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.base.utilities.XMICSResourceImpl;
+import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceFactory;
+import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceImpl;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -168,45 +169,34 @@ public class LoadTests extends XtextTestCase
 		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		BaseCSResource csResource = null;
-		try {
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
-			csResource = (BaseCSResource)ocl.getResourceSet().getResource(inputURI, true);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
-			assertNoResourceErrors("Load failed", csResource);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
-			assertNoUnresolvedProxies("Unresolved proxies", csResource);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
-			if (csResource.getContents().size() > 0) {
-				assertNoValidationErrors("Validation errors", csResource.getContents().get(0));
-			}
-			CS2AS cs2as = csResource.findCS2AS();
-			if (cs2as != null) {
-				ASResource asResource = cs2as.getASResource();
-				assertNoValidationErrors("Loaded pivot", asResource);
-			}
-			//			if (doSave) {
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-			csResource.setURI(oclOutputURI);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			csResource.save(XMIUtil.createSaveOptions());
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
-			assertNoResourceErrors("Save failed", csResource);
+		ResourceSet resourceSet = ocl.getResourceSet();
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
+		csResource = (BaseCSResource)resourceSet.getResource(inputURI, true);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
+		assertNoResourceErrors("Load failed", csResource);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
+		assertNoUnresolvedProxies("Unresolved proxies", csResource);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+		if (csResource.getContents().size() > 0) {
+			assertNoValidationErrors("Validation errors", csResource.getContents().get(0));
 		}
-		//		}
-		finally {
-		//		csResource.dispose();					// XXX too early for ongoing testLoadUnloadReload_OCLTest_ocl usage
+		CS2AS cs2as = csResource.findCS2AS();
+		if (cs2as != null) {
+			ASResource asResource = cs2as.getASResource();
+			assertNoValidationErrors("Loaded pivot", asResource);
 		}
-	//	Resource xmiResource = ocl.getResourceSet().createResource(xmiOutputURI);
-		Resource xmiResource = new XMICSResourceImpl(xmiOutputURI);
-		ocl.getResourceSet().getResources().add(xmiResource);
-		xmiResource.getContents().addAll(csResource.getContents());
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
+		csResource.setURI(oclOutputURI);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		csResource.save(XMIUtil.createSaveOptions());
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
+		assertNoResourceErrors("Save failed", csResource);
+		OCLCSResourceImpl xmiResource = new OCLCSResourceImpl(xmiOutputURI, csResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		xmiResource.save(null);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
-		//	return xmiResource;
-		csResource.setURI(inputURI);
-		csResource.getContents().addAll(xmiResource.getContents());
+	//	csResource.setURI(inputURI);
 		return csResource;
 	}
 
@@ -690,7 +680,7 @@ public class LoadTests extends XtextTestCase
 	protected @NonNull URI getXMIoutputURI(@NonNull URI inputURI) {
 		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
-		String xmiOutputName = stem + "." + extension + ".xmi";
+		String xmiOutputName = stem + ".oclcs";
 		return getTestFileURI(xmiOutputName);
 	}
 
@@ -1397,9 +1387,11 @@ public class LoadTests extends XtextTestCase
 
 		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		OCL ocl2 = createOCLWithProjectMap();
-		Resource xmiResource = ocl2.getResourceSet().createResource(xmiOutputURI);
+		ocl2.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put("oclcs", new OCLCSResourceFactory());
+		Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
 		assertNoResourceErrors("CS load", xmiResource);
 		assertNoUnresolvedProxies("CS load", xmiResource);
+		assertNoValidationErrors("CS load", xmiResource);
 		// XXX AS checks
 		ocl2.dispose();
 	}
