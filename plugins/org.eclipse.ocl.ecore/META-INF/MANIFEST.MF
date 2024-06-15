@@ -20,5 +20,5 @@ Export-Package: org.eclipse.ocl.ecore,
  org.eclipse.ocl.ecore.parser,
  org.eclipse.ocl.ecore.util,
  org.eclipse.ocl.ecore.utilities
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.ocl.ecore

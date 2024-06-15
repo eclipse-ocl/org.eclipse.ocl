@@ -6,7 +6,7 @@ Bundle-Version: 6.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.examples.eventmanager.tests,
  org.eclipse.ocl.examples.eventmanager.tests.filters;x-internal:=true,
  org.eclipse.ocl.examples.eventmanager.tests.framework;x-internal:=true,
