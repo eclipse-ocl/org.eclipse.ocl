@@ -7,5 +7,6 @@ Bundle-Version: 1.22.0.qualifier
 Require-Bundle: org.eclipse.ocl.pivot,
  org.eclipse.xtext;resolution:=optional
 Automatic-Module-Name: org.eclipse.ocl.examples.project.completeocltutorial
+Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: .;x-internal:=true
