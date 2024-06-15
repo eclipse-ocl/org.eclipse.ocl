@@ -90,12 +90,14 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceFactory;
-import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceImpl;
+import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceLoadImpl;
+import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceSaveImpl;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 import junit.framework.TestCase;
@@ -191,12 +193,13 @@ public class LoadTests extends XtextTestCase
 		csResource.save(XMIUtil.createSaveOptions());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", csResource);
-		OCLCSResourceImpl xmiResource = new OCLCSResourceImpl(xmiOutputURI, csResource);
+		OCLCSResourceSaveImpl xmiResource = new OCLCSResourceSaveImpl(xmiOutputURI, csResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		csResource.setURI(xmiOutputURI);
 		xmiResource.save(null);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
-	//	csResource.setURI(inputURI);
+		csResource.setURI(oclOutputURI);
 		return csResource;
 	}
 
@@ -1389,6 +1392,13 @@ public class LoadTests extends XtextTestCase
 		OCL ocl2 = createOCLWithProjectMap();
 		ocl2.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put("oclcs", new OCLCSResourceFactory());
 		Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
+//		Resource asResource = ((CSResource)xmiResource).getASResource();
+		CS2AS cs2as = ( (OCLCSResourceLoadImpl)xmiResource).getCS2AS();
+		ASResource asResource = cs2as.getASResource();
+		final ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		cs2as.update(consumer);
+		xmiResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
+		xmiResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
 		assertNoResourceErrors("CS load", xmiResource);
 		assertNoUnresolvedProxies("CS load", xmiResource);
 		assertNoValidationErrors("CS load", xmiResource);

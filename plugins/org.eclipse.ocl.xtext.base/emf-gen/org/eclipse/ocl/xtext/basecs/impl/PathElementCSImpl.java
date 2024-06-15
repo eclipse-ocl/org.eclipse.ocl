@@ -405,6 +405,11 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				getClass();			// XXX
 			}
 			EObject resolvedProxy = eResolveProxy(oldReferredElement);
+			if (resolvedProxy == null) {
+				resolvedProxy = eResolveProxy(oldReferredElement);
+			}
+			assert resolvedProxy != null;		// XXX
+		//	assert !resolvedProxy.eIsProxy();	// XXX
 		/*	if (resolvedProxy instanceof Pivotable) {
 				Resource resource = resolvedProxy.eResource();
 				if (resource instanceof CSResource) {
