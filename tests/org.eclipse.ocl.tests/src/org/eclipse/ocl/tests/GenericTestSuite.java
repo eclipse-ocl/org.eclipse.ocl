@@ -684,7 +684,7 @@ extends TestCase {
 			EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> envFactory,
 			C context, String text) {
 
-		OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> localOcl = OCL.newInstance(envFactory);
+		OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> localOcl = OCL.newInstanceAbstract(envFactory);
 		OCLHelper<C, O, P, CT> helper = localOcl.createOCLHelper();
 		helper.setContext(context);
 

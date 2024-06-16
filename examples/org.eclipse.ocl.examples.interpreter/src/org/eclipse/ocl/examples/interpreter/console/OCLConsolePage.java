@@ -143,10 +143,12 @@ extends Page {
 
 	public IItemLabelProvider tupleTypeLabelProvider = new IItemLabelProvider() {
 
+		@Override
 		public Object getImage(Object object) {
 			return null;
 		}
 
+		@Override
 		public String getText(Object object) {
 			@SuppressWarnings("unchecked")
 			Tuple<?, Object> tuple = (Tuple<?, Object>) object;
@@ -203,6 +205,7 @@ extends Page {
 			input.getTextWidget().addKeyListener(new InputKeyListener());
 
 			selectionListener = new ISelectionListener() {
+				@Override
 				public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 					OCLConsolePage.this.selectionChanged(selection);
 				}};
@@ -632,6 +635,7 @@ extends Page {
 			private List<String> history = new ArrayList<String>();
 			private int currentHistoryPointer = 0;
 
+			@Override
 			public void keyPressed(KeyEvent e) {
 				switch (e.keyCode) {
 					case SWT.CR :
@@ -671,6 +675,7 @@ extends Page {
 				}
 			}
 
+			@Override
 			public void keyReleased(KeyEvent e) {
 				switch (e.keyCode) {
 					case SWT.CR :
@@ -871,6 +876,7 @@ extends Page {
 		}
 
 		private class EcoreOCLFactory implements IOCLFactory<Object> {
+			@Override
 			public TargetMetamodel getTargetMetamodel() {
 				return TargetMetamodel.Ecore;
 			}
@@ -884,23 +890,27 @@ extends Page {
 				return new EcoreEnvironmentFactory(compositeRegistry);
 			}
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level) {
 				EcoreEnvironmentFactory envFactory = createEnvironmentFactory();
-				return OCL.newInstance(envFactory);
+				return OCL.newInstanceAbstract(envFactory);
 			}
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level,
 					Resource res) {
 				EcoreEnvironmentFactory envFactory = createEnvironmentFactory();
-				return OCL.newInstance(envFactory, res);
+				return OCL.newInstanceAbstract(envFactory, res);
 			}
 
+			@Override
 			public Object getContextClassifier(EObject object) {
 				return context.eClass();
 			}
 
+			@Override
 			public String getName(Object modelElement) {
 				return ((ENamedElement) modelElement).getName();
 			}
@@ -936,10 +946,12 @@ extends Page {
 		}
 
 		private class UMLOCLFactory implements IOCLFactory<Object> {
+			@Override
 			public TargetMetamodel getTargetMetamodel() {
 				return TargetMetamodel.UML;
 			}
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level) {
 				UMLEnvironmentFactory factory = new UMLEnvironmentFactory(
@@ -949,7 +961,7 @@ extends Page {
 					context.eResource().getResourceSet());
 
 
-				OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> result = OCL.newInstance(factory);
+				OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> result = OCL.newInstanceAbstract(factory);
 
 				switch (level) {
 					case M2:
@@ -967,6 +979,7 @@ extends Page {
 				return result;
 			}
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level,
 					Resource res) {
@@ -977,7 +990,7 @@ extends Page {
 						EPackage.Registry.INSTANCE),
 					context.eResource().getResourceSet());
 
-				OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> result = OCL.newInstance(factory, res);
+				OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> result = OCL.newInstanceAbstract(factory, res);
 
 				switch (level) {
 					case M2:
@@ -995,11 +1008,13 @@ extends Page {
 				return result;
 			}
 
+			@Override
 			public Object getContextClassifier(EObject object) {
 				return OCLUMLUtil.getClassifier(context.eClass(),
 					context.eResource().getResourceSet());
 			}
 
+			@Override
 			public String getName(Object modelElement) {
 				return ((NamedElement) modelElement).getName();
 			}
@@ -1034,6 +1049,7 @@ extends Page {
 			private List<IAction> actions = new java.util.ArrayList<IAction>();
 
 			private IPropertyChangeListener listener = new IPropertyChangeListener() {
+				@Override
 				public void propertyChange(PropertyChangeEvent event) {
 					if (IAction.CHECKED.equals(event.getProperty())) {
 						if (Boolean.TRUE.equals(event.getNewValue())) {
@@ -1062,6 +1078,7 @@ extends Page {
 					setText(action.getText());
 				}
 
+				@Override
 				public Menu getMenu(Control parent) {
 					if (menu == null) {
 						menu = new Menu(parent);
@@ -1079,12 +1096,14 @@ extends Page {
 					contrib.fill(m, -1);
 				}
 
+				@Override
 				public void dispose() {
 					if (menu != null) {
 						menu.dispose();
 					}
 				}
 
+				@Override
 				public Menu getMenu(Menu parent) {
 					return null;
 				}

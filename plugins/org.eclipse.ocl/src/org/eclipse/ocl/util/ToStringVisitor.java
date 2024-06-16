@@ -58,7 +58,7 @@ import org.eclipse.ocl.utilities.Visitable;
 /**
  * Converts an OCL expression to a string for debugging.  This is not intended
  * to be used by client applications as an AST-to-text transformation.
- * 
+ *
  * @author Edith Schonberg (edith)
  * @author Christian W. Damus (cdamus)
  * @author Edward Willink (ewillink)
@@ -69,7 +69,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     private final Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> env;
     private final UMLReflection<?, C, O, P, EL, PM, S, COA, SSA, CT> uml;
 
-	
+
 	/**
 	 * Indicates where a required element in the AST was <code>null</code>, so
 	 * that it is evident in the debugger that something was missing.  We don't
@@ -80,50 +80,51 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 
 	/**
 	 * Initializes me with my environment.
-	 * 
+	 *
 	 * @param env my environment
 	 */
 	protected ToStringVisitor(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> env) {
 	    this.env = env;
 		this.uml = (env == null)? null : env.getUMLReflection();
 	}
-	
+
 	/**
 	 * Obtains an instance of the <tt>toString()</tt> visitor for the specified
 	 * environment.
-	 * 
+	 *
 	 * @param env an OCL environment
-	 * 
+	 *
 	 * @return the corresponding instance
 	 */
 	public static <C, O, P, EL, PM, S, COA, SSA, CT>
 	ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> getInstance(
 			Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> env) {
-		
+
 		return new ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>(env);
 	}
-	
+
 	/**
 	 * Obtains an instance of the <tt>toString()</tt> visitor for the specified
 	 * expression or other typed element.
-	 * 
+	 *
 	 * @param element an OCL expression or other typed element such as a variable
-	 * 
+	 *
 	 * @return the corresponding instance
+	 * @since 6.22
 	 */
 	@SuppressWarnings("unchecked")
 	public static <C, O, P, EL, PM, S, COA, SSA, CT>
-	ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> getInstance(
+	ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> getInstanceAbstract(
 			TypedElement<C> element) {
-		
+
 		return new ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>(
 				(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?>)
 					Environment.Registry.INSTANCE.getEnvironmentFor(element));
 	}
-	
+
 	/**
 	 * Null-safe access to the name of a named element.
-	 * 
+	 *
 	 * @param named a named element or <code>null</code>
 	 * @return a name, or the null placeholder if the named element or its name
 	 *    be <code>null</code>.  i.e., <code>null</code> is never returned
@@ -131,10 +132,10 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 	protected String getName(Object named) {
 		return (uml == null)? NULL_PLACEHOLDER : uml.getName(named);
 	}
-    
+
     /**
      * Null-safe access to the qualified name of a named element.
-     * 
+     *
      * @param named a named element or <code>null</code>
      * @return a qualified name, or the null placeholder if the named element
      *    or its name be <code>null</code>.  i.e., <code>null</code> is never
@@ -146,7 +147,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 
 	/**
 	 * Callback for an OperationCallExp visit.
-	 * 
+	 *
 	 * Look at the source to determine operator ( -&gt; or . )
 	 * @param oc the operation call expression
 	 * @return string
@@ -154,16 +155,16 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleOperationCallExp(OperationCallExp<C,O> oc,
             String sourceResult, List<String> argumentResults) {
-        
+
 		OCLExpression<C> source = oc.getSource();
 		C sourceType = source != null ? source.getType() : null;
 		O oper = oc.getReferredOperation();
-		
+
 		StringBuilder result = new StringBuilder();
 		result.append(sourceResult);
 		result.append(sourceType instanceof CollectionType<?, ?> ? "->" : "."); //$NON-NLS-1$ //$NON-NLS-2$
 		result.append(getName(oper));
-		
+
         result.append('(');
         for (Iterator<String> iter = argumentResults.iterator(); iter.hasNext();) {
 			result.append(iter.next());
@@ -172,12 +173,12 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
             }
 		}
 		result.append(')');
-        
+
 		return maybeAtPre(oc, result.toString());
 	}
 
 	/**
-	 * Callback for an EnumLiteralExp visit.  
+	 * Callback for an EnumLiteralExp visit.
 	 * @param el the enumeration literal expresion
 	 * @return the enumeration literal toString()
 	 */
@@ -196,16 +197,16 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     public String visitVariableExp(VariableExp<C, PM> v) {
 		Variable<C, PM> vd = v.getReferredVariable();
 		String result = (vd == null) ? null : vd.getName();
-		
+
 		if (result == null) {
 			result = NULL_PLACEHOLDER;
 		}
-		
+
 		return result;
 	}
 
 	/**
-	 * Callback for an AssociationEndCallExp visit. 
+	 * Callback for an AssociationEndCallExp visit.
 	 * @param pc the property call expression
 	 * @return string source.ref
 	 */
@@ -219,29 +220,29 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 			//   we just return our name, because our source is null (implied)
 			return getName(property);
 		}
-		
+
 		StringBuilder result = new StringBuilder(
 			maybeAtPre(pc, sourceResult + "." + getName(property)));//$NON-NLS-1$
-		
+
 		if (!qualifierResults.isEmpty()) {
 			result.append('[');
-			
+
 			for (Iterator<String> iter = qualifierResults.iterator(); iter.hasNext();) {
 				result.append(iter.next());
-				
+
 				if (iter.hasNext()) {
 					result.append(", "); //$NON-NLS-1$
 				}
 			}
-			
+
 			result.append(']');
 		}
-		
+
 		return result.toString();
 	}
 
 	/**
-	 * Callback for an AssociationClassCallExp visit. 
+	 * Callback for an AssociationClassCallExp visit.
 	 * @param ac the association class expression
 	 * @return string source.ref
 	 */
@@ -252,22 +253,22 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 
 		C ref = ac.getReferredAssociationClass();
 		String name = initialLower(getName(ref));
-		
+
 		StringBuilder result = new StringBuilder(
 			maybeAtPre(ac, sourceResult + "." + name));//$NON-NLS-1$
-		
+
 		if (!qualifierResults.isEmpty()) {
 			result.append('[').append(qualifierResults.get(0)).append(']');
 		}
-		
+
 		return result.toString();
 	}
-	
+
 	protected String initialLower(String name) {
 		if (name == null || name.length() == 0) {
 			return name;
 		}
-		
+
 		StringBuilder result = new StringBuilder(name);
 		result.setCharAt(0, Character.toLowerCase(result.charAt(0)));
 		return result.toString();
@@ -281,22 +282,22 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleVariable(Variable<C,PM> vd, String initResult) {
 		String varName = vd.getName();
-		
+
 		if (varName == null) {
 			varName = NULL_PLACEHOLDER;
 		}
-		
+
 		C type = vd.getType();
 		String result = varName;
 
 		if (type != null) {
 			result += " : " + getName(type);//$NON-NLS-1$
 		}
-        
+
         if (initResult != null) {
 			result += " = " + initResult;//$NON-NLS-1$
         }
-        
+
 		return result;
 	}
 
@@ -308,12 +309,12 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleIfExp(IfExp<C> ifExp, String conditionResult, String thenResult, String elseResult) {
         StringBuilder result = new StringBuilder();
-        
+
         result.append("if ").append(conditionResult); //$NON-NLS-1$
         result.append(" then ").append(thenResult); //$NON-NLS-1$
         result.append(" else ").append(elseResult); //$NON-NLS-1$
         result.append(" endif"); //$NON-NLS-1$
-        
+
         return result.toString();
 	}
 
@@ -321,7 +322,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     public String visitTypeExp(TypeExp<C> t) {
 		return getQualifiedName(t.getReferredType());
 	}
-	
+
 	@Override
     public String visitStateExp(StateExp<C, S> s) {
 		return getName(s);
@@ -345,8 +346,8 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 	}
 
 	/**
-	 * Callback for an IntegerLiteralExp visit. 
-	 * @param il -- integer literal expression 
+	 * Callback for an IntegerLiteralExp visit.
+	 * @param il -- integer literal expression
 	 * @return String
 	 */
 	@Override
@@ -354,10 +355,10 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 		return (il.getLongSymbol() == null)? NULL_PLACEHOLDER
 				: il.getLongSymbol().toString();
 	}
-    
+
     /**
-     * Callback for an UnlimitedNaturalLiteralExp visit. 
-     * @param unl -- unlimited natural literal expression 
+     * Callback for an UnlimitedNaturalLiteralExp visit.
+     * @param unl -- unlimited natural literal expression
      * @return String
      */
     @Override
@@ -365,11 +366,11 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
         if (unl.isUnlimited()) {
             return "*"; //$NON-NLS-1$
         }
-        
+
         return (unl.getIntegerSymbol() == null)? NULL_PLACEHOLDER
                 : unl.getIntegerSymbol().toString();
     }
-    
+
 
 	/**
 	 * Callback for a RealLiteralExp visit.
@@ -412,11 +413,11 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleLetExp(LetExp<C,PM> letExp, String variableResult,
             String inResult) {
-        
+
         StringBuilder result = new StringBuilder();
 		result.append("let ").append(variableResult); //$NON-NLS-1$
         result.append(" in ").append(inResult); //$NON-NLS-1$
-        
+
 		return result.toString();
 
 	}
@@ -430,18 +431,18 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     protected String handleIterateExp(IterateExp<C,PM> callExp,
             String sourceResult, List<String> variableResults,
             String resultResult, String bodyResult) {
-        
+
         StringBuilder result = new StringBuilder();
-        
+
         result.append(sourceResult).append("->iterate("); //$NON-NLS-1$
-        
+
 		for (Iterator<String> iter = variableResults.iterator(); iter.hasNext();) {
 			result.append(iter.next());
 			if (iter.hasNext()) {
 				result.append(", ");//$NON-NLS-1$
             }
 		}
-        
+
 		result.append("; ").append(resultResult).append(" | ");//$NON-NLS-2$//$NON-NLS-1$
 
 		result.append(bodyResult).append(')');
@@ -457,19 +458,19 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleIteratorExp(IteratorExp<C,PM> callExp,
             String sourceResult, List<String> variableResults, String bodyResult) {
-        
+
         StringBuilder result = new StringBuilder();
 
         String name = callExp.getName();
         result.append(sourceResult).append("->").append(name).append('('); //$NON-NLS-1$
-        
+
         for (Iterator<String> iter = variableResults.iterator(); iter.hasNext();) {
             result.append(iter.next());
             if (iter.hasNext()) {
                 result.append(", ");//$NON-NLS-1$
             }
         }
-        
+
         result.append(" | ").append(bodyResult).append(')');//$NON-NLS-1$
 
         return result.toString();
@@ -483,9 +484,9 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleCollectionLiteralExp(CollectionLiteralExp<C> cl,
             List<String> partResults) {
-        
+
         StringBuilder result = new StringBuilder();
-        
+
 		// construct the appropriate collection from the parts
 		// based on the collection kind.
 		CollectionKind kind = cl.getKind();
@@ -514,18 +515,18 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 				result.append(", "); //$NON-NLS-1$
             }
 		}
-        
+
 		result.append('}');
-        
+
         return result.toString();
 	}
-    
+
     @Override
     protected String handleCollectionItem(CollectionItem<C> item,
             String itemResult) {
         return itemResult;
     }
-    
+
     @Override
     protected String handleCollectionRange(CollectionRange<C> range,
             String firstResult, String lastResult) {
@@ -540,82 +541,82 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     protected String handleTupleLiteralExp(TupleLiteralExp<C,P> literalExp,
             List<String> partResults) {
-        
+
 		// construct the appropriate collection from the parts
 		// based on the collection kind.
 		StringBuilder result = new StringBuilder();
         result.append("Tuple{");//$NON-NLS-1$
-        
+
 		for (Iterator<String> iter = partResults.iterator(); iter.hasNext();) {
 			result.append(iter.next());
-            
+
 			if (iter.hasNext()) {
 				result.append(", ");//$NON-NLS-1$
             }
 		}
-        
+
 		result.append('}');
-        
+
         return result.toString();
 	}
-	
+
     @Override
     protected String handleTupleLiteralPart(TupleLiteralPart<C, P> part,
             String valueResult) {
-        
+
 		String varName = part.getName();
 		C type = part.getType();
-        
+
 		StringBuilder result = new StringBuilder();
-        
+
         result.append(varName);
 
 		if (type != null) {
 			result.append(" : ").append(getName(type));//$NON-NLS-1$
 		}
-		
+
 		if (valueResult != null) {
 			result.append(" = ").append(valueResult);//$NON-NLS-1$
 		}
-		
+
 		return result.toString();
 	}
-	
+
     @Override
     protected String handleMessageExp(MessageExp<C, COA, SSA> messageExp,
             String targetResult, List<String> argumentResults) {
 		StringBuilder result = new StringBuilder();
-		
+
 		result.append(targetResult);
-		
+
 		result.append((messageExp.getType() instanceof CollectionType<?, ?>)?
             "^^" : "^");  //$NON-NLS-1$//$NON-NLS-2$
-	
+
 		if (messageExp.getCalledOperation() != null) {
 			result.append(getName(getOperation(messageExp.getCalledOperation())));
 		} else if (messageExp.getSentSignal() != null) {
 			result.append(getName(getSignal(messageExp.getSentSignal())));
 		}
-		
+
 		result.append('(');
-		
+
 		for (Iterator<String> iter = argumentResults.iterator(); iter.hasNext();) {
 			result.append(iter.next());
-			
+
 			if (iter.hasNext()) {
 				result.append(", ");  //$NON-NLS-1$
 			}
 		}
-		
+
 		result.append(')');
-		
+
 		return result.toString();
 	}
-	
+
 	protected O getOperation(COA callOperationAction) {
 		return (uml == null)? null : uml.getOperation(callOperationAction);
 	}
-	
+
 	protected C getSignal(SSA sendSignalAction) {
 		return (uml == null)? null : uml.getSignal(sendSignalAction);
 	}
@@ -634,12 +635,12 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     @Override
     public String visitConstraint(CT constraint) {
         StringBuilder result = new StringBuilder();
-        
+
         List<? extends EObject> constrained = getConstrainedElements(constraint);
-        
+
         if (!constrained.isEmpty()) {
             EObject elem = constrained.get(0);
-            
+
             result.append("context "); //$NON-NLS-1$
             if (isClassifier(elem)) {
                 result.append(getName(elem));
@@ -652,10 +653,10 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
                 P prop = (P) elem;
                 appendPropertySignature(result, prop);
             }
-            
+
             result.append(' ');
         }
-        
+
         String stereo = getStereotype(constraint);
         if (UMLReflection.PRECONDITION.equals(stereo)) {
             result.append("pre: "); //$NON-NLS-1$
@@ -669,9 +670,9 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
             result.append("derive: "); //$NON-NLS-1$
         } else if (UMLReflection.POSTCONDITION.equals(stereo)) {
             result.append("def: "); //$NON-NLS-1$
-            
+
             EObject elem = constrained.get(1);
-            
+
             if (isOperation(elem)) {
                 @SuppressWarnings("unchecked")
                 O oper = (O) elem;
@@ -681,76 +682,76 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
                 P prop = (P) elem;
                 appendPropertySignature(result, prop);
             }
-            
+
             result.append(" = "); //$NON-NLS-1$
         } else {
             result.append("inv "); //$NON-NLS-1$
             result.append(getName(constraint));
             result.append(": "); //$NON-NLS-1$
         }
-        
+
         result.append(visit(getSpecification(constraint)));
-        
+
         return result.toString();
     }
-	
+
 	protected boolean isClassifier(Object element) {
 		return (uml != null) && uml.isClassifier(element);
 	}
-	
+
 	protected boolean isOperation(Object element) {
 		return (uml != null) && uml.isOperation(element);
 	}
-	
+
 	protected boolean isProperty(Object element) {
 		return (uml != null) && uml.isProperty(element);
 	}
-	
+
 	protected List<? extends EObject> getConstrainedElements(CT constraint) {
 		return (uml == null)? null : uml.getConstrainedElements(constraint);
 	}
-	
+
 	protected String getStereotype(CT constraint) {
 		return (uml == null)? null : uml.getStereotype(constraint);
 	}
-	
+
 	@Override
     protected ExpressionInOCL<C, PM> getSpecification(CT constraint) {
 		return (uml == null)? null : uml.getSpecification(constraint);
 	}
-	
+
 	private void appendOperationSignature(StringBuilder buf, O operation) {
 		buf.append(getName(operation)).append('(');
-		
+
 		boolean comma = false;
 		for (Iterator<PM> iter = getParameters(operation).iterator(); iter.hasNext();) {
 			PM parm = iter.next();
-			
+
 			if (comma) {
 				buf.append(", "); //$NON-NLS-1$
 			} else {
 				comma = true;
 			}
-			
+
 			buf.append(getName(parm)).append(" : "); //$NON-NLS-1$
-			
+
 			if (getType(parm) != null) {
 				buf.append(getName(getType(parm)));
 			} else {
 				buf.append("OclVoid"); //$NON-NLS-1$
 			}
 		}
-		
+
 		buf.append(") :"); //$NON-NLS-1$
 		if (getType(operation) != null) {
 			buf.append(' ').append(getName(getType(operation)));
 		}
 	}
-	
+
 	protected C getType(Object typedElement) {
 		return (uml == null)? null : TypeUtil.resolveType(env, uml.getOCLType(typedElement));
 	}
-	
+
 	protected List<PM> getParameters(O operation) {
 		return (uml == null)? null : uml.getParameters(operation);
 	}
@@ -778,7 +779,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
     public String visitNullLiteralExp(NullLiteralExp<C> il) {
 		return "null"; //$NON-NLS-1$
 	}
-	
+
 	private String visit(Visitable visitable) {
 		return (visitable == null)? NULL_PLACEHOLDER : (String) visitable.accept(this);
 	}

@@ -4,8 +4,8 @@
  * are made available under the terms of the Common Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/cpl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   Kenn Hussey - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.interpreter.delegate;
@@ -43,29 +43,34 @@ public class OCLQueryDelegateTextViewer
 	private class EcoreOCLFactory
 			implements IOCLFactory<Object> {
 
+		@Override
 		public TargetMetamodel getTargetMetamodel() {
 			return TargetMetamodel.Ecore;
 		}
 
+		@Override
 		@SuppressWarnings("unchecked")
 		public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(
 				ModelingLevel level) {
-			return OCL.newInstance(new EcoreEnvironmentFactory(
+			return OCL.newInstanceAbstract(new EcoreEnvironmentFactory(
 				EPackage.Registry.INSTANCE));
 		}
 
+		@Override
 		@SuppressWarnings("unchecked")
 		public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(
 				ModelingLevel level, Resource res) {
 
-			return OCL.newInstance(new EcoreEnvironmentFactory(
+			return OCL.newInstanceAbstract(new EcoreEnvironmentFactory(
 				EPackage.Registry.INSTANCE), res);
 		}
 
+		@Override
 		public Object getContextClassifier(EObject object) {
 			return context.eClass();
 		}
 
+		@Override
 		public String getName(Object modelElement) {
 			return ((ENamedElement) modelElement).getName();
 		}
@@ -75,15 +80,18 @@ public class OCLQueryDelegateTextViewer
 		super(parent, new ColorManager(), styles);
 	}
 
+	@Override
 	public void setContext(EClassifier context) {
 		((OCLDocument) getDocument()).setOCLContext(this.context = context);
 	}
 
+	@Override
 	public void setParameters(Map<String, EClassifier> parameters) {
 		((OCLDocument) getDocument())
 			.setOCLParameters(this.parameters = parameters);
 	}
 
+	@Override
 	public void setDocument(IDocument document) {
 
 		if (document != null) {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365
@@ -12,6 +12,7 @@
 package org.eclipse.ocl.expressions.impl;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -636,7 +637,7 @@ public class TupleLiteralPartImpl<C, P>
 		if (eIsProxy()) {
 			return super.toString();
 		}
-		return accept(ToStringVisitor.getInstance(this));
+		return accept(ToStringVisitor.getInstanceAbstract(this));
 	}
 
 } //TupleLiteralPartImpl

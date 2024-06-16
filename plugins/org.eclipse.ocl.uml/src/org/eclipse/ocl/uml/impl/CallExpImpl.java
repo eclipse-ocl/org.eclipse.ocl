@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365, 207365
@@ -379,7 +379,7 @@ public abstract class CallExpImpl
 		}
 
 		return this.<String, Visitor<String, ?, ?, ?, ?, ?, ?, ?, ?, ?>> accept(
-			ToStringVisitor.getInstance(this));
+			ToStringVisitor.getInstanceAbstract(this));
 	}
 
 } //CallExpImpl

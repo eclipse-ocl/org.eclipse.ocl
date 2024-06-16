@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   IBM - Initial API and implementation
  *   Zeligsoft - Bug 207365, 207365
@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.OCLExpression;
-
 //import org.eclipse.ocl.expressions.operations.OCLExpressionOperations;
 import org.eclipse.ocl.util.ToStringVisitor;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -331,7 +330,7 @@ public abstract class OCLExpressionImpl<C>
 		}
 
 		return this.<String, Visitor<String, ?, ?, ?, ?, ?, ?, ?, ?, ?>> accept(
-			ToStringVisitor.getInstance(this));
+			ToStringVisitor.getInstanceAbstract(this));
 	}
 
 } //OCLExpressionImpl
