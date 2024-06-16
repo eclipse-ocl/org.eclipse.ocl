@@ -34,9 +34,9 @@ import org.eclipse.ocl.helper.OCLHelper;
  * client code from the long list of parameter substitutions.  This subclass
  * also provides a shortcut to creating an <code>OCL</code> on the shared
  * {@link EcoreEnvironmentFactory} instance.
- * 
+ *
  * @author Christian W. Damus (cdamus)
- * 
+ *
  * @see EcoreEnvironmentFactory
  */
 public class OCL extends org.eclipse.ocl.OCL<
@@ -48,18 +48,18 @@ public class OCL extends org.eclipse.ocl.OCL<
 	/**
 	 * Initialize registries to support OCL and Ecore usage. This method is
 	 * intended for initialization of standalone behaviors for which plugin extension
-	 * registrations have not been applied. 
-	 *<p> 
+	 * registrations have not been applied.
+	 *<p>
 	 * A null resourceSet may be provided to initialize the global package registry
 	 * and global URI mapping registry.
-	 *<p> 
+	 *<p>
 	 * A non-null resourceSet may be provided to identify a specific package registry.
 	 *<p>
 	 * This method is used to configure the ResourceSet used to load the OCL Standard Library.
 
 	 * @param resourceSet to be initialized or null for global initialization
 	 * @return a failure reason, null if successful
-	 * 
+	 *
 	 * @since 3.0
 	 */
 	public static String initialize(ResourceSet resourceSet) {
@@ -73,7 +73,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 
 	/**
      * Initializes me with an environment factory for the Ecore metamodel.
-     *  
+     *
 	 * @param envFactory my environment factory
 	 */
 	protected OCL(EnvironmentFactory<
@@ -86,7 +86,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 
 	/**
      * Initializes me with an initial environment for the Ecore metamodel.
-     * 
+     *
 	 * @param env my root environment
 	 */
 	protected OCL(Environment<
@@ -100,7 +100,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 	/**
      * Initializes me with an environment factory for the Ecore metamodel and
      * a resource from which to load my root environment.
-     * 
+     *
 	 * @param envFactory my environment factory
      * @param resource my persisted root environment
 	 */
@@ -116,17 +116,17 @@ public class OCL extends org.eclipse.ocl.OCL<
     /**
      * Creates a new <code>OCL</code> using the shared Ecore environment
      * factory instance.
-     * 
+     *
      * @return the new <code>OCL</code>
      */
 	public static OCL newInstance() {
 		return new OCL(EcoreEnvironmentFactory.INSTANCE);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified Ecore environment
      * factory.
-     * 
+     *
      * @param envFactory an environment factory for Ecore
      * @return the new <code>OCL</code>
      */
@@ -135,14 +135,13 @@ public class OCL extends org.eclipse.ocl.OCL<
 			EEnumLiteral, EParameter, EObject,
 			CallOperationAction, SendSignalAction, Constraint,
 			EClass, EObject> envFactory) {
-		
 		return new OCL(envFactory);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified initial Ecore
      * environment.
-     * 
+     *
      * @param env an environment for Ecore
      * @return the new <code>OCL</code>
      */
@@ -151,14 +150,13 @@ public class OCL extends org.eclipse.ocl.OCL<
 			EEnumLiteral, EParameter, EObject,
 			CallOperationAction, SendSignalAction, Constraint,
 			EClass, EObject> env) {
-		
 		return new OCL(env);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified Ecore environment
      * factory and a resource from which to load the initial environment.
-     * 
+     *
      * @param envFactory an environment factory for Ecore
      * @param resource the resource containing a persistent environment
      *    (which may be empty for an initially empty environment)
@@ -170,10 +168,9 @@ public class OCL extends org.eclipse.ocl.OCL<
 			CallOperationAction, SendSignalAction, Constraint,
 			EClass, EObject> envFactory,
 			Resource resource) {
-		
 		return new OCL(envFactory, resource);
 	}
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -185,7 +182,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Helper createOCLHelper() {
        return new OCLHelperImpl(super.createOCLHelper());
     }
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -197,7 +194,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Query createQuery(Constraint constraint) {
     	return new QueryImpl(super.createQuery(constraint), this);
     }
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -209,11 +206,11 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Query createQuery(org.eclipse.ocl.expressions.OCLExpression<EClassifier> query) {
     	return new QueryImpl(super.createQuery(query), this);
     }
-    
+
     /**
      * Convenient interface aliasing the type parameter substitutions for the
      * Ecore environment, for ease of typing.
-     * 
+     *
      * @author Christian W. Damus (cdamus)
      */
     public static interface Helper extends OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> {
@@ -225,7 +222,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 * </p>
     	 */
         OCLExpression createQuery(String expression) throws ParserException;
-        
+
     	/**
     	 * {@inheritDoc}
     	 * <p>
@@ -235,11 +232,11 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 */
         OCL getOCL();
     }
-    
+
     /**
      * Convenient interface aliasing the type parameter substitutions for the
      * UML environment, for ease of typing.
-     * 
+     *
      * @author Christian W. Damus (cdamus)
      */
     public static interface Query extends org.eclipse.ocl.Query<EClassifier, EClass, EObject> {
@@ -251,12 +248,12 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 * </p>
     	 */
     	OCLExpression getExpression();
-        
+
     	/**
     	 * <p>
     	 * Obtains the {@link OCL} that created me.
     	 * </p>
-         * 
+         *
          * @return my originating <tt>OCL</tt> instance
     	 */
         OCL getOCL();

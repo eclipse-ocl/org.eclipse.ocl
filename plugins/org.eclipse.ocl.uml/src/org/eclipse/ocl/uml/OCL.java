@@ -42,7 +42,7 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
  * Convenient subclass of the <code>OCL</code> fa&ccedil;ade that binds the
  * UML metamodel to the superclass's generic type parameters.  This frees
  * client code from the long list of parameter substitutions.  This subclass
- * also provides a shortcut to creating an <code>OCL</code> on a 
+ * also provides a shortcut to creating an <code>OCL</code> on a
  * {@link UMLEnvironmentFactory} instance using its own resource set.
  * <p>
  * The parser environments created by the UML environment factory support OCL
@@ -54,9 +54,9 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
  * context classifier.  A convenient way to obtain this metaclass is via the
  * {@link OCLUMLUtil#getMetaclass(org.eclipse.uml2.uml.Element)} method.
  * </p>
- * 
+ *
  * @author Christian W. Damus (cdamus)
- * 
+ *
  * @see UMLEnvironmentFactory
  */
 public class OCL extends org.eclipse.ocl.OCL<
@@ -69,10 +69,10 @@ public class OCL extends org.eclipse.ocl.OCL<
 	 * Initialize registries to support OCL and UML usage. This method is
 	 * intended for initialization of standalone behaviors for which plugin extension
 	 * registrations have not been applied.
-	 *<p> 
+	 *<p>
 	 * A null resourceSet may be provided to initialize the global package registry
 	 * and global URI mapping registry.
-	 *<p> 
+	 *<p>
 	 * A non-null resourceSet may be provided to identify specific package
 	 * and global URI mapping registries.
 	 * <p>
@@ -80,7 +80,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 
 	 * @param resourceSet to be initialized or null for global initialization
 	 * @return a failure reason, null if successful
-	 * 
+	 *
 	 * @since 3.0
 	 */
 	public static String initialize(ResourceSet resourceSet) {
@@ -107,7 +107,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 		}
 		Map<URI, URI> uriMap = resourceSet != null
 			? resourceSet.getURIConverter().getURIMap()
-			: URIConverter.URI_MAP;		
+			: URIConverter.URI_MAP;
 		uriMap.put(URI.createURI(UMLEnvironment.OCL_STANDARD_LIBRARY_NS_URI), createURI(oclLocation, "/model/oclstdlib.uml")); //$NON-NLS-1$
 		uriMap.put(URI.createURI(UMLResource.PROFILES_PATHMAP), createURI(resourcesLocation, "/profiles/")); //$NON-NLS-1$
 		uriMap.put(URI.createURI(UMLResource.METAMODELS_PATHMAP), createURI(resourcesLocation, "/metamodels/")); //$NON-NLS-1$
@@ -128,7 +128,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 
 	/**
      * Initializes me with an environment factory for the UML metamodel.
-     *  
+     *
      * @param envFactory my environment factory
      */
 	protected OCL(EnvironmentFactory<
@@ -141,7 +141,7 @@ public class OCL extends org.eclipse.ocl.OCL<
 
     /**
      * Initializes me with an initial environment for the UML metamodel.
-     * 
+     *
      * @param env my root environment
      */
 	protected OCL(Environment<
@@ -155,7 +155,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     /**
      * Initializes me with an environment factory for the UML metamodel and
      * a resource from which to load my root environment.
-     * 
+     *
      * @param envFactory my environment factory
      * @param resource my persisted root environment
      */
@@ -172,7 +172,7 @@ public class OCL extends org.eclipse.ocl.OCL<
      * Creates a new <code>OCL</code> using a new UML environment factory
      * that uses a private resource set and the global package registry for
      * looking up Ecore representations of UML packages.
-     * 
+     *
      * @return the new <code>OCL</code>
      */
 	public static OCL newInstance() {
@@ -183,18 +183,18 @@ public class OCL extends org.eclipse.ocl.OCL<
      * Creates a new <code>OCL</code> using a new UML environment factory
      * that uses the specified resource set and its local package registry for
      * looking up Ecore representations of UML packages.
-     * 
+     *
      * @param rset a resource set containing UML models
      * @return the new <code>OCL</code>
      */
 	public static OCL newInstance(ResourceSet rset) {
 		return new OCL(new UMLEnvironmentFactory(rset));
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified UML environment
      * factory.
-     * 
+     *
      * @param envFactory an environment factory for UML
      * @return the new <code>OCL</code>
      */
@@ -203,14 +203,13 @@ public class OCL extends org.eclipse.ocl.OCL<
 			EnumerationLiteral, Parameter, State,
 			CallOperationAction, SendSignalAction, Constraint,
 			Class, EObject> envFactory) {
-		
 		return new OCL(envFactory);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified initial UML
      * environment.
-     * 
+     *
      * @param env an environment for UML
      * @return the new <code>OCL</code>
      */
@@ -219,14 +218,13 @@ public class OCL extends org.eclipse.ocl.OCL<
 			EnumerationLiteral, Parameter, State,
 			CallOperationAction, SendSignalAction, Constraint,
 			Class, EObject> env) {
-		
 		return new OCL(env);
 	}
-	
+
     /**
      * Creates a new <code>OCL</code> using the specified UML environment
      * factory and a resource from which to load the initial environment.
-     * 
+     *
      * @param envFactory an environment factory for UML
      * @param resource the resource containing a persistent environment
      *    (which may be empty for an initially empty environment)
@@ -238,10 +236,9 @@ public class OCL extends org.eclipse.ocl.OCL<
 			CallOperationAction, SendSignalAction, Constraint,
 			Class, EObject> envFactory,
 			Resource resource) {
-		
 		return new OCL(envFactory, resource);
 	}
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -253,7 +250,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Helper createOCLHelper() {
        return new OCLHelperImpl(super.createOCLHelper());
     }
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -265,7 +262,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Query createQuery(Constraint constraint) {
     	return new QueryImpl(super.createQuery(constraint), this);
     }
-    
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -277,11 +274,11 @@ public class OCL extends org.eclipse.ocl.OCL<
     public Query createQuery(org.eclipse.ocl.expressions.OCLExpression<Classifier> query) {
     	return new QueryImpl(super.createQuery(query), this);
     }
-    
+
     /**
      * Convenient interface aliasing the type parameter substitutions for the
      * UML environment, for ease of typing.
-     * 
+     *
      * @author Christian W. Damus (cdamus)
      */
     public static interface Helper extends OCLHelper<Classifier, Operation, Property, Constraint> {
@@ -293,7 +290,7 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 * </p>
     	 */
         OCLExpression createQuery(String expression) throws ParserException;
-        
+
     	/**
     	 * {@inheritDoc}
     	 * <p>
@@ -303,11 +300,11 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 */
         OCL getOCL();
     }
-    
+
     /**
      * Convenient interface aliasing the type parameter substitutions for the
      * UML environment, for ease of typing.
-     * 
+     *
      * @author Christian W. Damus (cdamus)
      */
     public static interface Query extends org.eclipse.ocl.Query<Classifier, Class, EObject> {
@@ -319,12 +316,12 @@ public class OCL extends org.eclipse.ocl.OCL<
     	 * </p>
     	 */
     	OCLExpression getExpression();
-        
+
     	/**
          * <p>
          * Obtains the {@link OCL} that created me.
          * </p>
-         * 
+         *
          * @return my originating <tt>OCL</tt> instance
     	 */
         OCL getOCL();

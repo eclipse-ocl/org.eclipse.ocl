@@ -51,6 +51,7 @@ import org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.ecore.internal.TypeResolverImpl;
 import org.eclipse.ocl.ecore.internal.UMLReflectionImpl;
 import org.eclipse.ocl.ecore.opposites.OppositeEndFinder;
+import org.eclipse.ocl.ecore.utilities.ToStringVisitor;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.impl.ExpressionsPackageImpl;
@@ -1171,5 +1172,19 @@ implements EnvironmentWithHiddenOpposites {
 	 */
 	public OppositeEndFinder getOppositeEndFinder() {
 		return oppositeEndFinder;
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL() {
+		return OCL.newInstance(this);
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public ToStringVisitor createToStringVisitor(Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {
+		return new ToStringVisitor(environment);
 	}
 }

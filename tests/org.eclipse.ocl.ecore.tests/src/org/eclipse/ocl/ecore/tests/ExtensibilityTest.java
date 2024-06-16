@@ -44,6 +44,7 @@ import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.EnvironmentWithHiddenOpposites;
 import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.utilities.ToStringVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.OCLSyntaxHelper;
@@ -426,6 +427,20 @@ extends AbstractTestSuite {
 				String name) {
 			return delegate.lookupImplicitSourceForOppositeProperty(name);
 		}
+
+		/**
+		 * @since 6.22
+		 */
+		public OCL createOCL() {
+			return OCL.newInstance(this);
+		}
+
+		/**
+		 * @since 6.22
+		 */
+		public ToStringVisitor createToStringVisitor(Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {
+			return new ToStringVisitor(environment);
+		}
 	}
 
 	class WrapperEnvironmentFactory implements EnvironmentFactory<
@@ -545,6 +560,14 @@ extends AbstractTestSuite {
 		public OCLSyntaxHelper createOCLSyntaxHelper(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 			return delegate.createOCLSyntaxHelper(env);
+		}
+
+		public OCL createOCL() {
+			return OCL.newInstance(this);
+		}
+
+		public OCL createOCL(Resource resource) {
+			return OCL.newInstance(this, resource);
 		}
 	}
 

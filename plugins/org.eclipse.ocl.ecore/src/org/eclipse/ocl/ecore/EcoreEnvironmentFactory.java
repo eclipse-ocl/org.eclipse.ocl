@@ -196,6 +196,20 @@ public class EcoreEnvironmentFactory
 	}
 
 	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL() {
+		return OCL.newInstance(this);
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL(Resource resource) {
+		return OCL.newInstance(this, resource);
+	}
+
+	/**
 	 * @since 3.1
 	 */
 	@Override

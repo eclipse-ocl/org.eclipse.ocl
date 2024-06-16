@@ -7,7 +7,7 @@
  *
  * Contributors:
  *   IBM - Initial API and implementation
- *   E.D.Willink - Refactoring to support extensibility and flexible error handling 
+ *   E.D.Willink - Refactoring to support extensibility and flexible error handling
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Bug 333032
  *******************************************************************************/
 
@@ -47,7 +47,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * {@link OCLUtil#getAdapter(EnvironmentFactory, Class)} method to obtain
  * adapters for any factory instance.
  * </p>
- * 
+ *
  * @param <PK> is substituted by the metaclass representing the metamodel's
  *    analogue for the UML 2.x <tt>Package</tt>
  * @param <C> corresponds to the UML <tt>Classifier</tt> metaclass
@@ -69,7 +69,7 @@ import org.eclipse.ocl.utilities.Visitor;
  * @author Christian W. Damus (cdamus)
  */
 public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
-	
+
 	/**
 	 * Creates a root environment, in which package contexts and/or classifier
      * contexts will be created as nested environments.  All operation body
@@ -77,21 +77,21 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
      * of additional attributes and operations should be maintained by the root
      * environment, so that they will be accessible from constraints parsed in
      * any nested environment.
-	 * 
+	 *
 	 * @return a new root environment
 	 */
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createEnvironment();
-	
+
 	/**
 	 * Creates an environment suitable for parsing OCL expressions in the
 	 * specified package context.  This context will become a classifier context
 	 * when the {@linkplain Environment#setSelfVariable "self" variable}
 	 * is defined.
-	 * 
+	 *
 	 * @param pathname the qualified package name (the "::"-separated parts)
 	 * @return the environment or null if lookup fails to locate a package
-	 * 
+	 *
 	 * @see #createClassifierContext
 	 * @see #createOperationContext
      * @see #createAttributeContext
@@ -100,27 +100,27 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 	createPackageContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
 			List<String> pathname);
-	
+
 	/**
 	 * Loads an environment from the specified <tt>resource</tt>.  If not
 	 * already loaded, this method will load the resource.  This resource will
 	 * subsequently be used to persist new OCL constraints, so supplying a new,
 	 * empty resource will allow the client to determine where the environment
 	 * is persisted.
-	 * 
+	 *
 	 * @param resource a resource containing the persisted environment
 	 */
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	loadEnvironment(Resource resource);
-	
+
 	/**
 	 * Creates an environment suitable for parsing OCL expressions in the
 	 * specified <code>context</code>, which is some classifier
 	 * in the client's model.
-	 * 
+	 *
 	 * @param context the context classifier
 	 * @return the environment
-	 * 
+	 *
 	 * @see #createOperationContext(Environment, Object)
      * @see #createAttributeContext(Environment, Object)
      * @see #createInstanceContext(Environment, Object)
@@ -129,7 +129,7 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 	createClassifierContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
 			C context);
-	
+
     /**
      * Creates an environment suitable for parsing OCL expressions on the
      * specified <code>context</code> object, which is an instance of some
@@ -142,10 +142,10 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
      * environment factory supports, if possible.  If not possible, then the
      * {@link OCLStandardLibrary#getOclAny() OclAny} type is assumed.
      * </p>
-     * 
+     *
      * @param context the context object or value
      * @return the environment
-     * 
+     *
      * @see #createClassifierContext(Environment, Object)
      * @see OCLStandardLibrary#getOclAny()
      */
@@ -153,72 +153,72 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
     createInstanceContext(
             Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
             Object context);
-    
+
 	/**
 	 * Creates an environment suitable for parsing OCL expressions on the
 	 * specified <code>operation</code>, which is some operation
 	 * in the client's metamodel.  Note that operation contexts can be defined
 	 * in the context of any classifier to which that operation is applicable.
-	 * 
+	 *
 	 * @param parent the parent environment, defining the classifier context
 	 * @param operation an operation in the client's metamodel
 	 * @return the environment
-	 * 
+	 *
 	 * @see #createClassifierContext(Environment, Object)
 	 */
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createOperationContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
 			O operation);
-	
+
 	/**
 	 * Creates an environment suitable for parsing OCL expressions on the
 	 * specified <code>property</code>, which is some attribute
 	 * in the client's metamodel.  Note that attribute contexts can be defined
 	 * in the context of any classifier in which that attribute is available.
-	 * 
+	 *
      * @param parent the parent environment, defining the classifier context
 	 * @param property an attribute in the client's metamodel
 	 * @return the environment
-	 * 
+	 *
 	 * @see #createClassifierContext(Environment, Object)
 	 */
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createAttributeContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
 			P property);
-	
+
 	/**
 	 * Creates a child environment of a specified <code>parent</code>, for
 	 * definition of nested scopes.
-	 * 
+	 *
 	 * @param parent the parent environment
 	 * @return the child environment
 	 */
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createEnvironment(Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent);
-	
+
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
 	 * an OCL expression as it is evaluated.
-	 * 
+	 *
 	 * @return a new evaluation environment
 	 */
 	EvaluationEnvironment<C, O, P, CLS, E> createEvaluationEnvironment();
-	
+
 	/**
 	 * Creates a new evaluation environment as a nested environment of the
 	 * specified <tt>parent</tt>.
-	 * 
+	 *
 	 * @param parent a nesting evaluation environment
 	 * @return a new nested evaluation environment
 	 */
 	EvaluationEnvironment<C, O, P, CLS, E> createEvaluationEnvironment(
 			EvaluationEnvironment<C, O, P, CLS, E> parent);
-	
+
     /**
      * Creates a new evaluation visitor, for the evaluation of OCL expressions.
-     * 
+     *
      * @param env the environment in which the expression was originally parsed
      *    (or some compatible environment)
      * @param evalEnv the evaluation environment that the visitor is to use
@@ -233,11 +233,25 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 			Map<? extends CLS, ? extends Set<? extends E>> extentMap);
 
 	/**
+	 * Create an appropriately derived new instance of OCL.
+	 *
+	 * @since 6.22
+	 */
+	OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL();
+
+	/**
+	 * Create an appropriately derived new instance of OCL using resource.
+	 *
+	 * @since 6.22
+	 */
+	OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL(Resource resource);
+
+	/**
 	 * Creates an instance of the OCLAnalyzer that analyzes the
 	 * given input on behalf of this environment.
-	 * 
+	 *
 	 * @param input the text to be analyzed
-	 * 
+	 *
 	 * @return an OCLAnalyzer instance for this environment
 	 * @since 3.1
 	 */
@@ -245,11 +259,11 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 		Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> environment, String input);
 
 	/**
-	 * Creates an instance of the OCLAnalyzer that will use 
+	 * Creates an instance of the OCLAnalyzer that will use
 	 * a given parser to perform syntactic and lexical analysis.
-	 * 
+	 *
 	 * @param parser performing syntax analysis
-	 * 
+	 *
 	 * @return an OCLAnalyzer instance for this environment
 	 * @since 3.1
 	 */
@@ -258,9 +272,9 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 
 	/**
 	 * Creates an instance of the OCLFactoryWithHistory object for this environment.
-	 * 
+	 *
 	 * @param env an OCL environment (must not be <code>null</code>)
-	 * 
+	 *
 	 * @return an OCLFactoryWithHistory instance for this environment
 	 * @since 3.1
 	 */
@@ -269,9 +283,9 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 
 	/**
 	 * Creates an instance of the OCLSyntaxHelper object for this environment.
-	 * 
+	 *
 	 * @param environment an OCL environment (must not be <code>null</code>)
-	 * 
+	 *
 	 * @return an OCLSyntaxHelper instance for this environment
 	 * @since 3.1
 	 */
@@ -282,21 +296,21 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 	 * Obtains an instance of the validation visitor that validates against the
 	 * specified environment, which presumably was used in parsing the OCL in
 	 * the first place.
-	 * 
+	 *
 	 * @param environment an OCL environment (must not be <code>null</code>)
-	 * 
+	 *
 	 * @return a validation visitor instance for the specified environment
 	 * @since 3.1
 	 */
 	Visitor<Boolean, C, O, P, EL, PM, S, COA, SSA, CT> createValidationVisitor(
 		Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> environment);
-	
+
 	/**
 	 * Optional adapter interface for look-up methods that throw
 	 * {@link LookupException}s on abnormal failures (usually ambiguous names).
-	 * 
+	 *
 	 * @author Christian W. Damus (cdamus)
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	interface Lookup<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
@@ -305,11 +319,11 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 		 * specified package context.  This context will become a classifier context
 		 * when the {@linkplain Environment#setSelfVariable "self" variable}
 		 * is defined.
-		 * 
+		 *
 		 * @param pathname the qualified package name (the "::"-separated parts)
 		 * @return the environment or null if lookup fails to locate a package
 		 * @throws LookupException if package lookup encounters an error such as an ambiguity
-		 * 
+		 *
 		 * @see #createClassifierContext
 		 * @see #createOperationContext
 	     * @see #createAttributeContext

@@ -34,7 +34,10 @@ public class ToStringVisitor
 		EEnumLiteral, EParameter, EObject,
 		CallOperationAction, SendSignalAction, Constraint>
 		implements VisitorExtension<String> {
-    protected ToStringVisitor(
+    /**
+	 * @since 6.22
+	 */
+    public ToStringVisitor(
 			Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env) {
 		super(env);
 	}
@@ -42,9 +45,9 @@ public class ToStringVisitor
 	/**
 	 * Obtains an instance of the <tt>toString()</tt> visitor for the specified
 	 * expression or other typed element.
-	 * 
+	 *
 	 * @param element an OCL expression or other typed element such as a variable
-	 * 
+	 *
 	 * @return the corresponding instance
 	 */
 	public static ToStringVisitor getInstance(TypedElement<EClassifier> element) {
@@ -52,7 +55,7 @@ public class ToStringVisitor
 			Environment.Registry.INSTANCE.getEnvironmentFor(element);
 		return new ToStringVisitor(env);
 	}
-	
+
 	/**
 	 * @since 3.1
 	 */
@@ -65,10 +68,10 @@ public class ToStringVisitor
 			//   we just return our name, because our source is null (implied)
 			return "oppositeOf(" + getName(property) + ")";   //$NON-NLS-1$//$NON-NLS-2$
 		}
-		
+
 		StringBuilder result = new StringBuilder(
 			maybeAtPre(callExp, sourceResult + ".oppositeOf(" + getName(property) + ")"));//$NON-NLS-1$ //$NON-NLS-2$
-		
+
 		return result.toString();
     }
 

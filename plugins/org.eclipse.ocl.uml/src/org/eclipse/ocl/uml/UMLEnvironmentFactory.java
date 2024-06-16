@@ -74,13 +74,13 @@ public class UMLEnvironmentFactory
 	private final ResourceSet resourceSet;
 
     private Package umlMetamodel;
-    
+
     // cache of EClass to UML Classfier
     private Map<EClass, Classifier> eclassToClassifierMap =
         new java.util.HashMap<EClass, Classifier>();
     private Map<List<String>, Package> packageCache =
         new java.util.HashMap<List<String>, Package>();
-    
+
     /**
      * Initializes me.  Environments that I create will use a private resource
      * set and its package registry to look up UML packages and their Ecore
@@ -89,40 +89,40 @@ public class UMLEnvironmentFactory
 	public UMLEnvironmentFactory() {
 		this(new ResourceSetImpl());
 	}
-	
+
     /**
      * Initializes me with a resource set that the environments I create
      * will use (along with its package registry) to look up UML packages and
      * their Ecore definitions.
-     * 
+     *
      * @param rset my resource set (must not by <code>null</code>)
      */
 	public UMLEnvironmentFactory(ResourceSet rset) {
 		this(rset.getPackageRegistry(), rset);
 	}
-	
+
     /**
      * Initializes me with a resource set and package registry that the
      * environments I create will use to look up UML packages and
      * their Ecore definitions.
-     * 
+     *
      * @param registry my package registry (must not be <code>null</code>)
      * @param rset my resource set (must not be <code>null</code>)
      */
 	public UMLEnvironmentFactory(EPackage.Registry registry, ResourceSet rset) {
 		super();
-		
+
 		this.registry = registry;
 		this.resourceSet = rset;
 	}
-	
+
     // implements the inherited specification
 	public UMLEnvironment createEnvironment() {
 		UMLEnvironment result = new UMLEnvironment(registry, resourceSet);
 		result.setFactory(this);
 		return result;
 	}
-	
+
     // implements the inherited specification
 	public Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> loadEnvironment(
 			Resource resource) {
@@ -130,50 +130,50 @@ public class UMLEnvironmentFactory
 		result.setFactory(this);
 		return result;
 	}
-	
+
     /**
      * Obtains the package registry that the environment I create will use to
      * look up the Ecore definitions of UML packages.
-     * 
+     *
      * @return my package registry
      */
 	public final EPackage.Registry getEPackageRegistry() {
 		return registry;
 	}
-	
+
     /**
      * Obtains the resource set that the environment I create will use to
      * find UML packages.
-     * 
+     *
      * @return my resource set
      */
 	public final ResourceSet getResourceSet() {
 		return resourceSet;
 	}
-	
+
     /**
      * Obtains the UML metamodel library, loaded in my resource set.
-     * 
+     *
      * @return the UML metamodel
      */
 	protected Package getUMLMetamodel() {
         if (umlMetamodel == null) {
             umlMetamodel = OCLUMLUtil.getUMLMetamodel(getResourceSet());
         }
-        
+
         return umlMetamodel;
 	}
-	
+
     // implements the inherited specification
 	@Override
 	protected Package lookupPackage(List<String> pathname) {
         Package result = packageCache.get(pathname);
-        
+
 		if (result == null) {
 		    result = OCLUMLUtil.findPackage(pathname, resourceSet);
             packageCache.put(pathname, result);
         }
-        
+
         return result;
 	}
 
@@ -181,7 +181,7 @@ public class UMLEnvironmentFactory
 	@Override
 	protected Classifier getClassifier(Object context) {
 		Classifier result;
-		
+
 		if (context instanceof InstanceSpecification) {
 			InstanceSpecification instance = (InstanceSpecification) context;
 			if (!instance.getClassifiers().isEmpty()) {
@@ -206,16 +206,16 @@ public class UMLEnvironmentFactory
 			// an instance of a metaclass that was modeled in UML and
 			//   generated to code?
 			EClass eclass = ((EObject) context).eClass();
-            
+
             result = eclassToClassifierMap.get(eclass);
             if (result == null) {
                 result = OCLUMLUtil.getClassifier(eclass, resourceSet);
-                
+
                 if (result == null) {
                     // cache the failed lookup for next time
                     result = OCLStandardLibraryImpl.INSTANCE.getOclAny();
                 }
-                
+
                 eclassToClassifierMap.put(eclass, result);
             }
 		} else {
@@ -233,7 +233,7 @@ public class UMLEnvironmentFactory
 				result = OCLStandardLibraryImpl.INSTANCE.getOclAny();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -241,12 +241,12 @@ public class UMLEnvironmentFactory
 	public Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject>
 	createEnvironment(
 			Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> parent) {
-		
+
 		if (!(parent instanceof UMLEnvironment)) {
 			throw new IllegalArgumentException(
 				"Parent environment must be a UML environment: " + parent); //$NON-NLS-1$
 		}
-		
+
 		UMLEnvironment result = new UMLEnvironment(parent);
 		result.setFactory(this);
 		return result;
@@ -262,5 +262,19 @@ public class UMLEnvironmentFactory
 	createEvaluationEnvironment(
 			EvaluationEnvironment<Classifier, Operation, Property, Class, EObject> parent) {
 		return new UMLEvaluationEnvironment(parent);
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL() {
+		return OCL.newInstance(this);
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL(Resource resource) {
+		return OCL.newInstance(this, resource);
 	}
 }

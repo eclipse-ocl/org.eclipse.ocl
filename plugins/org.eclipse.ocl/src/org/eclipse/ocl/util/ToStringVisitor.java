@@ -105,21 +105,27 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 
 	/**
 	 * Obtains an instance of the <tt>toString()</tt> visitor for the specified
-	 * expression or other typed element.
+	 * expression or other typed element. Attempts to invoke an Ecore / UML derived
+	 * ToStringVisitor before falling back on this abstract ToStringVisitor.
+	 *
+	 * This method replaces the getInstance() method that had to be removed to avoid
+	 * a conflicting signature in derived classes when using Java >= 8.
 	 *
 	 * @param element an OCL expression or other typed element such as a variable
 	 *
 	 * @return the corresponding instance
 	 * @since 6.22
 	 */
-	@SuppressWarnings("unchecked")
 	public static <C, O, P, EL, PM, S, COA, SSA, CT>
 	ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> getInstanceAbstract(
 			TypedElement<C> element) {
-
-		return new ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>(
-				(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?>)
-					Environment.Registry.INSTANCE.getEnvironmentFor(element));
+		Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> environment = Environment.Registry.INSTANCE.getEnvironmentFor(element);
+		if (environment != null) {
+			return environment.createToStringVisitor(environment);
+		}
+		else {
+			return new ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>(environment);
+		}
 	}
 
 	/**

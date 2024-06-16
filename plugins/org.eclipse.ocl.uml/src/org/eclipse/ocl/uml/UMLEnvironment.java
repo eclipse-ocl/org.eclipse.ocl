@@ -39,6 +39,7 @@ import org.eclipse.ocl.uml.internal.OCLStandardLibraryImpl;
 import org.eclipse.ocl.uml.internal.UMLForeignMethods;
 import org.eclipse.ocl.uml.internal.UMLReflectionImpl;
 import org.eclipse.ocl.uml.util.OCLUMLUtil;
+import org.eclipse.ocl.uml.util.ToStringVisitor;
 import org.eclipse.ocl.utilities.OCLFactory;
 import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.uml2.uml.Association;
@@ -74,22 +75,22 @@ import org.eclipse.uml2.uml.Vertex;
  * {@link EPackage} registry to find the corresponding Ecore definitions of
  * packages when evaluating expressions on instances of the UML model (in the
  * case of evaluation on UML2-generated API objects).
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 public class UMLEnvironment
     extends
     AbstractEnvironment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> {
-	
+
 	/**
 	 * The namespace URI of the UML representation of the OCL Standard Library.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public static final String OCL_STANDARD_LIBRARY_NS_URI = "http://www.eclipse.org/ocl/1.1.0/oclstdlib.uml"; //$NON-NLS-1$
-    
+
     static final String ANNOTATION_SOURCE = org.eclipse.ocl.uml.UMLPackage.eNS_URI;
-    
+
     private static OCLStandardLibraryImpl standardLibrary;
 
     private UMLReflection<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint> reflection;
@@ -114,7 +115,7 @@ public class UMLEnvironment
      * Initializes me with a package registry for looking up the Ecore
      * representations of UML packages and a resource set for looking up UML
      * packages in UML resources.
-     * 
+     *
      * @param registry
      *            the Ecore package registry to use
      * @param rset
@@ -131,7 +132,7 @@ public class UMLEnvironment
      * Initializes me with a package registry for looking up the Ecore
      * representations of UML packages, a resource set for looking up UML
      * packages in UML resources, and a resource from which to load myself.
-     * 
+     *
      * @param registry
      *            the Ecore package registry to use
      * @param rset
@@ -150,7 +151,7 @@ public class UMLEnvironment
     /**
      * Initializes me with a parent environment. I inherit my package registry,
      * resource set, and resource from it.
-     * 
+     *
      * @param parent
      *            my parent environment
      */
@@ -194,7 +195,7 @@ public class UMLEnvironment
     /**
      * Sets the factory that created me. This method should only be invoked by
      * that factory.
-     * 
+     *
      * @param factory
      *            my originating factory
      */
@@ -209,7 +210,7 @@ public class UMLEnvironment
      * applications in the case that the classifier is a stereotype or some
      * other type in a {@link Profile}.  Finding the Ecore definition of a profile
      * type requires finding the actual applied version of the profile.
-     * 
+     *
      * @param type a UML classifier
      * @param element an element in the context of which the OCL evaluation
      *     is being performed
@@ -220,12 +221,12 @@ public class UMLEnvironment
 	public EClassifier getEClassifier(Classifier type, Object element) {
 		return OCLUMLUtil.getEClassifier(type, element, registry);
 	}
-    
+
 //    /**
 //     * Obtains my EPackage registry, for looking up the Ecore correspondents
 //     * of UML metamodel elements when working with instances of generated Java
 //     * types.
-//     * 
+//     *
 //     * @return my EPackage registry
 //     */
 //    EPackage.Registry getEPackageRegistry() {
@@ -250,7 +251,7 @@ public class UMLEnvironment
     /**
      * Obtains the resource set in which I look for UML packages when resolving
      * package names.
-     * 
+     *
      * @return my resource set
      */
     protected final ResourceSet getResourceSet() {
@@ -259,7 +260,7 @@ public class UMLEnvironment
 
     /**
      * Obtains the UML metamodel library, loaded in my resource set.
-     * 
+     *
      * @return the UML metamodel
      */
     protected Package getUMLMetamodel() {
@@ -296,10 +297,10 @@ public class UMLEnvironment
 
     /**
      * Creates a new type resolver for use with this environment, persisted
-     * in a default resource. 
-     * 
+     * in a default resource.
+     *
      * @return a new type resolver
-     * 
+     *
      * @deprecated Override the {@link #createTypeResolver(Resource)} method,
      *     instead, handling the case where the resource is <code>null</code>
      */
@@ -307,17 +308,17 @@ public class UMLEnvironment
     protected TypeResolver<Classifier, Operation, Property> createTypeResolver() {
         return createTypeResolver(null);
     }
-    
+
     /**
      * <p>
      * Creates a new type resolver for use with this environment.
      * </p><p>
      * Subclasses may override.
      * </p>
-     * 
+     *
      * @param resource the resource for the type resolver's persistence
      * @return a new type resolver
-     * 
+     *
      * @since 1.2
      */
     protected TypeResolver<Classifier, Operation, Property> createTypeResolver(Resource resource) {
@@ -472,7 +473,7 @@ public class UMLEnvironment
     @Override
     protected void findNonNavigableAssociationEnds(Classifier classifier,
             String name, List<Property> ends) {
-        
+
         EList<Association> associations = UMLForeignMethods.getAllAssociations(classifier);
 
         // search for non-navigable, named ends
@@ -483,17 +484,17 @@ public class UMLEnvironment
 				if ((end != null)
 					&& OCLUMLUtil
 						.isNonNavigableAssocationEndOf(end, classifier)) {
-					
+
 					ends.add(end);
 				}
             }
         }
     }
-    
+
     @Override
     protected void findUnnamedAssociationEnds(Classifier classifier, String name,
             List<Property> ends) {
-        
+
         EList<Association> associations = UMLForeignMethods.getAllAssociations(classifier);
 
         for (Association next : associations) {
@@ -505,7 +506,7 @@ public class UMLEnvironment
 							&& initialLower(type).equals(name)
 							&& OCLUMLUtil.isNonNavigableAssocationEndOf(end,
 								classifier)) {
-							
+
 							ends.add(end);
 						}
                     }
@@ -513,12 +514,12 @@ public class UMLEnvironment
             }
         }
     }
-    
+
     /**
      * Queries whether the specified association end has no name.
-     * 
+     *
      * @param associationEnd an association end
-     * 
+     *
      * @return whether it is unnamed
      */
     protected boolean isUnnamed(Property associationEnd) {
@@ -558,7 +559,7 @@ public class UMLEnvironment
     /**
      * Finds all states in the specified owner type that match the given path
      * name prefix and add them to the accumulator list.
-     * 
+     *
      * @param owner
      *            the owner type
      * @param pathPrefix
@@ -633,7 +634,7 @@ public class UMLEnvironment
     // implements the inherited specification
     public Property defineAttribute(Classifier owner,
             Variable<Classifier, Parameter> variable, Constraint constraint) {
-		resetTypeCaches();		
+		resetTypeCaches();
         Property result;
 
         String name = variable.getName();
@@ -657,7 +658,7 @@ public class UMLEnvironment
     public Operation defineOperation(Classifier owner, String name,
             Classifier type, List<Variable<Classifier, Parameter>> params,
             Constraint constraint) {
-		resetTypeCaches();		
+		resetTypeCaches();
         Operation result = UMLFactory.eINSTANCE.createOperation();
 
         result.addKeyword(UMLReflection.OCL_HELPER);
@@ -686,14 +687,14 @@ public class UMLEnvironment
 
         return result;
     }
-    
+
     private void annotate(Feature feature, Constraint definition) {
         EAnnotation annotation = feature.getEAnnotation(ANNOTATION_SOURCE);
-        
+
         if (annotation == null) {
             annotation = feature.createEAnnotation(ANNOTATION_SOURCE);
         }
-        
+
         annotation.getReferences().add(definition);
     }
 
@@ -710,7 +711,7 @@ public class UMLEnvironment
         EcoreUtil.remove(definition);
 
         definition.getConstrainedElements().clear();
-		resetTypeCaches();		
+		resetTypeCaches();
     }
 
     // implements the inherited specification
@@ -739,7 +740,7 @@ public class UMLEnvironment
                         UMLPackage.Literals.CONSTRAINT);
                 }
             }
-            
+
             if (result == null) {
                 // backward compatibility for existing serializations
                 for (Constraint ct : owner.getOwnedRules()) {
@@ -775,14 +776,29 @@ public class UMLEnvironment
             && UMLReflection.POSTCONDITION.equals(constraint.getKeywords().get(
                 0));
     }
-    
+
     /**
      * I provide a custom formatting helper for UML metamodel.
-     * 
+     *
      * @since 1.2
      */
     @Override
     public FormattingHelper getFormatter() {
         return UMLFormattingHelper.INSTANCE;
     }
+
+	/**
+	 * @since 6.22
+	 */
+	public OCL createOCL() {
+		return OCL.newInstance(this);
+	}
+
+	/**
+	 * @since 6.22
+	 */
+	public ToStringVisitor createToStringVisitor(
+			Environment<?, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {
+		return new ToStringVisitor(environment);
+	}
 }

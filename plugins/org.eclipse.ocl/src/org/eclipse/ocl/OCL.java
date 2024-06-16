@@ -147,6 +147,9 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 * Creates a new <code>OCL</code> with an environment factory, which it will
 	 * use to create a root environment.
 	 *
+	 * This method replaces the newInstance() method that had to be removed to avoid
+	 * a conflicting signature in derived classes when using Java >= 8.
+	 *
 	 * @param envFactory
 	 *            an environment factory
 	 * @return the OCL fa&ccedil;ade
@@ -154,12 +157,19 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 */
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> envFactory) {
-
-		return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(envFactory);
+		if (envFactory != null) {
+			return envFactory.createOCL();
+		}
+		else {
+			return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(envFactory);
+		}
 	}
 
 	/**
 	 * Creates a new <code>OCL</code> on the specified root environment.
+	 *
+	 * This method replaces the newInstance() method that had to be removed to avoid
+	 * a conflicting signature in derived classes when using Java >= 8.
 	 *
 	 * @param env
 	 *            the root environment
@@ -168,14 +178,21 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 */
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env) {
-
-		return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(env);
+		if (env != null) {
+			return env.createOCL();
+		}
+		else {
+			return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(env);
+		}
 	}
 
 	/**
 	 * Creates a new <code>OCL</code> with an environment factory and a resource
 	 * in which its environment is to be persisted, or from which it may be
 	 * loaded if the resource already has content.
+	 *
+	 * This method replaces the newInstance() method that had to be removed to avoid
+	 * a conflicting signature in derived classes when using Java >= 8.
 	 *
 	 * @param envFactory
 	 *            an environment factory
@@ -187,9 +204,12 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> envFactory,
 			Resource resource) {
-
-		return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(
-			envFactory, resource);
+		if (envFactory != null) {
+			return envFactory.createOCL(resource);
+		}
+		else {
+			return new OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(envFactory, resource);
+		}
 	}
 
 	/**
