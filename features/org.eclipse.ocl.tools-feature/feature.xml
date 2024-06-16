@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.tools"
       label="%featureName"
-      version="3.22.0.qualifier"
+      version="6.22.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.ecore"
       license-feature="org.eclipse.license"

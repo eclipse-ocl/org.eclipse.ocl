@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.examples.impactanalyzer;singleton:=true
-Bundle-Version: 3.22.0.qualifier
+Bundle-Version: 6.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,10 +10,10 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
- org.eclipse.ocl.ecore;bundle-version="[3.1.0,4.0.0)",
+ org.eclipse.ocl.ecore;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.ocl.examples.eventmanager;bundle-version="[3.1.0,4.0.0)",
- org.eclipse.ocl.examples.impactanalyzer.util;bundle-version="[3.1.0,4.0.0)"
+ org.eclipse.ocl.examples.eventmanager;bundle-version="[6.0.0,7.0.0)",
+ org.eclipse.ocl.examples.impactanalyzer.util;bundle-version="[6.0.0,7.0.0)"
 Export-Package: org.eclipse.ocl.examples.impactanalyzer,
  org.eclipse.ocl.examples.impactanalyzer.configuration,
  org.eclipse.ocl.examples.impactanalyzer.deltaPropagation;x-friends:="org.eclipse.ocl.examples.impactanalyzer.debug,org.eclipse.ocl.examples.impactanalyzer.tests",

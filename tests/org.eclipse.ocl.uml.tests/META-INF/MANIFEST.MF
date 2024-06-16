@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.uml.tests;singleton:=true
-Bundle-Version: 5.22.0.qualifier
+Bundle-Version: 6.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,8 +13,8 @@ Export-Package: org.eclipse.ocl.uml.helper.tests,
  org.eclipse.ocl.uml.tests.dummyRegistration.util;x-internal:=true
 Require-Bundle: org.eclipse.emf.mapping.ecore2xml;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.uml2.uml;bundle-version="[5.0.0,6.0.0)",
- org.eclipse.ocl.uml;bundle-version="[5.0.0,6.0.0)";visibility:=reexport,
- org.eclipse.ocl.tests;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
+ org.eclipse.ocl.uml;bundle-version="[6.0.0,7.0.0)";visibility:=reexport,
+ org.eclipse.ocl.tests;bundle-version="[6.0.0,7.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Automatic-Module-Name: org.eclipse.ocl.uml.tests
