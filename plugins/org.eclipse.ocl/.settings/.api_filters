@@ -8,6 +8,32 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/Environment.java" type="org.eclipse.ocl.Environment">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.Environment"/>
+                <message_argument value="createOCL()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.Environment"/>
+                <message_argument value="createToStringVisitor(Environment&lt;?,C,O,P,EL,PM,S,COA,SSA,CT,?,?&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.Environment"/>
+                <message_argument value="createOCL()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.Environment"/>
+                <message_argument value="createToStringVisitor(Environment&lt;?,C,O,P,EL,PM,S,COA,SSA,CT,?,?&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/OCL.java" type="org.eclipse.ocl.OCL">
         <filter id="338792546">
             <message_arguments>

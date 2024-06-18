@@ -102,14 +102,16 @@ public class EcoreEnvironmentFactory
 	}
 
     // implements the inherited specification
-    public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
+    @Override
+	public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
 	createEnvironment() {
 		EcoreEnvironment result = new EcoreEnvironment(this, null);
 		return result;
 	}
 
     // implements the inherited specification
-    public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
+    @Override
+	public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
 	loadEnvironment(Resource resource) {
 		EcoreEnvironment result = new EcoreEnvironment(this, resource);
 		return result;
@@ -161,6 +163,7 @@ public class EcoreEnvironmentFactory
     }
 
     // implements the inherited specification
+	@Override
 	public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
 	createEnvironment(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 		if (!(parent instanceof EcoreEnvironment)) {
@@ -173,12 +176,14 @@ public class EcoreEnvironmentFactory
 	}
 
     // implements the inherited specification
+	@Override
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject>
 	createEvaluationEnvironment() {
 		return new EcoreEvaluationEnvironment(this);
 	}
 
     // implements the inherited specification
+	@Override
 	public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject>
 	createEvaluationEnvironment(
 			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
@@ -196,15 +201,17 @@ public class EcoreEnvironmentFactory
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 3.22
 	 */
+	@Override
 	public OCL createOCL() {
 		return OCL.newInstance(this);
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 3.22
 	 */
+	@Override
 	public OCL createOCL(Resource resource) {
 		return OCL.newInstance(this, resource);
 	}

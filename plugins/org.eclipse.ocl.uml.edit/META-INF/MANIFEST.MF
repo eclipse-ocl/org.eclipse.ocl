@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.uml.edit;singleton:=true
-Bundle-Version: 6.22.0.qualifier
+Bundle-Version: 5.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.ocl.uml.edit.OCLUMLEditPlugin$Implementation
 Bundle-Vendor: %providerName
@@ -11,8 +11,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.uml.edit,
  org.eclipse.ocl.uml.provider
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
- org.eclipse.ocl.uml;bundle-version="[6.0.0,7.0.0)";visibility:=reexport,
- org.eclipse.ocl.edit;bundle-version="[6.0.0,7.0.0)";visibility:=reexport,
+ org.eclipse.ocl.uml;bundle-version="[5.0.0,6.0.0)";visibility:=reexport,
+ org.eclipse.ocl.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.uml2.uml;bundle-version="[5.0.0,6.0.0)",
  org.eclipse.uml2.uml.edit;bundle-version="[5.0.0,6.0.0)"
 Bundle-ActivationPolicy: lazy

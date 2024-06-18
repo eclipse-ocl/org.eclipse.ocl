@@ -4,11 +4,11 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.ui;singleton:=true
 Bundle-Localization: plugin
-Bundle-Version: 6.22.0.qualifier
+Bundle-Version: 1.22.0.qualifier
 Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.ocl;bundle-version="[6.0.0,7.0.0)";visibility:=reexport,
- org.eclipse.ocl.common.ui;bundle-version="[6.0.0,7.0.0)";visibility:=reexport
+ org.eclipse.ocl;bundle-version="[3.2.0,4.0.0)";visibility:=reexport,
+ org.eclipse.ocl.common.ui;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.ocl.ui
 Export-Package: org.eclipse.ocl.ui.internal.messages;x-internal:=true,

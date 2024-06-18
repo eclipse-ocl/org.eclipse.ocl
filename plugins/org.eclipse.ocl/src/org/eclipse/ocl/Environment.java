@@ -586,16 +586,20 @@ public interface Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	/**
 	 * Create an appropriately derived new instance of OCL.
 	 *
-	 * @since 6.22
+	 * @since 3.22
 	 */
-	OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL();
+	default OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Create an appropriately derived new instance of ToStringVisitor.
 	 *
-	 * @since 6.22
+	 * @since 3.22
 	 */
-    ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> createToStringVisitor(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> environment);
+    default ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> createToStringVisitor(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> environment) {
+		throw new UnsupportedOperationException();
+	}
 
     /**
      * A registry of environments.  The registry may be consulted to find a

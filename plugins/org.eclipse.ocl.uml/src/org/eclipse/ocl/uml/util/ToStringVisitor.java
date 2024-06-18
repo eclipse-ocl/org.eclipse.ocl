@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.SendSignalAction;
 import org.eclipse.uml2.uml.State;
 
 /**
- * @since 6.22
+ * @since 5.22
  */
 public class ToStringVisitor extends org.eclipse.ocl.util.ToStringVisitor<
 		Classifier, Operation, Property,
@@ -41,8 +41,6 @@ public class ToStringVisitor extends org.eclipse.ocl.util.ToStringVisitor<
 	 * @param element an OCL expression or other typed element such as a variable
 	 *
 	 * @return the corresponding instance
-	 *
-	 * @since 6.22
 	 */
 	public static ToStringVisitor getInstance(TypedElement<Classifier> element) {
 		Environment<?, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, ?, ?> env =

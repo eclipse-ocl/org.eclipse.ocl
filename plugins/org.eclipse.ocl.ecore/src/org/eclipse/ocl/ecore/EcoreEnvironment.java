@@ -204,6 +204,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public EnvironmentFactory<
 	EPackage, EClassifier, EOperation, EStructuralFeature,
 	EEnumLiteral, EParameter,
@@ -257,6 +258,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public void setParent(Environment<
 			EPackage, EClassifier, EOperation, EStructuralFeature,
 			EEnumLiteral, EParameter,
@@ -266,21 +268,25 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public OCLStandardLibrary<EClassifier> getOCLStandardLibrary() {
 		return OCLStandardLibraryImpl.INSTANCE;
 	}
 
 	// implements the inherited specification
+	@Override
 	public TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
 		return typeResolver;
 	}
 
 	// implements the inherited specification
+	@Override
 	public OCLFactory getOCLFactory() {
 		return OCLFactoryImpl.INSTANCE;
 	}
 
 	// implements the inherited specification
+	@Override
 	public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
 		return UMLReflectionImpl.INSTANCE;
 	}
@@ -323,6 +329,7 @@ implements EnvironmentWithHiddenOpposites {
 	 * in my package registry.
 	 * </p>
 	 */
+	@Override
 	public EPackage lookupPackage(List<String> path) {
 		if (!path.isEmpty() && OCL_PACKAGES.containsKey(path)) {
 			return OCL_PACKAGES.get(path);
@@ -368,6 +375,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public EClassifier lookupClassifier(List<String> names) {
 		EPackage pkg = null;
 		EPackage currPkg = getContextPackage();
@@ -464,6 +472,7 @@ implements EnvironmentWithHiddenOpposites {
 	 * {@link #collectStates} method.
 	 * </p>
 	 */
+	@Override
 	public List<EObject> getStates(EClassifier owner, List<String> pathPrefix) {
 		EList<EObject> result = new BasicEList<EObject>();
 
@@ -502,6 +511,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public EStructuralFeature defineAttribute(
 			EClassifier owner,
 			org.eclipse.ocl.expressions.Variable<
@@ -543,6 +553,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public EOperation defineOperation(EClassifier owner, String name,
 			EClassifier type,
 			List<org.eclipse.ocl.expressions.Variable<
@@ -585,6 +596,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public void undefine(Object feature) {
 		Constraint definition = getDefinition(feature);
 
@@ -600,6 +612,7 @@ implements EnvironmentWithHiddenOpposites {
 		resetTypeCaches();
 	}
 
+	@Override
 	public Constraint getDefinition(Object feature) {
 		Constraint result = null;
 		ETypedElement typedFeature = (ETypedElement) feature;
@@ -892,6 +905,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	// implements the inherited specification
+	@Override
 	public boolean isInPostcondition(
 			org.eclipse.ocl.expressions.OCLExpression<EClassifier> exp) {
 
@@ -914,6 +928,7 @@ implements EnvironmentWithHiddenOpposites {
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public Variable<EClassifier, EParameter> lookupImplicitSourceForOppositeProperty(String name) {
 		Variable<EClassifier, EParameter> vdcl;
 
@@ -964,6 +979,7 @@ implements EnvironmentWithHiddenOpposites {
 	 *     or worse
 	 * @since 3.1
 	 */
+	@Override
 	public EReference lookupOppositeProperty(EClassifier owner, String name) throws LookupException {
 		if (owner == null) {
 			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOppositeProperty(name);
@@ -1146,6 +1162,7 @@ implements EnvironmentWithHiddenOpposites {
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public EClassifier getOppositePropertyType(EClassifier owner,
 			EReference property) {
 		return ((UMLReflectionImpl) getUMLReflection()).getOCLCollectionType(
@@ -1156,6 +1173,7 @@ implements EnvironmentWithHiddenOpposites {
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public Map<String, EReference> getHiddenOppositeProperties(
 			EClassifier classifier) {
 		Map<String, EReference> result;
@@ -1175,15 +1193,17 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 3.22
 	 */
+	@Override
 	public OCL createOCL() {
 		return OCL.newInstance(this);
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 3.22
 	 */
+	@Override
 	public ToStringVisitor createToStringVisitor(Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {
 		return new ToStringVisitor(environment);
 	}

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl;singleton:=true
-Bundle-Version: 6.22.0.qualifier
+Bundle-Version: 3.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -43,7 +43,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  lpg.runtime.java;bundle-version="[2.0.17,3.0.0)";visibility:=reexport,
- org.eclipse.ocl.common;bundle-version="[6.0.0,7.0.0)";visibility:=reexport
+ org.eclipse.ocl.common;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Bundle-Activator: org.eclipse.ocl.internal.OCLPlugin$Implementation
 Eclipse-LazyStart: true
 Bundle-ActivationPolicy: lazy

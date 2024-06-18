@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.ecore;singleton:=true
-Bundle-Version: 6.22.0.qualifier
+Bundle-Version: 3.22.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.ocl.ecore.internal.OCLEcorePlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
- org.eclipse.ocl;bundle-version="[6.0.0,7.0.0)";visibility:=reexport
+ org.eclipse.ocl;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ocl.ecore,
  org.eclipse.ocl.ecore.delegate,
