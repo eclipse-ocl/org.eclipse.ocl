@@ -157,6 +157,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return oclFactory;
 	}
 
+	@Override
 	public int getRelationship(C type1, C type2) {
 
 		if (type1 != null) {
@@ -402,6 +403,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		}
 	}
 
+	@Override
 	public C getResultType(Object problemObject, C owner, O operation,
 			List<? extends TypedElement<C>> args) {
 
@@ -430,6 +432,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return resolve(uml.getOCLType(operation));
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getPropertyType(C owner, P property) {
 
@@ -462,6 +465,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 	 * 
 	 * @see UMLReflection#getCommonSuperType(Object, Object)
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C commonSuperType(Object problemObject, C type1, C type2) {
 
@@ -650,6 +654,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		}
 	}
 
+	@Override
 	public boolean checkMutuallyComparable(Object problemObject, C type1,
 			C type2, int opcode) {
 
@@ -666,6 +671,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return true;
 	}
 
+	@Override
 	public boolean exactTypeMatch(C type1, C type2) {
 
 		switch (getRelationship(type1, type2)) {
@@ -676,6 +682,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		}
 	}
 
+	@Override
 	public boolean compatibleTypeMatch(C type1, C type2) {
 
 		switch (getRelationship(type1, type2)) {
@@ -687,6 +694,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		}
 	}
 
+	@Override
 	public List<O> getOperations(C owner) {
 		List<O> result;
 
@@ -771,6 +779,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 	 * 
 	 * @return the matching operation, or <code>null</code> if not found
 	 */
+	@Override
 	public P findAttribute(C owner, String name) {
 		List<P> attributes = getAttributes(owner);
 		List<P> matches = null;
@@ -801,6 +810,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return null;
 	}
 
+	@Override
 	public List<P> getAttributes(C owner) {
 		List<P> result;
 
@@ -858,6 +868,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return result;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public O resolveGenericSignature(C owner, O oper) {
 
@@ -992,6 +1003,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return result;
 	}
 
+	@Override
 	public boolean matchArgs(C owner, List<?> paramsOrProperties,
 			List<? extends TypedElement<C>> args) {
 		int exactitude = matchArgsWithExactitude(owner, paramsOrProperties, args);
@@ -1052,6 +1064,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return exactitude;
 	}
 
+	@Override
 	public C findSignalMatching(C receiver, List<C> signals, String name,
 			List<? extends TypedElement<C>> args) {
 
@@ -1069,6 +1082,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return null;
 	}
 
+	@Override
 	public O findOperationMatching(C owner, String name,
 			List<? extends TypedElement<C>> args) {
 
@@ -1138,6 +1152,7 @@ public abstract class AbstractTypeChecker<C, O, P, PM>
 		return matches;
 	}
 
+	@Override
 	public boolean isStandardLibraryFeature(C owner, Object feature) {
 		boolean result = owner instanceof PredefinedType<?>;
 

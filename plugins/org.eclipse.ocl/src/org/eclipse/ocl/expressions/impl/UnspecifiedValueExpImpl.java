@@ -102,6 +102,7 @@ public class UnspecifiedValueExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeStartPosition() {
 		return typeStartPosition;
 	}
@@ -111,6 +112,7 @@ public class UnspecifiedValueExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeStartPosition(int newTypeStartPosition) {
 		int oldTypeStartPosition = typeStartPosition;
 		typeStartPosition = newTypeStartPosition;
@@ -125,6 +127,7 @@ public class UnspecifiedValueExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeEndPosition() {
 		return typeEndPosition;
 	}
@@ -134,6 +137,7 @@ public class UnspecifiedValueExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeEndPosition(int newTypeEndPosition) {
 		int oldTypeEndPosition = typeEndPosition;
 		typeEndPosition = newTypeEndPosition;

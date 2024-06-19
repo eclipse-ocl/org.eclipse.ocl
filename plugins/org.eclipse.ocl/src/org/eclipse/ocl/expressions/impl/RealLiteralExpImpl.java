@@ -82,6 +82,7 @@ public class RealLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Double getRealSymbol() {
 		return realSymbol;
 	}
@@ -91,6 +92,7 @@ public class RealLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRealSymbol(Double newRealSymbol) {
 		Double oldRealSymbol = realSymbol;
 		realSymbol = newRealSymbol;
@@ -105,6 +107,7 @@ public class RealLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkRealType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return RealLiteralExpOperations.checkRealType(this, diagnostics,

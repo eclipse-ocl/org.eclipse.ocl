@@ -106,149 +106,185 @@ public class OCLFactoryWithHistory implements OCLFactory {
     	return errorNodes.contains(expr);
     }
     
-    public <C, P> AssociationClassCallExp<C, P> createAssociationClassCallExp() {
+    @Override
+	public <C, P> AssociationClassCallExp<C, P> createAssociationClassCallExp() {
         return record(delegate.<C, P>createAssociationClassCallExp());
     }
 
-    public <C, O> BagType<C, O> createBagType(C elementType) {
+    @Override
+	public <C, O> BagType<C, O> createBagType(C elementType) {
         return record(delegate.<C, O>createBagType(elementType));
     }
 
-    public <C> BooleanLiteralExp<C> createBooleanLiteralExp() {
+    @Override
+	public <C> BooleanLiteralExp<C> createBooleanLiteralExp() {
         return record(delegate.<C>createBooleanLiteralExp());
     }
 
-    public <C> CollectionItem<C> createCollectionItem() {
+    @Override
+	public <C> CollectionItem<C> createCollectionItem() {
         return record(delegate.<C>createCollectionItem());
     }
 
-    public <C> CollectionLiteralExp<C> createCollectionLiteralExp() {
+    @Override
+	public <C> CollectionLiteralExp<C> createCollectionLiteralExp() {
         return record(delegate.<C>createCollectionLiteralExp());
     }
 
-    public <C> CollectionRange<C> createCollectionRange() {
+    @Override
+	public <C> CollectionRange<C> createCollectionRange() {
         return record(delegate.<C>createCollectionRange());
     }
 
-    public <C, O> CollectionType<C, O> createCollectionType(C elementType) {
+    @Override
+	public <C, O> CollectionType<C, O> createCollectionType(C elementType) {
         return record(delegate.<C, O>createCollectionType(elementType));
     }
 
-    public <C, O> CollectionType<C, O> createCollectionType(
+    @Override
+	public <C, O> CollectionType<C, O> createCollectionType(
             CollectionKind kind, C elementType) {
         return record(delegate.<C, O>createCollectionType(kind, elementType));
     }
 
-    public <C, EL> EnumLiteralExp<C, EL> createEnumLiteralExp() {
+    @Override
+	public <C, EL> EnumLiteralExp<C, EL> createEnumLiteralExp() {
         return record(delegate.<C, EL>createEnumLiteralExp());
     }
 
-    public <C> IfExp<C> createIfExp() {
+    @Override
+	public <C> IfExp<C> createIfExp() {
         return record(delegate.<C>createIfExp());
     }
 
-    public <C> IntegerLiteralExp<C> createIntegerLiteralExp() {
+    @Override
+	public <C> IntegerLiteralExp<C> createIntegerLiteralExp() {
         return record(delegate.<C>createIntegerLiteralExp());
     }
 
-    public <C> InvalidLiteralExp<C> createInvalidLiteralExp() {
+    @Override
+	public <C> InvalidLiteralExp<C> createInvalidLiteralExp() {
         return record(delegate.<C>createInvalidLiteralExp());
     }
 
-    public <C, PM> IterateExp<C, PM> createIterateExp() {
+    @Override
+	public <C, PM> IterateExp<C, PM> createIterateExp() {
         return record(delegate.<C, PM>createIterateExp());
     }
 
-    public <C, PM> IteratorExp<C, PM> createIteratorExp() {
+    @Override
+	public <C, PM> IteratorExp<C, PM> createIteratorExp() {
         return record(delegate.<C, PM>createIteratorExp());
     }
 
-    public <C, PM> LetExp<C, PM> createLetExp() {
+    @Override
+	public <C, PM> LetExp<C, PM> createLetExp() {
         return record(delegate.<C, PM>createLetExp());
     }
 
-    public <C, COA, SSA> MessageExp<C, COA, SSA> createMessageExp() {
+    @Override
+	public <C, COA, SSA> MessageExp<C, COA, SSA> createMessageExp() {
         return record(delegate.<C, COA, SSA>createMessageExp());
     }
 
-    public <C> NullLiteralExp<C> createNullLiteralExp() {
+    @Override
+	public <C> NullLiteralExp<C> createNullLiteralExp() {
         return record(delegate.<C>createNullLiteralExp());
     }
 
-    public <C, O> OperationCallExp<C, O> createOperationCallExp() {
+    @Override
+	public <C, O> OperationCallExp<C, O> createOperationCallExp() {
         return record(delegate.<C, O>createOperationCallExp());
     }
 
-    public <C, O, P> MessageType<C, O, P> createOperationMessageType(O operation) {
+    @Override
+	public <C, O, P> MessageType<C, O, P> createOperationMessageType(O operation) {
         return record(delegate.<C, O, P>createOperationMessageType(operation));
     }
 
-    public <C, O> OrderedSetType<C, O> createOrderedSetType(C elementType) {
+    @Override
+	public <C, O> OrderedSetType<C, O> createOrderedSetType(C elementType) {
         return record(delegate.<C, O>createOrderedSetType(elementType));
     }
 
-    public <C, P> PropertyCallExp<C, P> createPropertyCallExp() {
+    @Override
+	public <C, P> PropertyCallExp<C, P> createPropertyCallExp() {
         return record(delegate.<C, P>createPropertyCallExp());
     }
 
-    public <C> RealLiteralExp<C> createRealLiteralExp() {
+    @Override
+	public <C> RealLiteralExp<C> createRealLiteralExp() {
         return record(delegate.<C>createRealLiteralExp());
     }
 
-    public <C, O> SequenceType<C, O> createSequenceType(C elementType) {
+    @Override
+	public <C, O> SequenceType<C, O> createSequenceType(C elementType) {
         return record(delegate.<C, O>createSequenceType(elementType));
     }
 
-    public <C, O> SetType<C, O> createSetType(C elementType) {
+    @Override
+	public <C, O> SetType<C, O> createSetType(C elementType) {
         return record(delegate.<C, O>createSetType(elementType));
     }
 
-    public <C, O, P> MessageType<C, O, P> createSignalMessageType(C signal) {
+    @Override
+	public <C, O, P> MessageType<C, O, P> createSignalMessageType(C signal) {
         return record(delegate.<C, O, P>createSignalMessageType(signal));
     }
 
-    public <C, S> StateExp<C, S> createStateExp() {
+    @Override
+	public <C, S> StateExp<C, S> createStateExp() {
         return record(delegate.<C, S>createStateExp());
     }
 
-    public <C> StringLiteralExp<C> createStringLiteralExp() {
+    @Override
+	public <C> StringLiteralExp<C> createStringLiteralExp() {
         return record(delegate.<C>createStringLiteralExp());
     }
 
-    public <C, P> TupleLiteralExp<C, P> createTupleLiteralExp() {
+    @Override
+	public <C, P> TupleLiteralExp<C, P> createTupleLiteralExp() {
         return record(delegate.<C, P>createTupleLiteralExp());
     }
 
-    public <C, P> TupleLiteralPart<C, P> createTupleLiteralPart() {
+    @Override
+	public <C, P> TupleLiteralPart<C, P> createTupleLiteralPart() {
         return record(delegate.<C, P>createTupleLiteralPart());
     }
 
-    public <C, O, P> TupleType<O, P> createTupleType(
+    @Override
+	public <C, O, P> TupleType<O, P> createTupleType(
             List<? extends TypedElement<C>> parts) {
         return record(delegate.<C, O, P>createTupleType(parts));
     }
 
-    public <C> TypeExp<C> createTypeExp() {
+    @Override
+	public <C> TypeExp<C> createTypeExp() {
         return record(delegate.<C>createTypeExp());
     }
 
-    public <C, O> TypeType<C, O> createTypeType(C type) {
+    @Override
+	public <C, O> TypeType<C, O> createTypeType(C type) {
         return record(delegate.<C, O>createTypeType(type));
     }
 
-    public <C> UnlimitedNaturalLiteralExp<C> createUnlimitedNaturalLiteralExp() {
+    @Override
+	public <C> UnlimitedNaturalLiteralExp<C> createUnlimitedNaturalLiteralExp() {
         return record(delegate.<C>createUnlimitedNaturalLiteralExp());
     }
 
-    public <C> UnspecifiedValueExp<C> createUnspecifiedValueExp() {
+    @Override
+	public <C> UnspecifiedValueExp<C> createUnspecifiedValueExp() {
         return record(delegate.<C>createUnspecifiedValueExp());
     }
 
-    public <C, PM> Variable<C, PM> createVariable() {
+    @Override
+	public <C, PM> Variable<C, PM> createVariable() {
         return record(delegate.<C, PM>createVariable());
     }
 
-    public <C, PM> VariableExp<C, PM> createVariableExp() {
+    @Override
+	public <C, PM> VariableExp<C, PM> createVariableExp() {
         return record(delegate.<C, PM>createVariableExp());
     }
 }

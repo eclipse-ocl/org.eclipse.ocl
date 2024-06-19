@@ -78,6 +78,7 @@ public class TupleLiteralExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TupleLiteralPart<C, P>> getPart() {
 		if (part == null) {
 			part = new EObjectContainmentEList<TupleLiteralPart<C, P>>(
@@ -92,6 +93,7 @@ public class TupleLiteralExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkTupleType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return TupleLiteralExpOperations.checkTupleType(this, diagnostics,
@@ -103,6 +105,7 @@ public class TupleLiteralExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkPartsUnique(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return TupleLiteralExpOperations.checkPartsUnique(this, diagnostics,

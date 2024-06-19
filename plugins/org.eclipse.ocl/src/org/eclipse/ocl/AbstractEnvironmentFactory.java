@@ -98,7 +98,8 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	}
 
     // implements the interface method
-    public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
+    @Override
+	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
     createPackageContext(
             Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
             List<String> pathname) {
@@ -116,6 +117,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	protected abstract PK lookupPackage(List<String> pathname);
 	
     // implements the interface method
+	@Override
 	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createClassifierContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
@@ -139,7 +141,8 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	}
     
     // implements the interface method
-    public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
+    @Override
+	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
     createInstanceContext(
             Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
             Object context) {
@@ -148,6 +151,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
     }
 	
     // implements the interface method
+	@Override
 	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createOperationContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
@@ -178,6 +182,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	}
 	
     // implements the interface method
+	@Override
 	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	createAttributeContext(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent,
@@ -195,6 +200,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	}
 	
     // implements the interface method
+	@Override
 	public EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createEvaluationVisitor(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env,
 			EvaluationEnvironment<C, O, P, CLS, E> evalEnv,
@@ -215,6 +221,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public OCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCLAnalyzer(
 		Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env, String input) {
 		return new OCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(env, input);
@@ -223,6 +230,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public OCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCLAnalyzer(
 		AbstractOCLParser parser) {
 		return new OCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(parser);
@@ -231,6 +239,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public OCLFactoryWithHistory createOCLFactoryWithHistory(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env) {
 		return new OCLFactoryWithHistory(env.getOCLFactory());
@@ -239,6 +248,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public OCLSyntaxHelper createOCLSyntaxHelper(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env) {
 		return new org.eclipse.ocl.internal.helper.OCLSyntaxHelper<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(env);
@@ -247,6 +257,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	/**
 	 * @since 3.1
 	 */
+	@Override
 	public Visitor<Boolean, C, O, P, EL, PM, S, COA, SSA, CT> createValidationVisitor(
 		Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env) {
 		return new ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>(env);
@@ -307,6 +318,7 @@ public abstract class AbstractEnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SS
 	 * 
 	 * @since 1.2
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Class<T> adapterType) {
 		T result;

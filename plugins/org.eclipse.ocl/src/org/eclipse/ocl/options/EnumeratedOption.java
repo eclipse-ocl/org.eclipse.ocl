@@ -30,6 +30,7 @@ public class EnumeratedOption<T extends Enum<T>> extends BasicOption<T> implemen
 		return enumType;
 	}		
 
+	@Override
 	public T getValueOf(String string) {
 		if (string == null) {
 			return null;

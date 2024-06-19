@@ -22,6 +22,7 @@ public class ClassPreference<T> extends Preference<Class<? extends T>>
 		this.type = type;
 	}
 
+	@Override
 	public Class<? extends T> getValueOf(String string) {
 		if (string == null) {
 			return null;

@@ -115,6 +115,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getPropertyStartPosition() {
 		return propertyStartPosition;
 	}
@@ -124,6 +125,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPropertyStartPosition(int newPropertyStartPosition) {
 		int oldPropertyStartPosition = propertyStartPosition;
 		propertyStartPosition = newPropertyStartPosition;
@@ -138,6 +140,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getPropertyEndPosition() {
 		return propertyEndPosition;
 	}
@@ -147,6 +150,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPropertyEndPosition(int newPropertyEndPosition) {
 		int oldPropertyEndPosition = propertyEndPosition;
 		propertyEndPosition = newPropertyEndPosition;
@@ -161,6 +165,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getSource() {
 		return source;
 	}
@@ -191,6 +196,7 @@ public abstract class CallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSource(OCLExpression<C> newSource) {
 		if (newSource != source) {
 			NotificationChain msgs = null;

@@ -89,10 +89,12 @@ public enum ProblemOption implements PreferenceableOption<Severity>, Option<Seve
 		this.defaultValue = defaultValue;
 	}
 	
+	@Override
 	public String getKey() {
 		return key;
 	}
 	
+	@Override
 	public Severity getDefaultValue() {
 		return defaultValue;
 	}
@@ -100,6 +102,7 @@ public enum ProblemOption implements PreferenceableOption<Severity>, Option<Seve
 	/**
 	 * @since 3.2
 	 */
+	@Override
 	public String getPluginId() {
 		return pluginId;
 	}
@@ -107,6 +110,7 @@ public enum ProblemOption implements PreferenceableOption<Severity>, Option<Seve
 	/**
 	 * @since 3.2
 	 */
+	@Override
 	public Severity getValueOf(String string) {
 		if (string != null) {
 			try {

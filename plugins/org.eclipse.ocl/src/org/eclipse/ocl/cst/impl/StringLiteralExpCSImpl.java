@@ -102,6 +102,7 @@ public class StringLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getStringSymbol() {
 		return stringSymbol;
 	}
@@ -111,6 +112,7 @@ public class StringLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStringSymbol(String newStringSymbol) {
 		String oldStringSymbol = stringSymbol;
 		stringSymbol = newStringSymbol;
@@ -126,6 +128,7 @@ public class StringLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getUnescapedStringSymbol() {
 		return unescapedStringSymbol;
 	}
@@ -136,6 +139,7 @@ public class StringLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setUnescapedStringSymbol(String newUnescapedStringSymbol) {
 		String oldUnescapedStringSymbol = unescapedStringSymbol;
 		unescapedStringSymbol = newUnescapedStringSymbol;

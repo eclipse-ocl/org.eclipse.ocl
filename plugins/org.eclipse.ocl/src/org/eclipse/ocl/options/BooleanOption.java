@@ -23,6 +23,7 @@ public class BooleanOption extends BasicOption<Boolean> implements Preferenceabl
 		super(pluginId, key, defaultValue);
 	}
 
+	@Override
 	public Boolean getValueOf(String string) {
 		return Boolean.valueOf(string);
 	}		

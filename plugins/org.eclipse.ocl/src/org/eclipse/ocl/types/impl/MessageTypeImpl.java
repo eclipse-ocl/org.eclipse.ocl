@@ -97,6 +97,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public String getName() {
 		return SINGLETON_NAME;
 	}
@@ -106,6 +107,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<O> oclOperations() {
 		if (operations == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -123,6 +125,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkExclusiveSignature(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageTypeOperations.checkExclusiveSignature(this, diagnostics,
@@ -134,6 +137,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkOperationParameters(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageTypeOperations.checkOperationParameters(this, diagnostics,
@@ -145,6 +149,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkSignalAttributes(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageTypeOperations.checkSignalAttributes(this, diagnostics,
@@ -156,6 +161,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public O getReferredOperation() {
 		if (referredOperation != null
@@ -186,6 +192,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredOperation(O newReferredOperation) {
 		O oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
@@ -200,6 +207,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getReferredSignal() {
 		if (referredSignal != null && ((EObject) referredSignal).eIsProxy()) {
@@ -229,6 +237,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredSignal(C newReferredSignal) {
 		C oldReferredSignal = referredSignal;
 		referredSignal = newReferredSignal;
@@ -243,6 +252,7 @@ public class MessageTypeImpl<C, O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<P> oclProperties() {
 		if (properties == null) {
 			properties = new BasicEList<P>();

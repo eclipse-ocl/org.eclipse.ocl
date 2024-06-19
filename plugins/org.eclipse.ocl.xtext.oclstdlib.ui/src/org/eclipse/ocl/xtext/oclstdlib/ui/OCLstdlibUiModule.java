@@ -43,6 +43,7 @@ public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 //		return OCLstdlibRenameStrategy.Provider.class;
 //	}
 
+	@Override
 	@SuppressWarnings("restriction")
 	public Class<? extends org.eclipse.xtext.ui.refactoring.IReferenceUpdater> bindIReferenceUpdater() {
 		return OCLstdlibReferenceUpdater.class;

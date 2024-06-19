@@ -24,14 +24,17 @@ interface IMessages {
 	String bind(String message, Object[] args);
 	
 	class Default implements IMessages {
+		@Override
 		public String bind(String message, Object arg) {
 			return MessageFormat.format(message, new Object[] {arg});
 		}
 
+		@Override
 		public String bind(String message, Object arg1, Object arg2) {
 			return MessageFormat.format(message, new Object[] {arg1, arg2});
 		}
 
+		@Override
 		public String bind(String message, Object[] args) {
 			return MessageFormat.format(message, args);
 		}
@@ -43,14 +46,17 @@ interface IMessages {
 					OCLMessages.BUNDLE_NAME, OCLMessages.class);
 		}
 
+		@Override
 		public String bind(String message, Object arg) {
 			return org.eclipse.osgi.util.NLS.bind(message, arg);
 		}
 
+		@Override
 		public String bind(String message, Object arg1, Object arg2) {
 			return org.eclipse.osgi.util.NLS.bind(message, arg1, arg2);
 		}
 
+		@Override
 		public String bind(String message, Object[] args) {
 			return org.eclipse.osgi.util.NLS.bind(message, args);
 		}

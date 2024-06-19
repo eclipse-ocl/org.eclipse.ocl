@@ -102,6 +102,7 @@ public class ClassifierContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PathNameCS getPathNameCS() {
 		return pathNameCS;
 	}
@@ -133,6 +134,7 @@ public class ClassifierContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPathNameCS(PathNameCS newPathNameCS) {
 		if (newPathNameCS != pathNameCS) {
 			NotificationChain msgs = null;
@@ -161,6 +163,7 @@ public class ClassifierContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<InvOrDefCS> getConstraints() {
 		if (constraints == null) {
 			constraints = new EObjectContainmentEList<InvOrDefCS>(
@@ -176,6 +179,7 @@ public class ClassifierContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -209,6 +213,7 @@ public class ClassifierContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;

@@ -122,6 +122,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getTarget() {
 		return target;
 	}
@@ -152,6 +153,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTarget(OCLExpressionCS newTarget) {
 		if (newTarget != target) {
 			NotificationChain msgs = null;
@@ -176,6 +178,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MessageExpKind getKind() {
 		return kind;
 	}
@@ -185,6 +188,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setKind(MessageExpKind newKind) {
 		MessageExpKind oldKind = kind;
 		kind = newKind == null
@@ -200,6 +204,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -230,6 +235,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
@@ -257,6 +263,7 @@ public class MessageExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLMessageArgCS> getArguments() {
 		if (arguments == null) {
 			arguments = new EObjectContainmentEList<OCLMessageArgCS>(

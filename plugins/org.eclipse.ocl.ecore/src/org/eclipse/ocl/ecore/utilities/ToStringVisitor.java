@@ -35,7 +35,7 @@ public class ToStringVisitor
 		CallOperationAction, SendSignalAction, Constraint>
 		implements VisitorExtension<String> {
     /**
-	 * @since 6.22
+	 * @since 3.22
 	 */
     public ToStringVisitor(
 			Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env) {

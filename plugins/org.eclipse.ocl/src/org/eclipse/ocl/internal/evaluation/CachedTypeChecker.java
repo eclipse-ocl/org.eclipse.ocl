@@ -128,7 +128,8 @@ public class CachedTypeChecker<C, O, P, PM> extends BasicTypeChecker<C, O, P, PM
 	 * Return the operation of dynamicType that exactly match the staticOperation, or null
 	 * if there is none or more than one.
 	 */
-    public O getDynamicOperation(C dynamicType, O staticOperation) {
+    @Override
+	public O getDynamicOperation(C dynamicType, O staticOperation) {
     	//
     	//	Use class2dynamic2static to return known dynamic operation for static operation on a source type. 
     	//
@@ -307,12 +308,14 @@ public class CachedTypeChecker<C, O, P, PM> extends BasicTypeChecker<C, O, P, PM
 		return name2property;
 	}
 
+	@Override
 	public void reset() {
 		type2name2operationOrOperations.clear();
 		type2static2dynamic.clear();
 		type2name2property.clear();
 	}
 
+	@Override
 	public void setBypass(boolean bypass) {
 		reset();
 		this.bypass = bypass;

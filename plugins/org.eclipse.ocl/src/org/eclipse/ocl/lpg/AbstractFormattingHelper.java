@@ -34,6 +34,7 @@ public class AbstractFormattingHelper implements FormattingHelper
 	 */
     public static final AbstractFormattingHelper INSTANCE = new AbstractFormattingHelper();
 
+	@Override
 	public String formatClass(Object object) {
 		if (object == null) {
             return "<null-class>"; //$NON-NLS-1$
@@ -42,6 +43,7 @@ public class AbstractFormattingHelper implements FormattingHelper
         }
 	}
 
+	@Override
 	public String formatEClassName(EObject eObject) {
 		if (eObject == null) {
             return "<null-eObject>"; //$NON-NLS-1$
@@ -50,6 +52,7 @@ public class AbstractFormattingHelper implements FormattingHelper
         }
 	}
 
+	@Override
 	public String formatName(Object object) {
 		if (object == null) {
             return formatString(null);
@@ -70,7 +73,8 @@ public class AbstractFormattingHelper implements FormattingHelper
 	    return "::"; //$NON-NLS-1$
 	}
 	
-    public String formatQualifiedName(Object object) {
+    @Override
+	public String formatQualifiedName(Object object) {
         if (object instanceof EObject) {
             Object container = ((EObject)object).eContainer();
             if (container != null) {
@@ -81,6 +85,7 @@ public class AbstractFormattingHelper implements FormattingHelper
         return formatName(object);
     }
 
+	@Override
 	public String formatPath(List<String> pathName) {
 		StringBuilder s = new StringBuilder();
 		if (pathName != null) {
@@ -95,6 +100,7 @@ public class AbstractFormattingHelper implements FormattingHelper
 		return s.toString();
 	}
 
+	@Override
 	public String formatPath(List<String> pathName, String name) {
 		StringBuilder s = new StringBuilder();
 		if (pathName != null) {
@@ -108,10 +114,12 @@ public class AbstractFormattingHelper implements FormattingHelper
 		return s.toString();
 	}
 
+	@Override
 	public String formatString(String name) {
 		return name != null ? name : "<null>"; //$NON-NLS-1$
 	}
 	
+	@Override
 	public String formatType(Object type) {
 		if (type instanceof VoidType<?>) {
             return "<void-type>"; //$NON-NLS-1$

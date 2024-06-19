@@ -88,6 +88,7 @@ public class LetExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<VariableCS> getVariables() {
 		if (variables == null) {
 			variables = new EObjectContainmentEList<VariableCS>(
@@ -101,6 +102,7 @@ public class LetExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getInExpression() {
 		return inExpression;
 	}
@@ -131,6 +133,7 @@ public class LetExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setInExpression(OCLExpressionCS newInExpression) {
 		if (newInExpression != inExpression) {
 			NotificationChain msgs = null;

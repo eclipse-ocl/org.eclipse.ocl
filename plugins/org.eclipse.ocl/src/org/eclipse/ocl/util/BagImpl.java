@@ -81,7 +81,8 @@ final class BagImpl<E> extends AbstractCollection<E> implements Bag<E> {
         return count(o) > 0;
     }
     
-    public int count(Object o) {
+    @Override
+	public int count(Object o) {
         MutableInteger count = coll.get(o);
         
         if (count != null) {
@@ -149,6 +150,7 @@ final class BagImpl<E> extends AbstractCollection<E> implements Bag<E> {
 				currInitialized = false;
 			}
 
+			@Override
 			public boolean hasNext() {
 				if (it.hasNext())
 					return true;
@@ -156,6 +158,7 @@ final class BagImpl<E> extends AbstractCollection<E> implements Bag<E> {
 				return currInitialized && offset < count.i - 1;
 			}
 
+			@Override
 			public E next() {
 				if (!hasNext())
 					throw new NoSuchElementException();
@@ -172,6 +175,7 @@ final class BagImpl<E> extends AbstractCollection<E> implements Bag<E> {
 				return curr;
 			}
 
+			@Override
 			public void remove() {
 				UnsupportedOperationException error = new UnsupportedOperationException(
 						OCLMessages.RemoveUnsupported_ERROR_);

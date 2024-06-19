@@ -104,6 +104,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -113,6 +114,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -126,6 +128,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypeCS getTypeCS() {
 		return typeCS;
 	}
@@ -156,6 +159,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeCS(TypeCS newTypeCS) {
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
@@ -180,6 +184,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getInitExpression() {
 		return initExpression;
 	}
@@ -210,6 +215,7 @@ public class VariableCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setInitExpression(OCLExpressionCS newInitExpression) {
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;

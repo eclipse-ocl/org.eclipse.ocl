@@ -105,6 +105,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PrePostOrBodyEnum getKind() {
 		return kind;
 	}
@@ -114,6 +115,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setKind(PrePostOrBodyEnum newKind) {
 		PrePostOrBodyEnum oldKind = kind;
 		kind = newKind == null
@@ -129,6 +131,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -160,6 +163,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
@@ -187,6 +191,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getExpressionCS() {
 		return expressionCS;
 	}
@@ -218,6 +223,7 @@ public class PrePostOrBodyDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setExpressionCS(OCLExpressionCS newExpressionCS) {
 		if (newExpressionCS != expressionCS) {
 			NotificationChain msgs = null;

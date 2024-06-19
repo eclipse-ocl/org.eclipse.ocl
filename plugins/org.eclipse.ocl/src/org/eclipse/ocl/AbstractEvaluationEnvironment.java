@@ -87,7 +87,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      *            the name whose value is to be returned
      * @return the value associated with the name
      */
-    public Object getValueOf(String name) {
+    @Override
+	public Object getValueOf(String name) {
         return map.get(name);
     }
 
@@ -99,7 +100,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      * @param value
      *            the new value
      */
-    public void replace(String name, Object value) {
+    @Override
+	public void replace(String name, Object value) {
         map.put(name, value);
     }
 
@@ -111,7 +113,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      * @param value
      *            the associated binding
      */
-    public void add(String name, Object value) {
+    @Override
+	public void add(String name, Object value) {
         if (map.containsKey(name)) {
             String message = OCLMessages.bind(
             		OCLMessages.BindingExist_ERROR_,
@@ -130,14 +133,16 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      *            the name to remove
      * @return the value associated with the removed name
      */
-    public Object remove(String name) {
+    @Override
+	public Object remove(String name) {
         return map.remove(name);
     }
 
     /**
      * Clears the environment of variables.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         map.clear();
     }
 
@@ -154,7 +159,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      * by the OCL Standard Library.  This implementation delegates to the
      * parent environment (if any), otherwise returns <code>false</code>.
      */
-    public boolean overrides(O operation, int opcode) {
+    @Override
+	public boolean overrides(O operation, int opcode) {
     	return (getParent() != null)? getParent().overrides(operation, opcode) : false;
     }
 
@@ -167,7 +173,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
      * @return the result of the Java method invocation, or <tt>OclInvalid</tt>
      *    on failure of the method invocation
      */
-    public Object callOperation(O operation, int opcode, Object source, Object[] args)
+    @Override
+	public Object callOperation(O operation, int opcode, Object source, Object[] args)
 
 		throws IllegalArgumentException {
 
@@ -262,6 +269,7 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
 	 * Implements the interface method by testing whether I am an instance of
 	 * the requested adapter type.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Class<T> adapterType) {
 		T result;
@@ -279,7 +287,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         return options;
     }
 
-    public Map<Option<?>, Object> getOptions() {
+    @Override
+	public Map<Option<?>, Object> getOptions() {
         Customizable parent = (getParent() != null)?
             OCLUtil.getAdapter(getParent(), Customizable.class) : null;
 
@@ -292,18 +301,21 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         return result;
     }
 
-    public <T> void setOption(Option<T> option, T value) {
+    @Override
+	public <T> void setOption(Option<T> option, T value) {
         basicGetOptions().put(option, value);
     }
 
-    public <T> void putOptions(Map<? extends Option<T>, ? extends T> options) {
+    @Override
+	public <T> void putOptions(Map<? extends Option<T>, ? extends T> options) {
         Map<Option<?>, Object> myOptions = basicGetOptions();
 
         myOptions.clear();
         myOptions.putAll(options);
     }
 
-    public <T> T removeOption(Option<T> option) {
+    @Override
+	public <T> T removeOption(Option<T> option) {
         T result = getValue(option);
 
         basicGetOptions().remove(option);
@@ -311,7 +323,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         return result;
     }
 
-    public <T> Map<Option<T>, T> removeOptions(Collection<Option<T>> options) {
+    @Override
+	public <T> Map<Option<T>, T> removeOptions(Collection<Option<T>> options) {
         Map<Option<T>, T> result = new java.util.HashMap<Option<T>, T>();
 
         Map<Option<?>, Object> myOptions = basicGetOptions();
@@ -324,7 +337,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         return result;
     }
 
-    public Map<Option<?>, Object> clearOptions() {
+    @Override
+	public Map<Option<?>, Object> clearOptions() {
         Map<Option<?>, Object> myOptions = basicGetOptions();
 
         Map<Option<?>, Object> result = new java.util.HashMap<Option<?>, Object>(
@@ -335,12 +349,14 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         return result;
     }
 
-    public boolean isEnabled(Option<Boolean> option) {
+    @Override
+	public boolean isEnabled(Option<Boolean> option) {
         Boolean result = getValue(option);
         return (result == null)? false : result.booleanValue();
     }
 
-    public <T> T getValue(Option<T> option) {
+    @Override
+	public <T> T getValue(Option<T> option) {
 		Map<Option<?>, Object> options = basicGetOptions();
         @SuppressWarnings("unchecked")
         T result = (T) options.get(option);
@@ -401,12 +417,14 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         protected abstract String getName(P part);
 
         // implements the inherited specification
-        public TupleType<O, P> getTupleType() {
+        @Override
+		public TupleType<O, P> getTupleType() {
             return type;
         }
 
         // implements the inherited specification
-        public Object getValue(String partName) {
+        @Override
+		public Object getValue(String partName) {
             Object partValue = parts.get(partName);
 			if (partValue instanceof Number) {
 				partValue = NumberUtil.coerceNumber((Number)partValue);
@@ -415,7 +433,8 @@ public abstract class AbstractEvaluationEnvironment<C, O, P, CLS, E>
         }
 
         // implements the inherited specification
-        public Object getValue(P part) {
+        @Override
+		public Object getValue(P part) {
             return getValue(getName(part));
         }
 

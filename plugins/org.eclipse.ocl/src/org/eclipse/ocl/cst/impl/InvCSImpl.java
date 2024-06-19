@@ -71,6 +71,7 @@ public class InvCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getExpressionCS() {
 		return expressionCS;
 	}
@@ -101,6 +102,7 @@ public class InvCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setExpressionCS(OCLExpressionCS newExpressionCS) {
 		if (newExpressionCS != expressionCS) {
 			NotificationChain msgs = null;

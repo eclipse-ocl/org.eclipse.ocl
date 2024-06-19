@@ -114,39 +114,45 @@ public final class OCLUtil {
 			        (Environment<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>) env;
 			    
 				result = (T) new Environment.Lookup<Object, Object, Object, Object>() {
-				    public Object tryLookupPackage(List<String> names)
+				    @Override
+					public Object tryLookupPackage(List<String> names)
                         throws LookupException {
                         
                         return _env.lookupPackage(names);
                     }
     
-                    public Object tryLookupClassifier(List<String> names)
+                    @Override
+					public Object tryLookupClassifier(List<String> names)
 						throws LookupException {
 						
 						return _env.lookupClassifier(names);
 					}
 
-                    public Object tryLookupOperation(Object owner, String name,
+                    @Override
+					public Object tryLookupOperation(Object owner, String name,
                             List<? extends TypedElement<Object>> args)
                         throws LookupException {
                         
                         return _env.lookupOperation(owner, name, args);
                     }
 
-                    public Object tryLookupProperty(Object owner, String name)
+                    @Override
+					public Object tryLookupProperty(Object owner, String name)
                         throws LookupException {
                         
                         return _env.lookupProperty(owner, name);
                     }
 
-                    public Object tryLookupAssociationClassReference(Object owner,
+                    @Override
+					public Object tryLookupAssociationClassReference(Object owner,
                             String name)
                         throws LookupException {
                         
                         return _env.lookupAssociationClassReference(owner, name);
                     }
 
-                    public Object tryLookupSignal(Object owner, String name,
+                    @Override
+					public Object tryLookupSignal(Object owner, String name,
                             List<? extends TypedElement<Object>> args)
                         throws LookupException {
                         
@@ -260,6 +266,7 @@ public final class OCLUtil {
 			        (EnvironmentFactory<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>) factory;
 			    
 				result = (T) new EnvironmentFactory.Lookup<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>() {
+					@Override
 					public Environment<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object> tryCreatePackageContext(
 							Environment<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object> parent,
 							List<String> pathname)

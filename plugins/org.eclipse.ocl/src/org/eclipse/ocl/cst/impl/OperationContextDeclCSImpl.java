@@ -88,6 +88,7 @@ public class OperationContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OperationCS getOperationCS() {
 		return operationCS;
 	}
@@ -119,6 +120,7 @@ public class OperationContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setOperationCS(OperationCS newOperationCS) {
 		if (newOperationCS != operationCS) {
 			NotificationChain msgs = null;
@@ -146,6 +148,7 @@ public class OperationContextDeclCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PrePostOrBodyDeclCS> getPrePostOrBodyDecls() {
 		if (prePostOrBodyDecls == null) {
 			prePostOrBodyDecls = new EObjectContainmentEList<PrePostOrBodyDeclCS>(

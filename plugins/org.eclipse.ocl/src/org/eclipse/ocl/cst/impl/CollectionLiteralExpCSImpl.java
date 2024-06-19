@@ -98,6 +98,7 @@ public class CollectionLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionTypeIdentifierEnum getCollectionType() {
 		return collectionType;
 	}
@@ -107,6 +108,7 @@ public class CollectionLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCollectionType(
 			CollectionTypeIdentifierEnum newCollectionType) {
 		CollectionTypeIdentifierEnum oldCollectionType = collectionType;
@@ -124,6 +126,7 @@ public class CollectionLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<CollectionLiteralPartCS> getCollectionLiteralParts() {
 		if (collectionLiteralParts == null) {
 			collectionLiteralParts = new EObjectContainmentEList<CollectionLiteralPartCS>(

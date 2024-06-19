@@ -93,6 +93,7 @@ public class CollectionTypeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionTypeIdentifierEnum getCollectionTypeIdentifier() {
 		return collectionTypeIdentifier;
 	}
@@ -102,6 +103,7 @@ public class CollectionTypeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCollectionTypeIdentifier(
 			CollectionTypeIdentifierEnum newCollectionTypeIdentifier) {
 		CollectionTypeIdentifierEnum oldCollectionTypeIdentifier = collectionTypeIdentifier;
@@ -119,6 +121,7 @@ public class CollectionTypeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypeCS getTypeCS() {
 		return typeCS;
 	}
@@ -149,6 +152,7 @@ public class CollectionTypeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeCS(TypeCS newTypeCS) {
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;

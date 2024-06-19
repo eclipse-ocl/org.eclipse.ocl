@@ -152,6 +152,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            the operation call expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitOperationCallExp(OperationCallExp<C, O> oc) {
 
 		OCLExpression<C> source = oc.getSource();
@@ -288,6 +289,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            the enumeration literal expresion
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitEnumLiteralExp(EnumLiteralExp<C, EL> el) {
 		EL l = el.getReferredEnumLiteral();
 		C type = el.getType();
@@ -308,6 +310,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            the variable expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitVariableExp(VariableExp<C, PM> v) {
 		// get the referred variable name
 		Variable<C, PM> vd = v.getReferredVariable();
@@ -337,6 +340,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 * @param pc the property call expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitPropertyCallExp(PropertyCallExp<C, P> pc) {
 		P property = pc.getReferredProperty();
 		OCLExpression<C> source = pc.getSource();
@@ -427,6 +431,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            the association end expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitAssociationClassCallExp(AssociationClassCallExp<C, P> ae) {
 		C ref = ae.getReferredAssociationClass();
 		OCLExpression<C> source = ae.getSource();
@@ -491,6 +496,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            variable declaration
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitVariable(Variable<C, PM> vd) {
 		String varName = vd.getName();
 		if (varName == null) {
@@ -522,6 +528,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            if expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitIfExp(IfExp<C> i) {
 		OCLExpression<C> cond = i.getCondition();
 		OCLExpression<C> thenexp = i.getThenExpression();
@@ -561,6 +568,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
 
+	@Override
 	public Boolean visitMessageExp(MessageExp<C, COA, SSA> m) {
 		if (m.getTarget() == null) {
 			String message = OCLMessages.bind(
@@ -642,6 +650,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            unspecified value expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitUnspecifiedValueExp(UnspecifiedValueExp<C> uv) {
 		// unspecified values need not declare a type (it can be OclVoid).
 		//   The only restriction is that they can only be used in message expressions
@@ -658,6 +667,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	/**
 	 * Callback for a TypeExp visit.
 	 */
+	@Override
 	public Boolean visitTypeExp(TypeExp<C> t) {
 		if (!(t.getType() instanceof TypeType<?, ?>)) {
 			String message = OCLMessages.bind(OCLMessages.TypeConformanceTypeExp_ERROR_,
@@ -683,6 +693,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            integer literal expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitIntegerLiteralExp(IntegerLiteralExp<C> il) {
 		if (il.getType()  != getStandardLibrary().getInteger()) {
 			String message = OCLMessages.TypeConformanceIntegerLiteral_ERROR_;
@@ -699,7 +710,8 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
      *            unlimited literal expression
      * @return Boolean -- true if validated
      */
-    public Boolean visitUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp<C> unl) {
+    @Override
+	public Boolean visitUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp<C> unl) {
         if (unl.getType() != getStandardLibrary().getUnlimitedNatural()) {
         	String message = OCLMessages.TypeConformanceUnlimitedNaturalLiteral_ERROR_;
             return validatorError(unl, message, "visitUnlimitedNaturalLiteralExp");//$NON-NLS-1$
@@ -715,6 +727,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            real literal expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitRealLiteralExp(RealLiteralExp<C> rl) {
 		if (rl.getType() != getStandardLibrary().getReal()) {
 			String message = OCLMessages.TypeConformanceRealLiteral_ERROR_;
@@ -731,6 +744,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            string literal expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitStringLiteralExp(StringLiteralExp<C> sl) {
 		if (sl.getType() != getStandardLibrary().getString()) {
 			String message = OCLMessages.TypeConformanceStringLiteral_ERROR_;
@@ -747,6 +761,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            boolean literal expression
 	 * @return Boolean - true if validated
 	 */
+	@Override
 	public Boolean visitBooleanLiteralExp(BooleanLiteralExp<C> bl) {
 		if (bl.getType() != getStandardLibrary().getBoolean()) {
 			String message = OCLMessages.TypeConformanceBooleanLiteral_ERROR_;
@@ -763,6 +778,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            let expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitLetExp(LetExp<C, PM> l) {
 		Variable<C, PM> vd = l.getVariable();
 		OCLExpression<C> in = l.getIn();
@@ -801,6 +817,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            iterate expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitIterateExp(IterateExp<C, PM> ie) {
 		// get the variable declaration for the result
 		Variable<C, PM> vd = ie.getResult();
@@ -897,6 +914,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            iterator expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitIteratorExp(IteratorExp<C, PM> ie) {
 		C type = ie.getType();
 		OCLExpression<C> body = ie.getBody();
@@ -1096,6 +1114,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            collection literal expression
 	 * @return Boolean -- true if validated
 	 */
+	@Override
 	public Boolean visitCollectionLiteralExp(CollectionLiteralExp<C> cl) {
 		CollectionKind kind = cl.getKind();
 		C type = cl.getType();
@@ -1179,11 +1198,13 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
     
-    public Boolean visitCollectionItem(CollectionItem<C> item) {
+    @Override
+	public Boolean visitCollectionItem(CollectionItem<C> item) {
         return item.getItem().accept(this);
     }
     
-    public Boolean visitCollectionRange(CollectionRange<C> range) {
+    @Override
+	public Boolean visitCollectionRange(CollectionRange<C> range) {
         return range.getFirst().accept(this) && range.getLast().accept(this);
     }
 
@@ -1199,6 +1220,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *            tuple literal expression
 	 * @return Boolean
 	 */
+	@Override
 	public Boolean visitTupleLiteralExp(TupleLiteralExp<C, P> tl) {
 
 		C type = tl.getType();
@@ -1250,6 +1272,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
 	
+	@Override
 	public Boolean visitTupleLiteralPart(TupleLiteralPart<C, P> tp) {
 		P property = tp.getAttribute();
 		
@@ -1295,6 +1318,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
 	
+	@Override
 	public Boolean visitStateExp(StateExp<C, S> s) {
 		Object state = s.getReferredState();
 		
@@ -1371,6 +1395,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
         return (uml != null) && uml.isStatic(feature);
     }
 
+	@Override
 	public Boolean visitInvalidLiteralExp(InvalidLiteralExp<C> il) {
 		if (!(il.getType() instanceof InvalidType<?>)) {
 			String message = OCLMessages.TypeConformanceInvalidLiteral_ERROR_;
@@ -1379,6 +1404,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
 
+	@Override
 	public Boolean visitNullLiteralExp(NullLiteralExp<C> il) {
 		if (!(il.getType() instanceof VoidType<?>)) {
 			String message = OCLMessages.TypeConformanceNullLiteral_ERROR_;
@@ -1387,7 +1413,8 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE;
 	}
 	
-    public Boolean visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
+    @Override
+	public Boolean visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
         if (expression.getContextVariable() == null) {
         	String message = OCLMessages.MissingContextVariable_ERROR_;
             return validatorError(expression, message, "visitExpressionInOCL");//$NON-NLS-1$
@@ -1716,6 +1743,7 @@ public class ValidationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 * 
 	 * @param constraint the constraint to validate
 	 */
+	@Override
 	public Boolean visitConstraint(CT constraint) {
         ExpressionInOCL<C, PM> specification = uml.getSpecification(constraint);
         Boolean specificationResult = specification.accept(this);

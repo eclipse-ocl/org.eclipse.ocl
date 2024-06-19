@@ -68,19 +68,23 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		environmentFactory = ocl.getEnvironment().getFactory();
 	}
 	
+	@Override
 	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	getEnvironment() {
 		return env == null? ocl.getEnvironment() : env;
 	}
 	
-    public OCL<?, C, O, P, ?, ?, ?, ?, ?, CT, ?, ?> getOCL() {
+    @Override
+	public OCL<?, C, O, P, ?, ?, ?, ?, ?, CT, ?, ?> getOCL() {
         return ocl;
     }
     
+	@Override
 	public boolean isValidating() {
 		return validating;
 	}
 	
+	@Override
 	public void setValidating(boolean validating) {
 		this.validating = validating;
 	}
@@ -109,48 +113,58 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		syntaxHelper = null;
 	}
 	
+	@Override
 	public void setContext(C context) {
 		setEnvironment(environmentFactory.createClassifierContext(
             ocl.getEnvironment(), context));
 	}
 	
+	@Override
 	public void setOperationContext(C context, O operation) {
         setContext(context);
 		setEnvironment(environmentFactory.createOperationContext(env, operation));
 	}
 	
+	@Override
 	public void setAttributeContext(C context, P property) {
         setContext(context);
 		setEnvironment(environmentFactory.createAttributeContext(env, property));
 	}
     
-    public void setInstanceContext(Object instance) {
+    @Override
+	public void setInstanceContext(Object instance) {
         setEnvironment(environmentFactory.createInstanceContext(
             ocl.getEnvironment(), instance));
     }
     
-    public void setInstanceOperationContext(Object instance, O operation) {
+    @Override
+	public void setInstanceOperationContext(Object instance, O operation) {
         setInstanceContext(instance);
         setEnvironment(environmentFactory.createOperationContext(env, operation));
     }
     
-    public void setInstanceAttributeContext(Object instance, P property) {
+    @Override
+	public void setInstanceAttributeContext(Object instance, P property) {
         setInstanceContext(instance);
         setEnvironment(environmentFactory.createAttributeContext(env, property));
     }
 	
+	@Override
 	public C getContextClassifier() {
 		return env.getContextClassifier();
 	}
 	
+	@Override
 	public O getContextOperation() {
 		return env.getContextOperation();
 	}
 	
+	@Override
 	public P getContextAttribute() {
 		return env.getContextProperty();
 	}
 
+	@Override
 	public List<Choice> getSyntaxHelp(ConstraintKind constraintType, String txt) {
 	    if (constraintType == null) {
 	        // query expressions cannot use post-condition constructs such
@@ -161,7 +175,8 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createSyntaxHelper().getSyntaxHelp(constraintType, txt);
 	}
 
-    public OCLExpression<C>
+    @Override
+	public OCLExpression<C>
     createQuery(String expression) throws ParserException {
         if (removeOCLComments(expression).length() > 0) {
             // be sure to pass the original expression along to get the right
@@ -180,7 +195,8 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
                         env.getOCLStandardLibrary().getBoolean())).getBodyExpression();
     }
 
-    public CT createConstraint(ConstraintKind kind, String expression)
+    @Override
+	public CT createConstraint(ConstraintKind kind, String expression)
         throws ParserException {
         
         switch (kind) {
@@ -202,6 +218,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
         }
     }
     
+	@Override
 	public CT createInvariant(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -217,6 +234,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getBoolean());
 	}
 
+	@Override
 	public CT createPrecondition(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -232,6 +250,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getBoolean());
 	}
 	
+	@Override
 	public CT createPostcondition(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -247,6 +266,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getBoolean());
 	}
 	
+	@Override
 	public CT createBodyCondition(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -262,6 +282,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getOclVoid());
 	}
 	
+	@Override
 	public CT createInitialValueExpression(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -277,6 +298,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getOclVoid());
 	}
 	
+	@Override
 	public CT createDerivedValueExpression(String expression) throws ParserException {
 		if (removeOCLComments(expression).length() > 0) {
 			// be sure to pass the original expression along to get the right
@@ -292,6 +314,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return createNullCondition(env.getOCLStandardLibrary().getOclVoid());
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public O defineOperation(String defExpression) throws ParserException {
 		try {
@@ -310,6 +333,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return null;  // make the compiler happy
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public P defineAttribute(String defExpression) throws ParserException {
 		try {
@@ -413,6 +437,7 @@ class OCLHelperImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return syntaxHelper;
 	}
 	
+	@Override
 	public Diagnostic getProblems() {
 		return problems;
 	}

@@ -99,6 +99,7 @@ public class PackageDeclarationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PathNameCS getPathNameCS() {
 		return pathNameCS;
 	}
@@ -130,6 +131,7 @@ public class PackageDeclarationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPathNameCS(PathNameCS newPathNameCS) {
 		if (newPathNameCS != pathNameCS) {
 			NotificationChain msgs = null;
@@ -157,6 +159,7 @@ public class PackageDeclarationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ContextDeclCS> getContextDecls() {
 		if (contextDecls == null) {
 			contextDecls = new EObjectContainmentEList<ContextDeclCS>(
@@ -171,6 +174,7 @@ public class PackageDeclarationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PackageDeclarationCS getPackageDeclarationCS() {
 		if (packageDeclarationCS != null && packageDeclarationCS.eIsProxy()) {
 			InternalEObject oldPackageDeclarationCS = (InternalEObject) packageDeclarationCS;
@@ -200,6 +204,7 @@ public class PackageDeclarationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPackageDeclarationCS(
 			PackageDeclarationCS newPackageDeclarationCS) {
 		PackageDeclarationCS oldPackageDeclarationCS = packageDeclarationCS;

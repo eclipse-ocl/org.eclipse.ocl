@@ -71,6 +71,7 @@ public class CollectionRangeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getLastExpressionCS() {
 		return lastExpressionCS;
 	}
@@ -102,6 +103,7 @@ public class CollectionRangeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLastExpressionCS(OCLExpressionCS newLastExpressionCS) {
 		if (newLastExpressionCS != lastExpressionCS) {
 			NotificationChain msgs = null;

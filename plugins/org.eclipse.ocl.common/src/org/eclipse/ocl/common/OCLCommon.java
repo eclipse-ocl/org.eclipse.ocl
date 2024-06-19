@@ -80,6 +80,7 @@ public class OCLCommon implements OCLConstants
 			INSTANCE_SCOPE_INSTANCE.getNode(qualifier).addPreferenceChangeListener(this);
 		}
 
+		@Override
 		public void preferenceChange(PreferenceChangeEvent event) {
 			String key = event.getKey();
 			if (key != null){

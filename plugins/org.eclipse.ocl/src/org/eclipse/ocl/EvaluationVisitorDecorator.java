@@ -118,42 +118,48 @@ public class EvaluationVisitorDecorator<PK, C, O, P, EL, PM, S, COA, SSA, CT, CL
     /**
      * Obtains my delegate's environment.
      */
-    public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEnvironment() {
+    @Override
+	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEnvironment() {
         return getDelegate().getEnvironment();
     }
 
     /**
      * Obtains my delegate's evaluation environment.
      */
-    public EvaluationEnvironment<C, O, P, CLS, E> getEvaluationEnvironment() {
+    @Override
+	public EvaluationEnvironment<C, O, P, CLS, E> getEvaluationEnvironment() {
         return getDelegate().getEvaluationEnvironment();
     }
 
     /**
      * Obtains my delegate's extent map.
      */
-    public Map<? extends CLS, ? extends Set<? extends E>> getExtentMap() {
+    @Override
+	public Map<? extends CLS, ? extends Set<? extends E>> getExtentMap() {
         return getDelegate().getExtentMap();
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitConstraint(CT constraint) {
+    @Override
+	public Object visitConstraint(CT constraint) {
         return getDelegate().visitConstraint(constraint);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitExpression(OCLExpression<C> expression) {
+    @Override
+	public Object visitExpression(OCLExpression<C> expression) {
         return getDelegate().visitExpression(expression);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitAssociationClassCallExp(
+    @Override
+	public Object visitAssociationClassCallExp(
             AssociationClassCallExp<C, P> callExp) {
         return getDelegate().visitAssociationClassCallExp(callExp);
     }
@@ -161,161 +167,184 @@ public class EvaluationVisitorDecorator<PK, C, O, P, EL, PM, S, COA, SSA, CT, CL
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitBooleanLiteralExp(BooleanLiteralExp<C> literalExp) {
+    @Override
+	public Object visitBooleanLiteralExp(BooleanLiteralExp<C> literalExp) {
         return getDelegate().visitBooleanLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitCollectionItem(CollectionItem<C> item) {
+    @Override
+	public Object visitCollectionItem(CollectionItem<C> item) {
         return getDelegate().visitCollectionItem(item);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitCollectionLiteralExp(CollectionLiteralExp<C> literalExp) {
+    @Override
+	public Object visitCollectionLiteralExp(CollectionLiteralExp<C> literalExp) {
         return getDelegate().visitCollectionLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitCollectionRange(CollectionRange<C> range) {
+    @Override
+	public Object visitCollectionRange(CollectionRange<C> range) {
         return getDelegate().visitCollectionRange(range);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitEnumLiteralExp(EnumLiteralExp<C, EL> literalExp) {
+    @Override
+	public Object visitEnumLiteralExp(EnumLiteralExp<C, EL> literalExp) {
         return getDelegate().visitEnumLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
+    @Override
+	public Object visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
         return getDelegate().visitExpressionInOCL(expression);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitIfExp(IfExp<C> ifExp) {
+    @Override
+	public Object visitIfExp(IfExp<C> ifExp) {
         return getDelegate().visitIfExp(ifExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitIntegerLiteralExp(IntegerLiteralExp<C> literalExp) {
+    @Override
+	public Object visitIntegerLiteralExp(IntegerLiteralExp<C> literalExp) {
         return getDelegate().visitIntegerLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitInvalidLiteralExp(InvalidLiteralExp<C> literalExp) {
+    @Override
+	public Object visitInvalidLiteralExp(InvalidLiteralExp<C> literalExp) {
         return getDelegate().visitInvalidLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitIterateExp(IterateExp<C, PM> callExp) {
+    @Override
+	public Object visitIterateExp(IterateExp<C, PM> callExp) {
         return getDelegate().visitIterateExp(callExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitIteratorExp(IteratorExp<C, PM> callExp) {
+    @Override
+	public Object visitIteratorExp(IteratorExp<C, PM> callExp) {
         return getDelegate().visitIteratorExp(callExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitLetExp(LetExp<C, PM> letExp) {
+    @Override
+	public Object visitLetExp(LetExp<C, PM> letExp) {
         return getDelegate().visitLetExp(letExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitMessageExp(MessageExp<C, COA, SSA> messageExp) {
+    @Override
+	public Object visitMessageExp(MessageExp<C, COA, SSA> messageExp) {
         return getDelegate().visitMessageExp(messageExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitNullLiteralExp(NullLiteralExp<C> literalExp) {
+    @Override
+	public Object visitNullLiteralExp(NullLiteralExp<C> literalExp) {
         return getDelegate().visitNullLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitOperationCallExp(OperationCallExp<C, O> callExp) {
+    @Override
+	public Object visitOperationCallExp(OperationCallExp<C, O> callExp) {
         return getDelegate().visitOperationCallExp(callExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitPropertyCallExp(PropertyCallExp<C, P> callExp) {
+    @Override
+	public Object visitPropertyCallExp(PropertyCallExp<C, P> callExp) {
         return getDelegate().visitPropertyCallExp(callExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitRealLiteralExp(RealLiteralExp<C> literalExp) {
+    @Override
+	public Object visitRealLiteralExp(RealLiteralExp<C> literalExp) {
         return getDelegate().visitRealLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitStateExp(StateExp<C, S> stateExp) {
+    @Override
+	public Object visitStateExp(StateExp<C, S> stateExp) {
         return getDelegate().visitStateExp(stateExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitStringLiteralExp(StringLiteralExp<C> literalExp) {
+    @Override
+	public Object visitStringLiteralExp(StringLiteralExp<C> literalExp) {
         return getDelegate().visitStringLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitTupleLiteralExp(TupleLiteralExp<C, P> literalExp) {
+    @Override
+	public Object visitTupleLiteralExp(TupleLiteralExp<C, P> literalExp) {
         return getDelegate().visitTupleLiteralExp(literalExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitTupleLiteralPart(TupleLiteralPart<C, P> part) {
+    @Override
+	public Object visitTupleLiteralPart(TupleLiteralPart<C, P> part) {
         return getDelegate().visitTupleLiteralPart(part);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitTypeExp(TypeExp<C> typeExp) {
+    @Override
+	public Object visitTypeExp(TypeExp<C> typeExp) {
         return getDelegate().visitTypeExp(typeExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitUnlimitedNaturalLiteralExp(
+    @Override
+	public Object visitUnlimitedNaturalLiteralExp(
             UnlimitedNaturalLiteralExp<C> literalExp) {
         return getDelegate().visitUnlimitedNaturalLiteralExp(literalExp);
     }
@@ -323,21 +352,24 @@ public class EvaluationVisitorDecorator<PK, C, O, P, EL, PM, S, COA, SSA, CT, CL
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitUnspecifiedValueExp(UnspecifiedValueExp<C> unspecExp) {
+    @Override
+	public Object visitUnspecifiedValueExp(UnspecifiedValueExp<C> unspecExp) {
         return getDelegate().visitUnspecifiedValueExp(unspecExp);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitVariable(Variable<C, PM> variable) {
+    @Override
+	public Object visitVariable(Variable<C, PM> variable) {
         return getDelegate().visitVariable(variable);
     }
 
     /**
      * Delegates to my decorated visitor.
      */
-    public Object visitVariableExp(VariableExp<C, PM> variableExp) {
+    @Override
+	public Object visitVariableExp(VariableExp<C, PM> variableExp) {
         return getDelegate().visitVariableExp(variableExp);
     }
 }

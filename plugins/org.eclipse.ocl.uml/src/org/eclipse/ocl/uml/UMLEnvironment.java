@@ -174,7 +174,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public EnvironmentFactory<org.eclipse.uml2.uml.Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, org.eclipse.uml2.uml.Class, EObject> getFactory() {
+    @Override
+	public EnvironmentFactory<org.eclipse.uml2.uml.Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, org.eclipse.uml2.uml.Class, EObject> getFactory() {
         if (factory != null) {
             return factory;
         }
@@ -234,13 +235,15 @@ public class UMLEnvironment
 //    }
 
     // implements the inherited specification
-    public void setParent(
+    @Override
+	public void setParent(
             Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> env) {
         super.setParent((UMLEnvironment) env);
     }
 
     // implements the inherited specification
-    public OCLStandardLibrary<Classifier> getOCLStandardLibrary() {
+    @Override
+	public OCLStandardLibrary<Classifier> getOCLStandardLibrary() {
         if (standardLibrary == null) {
             standardLibrary = OCLStandardLibraryImpl.INSTANCE;
         }
@@ -277,17 +280,20 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public TypeResolver<Classifier, Operation, Property> getTypeResolver() {
+    @Override
+	public TypeResolver<Classifier, Operation, Property> getTypeResolver() {
         return typeResolver;
     }
 
     // implements the inherited specification
-    public OCLFactory getOCLFactory() {
+    @Override
+	public OCLFactory getOCLFactory() {
         return OCLFactoryImpl.INSTANCE;
     }
 
     // implements the inherited specification
-    public UMLReflection<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+    @Override
+	public UMLReflection<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
         if (reflection == null) {
             reflection = new UMLReflectionImpl(this);
         }
@@ -332,7 +338,8 @@ public class UMLEnvironment
      * a resource containing the specified package.
      * </p>
      */
-    public org.eclipse.uml2.uml.Package lookupPackage(List<String> path) {
+    @Override
+	public org.eclipse.uml2.uml.Package lookupPackage(List<String> path) {
         Package tryCache = packageCache.get(path);
         if (tryCache != null) {
             return tryCache;
@@ -381,7 +388,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public Classifier lookupClassifier(List<String> names) {
+    @Override
+	public Classifier lookupClassifier(List<String> names) {
         Classifier tryCache = classifierCache.get(names);
         if (tryCache != null) {
             return tryCache;
@@ -527,7 +535,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public List<State> getStates(Classifier owner, List<String> pathPrefix) {
+    @Override
+	public List<State> getStates(Classifier owner, List<String> pathPrefix) {
         EList<State> result = new BasicEList.FastCompare<State>();
 
         collectStates(owner, pathPrefix, result);
@@ -632,7 +641,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public Property defineAttribute(Classifier owner,
+    @Override
+	public Property defineAttribute(Classifier owner,
             Variable<Classifier, Parameter> variable, Constraint constraint) {
 		resetTypeCaches();
         Property result;
@@ -655,7 +665,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public Operation defineOperation(Classifier owner, String name,
+    @Override
+	public Operation defineOperation(Classifier owner, String name,
             Classifier type, List<Variable<Classifier, Parameter>> params,
             Constraint constraint) {
 		resetTypeCaches();
@@ -699,7 +710,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public void undefine(Object feature) {
+    @Override
+	public void undefine(Object feature) {
         Constraint definition = getDefinition(feature);
 
         if (definition == null) {
@@ -715,7 +727,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public Constraint getDefinition(Object feature) {
+    @Override
+	public Constraint getDefinition(Object feature) {
         Constraint result = null;
         Feature umlFeature = (Feature) feature;
 
@@ -757,7 +770,8 @@ public class UMLEnvironment
     }
 
     // implements the inherited specification
-    public boolean isInPostcondition(
+    @Override
+	public boolean isInPostcondition(
             org.eclipse.ocl.expressions.OCLExpression<Classifier> exp) {
 
         Constraint constraint = null;
@@ -788,15 +802,17 @@ public class UMLEnvironment
     }
 
 	/**
-	 * @since 6.22
+	 * @since 5.22
 	 */
+	@Override
 	public OCL createOCL() {
 		return OCL.newInstance(this);
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 5.22
 	 */
+	@Override
 	public ToStringVisitor createToStringVisitor(
 			Environment<?, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {
 		return new ToStringVisitor(environment);

@@ -31,6 +31,7 @@ public class ObjectOption<T> extends BasicOption<T> implements PreferenceableOpt
 		this.classType = classType;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public T getValueOf(String string) {
 		if (string == null) {

@@ -29,6 +29,7 @@ public class ClassOption<T> extends BasicOption<Class<? extends T>> implements P
 		this.classType = classType;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Class<? extends T> getValueOf(String string) {
 		if ((string == null) || (string.length() <= 0)) {

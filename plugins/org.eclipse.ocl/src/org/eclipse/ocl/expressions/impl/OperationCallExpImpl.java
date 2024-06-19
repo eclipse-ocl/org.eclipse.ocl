@@ -109,6 +109,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLExpression<C>> getArgument() {
 		if (argument == null) {
 			argument = new EObjectContainmentEList<OCLExpression<C>>(
@@ -123,6 +124,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public O getReferredOperation() {
 		if (referredOperation != null
@@ -153,6 +155,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredOperation(O newReferredOperation) {
 		O oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
@@ -167,6 +170,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public int getOperationCode() {
 		if (operationCode < 0) {
 			if ((getSource() != null) && (getReferredOperation() != null)) {
@@ -203,6 +207,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public void setOperationCode(int newOperationCode) {
 		operationCode = newOperationCode;
 	}
@@ -212,6 +217,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkArgumentsConform(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return OperationCallExpOperations.checkArgumentsConform(this,
@@ -223,6 +229,7 @@ public class OperationCallExpImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkArgumentCount(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return OperationCallExpOperations.checkArgumentCount(this, diagnostics,

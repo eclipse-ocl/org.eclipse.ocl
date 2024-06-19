@@ -88,6 +88,7 @@ public abstract class NavigationCallExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLExpression<C>> getQualifier() {
 		if (qualifier == null) {
 			qualifier = new EObjectContainmentEList<OCLExpression<C>>(
@@ -102,6 +103,7 @@ public abstract class NavigationCallExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public P getNavigationSource() {
 		if (navigationSource != null
@@ -132,6 +134,7 @@ public abstract class NavigationCallExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setNavigationSource(P newNavigationSource) {
 		P oldNavigationSource = navigationSource;
 		navigationSource = newNavigationSource;

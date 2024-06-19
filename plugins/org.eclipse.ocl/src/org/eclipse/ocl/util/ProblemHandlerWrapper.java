@@ -37,6 +37,7 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void analyzerProblem(Severity problemSeverity,
 			String problemMessage, String processingContext, int startOffset,
 			int endOffset) {
@@ -45,41 +46,49 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void beginParse() {
 		delegate.beginParse();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void beginValidation() {
 		delegate.beginValidation();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void endParse() {
 		delegate.endParse();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void endValidation() {
 		delegate.endValidation();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void flush(Monitor monitor) {
 		delegate.flush(monitor);
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public int getErrorReportLineOffset() {
 		return delegate.getErrorReportLineOffset();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public AbstractParser getParser() {
 		return delegate.getParser();
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void handleProblem(Severity problemSeverity, Phase processingPhase,
 			String problemMessage, String processingContext, int startOffset,
 			int endOffset) {
@@ -88,6 +97,7 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void lexerProblem(Severity problemSeverity, String problemMessage,
 			String processingContext, int startOffset, int endOffset) {
 		delegate.lexerProblem(problemSeverity, problemMessage,
@@ -95,6 +105,7 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void parserProblem(Severity problemSeverity, String problemMessage,
 			String processingContext, int startOffset, int endOffset) {
 		delegate.parserProblem(problemSeverity, problemMessage,
@@ -102,16 +113,19 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void setErrorReportLineOffset(int offset) {
 		delegate.setErrorReportLineOffset(offset);
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void setParser(AbstractParser parser) {
 		delegate.setParser(parser);
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void utilityProblem(Severity problemSeverity, String problemMessage,
 			String processingContext, int startOffset, int endOffset) {
 		delegate.utilityProblem(problemSeverity, problemMessage,
@@ -119,6 +133,7 @@ public class ProblemHandlerWrapper
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public void validatorProblem(Severity problemSeverity,
 			String problemMessage, String processingContext, int startOffset,
 			int endOffset) {

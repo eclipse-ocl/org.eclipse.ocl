@@ -138,6 +138,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	@SuppressWarnings("unchecked")
 	public Environment.Internal<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getInternalParent() {
 		return (Environment.Internal<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>) super.getParent();
@@ -160,6 +161,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @param parent my new parent
 	 */
+	@Override
 	public void setInternalParent(Environment.Internal<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> parent) {
 		super.setParent(parent);
 	}
@@ -175,6 +177,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public PK getContextPackage() {
 		if (contextPackage != null) {
 			return contextPackage;
@@ -195,11 +198,13 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public C getContextClassifier() {
 		return getSelfVariable().getType();
 	}
 
 	// implements the interface method
+	@Override
 	public O getContextOperation() {
 		if (contextOperation != null) {
 			return contextOperation;
@@ -221,6 +226,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public P getContextProperty() {
 		if (contextProperty != null) {
 			return contextProperty;
@@ -252,11 +258,13 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public boolean isEmpty() {
 		return namedElements.isEmpty();
 	}
 
 	// implements the interface method
+	@Override
 	public Collection<Variable<C, PM>> getVariables() {
 		Collection<Variable<C, PM>> result = new java.util.ArrayList<Variable<C, PM>>();
 
@@ -281,6 +289,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public boolean addElement(String name, Variable<C, PM> elem, boolean isExplicit) {
 
 		if (name == null) {
@@ -315,6 +324,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public void deleteElement(String name) {
 
 		for (Iterator<VariableEntry> iter = namedElements.iterator(); iter.hasNext();) {
@@ -342,6 +352,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public void setSelfVariable(Variable<C, PM> var) {
 		selfVariable = var;
 
@@ -356,6 +367,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> getSelfVariable() {
 		Variable<C, PM> result = selfVariable;
 
@@ -380,6 +392,7 @@ Environment.Lookup<PK, C, O, P> {
 		return namedElements.get(index);
 	}
 
+	@Override
 	public void addHelperProperty(C owner, P property) {
 		addProperty(owner, property);
 	}
@@ -407,6 +420,7 @@ Environment.Lookup<PK, C, O, P> {
 		}
 	}
 
+	@Override
 	public List<P> getAdditionalAttributes(C classifier) {
 		if (getInternalParent() != null) {
 			return getInternalParent().getAdditionalAttributes(classifier);
@@ -443,6 +457,7 @@ Environment.Lookup<PK, C, O, P> {
 				return result;
 	}
 
+	@Override
 	public void addHelperOperation(C owner, O operation) {
 		addOperation(owner, operation);
 	}
@@ -470,6 +485,7 @@ Environment.Lookup<PK, C, O, P> {
 		}
 	}
 
+	@Override
 	public List<O> getAdditionalOperations(C classifier) {
 		if (getInternalParent() != null) {
 			return getInternalParent().getAdditionalOperations(classifier);
@@ -507,6 +523,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public void setInitConstraint(P property, CT constraint) {
 		if (getInternalParent() != null) {
 			// propagate initializers as high as possible so that they
@@ -518,6 +535,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public CT getInitConstraint(P property) {
 		if (getInternalParent() != null) {
 			return getInternalParent().getInitConstraint(property);
@@ -527,6 +545,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public void setDeriveConstraint(P property, CT constraint) {
 		if (getInternalParent() != null) {
 			// propagate derivations as high as possible so that they
@@ -538,6 +557,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public CT getDeriveConstraint(P property) {
 		if (getInternalParent() != null) {
 			return getInternalParent().getDeriveConstraint(property);
@@ -547,6 +567,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public void setBodyCondition(O operation, CT constraint) {
 		if (getInternalParent() != null) {
 			// propagate bodies as high as possible so that they
@@ -558,6 +579,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public CT getBodyCondition(O operation) {
 		if (getInternalParent() != null) {
 			return getInternalParent().getBodyCondition(operation);
@@ -567,6 +589,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupLocal(String name) {
 		// support operation parameters whose names need to be escaped in OCL
 		Variable<C, PM> result = doLookupLocal(name);
@@ -589,6 +612,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable <C, PM>lookup(String name) {
 		Variable<C, PM> elem = lookupLocal(name);
 
@@ -604,6 +628,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public O lookupOperation(C owner, String name, List<? extends TypedElement<C>> args) {
 		O result = doLookupOperation(owner, name, args);
 
@@ -628,6 +653,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public P lookupProperty(C owner, String name) {
 		P result = doLookupProperty(owner, name);
 
@@ -652,6 +678,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public C lookupAssociationClassReference(C owner, String name) {
 		C result = doLookupAssociationClassReference(owner, name);
 
@@ -692,6 +719,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public C lookupSignal(C owner, String name, List<? extends TypedElement<C>> args) {
 		C result = doLookupSignal(owner, name, args);
 
@@ -717,6 +745,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public S lookupState(C owner, List<String> path) throws LookupException {
 		if (owner == null) {
 			Variable<C, PM> vdcl = lookupImplicitSourceForState(path);
@@ -760,6 +789,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupImplicitSourceForOperation(
 			String name,
 			List<? extends TypedElement<C>> args) {
@@ -795,6 +825,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupImplicitSourceForProperty(String name) {
 		Variable<C, PM> vdcl;
 
@@ -848,6 +879,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupImplicitSourceForAssociationClass(String name) {
 		Variable<C, PM> vdcl;
 		for (int i = namedElements.size() - 1; i >= 0; i--) {
@@ -879,6 +911,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupImplicitSourceForSignal(
 			String name,
 			List<? extends TypedElement<C>> args) {
@@ -915,6 +948,7 @@ Environment.Lookup<PK, C, O, P> {
 	}
 
 	// implements the interface method
+	@Override
 	public Variable<C, PM> lookupImplicitSourceForState(List<String> path)
 			throws LookupException {
 		Variable<C, PM> vdcl;
@@ -979,6 +1013,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public C tryLookupAssociationClassReference(C owner, String name)
 			throws LookupException {
 
@@ -991,6 +1026,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public C tryLookupClassifier(List<String> names)
 			throws LookupException {
 
@@ -1003,6 +1039,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public O tryLookupOperation(C owner, String name,
 			List<? extends TypedElement<C>> args)
 					throws LookupException {
@@ -1016,6 +1053,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public C tryLookupSignal(C owner, String name,
 			List<? extends TypedElement<C>> args)
 					throws LookupException {
@@ -1029,6 +1067,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public PK tryLookupPackage(List<String> names)
 			throws LookupException {
 
@@ -1041,6 +1080,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public P tryLookupProperty(C owner, String name)
 			throws LookupException {
 
@@ -1168,6 +1208,7 @@ Environment.Lookup<PK, C, O, P> {
 	 *
 	 * @since 1.2
 	 */
+	@Override
 	public void dispose() {
 		if ((getInternalParent() == null)
 				&& (getTypeResolver() instanceof AbstractTypeResolver<?, ?, ?, ?, ?>)) {

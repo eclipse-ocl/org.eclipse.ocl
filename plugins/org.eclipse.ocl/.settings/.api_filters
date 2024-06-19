@@ -9,18 +9,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/Environment.java" type="org.eclipse.ocl.Environment">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.Environment"/>
-                <message_argument value="createOCL()"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.Environment"/>
-                <message_argument value="createToStringVisitor(Environment&lt;?,C,O,P,EL,PM,S,COA,SSA,CT,?,?&gt;)"/>
-            </message_arguments>
-        </filter>
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.Environment"/>
@@ -70,14 +58,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/parser/OCLParserprs.java" type="org.eclipse.ocl.parser.OCLParserprs">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="OCLParsersym"/>
-                <message_argument value="OCLParserprs"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/parser/backtracking/OCLBacktrackingKWLexerprs.java" type="org.eclipse.ocl.parser.backtracking.OCLBacktrackingKWLexerprs">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -91,14 +71,6 @@
             <message_arguments>
                 <message_argument value="OCLBacktrackingLexersym"/>
                 <message_argument value="OCLBacktrackingLexerprs"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/parser/backtracking/OCLBacktrackingParserprs.java" type="org.eclipse.ocl.parser.backtracking.OCLBacktrackingParserprs">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="OCLBacktrackingParsersym"/>
-                <message_argument value="OCLBacktrackingParserprs"/>
             </message_arguments>
         </filter>
     </resource>

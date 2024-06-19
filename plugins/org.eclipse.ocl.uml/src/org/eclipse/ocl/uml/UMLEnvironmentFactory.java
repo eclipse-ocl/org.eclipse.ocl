@@ -117,6 +117,7 @@ public class UMLEnvironmentFactory
 	}
 
     // implements the inherited specification
+	@Override
 	public UMLEnvironment createEnvironment() {
 		UMLEnvironment result = new UMLEnvironment(registry, resourceSet);
 		result.setFactory(this);
@@ -124,6 +125,7 @@ public class UMLEnvironmentFactory
 	}
 
     // implements the inherited specification
+	@Override
 	public Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> loadEnvironment(
 			Resource resource) {
 		UMLEnvironment result = new UMLEnvironment(registry, resourceSet, resource);
@@ -238,6 +240,7 @@ public class UMLEnvironmentFactory
 	}
 
     // implements the inherited specification
+	@Override
 	public Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject>
 	createEnvironment(
 			Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> parent) {
@@ -253,11 +256,13 @@ public class UMLEnvironmentFactory
 	}
 
     // implements the inherited specification
+	@Override
 	public EvaluationEnvironment<Classifier, Operation, Property, Class, EObject> createEvaluationEnvironment() {
 		return new UMLEvaluationEnvironment(this);
 	}
 
     // implements the inherited specification
+	@Override
 	public EvaluationEnvironment<Classifier, Operation, Property, Class, EObject>
 	createEvaluationEnvironment(
 			EvaluationEnvironment<Classifier, Operation, Property, Class, EObject> parent) {
@@ -265,15 +270,17 @@ public class UMLEnvironmentFactory
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 5.22
 	 */
+	@Override
 	public OCL createOCL() {
 		return OCL.newInstance(this);
 	}
 
 	/**
-	 * @since 6.22
+	 * @since 5.22
 	 */
+	@Override
 	public OCL createOCL(Resource resource) {
 		return OCL.newInstance(this, resource);
 	}

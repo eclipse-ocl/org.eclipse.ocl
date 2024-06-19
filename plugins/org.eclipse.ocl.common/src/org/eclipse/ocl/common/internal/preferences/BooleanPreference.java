@@ -19,6 +19,7 @@ public class BooleanPreference extends Preference<Boolean>
 		super(pluginId, key, defaultValue);
 	}
 
+	@Override
 	public Boolean getValueOf(String string) {
 		return Boolean.valueOf(string);
 	}		

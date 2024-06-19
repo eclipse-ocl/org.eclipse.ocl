@@ -82,6 +82,7 @@ public class AssociationClassCallExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getReferredAssociationClass() {
 		if (referredAssociationClass != null
@@ -113,6 +114,7 @@ public class AssociationClassCallExpImpl<C, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredAssociationClass(C newReferredAssociationClass) {
 		C oldReferredAssociationClass = referredAssociationClass;
 		referredAssociationClass = newReferredAssociationClass;

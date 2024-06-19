@@ -74,6 +74,7 @@ public class TupleTypeCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<VariableCS> getVariables() {
 		if (variables == null) {
 			variables = new EObjectContainmentEList<VariableCS>(

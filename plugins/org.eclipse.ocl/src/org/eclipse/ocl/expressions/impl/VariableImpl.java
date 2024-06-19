@@ -182,6 +182,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -191,6 +192,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public C getType() {
 		return type;
 	}
@@ -200,6 +202,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -209,6 +212,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public void setType(C type) {
 		this.type = type;
 	}
@@ -218,6 +222,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getStartPosition() {
 		return startPosition;
 	}
@@ -227,6 +232,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStartPosition(int newStartPosition) {
 		int oldStartPosition = startPosition;
 		startPosition = newStartPosition;
@@ -241,6 +247,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getEndPosition() {
 		return endPosition;
 	}
@@ -250,6 +257,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEndPosition(int newEndPosition) {
 		int oldEndPosition = endPosition;
 		endPosition = newEndPosition;
@@ -264,6 +272,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeStartPosition() {
 		return typeStartPosition;
 	}
@@ -273,6 +282,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeStartPosition(int newTypeStartPosition) {
 		int oldTypeStartPosition = typeStartPosition;
 		typeStartPosition = newTypeStartPosition;
@@ -287,6 +297,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeEndPosition() {
 		return typeEndPosition;
 	}
@@ -296,6 +307,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeEndPosition(int newTypeEndPosition) {
 		int oldTypeEndPosition = typeEndPosition;
 		typeEndPosition = newTypeEndPosition;
@@ -310,6 +322,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getInitExpression() {
 		return initExpression;
 	}
@@ -340,6 +353,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setInitExpression(OCLExpression<C> newInitExpression) {
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;
@@ -367,6 +381,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public PM getRepresentedParameter() {
 		if (representedParameter != null
@@ -397,6 +412,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRepresentedParameter(PM newRepresentedParameter) {
 		PM oldRepresentedParameter = representedParameter;
 		representedParameter = newRepresentedParameter;
@@ -411,6 +427,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T, U extends Visitor<T, ?, ?, ?, ?, ?, ?, ?, ?, ?>> T accept(U v) {
 		return ((Visitor<T, C, ?, ?, ?, PM, ?, ?, ?, ?>) v).visitVariable(this);
@@ -421,6 +438,7 @@ public class VariableImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkInitType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return VariableOperations.checkInitType(this, diagnostics, context);

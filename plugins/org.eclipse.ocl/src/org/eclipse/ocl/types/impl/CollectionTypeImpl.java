@@ -194,6 +194,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public String getName() {
 		if (name == null) {
@@ -244,6 +245,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<O> oclOperations() {
 		if (operations == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -285,6 +287,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkCollectionTypeName(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return CollectionTypeOperations.checkCollectionTypeName(this,
@@ -296,6 +299,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkNoInvalidValues(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return CollectionTypeOperations.checkNoInvalidValues(this, diagnostics,
@@ -307,6 +311,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getStartPosition() {
 		return startPosition;
 	}
@@ -316,6 +321,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStartPosition(int newStartPosition) {
 		int oldStartPosition = startPosition;
 		startPosition = newStartPosition;
@@ -330,6 +336,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getEndPosition() {
 		return endPosition;
 	}
@@ -339,6 +346,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEndPosition(int newEndPosition) {
 		int oldEndPosition = endPosition;
 		endPosition = newEndPosition;
@@ -353,6 +361,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeStartPosition() {
 		return typeStartPosition;
 	}
@@ -362,6 +371,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeStartPosition(int newTypeStartPosition) {
 		int oldTypeStartPosition = typeStartPosition;
 		typeStartPosition = newTypeStartPosition;
@@ -376,6 +386,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getTypeEndPosition() {
 		return typeEndPosition;
 	}
@@ -385,6 +396,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeEndPosition(int newTypeEndPosition) {
 		int oldTypeEndPosition = typeEndPosition;
 		typeEndPosition = newTypeEndPosition;
@@ -399,6 +411,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getElementType() {
 		if (elementType != null && ((EObject) elementType).eIsProxy()) {
@@ -428,6 +441,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setElementType(C newElementType) {
 		C oldElementType = elementType;
 		elementType = newElementType;
@@ -442,6 +456,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public CollectionKind getKind() {
 		return CollectionKind.COLLECTION_LITERAL;
 	}
@@ -451,6 +466,7 @@ public class CollectionTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<O> oclIterators() {
 		if (iterators == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE

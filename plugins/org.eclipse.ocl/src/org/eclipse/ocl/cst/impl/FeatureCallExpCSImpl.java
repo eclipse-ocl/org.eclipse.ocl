@@ -102,6 +102,7 @@ public class FeatureCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PathNameCS getPathNameCS() {
 		return pathNameCS;
 	}
@@ -134,6 +135,7 @@ public class FeatureCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPathNameCS(PathNameCS newPathNameCS) {
 		if (newPathNameCS != pathNameCS) {
 			NotificationChain msgs = null;
@@ -161,6 +163,7 @@ public class FeatureCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLExpressionCS> getArguments() {
 		if (arguments == null) {
 			arguments = new EObjectContainmentEList<OCLExpressionCS>(
@@ -175,6 +178,7 @@ public class FeatureCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IsMarkedPreCS getIsMarkedPreCS() {
 		return isMarkedPreCS;
 	}
@@ -206,6 +210,7 @@ public class FeatureCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIsMarkedPreCS(IsMarkedPreCS newIsMarkedPreCS) {
 		if (newIsMarkedPreCS != isMarkedPreCS) {
 			NotificationChain msgs = null;

@@ -93,6 +93,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getThenExpression() {
 		return thenExpression;
 	}
@@ -123,6 +124,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setThenExpression(OCLExpressionCS newThenExpression) {
 		if (newThenExpression != thenExpression) {
 			NotificationChain msgs = null;
@@ -152,6 +154,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getElseExpression() {
 		return elseExpression;
 	}
@@ -182,6 +185,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setElseExpression(OCLExpressionCS newElseExpression) {
 		if (newElseExpression != elseExpression) {
 			NotificationChain msgs = null;
@@ -211,6 +215,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getCondition() {
 		return condition;
 	}
@@ -241,6 +246,7 @@ public class IfExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCondition(OCLExpressionCS newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
