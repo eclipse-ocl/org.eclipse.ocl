@@ -450,7 +450,8 @@ public void reset(Reader reader, String filename) throws java.io.IOException {
     reset(input_chars, filename, ECLIPSE_TAB_VALUE);
 }
 
-    public void ruleAction(int ruleNumber)
+    @Override
+	public void ruleAction(int ruleNumber)
     {
         switch(ruleNumber)
         {

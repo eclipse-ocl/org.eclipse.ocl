@@ -542,6 +542,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCSTNode() {
 		return cstNodeEClass;
 	}
@@ -551,6 +552,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCSTNode_StartOffset() {
 		return (EAttribute) cstNodeEClass.getEStructuralFeatures().get(0);
 	}
@@ -560,6 +562,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCSTNode_EndOffset() {
 		return (EAttribute) cstNodeEClass.getEStructuralFeatures().get(1);
 	}
@@ -570,6 +573,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCSTNode_StartToken() {
 		return (EAttribute) cstNodeEClass.getEStructuralFeatures().get(2);
 	}
@@ -580,6 +584,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCSTNode_EndToken() {
 		return (EAttribute) cstNodeEClass.getEStructuralFeatures().get(3);
 	}
@@ -590,6 +595,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCSTNode_Ast() {
 		return (EAttribute) cstNodeEClass.getEStructuralFeatures().get(4);
 	}
@@ -599,6 +605,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPackageDeclarationCS() {
 		return packageDeclarationCSEClass;
 	}
@@ -608,6 +615,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPackageDeclarationCS_PathNameCS() {
 		return (EReference) packageDeclarationCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -618,6 +626,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPackageDeclarationCS_ContextDecls() {
 		return (EReference) packageDeclarationCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -628,6 +637,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPackageDeclarationCS_PackageDeclarationCS() {
 		return (EReference) packageDeclarationCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -638,6 +648,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getContextDeclCS() {
 		return contextDeclCSEClass;
 	}
@@ -647,6 +658,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getClassifierContextDeclCS() {
 		return classifierContextDeclCSEClass;
 	}
@@ -656,6 +668,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getClassifierContextDeclCS_PathNameCS() {
 		return (EReference) classifierContextDeclCSEClass
 			.getEStructuralFeatures().get(0);
@@ -667,6 +680,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getClassifierContextDeclCS_Constraints() {
 		return (EReference) classifierContextDeclCSEClass
 			.getEStructuralFeatures().get(1);
@@ -678,6 +692,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getClassifierContextDeclCS_SimpleNameCS() {
 		return (EReference) classifierContextDeclCSEClass
 			.getEStructuralFeatures().get(2);
@@ -688,6 +703,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOperationContextDeclCS() {
 		return operationContextDeclCSEClass;
 	}
@@ -697,6 +713,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationContextDeclCS_OperationCS() {
 		return (EReference) operationContextDeclCSEClass
 			.getEStructuralFeatures().get(0);
@@ -707,6 +724,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationContextDeclCS_PrePostOrBodyDecls() {
 		return (EReference) operationContextDeclCSEClass
 			.getEStructuralFeatures().get(1);
@@ -717,6 +735,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPrePostOrBodyDeclCS() {
 		return prePostOrBodyDeclCSEClass;
 	}
@@ -726,6 +745,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPrePostOrBodyDeclCS_Kind() {
 		return (EAttribute) prePostOrBodyDeclCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -736,6 +756,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPrePostOrBodyDeclCS_SimpleNameCS() {
 		return (EReference) prePostOrBodyDeclCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -746,6 +767,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPrePostOrBodyDeclCS_ExpressionCS() {
 		return (EReference) prePostOrBodyDeclCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -756,6 +778,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOperationCS() {
 		return operationCSEClass;
 	}
@@ -765,6 +788,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCS_PathNameCS() {
 		return (EReference) operationCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -774,6 +798,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCS_SimpleNameCS() {
 		return (EReference) operationCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -783,6 +808,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCS_Parameters() {
 		return (EReference) operationCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -792,6 +818,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCS_TypeCS() {
 		return (EReference) operationCSEClass.getEStructuralFeatures().get(3);
 	}
@@ -801,6 +828,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInitOrDerValueCS() {
 		return initOrDerValueCSEClass;
 	}
@@ -810,6 +838,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getInitOrDerValueCS_ExpressionCS() {
 		return (EReference) initOrDerValueCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -820,6 +849,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDerValueCS() {
 		return derValueCSEClass;
 	}
@@ -829,6 +859,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInitValueCS() {
 		return initValueCSEClass;
 	}
@@ -838,6 +869,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInvOrDefCS() {
 		return invOrDefCSEClass;
 	}
@@ -847,6 +879,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getInvOrDefCS_SimpleNameCS() {
 		return (EReference) invOrDefCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -856,6 +889,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInvCS() {
 		return invCSEClass;
 	}
@@ -865,6 +899,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getInvCS_ExpressionCS() {
 		return (EReference) invCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -874,6 +909,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDefCS() {
 		return defCSEClass;
 	}
@@ -883,6 +919,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDefCS_DefExpressionCS() {
 		return (EReference) defCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -893,6 +930,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDefCS_Static() {
 		return (EAttribute) defCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -902,6 +940,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDefExpressionCS() {
 		return defExpressionCSEClass;
 	}
@@ -911,6 +950,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDefExpressionCS_OperationCS() {
 		return (EReference) defExpressionCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -921,6 +961,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDefExpressionCS_VariableCS() {
 		return (EReference) defExpressionCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -931,6 +972,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDefExpressionCS_ExpressionCS() {
 		return (EReference) defExpressionCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -941,6 +983,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPathNameCS() {
 		return pathNameCSEClass;
 	}
@@ -951,6 +994,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPathNameCS_SimpleNames() {
 		return (EReference) pathNameCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -960,6 +1004,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVariableExpCS() {
 		return variableExpCSEClass;
 	}
@@ -969,6 +1014,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableExpCS_Arguments() {
 		return (EReference) variableExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -978,6 +1024,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableExpCS_SimpleNameCS() {
 		return (EReference) variableExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -987,6 +1034,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableExpCS_IsMarkedPreCS() {
 		return (EReference) variableExpCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -996,6 +1044,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSimpleNameCS() {
 		return simpleNameCSEClass;
 	}
@@ -1005,6 +1054,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSimpleNameCS_Value() {
 		return (EAttribute) simpleNameCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1014,6 +1064,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSimpleNameCS_Type() {
 		return (EAttribute) simpleNameCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1023,6 +1074,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTypeCS() {
 		return typeCSEClass;
 	}
@@ -1032,6 +1084,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPrimitiveTypeCS() {
 		return primitiveTypeCSEClass;
 	}
@@ -1041,6 +1094,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTupleTypeCS() {
 		return tupleTypeCSEClass;
 	}
@@ -1050,6 +1104,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTupleTypeCS_Variables() {
 		return (EReference) tupleTypeCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1059,6 +1114,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionTypeCS() {
 		return collectionTypeCSEClass;
 	}
@@ -1068,6 +1124,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCollectionTypeCS_CollectionTypeIdentifier() {
 		return (EAttribute) collectionTypeCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1078,6 +1135,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionTypeCS_TypeCS() {
 		return (EReference) collectionTypeCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1088,6 +1146,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOCLExpressionCS() {
 		return oclExpressionCSEClass;
 	}
@@ -1097,6 +1156,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLetExpCS() {
 		return letExpCSEClass;
 	}
@@ -1106,6 +1166,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLetExpCS_Variables() {
 		return (EReference) letExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1115,6 +1176,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLetExpCS_InExpression() {
 		return (EReference) letExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1124,6 +1186,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIfExpCS() {
 		return ifExpCSEClass;
 	}
@@ -1133,6 +1196,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExpCS_ThenExpression() {
 		return (EReference) ifExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1142,6 +1206,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExpCS_ElseExpression() {
 		return (EReference) ifExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1151,6 +1216,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExpCS_Condition() {
 		return (EReference) ifExpCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -1160,6 +1226,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOCLMessageArgCS() {
 		return oclMessageArgCSEClass;
 	}
@@ -1169,6 +1236,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOCLMessageArgCS_TypeCS() {
 		return (EReference) oclMessageArgCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1179,6 +1247,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOCLMessageArgCS_Expression() {
 		return (EReference) oclMessageArgCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1189,6 +1258,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLiteralExpCS() {
 		return literalExpCSEClass;
 	}
@@ -1198,6 +1268,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionLiteralExpCS() {
 		return collectionLiteralExpCSEClass;
 	}
@@ -1207,6 +1278,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCollectionLiteralExpCS_CollectionType() {
 		return (EAttribute) collectionLiteralExpCSEClass
 			.getEStructuralFeatures().get(0);
@@ -1217,6 +1289,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionLiteralExpCS_CollectionLiteralParts() {
 		return (EReference) collectionLiteralExpCSEClass
 			.getEStructuralFeatures().get(1);
@@ -1227,6 +1300,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTupleLiteralExpCS() {
 		return tupleLiteralExpCSEClass;
 	}
@@ -1236,6 +1310,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTupleLiteralExpCS_Variables() {
 		return (EReference) tupleLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1246,6 +1321,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPrimitiveLiteralExpCS() {
 		return primitiveLiteralExpCSEClass;
 	}
@@ -1255,6 +1331,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPrimitiveLiteralExpCS_Symbol() {
 		return (EAttribute) primitiveLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1265,6 +1342,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerLiteralExpCS() {
 		return integerLiteralExpCSEClass;
 	}
@@ -1274,6 +1352,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExpCS_IntegerSymbol() {
 		return (EAttribute) integerLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1285,6 +1364,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExpCS_ExtendedIntegerSymbol() {
 		return (EAttribute) integerLiteralExpCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1296,6 +1376,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExpCS_LongSymbol() {
 		return (EAttribute) integerLiteralExpCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -1306,6 +1387,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getUnlimitedNaturalLiteralExpCS() {
 		return unlimitedNaturalLiteralExpCSEClass;
 	}
@@ -1315,6 +1397,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExpCS_IntegerSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpCSEClass
 			.getEStructuralFeatures().get(0);
@@ -1326,6 +1409,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExpCS_ExtendedIntegerSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpCSEClass
 			.getEStructuralFeatures().get(1);
@@ -1337,6 +1421,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExpCS_LongSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpCSEClass
 			.getEStructuralFeatures().get(2);
@@ -1347,6 +1432,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getRealLiteralExpCS() {
 		return realLiteralExpCSEClass;
 	}
@@ -1356,6 +1442,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getRealLiteralExpCS_RealSymbol() {
 		return (EAttribute) realLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1366,6 +1453,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStringLiteralExpCS() {
 		return stringLiteralExpCSEClass;
 	}
@@ -1375,6 +1463,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStringLiteralExpCS_StringSymbol() {
 		return (EAttribute) stringLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1386,6 +1475,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStringLiteralExpCS_UnescapedStringSymbol() {
 		return (EAttribute) stringLiteralExpCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1396,6 +1486,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBooleanLiteralExpCS() {
 		return booleanLiteralExpCSEClass;
 	}
@@ -1405,6 +1496,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBooleanLiteralExpCS_BooleanSymbol() {
 		return (EAttribute) booleanLiteralExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1415,6 +1507,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionLiteralPartCS() {
 		return collectionLiteralPartCSEClass;
 	}
@@ -1424,6 +1517,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionLiteralPartCS_ExpressionCS() {
 		return (EReference) collectionLiteralPartCSEClass
 			.getEStructuralFeatures().get(0);
@@ -1434,6 +1528,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionRangeCS() {
 		return collectionRangeCSEClass;
 	}
@@ -1443,6 +1538,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionRangeCS_LastExpressionCS() {
 		return (EReference) collectionRangeCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1453,6 +1549,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLoopExpCS() {
 		return loopExpCSEClass;
 	}
@@ -1462,6 +1559,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLoopExpCS_Variable1() {
 		return (EReference) loopExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1471,6 +1569,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLoopExpCS_Variable2() {
 		return (EReference) loopExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1480,6 +1579,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLoopExpCS_Body() {
 		return (EReference) loopExpCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -1489,6 +1589,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIteratorExpCS() {
 		return iteratorExpCSEClass;
 	}
@@ -1498,6 +1599,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIterateExpCS() {
 		return iterateExpCSEClass;
 	}
@@ -1507,6 +1609,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOperationCallExpCS() {
 		return operationCallExpCSEClass;
 	}
@@ -1517,6 +1620,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getOperationCallExpCS_IsAtomic() {
 		return (EAttribute) operationCallExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1527,6 +1631,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIsMarkedPreCS() {
 		return isMarkedPreCSEClass;
 	}
@@ -1536,6 +1641,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPropertyContextCS() {
 		return propertyContextCSEClass;
 	}
@@ -1545,6 +1651,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPropertyContextCS_PathNameCS() {
 		return (EReference) propertyContextCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1555,6 +1662,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPropertyContextCS_SimpleNameCS() {
 		return (EReference) propertyContextCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1565,6 +1673,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPropertyContextCS_TypeCS() {
 		return (EReference) propertyContextCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -1576,6 +1685,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPropertyContextCS_Constraints() {
 		return (EReference) propertyContextCSEClass.getEStructuralFeatures()
 			.get(3);
@@ -1587,6 +1697,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOCLDocumentCS() {
 		return oclDocumentCSEClass;
 	}
@@ -1597,6 +1708,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOCLDocumentCS_PackageDeclarations() {
 		return (EReference) oclDocumentCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1606,6 +1718,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMessageExpCS() {
 		return messageExpCSEClass;
 	}
@@ -1615,6 +1728,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExpCS_Target() {
 		return (EReference) messageExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1624,6 +1738,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getMessageExpCS_Kind() {
 		return (EAttribute) messageExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1633,6 +1748,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExpCS_SimpleNameCS() {
 		return (EReference) messageExpCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -1642,6 +1758,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExpCS_Arguments() {
 		return (EReference) messageExpCSEClass.getEStructuralFeatures().get(3);
 	}
@@ -1651,6 +1768,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVariableCS() {
 		return variableCSEClass;
 	}
@@ -1660,6 +1778,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVariableCS_Name() {
 		return (EAttribute) variableCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1669,6 +1788,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableCS_TypeCS() {
 		return (EReference) variableCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1678,6 +1798,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableCS_InitExpression() {
 		return (EReference) variableCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -1687,6 +1808,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNullLiteralExpCS() {
 		return nullLiteralExpCSEClass;
 	}
@@ -1696,6 +1818,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInvalidLiteralExpCS() {
 		return invalidLiteralExpCSEClass;
 	}
@@ -1705,6 +1828,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCallExpCS() {
 		return callExpCSEClass;
 	}
@@ -1714,6 +1838,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCallExpCS_Source() {
 		return (EReference) callExpCSEClass.getEStructuralFeatures().get(0);
 	}
@@ -1723,6 +1848,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCallExpCS_Accessor() {
 		return (EAttribute) callExpCSEClass.getEStructuralFeatures().get(1);
 	}
@@ -1732,6 +1858,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCallExpCS_SimpleNameCS() {
 		return (EReference) callExpCSEClass.getEStructuralFeatures().get(2);
 	}
@@ -1741,6 +1868,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFeatureCallExpCS() {
 		return featureCallExpCSEClass;
 	}
@@ -1751,6 +1879,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFeatureCallExpCS_PathNameCS() {
 		return (EReference) featureCallExpCSEClass.getEStructuralFeatures()
 			.get(0);
@@ -1761,6 +1890,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFeatureCallExpCS_Arguments() {
 		return (EReference) featureCallExpCSEClass.getEStructuralFeatures()
 			.get(1);
@@ -1771,6 +1901,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFeatureCallExpCS_IsMarkedPreCS() {
 		return (EReference) featureCallExpCSEClass.getEStructuralFeatures()
 			.get(2);
@@ -1781,6 +1912,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getPrePostOrBodyEnum() {
 		return prePostOrBodyEnumEEnum;
 	}
@@ -1790,6 +1922,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getSimpleTypeEnum() {
 		return simpleTypeEnumEEnum;
 	}
@@ -1799,6 +1932,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getCollectionTypeIdentifierEnum() {
 		return collectionTypeIdentifierEnumEEnum;
 	}
@@ -1808,6 +1942,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getDotOrArrowEnum() {
 		return dotOrArrowEnumEEnum;
 	}
@@ -1818,6 +1953,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getIToken() {
 		return iTokenEDataType;
 	}
@@ -1827,6 +1963,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getMessageExpKind() {
 		return messageExpKindEEnum;
 	}
@@ -1836,6 +1973,7 @@ public class CSTPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CSTFactory getCSTFactory() {
 		return (CSTFactory) getEFactoryInstance();
 	}

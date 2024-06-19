@@ -113,6 +113,7 @@ implements IntegerLiteralExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public Integer getIntegerSymbol() {
 		if (extendedIntegerSymbol != 0) {
 			throw new IllegalStateException(
@@ -126,6 +127,7 @@ implements IntegerLiteralExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public void setIntegerSymbol(Integer newIntegerSymbol) {
 		Integer oldIntegerSymbol = integerSymbol;
 		Long oldExtendedIntegerSymbol = extendedIntegerSymbol;
@@ -158,6 +160,7 @@ implements IntegerLiteralExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public Long getLongSymbol() {
 		return extendedIntegerSymbol * (1L << Integer.SIZE)
 				+ (integerSymbol != null
@@ -171,6 +174,7 @@ implements IntegerLiteralExpCS {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public void setLongSymbol(Long newLongSymbol) {
 		Integer oldIntegerSymbol = integerSymbol;
 		Long oldExtendedIntegerSymbol = extendedIntegerSymbol;

@@ -77,23 +77,28 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 	 */
 	private Map<String, String> normalizers = null;
 
+	@Override
 	public void addSupertype(EClass aClass, EClass superClass) {
 		aClass.getESuperTypes().add(superClass);
 	}
 
+	@Override
 	public EClass createClass() {
 		return EcoreFactory.eINSTANCE.createEClass();
 	}
 
+	@Override
 	public EAnnotation createComment() {
 		return EcoreFactory.eINSTANCE.createEAnnotation();
 	}
 
+	@Override
 	public void createGeneralization(EClassifier special, EClassifier general) {
 		if ((special instanceof EClass) && (general instanceof EClass))
 			((EClass)special).getESuperTypes().add((EClass)general);
 	}
 
+	@Override
 	public EPackage createNestedPackage(EPackage aPackage, String name) {
 		EPackage nestedPackage = EcoreFactory.eINSTANCE.createEPackage();
 		nestedPackage.setName(name);
@@ -101,12 +106,14 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return nestedPackage;
 	}
 
+	@Override
 	public OCL createOCL(ResourceSet resourceSet) {
 		Registry packageRegistry = resourceSet.getPackageRegistry();
 		EcoreEnvironment.checkRegistry(packageRegistry);			// Not needed; just providing code coverage
 		return OCL.newInstance(new EcoreEnvironmentFactoryWithHiddenOpposites(packageRegistry));
 	}
 
+	@Override
 	public EAttribute createOwnedAttribute(EClass aClass, String name, EClassifier type) {
 		EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setName(name);
@@ -115,6 +122,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eAttribute;
 	}
 
+	@Override
 	public EClass createOwnedClass(EPackage aPackage, String name, boolean isAbstract) {
 		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.setName(name);
@@ -123,6 +131,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eClass;
 	}
 
+	@Override
 	public EEnum createOwnedEnumeration(EPackage aPackage, String name) {
 		EEnum eEnum = EcoreFactory.eINSTANCE.createEEnum();
 		eEnum.setName(name);
@@ -130,6 +139,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eEnum;
 	}
 
+	@Override
 	public EEnumLiteral createOwnedLiteral(EEnum anEnumeration, String name) {
 		EEnumLiteral eLiteral = EcoreFactory.eINSTANCE.createEEnumLiteral();
 		eLiteral.setName(name);
@@ -137,6 +147,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eLiteral;
 	}
 
+	@Override
 	public EOperation createOwnedOperation(EClass aClass, String name, EList<String> paramNames, EList<EClassifier> paramTypes, EClassifier type, boolean isQuery) {
 		EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
 		eOperation.setName(name);
@@ -158,10 +169,12 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eParameter;
 	}
 
+	@Override
 	public EOperation createOwnedPrimitiveOperation(EClassifier aPrimitiveType, String name, EList<String> paramNames, EList<EClassifier> paramTypes, EClassifier type, boolean isQuery) {
 		return createOwnedOperation((EClass) aPrimitiveType, name, paramNames, paramTypes, type, isQuery);
 	}
 
+	@Override
 	public EClass createOwnedPrimitiveType(EPackage aPackage, String name) {
 		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.setName(name);
@@ -169,6 +182,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eClass;
 	}
 
+	@Override
 	public EReference createOwnedReference(EClass aClass, String name, EClass type) {
 		EReference eReference = EcoreFactory.eINSTANCE.createEReference();
 		eReference.setName(name);
@@ -177,17 +191,20 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return eReference;
 	}
 
+	@Override
 	public EPackage createPackage(String name) {
 		EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
 		ePackage.setName(name);
 		return ePackage;
 	}
 
+	@Override
 	public TestReflection<EObject, EPackage, EClassifier, EClassifier, EClass, EDataType, EClassifier, EEnum, EOperation, EParameter, EStructuralFeature, EAttribute, EReference, EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint> createReflection(
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment) {
 		return this;
 	}
 
+	@Override
 	public String denormalize(String key) {
 		if (normalizers == null) {
 			normalizers = new HashMap<String, String>();
@@ -221,6 +238,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		//        fruitPackage = null;
 	}
 
+	@Override
 	public EStructuralFeature getAttribute(EClassifier classifier, String name, EClassifier type) {
 		if (!(classifier instanceof EClass))
 			return null;
@@ -231,34 +249,42 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return feature;
 	}
 
+	@Override
 	public EClassifier getBigDecimal() {
 		return EcorePackage.Literals.EBIG_DECIMAL;
 	}
 
+	@Override
 	public EClassifier getBigInteger() {
 		return EcorePackage.Literals.EBIG_INTEGER;
 	}
 
+	@Override
 	public OCLExpression<EClassifier> getBodyExpression(Constraint constraint) {
 		return constraint.getSpecification().getBodyExpression();
 	}
 
+	@Override
 	public EClassifier getClassTypeContext() {
 		return EcorePackage.Literals.ECLASS;
 	}
 
+	@Override
 	public EClassifier getClassifierTypeContext() {
 		return EcorePackage.Literals.ECLASSIFIER;
 	}
 
+	@Override
 	public EClassifier getCollectionKindTypeContext() {
 		return ExpressionsPackage.Literals.COLLECTION_KIND;
 	}
 
+	@Override
 	public EClassifier getCommentTypeContext() {
 		return EcorePackage.Literals.EANNOTATION;
 	}
 
+	@Override
 	public java.lang.Class<Constraint> getConstraintClass() {
 		return Constraint.class;
 	}
@@ -269,38 +295,47 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return EcorePackage.Literals.ERESOURCE;
 	}
 
+	@Override
 	public EPackage getEPackage(EPackage pkg) {
 		return pkg;
 	}
 
+	@Override
 	public EClassifier getEcoreBigDecimal() {
 		return EcorePackage.Literals.EBIG_DECIMAL;
 	}
 
+	@Override
 	public EClassifier getEcoreBigInteger() {
 		return EcorePackage.Literals.EBIG_INTEGER;
 	}
 
+	@Override
 	public EClassifier getEcoreLong() {
 		return EcorePackage.Literals.ELONG;
 	}
 
+	@Override
 	public EPackage getEcorePrimitiveTypes() {	// FIXME UOE
 		throw new UnsupportedOperationException(getClass().getName() + ".getEcorePrimitiveTypes");
 	}
 
+	@Override
 	public String getFruitModelPath() {
 		return "/model/OCLTest.ecore";
 	}
 
+	@Override
 	public EClassifier getMetaclass(String name) {
 		return EcorePackage.eINSTANCE.getEClassifier(name);
 	}
 
+	@Override
 	public EClassifier getMetametaclass(String name) {
 		return EcorePackage.eINSTANCE.getEClassifier(name);
 	}
 
+	@Override
 	public String getNsURI(EPackage aPackage) {
 		return aPackage.getNsURI();
 	}
@@ -309,55 +344,68 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		throw new UnsupportedOperationException(getClass().getName() + ".getOCLExpressionTypes");
 	}
 
+	@Override
 	public EClassifier getOwnedType(EPackage aPackage, String name) {
 		return aPackage.getEClassifier(name);
 	}
 
+	@Override
 	public EClassifier getOwner(EOperation context) {
 		return context.getEContainingClass();
 	}
 
+	@Override
 	public EPackage getResourcePackage(ResourceSet resourceSet, URI uri) {
 		Resource res = resourceSet.getResource(uri, true);
 		return (EPackage) res.getContents().get(0);
 	}
 
+	@Override
 	public EClassifier getStringTypeContext() {
 		return EcorePackage.Literals.ESTRING;
 	}
 
+	@Override
 	public String getTestPlugInId() {
 		return PLUGIN_ID;
 	}
 
+	@Override
 	public EDataType getUMLBoolean() {
 		return EcorePackage.Literals.EBOOLEAN;
 	}
 
+	@Override
 	public EClassifier getUMLInteger() {
 		return EcorePackage.Literals.EINT;
 	}
 
+	@Override
 	public EClassifier getUMLLong() {
 		return EcorePackage.Literals.ELONG;
 	}
 
+	@Override
 	public EPackage getUMLMetamodel() {	// FIXME UOE
 		return EcorePackage.eINSTANCE;
 	}
 
+	@Override
 	public EPackage getUMLPrimitiveTypes() {	// FIXME UOE
 		throw new UnsupportedOperationException(getClass().getName() + ".getUMLPrimitiveTypes");
 	}
 
+	@Override
 	public EDataType getUMLString() {
 		return EcorePackage.Literals.ESTRING;
 	}
 
+	@Override
 	public EDataType getUMLUnlimitedNatural() {	// FIXME UOE
 		throw new UnsupportedOperationException(getClass().getName() + ".getUnlimitedNatural");
 	}
 
+	@Override
 	public int getUnlimitedValue() {
 		return -1;			// FIXME find symbolic value
 	}
@@ -381,6 +429,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return uriMap;
 	} */
 
+	@Override
 	public ResourceSet createResourceSet() {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -395,6 +444,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return resourceSet;
 	}
 
+	@Override
 	public boolean isOrdered(String key) {
 		if ("nestedPackage".equals(key)) {
 			return true;
@@ -402,6 +452,7 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return false;
 	}
 
+	@Override
 	public boolean isUnique(String key) {
 		if ("nestedPackage".equals(key)) {
 			return true;
@@ -409,42 +460,52 @@ EEnumLiteral, EObject, CallOperationAction, SendSignalAction, Constraint>
 		return false;
 	}
 
+	@Override
 	public void setAbstract(EClass aClass, boolean isAbstract) {
 		aClass.setAbstract(isAbstract);
 	}
 
+	@Override
 	public void setIsOrdered(EStructuralFeature aProperty, boolean isOrdered) {
 		aProperty.setOrdered(isOrdered);
 	}
 
+	@Override
 	public void setIsQuery(EOperation anOperation, boolean isQuery) {
 		//		anOperation.setIsQuery(isQuery);
 	}
 
+	@Override
 	public void setIsUnique(EStructuralFeature aProperty, boolean isUnique) {
 		aProperty.setUnique(isUnique);
 	}
 
+	@Override
 	public void setName(EClass aClass, String name) {
 		aClass.setName(name);
 	}
 
+	@Override
 	public void setNsPrefix(EPackage aPackage, String name) {
 		aPackage.setNsPrefix(name);
 	}
 
+	@Override
 	public void setNsURI(EPackage aPackage, String name) {
 		aPackage.setNsPrefix(name);
 	}
 
+	@Override
 	public void setOperationUpper(EOperation anOperation, int value) {
 		anOperation.setUpperBound(value);
 	}
 
+	@Override
 	public void setUpper(EStructuralFeature aProperty, int value) {
 		aProperty.setUpperBound(value);
 	}
 
+	@Override
 	public boolean usesCompareTo() {
 		return true;
 	}

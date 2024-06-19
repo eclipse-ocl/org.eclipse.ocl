@@ -76,6 +76,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		this.extentMap = extentMap;
 	}
 
+	@Override
 	public Map<CLS, ? extends Set<? extends E>> getExtentMap() {
 		if (extentMap == null) {
 			EvaluationEnvironment<C, O, P, CLS, E> myEnv =
@@ -89,10 +90,12 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return extentMap;
 	}
 
+	@Override
 	public OCLExpression<C> getExpression() {
 		return expression;
 	}
 
+	@Override
 	public Object evaluate(Object obj) {
 		evalProblems = null;
 		
@@ -131,6 +134,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return result;
 	}
 
+	@Override
 	public Object evaluate() {
 		evalProblems = null;
 		
@@ -152,6 +156,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return result;
 	}
 
+	@Override
 	public boolean check(Object obj) {
 		if (resultType() != environment.getOCLStandardLibrary().getBoolean()) {
 			IllegalArgumentException error = new IllegalArgumentException(
@@ -171,6 +176,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return Boolean.TRUE.equals(result);
 	}
 
+	@Override
 	public List<?> evaluate(List<?> objList) {
 		if (objList == null) {
 			IllegalArgumentException error = new IllegalArgumentException(
@@ -194,6 +200,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return result;
 	}
 	
+	@Override
 	public boolean check(List<?> objList) {
 		if (objList == null) {
 			IllegalArgumentException error = new IllegalArgumentException(
@@ -219,6 +226,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return true;
 	}
 
+	@Override
 	public <T> List<T> select(List<T> objList) {
 		if (objList == null) {
 			IllegalArgumentException error = new IllegalArgumentException(
@@ -243,6 +251,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return result;
 	}
 
+	@Override
 	public <T> List<T> reject(List<T> objList) {
 		if (objList == null) {
 			IllegalArgumentException error = new IllegalArgumentException(
@@ -267,14 +276,17 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return result;
 	}
 
+	@Override
 	public C resultType() {
 		return expression.getType();
 	}
 
+	@Override
 	public String queryText() {
 		return expression.toString();
 	}
 
+	@Override
 	public EvaluationEnvironment<C, O, P, CLS, E> getEvaluationEnvironment() {
 		if (evalEnv == null) {
 			evalEnv = environment.getFactory().createEvaluationEnvironment();
@@ -283,6 +295,7 @@ public class QueryImpl<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 		return evalEnv;
 	}
 
+	@Override
 	public Diagnostic getProblems() {
 		return evalProblems;
 	}

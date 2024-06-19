@@ -105,6 +105,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getSource() {
 		return source;
 	}
@@ -135,6 +136,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSource(OCLExpressionCS newSource) {
 		if (newSource != source) {
 			NotificationChain msgs = null;
@@ -159,6 +161,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DotOrArrowEnum getAccessor() {
 		return accessor;
 	}
@@ -168,6 +171,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAccessor(DotOrArrowEnum newAccessor) {
 		DotOrArrowEnum oldAccessor = accessor;
 		accessor = newAccessor == null
@@ -183,6 +187,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -213,6 +218,7 @@ public class CallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;

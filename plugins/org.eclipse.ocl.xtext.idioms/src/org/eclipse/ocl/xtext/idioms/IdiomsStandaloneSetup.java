@@ -13,9 +13,6 @@
 package org.eclipse.ocl.xtext.idioms;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetupGenerated;
-
 import com.google.inject.Injector;
 
 /**

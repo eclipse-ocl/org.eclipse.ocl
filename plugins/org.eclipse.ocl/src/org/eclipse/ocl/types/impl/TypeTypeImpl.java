@@ -83,6 +83,7 @@ public class TypeTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public String getName() {
 		if (name == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -99,6 +100,7 @@ public class TypeTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<O> oclOperations() {
 		if (operations == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -116,6 +118,7 @@ public class TypeTypeImpl<C, O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getReferredType() {
 		if (referredType != null && ((EObject) referredType).eIsProxy()) {

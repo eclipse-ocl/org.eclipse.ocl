@@ -71,6 +71,7 @@ public abstract class InvOrDefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -101,6 +102,7 @@ public abstract class InvOrDefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;

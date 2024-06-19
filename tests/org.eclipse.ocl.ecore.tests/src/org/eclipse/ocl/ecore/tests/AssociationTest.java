@@ -630,6 +630,7 @@ extends AbstractTestSuite {
 			//		init();
 		}
 
+		@Override
 		public void init() {
 			initFruitExtensions();
 

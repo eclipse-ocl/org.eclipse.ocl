@@ -126,6 +126,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O> AnyType<O> createAnyType() {
 		AnyTypeImpl<O> anyType = new AnyTypeImpl<O>();
 		return anyType;
@@ -136,6 +137,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> BagType<C, O> createBagType() {
 		BagTypeImpl<C, O> bagType = new BagTypeImpl<C, O>();
 		return bagType;
@@ -146,6 +148,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> CollectionType<C, O> createCollectionType() {
 		CollectionTypeImpl<C, O> collectionType = new CollectionTypeImpl<C, O>();
 		return collectionType;
@@ -156,6 +159,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ElementType createElementType() {
 		ElementTypeImpl elementType = new ElementTypeImpl();
 		return elementType;
@@ -166,6 +170,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O> InvalidType<O> createInvalidType() {
 		InvalidTypeImpl<O> invalidType = new InvalidTypeImpl<O>();
 		return invalidType;
@@ -176,6 +181,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O, P> MessageType<C, O, P> createMessageType() {
 		MessageTypeImpl<C, O, P> messageType = new MessageTypeImpl<C, O, P>();
 		return messageType;
@@ -186,6 +192,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> OrderedSetType<C, O> createOrderedSetType() {
 		OrderedSetTypeImpl<C, O> orderedSetType = new OrderedSetTypeImpl<C, O>();
 		return orderedSetType;
@@ -196,6 +203,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O> PrimitiveType<O> createPrimitiveType() {
 		PrimitiveTypeImpl<O> primitiveType = new PrimitiveTypeImpl<O>();
 		return primitiveType;
@@ -206,6 +214,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> SequenceType<C, O> createSequenceType() {
 		SequenceTypeImpl<C, O> sequenceType = new SequenceTypeImpl<C, O>();
 		return sequenceType;
@@ -216,6 +225,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> SetType<C, O> createSetType() {
 		SetTypeImpl<C, O> setType = new SetTypeImpl<C, O>();
 		return setType;
@@ -226,6 +236,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O, P> TupleType<O, P> createTupleType() {
 		TupleTypeImpl<O, P> tupleType = new TupleTypeImpl<O, P>();
 		return tupleType;
@@ -236,6 +247,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <C, O> TypeType<C, O> createTypeType() {
 		TypeTypeImpl<C, O> typeType = new TypeTypeImpl<C, O>();
 		return typeType;
@@ -246,6 +258,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O> VoidType<O> createVoidType() {
 		VoidTypeImpl<O> voidType = new VoidTypeImpl<O>();
 		return voidType;
@@ -257,6 +270,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <O> TemplateParameterType<O> createTemplateParameterType() {
 		TemplateParameterTypeImpl<O> templateParameterType = new TemplateParameterTypeImpl<O>();
 		return templateParameterType;
@@ -267,6 +281,7 @@ public class TypesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypesPackage getTypesPackage() {
 		return (TypesPackage) getEPackage();
 	}

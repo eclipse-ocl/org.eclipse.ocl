@@ -71,6 +71,7 @@ public class TypeExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public C getReferredType() {
 		if (referredType != null && ((EObject) referredType).eIsProxy()) {
@@ -100,6 +101,7 @@ public class TypeExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredType(C newReferredType) {
 		C oldReferredType = referredType;
 		referredType = newReferredType;

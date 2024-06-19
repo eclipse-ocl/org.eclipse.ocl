@@ -27,10 +27,12 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
  */
 public class BlankProjectPreferencePage extends DialogPage implements IWorkbenchPreferencePage, IWorkbenchPropertyPage
 {
+	@Override
 	public Point computeSize() {
 		return new Point(10,10);
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite composite1= new Composite(parent, SWT.NONE);
 		composite1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -41,35 +43,44 @@ public class BlankProjectPreferencePage extends DialogPage implements IWorkbench
 		setControl(composite1);
 	}
 
+	@Override
 	public IAdaptable getElement() {
 		return null;
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 	}
 
+	@Override
 	public boolean isValid() {
 		return true;
 	}
 
+	@Override
 	public boolean okToLeave() {
 		return true;
 	}
 
+	@Override
 	public boolean performCancel() {
 		return true;
 	}
 
+	@Override
 	public boolean performOk() {
 		return true;
 	}
 
+	@Override
 	public void setContainer(IPreferencePageContainer preferencePageContainer) {
 	}
 
+	@Override
 	public void setElement(IAdaptable element) {
 	}
 
+	@Override
 	public void setSize(Point size) {
 	}
 }

@@ -83,5 +83,6 @@ public interface EvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	 *    be boolean-valued but the computed result is not of boolean type
 	 *    (or <tt>OclInvalid</tt>)
 	 */
+	@Override
 	public Object visitConstraint(CT constraint);
 }

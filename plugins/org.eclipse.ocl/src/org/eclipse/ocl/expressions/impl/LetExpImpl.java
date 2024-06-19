@@ -87,6 +87,7 @@ public class LetExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getIn() {
 		return in;
 	}
@@ -116,6 +117,7 @@ public class LetExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIn(OCLExpression<C> newIn) {
 		if (newIn != in) {
 			NotificationChain msgs = null;
@@ -140,6 +142,7 @@ public class LetExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Variable<C, PM> getVariable() {
 		return variable;
 	}
@@ -170,6 +173,7 @@ public class LetExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setVariable(Variable<C, PM> newVariable) {
 		if (newVariable != variable) {
 			NotificationChain msgs = null;
@@ -197,6 +201,7 @@ public class LetExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkLetType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return LetExpOperations.checkLetType(this, diagnostics, context);

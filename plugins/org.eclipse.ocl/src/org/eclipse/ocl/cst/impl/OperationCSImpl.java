@@ -112,6 +112,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PathNameCS getPathNameCS() {
 		return pathNameCS;
 	}
@@ -142,6 +143,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPathNameCS(PathNameCS newPathNameCS) {
 		if (newPathNameCS != pathNameCS) {
 			NotificationChain msgs = null;
@@ -171,6 +173,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -201,6 +204,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
@@ -230,6 +234,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<VariableCS> getParameters() {
 		if (parameters == null) {
 			parameters = new EObjectContainmentEList<VariableCS>(
@@ -243,6 +248,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypeCS getTypeCS() {
 		return typeCS;
 	}
@@ -273,6 +279,7 @@ public class OperationCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeCS(TypeCS newTypeCS) {
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;

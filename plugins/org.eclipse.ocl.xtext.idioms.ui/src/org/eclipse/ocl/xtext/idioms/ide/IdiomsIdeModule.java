@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.idioms.ide;
 
-import org.eclipse.ocl.xtext.idioms.ide.AbstractIdiomsIdeModule;
-
 /**
  * Use this class to register ide components.
  */

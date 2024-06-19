@@ -78,6 +78,7 @@ public class RealLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Double getRealSymbol() {
 		return realSymbol;
 	}
@@ -87,6 +88,7 @@ public class RealLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRealSymbol(Double newRealSymbol) {
 		Double oldRealSymbol = realSymbol;
 		realSymbol = newRealSymbol;

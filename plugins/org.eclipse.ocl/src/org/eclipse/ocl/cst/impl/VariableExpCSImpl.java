@@ -100,6 +100,7 @@ public class VariableExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLExpressionCS> getArguments() {
 		if (arguments == null) {
 			arguments = new EObjectContainmentEList<OCLExpressionCS>(
@@ -114,6 +115,7 @@ public class VariableExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS getSimpleNameCS() {
 		return simpleNameCS;
 	}
@@ -144,6 +146,7 @@ public class VariableExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSimpleNameCS(SimpleNameCS newSimpleNameCS) {
 		if (newSimpleNameCS != simpleNameCS) {
 			NotificationChain msgs = null;
@@ -171,6 +174,7 @@ public class VariableExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IsMarkedPreCS getIsMarkedPreCS() {
 		return isMarkedPreCS;
 	}
@@ -201,6 +205,7 @@ public class VariableExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIsMarkedPreCS(IsMarkedPreCS newIsMarkedPreCS) {
 		if (newIsMarkedPreCS != isMarkedPreCS) {
 			NotificationChain msgs = null;

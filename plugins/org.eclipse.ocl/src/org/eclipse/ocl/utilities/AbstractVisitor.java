@@ -101,6 +101,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the operation-call source and then its arguments.
      * Returns the result of {@link #handleOperationCallExp(OperationCallExp, Object, List)}.
      */
+	@Override
 	public T visitOperationCallExp(OperationCallExp<C, O> callExp) {
         OCLExpression<C> source = callExp.getSource();
 		T sourceResult = safeVisit(source);
@@ -141,6 +142,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitVariableExp(VariableExp<C, PM> v) {
 		return result;
 	}
@@ -149,6 +151,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the property-call source and then its qualifiers (if any).
      * Returns the result of {@link #handlePropertyCallExp(PropertyCallExp, Object, List)}.
      */
+	@Override
 	public T visitPropertyCallExp(PropertyCallExp<C, P> callExp) {
         // source is null when the property call expression is an
         //    association class navigation qualifier
@@ -194,6 +197,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the association-class-call source and then its qualifiers (if any).
      * Returns the result of {@link #handleAssociationClassCallExp(AssociationClassCallExp, Object, List)}.
      */
+	@Override
 	public T visitAssociationClassCallExp(AssociationClassCallExp<C, P> callExp) {
 		T sourceResult = safeVisit(callExp.getSource());
 		
@@ -234,6 +238,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the variable's initialization expression (if any).
      * Returns the result of {@link #handleVariable(Variable, Object)}.
      */
+	@Override
 	public T visitVariable(Variable<C, PM> variable) {
         T initResult = safeVisit(variable.getInitExpression());
 		
@@ -261,6 +266,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the if expression's condition, then, and else expressions.
      * Returns the result of {@link #handleIfExp(IfExp, Object, Object, Object)}.
      */
+	@Override
 	public T visitIfExp(IfExp<C> ifExp) {
 		return handleIfExp(ifExp,
 				safeVisit(ifExp.getCondition()),
@@ -289,6 +295,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitTypeExp(TypeExp<C> t) {
 		return result;
 	}
@@ -297,6 +304,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the message expression's target and then its arguments.
      * Returns the result of {@link #handleMessageExp(MessageExp, Object, List)}.
      */
+	@Override
 	public T visitMessageExp(MessageExp<C, COA, SSA> messageExp) {
         T targetResult = safeVisit(messageExp.getTarget());
         
@@ -336,6 +344,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitUnspecifiedValueExp(UnspecifiedValueExp<C> unspecExp) {
 		return result;
 	}
@@ -343,6 +352,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitStateExp(StateExp<C, S> stateExp) {
 		return result;
 	}
@@ -350,6 +360,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitIntegerLiteralExp(IntegerLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -357,13 +368,15 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
-    public T visitUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp<C> literalExp) {
+    @Override
+	public T visitUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp<C> literalExp) {
         return result;
     }
 
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitRealLiteralExp(RealLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -371,6 +384,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitStringLiteralExp(StringLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -378,6 +392,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitBooleanLiteralExp(BooleanLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -385,6 +400,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitNullLiteralExp(NullLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -392,6 +408,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitInvalidLiteralExp(InvalidLiteralExp<C> literalExp) {
 		return result;
 	}
@@ -400,6 +417,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the tuple literal's parts.
      * Returns the result of {@link #handleTupleLiteralExp(TupleLiteralExp, List)}.
      */
+	@Override
 	public T visitTupleLiteralExp(TupleLiteralExp<C, P> literalExp) {
         List<T> partResults;
         List<TupleLiteralPart<C, P>> parts = literalExp.getPart();
@@ -437,6 +455,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the tuple literal part's value, if any.
      * Returns the result of {@link #handleTupleLiteralPart(TupleLiteralPart, Object)}.
      */
+	@Override
 	public T visitTupleLiteralPart(TupleLiteralPart<C, P> part) {
         T valueResult = safeVisit(part.getValue());
 		
@@ -464,6 +483,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Visits the let's variable declaration then its 'in' expression.
      * Returns the result of {@link #handleLetExp(LetExp, Object, Object)}.
      */
+	@Override
 	public T visitLetExp(LetExp<C, PM> letExp) {
 		return handleLetExp(letExp,
 				safeVisit(letExp.getVariable()),
@@ -489,6 +509,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
     /**
      * Simply returns {@link #result}.
      */
+	@Override
 	public T visitEnumLiteralExp(EnumLiteralExp<C, EL> literalExp) {
 		return result;
 	}
@@ -498,6 +519,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * 
      * Returns the result of {@link #handleCollectionLiteralExp(CollectionLiteralExp, List)}.
      */
+	@Override
 	public T visitCollectionLiteralExp(CollectionLiteralExp<C> literalExp) {
         List<T> partResults;
         List<CollectionLiteralPart<C>> parts = literalExp.getPart();
@@ -536,7 +558,8 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * 
      * Returns the result of {@link #handleCollectionItem(CollectionItem, Object)}
      */
-    public T visitCollectionItem(CollectionItem<C> item) {
+    @Override
+	public T visitCollectionItem(CollectionItem<C> item) {
     	T itemResult = safeVisit(item.getItem());
     	
         return handleCollectionItem(item, itemResult);
@@ -562,7 +585,8 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * 
      * Returns the result of {@link #handleCollectionRange(CollectionRange, Object, Object)}.
      */
-    public T visitCollectionRange(CollectionRange<C> range) {
+    @Override
+	public T visitCollectionRange(CollectionRange<C> range) {
         return handleCollectionRange(range,
         		safeVisit(range.getFirst()),
         		safeVisit(range.getLast()));
@@ -590,6 +614,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * expression.
      * Returns the result of {@link #handleIteratorExp(IteratorExp, Object, List, Object)}.
      */
+	@Override
 	public T visitIteratorExp(IteratorExp<C, PM> callExp) {
         T sourceResult = safeVisit(callExp.getSource());
         
@@ -634,6 +659,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * result variable, and body expression.
      * Returns the result of {@link #handleIterateExp(IterateExp, Object, List, Object, Object)}.
      */
+	@Override
 	public T visitIterateExp(IterateExp<C, PM> callExp) {
         T sourceResult = safeVisit(callExp.getSource());
         
@@ -684,7 +710,8 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * Returns the result of
      * {@link #handleExpressionInOCL(ExpressionInOCL, Object, Object, List, Object)}.
      */
-    public T visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
+    @Override
+	public T visitExpressionInOCL(ExpressionInOCL<C, PM> expression) {
         T contextResult = safeVisit(expression.getContextVariable());
         
         Variable<C, PM> resultVar = expression.getResultVariable();
@@ -738,6 +765,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * 
      * @see #getSpecification(Object)
      */
+	@Override
 	public T visitConstraint(CT constraint) {
         T specificationResult = safeVisit(getSpecification(constraint));
 		

@@ -94,6 +94,7 @@ public class DefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DefExpressionCS getDefExpressionCS() {
 		return defExpressionCS;
 	}
@@ -124,6 +125,7 @@ public class DefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDefExpressionCS(DefExpressionCS newDefExpressionCS) {
 		if (newDefExpressionCS != defExpressionCS) {
 			NotificationChain msgs = null;
@@ -152,6 +154,7 @@ public class DefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isStatic() {
 		return (eFlags & STATIC_EFLAG) != 0;
 	}
@@ -162,6 +165,7 @@ public class DefCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStatic(boolean newStatic) {
 		boolean oldStatic = (eFlags & STATIC_EFLAG) != 0;
 		if (newStatic)

@@ -91,6 +91,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getBody() {
 		return body;
 	}
@@ -121,6 +122,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBody(OCLExpression<C> newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
@@ -145,6 +147,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Variable<C, PM>> getIterator() {
 		if (iterator == null) {
 			iterator = new EObjectContainmentEList<Variable<C, PM>>(
@@ -158,6 +161,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkSourceCollection(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return LoopExpOperations.checkSourceCollection(this, diagnostics,
@@ -169,6 +173,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkLoopVariableInit(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return LoopExpOperations.checkLoopVariableInit(this, diagnostics,
@@ -180,6 +185,7 @@ public abstract class LoopExpImpl<C, PM>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkLoopVariableType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return LoopExpOperations.checkLoopVariableType(this, diagnostics,

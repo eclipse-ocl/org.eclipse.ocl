@@ -49,12 +49,14 @@ public class EnvironmentRegistryImpl implements Registry {
     private static final String E_PACKAGE = "package"; //$NON-NLS-1$
     private static final String A_NS_URI = "nsURI"; //$NON-NLS-1$
     
+	@Override
 	public <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEnvironmentFor(
 			OCLExpression<C> expression) {
 		return getEnvironmentFor(expression.getType());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
 	Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEnvironmentFor(
@@ -94,6 +96,7 @@ public class EnvironmentRegistryImpl implements Registry {
 		return null;
 	}
 
+	@Override
 	public void registerEnvironment(
 			Environment<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> environment) {
 
@@ -102,7 +105,8 @@ public class EnvironmentRegistryImpl implements Registry {
 		}
 	}
     
-    public void deregisterEnvironment(
+    @Override
+	public void deregisterEnvironment(
             Environment<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> environment) {
         environments.remove(environment);
     }
@@ -228,6 +232,7 @@ public class EnvironmentRegistryImpl implements Registry {
 			}
 		}
 
+		@Override
 		public void registryChanged(IRegistryChangeEvent event) {
 			for (IExtensionDelta delta : event.getExtensionDeltas(
                     namespace, PT_ENVIRONMENTS)) {

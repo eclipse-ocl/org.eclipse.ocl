@@ -19,6 +19,7 @@ public class StringPreference extends Preference<String>
 		super(pluginId, key, defaultValue);
 	}
 
+	@Override
 	public /*@NonNull*/ String getValueOf(/*@NonNull*/ String string) {
 		return string;
 	}

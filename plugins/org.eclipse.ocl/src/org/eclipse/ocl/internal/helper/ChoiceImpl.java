@@ -51,21 +51,25 @@ class ChoiceImpl implements Choice {
 	}
 
     // implements the inherited specification
+	@Override
 	public String getName() {
 		return name;
 	}
 
     // implements the inherited specification
+	@Override
 	public String getDescription() {
 		return description;
 	}
 
     // implements the inherited specification
+	@Override
 	public ChoiceKind getKind() {
 		return kind;
 	}
 	
     // implements the inherited specification
+	@Override
 	public Object getElement() {
 		return element;
 	}

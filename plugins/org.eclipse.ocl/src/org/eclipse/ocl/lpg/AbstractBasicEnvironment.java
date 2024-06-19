@@ -67,6 +67,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 	 * Subclasses may override or extend this implementation.
 	 * </p>
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Class<T> adapterType) {
 		T result;
@@ -82,6 +83,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return result;
 	}
 	
+	@Override
 	public void analyzerError(String problemMessage, String problemContext, Object problemObject) {
 		CSTNode cstNode = getASTMapping(problemObject);
 		int startOffset = cstNode != null ? cstNode.getStartOffset() : -1;
@@ -89,6 +91,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		analyzerError(problemMessage, problemContext, startOffset, endOffset);
 	}
 	
+	@Override
 	public void analyzerError(String problemMessage, String problemContext, List<?> problemObjects) {
 		int startOffset = -1;
 		int endOffset = -1;
@@ -101,6 +104,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		analyzerError(problemMessage, problemContext, startOffset, endOffset);
 	}
 	
+	@Override
 	public void analyzerError(String problemMessage, String problemContext, int startOffset, int endOffset) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler != null) {
@@ -109,6 +113,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 	
+	@Override
 	public void analyzerWarning(String problemMessage, String problemContext, Object problemObject) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler != null) {
@@ -129,6 +134,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return parent;
 	}
 	
+	@Override
 	public AbstractParser getParser() {
 		return parser;
 	}	
@@ -140,6 +146,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return astNodeToCSTNodeMap;
 	}
 
+	@Override
 	public CSTNode getASTMapping(Object object) {
 		if (object instanceof CSTNode) {
             return (CSTNode) object;
@@ -150,6 +157,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
         }
 	}
 
+	@Override
 	public FormattingHelper getFormatter() {
 		if (formatter == null) {
             formatter = createFormattingHelper();
@@ -170,6 +178,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return AbstractFormattingHelper.INSTANCE;
 	}
 
+	@Override
 	public ProblemHandler getProblemHandler() {
 		if (problemHandler == null) {
 			BasicEnvironment parent = getParent();
@@ -182,6 +191,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return problemHandler;
 	}
 
+	@Override
 	public void initASTMapping(Object astNode, CSTNode cstNode) {
 		initASTMapping(astNode, cstNode, astNode);
 	}
@@ -189,6 +199,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 	/**
 	 * @since 1.3
 	 */
+	@Override
 	public void initASTMapping(Object fromAstNode, CSTNode cstNode,
 			Object toAstNode) {
 		if (cstNode != null) {
@@ -219,6 +230,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 
+	@Override
 	public void lexerError(int errorCode, int startOffset, int endOffset) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler != null) {
@@ -235,6 +247,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 
+	@Override
 	public void parserError(int errorCode, int leftToken, int rightToken, String tokenText) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler == null) {
@@ -299,6 +312,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		this.parent = parent;
 	}
 	
+	@Override
 	public void setParser(AbstractParser parser) {
 		this.parser = parser;
 		if (problemHandler != null) {
@@ -306,12 +320,14 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 
+	@Override
 	public ProblemHandler setProblemHandler(ProblemHandler newProblemHandler) {
 		ProblemHandler oldProblemHandler = problemHandler;
 		this.problemHandler = newProblemHandler;
 		return oldProblemHandler;
 	}
 
+	@Override
 	public void utilityError(String problemMessage, String problemContext, Object problemObject) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler != null) {
@@ -323,6 +339,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 	
+	@Override
 	public void validatorError(String problemMessage, String problemContext, Object problemObject) {
 		ProblemHandler problemHandler = getProblemHandler();
 		if (problemHandler != null) {
@@ -334,6 +351,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		}
 	}
 
+	@Override
 	public void problem(Severity severity, Phase phase, String problemMessage,
 			String problemContext, Object problemObject) {
 		ProblemHandler problemHandler = getProblemHandler();
@@ -358,6 +376,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 	    return options;
 	}
 	
+	@Override
 	public Map<Option<?>, Object> getOptions() {
 		Map<Option<?>, Object> result = (getParent() != null)
 			? new java.util.HashMap<Option<?>, Object>(getParent().getOptions())
@@ -368,10 +387,12 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return result;
 	}
 	
+	@Override
 	public <T> void setOption(Option<T> option, T value) {
 		basicGetOptions().put(option, value);
 	}
 	
+	@Override
 	public <T> void putOptions(Map<? extends Option<T>, ? extends T> options) {
 		Map<Option<?>, Object> myOptions = basicGetOptions();
 		
@@ -379,6 +400,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		myOptions.putAll(options);
 	}
 	
+	@Override
 	public <T> T removeOption(Option<T> option) {
 		T result = getValue(option);
 		
@@ -387,6 +409,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return result;
 	}
 	
+	@Override
 	public <T> Map<Option<T>, T> removeOptions(Collection<Option<T>> options) {
 		Map<Option<T>, T> result = new java.util.HashMap<Option<T>, T>();
 		
@@ -400,6 +423,7 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return result;
 	}
 	
+	@Override
 	public Map<Option<?>, Object> clearOptions() {
 		Map<Option<?>, Object> myOptions = basicGetOptions();
 		
@@ -411,11 +435,13 @@ public abstract class AbstractBasicEnvironment implements BasicEnvironment2 {
 		return result;
 	}
 	
+	@Override
 	public boolean isEnabled(Option<Boolean> option) {
 		Boolean result = getValue(option);
 		return (result == null)? false : result.booleanValue();
 	}
 	
+	@Override
 	public <T> T getValue(Option<T> option) {
 		Map<Option<?>, Object> options = basicGetOptions();
 		@SuppressWarnings("unchecked")

@@ -136,11 +136,13 @@ public abstract class AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA
     }
 
     // implements the interface method
+	@Override
 	public EvaluationEnvironment<C, O, P, CLS, E> getEvaluationEnvironment() {
 		return evalEnv;
 	}
 
     // implements the interface method
+	@Override
 	public Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> getEnvironment() {
 		return env;
 	}
@@ -150,6 +152,7 @@ public abstract class AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA
     }
 
     // implements the interface method
+	@Override
 	public Map<? extends CLS, ? extends Set<? extends E>> getExtentMap() {
 		return extentMap;
 	}
@@ -237,6 +240,7 @@ public abstract class AbstractEvaluationVisitor<PK, C, O, P, EL, PM, S, COA, SSA
 	 *
 	 * @return the result of the evaluation
 	 */
+	@Override
 	public Object visitExpression(OCLExpression<C> expression) {
         try {
             return expression.accept(getVisitor());

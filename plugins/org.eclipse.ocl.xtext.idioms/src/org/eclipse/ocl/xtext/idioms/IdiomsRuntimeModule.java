@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.idioms;
 
-import org.eclipse.ocl.xtext.idioms.AbstractIdiomsRuntimeModule;
 import org.eclipse.ocl.xtext.idioms.serializer.IdiomsCrossReferenceSerializer;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;

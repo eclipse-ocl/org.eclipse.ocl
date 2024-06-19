@@ -68,6 +68,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public String getName() {
 		if (name == null) {
 			Environment<?, Object, O, P, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -109,6 +110,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<O> oclOperations() {
 		if (operations == null) {
 			Environment<?, ?, O, ?, ?, ?, ?, ?, ?, ?, ?, ?> env = Environment.Registry.INSTANCE
@@ -126,6 +128,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkTupleTypeName(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return TupleTypeOperations.checkTupleTypeName(this, diagnostics,
@@ -137,6 +140,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkPartNamesUnique(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return TupleTypeOperations.checkPartNamesUnique(this, diagnostics,
@@ -148,6 +152,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkFeaturesOnlyProperties(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return TupleTypeOperations.checkFeaturesOnlyProperties(this,
@@ -159,6 +164,7 @@ public class TupleTypeImpl<O, P>
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public EList<P> oclProperties() {
 		if (properties == null) {
 			properties = new BasicEList<P>();

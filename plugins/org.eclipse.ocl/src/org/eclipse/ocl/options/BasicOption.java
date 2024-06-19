@@ -48,6 +48,7 @@ public class BasicOption<T> implements Option<T> {
 		this.defaultValue = defaultValue;
 	}
 	
+	@Override
 	public final String getKey() {
 		return key;
 	}
@@ -64,6 +65,7 @@ public class BasicOption<T> implements Option<T> {
 		return String.valueOf(pluginId) + " / " + String.valueOf(key) + "[" + String.valueOf(defaultValue) + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 	
+	@Override
 	public final T getDefaultValue() {
 		return defaultValue;
 	}

@@ -78,6 +78,7 @@ public class UtilitiesFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public UtilitiesPackage getUtilitiesPackage() {
 		return (UtilitiesPackage) getEPackage();
 	}

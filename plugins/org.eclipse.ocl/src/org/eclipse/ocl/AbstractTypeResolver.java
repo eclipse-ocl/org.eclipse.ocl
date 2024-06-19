@@ -117,6 +117,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public C resolve(C type) {
 		C result = (type == null)? type : resolveSwitch.doSwitch((EObject) type);
 		
@@ -138,6 +139,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
     }
     
 	// Documentation copied from the inherited specification
+	@Override
 	public Resource getResource() {
 		if (resource == null) {
 		    // because we are creating the resource, we should dispose it
@@ -198,6 +200,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public CollectionType<C, O> resolveCollectionType(
 			CollectionKind kind,
 			C elementType) {
@@ -371,6 +374,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 
 	// Documentation copied from the inherited specification
+	@Override
 	public TupleType<O, P> resolveTupleType(
 			EList<? extends TypedElement<C>> parts) {
 		TupleType<O, P> result = findTupleType(parts);
@@ -482,6 +486,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public TypeType<C, O> resolveTypeType(C type) {
 		if (type == getOclType().getReferredType()) {
 			// this is the canonical OclType instance
@@ -589,6 +594,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public MessageType<C, O, P> resolveOperationMessageType(O operation) {
 		if (operation == getOclMessage().getReferredOperation()) {
 			// this is the canonical OclMessage type
@@ -605,6 +611,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public MessageType<C, O, P> resolveSignalMessageType(C signal) {
 		if (signal == getOclMessage().getReferredSignal()) {
 			// this is the canonical OclMessage type
@@ -727,6 +734,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public O resolveAdditionalOperation(C owner, O operation) {
 		C shadow = getShadowClass(owner);
 		
@@ -739,6 +747,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 		return result;
 	}
 	
+	@Override
 	public List<O> getAdditionalOperations(C owner) {
         if (hasAdditionalFeatures()) {
     		C shadow = findShadowClass(owner);
@@ -833,6 +842,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
 	}
 	
 	// Documentation copied from the inherited specification
+	@Override
 	public P resolveAdditionalAttribute(C owner, P property) {
 		C shadow = getShadowClass(owner);
 		
@@ -858,6 +868,7 @@ public abstract class AbstractTypeResolver<PK, C, O, P, PM>
             || (findAdditionalFeaturesPackage() != null);
     }
     
+	@Override
 	public List<P> getAdditionalAttributes(C owner) {
         if (hasAdditionalFeatures()) {
     		C shadow = findShadowClass(owner);

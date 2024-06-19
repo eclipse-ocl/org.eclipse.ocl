@@ -79,6 +79,7 @@ public class TemplateParameterTypeImpl<O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getSpecification() {
 		return specification;
 	}
@@ -88,6 +89,7 @@ public class TemplateParameterTypeImpl<O>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSpecification(String newSpecification) {
 		String oldSpecification = specification;
 		specification = newSpecification;

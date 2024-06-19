@@ -444,6 +444,7 @@ public class ExpressionsPackageImpl
 		EValidator.Registry.INSTANCE.put(theExpressionsPackage,
 			new EValidator.Descriptor() {
 
+				@Override
 				public EValidator getEValidator() {
 					return ExpressionsValidator.INSTANCE;
 				}
@@ -463,6 +464,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAssociationClassCallExp() {
 		return associationClassCallExpEClass;
 	}
@@ -472,6 +474,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getAssociationClassCallExp_ReferredAssociationClass() {
 		return (EReference) associationClassCallExpEClass
 			.getEStructuralFeatures().get(0);
@@ -482,6 +485,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBooleanLiteralExp() {
 		return booleanLiteralExpEClass;
 	}
@@ -491,6 +495,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBooleanLiteralExp_BooleanSymbol() {
 		return (EAttribute) booleanLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -501,6 +506,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCallExp() {
 		return callExpEClass;
 	}
@@ -510,6 +516,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCallExp_Source() {
 		return (EReference) callExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -519,6 +526,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionItem() {
 		return collectionItemEClass;
 	}
@@ -528,6 +536,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionItem_Item() {
 		return (EReference) collectionItemEClass.getEStructuralFeatures()
 			.get(0);
@@ -538,6 +547,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionLiteralExp() {
 		return collectionLiteralExpEClass;
 	}
@@ -547,6 +557,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCollectionLiteralExp_Kind() {
 		return (EAttribute) collectionLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -557,6 +568,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionLiteralExp_Part() {
 		return (EReference) collectionLiteralExpEClass.getEStructuralFeatures()
 			.get(1);
@@ -567,6 +579,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCollectionLiteralExp_SimpleRange() {
 		return (EAttribute) collectionLiteralExpEClass.getEStructuralFeatures()
 			.get(2);
@@ -577,6 +590,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionLiteralPart() {
 		return collectionLiteralPartEClass;
 	}
@@ -586,6 +600,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionRange() {
 		return collectionRangeEClass;
 	}
@@ -595,6 +610,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionRange_First() {
 		return (EReference) collectionRangeEClass.getEStructuralFeatures()
 			.get(0);
@@ -605,6 +621,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionRange_Last() {
 		return (EReference) collectionRangeEClass.getEStructuralFeatures()
 			.get(1);
@@ -615,6 +632,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getEnumLiteralExp() {
 		return enumLiteralExpEClass;
 	}
@@ -624,6 +642,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getEnumLiteralExp_ReferredEnumLiteral() {
 		return (EReference) enumLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -634,6 +653,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFeatureCallExp() {
 		return featureCallExpEClass;
 	}
@@ -643,6 +663,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getFeatureCallExp_MarkedPre() {
 		return (EAttribute) featureCallExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -653,6 +674,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIfExp() {
 		return ifExpEClass;
 	}
@@ -662,6 +684,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExp_Condition() {
 		return (EReference) ifExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -671,6 +694,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExp_ThenExpression() {
 		return (EReference) ifExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -680,6 +704,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIfExp_ElseExpression() {
 		return (EReference) ifExpEClass.getEStructuralFeatures().get(2);
 	}
@@ -689,6 +714,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerLiteralExp() {
 		return integerLiteralExpEClass;
 	}
@@ -698,6 +724,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExp_IntegerSymbol() {
 		return (EAttribute) integerLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -709,6 +736,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExp_ExtendedIntegerSymbol() {
 		return (EAttribute) integerLiteralExpEClass.getEStructuralFeatures()
 			.get(1);
@@ -720,6 +748,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerLiteralExp_LongSymbol() {
 		return (EAttribute) integerLiteralExpEClass.getEStructuralFeatures()
 			.get(2);
@@ -730,6 +759,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getUnlimitedNaturalLiteralExp() {
 		return unlimitedNaturalLiteralExpEClass;
 	}
@@ -739,6 +769,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExp_IntegerSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpEClass
 			.getEStructuralFeatures().get(0);
@@ -749,6 +780,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExp_Unlimited() {
 		return (EAttribute) unlimitedNaturalLiteralExpEClass
 			.getEStructuralFeatures().get(1);
@@ -760,6 +792,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExp_ExtendedIntegerSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpEClass
 			.getEStructuralFeatures().get(2);
@@ -771,6 +804,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getUnlimitedNaturalLiteralExp_LongSymbol() {
 		return (EAttribute) unlimitedNaturalLiteralExpEClass
 			.getEStructuralFeatures().get(3);
@@ -781,6 +815,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInvalidLiteralExp() {
 		return invalidLiteralExpEClass;
 	}
@@ -790,6 +825,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIterateExp() {
 		return iterateExpEClass;
 	}
@@ -799,6 +835,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getIterateExp_Result() {
 		return (EReference) iterateExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -808,6 +845,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIteratorExp() {
 		return iteratorExpEClass;
 	}
@@ -817,6 +855,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLetExp() {
 		return letExpEClass;
 	}
@@ -826,6 +865,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLetExp_In() {
 		return (EReference) letExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -835,6 +875,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLetExp_Variable() {
 		return (EReference) letExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -844,6 +885,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLiteralExp() {
 		return literalExpEClass;
 	}
@@ -853,6 +895,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLoopExp() {
 		return loopExpEClass;
 	}
@@ -862,6 +905,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLoopExp_Body() {
 		return (EReference) loopExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -871,6 +915,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLoopExp_Iterator() {
 		return (EReference) loopExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -880,6 +925,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMessageExp() {
 		return messageExpEClass;
 	}
@@ -889,6 +935,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExp_Target() {
 		return (EReference) messageExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -898,6 +945,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExp_Argument() {
 		return (EReference) messageExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -907,6 +955,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExp_CalledOperation() {
 		return (EReference) messageExpEClass.getEStructuralFeatures().get(2);
 	}
@@ -916,6 +965,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageExp_SentSignal() {
 		return (EReference) messageExpEClass.getEStructuralFeatures().get(3);
 	}
@@ -925,6 +975,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNavigationCallExp() {
 		return navigationCallExpEClass;
 	}
@@ -934,6 +985,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getNavigationCallExp_Qualifier() {
 		return (EReference) navigationCallExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -944,6 +996,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getNavigationCallExp_NavigationSource() {
 		return (EReference) navigationCallExpEClass.getEStructuralFeatures()
 			.get(1);
@@ -954,6 +1007,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNullLiteralExp() {
 		return nullLiteralExpEClass;
 	}
@@ -963,6 +1017,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNumericLiteralExp() {
 		return numericLiteralExpEClass;
 	}
@@ -972,6 +1027,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOCLExpression() {
 		return oclExpressionEClass;
 	}
@@ -981,6 +1037,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOperationCallExp() {
 		return operationCallExpEClass;
 	}
@@ -990,6 +1047,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCallExp_Argument() {
 		return (EReference) operationCallExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -1000,6 +1058,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getOperationCallExp_ReferredOperation() {
 		return (EReference) operationCallExpEClass.getEStructuralFeatures()
 			.get(1);
@@ -1010,6 +1069,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getOperationCallExp_OperationCode() {
 		return (EAttribute) operationCallExpEClass.getEStructuralFeatures()
 			.get(2);
@@ -1020,6 +1080,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPrimitiveLiteralExp() {
 		return primitiveLiteralExpEClass;
 	}
@@ -1029,6 +1090,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPropertyCallExp() {
 		return propertyCallExpEClass;
 	}
@@ -1038,6 +1100,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPropertyCallExp_ReferredProperty() {
 		return (EReference) propertyCallExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -1048,6 +1111,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getRealLiteralExp() {
 		return realLiteralExpEClass;
 	}
@@ -1057,6 +1121,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getRealLiteralExp_RealSymbol() {
 		return (EAttribute) realLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -1067,6 +1132,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStateExp() {
 		return stateExpEClass;
 	}
@@ -1076,6 +1142,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStateExp_ReferredState() {
 		return (EReference) stateExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -1085,6 +1152,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStringLiteralExp() {
 		return stringLiteralExpEClass;
 	}
@@ -1094,6 +1162,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStringLiteralExp_StringSymbol() {
 		return (EAttribute) stringLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -1104,6 +1173,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTupleLiteralExp() {
 		return tupleLiteralExpEClass;
 	}
@@ -1113,6 +1183,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTupleLiteralExp_Part() {
 		return (EReference) tupleLiteralExpEClass.getEStructuralFeatures()
 			.get(0);
@@ -1123,6 +1194,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTupleLiteralPart() {
 		return tupleLiteralPartEClass;
 	}
@@ -1132,6 +1204,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTupleLiteralPart_Value() {
 		return (EReference) tupleLiteralPartEClass.getEStructuralFeatures()
 			.get(0);
@@ -1142,6 +1215,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTupleLiteralPart_Attribute() {
 		return (EReference) tupleLiteralPartEClass.getEStructuralFeatures()
 			.get(1);
@@ -1152,6 +1226,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTypeExp() {
 		return typeExpEClass;
 	}
@@ -1161,6 +1236,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTypeExp_ReferredType() {
 		return (EReference) typeExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -1170,6 +1246,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getUnspecifiedValueExp() {
 		return unspecifiedValueExpEClass;
 	}
@@ -1179,6 +1256,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVariable() {
 		return variableEClass;
 	}
@@ -1188,6 +1266,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariable_InitExpression() {
 		return (EReference) variableEClass.getEStructuralFeatures().get(0);
 	}
@@ -1197,6 +1276,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariable_RepresentedParameter() {
 		return (EReference) variableEClass.getEStructuralFeatures().get(1);
 	}
@@ -1206,6 +1286,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVariableExp() {
 		return variableExpEClass;
 	}
@@ -1215,6 +1296,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVariableExp_ReferredVariable() {
 		return (EReference) variableExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -1224,6 +1306,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getCollectionKind() {
 		return collectionKindEEnum;
 	}
@@ -1233,6 +1316,7 @@ public class ExpressionsPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ExpressionsFactory getExpressionsFactory() {
 		return (ExpressionsFactory) getEFactoryInstance();
 	}

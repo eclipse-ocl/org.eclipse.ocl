@@ -78,6 +78,7 @@ public abstract class FeatureCallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isMarkedPre() {
 		return (eFlags & MARKED_PRE_EFLAG) != 0;
 	}
@@ -87,6 +88,7 @@ public abstract class FeatureCallExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMarkedPre(boolean newMarkedPre) {
 		boolean oldMarkedPre = (eFlags & MARKED_PRE_EFLAG) != 0;
 		if (newMarkedPre)

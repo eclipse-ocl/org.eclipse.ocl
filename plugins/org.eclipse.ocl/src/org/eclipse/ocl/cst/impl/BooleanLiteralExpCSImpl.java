@@ -103,6 +103,7 @@ public class BooleanLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getSymbol() {
 		return symbol;
 	}
@@ -112,6 +113,7 @@ public class BooleanLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSymbol(String newSymbol) {
 		String oldSymbol = symbol;
 		symbol = newSymbol;
@@ -125,6 +127,7 @@ public class BooleanLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Boolean getBooleanSymbol() {
 		return booleanSymbol;
 	}
@@ -134,6 +137,7 @@ public class BooleanLiteralExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBooleanSymbol(Boolean newBooleanSymbol) {
 		Boolean oldBooleanSymbol = booleanSymbol;
 		booleanSymbol = newBooleanSymbol;

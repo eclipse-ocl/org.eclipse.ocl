@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.idioms.LocatorDeclaration;
 import org.eclipse.ocl.xtext.idioms.SegmentDeclaration;
-import org.eclipse.ocl.xtext.idioms.validation.AbstractIdiomsValidator;
 
 /**
  * This class contains custom validation rules.

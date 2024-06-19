@@ -23,9 +23,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.idioms.Idiom;
-import org.eclipse.ocl.xtext.idioms.IdiomsModel;
-import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
 {

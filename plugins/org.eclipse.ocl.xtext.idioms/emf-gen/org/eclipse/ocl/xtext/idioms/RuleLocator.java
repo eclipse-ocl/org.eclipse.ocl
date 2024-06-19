@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.idioms;
 
 import org.eclipse.xtext.AbstractRule;
-import org.eclipse.xtext.Grammar;
 
 /**
  * <!-- begin-user-doc -->

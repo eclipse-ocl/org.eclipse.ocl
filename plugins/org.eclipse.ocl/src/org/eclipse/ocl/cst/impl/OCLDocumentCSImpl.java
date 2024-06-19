@@ -74,6 +74,7 @@ public class OCLDocumentCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PackageDeclarationCS> getPackageDeclarations() {
 		if (packageDeclarations == null) {
 			packageDeclarations = new EObjectContainmentEList<PackageDeclarationCS>(

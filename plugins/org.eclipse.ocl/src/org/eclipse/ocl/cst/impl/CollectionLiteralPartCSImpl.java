@@ -71,6 +71,7 @@ public class CollectionLiteralPartCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getExpressionCS() {
 		return expressionCS;
 	}
@@ -102,6 +103,7 @@ public class CollectionLiteralPartCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setExpressionCS(OCLExpressionCS newExpressionCS) {
 		if (newExpressionCS != expressionCS) {
 			NotificationChain msgs = null;

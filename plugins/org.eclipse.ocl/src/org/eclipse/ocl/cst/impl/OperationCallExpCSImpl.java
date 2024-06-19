@@ -81,6 +81,7 @@ public class OperationCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Boolean getIsAtomic() {
 		return isAtomic;
 	}
@@ -91,6 +92,7 @@ public class OperationCallExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIsAtomic(Boolean newIsAtomic) {
 		Boolean oldIsAtomic = isAtomic;
 		isAtomic = newIsAtomic;

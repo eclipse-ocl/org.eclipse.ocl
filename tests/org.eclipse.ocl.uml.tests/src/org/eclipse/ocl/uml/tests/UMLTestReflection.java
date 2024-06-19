@@ -72,15 +72,18 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 			org.eclipse.ocl.uml.UMLPackage.eINSTANCE.getClass();
 		}
 
+		@Override
 		public OCL createOCL(ResourceSet resourceSet) {
 			return OCL.newInstance(resourceSet);
 		}
 
+		@Override
 		public TestReflection<EObject, Package, Type, Classifier, Class, DataType, PrimitiveType, Enumeration, Operation, Parameter, Property, Property, Property, EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint> createReflection(
 				Environment<Package, Classifier, Operation, Property, EnumerationLiteral, Parameter, State, CallOperationAction, SendSignalAction, Constraint, Class, EObject> environment) {
 			return new UMLTestReflection((UMLEnvironment) environment);
 		}
 
+		@Override
 		public ResourceSet createResourceSet() {
 			Environment.Registry.INSTANCE.registerEnvironment(
 				new UMLEnvironmentFactory().createEnvironment());
@@ -107,6 +110,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 			return resourceSet;
 		}
 
+		@Override
 		public String getTestPlugInId() {
 			return PLUGIN_ID;
 		}
@@ -136,42 +140,52 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	protected static Package ecorePrimitiveTypes;
 	protected static Package oclMetamodel;
 
+	@Override
 	public void addSupertype(Class aClass, Class superType) {
 		aClass.getSuperClasses().add(superType);
 	}
 
+	@Override
 	public Class createClass() {
 		return UMLFactory.eINSTANCE.createClass();
 	}
 
+	@Override
 	public Comment createComment() {
 		return UMLFactory.eINSTANCE.createComment();
 	}
 
+	@Override
 	public void createGeneralization(Classifier special, Classifier general) {
 		special.createGeneralization(general);
 	}
 
+	@Override
 	public Package createNestedPackage(Package aPackage, String name) {
 		return aPackage.createNestedPackage(name);
 	}
 
+	@Override
 	public Property createOwnedAttribute(Class aClass, String name, Classifier type) {
 		return aClass.createOwnedAttribute(name, type);
 	}
 
+	@Override
 	public Class createOwnedClass(Package aPackage, String name, boolean isAbstract) {
 		return aPackage.createOwnedClass(name, isAbstract);
 	}
 
+	@Override
 	public Enumeration createOwnedEnumeration(Package aPackage, String name) {
 		return aPackage.createOwnedEnumeration(name);
 	}
 
+	@Override
 	public EnumerationLiteral createOwnedLiteral(Enumeration anEnumeration, String name) {
 		return anEnumeration.createOwnedLiteral(name);
 	}
 
+	@Override
 	public Operation createOwnedOperation(Class aClass, String name, EList<String> paramNames, EList<Type> paramTypes, Type type, boolean isQuery) {
 		Operation operation = aClass.createOwnedOperation(name, paramNames, paramTypes, type);
 		if (isQuery) {
@@ -180,6 +194,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return operation;
 	}
 
+	@Override
 	public Operation createOwnedPrimitiveOperation(PrimitiveType aPrimitiveType, String name, EList<String> paramNames, EList<Type> paramTypes, Type type, boolean isQuery) {
 		Operation operation = aPrimitiveType.createOwnedOperation(name, paramNames, paramTypes, type);
 		if (isQuery) {
@@ -188,14 +203,17 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return operation;
 	}
 
+	@Override
 	public PrimitiveType createOwnedPrimitiveType(Package aPackage, String name) {
 		return aPackage.createOwnedPrimitiveType(name);
 	}
 
+	@Override
 	public Property createOwnedReference(Class aClass, String name, Class type) {
 		return aClass.createOwnedAttribute(name, type);
 	}
 
+	@Override
 	public Package createPackage(String name) {
 		Package uPackage = UMLFactory.eINSTANCE.createPackage();
 		uPackage.setName(name);
@@ -241,6 +259,7 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 //        fruitPackage = null;
 	} */
 
+	@Override
 	public String denormalize(String key) {
 		if (normalizers == null) {
 			normalizers = new HashMap<String, String>();
@@ -251,39 +270,48 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return normalizers.get(key);
 	}
 
+	@Override
 	public Property getAttribute(Classifier classifier, String name, Type type) {
 		return classifier.getAttribute(name, type);
 	}
 
+	@Override
 	public Classifier getBigDecimal() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigDecimal");
 	}
 
+	@Override
 	public Classifier getBigInteger() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigInteger");
 	}
 
+	@Override
 	public OCLExpression<Classifier> getBodyExpression(Constraint constraint) {
 		return ((ExpressionInOCL) constraint.getSpecification()).getBodyExpression();
 	}
 
+	@Override
 	public Classifier getClassTypeContext() {
 		return (Classifier) umlMetamodel.getOwnedType("Class");
 	}
 
+	@Override
 	public Classifier getClassifierTypeContext() {
 		return (Classifier) umlMetamodel.getOwnedType("Classifier");
 	}
 
+	@Override
 	public Classifier getCollectionKindTypeContext() {
 		Package expressionsPackage = oclMetamodel.getNestedPackage("expressions");
 		return (Classifier) expressionsPackage.getOwnedType("CollectionKind");
 	}
 
+	@Override
 	public Classifier getCommentTypeContext() {
 		return (Classifier) umlMetamodel.getOwnedType("Comment");
 	}
 
+	@Override
 	public java.lang.Class<Constraint> getConstraintClass() {
 		return Constraint.class;
 	}
@@ -292,34 +320,42 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 	//		return environment.getOCLStandardLibrary().getInvalid();
 	//	}
 
+	@Override
 	public EPackage getEPackage(Package pkg) {
 		return UMLUtil.convertToEcore(pkg, null).iterator().next();
 	}
 
+	@Override
 	public PrimitiveType getEcoreBigDecimal() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigDecimal");
 	}
 
+	@Override
 	public PrimitiveType getEcoreBigInteger() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("EBigInteger");
 	}
 
+	@Override
 	public PrimitiveType getEcoreLong() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("ELong");
 	}
 
+	@Override
 	public Package getEcorePrimitiveTypes() {
 		return ecorePrimitiveTypes;
 	}
 
+	@Override
 	public String getFruitModelPath() {
 		return "/model/OCLTest.uml";
 	}
 
+	@Override
 	public Classifier getMetaclass(String name) {
 		return (Classifier) umlMetamodel.getOwnedType(name);
 	}
 
+	@Override
 	public Classifier getMetametaclass(String name) {
 		return (Classifier) umlMetamodel.getOwnedType(name);
 	}
@@ -328,55 +364,68 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return oclMetamodel;
 	}
 
+	@Override
 	public String getNsURI(Package aPackage) {	// FIXME UOE
 		throw new UnsupportedOperationException(getClass().getName() + ".getNsURI");
 	}
 
+	@Override
 	public Type getOwnedType(Package aPackage, String name) {
 		return aPackage.getOwnedType(name);
 	}
 
+	@Override
 	public Classifier getOwner(Operation context) {
 		return (Classifier) context.getOwner();
 	}
 
+	@Override
 	public Package getResourcePackage(ResourceSet resourceSet, URI uri) {
 		Resource res = resourceSet.getResource(uri, true);
 		return (Package) res.getContents().get(0);
 	}
 
+	@Override
 	public Classifier getStringTypeContext() {
 		return OCLStandardLibraryImpl.INSTANCE.getString();
 	}
 
+	@Override
 	public PrimitiveType getUMLBoolean() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("Boolean");
 	}
 
+	@Override
 	public PrimitiveType getUMLInteger() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("Integer");
 	}
 
+	@Override
 	public PrimitiveType getUMLLong() {
 		return (PrimitiveType) ecorePrimitiveTypes.getOwnedType("ELong");
 	}
 
+	@Override
 	public Package getUMLMetamodel() {
 		return umlMetamodel;
 	}
 
+	@Override
 	public Package getUMLPrimitiveTypes() {
 		return umlPrimitiveTypes;
 	}
 
+	@Override
 	public PrimitiveType getUMLString() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("String");
 	}
 
+	@Override
 	public PrimitiveType getUMLUnlimitedNatural() {
 		return (PrimitiveType) umlPrimitiveTypes.getOwnedType("UnlimitedNatural");
 	}
 
+	@Override
 	public int getUnlimitedValue() {
 		return LiteralUnlimitedNatural.UNLIMITED;
 	}
@@ -440,10 +489,12 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		}
     } */
 
+	@Override
 	public boolean isOrdered(String key) {
 		return false;
 	}
 
+	@Override
 	public boolean isUnique(String key) {
 		if ("nestedPackage".equals(key)) {
 			return true;
@@ -451,42 +502,52 @@ EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint>
 		return false;
 	}
 
+	@Override
 	public void setAbstract(Class aClass, boolean isAbstract) {
 		aClass.setIsAbstract(isAbstract);
 	}
 
+	@Override
 	public void setIsOrdered(Property aProperty, boolean isOrdered) {
 		aProperty.setIsOrdered(isOrdered);
 	}
 
+	@Override
 	public void setIsQuery(Operation anOperation, boolean isQuery) {
 		anOperation.setIsQuery(isQuery);
 	}
 
+	@Override
 	public void setIsUnique(Property aProperty, boolean isUnique) {
 		aProperty.setIsUnique(isUnique);
 	}
 
+	@Override
 	public void setName(Class aClass, String name) {
 		aClass.setName(name);
 	}
 
+	@Override
 	public void setNsPrefix(Package aPackage, String name) {
 		//		aPackage.setNsPrefix(name);
 	}
 
+	@Override
 	public void setNsURI(Package aPackage, String name) {
 		//		aPackage.setNsPrefix(name);
 	}
 
+	@Override
 	public void setOperationUpper(Operation anOperation, int value) {
 		anOperation.setUpper(value);
 	}
 
+	@Override
 	public void setUpper(Property aProperty, int value) {
 		aProperty.setUpper(value);
 	}
 
+	@Override
 	public boolean usesCompareTo() {
 		return false;
 	}

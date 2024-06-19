@@ -83,6 +83,7 @@ public class OCLMessageArgCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypeCS getTypeCS() {
 		return typeCS;
 	}
@@ -113,6 +114,7 @@ public class OCLMessageArgCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTypeCS(TypeCS newTypeCS) {
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
@@ -141,6 +143,7 @@ public class OCLMessageArgCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getExpression() {
 		return expression;
 	}
@@ -171,6 +174,7 @@ public class OCLMessageArgCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setExpression(OCLExpressionCS newExpression) {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;

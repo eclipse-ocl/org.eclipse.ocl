@@ -82,6 +82,7 @@ public class StringLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getStringSymbol() {
 		return stringSymbol;
 	}
@@ -91,6 +92,7 @@ public class StringLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStringSymbol(String newStringSymbol) {
 		String oldStringSymbol = stringSymbol;
 		stringSymbol = newStringSymbol;
@@ -105,6 +107,7 @@ public class StringLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkStringType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return StringLiteralExpOperations.checkStringType(this, diagnostics,

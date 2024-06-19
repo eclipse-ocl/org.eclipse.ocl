@@ -348,6 +348,7 @@ protected final void reportErrorTokenMessage(int error_token, String msg) {
 	getIPrsStream().reportErrorTokenMessage(error_token, msg); 
 }
 
+	@Override
 	@SuppressWarnings("unchecked")
     public void ruleAction(int ruleNumber)
     {

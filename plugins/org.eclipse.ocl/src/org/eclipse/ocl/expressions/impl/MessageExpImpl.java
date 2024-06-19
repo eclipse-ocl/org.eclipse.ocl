@@ -157,6 +157,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getPropertyStartPosition() {
 		return propertyStartPosition;
 	}
@@ -166,6 +167,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPropertyStartPosition(int newPropertyStartPosition) {
 		int oldPropertyStartPosition = propertyStartPosition;
 		propertyStartPosition = newPropertyStartPosition;
@@ -180,6 +182,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getPropertyEndPosition() {
 		return propertyEndPosition;
 	}
@@ -189,6 +192,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPropertyEndPosition(int newPropertyEndPosition) {
 		int oldPropertyEndPosition = propertyEndPosition;
 		propertyEndPosition = newPropertyEndPosition;
@@ -203,6 +207,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getTarget() {
 		return target;
 	}
@@ -233,6 +238,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTarget(OCLExpression<C> newTarget) {
 		if (newTarget != target) {
 			NotificationChain msgs = null;
@@ -261,6 +267,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<OCLExpression<C>> getArgument() {
 		if (argument == null) {
 			argument = new EObjectContainmentEList<OCLExpression<C>>(
@@ -275,6 +282,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public COA getCalledOperation() {
 		return calledOperation;
 	}
@@ -306,6 +314,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCalledOperation(COA newCalledOperation) {
 		if (newCalledOperation != calledOperation) {
 			NotificationChain msgs = null;
@@ -333,6 +342,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SSA getSentSignal() {
 		return sentSignal;
 	}
@@ -363,6 +373,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSentSignal(SSA newSentSignal) {
 		if (newSentSignal != sentSignal) {
 			NotificationChain msgs = null;
@@ -390,6 +401,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkOperationArguments(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageExpOperations.checkOperationArguments(this, diagnostics,
@@ -401,6 +413,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkSignalArguments(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageExpOperations.checkSignalArguments(this, diagnostics,
@@ -412,6 +425,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkTargetDefinesOperation(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageExpOperations.checkTargetDefinesOperation(this,
@@ -423,6 +437,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkHasOperationOrSignal(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageExpOperations.checkHasOperationOrSignal(this, diagnostics,
@@ -434,6 +449,7 @@ public class MessageExpImpl<C, COA, SSA>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkTargetNotCollection(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return MessageExpOperations.checkTargetNotCollection(this, diagnostics,

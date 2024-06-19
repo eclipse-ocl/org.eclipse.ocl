@@ -22,64 +22,84 @@ package org.eclipse.ocl.parser.backtracking;
 
 public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBacktrackingLexersym {
     public final static int ERROR_SYMBOL = 0;
-    public final int getErrorSymbol() { return ERROR_SYMBOL; }
+    @Override
+	public final int getErrorSymbol() { return ERROR_SYMBOL; }
 
     public final static int SCOPE_UBOUND = 0;
-    public final int getScopeUbound() { return SCOPE_UBOUND; }
+    @Override
+	public final int getScopeUbound() { return SCOPE_UBOUND; }
 
     public final static int SCOPE_SIZE = 0;
-    public final int getScopeSize() { return SCOPE_SIZE; }
+    @Override
+	public final int getScopeSize() { return SCOPE_SIZE; }
 
     public final static int MAX_NAME_LENGTH = 0;
-    public final int getMaxNameLength() { return MAX_NAME_LENGTH; }
+    @Override
+	public final int getMaxNameLength() { return MAX_NAME_LENGTH; }
 
     public final static int NUM_STATES = 43;
-    public final int getNumStates() { return NUM_STATES; }
+    @Override
+	public final int getNumStates() { return NUM_STATES; }
 
     public final static int NT_OFFSET = 103;
-    public final int getNtOffset() { return NT_OFFSET; }
+    @Override
+	public final int getNtOffset() { return NT_OFFSET; }
 
     public final static int LA_STATE_OFFSET = 726;
-    public final int getLaStateOffset() { return LA_STATE_OFFSET; }
+    @Override
+	public final int getLaStateOffset() { return LA_STATE_OFFSET; }
 
     public final static int MAX_LA = 2;
-    public final int getMaxLa() { return MAX_LA; }
+    @Override
+	public final int getMaxLa() { return MAX_LA; }
 
     public final static int NUM_RULES = 268;
-    public final int getNumRules() { return NUM_RULES; }
+    @Override
+	public final int getNumRules() { return NUM_RULES; }
 
     public final static int NUM_NONTERMINALS = 35;
-    public final int getNumNonterminals() { return NUM_NONTERMINALS; }
+    @Override
+	public final int getNumNonterminals() { return NUM_NONTERMINALS; }
 
     public final static int NUM_SYMBOLS = 138;
-    public final int getNumSymbols() { return NUM_SYMBOLS; }
+    @Override
+	public final int getNumSymbols() { return NUM_SYMBOLS; }
 
     public final static int SEGMENT_SIZE = 8192;
-    public final int getSegmentSize() { return SEGMENT_SIZE; }
+    @Override
+	public final int getSegmentSize() { return SEGMENT_SIZE; }
 
     public final static int START_STATE = 269;
-    public final int getStartState() { return START_STATE; }
+    @Override
+	public final int getStartState() { return START_STATE; }
 
     public final static int IDENTIFIER_SYMBOL = 0;
     public final int getIdentifier_SYMBOL() { return IDENTIFIER_SYMBOL; }
 
     public final static int EOFT_SYMBOL = 99;
-    public final int getEoftSymbol() { return EOFT_SYMBOL; }
+    @Override
+	public final int getEoftSymbol() { return EOFT_SYMBOL; }
 
     public final static int EOLT_SYMBOL = 104;
-    public final int getEoltSymbol() { return EOLT_SYMBOL; }
+    @Override
+	public final int getEoltSymbol() { return EOLT_SYMBOL; }
 
     public final static int ACCEPT_ACTION = 457;
-    public final int getAcceptAction() { return ACCEPT_ACTION; }
+    @Override
+	public final int getAcceptAction() { return ACCEPT_ACTION; }
 
     public final static int ERROR_ACTION = 458;
-    public final int getErrorAction() { return ERROR_ACTION; }
+    @Override
+	public final int getErrorAction() { return ERROR_ACTION; }
 
     public final static boolean BACKTRACK = false;
-    public final boolean getBacktrack() { return BACKTRACK; }
+    @Override
+	public final boolean getBacktrack() { return BACKTRACK; }
 
-    public final int getStartSymbol() { return lhs(0); }
-    public final boolean isValidForParser() { return OCLBacktrackingLexersym.isValidForParser; }
+    @Override
+	public final int getStartSymbol() { return lhs(0); }
+    @Override
+	public final boolean isValidForParser() { return OCLBacktrackingLexersym.isValidForParser; }
 
 
     public interface IsNullable {
@@ -101,7 +121,8 @@ public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBackt
         };
     };
     public final static byte isNullable[] = IsNullable.isNullable;
-    public final boolean isNullable(int index) { return isNullable[index] != 0; }
+    @Override
+	public final boolean isNullable(int index) { return isNullable[index] != 0; }
 
     public interface ProsthesesIndex {
         public final static byte prosthesesIndex[] = {0,
@@ -164,9 +185,11 @@ public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBackt
         };
     };
     public final static byte baseCheck[] = BaseCheck.baseCheck;
-    public final int baseCheck(int index) { return baseCheck[index]; }
+    @Override
+	public final int baseCheck(int index) { return baseCheck[index]; }
     public final static byte rhs[] = baseCheck;
-    public final int rhs(int index) { return rhs[index]; };
+    @Override
+	public final int rhs(int index) { return rhs[index]; };
 
     public interface BaseAction {
         public final static char baseAction[] = {
@@ -219,9 +242,11 @@ public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBackt
         };
     };
     public final static char baseAction[] = BaseAction.baseAction;
-    public final int baseAction(int index) { return baseAction[index]; }
+    @Override
+	public final int baseAction(int index) { return baseAction[index]; }
     public final static char lhs[] = baseAction;
-    public final int lhs(int index) { return lhs[index]; };
+    @Override
+	public final int lhs(int index) { return lhs[index]; };
 
     public interface TermCheck {
         public final static byte termCheck[] = {0,
@@ -360,7 +385,8 @@ public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBackt
         };
     };
     public final static byte termCheck[] = TermCheck.termCheck;
-    public final int termCheck(int index) { return termCheck[index]; }
+    @Override
+	public final int termCheck(int index) { return termCheck[index]; }
 
     public interface TermAction {
         public final static char termAction[] = {0,
@@ -499,43 +525,66 @@ public class OCLBacktrackingLexerprs implements lpg.runtime.ParseTable, OCLBackt
         };
     };
     public final static char termAction[] = TermAction.termAction;
-    public final int termAction(int index) { return termAction[index]; }
-    public final int asb(int index) { return 0; }
-    public final int asr(int index) { return 0; }
-    public final int nasb(int index) { return 0; }
-    public final int nasr(int index) { return 0; }
-    public final int terminalIndex(int index) { return 0; }
-    public final int nonterminalIndex(int index) { return 0; }
-    public final int scopePrefix(int index) { return 0;}
-    public final int scopeSuffix(int index) { return 0;}
-    public final int scopeLhs(int index) { return 0;}
-    public final int scopeLa(int index) { return 0;}
-    public final int scopeStateSet(int index) { return 0;}
-    public final int scopeRhs(int index) { return 0;}
-    public final int scopeState(int index) { return 0;}
-    public final int inSymb(int index) { return 0;}
-    public final String name(int index) { return null; }
-    public final int originalState(int state) { return 0; }
-    public final int asi(int state) { return 0; }
-    public final int nasi(int state) { return 0; }
-    public final int inSymbol(int state) { return 0; }
+    @Override
+	public final int termAction(int index) { return termAction[index]; }
+    @Override
+	public final int asb(int index) { return 0; }
+    @Override
+	public final int asr(int index) { return 0; }
+    @Override
+	public final int nasb(int index) { return 0; }
+    @Override
+	public final int nasr(int index) { return 0; }
+    @Override
+	public final int terminalIndex(int index) { return 0; }
+    @Override
+	public final int nonterminalIndex(int index) { return 0; }
+    @Override
+	public final int scopePrefix(int index) { return 0;}
+    @Override
+	public final int scopeSuffix(int index) { return 0;}
+    @Override
+	public final int scopeLhs(int index) { return 0;}
+    @Override
+	public final int scopeLa(int index) { return 0;}
+    @Override
+	public final int scopeStateSet(int index) { return 0;}
+    @Override
+	public final int scopeRhs(int index) { return 0;}
+    @Override
+	public final int scopeState(int index) { return 0;}
+    @Override
+	public final int inSymb(int index) { return 0;}
+    @Override
+	public final String name(int index) { return null; }
+    @Override
+	public final int originalState(int state) { return 0; }
+    @Override
+	public final int asi(int state) { return 0; }
+    @Override
+	public final int nasi(int state) { return 0; }
+    @Override
+	public final int inSymbol(int state) { return 0; }
 
     /**
      * assert(! goto_default);
      */
-    public final int ntAction(int state, int sym) {
+    @Override
+	public final int ntAction(int state, int sym) {
         return baseAction[state + sym];
     }
 
     /**
      * assert(! shift_default);
      */
-    public final int tAction(int state, int sym) {
+    @Override
+	public final int tAction(int state, int sym) {
         int i = baseAction[state],
             k = i + sym;
         return termAction[termCheck[k] == sym ? k : i];
     }
-    public final int lookAhead(int la_state, int sym) {
+    @Override
+	public final int lookAhead(int la_state, int sym) {
         int k = la_state + sym;
         return termAction[termCheck[k] == sym ? k : la_state];
     }

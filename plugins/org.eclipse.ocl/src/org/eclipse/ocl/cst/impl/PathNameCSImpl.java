@@ -77,6 +77,7 @@ public class PathNameCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SimpleNameCS> getSimpleNames() {
 		if (simpleNames == null) {
 			simpleNames = new EObjectContainmentEList<SimpleNameCS>(

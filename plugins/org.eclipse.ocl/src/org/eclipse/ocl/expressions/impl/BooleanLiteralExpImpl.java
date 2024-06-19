@@ -82,6 +82,7 @@ public class BooleanLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Boolean getBooleanSymbol() {
 		return booleanSymbol;
 	}
@@ -91,6 +92,7 @@ public class BooleanLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBooleanSymbol(Boolean newBooleanSymbol) {
 		Boolean oldBooleanSymbol = booleanSymbol;
 		booleanSymbol = newBooleanSymbol;
@@ -105,6 +107,7 @@ public class BooleanLiteralExpImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkBooleanType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return BooleanLiteralExpOperations.checkBooleanType(this, diagnostics,

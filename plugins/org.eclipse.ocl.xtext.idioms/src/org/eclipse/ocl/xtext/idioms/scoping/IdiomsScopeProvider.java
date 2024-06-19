@@ -26,7 +26,6 @@ import org.eclipse.ocl.xtext.idioms.EPackageDeclaration;
 import org.eclipse.ocl.xtext.idioms.IdiomsImport;
 import org.eclipse.ocl.xtext.idioms.IdiomsModel;
 import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.idioms.scoping.AbstractIdiomsScopeProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;

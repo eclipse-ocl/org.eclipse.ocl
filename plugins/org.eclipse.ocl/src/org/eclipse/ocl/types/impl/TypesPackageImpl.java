@@ -227,6 +227,7 @@ public class TypesPackageImpl
 		EValidator.Registry.INSTANCE.put(theTypesPackage,
 			new EValidator.Descriptor() {
 
+				@Override
 				public EValidator getEValidator() {
 					return TypesValidator.INSTANCE;
 				}
@@ -245,6 +246,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAnyType() {
 		return anyTypeEClass;
 	}
@@ -254,6 +256,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBagType() {
 		return bagTypeEClass;
 	}
@@ -263,6 +266,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getCollectionType() {
 		return collectionTypeEClass;
 	}
@@ -272,6 +276,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getCollectionType_ElementType() {
 		return (EReference) collectionTypeEClass.getEStructuralFeatures()
 			.get(0);
@@ -282,6 +287,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCollectionType_Kind() {
 		return (EAttribute) collectionTypeEClass.getEStructuralFeatures()
 			.get(1);
@@ -292,6 +298,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getElementType() {
 		return elementTypeEClass;
 	}
@@ -301,6 +308,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInvalidType() {
 		return invalidTypeEClass;
 	}
@@ -310,6 +318,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMessageType() {
 		return messageTypeEClass;
 	}
@@ -319,6 +328,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageType_ReferredOperation() {
 		return (EReference) messageTypeEClass.getEStructuralFeatures().get(0);
 	}
@@ -328,6 +338,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMessageType_ReferredSignal() {
 		return (EReference) messageTypeEClass.getEStructuralFeatures().get(1);
 	}
@@ -337,6 +348,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getOrderedSetType() {
 		return orderedSetTypeEClass;
 	}
@@ -346,6 +358,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPrimitiveType() {
 		return primitiveTypeEClass;
 	}
@@ -355,6 +368,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSequenceType() {
 		return sequenceTypeEClass;
 	}
@@ -364,6 +378,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSetType() {
 		return setTypeEClass;
 	}
@@ -373,6 +388,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTupleType() {
 		return tupleTypeEClass;
 	}
@@ -382,6 +398,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTypeType() {
 		return typeTypeEClass;
 	}
@@ -391,6 +408,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTypeType_ReferredType() {
 		return (EReference) typeTypeEClass.getEStructuralFeatures().get(0);
 	}
@@ -400,6 +418,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVoidType() {
 		return voidTypeEClass;
 	}
@@ -410,6 +429,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTemplateParameterType() {
 		return templateParameterTypeEClass;
 	}
@@ -420,6 +440,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTemplateParameterType_Specification() {
 		return (EAttribute) templateParameterTypeEClass.getEStructuralFeatures()
 			.get(0);
@@ -430,6 +451,7 @@ public class TypesPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TypesFactory getTypesFactory() {
 		return (TypesFactory) getEFactoryInstance();
 	}

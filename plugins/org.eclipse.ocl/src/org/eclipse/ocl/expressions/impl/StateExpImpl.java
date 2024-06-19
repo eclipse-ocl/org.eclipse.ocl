@@ -74,6 +74,7 @@ public class StateExpImpl<C, S>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public S getReferredState() {
 		if (referredState != null && ((EObject) referredState).eIsProxy()) {
@@ -103,6 +104,7 @@ public class StateExpImpl<C, S>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferredState(S newReferredState) {
 		S oldReferredState = referredState;
 		referredState = newReferredState;

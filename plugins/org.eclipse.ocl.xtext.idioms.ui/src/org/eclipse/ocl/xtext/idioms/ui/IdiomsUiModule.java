@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.idioms.ui;
 
-import org.eclipse.ocl.xtext.idioms.ui.AbstractIdiomsUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**

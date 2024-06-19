@@ -267,6 +267,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PackageDeclarationCS createPackageDeclarationCS() {
 		PackageDeclarationCSImpl packageDeclarationCS = new PackageDeclarationCSImpl();
 		return packageDeclarationCS;
@@ -277,6 +278,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PropertyContextCS createPropertyContextCS() {
 		PropertyContextCSImpl propertyContextCS = new PropertyContextCSImpl();
 		return propertyContextCS;
@@ -287,6 +289,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ClassifierContextDeclCS createClassifierContextDeclCS() {
 		ClassifierContextDeclCSImpl classifierContextDeclCS = new ClassifierContextDeclCSImpl();
 		return classifierContextDeclCS;
@@ -297,6 +300,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OperationContextDeclCS createOperationContextDeclCS() {
 		OperationContextDeclCSImpl operationContextDeclCS = new OperationContextDeclCSImpl();
 		return operationContextDeclCS;
@@ -307,6 +311,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PrePostOrBodyDeclCS createPrePostOrBodyDeclCS() {
 		PrePostOrBodyDeclCSImpl prePostOrBodyDeclCS = new PrePostOrBodyDeclCSImpl();
 		return prePostOrBodyDeclCS;
@@ -317,6 +322,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OperationCS createOperationCS() {
 		OperationCSImpl operationCS = new OperationCSImpl();
 		return operationCS;
@@ -327,6 +333,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DerValueCS createDerValueCS() {
 		DerValueCSImpl derValueCS = new DerValueCSImpl();
 		return derValueCS;
@@ -337,6 +344,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public InitValueCS createInitValueCS() {
 		InitValueCSImpl initValueCS = new InitValueCSImpl();
 		return initValueCS;
@@ -347,6 +355,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public InvCS createInvCS() {
 		InvCSImpl invCS = new InvCSImpl();
 		return invCS;
@@ -357,6 +366,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DefCS createDefCS() {
 		DefCSImpl defCS = new DefCSImpl();
 		return defCS;
@@ -367,6 +377,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DefExpressionCS createDefExpressionCS() {
 		DefExpressionCSImpl defExpressionCS = new DefExpressionCSImpl();
 		return defExpressionCS;
@@ -377,6 +388,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PathNameCS createPathNameCS() {
 		PathNameCSImpl pathNameCS = new PathNameCSImpl();
 		return pathNameCS;
@@ -387,6 +399,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VariableExpCS createVariableExpCS() {
 		VariableExpCSImpl variableExpCS = new VariableExpCSImpl();
 		return variableExpCS;
@@ -397,6 +410,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleNameCS createSimpleNameCS() {
 		SimpleNameCSImpl simpleNameCS = new SimpleNameCSImpl();
 		return simpleNameCS;
@@ -407,6 +421,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PrimitiveTypeCS createPrimitiveTypeCS() {
 		PrimitiveTypeCSImpl primitiveTypeCS = new PrimitiveTypeCSImpl();
 		return primitiveTypeCS;
@@ -417,6 +432,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TupleTypeCS createTupleTypeCS() {
 		TupleTypeCSImpl tupleTypeCS = new TupleTypeCSImpl();
 		return tupleTypeCS;
@@ -427,6 +443,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionTypeCS createCollectionTypeCS() {
 		CollectionTypeCSImpl collectionTypeCS = new CollectionTypeCSImpl();
 		return collectionTypeCS;
@@ -437,6 +454,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LetExpCS createLetExpCS() {
 		LetExpCSImpl letExpCS = new LetExpCSImpl();
 		return letExpCS;
@@ -447,6 +465,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IfExpCS createIfExpCS() {
 		IfExpCSImpl ifExpCS = new IfExpCSImpl();
 		return ifExpCS;
@@ -457,6 +476,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MessageExpCS createMessageExpCS() {
 		MessageExpCSImpl messageExpCS = new MessageExpCSImpl();
 		return messageExpCS;
@@ -467,6 +487,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLMessageArgCS createOCLMessageArgCS() {
 		OCLMessageArgCSImpl oclMessageArgCS = new OCLMessageArgCSImpl();
 		return oclMessageArgCS;
@@ -477,6 +498,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VariableCS createVariableCS() {
 		VariableCSImpl variableCS = new VariableCSImpl();
 		return variableCS;
@@ -487,6 +509,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionLiteralExpCS createCollectionLiteralExpCS() {
 		CollectionLiteralExpCSImpl collectionLiteralExpCS = new CollectionLiteralExpCSImpl();
 		return collectionLiteralExpCS;
@@ -497,6 +520,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TupleLiteralExpCS createTupleLiteralExpCS() {
 		TupleLiteralExpCSImpl tupleLiteralExpCS = new TupleLiteralExpCSImpl();
 		return tupleLiteralExpCS;
@@ -507,6 +531,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PrimitiveLiteralExpCS createPrimitiveLiteralExpCS() {
 		PrimitiveLiteralExpCSImpl primitiveLiteralExpCS = new PrimitiveLiteralExpCSImpl();
 		return primitiveLiteralExpCS;
@@ -517,6 +542,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IntegerLiteralExpCS createIntegerLiteralExpCS() {
 		IntegerLiteralExpCSImpl integerLiteralExpCS = new IntegerLiteralExpCSImpl();
 		return integerLiteralExpCS;
@@ -527,6 +553,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public UnlimitedNaturalLiteralExpCS createUnlimitedNaturalLiteralExpCS() {
 		UnlimitedNaturalLiteralExpCSImpl unlimitedNaturalLiteralExpCS = new UnlimitedNaturalLiteralExpCSImpl();
 		return unlimitedNaturalLiteralExpCS;
@@ -537,6 +564,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public RealLiteralExpCS createRealLiteralExpCS() {
 		RealLiteralExpCSImpl realLiteralExpCS = new RealLiteralExpCSImpl();
 		return realLiteralExpCS;
@@ -547,6 +575,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StringLiteralExpCS createStringLiteralExpCS() {
 		StringLiteralExpCSImpl stringLiteralExpCS = new StringLiteralExpCSImpl();
 		return stringLiteralExpCS;
@@ -557,6 +586,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public BooleanLiteralExpCS createBooleanLiteralExpCS() {
 		BooleanLiteralExpCSImpl booleanLiteralExpCS = new BooleanLiteralExpCSImpl();
 		return booleanLiteralExpCS;
@@ -567,6 +597,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionLiteralPartCS createCollectionLiteralPartCS() {
 		CollectionLiteralPartCSImpl collectionLiteralPartCS = new CollectionLiteralPartCSImpl();
 		return collectionLiteralPartCS;
@@ -577,6 +608,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CollectionRangeCS createCollectionRangeCS() {
 		CollectionRangeCSImpl collectionRangeCS = new CollectionRangeCSImpl();
 		return collectionRangeCS;
@@ -587,6 +619,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CallExpCS createCallExpCS() {
 		CallExpCSImpl callExpCS = new CallExpCSImpl();
 		return callExpCS;
@@ -597,6 +630,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LoopExpCS createLoopExpCS() {
 		LoopExpCSImpl loopExpCS = new LoopExpCSImpl();
 		return loopExpCS;
@@ -607,6 +641,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IteratorExpCS createIteratorExpCS() {
 		IteratorExpCSImpl iteratorExpCS = new IteratorExpCSImpl();
 		return iteratorExpCS;
@@ -617,6 +652,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IterateExpCS createIterateExpCS() {
 		IterateExpCSImpl iterateExpCS = new IterateExpCSImpl();
 		return iterateExpCS;
@@ -627,6 +663,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FeatureCallExpCS createFeatureCallExpCS() {
 		FeatureCallExpCSImpl featureCallExpCS = new FeatureCallExpCSImpl();
 		return featureCallExpCS;
@@ -637,6 +674,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OperationCallExpCS createOperationCallExpCS() {
 		OperationCallExpCSImpl operationCallExpCS = new OperationCallExpCSImpl();
 		return operationCallExpCS;
@@ -647,6 +685,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IsMarkedPreCS createIsMarkedPreCS() {
 		IsMarkedPreCSImpl isMarkedPreCS = new IsMarkedPreCSImpl();
 		return isMarkedPreCS;
@@ -658,6 +697,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLDocumentCS createOCLDocumentCS() {
 		OCLDocumentCSImpl oclDocumentCS = new OCLDocumentCSImpl();
 		return oclDocumentCS;
@@ -668,6 +708,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NullLiteralExpCS createNullLiteralExpCS() {
 		NullLiteralExpCSImpl nullLiteralExpCS = new NullLiteralExpCSImpl();
 		return nullLiteralExpCS;
@@ -678,6 +719,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public InvalidLiteralExpCS createInvalidLiteralExpCS() {
 		InvalidLiteralExpCSImpl invalidLiteralExpCS = new InvalidLiteralExpCSImpl();
 		return invalidLiteralExpCS;
@@ -846,6 +888,7 @@ public class CSTFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CSTPackage getCSTPackage() {
 		return (CSTPackage) getEPackage();
 	}

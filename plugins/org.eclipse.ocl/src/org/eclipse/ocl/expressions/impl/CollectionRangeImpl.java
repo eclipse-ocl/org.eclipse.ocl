@@ -86,6 +86,7 @@ public class CollectionRangeImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getFirst() {
 		return first;
 	}
@@ -116,6 +117,7 @@ public class CollectionRangeImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFirst(OCLExpression<C> newFirst) {
 		if (newFirst != first) {
 			NotificationChain msgs = null;
@@ -143,6 +145,7 @@ public class CollectionRangeImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpression<C> getLast() {
 		return last;
 	}
@@ -173,6 +176,7 @@ public class CollectionRangeImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLast(OCLExpression<C> newLast) {
 		if (newLast != last) {
 			NotificationChain msgs = null;
@@ -199,6 +203,7 @@ public class CollectionRangeImpl<C>
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean checkRangeType(DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		return CollectionRangeOperations.checkRangeType(this, diagnostics,

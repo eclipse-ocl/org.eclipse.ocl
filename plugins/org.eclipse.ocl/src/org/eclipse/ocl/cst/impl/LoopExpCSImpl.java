@@ -94,6 +94,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VariableCS getVariable1() {
 		return variable1;
 	}
@@ -124,6 +125,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setVariable1(VariableCS newVariable1) {
 		if (newVariable1 != variable1) {
 			NotificationChain msgs = null;
@@ -148,6 +150,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VariableCS getVariable2() {
 		return variable2;
 	}
@@ -178,6 +181,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setVariable2(VariableCS newVariable2) {
 		if (newVariable2 != variable2) {
 			NotificationChain msgs = null;
@@ -202,6 +206,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public OCLExpressionCS getBody() {
 		return body;
 	}
@@ -232,6 +237,7 @@ public class LoopExpCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBody(OCLExpressionCS newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
