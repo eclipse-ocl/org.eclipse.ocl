@@ -8,6 +8,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
+                <message_argument value="createCS2AS(EnvironmentFactoryInternal, CSResource, ASResource)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceImpl.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl">
         <filter id="336658481">
             <message_arguments>
