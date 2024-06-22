@@ -169,6 +169,11 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull Technology getTechnology();
 
 	/**
+	 * @since 1.22
+	 */
+	default boolean isDisposing() { return false; }
+
+	/**
 	 * Ensure that EPackage has been loaded in the externalResourceSet PackageRegistry.
 	 */
 	EPackage loadEPackage(@NonNull EPackage ePackage);
