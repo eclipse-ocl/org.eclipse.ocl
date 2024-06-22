@@ -63,10 +63,12 @@ public interface CSResource extends Resource
 	 * @since 1.15
 	 */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return getParserContext().getEnvironmentFactory();
+		ParserContext parserContext = getParserContext();
+		assert parserContext != null;				// XXX
+		return parserContext.getEnvironmentFactory();
 	}
 
-	@NonNull ParserContext getParserContext();
+	@Nullable ParserContext getParserContext();
 
 	/**
 	 * Return the map of known projects.
