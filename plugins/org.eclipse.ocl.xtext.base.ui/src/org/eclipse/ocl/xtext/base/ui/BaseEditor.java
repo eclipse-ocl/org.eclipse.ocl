@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentProvider;
 import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
@@ -53,6 +54,10 @@ public class BaseEditor extends XtextEditor
 			return adapter.cast(getEnvironmentFactory());
 		}
 		return super.getAdapter(adapter);
+	}
+
+	public @NonNull String getCSXMIfileExtension() {			// Should override
+		return PivotConstants.OCL_CS_FILE_EXTENSION;
 	}
 
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
