@@ -32,6 +32,7 @@
             </message_arguments>
         </filter>
     </resource>
+<<<<<<< Upstream, based on origin/master
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -93,6 +94,13 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
+=======
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="isDisposing()"/>
+>>>>>>> 4948d31 [583347] Add isDisposing(), trap disposed ToStringVisitor
             </message_arguments>
         </filter>
     </resource>
