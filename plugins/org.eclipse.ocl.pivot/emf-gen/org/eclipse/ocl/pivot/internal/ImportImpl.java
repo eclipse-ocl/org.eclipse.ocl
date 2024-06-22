@@ -13,17 +13,27 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -95,6 +105,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	protected ImportImpl()
 	{
 		super();
+	// XXX	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -147,6 +158,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	public void setImportedNamespace(Namespace newImportedNamespace)
 	{
+	// XXX	System.out.println("setImportedNamespace " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newImportedNamespace) + " " + String.valueOf(newImportedNamespace));
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
@@ -327,4 +339,38 @@ public class ImportImpl extends NamedElementImpl implements Import
 		return visitor.visitImport(this);
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
+		Namespace namespace = basicGetImportedNamespace();
+	// XXX	System.out.println("resolveESNotifier " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(namespace));
+		if ((namespace != null) && !namespace.eIsProxy()) {
+			if (namespace instanceof Model) {
+				EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();
+				URI externalURI = URI.createURI(((Model)namespace).getExternalURI());
+				return environmentFactory.getResourceSet().getResource(externalURI, false);
+			}
+			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
+				CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
+				for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+					EObject esObject = asPackage.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
+				}
+			}
+			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
+				CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
+				for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+					EObject esObject = asClass.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
+				}
+			}
+		}
+		return null;
+	}
 } //ImportImpl

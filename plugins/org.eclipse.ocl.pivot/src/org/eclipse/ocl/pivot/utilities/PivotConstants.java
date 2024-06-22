@@ -60,6 +60,11 @@ public interface PivotConstants
 	static final @NonNull String DOT_OCL_AS_FILE_EXTENSION = "." + OCL_AS_FILE_EXTENSION;
 
 	/**
+	 * @since 1.22
+	 */
+	static final @NonNull String OCL_CS_FILE_EXTENSION = "oclcs";
+
+	/**
 	 * String-valued URI prefix of a package defining the primitive types. Proxy references to
 	 * e.g. OCL's String rather than Ecore's EString are constructed by just appending 'String' to
 	 * the prefix.
