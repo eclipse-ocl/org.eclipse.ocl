@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
@@ -44,12 +45,10 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -83,7 +82,7 @@ import org.eclipse.xtext.util.Tuples;
  * and their corresponding Pivot Resources creating a CS2ASConversion
  * to update.
  */
-public abstract class CS2AS extends AbstractConversion	// FIXME migrate functionality to PivotHelper
+public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXME migrate functionality to PivotHelper
 {
 	public static interface UnresolvedProxyMessageProvider
 	{
@@ -391,14 +390,14 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
 		this.parserContext = csResource.getParserContext();
-		ParserContext parserContext2 = parserContext;
+	/*	ParserContext parserContext2 = parserContext;
 		assert parserContext2 != null;
 		if (parserContext2.getEnvironmentFactory() != environmentFactory) {
 			System.out.println("[" + Thread.currentThread().getName() + "] Parser " + NameUtil.debugSimpleName(parserContext2.getEnvironmentFactory()));
 			System.out.println("[" + Thread.currentThread().getName() + "] CS2AS " + NameUtil.debugSimpleName(environmentFactory));
 			System.out.println("[" + Thread.currentThread().getName() + "] Thread " + NameUtil.debugSimpleName(ThreadLocalExecutor.basicGetEnvironmentFactory()));
 		}
-		assert parserContext2.getEnvironmentFactory() == environmentFactory;
+		assert parserContext2.getEnvironmentFactory() == environmentFactory; */
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {
