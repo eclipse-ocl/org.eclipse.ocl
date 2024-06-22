@@ -33,7 +33,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -1784,5 +1786,26 @@ implements Property {
 			setOpposite(null);
 		}
 		setType(null);				// Easier to set them all than just the base_xxx ones
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		org.eclipse.ocl.pivot.Class asOwningClass = getOwningClass();
+		if (asOwningClass != null) {
+			CompleteClass completeClass = completeModel.getCompleteClass(asOwningClass);
+			Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
+			if (asProperties != null) {
+				for (Property asPartialProperty : asProperties) {
+					EObject esObject = asPartialProperty.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
+				}
+			}
+		}
+		return null;
 	}
 } //PropertyImpl
