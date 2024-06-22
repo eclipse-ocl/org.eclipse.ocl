@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource
@@ -53,6 +54,12 @@ public interface CSResource extends Resource
 	}
 
 	/**
+	 * The file extension for OCL Concrete Syntax resources.
+	 * @since 1.22
+	 */
+	@NonNull String FILE_EXTENSION = PivotConstants.OCL_CS_FILE_EXTENSION;
+
+	/**
 	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
 	 */
 	@NonNull ASResource getASResource();
@@ -68,7 +75,7 @@ public interface CSResource extends Resource
 		return parserContext.getEnvironmentFactory();
 	}
 
-	@Nullable ParserContext getParserContext();
+	@NonNull ParserContext getParserContext();
 
 	/**
 	 * Return the map of known projects.

@@ -18,13 +18,15 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
+import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceSaveImpl;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -34,7 +36,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
@@ -49,14 +50,15 @@ public class SaveCSHandler extends AbstractHandler
 			return null;
 		}
 		IEditorPart editor = HandlerUtil.getActiveEditor(event);
-		if (!(editor instanceof XtextEditor)) {
+		if (!(editor instanceof BaseEditor)) {
 			return null;
 		}
 		IEditorInput editorInput = editor.getEditorInput();
 		if (!(editorInput instanceof IFileEditorInput)) {
 			return null;
 		}
-		IXtextDocument document = ((XtextEditor)editor).getDocument();
+		BaseEditor baseEditor = (BaseEditor)editor;
+		IXtextDocument document = baseEditor.getDocument();
 		URI csURI = null;
 		try {
 			csURI = document.readOnly(new IUnitOfWork<URI, XtextResource>()
@@ -64,7 +66,7 @@ public class SaveCSHandler extends AbstractHandler
 				@Override
 				public URI exec(@Nullable XtextResource resource) throws Exception {
 					if (resource != null) {
-						return resource.getURI().appendFileExtension("xmi");
+						return resource.getURI().appendFileExtension(baseEditor.getCSXMIfileExtension());
 					}
 					else {
 						return null;
@@ -105,8 +107,7 @@ public class SaveCSHandler extends AbstractHandler
 				@Override
 				public Object exec(@Nullable XtextResource resource) throws Exception {
 					if (resource != null) {
-						XMIResource xmiResource = new XMIResourceImpl(newURI);
-						xmiResource.getContents().addAll(EcoreUtil.copyAll(resource.getContents()));
+						XMIResource xmiResource = new OCLCSResourceSaveImpl(newURI, OCLASResourceFactory.getInstance(), (BaseCSResource)resource);
 						xmiResource.save(null);
 					}
 					return null;

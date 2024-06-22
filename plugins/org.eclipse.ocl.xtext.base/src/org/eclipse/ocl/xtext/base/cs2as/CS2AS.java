@@ -381,23 +381,12 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	 */
 	private @Nullable PivotHelper helper = null;
 
-	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
-
 	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		this.csResource = csResource;
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
-		this.parserContext = csResource.getParserContext();
-	/*	ParserContext parserContext2 = parserContext;
-		assert parserContext2 != null;
-		if (parserContext2.getEnvironmentFactory() != environmentFactory) {
-			System.out.println("[" + Thread.currentThread().getName() + "] Parser " + NameUtil.debugSimpleName(parserContext2.getEnvironmentFactory()));
-			System.out.println("[" + Thread.currentThread().getName() + "] CS2AS " + NameUtil.debugSimpleName(environmentFactory));
-			System.out.println("[" + Thread.currentThread().getName() + "] Thread " + NameUtil.debugSimpleName(ThreadLocalExecutor.basicGetEnvironmentFactory()));
-		}
-		assert parserContext2.getEnvironmentFactory() == environmentFactory; */
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {
@@ -406,9 +395,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		this.asResource = aConverter.asResource;
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		//		csi2asMapping.add(this);
-		this.parserContext = aConverter.parserContext;
-		assert parserContext != null;
-		assert parserContext.getEnvironmentFactory() == environmentFactory;
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {
@@ -575,8 +561,8 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 	public @Nullable VariableDeclaration lookupSelf(@NonNull ElementCS csElement) {
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		@SuppressWarnings("deprecation")
-		EnvironmentView environmentView = parserContext != null ? new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME) : new EnvironmentView(environmentFactory, eReference, PivotConstants.SELF_NAME);
+		ParserContext parserContext = csResource.getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
+		EnvironmentView environmentView = new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
 		VariableDeclaration variableDeclaration = (VariableDeclaration) environmentView.getContent();

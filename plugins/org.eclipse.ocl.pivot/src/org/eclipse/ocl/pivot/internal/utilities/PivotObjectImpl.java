@@ -10,20 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -51,6 +58,49 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			}
 		}
 		return super.eObjectForURIFragmentSegment(uriFragmentSegment);
+	}
+
+	@Override
+	public EObject eResolveProxy(InternalEObject proxy) {
+		StringBuilder s = null;
+		if (ASResourceImpl.PROXIES.isActive()) {
+			s = new StringBuilder();
+			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+		}
+		if (proxy instanceof BagType) {
+			getClass();			// XXX
+		}
+		EObject resolvedProxy = super.eResolveProxy(proxy);
+	/*	if (resolvedProxy instanceof Pivotable) {
+			Resource resource = resolvedProxy.eResource();
+			if (resource instanceof CSResource) {
+				((CSResource)resource).getASResource();
+			}
+			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+		}
+		else */ if (resolvedProxy instanceof EModelElement) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				try {
+					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		if (s != null) {
+			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
+			ASResourceImpl.PROXIES.println(s.toString());
+		}
+		return resolvedProxy;
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+		StringBuilder s = null;
+		ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		super.eSetProxyURI(uri);
 	}
 
 	public @Nullable EObject getESObject() {
@@ -101,10 +151,13 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.22
 	 */
 	protected void resetESObject() {
+	//	if ("my::AType::referenced() : my::BType[?]".equals(toString())) {
+	//		getClass();				// XXX
+	//	}
 	    InternalEObject result = eInternalContainer();
 	    assert result != null;
-		EObject esObject = getESObject();
-		if (esObject == null) {
+		Notifier esNotifier = getESObject();
+		if (esNotifier == null) {
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				ASResourceImpl.PROXIES.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
@@ -118,18 +171,22 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 				else {
 					EObject csElement = csi2asMapping.getCSElement(this);
 					if (csElement != null) {		// XXX never happens CS is never externally referenced
-						esObject = csElement;
+						esNotifier = csElement;
 					//	ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-cs " + uri);
 					}
 				}
-				if (esObject == null) {
+				if ((esNotifier == null) && !environmentFactory.isDisposing()) {
 					// Else any old ES
-					esObject = resolveESObject(environmentFactory.getCompleteModel());
+					esNotifier = resolveESNotifier(environmentFactory.getCompleteModel());
 				}
 			}
 		}
-		if (esObject != null) {
-			URI uri = EcoreUtil.getURI(esObject);
+		if (esNotifier instanceof EObject) {
+			URI uri = EcoreUtil.getURI((EObject)esNotifier);
+			eSetProxyURI(uri);
+		}
+		else if (esNotifier instanceof Resource) {
+			URI uri = ((Resource)esNotifier).getURI();
 			eSetProxyURI(uri);
 		}
 		else {
@@ -148,13 +205,13 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * resolveESObject is called from unloaded(ASResource) to locate the ES Object that provides the Proxy URI.
-	 * Derived ckasses may naigayte the complete element to find an ESObject, or access the AS2CS mapping or
-	 * bypass blopated AS such as Import.
+	 * resolveESNotifier is called from resetESObject() to locate the ES Object that provides the Proxy URI.
+	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
+	 * bypass bloated AS such as Import.
 	 *
 	 * @since 1.22
 	 */
-	protected @Nullable EObject resolveESObject(@NonNull CompleteModel completeModel) {
+	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		return null;
 	}
 
