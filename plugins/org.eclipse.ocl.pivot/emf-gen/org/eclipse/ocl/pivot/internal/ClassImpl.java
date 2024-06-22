@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -34,7 +35,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -1426,6 +1429,21 @@ implements org.eclipse.ocl.pivot.Class {
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
 			classListeners = null;
 		}
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		CompleteClass completeClass = completeModel.getCompleteClass(this);
+		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+			EObject esObject = asClass.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		return null;
 	}
 
 	@Override

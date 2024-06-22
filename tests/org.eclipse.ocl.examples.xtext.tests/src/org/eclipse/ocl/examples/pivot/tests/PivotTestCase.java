@@ -38,6 +38,8 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -281,15 +283,15 @@ public class PivotTestCase extends TestCase
 		}
 		if (s1 == null) {
 			if (s2 != null) {
-				fail(s2.toString());
+				fail(prefix + s2.toString());
 			}
 		}
 		else {
 			if (s2 == null) {
-				fail(s1.toString());
+				fail(prefix + s1.toString());
 			}
 			else {
-				fail(s1.toString() + s2.toString());
+				fail(prefix + s1.toString() + s2.toString());
 			}
 		}
 		return diagnostics;
@@ -330,18 +332,24 @@ public class PivotTestCase extends TestCase
 			s.append(unresolvedProxies.size());
 			s.append(" unresolved proxies in ");
 			s.append(message);
-			for (Map.Entry<EObject, Collection<Setting>> unresolvedProxy : unresolvedProxies.entrySet()) {
+			for (Map.Entry<EObject, Collection<Setting>> entry : unresolvedProxies.entrySet()) {
 				s.append("\n");
-				BasicEObjectImpl key = (BasicEObjectImpl) unresolvedProxy.getKey();
-				s.append(key.eProxyURI());
-				for (Setting setting : unresolvedProxy.getValue()) {
+				BasicEObjectImpl eTarget = (BasicEObjectImpl) entry.getKey();
+				URI eProxyURI = eTarget.eProxyURI();
+				s.append(eProxyURI);
+				for (Setting setting : entry.getValue()) {
 					s.append("\n\t");
-					EObject eObject = setting.getEObject();
+					EObject eSource = setting.getEObject();
+					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 					try {
-						s.append(eObject.toString());
+						Object eGet = eSource.eGet(eStructuralFeature);		// XXX
+						if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
+							EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
+						}
+						s.append(eSource.toString());
 					}
 					catch (Exception e) {
-						s.append(EcoreUtil.getURI(eObject).toString());
+						s.append(EcoreUtil.getURI(eSource).toString());
 					}
 				}
 			}
@@ -354,7 +362,7 @@ public class PivotTestCase extends TestCase
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
 			for (EObject eObject : resource.getContents()) {
-				assertNoValidationErrorsInternal(string, ClassUtil.nonNullEMF(eObject));
+				assertNoValidationErrorsInternal(string + " " + resource.getURI(), ClassUtil.nonNullEMF(eObject));
 			}
 		}
 		finally {
@@ -373,7 +381,7 @@ public class PivotTestCase extends TestCase
 		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
-			assertNoValidationErrorsInternal(string, eObject);
+			assertNoValidationErrorsInternal(string + " " + EcoreUtil.getURI(eObject), eObject);
 		}
 		finally {
 			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
@@ -387,7 +395,7 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	protected static void assertNoValidationErrorsInternal(@NonNull String string, @NonNull EObject eObject) {
+	protected static void assertNoValidationErrorsInternal(@NonNull String prefix, @NonNull EObject eObject) {
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
@@ -398,7 +406,7 @@ public class PivotTestCase extends TestCase
 			return;
 		}
 		StringBuilder s = new StringBuilder();
-		s.append(children.size() + " validation errors");
+		s.append(prefix + ": " + children.size() + " validation errors");
 		appendChildren(s, children, 0);
 		fail(s.toString());
 	}
