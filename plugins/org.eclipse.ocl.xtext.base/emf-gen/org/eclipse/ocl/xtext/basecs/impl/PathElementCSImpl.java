@@ -14,12 +14,21 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -147,6 +156,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setReferredElement(Element newReferredElement)
 	{
+		ASResourceImpl.PROXIES.println("setReferredElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newReferredElement));
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
@@ -343,6 +353,37 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
 		return visitor.visitPathElementCS(this);
+	}
+
+	/*
+	 * Overloaded to promote references to persisted CS/ES elements to their internal AS elements.
+	 */
+	@Override
+	public EObject eResolveProxy(InternalEObject proxy) {
+		StringBuilder s = null;
+		if (ASResourceImpl.PROXIES.isActive()) {
+			s = new StringBuilder();
+			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+		}
+		EObject resolvedProxy = super.eResolveProxy(proxy);
+		if (resolvedProxy instanceof Pivotable) {
+			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+		}
+		else if (resolvedProxy instanceof EModelElement) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// CS2AS
+			if (environmentFactory != null) {
+				try {
+					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+				} catch (ParserException e) {
+					e.printStackTrace();		// Never happens proxies do not parse
+				}
+			}
+		}
+		if (s != null) {
+			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
+			ASResourceImpl.PROXIES.println(s.toString());
+		}
+		return resolvedProxy;
 	}
 
 	/**
