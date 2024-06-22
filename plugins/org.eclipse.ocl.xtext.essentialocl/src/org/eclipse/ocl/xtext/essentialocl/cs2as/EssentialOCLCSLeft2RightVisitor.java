@@ -18,7 +18,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -397,7 +399,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		assert csLastPathElement.getElementType() != null;
 		Element asElement = csLastPathElement.basicGetReferredElement();
-		if ((asElement instanceof Operation) && !asElement.eIsProxy()) {
+		if ((asElement != null) && asElement.eIsProxy()) {
+			URI eProxyURI = ((InternalEObject)asElement).eProxyURI();
+			String fragment = eProxyURI.fragment();
+			if ((fragment != null) && !fragment.startsWith("|")) {
+				asElement = csLastPathElement.getReferredElement();
+			}
+		}
+		if ((asElement instanceof Operation)  && !asElement.eIsProxy()) {
 			return new ResolvedInvocation((Operation)asElement);
 		}
 		String name = ElementUtil.getTextName(csLastPathElement);
@@ -849,6 +858,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			assert csPathName != null;
 		}
 		else {
+			invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,			// XXX debugging
+				sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 			checkForInvalidImplicitSourceType(csNameExp);
 			CS2AS.setPathElement(ClassUtil.nonNullState(csPathName), null, null);
 		}

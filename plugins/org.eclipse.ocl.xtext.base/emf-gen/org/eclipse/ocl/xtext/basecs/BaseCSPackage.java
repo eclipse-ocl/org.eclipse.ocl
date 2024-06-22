@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,6 +57,14 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 */
 	String eNS_PREFIX = "basecs"; //$NON-NLS-1$
+
+	/**
+	 * The package content type ID.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@NonNull String eCONTENT_TYPE = "org.eclipse.ocl.oclcs"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

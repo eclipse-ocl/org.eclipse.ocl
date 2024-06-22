@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -29,6 +30,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -748,6 +751,21 @@ implements org.eclipse.ocl.pivot.Package {
 		}
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		CompletePackage completePackage = completeModel.getCompletePackage(this);
+		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+			EObject esObject = asPackage.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		return null;
+	}
+
 	public void setIgnoreInvariants(boolean ignoreInvariants) {
 		this.ignoreInvariants = ignoreInvariants;
 	}
@@ -808,5 +826,11 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public URI eProxyURI() {
+		// TODO Auto-generated method stub
+		return super.eProxyURI();
 	}
 } //PackageImpl
