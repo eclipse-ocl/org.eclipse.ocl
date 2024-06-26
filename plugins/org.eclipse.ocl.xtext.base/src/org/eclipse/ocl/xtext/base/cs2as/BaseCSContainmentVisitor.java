@@ -165,8 +165,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		String name = csElement.getName();
 		if (name != null) {
 			helper.refreshName(pivotElement, name);
-			context.refreshComments(pivotElement, csElement);
 		}
+		context.refreshComments(pivotElement, csElement);
 		return pivotElement;
 	}
 
