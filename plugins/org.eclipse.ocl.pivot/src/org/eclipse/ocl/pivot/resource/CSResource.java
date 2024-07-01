@@ -21,36 +21,24 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource
  * for which a ParserContext defines how the Abstract Syntax elements should
- * be initialized.
+ * be initialized. The derived VaseCSREsourece provides a richer interface with Xtext dependencies.
  */
 public interface CSResource extends Resource
 {
 	/**
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated obsolete - folded into super interface */
 	public interface CSResourceExtension extends CSResource
 	{
-		/**
-		 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
-		 * required source visibility for debugging.
-		 */
-		void dispose();
 	}
 
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated obsolete - folded into super interface */
 	public interface CSResourceExtension2 extends CSResourceExtension
 	{
-		/**
-		 * Return true if this CSResource is derived from an ASResource..
-		 */
-		boolean isDerived();
-
-		/**
-		 * Set whether this CSResource is derived from an ASResource..
-		 */
-		void setDerived(boolean isDerived);
 	}
 
 	/**
@@ -58,6 +46,13 @@ public interface CSResource extends Resource
 	 * @since 1.22
 	 */
 	@NonNull String FILE_EXTENSION = PivotConstants.OCL_CS_FILE_EXTENSION;
+
+	/**
+	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
+	 * required source visibility for debugging.
+	 * @since 1.22
+	 */
+	default void dispose() {}
 
 	/**
 	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
@@ -82,6 +77,20 @@ public interface CSResource extends Resource
 	 */
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
 	@NonNull ProjectManager getProjectManager();
+
+	/**
+	 * Return true if this CSResource is derived from an ASResource..
+	 * @since 1.22
+	 */
+	default boolean isDerived() {
+		return false;
+	}
+
+	/**
+	 * Set whether this CSResource is derived from an ASResource..
+	 * @since 1.22
+	 */
+	default void setDerived(boolean isDerived) {}
 
 	void setParserContext(@Nullable ParserContext parserContext);
 
