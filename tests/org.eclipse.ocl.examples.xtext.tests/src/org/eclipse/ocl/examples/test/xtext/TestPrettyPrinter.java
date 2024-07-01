@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class TestPrettyPrinter extends XtextTestCase
@@ -27,7 +28,8 @@ public class TestPrettyPrinter extends XtextTestCase
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
-		Resource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+		Resource asResource = cs2as.getASResource();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof NamedElement) {
@@ -42,7 +44,8 @@ public class TestPrettyPrinter extends XtextTestCase
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI libraryURI = getTestModelURI("models/oclstdlib/OCL-2.3.oclstdlib");
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().getResource(libraryURI, true);
-		Resource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+		Resource asResource = cs2as.getASResource();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof NamedElement) {

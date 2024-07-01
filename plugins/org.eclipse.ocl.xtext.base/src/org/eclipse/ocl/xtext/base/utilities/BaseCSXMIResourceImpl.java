@@ -45,10 +45,14 @@ import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -186,7 +190,9 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 
 		@Override
 		protected void init(XMLResource csResource, Map<?, ?> options) {
-			CS2AS cs2as = ((BaseCSResource)((OCLCSResourceSaveImpl)csResource).getCSResource()).getCS2AS();			// XXX cast
+			BaseCSResource castCSResource = (BaseCSResource)((OCLCSResourceSaveImpl)csResource).getCSResource();				// XXX cast
+			EnvironmentFactory environmentFactory = castCSResource.getEnvironmentFactory();
+			ICS2AS cs2as = castCSResource.getCS2AS(environmentFactory);
 			Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 			if (options != null) {
 				for (Object key : options.keySet()) {
@@ -214,6 +220,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	{
 		public PreParsedContext(@NonNull EnvironmentFactoryInternal environmentFactory) {
 			super(environmentFactory, null);
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -324,6 +331,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 
 	@Override
 	public @NonNull ASResource getASResource() {
+		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getASResource()");
 		CS2AS cs2as = getCS2AS();
 		ASResource asResource = cs2as.getASResource();
 		return asResource;
@@ -340,21 +348,32 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	}
 
 	@Override
-	public @NonNull CS2AS getCS2AS() {
+	final public @NonNull CS2AS getCS2AS() {
+		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
+	//	if (cs2as != null) {
+	//		return cs2as;
+	//	}
+		EnvironmentFactory environmentFactory = getEnvironmentFactory();
+	//	EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// XXX pass environmentFactory
+	//	assert environmentFactory != null;
+		return getCS2AS(environmentFactory);
+	}
+
+	@Override
+	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
 		if (cs2as != null) {
 			return cs2as;
 		}
-	//	EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// XXX pass environmentFactory
-		assert environmentFactory != null;
-		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
+		EnvironmentFactoryInternal environmentFactoryInternal = (EnvironmentFactoryInternal)environmentFactory;
+		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactoryInternal);
 		if (csi2asMapping != null) {
 			cs2as = csi2asMapping.getCS2AS(this);
 			if (cs2as != null) {
 				return cs2as;
 			}
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		PivotMetamodelManager metamodelManager = environmentFactoryInternal.getMetamodelManager();
 		ClassLoader classLoader = getClass().getClassLoader();
 		if (classLoader != null) {
 			metamodelManager.addClassLoader(classLoader);
@@ -368,14 +387,13 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	//		cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
 	//	}
 	//	if (cs2as == null) {
-			cs2as = createCS2AS(environmentFactory, asResource);
+			cs2as = createCS2AS(environmentFactoryInternal, asResource);
 	//	}
 		return cs2as;
 	}
 
 	@Override
-	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory,
-			@NonNull ASResource asResource) {
+	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -395,8 +413,17 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-	//	return PivotUtilInternal.getEnvironmentFactory(this);
-		return BaseCSResource.super.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
+			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
+			if (projectManager == null) {
+				projectManager = ProjectManager.CLASS_PATH;
+			}
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, csResourceSet, null);
+		}
+		return environmentFactory;
+	//	return BaseCSResource.super.getEnvironmentFactory();
 	}
 
 	@Override
@@ -418,8 +445,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	@Override
 	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
-		getEnvironmentFactory();		// Ensure thread has OCL support for proxy resolution.
-		CS2AS cs2as = getCS2AS();
+		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		cs2as.update(consumer);
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
@@ -464,6 +490,11 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 
 	@Override
 	public void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void update(@NonNull EnvironmentFactory environmentFactory, @NonNull IDiagnosticConsumer diagnosticConsumer) {
 		throw new UnsupportedOperationException();
 	}
 

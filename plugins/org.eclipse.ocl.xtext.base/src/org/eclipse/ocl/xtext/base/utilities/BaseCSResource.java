@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
@@ -30,7 +31,7 @@ import org.eclipse.xtext.util.Triple;
 /**
  * BaseCSResource defines the Xtext-dependent extended interface for a Concrete Syntax resource.
  */
-public interface BaseCSResource extends CSResource.CSResourceExtension2
+public interface BaseCSResource extends CSResource, CSResource.CSResourceExtension2
 {
 	/**
 	 * Add the unresolved reference message for EReference in EObject at INode.
@@ -63,14 +64,18 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	 */
 	@NonNull URI getASURI(@NonNull URI csURI);
 
-	@NonNull CS2AS getCS2AS();
+	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
+	@NonNull CS2AS getCS2AS();			// XXX
+
+	@Override
+	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory);
 
 	/**
 	 * Return the CS2AS adapter for this resource.
 	 * If no CS2AS adapter installed, one is created and installed using the provided metamodelManager,
 	 * which if null is also created.
 	 */
-	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);			// XXX
 
 	/**
 	 * Return the name of the editor for use in diagnostics.
@@ -87,5 +92,8 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	 */
 	@NonNull URI resolve(@NonNull URI uri);
 
-	void update(@NonNull IDiagnosticConsumer diagnosticsConsumer);
+	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
+	void update(@NonNull IDiagnosticConsumer diagnosticConsumer);
+
+	void update(@NonNull EnvironmentFactory environmentFactory, @NonNull IDiagnosticConsumer diagnosticConsumer);
 }
