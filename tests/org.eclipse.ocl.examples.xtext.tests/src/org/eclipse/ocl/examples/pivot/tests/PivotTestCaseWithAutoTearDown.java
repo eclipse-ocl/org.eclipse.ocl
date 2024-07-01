@@ -110,7 +110,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		ResourceSet resourceSet2 = ocl.getResourceSet();
 		BaseCSResource xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
 		assertNoResourceErrors("Load failed", xtextResource);
-		CS2AS cs2as = xtextResource.getCS2AS();
+		CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
 		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(asResource.getContents().get(0)));

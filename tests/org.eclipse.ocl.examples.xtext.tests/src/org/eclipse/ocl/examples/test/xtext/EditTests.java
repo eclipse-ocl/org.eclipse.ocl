@@ -137,9 +137,9 @@ public class EditTests extends XtextTestCase
 
 	protected @NonNull Resource getEcoreFromCS(@NonNull OCL ocl, @NonNull String testDocument, @NonNull URI ecoreURI) throws IOException {
 		@NonNull URI xtextURI = URI.createURI("test.oclinecore");
-		CSResource xtextResource = ocl.getCSResource(xtextURI, testDocument);
+		BaseCSResource xtextResource = (BaseCSResource)ocl.getCSResource(xtextURI, testDocument);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
-		Resource asResource = cs2as(xtextResource, null);
+		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		Resource ecoreResource = as2ecore(ocl.getEnvironmentFactory(), asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
@@ -164,13 +164,13 @@ public class EditTests extends XtextTestCase
 						"		property children : Example[*] { ordered composes };\n" +
 						"	}\n" +
 						"}\n";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
@@ -228,13 +228,13 @@ public class EditTests extends XtextTestCase
 						"  {\n" +
 						"  }\n" +
 						"}\n";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, oldDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, oldDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
@@ -300,12 +300,12 @@ public class EditTests extends XtextTestCase
 				+ "	type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}\n"
 				+ "	type UnlimitedNatural : PrimitiveType conformsTo Integer => 'org.eclipse.ocl.pivot.values.UnlimitedNaturalValue' {}\n"
 				+ "}\n";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI outputURI = getTestFileURI("Bug541380.oclstdlib");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 //			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
 			assertNoResourceErrors("Loading operation", xtextResource);
 			assertNoValidationErrors("Loading operation", xtextResource);
@@ -370,13 +370,13 @@ public class EditTests extends XtextTestCase
 						"{\n" +
 						"	body: packages?->sortedBy(name)?->iterate(p; acc : String = '' | acc + ' ' + p.name);\n" +		// FIXME should not need second ?->
 						"}";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 		}
 		//
@@ -581,15 +581,15 @@ public class EditTests extends XtextTestCase
 						"		property oldTypes : uml::Type[*] { ordered };\n" +
 						"	}\n" +
 						"}";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		//		System.out.println("------Load--------------------------------");
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("Bug473249a.ecore");
 			URI outputURI = getTestFileURI("Bug473249.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
 			//			System.out.println("------cs2as--------------------------------");
-			asResource = cs2as(xtextResource, null);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			//			System.out.println("------as2ecore--------------------------------");
 			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 		}
@@ -630,13 +630,13 @@ public class EditTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument_class);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument_class);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_class, ecoreResource1);
 		}
@@ -701,13 +701,13 @@ public class EditTests extends XtextTestCase
 		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"*\nyet\nanother\ncomment\n"});
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument_uncommented);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument_uncommented);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_uncommented, ecoreResource1);
 		}
@@ -791,7 +791,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Xtext load", xtextResource1);
 			assertNoValidationErrors("Xtext load", xtextResource1);
 			ListBasedDiagnosticConsumer diagnosticsConsumer1 = new ListBasedDiagnosticConsumer();
-			xtextResource1.update(diagnosticsConsumer1);
+			xtextResource1.update(ocl1.getEnvironmentFactory(), diagnosticsConsumer1);
 			Set<EObject> parsePivotContent = new HashSet<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
@@ -832,7 +832,7 @@ public class EditTests extends XtextTestCase
 			assertNoResourceErrors("Xtext load", xtextResource2);
 			assertNoValidationErrors("Xtext load", xtextResource2);
 			ListBasedDiagnosticConsumer diagnosticsConsumer2 = new ListBasedDiagnosticConsumer();
-			xtextResource2.update(diagnosticsConsumer2);
+			xtextResource2.update(ocl1.getEnvironmentFactory(), diagnosticsConsumer2);
 			Set<EObject> reparsePivotContent = new HashSet<>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
@@ -855,13 +855,13 @@ public class EditTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.oclinecore");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
@@ -923,8 +923,8 @@ public class EditTests extends XtextTestCase
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
-		CSResource xtextResource = ClassUtil.nonNullState(ocl.getCSResource(outputURI, testDocument));
-		Resource asResource = cs2as(xtextResource, null);
+		BaseCSResource xtextResource = (BaseCSResource)ClassUtil.nonNullState(ocl.getCSResource(outputURI, testDocument));
+		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		{
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
@@ -1017,8 +1017,8 @@ public class EditTests extends XtextTestCase
 		URI outputURI = getTestFileURI("test.oclinecore");
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		CSResource xtextResource = ocl.getCSResource(outputURI, testDocument);
-		Resource asResource = cs2as(xtextResource, null);
+		BaseCSResource xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		{
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
@@ -1073,7 +1073,7 @@ public class EditTests extends XtextTestCase
 		URI outputURI = getTestFileURI("test.oclstdlib");
 		ModelContext modelContext = new ModelContext(environmentFactory, outputURI);
 		EssentialOCLCSResource xtextResource = (EssentialOCLCSResource) modelContext.createBaseResource(testDocument);
-		Resource asResource = cs2as(xtextResource, null);
+		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		assertResourceErrors("Loading input", xtextResource);
 		assertNoResourceErrors("Loading input", asResource);
 		//
@@ -1114,13 +1114,13 @@ public class EditTests extends XtextTestCase
 		String pasteText =
 				"context IterateExp\n" +
 						"inv False: true\n";
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			//			URI ecoreURI1 = getTestFileURI("test1.ecore");
 			URI outputURI = getTestFileURI("test.ocl");
-			xtextResource = ocl.getCSResource(outputURI, testDocument);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			assertNoResourceErrors("Loading", xtextResource);
 			assertNoValidationErrors("Loading", xtextResource);
 			assertNoResourceErrors("Loading", asResource);
@@ -1159,12 +1159,12 @@ public class EditTests extends XtextTestCase
 		String goodString = "coercion toUnlimitedNatural";
 		String badString = "coer cion toUnlimitedNatural";
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		CSResource xtextResource;
+		BaseCSResource xtextResource;
 		Resource asResource;
 		{
 			@NonNull URI libURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
-			xtextResource = ocl.getCSResource(libURI);
-			asResource = cs2as(xtextResource, null);
+			xtextResource = (BaseCSResource)ocl.getCSResource(libURI);
+			asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 			assertNoResourceErrors("Loading", xtextResource);
 			assertNoValidationErrors("Loading", xtextResource);
 			assertNoResourceErrors("Loading", asResource);

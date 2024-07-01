@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 //import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
@@ -107,7 +108,8 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull URI ecoreURI) throws IOException {
 		CSResource xtextResource = ocl.getCSResource(inputURI);
 		assertNoResourceErrors("Load failed", xtextResource);
-		ASResource asResource = xtextResource.getASResource();
+		ICS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		assertNoValidationErrors("Pivot validation errors", asResource.getModel());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
