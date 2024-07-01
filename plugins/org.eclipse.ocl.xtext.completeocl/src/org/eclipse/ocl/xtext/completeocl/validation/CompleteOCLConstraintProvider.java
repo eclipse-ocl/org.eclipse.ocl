@@ -20,10 +20,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.validation.model.Category;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.validation.LoadableConstraintProvider;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 /**
  * A CompleteOCLConstraintParser supports registration and lazy resolution of
@@ -90,9 +91,9 @@ public class CompleteOCLConstraintProvider extends LoadableConstraintProvider
 	@Override
 	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<@NonNull Category> categories) {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		CSResource xtextResource = null;
+		BaseCSResource xtextResource = null;
 		try {
-			xtextResource = (CSResource) resourceSet.getResource(uri, true);
+			xtextResource = (BaseCSResource)resourceSet.getResource(uri, true);
 		}
 		catch (WrappedException e) {
 			logger.error("Failed to load '" + uri, e);
@@ -105,7 +106,8 @@ public class CompleteOCLConstraintProvider extends LoadableConstraintProvider
 			logger.error("Failed to load '" + uri + message);
 			return false;
 		}
-		Resource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+		Resource asResource = cs2as.getASResource();
 		return installResource(asResource, categories);
 	}
 }

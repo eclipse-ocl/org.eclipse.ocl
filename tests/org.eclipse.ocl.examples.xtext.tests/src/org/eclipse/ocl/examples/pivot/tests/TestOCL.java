@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Value;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.xtext.diagnostics.ExceptionDiagnostic;
 
@@ -175,7 +176,8 @@ public class TestOCL extends OCLInternal
 			}
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
-			Resource asResource = csResource.getASResource();
+			CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+			Resource asResource = cs2as.getASResource();
 			PivotTestSuite.assertNoValidationErrors("Validating", asResource);
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
 		} catch (ParserException e) {
@@ -650,7 +652,8 @@ public class TestOCL extends OCLInternal
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			PivotUtil.checkResourceWarnings(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
-			Resource asResource = csResource.getASResource();
+			CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+			Resource asResource = cs2as.getASResource();
 			PivotTestSuite.assertNoValidationErrors("Validating", asResource);
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
 		} catch (ParserException e) {
@@ -691,10 +694,12 @@ public class TestOCL extends OCLInternal
 			String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+			ParserContext classContext = new ClassContext(environmentFactory, null, contextType, null);
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
-			Resource asResource = csResource.getASResource();
+			CS2AS cs2as = csResource.getCS2AS(environmentFactory);
+			Resource asResource = cs2as.getASResource();
 			for (int i = 0; i < bindings.length; i++) {
 				if (bindings[i] == this) {
 					bindings[i] = expression;
