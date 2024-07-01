@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -93,6 +94,7 @@ import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class PivotUtilInternal //extends PivotUtil
 {
@@ -100,6 +102,15 @@ public class PivotUtilInternal //extends PivotUtil
 	public static class ContainmentArrayList<T> extends ArrayList<T> {}
 
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
+
+	/**
+	 * If DEBUG_DEPRECATIONS is set active debugDeprecation() returns false causing debugged deprecations
+	 * to fail their assertions.
+	 *
+	 * @since 1.22
+	 */
+	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
+
 	public static boolean noDebug = true;
 	private static long startTime = System.currentTimeMillis();
 
@@ -118,6 +129,14 @@ public class PivotUtilInternal //extends PivotUtil
 	@Deprecated /* @deprecated FIXME BUG 509309 move to EnvironmentFactory.createHelper() */
 	public static @NonNull PivotHelper createHelper(@NonNull EnvironmentFactory environmentFactory) {
 		return new PivotHelper(environmentFactory);
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	public static boolean debugDeprecation(String string) {
+		System.out.println("Deprecated method in use: " + string);
+		return DEBUG_DEPRECATIONS.isActive() ? false : true; 		// False to crash
 	}
 
 	public static void debugPrintln(@Nullable Object string) {

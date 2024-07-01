@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
@@ -179,7 +180,8 @@ public class MonikerTests extends XtextTestCase
 		//
 		//	Get the pivot resource and check for load failures
 		//
-		ASResource asResource = csResource.getASResource();
+		CS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
+		ASResource asResource = cs2as.getASResource();
 		assertNoValidationErrors("Pivot validation problems", asResource);
 		if (asResource.isSaveable()) {
 			asResource.setURI(pivotURI);

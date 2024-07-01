@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
@@ -56,7 +57,8 @@ public class CS2ASLinker extends LazyLinker
 				//				System.out.println("Starting to refreshPivotMappings for " + eResource.getURI());
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
-					CS2AS cs2as = csResource.getCS2AS();
+					EnvironmentFactory environmentFactory = csResource.getEnvironmentFactory();
+					CS2AS cs2as = csResource.getCS2AS(environmentFactory);
 					ParserContext parserContext = ElementUtil.basicGetParserContext(model);
 					if (parserContext != null) {
 						Element rootElement = parserContext.getRootElement();

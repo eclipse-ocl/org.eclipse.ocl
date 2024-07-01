@@ -832,7 +832,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;
 					if (csResource != null) {
 						if (contextObject != null) {
-							csResource.getCS2AS();
+							csResource.getCS2AS(environmentFactory);
 						}
 						ResourceSet resourceSet = editor.getResourceSet();
 						if (resourceSet != null) {

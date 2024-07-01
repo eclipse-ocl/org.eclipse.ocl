@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -327,7 +328,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
 		xtextResource.load(null);
 		assertNoResourceErrors("Load failed", xtextResource);
-		Resource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+		Resource asResource = cs2as.getASResource();
 		assert asResource != null;
 		assertNoResourceErrors("File Model", asResource);
 		assertNoUnresolvedProxies("File Model", asResource);
@@ -341,7 +343,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		ModelContext modelContext = new ModelContext(environmentFactory, libraryURI);
 		BaseCSResource xtextResource = (BaseCSResource) modelContext.createBaseResource(null);
 		assertNoResourceErrors("Load failed", xtextResource);
-		ASResource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+		ASResource asResource = cs2as.getASResource();
 		assert asResource != null;
 		assertNoResourceErrors("File Model", asResource);
 		assertNoUnresolvedProxies("File Model", asResource);
@@ -499,7 +502,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 			xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
 			assertNoResourceErrors("Load failed", xtextResource);
 			//			adapter = xtextResource.getCS2ASAdapter(null);
-			Resource asResource = xtextResource.getASResource();
+			CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+			Resource asResource = cs2as.getASResource();
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
 			XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
