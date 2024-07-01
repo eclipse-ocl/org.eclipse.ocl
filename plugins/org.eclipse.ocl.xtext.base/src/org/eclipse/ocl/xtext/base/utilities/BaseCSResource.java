@@ -28,7 +28,7 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.util.Triple;
 
 /**
- * BaseResource defines the Xtext-dependent extended interface for a Concrete Syntax resource.
+ * BaseCSResource defines the Xtext-dependent extended interface for a Concrete Syntax resource.
  */
 public interface BaseCSResource extends CSResource.CSResourceExtension2
 {
