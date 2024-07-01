@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -579,8 +578,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			{
 				@Override
 				public Object exec(XtextResource state) throws Exception {
-					if (state instanceof CSResourceExtension2) {
-						((CSResourceExtension2)state).setDerived(true);
+					if (state instanceof CSResource) {
+						((CSResource)state).setDerived(true);
 					}
 					return null;
 				}
