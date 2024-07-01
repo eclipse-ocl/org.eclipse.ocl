@@ -196,7 +196,7 @@ public class SerializeTests extends XtextTestCase
 			//
 			String pivotName2 = stem + "2.ecore.oclas";
 			URI pivotURI2 = getTestFileURI(pivotName2);
-			Resource pivotResource2 = cs2as(xtextResource2, pivotURI2);
+			Resource pivotResource2 = cs2as(ocl2.getEnvironmentFactory(), xtextResource2, pivotURI2);
 			//
 			//	Pivot to Ecore
 			//

@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.internal.helper.OCLHelperImpl;
 import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLDebugOptions;
@@ -351,7 +352,8 @@ public class OCL
 	 * Return the Pivot resource counterpart of an Xtext csResource.
 	 */
 	public @NonNull ASResource cs2as(@NonNull CSResource csResource) {
-		ASResource asResource = csResource.getASResource();
+		ICS2AS cs2as = csResource.getCS2AS(getEnvironmentFactory());
+		ASResource asResource = cs2as.getASResource();
 		return asResource;
 	}
 

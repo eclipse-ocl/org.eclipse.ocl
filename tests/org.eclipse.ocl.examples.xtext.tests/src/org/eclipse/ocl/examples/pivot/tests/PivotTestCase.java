@@ -90,6 +90,8 @@ import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
@@ -574,25 +576,27 @@ public class PivotTestCase extends TestCase
 		environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
-		Resource asResource = cs2as(xtextResource, null);
+		Resource asResource = cs2as(environmentFactory, xtextResource, null);
 		Resource ecoreResource = as2ecore(environmentFactory, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
 
 	public static @NonNull Resource cs2as(@NonNull OCL ocl, @NonNull String testDocument) throws IOException {
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+		environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
-		Resource asResource = cs2as(xtextResource, null);
+		Resource asResource = cs2as(environmentFactory, xtextResource, null);
 		return asResource;
 	}
 
-	public static @NonNull Resource cs2as(@NonNull CSResource xtextResource, @Nullable URI pivotURI) throws IOException {
-		ASResource asResource = xtextResource.getASResource();
+	public static @NonNull Resource cs2as(@NonNull EnvironmentFactory environmentFactory, @NonNull BaseCSResource xtextResource, @Nullable URI pivotURI) throws IOException {
+		CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", asResource);
 		if ((pivotURI != null) && asResource.isSaveable()) {
 			asResource.setURI(pivotURI);
@@ -891,6 +895,7 @@ public class PivotTestCase extends TestCase
 		}
 
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
+		PivotUtilInternal.DEBUG_DEPRECATIONS.setState(true);
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
 			XMLNamespacePackage.eINSTANCE.getClass();

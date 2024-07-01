@@ -90,7 +90,8 @@ public class RoundTripTests extends XtextTestCase
 	}
 	public @NonNull ASResource createPivotFromXtext(@NonNull EnvironmentFactoryInternal environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
 		try {
-			ASResource asResource = xtextResource.getASResource();
+			CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+			ASResource asResource = cs2as.getASResource();
 			assertNoResourceErrors("To Pivot errors", xtextResource);
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			List<EObject> pivotContents = asResource.getContents();
