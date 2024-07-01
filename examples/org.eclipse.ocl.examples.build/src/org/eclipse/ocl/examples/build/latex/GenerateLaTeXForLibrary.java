@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.xtext.XtextStandaloneSetup;
 
@@ -51,7 +52,9 @@ public abstract class GenerateLaTeXForLibrary extends GenerateLaTeXUtils
 				issues.addError(this, message, null, null, null);
 				return;
 			}
-			ASResource asResource = ((BaseCSResource)xtextResource).getASResource();
+			BaseCSResource csResource = (BaseCSResource)xtextResource;
+			CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+			ASResource asResource = cs2as.getASResource();
 //			if (asResource == null) {
 //				return;
 //			}

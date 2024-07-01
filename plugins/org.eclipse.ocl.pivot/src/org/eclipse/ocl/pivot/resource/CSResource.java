@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -57,14 +58,27 @@ public interface CSResource extends Resource
 	/**
 	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
 	 */
+	@Deprecated /* @deprecated use getCS2AS(getEnvironmentFactory()).getASResource() since EnvironmentFactory usually known */
 	@NonNull ASResource getASResource();
 
+	/**
+	 * Return the ASResourceFactory corresponding to this CS Resource.
+	 */
 	@NonNull ASResourceFactory getASResourceFactory();
+
+	/**
+	 * Return the CS to AS conversion manager for use with environmentFactory.
+	 *
+	 * @since 1.22
+	 */
+	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * @since 1.15
 	 */
-	default @NonNull EnvironmentFactory getEnvironmentFactory() {
+	default @NonNull EnvironmentFactory getEnvironmentFactory() {		// XXX
 		ParserContext parserContext = getParserContext();
 		assert parserContext != null;				// XXX
 		return parserContext.getEnvironmentFactory();

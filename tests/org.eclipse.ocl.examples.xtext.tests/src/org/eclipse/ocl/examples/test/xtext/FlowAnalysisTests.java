@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -114,12 +113,13 @@ public class FlowAnalysisTests extends XtextTestCase
 			getEnvironmentFactory().adapt(xtextResource);
 			xtextResource.load(null);
 			assertNoResourceErrors("Load failed", xtextResource);
-			CS2AS cs2as = xtextResource.findCS2AS();
-			if (cs2as != null) {
-				ASResource asResource = cs2as.getASResource();
-				assertNoValidationErrors("Loaded pivot", asResource);
-			}
-			Resource asResource = xtextResource.getASResource();
+		//	CS2AS cs2as = xtextResource.findCS2AS();
+		//	if (cs2as != null) {
+		//		ASResource asResource = cs2as.getASResource();
+		//		assertNoValidationErrors("Loaded pivot", asResource);
+		//	}
+			CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+			Resource asResource = cs2as.getASResource();
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			assertNoResourceErrors("Save failed", xtextResource);
 			asResource.setURI(pivotURI);

@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
@@ -241,7 +242,8 @@ public abstract class CompleteOCLLoader
 			assert errors != null;
 			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 			if (message2 == null) {
-				Resource asResource = xtextResource.getASResource();
+				CS2AS cs2as = xtextResource.getCS2AS(getEnvironmentFactory());
+				Resource asResource = cs2as.getASResource();
 				errors = asResource.getErrors();
 				assert errors != null;
 				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");

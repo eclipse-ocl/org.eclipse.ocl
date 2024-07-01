@@ -28,12 +28,14 @@ import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
@@ -48,6 +50,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
@@ -420,6 +423,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		csi2asMapping.removeCSResource(csResource);
 	}
 
+	@Override
 	public @NonNull ASResource getASResource() {
 		return asResource;
 	}
@@ -560,6 +564,18 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	public @Nullable VariableDeclaration lookupSelf(@NonNull ElementCS csElement) {
+		for (EObject eObject = csElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Pivotable) {
+				Element asElement = ((Pivotable)eObject).getPivot();
+				if (asElement instanceof ExpressionInOCL) {
+					Variable ownedContext = ((ExpressionInOCL)asElement).getOwnedContext();
+					return PivotConstants.SELF_NAME.equals(ownedContext.getName()) ? ownedContext : null;	// Renamed context is not self
+				}
+			}
+		}
+	//	return null;
+
+		// XXX
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
 		ParserContext parserContext = csResource.getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
 		EnvironmentView environmentView = new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME);
