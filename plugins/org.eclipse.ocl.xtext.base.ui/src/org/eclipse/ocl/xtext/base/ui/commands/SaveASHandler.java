@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.osgi.util.NLS;
@@ -64,7 +65,9 @@ public class SaveASHandler extends AbstractHandler
 				@Override
 				public URI exec(@Nullable XtextResource resource) throws Exception {
 					if (resource instanceof BaseCSResource) {
-						Resource asResource = ((BaseCSResource)resource).getASResource();
+						BaseCSResource csResource = (BaseCSResource)resource;
+						CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+						Resource asResource = cs2as.getASResource();
 						return asResource.getURI();
 					}
 					else {
@@ -106,7 +109,9 @@ public class SaveASHandler extends AbstractHandler
 				@Override
 				public Object exec(@Nullable XtextResource resource) throws Exception {
 					if (resource instanceof BaseCSResource) {
-						ASResource asResource = ((BaseCSResource)resource).getASResource();
+						BaseCSResource csResource = (BaseCSResource)resource;
+						CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+						ASResource asResource = cs2as.getASResource();
 						URI oldURI = asResource.getURI();
 						boolean wasSaveable = asResource.isSaveable();
 						try {

@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.resource.ASResource;
+
 /**
  * @since 1.22
  */
 public interface ICS2AS
 {
+	@NonNull ASResource getASResource();
 }
