@@ -98,7 +98,6 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -112,6 +111,8 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.junit.AfterClass;
 
@@ -291,11 +292,12 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (message != null)
 			fail(message);
 		URI oclURI = getTestModelURI(MODEL_WITH_ERRORS_OCL);
-		CSResource xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+		BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(oclURI, true);
 		message = PivotUtil.formatResourceDiagnostics(xtextResource.getErrors(), "OCL load", "\n\t");
 		if (message != null)
 			fail(message);
-		Resource asResource = xtextResource.getASResource();
+		CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
+		Resource asResource = cs2as.getASResource();
 		message = PivotUtil.formatResourceDiagnostics(asResource.getErrors(), "Pivot OCL load", "\n\t");
 		if (message != null)
 			fail(message);

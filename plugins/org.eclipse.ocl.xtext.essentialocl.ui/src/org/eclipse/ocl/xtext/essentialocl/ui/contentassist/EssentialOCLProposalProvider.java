@@ -135,7 +135,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
 					ListBasedDiagnosticConsumer diagnosticsConsumer = new ListBasedDiagnosticConsumer();
-					csResource.update(diagnosticsConsumer);
+					csResource.update(csResource.getEnvironmentFactory(), diagnosticsConsumer);
 				}
 				catch (Exception exception) {
 					/* Never let an Exception leak out to abort Xtext */

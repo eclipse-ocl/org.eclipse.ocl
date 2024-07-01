@@ -352,8 +352,15 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull Resource resource, @Nullable URI uri) throws ParserException {
-		Resource asResource = resource instanceof ASResource ? resource : ((CSResource)resource).getASResource();
-		List<EObject> contents = asResource.getContents();
+		Resource asResource;
+		if (resource instanceof ASResource) {
+			asResource = resource;
+		}
+		else {
+			ICS2AS cs2as = ((CSResource)resource).getCS2AS(environmentFactory);
+			asResource = cs2as.getASResource();
+		}
+		List<@NonNull EObject> contents = asResource.getContents();
 		if (contents.size() <= 0) {
 			return null;
 		}

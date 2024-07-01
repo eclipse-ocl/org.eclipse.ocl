@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -421,6 +422,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @Nullable CS2AS findCS2AS() {
+		if (getResourceSet() == null) {			// e.g. when disposing
+			return null;
+		}
 		EnvironmentFactory environmentFactory = getEnvironmentFactory();
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping((EnvironmentFactoryInternal)environmentFactory);
 		if (csi2asMapping == null) {
@@ -436,7 +440,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @NonNull ASResource getASResource() {
-		CS2AS cs2as = getCS2AS();
+		System.out.println(getClass().getName() + ".getASResource() pass getEnvironmentFactory");		// XXX
+		assert false;
+		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
 		ASResource asResource = cs2as.getASResource();
 		return asResource;
 	}
@@ -452,17 +458,23 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public @NonNull CS2AS getCS2AS() {
-		ParserContext parserContext = getParserContext();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) parserContext.getEnvironmentFactory();
-		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
+	/*final*/ public @NonNull CS2AS getCS2AS() {			// XXX
+		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
+		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		return getCS2AS(environmentFactory);
+	}
+
+	@Override
+	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
+		EnvironmentFactoryInternal environmentFactoryInternal = (EnvironmentFactoryInternal)environmentFactory;
+		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactoryInternal);
 		if (csi2asMapping != null) {
 			CS2AS cs2as = csi2asMapping.getCS2AS(this);
 			if (cs2as != null) {
 				return cs2as;
 			}
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		PivotMetamodelManager metamodelManager = environmentFactoryInternal.getMetamodelManager();
 		ClassLoader classLoader = getClass().getClassLoader();
 		if (classLoader != null) {
 			metamodelManager.addClassLoader(classLoader);
@@ -473,10 +485,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		ASResource asResource = createASResource(asResourceSet);
 		CS2AS cs2as = null;
 		if (parserContext instanceof ExtendedParserContext) {
-			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
+			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);				// XXX wip less parserContext for direct CS load
 		}
 		if (cs2as == null) {
-			cs2as = createCS2AS(environmentFactory, asResource);
+			cs2as = createCS2AS(environmentFactoryInternal, asResource);
 		}
 		return cs2as;
 	}
@@ -510,10 +522,24 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
+	public final @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
+			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
+			if (projectManager == null) {
+				projectManager = ProjectManager.CLASS_PATH;
+			}
+			environmentFactory = getASResourceFactory().createEnvironmentFactory(projectManager);
+		}
+		return environmentFactory;
+	}
+
+	@Override
 	public final @NonNull ParserContext getParserContext() {		// FIXME only non-null for API compatibility
 		ParserContext parserContext2 = parserContext;
 		if (parserContext2 == null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
 			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
 		}
 		return parserContext2;
@@ -750,9 +776,16 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	//	}
 
 	@Override
-	public void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
+	public final void update(@NonNull IDiagnosticConsumer diagnosticConsumer) {
+		PivotUtilInternal.debugDeprecation(getClass().getName() + ".update");
 		CS2AS cs2as = getCS2AS();
-		cs2as.update(diagnosticsConsumer);
+		cs2as.update(diagnosticConsumer);
+	}
+
+	@Override
+	public void update(@NonNull EnvironmentFactory environmentFactory, @NonNull IDiagnosticConsumer diagnosticConsumer) {
+		CS2AS cs2as = getCS2AS(environmentFactory);
+		cs2as.update(diagnosticConsumer);
 	}
 
 	@Override

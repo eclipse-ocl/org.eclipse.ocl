@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -541,7 +542,7 @@ public class LoadTests extends XtextTestCase
 			AS2ID.assignIds(asResource, saveOptions);
 			assertResourceErrors("Pre-save", asResource, resourceErrors);
 		}
-		Resource asResource = doLoad_Concrete2(xtextResource, inputURI);
+		Resource asResource = doLoad_Concrete2(ocl, xtextResource, inputURI);
 		return asResource;
 	}
 	protected BaseCSResource doLoad_Concrete1(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
@@ -563,7 +564,7 @@ public class LoadTests extends XtextTestCase
 		return xtextResource;
 	}
 
-	protected Resource doLoad_Concrete2(@NonNull BaseCSResource xtextResource, @NonNull URI inputURI) throws IOException {
+	protected Resource doLoad_Concrete2(@NonNull OCL ocl, @NonNull BaseCSResource xtextResource, @NonNull URI inputURI) throws IOException {
 		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String inputName = stem + "." + extension;
@@ -571,7 +572,8 @@ public class LoadTests extends XtextTestCase
 		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		URI pivotURI = getTestFileURI(pivotName);
 		URI oclOutputURI = getOCLoutputURI(inputURI);
-		ASResource asResource = xtextResource.getASResource();
+		ICS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
+		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
@@ -628,13 +630,13 @@ public class LoadTests extends XtextTestCase
 		return asResource;
 	}
 
-	public Resource doLoad_CS(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
+	public BaseCSResource doLoad_CS(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		BaseCSResource csResource = null;
 		try {
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
-			csResource = (BaseCSResource) ocl.getResourceSet().getResource(inputURI, true);
+			csResource = (BaseCSResource)ocl.getResourceSet().getResource(inputURI, true);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
 			assertNoResourceErrors("Load failed", csResource);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
@@ -822,10 +824,10 @@ public class LoadTests extends XtextTestCase
 						"}\n";
 		TestFile testFile = createOCLinEcoreFile("Refresh.oclinecore", testFileContents);
 		BaseCSResource xtextResource = doLoad_Concrete1(ocl, testFile.getFileURI());
-		Resource asResource = doLoad_Concrete2(xtextResource, testFile.getFileURI());
+		Resource asResource = doLoad_Concrete2(ocl, xtextResource, testFile.getFileURI());
 		assertNoValidationErrors("First validation", asResource);
 		try {
-			xtextResource.update(new ListBasedDiagnosticConsumer());
+			xtextResource.update(ocl.getEnvironmentFactory(), new ListBasedDiagnosticConsumer());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -879,10 +881,10 @@ public class LoadTests extends XtextTestCase
 						"}";
 		TestFile testFile = createOCLinEcoreFile("Refresh2.oclinecore", testFileContents);
 		BaseCSResource xtextResource = doLoad_Concrete1(ocl, testFile.getFileURI());
-		Resource asResource = doLoad_Concrete2(xtextResource, testFile.getFileURI());
+		Resource asResource = doLoad_Concrete2(ocl, xtextResource, testFile.getFileURI());
 		assertNoValidationErrors("First validation", asResource);
 		try {
-			xtextResource.update(new ListBasedDiagnosticConsumer());
+			xtextResource.update(ocl.getEnvironmentFactory(), new ListBasedDiagnosticConsumer());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1133,8 +1135,9 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_Bug441620_completeocl() throws IOException {
 		OCL ocl = createOCL();
-		BaseCSResource csResource = (BaseCSResource) doLoad_CS(ocl, getTestModelURI("models/ocl/Bug441620.ocl"));
-		Resource oclResource = csResource.getASResource();
+		BaseCSResource csResource = doLoad_CS(ocl, getTestModelURI("models/ocl/Bug441620.ocl"));
+		CS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
+		Resource oclResource = cs2as.getASResource();
 		Model root = (Model) oclResource.getContents().get(0);
 		org.eclipse.ocl.pivot.Package oclDocPackage = root.getOwnedPackages().get(0);
 		assertEquals("pivot", oclDocPackage.getName());
@@ -1155,8 +1158,9 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_Bug441620b_completeocl() throws IOException {
 		OCL ocl = createOCL();
-		BaseCSResource csResource = (BaseCSResource) doLoad_CS(ocl, getTestModelURI("models/ocl/Bug441620b.ocl"));
-		Resource oclResource = csResource.getASResource();
+		BaseCSResource csResource = doLoad_CS(ocl, getTestModelURI("models/ocl/Bug441620b.ocl"));
+		CS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
+		Resource oclResource = cs2as.getASResource();
 		Model root = (Model) oclResource.getContents().get(0);
 		org.eclipse.ocl.pivot.Package oclDocPackage = root.getOwnedPackages().get(0);
 		assertEquals("ocl", oclDocPackage.getName());
@@ -1384,7 +1388,7 @@ public class LoadTests extends XtextTestCase
 		assertNoResourceErrors("CS load", xmiResource);
 		assertNoUnresolvedProxies("CS load", xmiResource);
 		assertNoValidationErrors("CS load", xmiResource);
-		CS2AS cs2as = ((BaseCSXMIResourceImpl)xmiResource).getCS2AS();
+		CS2AS cs2as = ((BaseCSXMIResourceImpl)xmiResource).getCS2AS(ocl2.getEnvironmentFactory());
 		ASResource asResource = cs2as.getASResource();
 		asResource.setSaveable(true);					// XXX why needed
 		asResource.save(XMIUtil.createSaveOptions(asResource));
