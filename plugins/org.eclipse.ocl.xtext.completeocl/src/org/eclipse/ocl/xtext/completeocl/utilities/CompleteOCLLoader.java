@@ -40,16 +40,39 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
 public abstract class CompleteOCLLoader
 {  // FIXME This is a pragmatic re-use. Redesign as part of a coherent API.
+	public static final class CompleteOCLLoaderWithLog extends CompleteOCLLoader
+	{
+		StringBuilder s = new StringBuilder();
+
+		public CompleteOCLLoaderWithLog(@NonNull EnvironmentFactory environmentFactory) {
+			super(environmentFactory);
+		}
+
+		@Override
+		protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
+		//	s.append("\n");
+			s.append(primaryMessage);
+		//	s.append("\n");
+			s.append(detailMessage);
+			return false;
+		}
+
+		@Override
+		public String toString() {
+			return s.toString();
+		}
+	}
+
 	protected final @NonNull OCLInternal ocl;
 	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
 	protected final @NonNull Set<@NonNull EPackage> mmPackages;
@@ -132,7 +155,11 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadDocument(@NonNull URI oclURI) {
-		Resource resource = loadResource(oclURI);
+		return loadDocument(oclURI, null);
+	}
+
+	public boolean loadDocument(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
+		Resource resource = loadResource(oclURI, sErrors);
 		if (resource == null) {
 			return false;
 		}
@@ -166,11 +193,22 @@ public abstract class CompleteOCLLoader
 	 * Return null after invoking error() to display any errors in a pop-up.
 	 */
 	public Resource loadResource(@NonNull URI oclURI) {
-		CSResource xtextResource = null;
+		return loadResource(oclURI, null);
+	}
+
+	/**
+	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
+	 * If sErrors is null, return null after invoking error() to display any errors in a pop-up.
+	 * Else returns error messages to sErrors.
+	 */
+	public Resource loadResource(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
 		CompleteOCLStandaloneSetup.init();
 		ResourceSet resourceSet = ocl.getResourceSet();
+		Resource resource = null;
+		URI loadURI = oclURI;
+		String message2 = null;
 		try {
-			xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+			resource = resourceSet.getResource(loadURI, true);
 		}
 		catch (WrappedException e) {
 			URI retryURI = null;
@@ -184,27 +222,44 @@ public abstract class CompleteOCLLoader
 				}
 			}
 			if (retryURI != null) {
-				xtextResource = (CSResource) resourceSet.getResource(retryURI, true);
+				loadURI = retryURI;
+				resource = resourceSet.getResource(retryURI, true);
 			}
 			else {
 				throw e;
 			}
 		}
-		List<org.eclipse.emf.ecore.resource.Resource.Diagnostic> errors = xtextResource.getErrors();
-		assert errors != null;
-		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
-		if (message != null) {
-			error("Failed to load '" + oclURI, message);
-			return null;
+		BaseCSResource xtextResource = null;
+		if (resource instanceof BaseCSResource) {
+			xtextResource = (BaseCSResource) resource;
 		}
-		Resource asResource = xtextResource.getASResource();
-		errors = asResource.getErrors();
-		assert errors != null;
-		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
-		if (message != null) {
-			error("Failed to load Pivot from '" + oclURI, message);
-			return null;
+		else {
+			message2 = "An " + resource.getClass().getName() + " loaded rather than the required BaseCSResource.";
 		}
-		return asResource;
+		if ((xtextResource != null) && (message2 == null)) {
+			List<Resource.@NonNull Diagnostic> errors = xtextResource.getErrors();
+			assert errors != null;
+			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+			if (message2 == null) {
+				Resource asResource = xtextResource.getASResource();
+				errors = asResource.getErrors();
+				assert errors != null;
+				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+				if (message2 == null) {
+					return asResource;
+				}
+			}
+		}
+		assert message2 != null;
+		String message1 = "Failed to load '" + loadURI + "' as an OCL document.";
+		if (sErrors != null) {
+			sErrors.append(message1);
+			sErrors.append("\n");
+			sErrors.append(message2);
+		}
+		else {
+			error(message1, message2);
+		}
+		return null;
 	}
 }
