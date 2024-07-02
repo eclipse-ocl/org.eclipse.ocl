@@ -191,7 +191,8 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					for (URI oclURI : uris) {
 						assert oclURI != null;
 						try {
-							if (!helper.loadDocument(oclURI)) {
+							StringBuilder s = new StringBuilder();
+							if (!helper.loadDocument(oclURI, s)) {
 								return false;
 							};
 						}

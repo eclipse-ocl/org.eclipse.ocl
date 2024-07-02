@@ -54,7 +54,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Model;
@@ -67,29 +67,6 @@ import org.junit.Before;
  */
 public class UMLValidateTest extends AbstractValidateTests
 {
-	public static final class LoaderWithLog extends CompleteOCLLoader
-	{
-		StringBuilder s = new StringBuilder();
-
-		public LoaderWithLog(@NonNull EnvironmentFactory environmentFactory) {
-			super(environmentFactory);
-		}
-
-		@Override
-		protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-			s.append("\n");
-			s.append(primaryMessage);
-			s.append("\n");
-			s.append(detailMessage);
-			return false;
-		}
-
-		@Override
-		public String toString() {
-			return s.toString();
-		}
-	}
-
 	protected @NonNull ValidationContext createValidationContext(@NonNull ResourceSet resourceSet) {
 		ValidationRegistryAdapter validationRegistry = getValidationRegistryAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
@@ -226,25 +203,18 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
-		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory())
-		{
-			@Override
-			protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-				return false;
-			}
-		};
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
-		@SuppressWarnings("unused")Resource oclResource = helper.loadResource(oclURI);
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels");
-		}
 		//
 		//	Load all the documents
 		//
 		if (!helper.loadDocument(oclURI)) {
-			fail("Failed to loadDocument");
+			fail(helper.toString());
+		}
+		if (!helper.loadMetamodels()) {
+			fail("Failed to loadMetamodels");
 		}
 		helper.installPackages();
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
@@ -278,19 +248,18 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug404882.ocl");
-		LoaderWithLog helper = new LoaderWithLog(ocl.getEnvironmentFactory());
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
-		@SuppressWarnings("unused")Resource oclResource = helper.loadResource(oclURI);
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
 		//
 		//	Load all the documents
 		//
 		if (!helper.loadDocument(oclURI)) {
-			fail("Failed to loadDocument '" + oclURI + "'");
+			fail(helper.toString());
+		}
+		if (!helper.loadMetamodels()) {
+			fail("Failed to loadMetamodels :\n" + helper.toString());
 		}
 		helper.installPackages();
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
@@ -314,19 +283,18 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug423905.ocl");
-		LoaderWithLog helper = new LoaderWithLog(ocl.getEnvironmentFactory());
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
-		@SuppressWarnings("unused")Resource oclResource = helper.loadResource(oclURI);
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
 		//
 		//	Load all the documents
 		//
 		if (!helper.loadDocument(oclURI)) {
-			fail("Failed to loadDocument '" + oclURI + "'\n" + helper);
+			fail(helper.toString());
+		}
+		if (!helper.loadMetamodels()) {
+			fail("Failed to loadMetamodels :\n" + helper.toString());
 		}
 		helper.installPackages();
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
@@ -491,19 +459,18 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug446007.ocl");
-		LoaderWithLog helper = new LoaderWithLog(ocl.getEnvironmentFactory());
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
-		@SuppressWarnings("unused")Resource oclResource = helper.loadResource(oclURI);
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
 		//
 		//	Load all the documents
 		//
 		if (!helper.loadDocument(oclURI)) {
-			fail("Failed to loadDocument '" + oclURI + "'");
+			fail(helper.toString());
+		}
+		if (!helper.loadMetamodels()) {
+			fail("Failed to loadMetamodels :\n" + helper.toString());
 		}
 		helper.installPackages();
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);

@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 
 import junit.framework.TestCase;
 
@@ -243,16 +243,16 @@ public abstract class AbstractValidityTestCase extends TestCase
 		ecoreResource2 = resourceSet.getResource(ecoreURI2, true);
 		ecoreResource3 = resourceSet.getResource(ecoreURI3, true);
 
-		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory())
-		{
-			@Override
-			protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-				return false;
-			}
-		};
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 
 		oclResource = helper.loadResource(oclURI);
+		if (oclResource == null) {
+			fail(helper.toString());
+		}
 		oclResource2 = helper.loadResource(oclURI2);
+		if (oclResource2 == null) {
+			fail(helper.toString());
+		}
 		assertTrue(helper.loadMetamodels());
 		helper.installPackages();
 
