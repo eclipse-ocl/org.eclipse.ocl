@@ -15,7 +15,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 
 /**
  * OCLCSResourceSaveImpl supports saving the contents of an EMF Resource using regular XMI serialization.
@@ -29,6 +32,11 @@ public class OCLCSResourceSaveImpl extends BaseCSXMIResourceImpl
 	public OCLCSResourceSaveImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
 		super(uri, asResourceFactory);
 		this.csResource = csResource;
+	}
+
+	@Override
+	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	public @NonNull CSResource getCSResource() {

@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class BaseCS2AS extends CS2AS
 {
-	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
+	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}
 

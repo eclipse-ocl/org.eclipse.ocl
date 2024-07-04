@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -45,7 +46,7 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 
 	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
 	@Override
-	public void installRootContents(@NonNull BaseCSResource csResource) {
+	public void installRootContents(@NonNull CSResource csResource) {
 		super.installRootContents(csResource);
 		Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames2 = metaTypeNames;
 		if (metaTypeNames2 != null) {

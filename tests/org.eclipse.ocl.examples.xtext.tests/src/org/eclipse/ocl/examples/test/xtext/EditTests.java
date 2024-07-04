@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -119,7 +118,7 @@ public class EditTests extends XtextTestCase
 		return debugRef.object == null;
 	}
 
-	protected @NonNull Resource doRename(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
+	protected @NonNull Resource doRename(@NonNull EnvironmentFactory environmentFactory, @NonNull BaseCSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
 			@NonNull String @NonNull[] asErrors, @NonNull String @NonNull[] ecoreErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
 		//		System.out.println("-----------------" + contextMessage + "----------------");
@@ -144,7 +143,7 @@ public class EditTests extends XtextTestCase
 		return ecoreResource;
 	}
 
-	protected void replace(@NonNull CSResource xtextResource, String oldString, String newString) {
+	protected void replace(@NonNull BaseCSResource xtextResource, String oldString, String newString) {
 		String xtextContent = ElementUtil.getRawText((ElementCS) xtextResource.getContents().get(0));
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;

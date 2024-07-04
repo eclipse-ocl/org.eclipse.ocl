@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -49,6 +50,12 @@ public interface CSResource extends Resource
 	@NonNull String FILE_EXTENSION = PivotConstants.OCL_CS_FILE_EXTENSION;
 
 	/**
+	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
+	 * @since 1.22
+	 */
+	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+
+	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
 	 * @since 1.22
@@ -79,11 +86,10 @@ public interface CSResource extends Resource
 	 * @since 1.15
 	 */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {		// XXX
-		ParserContext parserContext = getParserContext();
-		assert parserContext != null;				// XXX
-		return parserContext.getEnvironmentFactory();
+		throw new UnsupportedOperationException();
 	}
 
+	@Deprecated /* @deprecated only for BaseCSResource */
 	@NonNull ParserContext getParserContext();
 
 	/**
@@ -93,19 +99,22 @@ public interface CSResource extends Resource
 	@NonNull ProjectManager getProjectManager();
 
 	/**
-	 * Return true if this CSResource is derived from an ASResource..
+	 * Return true if this CSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
+	@Deprecated /* @deprecated only for BaseCSResource */
 	default boolean isDerived() {
 		return false;
 	}
 
 	/**
-	 * Set whether this CSResource is derived from an ASResource..
+	 * Set whether this CSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
+	@Deprecated /* @deprecated only for BaseCSResource */
 	default void setDerived(boolean isDerived) {}
 
+	@Deprecated /* @deprecated only for BaseCSResource */
 	void setParserContext(@Nullable ParserContext parserContext);
 
 	/**
@@ -114,7 +123,8 @@ public interface CSResource extends Resource
 	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
 	void setProjectManager(@Nullable ProjectManager projectManager);
 
-	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
-
+	@Deprecated /* @deprecated only for BaseCSResource */
 	void update(int index, int length, String newString);
+
+	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
 }
