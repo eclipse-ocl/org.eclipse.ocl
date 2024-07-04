@@ -51,8 +51,8 @@ public class ValidationEntry
 		ASResourceFactoryRegistry registry = ASResourceFactoryRegistry.INSTANCE;
 		String fileExtension = file.getFileExtension();
 		ASResourceFactory asResourceFactory = registry.getASResourceFactoryForExtension(fileExtension);
-		if (asResourceFactory instanceof ASResourceFactory.ASResourceFactoryExtension2) {
-			EnvironmentFactory environmentFactory = ((ASResourceFactory.ASResourceFactoryExtension2)asResourceFactory).createEnvironmentFactory(ProjectManager.CLASS_PATH);
+		if (asResourceFactory != null) {
+			EnvironmentFactory environmentFactory = asResourceFactory.createEnvironmentFactory(ProjectManager.CLASS_PATH);
 			return environmentFactory.createOCL();
 		}
 		return OCL.newInstance(ProjectManager.CLASS_PATH);

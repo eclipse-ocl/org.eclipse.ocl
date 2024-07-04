@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil.IdResourceEntityHandler;
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
  * Pivot Abstract Syntax Resources via the standard EMF contentType/fileExtension Resource creation APIs.
  */
-public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension2
+public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory, ASResourceFactory.ASResourceFactoryExtension2
 {
 	/**
 	 * @since 1.10
