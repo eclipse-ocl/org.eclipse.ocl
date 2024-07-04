@@ -433,7 +433,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public @NonNull LUSSIDs getLUSSIDs(@NonNull Map<@NonNull Object, @Nullable Object> options) {
 		LUSSIDs lussids2 = lussids;
 		if (lussids2 == null) {
-			lussids = lussids2 = ((ASResourceFactory.ASResourceFactoryExtension)asResourceFactory).createLUSSIDs(this, options);
+			lussids = lussids2 = asResourceFactory.createLUSSIDs(this, options);
 		}
 		return lussids2;
 	}
