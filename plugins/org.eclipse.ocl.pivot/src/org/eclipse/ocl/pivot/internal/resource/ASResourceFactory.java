@@ -51,20 +51,17 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated /* @deprecated obsolete - folded into super interface */
 	interface ASResourceFactoryExtension extends ASResourceFactory
 	{
-		/**
-		 * Create the LUSSID allocator for an asResource.
-		 */
-		@NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options);
 	}
 
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated obsolete - folded into super interface */
 	interface ASResourceFactoryExtension2 extends ASResourceFactoryExtension
 	{
-		@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
 	}
 
 	/**
@@ -105,6 +102,22 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 */
 	@Deprecated
 	org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id);
+
+	/**
+	 * Create an EnvironmentFactory appropriate to the AS Resource using projectManager.
+	 * @since 1.22
+	 */
+	default @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Create the LUSSID allocator for an asResource.
+	 * @since 1.22
+	 */
+	default @NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Create a visitor to locate orphan specializations.
