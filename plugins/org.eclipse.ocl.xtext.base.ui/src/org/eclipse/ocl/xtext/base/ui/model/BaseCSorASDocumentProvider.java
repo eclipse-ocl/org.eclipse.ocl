@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
@@ -578,8 +579,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			{
 				@Override
 				public Object exec(XtextResource state) throws Exception {
-					if (state instanceof CSResource) {
-						((CSResource)state).setDerived(true);
+					if (state instanceof BaseCSResource) {
+						((BaseCSResource)state).setDerived(true);
 					}
 					return null;
 				}
