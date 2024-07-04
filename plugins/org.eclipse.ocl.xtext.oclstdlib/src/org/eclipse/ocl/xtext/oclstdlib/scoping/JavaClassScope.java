@@ -37,9 +37,9 @@ import org.eclipse.jdt.core.IParent;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
@@ -63,7 +63,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 {
 	public static boolean SUPPRESS_WORK_THREAD = false;		// Set true to avoid WorkerThread delay when testing
 
-	public static @NonNull JavaClassScope getAdapter(@NonNull BaseCSResource csResource, @NonNull ClassLoader classLoader) {
+	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull ClassLoader classLoader) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
 			adapter = new JavaClassScope(classLoader);
@@ -72,7 +72,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	public static @NonNull JavaClassScope getAdapter(@NonNull BaseCSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
+	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
 			adapter = new JavaClassScope(classLoaders);
@@ -81,7 +81,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	public static @NonNull JavaClassScope getAdapter(@NonNull BaseCSResource csResource, @NonNull IProject project) {
+	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull IProject project) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
 			adapter = new JavaClassScope(project);
@@ -164,7 +164,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	}
 
 	@Override
-	public void getAdapter(@NonNull BaseCSResource importedResource) {
+	public void getAdapter(@NonNull CSResource importedResource) {
 		if (classLoaders.size() > 0) {
 			getAdapter(importedResource, classLoaders);
 		}
@@ -294,7 +294,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	 * Refresh the known classes in the CS Resource root.
 	 */
 	@Override
-	public void installContents(@NonNull BaseCSResource csResource) {
+	public void installContents(@NonNull CSResource csResource) {
 		Set<JavaClassCS> javaClasses = new HashSet<JavaClassCS>();
 		EList<EObject> contents = csResource.getContents();
 		for (int i = contents.size(); --i >= 0; ) {
