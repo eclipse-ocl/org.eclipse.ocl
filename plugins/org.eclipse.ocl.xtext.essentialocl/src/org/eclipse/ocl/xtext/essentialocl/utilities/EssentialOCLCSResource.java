@@ -425,8 +425,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (getResourceSet() == null) {			// e.g. when disposing
 			return null;
 		}
-		EnvironmentFactory environmentFactory = getEnvironmentFactory();
-		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping((EnvironmentFactoryInternal)environmentFactory);
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			return null;
+		}
+		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
 		if (csi2asMapping == null) {
 			return null;
 		}
