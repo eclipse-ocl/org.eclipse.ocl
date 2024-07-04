@@ -15,8 +15,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractScope;
 
@@ -26,7 +26,7 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
  */
 public abstract class AbstractJavaClassScope extends AbstractScope implements Adapter
 {
-	public static @Nullable AbstractJavaClassScope findAdapter(@NonNull BaseCSResource csResource) {
+	public static @Nullable AbstractJavaClassScope findAdapter(@NonNull CSResource csResource) {
 		return ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 	}
 
@@ -38,14 +38,14 @@ public abstract class AbstractJavaClassScope extends AbstractScope implements Ad
 
 	public abstract void addClassLoaders(@NonNull Iterable<@NonNull ClassLoader> classLoaders);
 
-	public abstract void getAdapter(@NonNull BaseCSResource importedResource);
+	public abstract void getAdapter(@NonNull CSResource importedResource);
 
 	@Override
 	public Notifier getTarget() {
 		return target;
 	}
 
-	public abstract void installContents(@NonNull BaseCSResource csResource);
+	public abstract void installContents(@NonNull CSResource csResource);
 
 	@Override
 	public boolean isAdapterForType(Object type) {

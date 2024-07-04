@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
@@ -46,6 +47,7 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	/**
 	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
 	 */
+	@Override
 	@NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	/**
@@ -82,6 +84,12 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 */
 	@NonNull String getEditorName();
 
+	@Override
+	@NonNull ParserContext getParserContext();
+
+	@Override
+	boolean isDerived();
+
 	/**
 	 * Return a non-null NamedElement if element is able to be accessed by a qualified path; Other elements must use a quoted URI.
 	 */
@@ -91,6 +99,9 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 * Return a uri against the URI of this CS resource.
 	 */
 	@NonNull URI resolve(@NonNull URI uri);
+
+	@Override
+	void setDerived(boolean isDerived);
 
 	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
 	void update(@NonNull IDiagnosticConsumer diagnosticConsumer);
