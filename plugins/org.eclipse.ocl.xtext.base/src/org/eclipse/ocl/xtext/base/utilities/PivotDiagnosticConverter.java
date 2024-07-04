@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 
@@ -29,7 +28,7 @@ public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 			ModelElementCS csModelElement = ElementUtil.getCsElement((Element) causer);
 			if (csModelElement != null) {
 				Resource resource = csModelElement.eResource();
-				if ((resource instanceof CSResource) && (getLocationDataInProgress || !((CSResource)resource).isDerived())) {
+				if ((resource instanceof BaseCSResource) && (getLocationDataInProgress || !((BaseCSResource)resource).isDerived())) {
 					return csModelElement;
 				}
 			}

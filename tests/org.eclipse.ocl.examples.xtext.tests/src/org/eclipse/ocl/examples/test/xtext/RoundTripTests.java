@@ -105,8 +105,8 @@ public class RoundTripTests extends XtextTestCase
 	}
 	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
-		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
+		XtextResource xtextResource = (XtextResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+		((BaseCSResource)xtextResource).updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());
 		debugTimestamp.log("Serialization save done");
@@ -126,7 +126,7 @@ public class RoundTripTests extends XtextTestCase
 
 	public CSResource createCompleteOCLXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());

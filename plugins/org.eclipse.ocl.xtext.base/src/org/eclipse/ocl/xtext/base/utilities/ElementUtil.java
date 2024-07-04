@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -108,7 +107,7 @@ public class ElementUtil
 
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {
 		Resource eResource = csElement.eResource();
-		ParserContext parserContext = eResource instanceof CSResource ? ((CSResource)eResource).getParserContext() : null;
+		ParserContext parserContext = eResource instanceof BaseCSResource ? ((BaseCSResource)eResource).getParserContext() : null;
 		// assert parserContext != null;		// FIXME only non-null for API compatibility
 		return parserContext;
 	}
