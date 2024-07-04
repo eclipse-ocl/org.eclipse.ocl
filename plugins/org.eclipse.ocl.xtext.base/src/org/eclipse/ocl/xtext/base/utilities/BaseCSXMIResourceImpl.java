@@ -10,14 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.utilities;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
@@ -30,9 +28,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
@@ -40,8 +36,6 @@ import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
-import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -52,7 +46,6 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -60,23 +53,18 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.diagnostics.Severity;
-import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
-import org.eclipse.xtext.util.Triple;
 
 /**
  * The BaseCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
  */
-public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements BaseCSResource
+public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements CSResource
 {
 	/**
 	 * CSXMISaveHelper overloads getHREF to persist references to the internal AS elements to their persistable CS/ES equivalents.
@@ -212,35 +200,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 		}
 	}
 
-	/**
-	 * A PreParsedContext is used by a directly loaded CS Resource to provide the minimal EnvironmentFactory related functionality.
-	 * The inappropriate complexities of Xtext parsing are not supported.
-	 */
-	protected static final class PreParsedContext extends AbstractParserContext
-	{
-		public PreParsedContext(@NonNull EnvironmentFactoryInternal environmentFactory) {
-			super(environmentFactory, null);
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull ExpressionInOCL parse(@Nullable EObject owner, @NonNull String expression) throws ParserException {
-			throw new UnsupportedOperationException();
-		}
-	}
-
 	protected final @NonNull ASResourceFactory asResourceFactory;
-	private @Nullable ParserContext parserContext = null;
 	private @Nullable CS2AS cs2as = null;
 
 	/**
@@ -251,11 +211,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 		this.asResourceFactory = asResourceFactory;
 	}
 
-	@Override
-	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
-			@NonNull EnvironmentFactoryInternal environmentFactory) {
-		throw new UnsupportedOperationException();
-	}
 
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
 		URI uri = ClassUtil.nonNullState(getURI());
@@ -275,20 +230,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	}
 
 	@Override
-	public void createAndAddDiagnostic(Triple<EObject, EReference, INode> triple) {
-	//	throw new UnsupportedOperationException();
-		return;			// XXX
-	}
-
-	@Override
-	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();
-	}
-
-//	@Override
-//	protected @NonNull XMIHelperImpl createXMLHelper() {
-//		return new BaseCSXMIResourceImpl.CSXMISaveHelper(this);
-//	}
+	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	@Override
 	protected @NonNull XMLSave createXMLSave() {
@@ -296,45 +238,13 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 		return new BaseCSXMIResourceImpl.CSXMISave(xmlHelper);
 	}
 
-	@Override
-	public void dispose() {
-	//	throw new UnsupportedOperationException();
-		CS2AS cs2as = findCS2AS();
-		if (cs2as != null) {
-			cs2as.dispose();
-		}
-	}
-
-	@Override
-	public @Nullable CS2AS findCS2AS() {
-//		throw new UnsupportedOperationException();
-		if (cs2as != null) {
-			return cs2as;
-		}
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
-			if (csi2asMapping != null) {
-				CS2AS cs2as = csi2asMapping.getCS2AS(this);
-				if (cs2as != null) {
-					return cs2as;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
 	public @NonNull String getASContentType() {
 		return asResourceFactory.getContentType();
 	}
 
 	@Override
-	public @NonNull ASResource getASResource() {
-		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getASResource()");
-		CS2AS cs2as = getCS2AS();
-		ASResource asResource = cs2as.getASResource();
-		return asResource;
+	public @NonNull ASResource getASResource() {				// deprecated CSResource method demoted to BaseCSResource
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -342,22 +252,8 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 		return asResourceFactory;
 	}
 
-	@Override
-	public @NonNull URI getASURI(@NonNull URI csURI) {
+	public @NonNull URI getASURI(@NonNull URI csURI) {				// XXX
 		return csURI.appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION);
-	}
-
-	@Override
-	final public @NonNull CS2AS getCS2AS() {
-		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
-	//	if (cs2as != null) {
-	//		return cs2as;
-	//	}
-		EnvironmentFactory environmentFactory = getEnvironmentFactory();
-	//	EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
-	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// XXX pass environmentFactory
-	//	assert environmentFactory != null;
-		return getCS2AS(environmentFactory);
 	}
 
 	@Override
@@ -382,19 +278,8 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
-	//	CS2AS cs2as = null;
-	//	if (parserContext instanceof ExtendedParserContext) {
-	//		cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
-	//	}
-	//	if (cs2as == null) {
-			cs2as = createCS2AS(environmentFactoryInternal, asResource);
-	//	}
+		cs2as = createCS2AS(environmentFactoryInternal, asResource);
 		return cs2as;
-	}
-
-	@Override
-	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -404,11 +289,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 			defaultSaveOptions = defaultSaveOptions2 = XMIUtil.createPivotSaveOptions();
 		}
 		return defaultSaveOptions2;
-	}
-
-	@Override
-	public @NonNull String getEditorName() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -423,22 +303,15 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, csResourceSet, null);
 		}
 		return environmentFactory;
-	//	return BaseCSResource.super.getEnvironmentFactory();
 	}
 
 	@Override
-	public @NonNull ParserContext getParserContext() {
-		ParserContext parserContext2 = parserContext;
-		if (parserContext2 == null) {
-			EnvironmentFactoryInternal environmentFactory = getCS2AS().getEnvironmentFactory();
-		//	assert environmentFactory != null;
-			parserContext = parserContext2 = new PreParsedContext(environmentFactory);
-		}
-		return parserContext2;
+	public @NonNull ParserContext getParserContext() {		// CSResource method demoted to BaseCSResource
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @NonNull ProjectManager getProjectManager() {
+	public @NonNull ProjectManager getProjectManager() {	// Obsolete CSResource method
 		throw new UnsupportedOperationException();
 	}
 
@@ -459,47 +332,27 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements B
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
 
 	@Override
-	public boolean isDerived() {
+	public boolean isDerived() {												// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @Nullable NamedElement isPathable(@NonNull EObject element) {
+	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @NonNull URI resolve(@NonNull URI uri) {
+	public void setParserContext(@Nullable ParserContext parserContext) {		// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setDerived(boolean isDerived) {
+	public void setProjectManager(@Nullable ProjectManager projectManager) {	// Obsolete CSResource method
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setParserContext(@Nullable ParserContext parserContext) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setProjectManager(@Nullable ProjectManager projectManager) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void update(@NonNull EnvironmentFactory environmentFactory, @NonNull IDiagnosticConsumer diagnosticConsumer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void update(int index, int length, String newString) {
+	public void update(int index, int length, String newString) {				// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}
 

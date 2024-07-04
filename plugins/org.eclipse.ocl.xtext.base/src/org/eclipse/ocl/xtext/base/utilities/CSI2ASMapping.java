@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -353,9 +354,9 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Mapping of each CS resource to its corresponding pivot Resource.
 	 */
-	protected final @NonNull Map<@NonNull BaseCSResource, @NonNull ASResource> cs2asResourceMap = new HashMap<>();
+	protected final @NonNull Map<@NonNull CSResource, @NonNull ASResource> cs2asResourceMap = new HashMap<>();
 
-	protected final @NonNull Map<@NonNull BaseCSResource, @NonNull CS2AS> cs2as2as = new HashMap<>();
+	protected final @NonNull Map<@NonNull CSResource, @NonNull CS2AS> cs2as2as = new HashMap<>();
 
 	/**
 	 * The map from CS element (identified by URI) to pivot element at the end of the last update. This map enables
@@ -388,7 +389,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		this.cs2asResourceMap.putAll(cs2asResourceMap);
 	}
 
-	public void add(@NonNull BaseCSResource csResource, @NonNull CS2AS cs2as) {
+	public void add(@NonNull CSResource csResource, @NonNull CS2AS cs2as) {
 		as2cs = null;
 		this.cs2asResourceMap.put(csResource, cs2as.getASResource());
 		this.cs2as2as.put(csResource, cs2as);
@@ -399,7 +400,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		//		cs2ases2.add(cs2as);
 	}
 
-	public @NonNull Set<@NonNull CSI> computeCSIs(@NonNull BaseCSResource csResource) {
+	public @NonNull Set<@NonNull CSI> computeCSIs(@NonNull CSResource csResource) {
 		Set<@NonNull CSI> map = new HashSet<>();
 		for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
 			EObject eObject = it.next();
@@ -432,7 +433,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	@Override
 	public void dispose() {
-		for (@NonNull BaseCSResource csResource : new ArrayList<>(cs2as2as.keySet())) {
+		for (@NonNull CSResource csResource : new ArrayList<>(cs2as2as.keySet())) {
 			csResource.dispose();
 		}
 		csi2as.clear();
@@ -457,11 +458,11 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Return the AS Resource corresponding to a given CS Resource.
 	 */
-	public @Nullable ASResource getASResource(@Nullable BaseCSResource csResource) {
+	public @Nullable ASResource getASResource(@Nullable CSResource csResource) {
 		return cs2asResourceMap.get(csResource);
 	}
 
-	public @Nullable CS2AS getCS2AS(@NonNull BaseCSResource csResource) {
+	public @Nullable CS2AS getCS2AS(@NonNull CSResource csResource) {
 		return cs2as2as.get(csResource);
 	}
 
@@ -504,7 +505,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Return all mapped CS Resources.
 	 */
-	public @NonNull Set<@NonNull BaseCSResource> getCSResources() {
+	public @NonNull Set<@NonNull CSResource> getCSResources() {
 		return cs2asResourceMap.keySet();
 	}
 
@@ -561,7 +562,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Remove the Resource mappings for all csResources. The CSI mappings persist until update() is called.
 	 */
-	public void removeCSResource(@NonNull BaseCSResource csResource) {
+	public void removeCSResource(@NonNull CSResource csResource) {
 		as2cs = null;
 		cs2asResourceMap.remove(csResource);
 		cs2as2as.remove(csResource);
@@ -573,10 +574,10 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public void update() {
 		as2cs = null;
 		csi2as.clear();
-		List<@NonNull BaseCSResource> iterationDomain = new ArrayList<>(cs2asResourceMap.keySet());
+		List<@NonNull CSResource> iterationDomain = new ArrayList<>(cs2asResourceMap.keySet());
 		int oldSize = cs2asResourceMap.size();
 		while (true) {
-			for (@NonNull BaseCSResource csResource : iterationDomain) {
+			for (@NonNull CSResource csResource : iterationDomain) {
 				for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
 					EObject eObject = it.next();
 					if (eObject instanceof ModelElementCS) {
@@ -591,7 +592,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				break;
 			}
 			oldSize = newSize;
-			Set<@NonNull BaseCSResource> newIterationDomain = new HashSet<>(cs2asResourceMap.keySet());
+			Set<@NonNull CSResource> newIterationDomain = new HashSet<>(cs2asResourceMap.keySet());
 			newIterationDomain.removeAll(iterationDomain);
 			iterationDomain.clear();
 			iterationDomain.addAll(newIterationDomain);

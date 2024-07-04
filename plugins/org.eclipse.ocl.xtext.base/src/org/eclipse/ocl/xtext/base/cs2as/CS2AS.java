@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -367,7 +368,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	/**
 	 * The CS resource mapped by this CS2AS.
 	 */
-	protected final @NonNull BaseCSResource csResource;
+	protected final @NonNull CSResource csResource;
 
 	/**
 	 * The AS resource mapped by this CS2AS.
@@ -384,7 +385,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	 */
 	private @Nullable PivotHelper helper = null;
 
-	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
+	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		this.csResource = csResource;
@@ -407,7 +408,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 	protected abstract @NonNull BaseCSVisitor<Continuation<?>> createContainmentVisitor(@NonNull CS2ASConversion cs2asConversion);
 
-	protected@NonNull  CS2ASConversion createConversion(@NonNull IDiagnosticConsumer diagnosticsConsumer, @NonNull BaseCSResource csResource) {
+	protected@NonNull  CS2ASConversion createConversion(@NonNull IDiagnosticConsumer diagnosticsConsumer, @NonNull CSResource csResource) {
 		return new CS2ASConversion(this, diagnosticsConsumer);
 	}
 
@@ -432,7 +433,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		return csi2asMapping.getCSElement(pivotElement);
 	}
 
-	public @NonNull BaseCSResource getCSResource() {
+	public @NonNull CSResource getCSResource() {
 		return csResource;
 	}
 
@@ -507,7 +508,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
-	public void installRootContents(@NonNull BaseCSResource csResource2) {}
+	public void installRootContents(@NonNull CSResource csResource2) {}
 
 	/**
 	 * Return true if csTYpeRef referes to a type that cannot be null, e.g. T[1],
@@ -577,7 +578,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 		// XXX
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		ParserContext parserContext = csResource.getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
+		ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
 		EnvironmentView environmentView = new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
@@ -685,7 +686,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
 //			metamodelManager.kill(deadPivot);
 		} */
-		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<>();
+		Map<CSResource, ASResource> cs2asResourceMap = new HashMap<>();
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);
