@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -82,7 +83,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.OperatorExpContinuation;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.TemplateSignatureContinuation;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
@@ -175,7 +175,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.postOrderVisitor = converter.createPostOrderVisitor(this);
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
 		this.optionalDefaultMultiplicity = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
-
 	}
 
 	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
@@ -227,7 +226,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.bind(csContext, messageTemplate, bindings);
 	}
 
-	public boolean checkForNoErrors(@NonNull BaseCSResource csResource) {
+	public boolean checkForNoErrors(@NonNull CSResource csResource) {
 		@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
 		if (ElementUtil.hasSyntaxError(errors)) {
 			return false;
@@ -755,7 +754,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		converter.installPivotUsage(csElement, newPivotElement);
 	}
 
-	protected void installRootContents(@NonNull BaseCSResource csResource) {	// FIXME This code is no longer needed; delete once QVTd checked
+	protected void installRootContents(@NonNull CSResource csResource) {	// FIXME This code is no longer needed; delete once QVTd checked
 		for (EObject eObject : csResource.getContents()) {
 			if (eObject instanceof Pivotable) {
 				Element pivotElement = ((Pivotable)eObject).getPivot();
@@ -800,7 +799,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	public void installRootElement(@NonNull BaseCSResource csResource, @NonNull Element pivotElement) {
+	public void installRootElement(@NonNull CSResource csResource, @NonNull Element pivotElement) {
 		Resource asResource = converter.getASResource();
 		asResource.getContents().add(pivotElement);
 		metamodelManager.installResource(asResource);
@@ -1119,7 +1118,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	protected void resetPivotMappings(@NonNull BaseCSResource csResource) {
+	protected void resetPivotMappings(@NonNull CSResource csResource) {
 		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof Pivotable) {
@@ -1346,7 +1345,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	/**
 	 * Sequence the update passes to make the pivot match the CS.
 	 */
-	public boolean update(@NonNull BaseCSResource csResource) {
+	public boolean update(@NonNull CSResource csResource) {
 		resetPivotMappings(csResource);
 		oldPackagesByName = new HashMap<>();
 		oldPackagesByQualifiedName = new HashMap<>();
