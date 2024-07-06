@@ -18,12 +18,10 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
- * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource
- * for which a ParserContext defines how the Abstract Syntax elements should
- * be initialized. The derived VaseCSREsourece provides a richer interface with Xtext dependencies.
+ * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
+ * The derived BaseCSResource provides a richer interface with Xtext parsing dependencies.
  */
 public interface CSResource extends Resource
 {
@@ -31,26 +29,16 @@ public interface CSResource extends Resource
 	 * @since 1.1
 	 */
 	@Deprecated /* @deprecated obsolete - folded into super interface */
-	public interface CSResourceExtension extends CSResource
-	{
-	}
+	public interface CSResourceExtension extends CSResource {}
 
 	/**
 	 * @since 1.3
 	 */
 	@Deprecated /* @deprecated obsolete - folded into super interface */
-	public interface CSResourceExtension2 extends CSResourceExtension
-	{
-	}
+	public interface CSResourceExtension2 extends CSResourceExtension {}
 
 	/**
-	 * The file extension for OCL Concrete Syntax resources.
-	 * @since 1.22
-	 */
-	@NonNull String FILE_EXTENSION = PivotConstants.OCL_CS_FILE_EXTENSION;
-
-	/**
-	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
+	 * Create the CS2AS converter for the asResource conversions using environmentFactory.
 	 * @since 1.22
 	 */
 	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
@@ -85,7 +73,7 @@ public interface CSResource extends Resource
 	/**
 	 * @since 1.15
 	 */
-	default @NonNull EnvironmentFactory getEnvironmentFactory() {		// XXX
+	default @NonNull EnvironmentFactory getEnvironmentFactory() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -36,7 +36,9 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -60,13 +62,17 @@ import org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibUiModule;
 import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartService;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -118,8 +124,42 @@ public class EditorTests extends XtextTestCase
 
 	protected void doTearDown(@NonNull XtextEditor editor) {
 		TestUIUtil.flushEvents();
+		editor.setInput(null);
+		IContentOutlinePage outlinePage = editor.getAdapter(IContentOutlinePage.class);
+		if (outlinePage != null) {
+			outlinePage.dispose();
+		}
+		editor.getSelectionProvider().setSelection(TextSelection.emptySelection());
 		editor.close(false);
 		TestUIUtil.flushEvents();
+	}
+
+	protected void zzdoTearDown2(@NonNull XtextEditor editor, FileEditorInput fileEditorInput) throws InterruptedException {
+		TestUIUtil.flushEvents();
+		editor.setInput(null);
+		IContentOutlinePage outlinePage = editor.getAdapter(IContentOutlinePage.class);
+		if (outlinePage != null) {
+			outlinePage.dispose();
+		}
+		editor.getSelectionProvider().setSelection(TextSelection.emptySelection());
+		editor.close(false);
+		TestUIUtil.flushEvents();
+		gc("post-close");
+	/*	IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
+		ISelectionService selectionService = activeWorkbenchWindow.getSelectionService();
+		ISelection selection = selectionService.getSelection();
+		try {
+			IEditorPart editor2 = IDE.openEditor(page, fileEditorInput, "org.eclipse.ui.DefaultTextEditor", true);
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		TestUIUtil.wait(7500); */
+
+		TestUIUtil.flushEvents();
+//		partService = activeWorkbenchWindow.getModel().getContext().get(SelectionService.class);
 	}
 
 	public void doTestEditor(@NonNull String editorId, @NonNull String testFile, @NonNull String testContent) throws Exception {
@@ -249,7 +289,8 @@ public class EditorTests extends XtextTestCase
 			public Object exec(@Nullable XtextResource resource) throws Exception {
 				assert resource != null;
 				//				assertNoResourceErrors("Loaded CS", resource);
-				CS2AS cs2as = ((BaseCSResource)resource).getCS2AS();
+				BaseCSResource csResource = (BaseCSResource)resource;
+				CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
 				if (cs2as != null) {
 					Resource asResource = cs2as.getASResource();
 					assertNoResourceErrors(prefix, asResource);
@@ -263,6 +304,24 @@ public class EditorTests extends XtextTestCase
 			}
 		});
 		return pivotContent;
+	}
+
+	/**
+	 * Open a boring text editpr so that actions such as DebugLastAction refer to a boring selection rather
+	 * the a TextSelection that references a BaseDocument ans so Resource and so .. leak.
+	 * @return
+	 * @throws Exception
+	 */
+	private IEditorPart openDummyEditor() throws Exception {
+		String dummyDocument = "dummy document\n";
+		TestFile dummyFile = createFile("DummyDocument.txt", dummyDocument);
+		InputStream inputStream = new URIConverter.ReadableInputStream(dummyDocument, "UTF-8");
+		FileEditorInput fileEditorInput = createFileEditorInput("test", "DummyDocument.txt", inputStream);
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
+		IEditorPart editor = IDE.openEditor(page, fileEditorInput, "org.eclipse.ui.DefaultTextEditor", true);
+		return editor;
 	}
 
 	private void replaceInContent(@NonNull XtextEditor editor, @NonNull String oldContent, @NonNull String newContent) throws BadLocationException {
@@ -281,6 +340,8 @@ public class EditorTests extends XtextTestCase
 
 	@Override
 	protected void setUp() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);		// XXX
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUIUtil.suppressGitPrefixPopUp();
 		TestUIUtil.closeIntro();
 		super.setUp();
@@ -413,7 +474,20 @@ public class EditorTests extends XtextTestCase
 	}
 
 	// FIXME Bug 399762 fails on Hudson
-	public void zztestEditor_OpenOCLinEcoreEditor4Test_Ecore_Update() throws Exception {
+	public void testEditor_OpenOCLinEcoreEditor4Test_Ecore_Update() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);// XXX
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow initialWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		assert initialWorkbenchWindow != null;
+		IWorkbenchPage initialPage = initialWorkbenchWindow.getActivePage();
+		assert initialPage != null;
+		IPartService initialPartService = initialWorkbenchWindow.getPartService();
+		assert initialPartService != null;
+		IWorkbenchPart initialPart = initialPartService.getActivePart();
+		assert initialPart != null;
+		ISelectionService selectionService = initialWorkbenchWindow.getSelectionService();
+		openDummyEditor();
 		String testDocument =
 				"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
 						"{\n" +
@@ -427,6 +501,7 @@ public class EditorTests extends XtextTestCase
 						"	}\n" +
 						"}\n";
 		FileEditorInput fileEditorInput = createEcoreFileEditorInput("test", "RefreshTest.ecore", testDocument);
+		TestUIUtil.flushEvents();
 		XtextEditor editor = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, fileEditorInput);
 		XtextDocument document = (XtextDocument) editor.getDocument();
 		Set<EObject> oldPivotContent = indexPivotContent(document, "Loaded pivot");
@@ -448,6 +523,57 @@ public class EditorTests extends XtextTestCase
 		TestUIUtil.flushEvents();
 		assertEquals(oldPivotContent, newPivotContent);
 		TestUIUtil.flushEvents();
-		doTearDown(editor);
+	//	doTearDown2(editor, fileEditorInput2);
+
+	//	TestUIUtil.flushEvents();
+	//	editor.setInput(null);
+	//	IContentOutlinePage outlinePage = editor.getAdapter(IContentOutlinePage.class);
+	//	if (outlinePage != null) {
+	//		outlinePage.dispose();
+	//	}
+	//	editor.getSelectionProvider().setSelection(TextSelection.emptySelection());
+	//	editor.close(false);
+		TestUIUtil.flushEvents();
+		gc("post-close");
+	//	ISelection selection1 = selectionService.getSelection();
+	/*	IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
+		ISelectionService selectionService = activeWorkbenchWindow.getSelectionService();
+		ISelection selection = selectionService.getSelection();
+		try {
+			IEditorPart editor2 = IDE.openEditor(page, fileEditorInput, "org.eclipse.ui.DefaultTextEditor", true);
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		TestUIUtil.wait(7500); */
+
+		TestUIUtil.flushEvents();
+//		partService = activeWorkbenchWindow.getModel().getContext().get(SelectionService.class);
+
+	//	IPartListener threadLocalExecutorUIPartListener = ThreadLocalExecutorUI.internalGetPartListener();
+
+		initialPage.closeAllEditors(false);
+		gc("After closeAllEditors");
+	//	ISelection selection2 = selectionService.getSelection();
+	//	IViewReference[] viewReferences = initialPage.getViewReferences();
+	//	for (IViewReference viewReference : viewReferences) {
+	//		IViewPart viewPart = viewReference.getView(false);
+		//	if (viewPart instanceof LaunchView) {
+		//		threadLocalExecutorUIPartListener.partDeactivated(viewPart);
+		//		threadLocalExecutorUIPartListener.partClosed(viewPart);
+		//	}
+	//	}
+	//	gc("After close LaunchView");
+		initialPage.activate(initialPart);
+	//	partListener.partActivated(initialPart);
+	//	initialPart.dispose();					-- leads to an NPE downstream
+	//	threadLocalExecutorUIPartListener.partDeactivated(initialPart);		// Find the appropriate UI call
+	//	threadLocalExecutorUIPartListener.partClosed(initialPart);
+	//	TestUIUtil.wait(10000);
+
+
+
 	}
 }

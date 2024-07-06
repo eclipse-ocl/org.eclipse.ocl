@@ -177,10 +177,10 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		}
 
 		@Override
-		protected void init(XMLResource csResource, Map<?, ?> options) {
-			BaseCSResource castCSResource = (BaseCSResource)((OCLCSResourceSaveImpl)csResource).getCSResource();				// XXX cast
-			EnvironmentFactory environmentFactory = castCSResource.getEnvironmentFactory();
-			ICS2AS cs2as = castCSResource.getCS2AS(environmentFactory);
+		protected void init(XMLResource xmlResource, Map<?, ?> options) {
+			CSResource csResource = (CSResource)xmlResource;
+			EnvironmentFactory environmentFactory = csResource.getEnvironmentFactory();
+			ICS2AS cs2as = csResource.getCS2AS(environmentFactory);
 			Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 			if (options != null) {
 				for (Object key : options.keySet()) {
@@ -196,7 +196,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 			else {
 				AS2ID.assignIds(asResource, saveOptions);
 			}
-			super.init(csResource, options);
+			super.init(xmlResource, options);
 		}
 	}
 
@@ -359,10 +359,5 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	@Override
 	public void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected boolean useIDs() {		// XXX ???
-		return true;
 	}
 }

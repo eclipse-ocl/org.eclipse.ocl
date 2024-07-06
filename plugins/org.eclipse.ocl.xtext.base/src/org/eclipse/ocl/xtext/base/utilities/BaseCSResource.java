@@ -87,6 +87,10 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	@Override
 	@NonNull ParserContext getParserContext();
 
+	/**
+	 * Return true if this BaseCSResource is derived from an ASResource.
+	 * @since 1.22
+	 */
 	@Override
 	boolean isDerived();
 
@@ -100,6 +104,10 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 */
 	@NonNull URI resolve(@NonNull URI uri);
 
+	/**
+	 * Set whether this BaseCSResource is derived from an ASResource.
+	 * @since 1.22
+	 */
 	@Override
 	void setDerived(boolean isDerived);
 

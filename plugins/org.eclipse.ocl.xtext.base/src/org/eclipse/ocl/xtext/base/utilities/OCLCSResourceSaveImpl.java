@@ -18,10 +18,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 
 /**
- * OCLCSResourceSaveImpl supports saving the contents of an EMF Resource using regular XMI serialization.
+ * OCLCSResourceSaveImpl supports saving the contents of a CS Resource using regular XMI serialization.
  * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
  * It ensures that references to AS elements within the XMI are serialized as equivalent CS/AS references.
  */
@@ -36,7 +37,7 @@ public class OCLCSResourceSaveImpl extends BaseCSXMIResourceImpl
 
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();			// XXX
+		return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
 	}
 
 	public @NonNull CSResource getCSResource() {
@@ -49,5 +50,10 @@ public class OCLCSResourceSaveImpl extends BaseCSXMIResourceImpl
 	@Override
 	public @NonNull EList<@NonNull EObject> getContents() {
 		return csResource.getContents();
+	}
+
+	@Override
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return csResource.getEnvironmentFactory();
 	}
 }

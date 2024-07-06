@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -75,6 +76,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -126,10 +128,10 @@ public class PivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-	//	PivotUtilInternal.noDebug = false;
-	//	DEBUG_GC = true;
-	//	DEBUG_ID = true;
-	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+		PivotUtilInternal.noDebug = false;
+		DEBUG_GC = true;
+		DEBUG_ID = true;
+		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
 	//	ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
@@ -738,7 +740,7 @@ public class PivotTestCase extends TestCase
 		}
 		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
 		if (environmentFactoryAdapter != null) {
-			EnvironmentFactoryInternal environmentFactory = environmentFactoryAdapter.getMetamodelManager().getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
 			ProjectManager projectManager = environmentFactory.getProjectManager();
 			projectManager.unload(resourceSet);
 		}
@@ -804,15 +806,14 @@ public class PivotTestCase extends TestCase
 				} catch (InterruptedException e) {
 					// Don't care -- e.printStackTrace();
 				}
-				if (DEBUG_GC) {
-					System.gc();
-					System.runFinalization();
-				}
 				if (testRunnable.throwable != null) {
 					throw testRunnable.throwable;
 				}
 			}
+			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null;
+			assert ThreadLocalExecutor.basicGetExecutor() == null;
 		}
+		// trarDown() cleans up / resets
 	}
 
 	@Deprecated /* @deprecated not used */
@@ -835,6 +836,34 @@ public class PivotTestCase extends TestCase
 	}
 
 	@Rule public TestName testName = new TestName();
+
+	protected void gc(String pfx) throws InterruptedException {
+	//	if (DEBUG_GC) {
+	//		AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories(null);
+	//	}
+		// UMLValidateTest.testValidate_Bug417062_uml is most demanding
+		for (int i = 0; i < 3; i++) {
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " gc-" + i + "-pre");
+			System.gc();
+		//	System.runFinalization();
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+				TestUIUtil.wait(180);
+			}
+			else {
+				Thread.sleep(80);				// ?? need to sleep long enough to let finalizers run
+			}
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " gc-" + i + "-post");
+			if (ThreadLocalExecutor.resetFinalizerReleases() == 0) {
+				break;				// need to loop till finalizers stop de-referencing
+			}
+		}
+		if (DEBUG_GC) {
+			if (pfx != null) {
+				System.out.println(pfx + " " + Thread.currentThread().getName());
+			}
+			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
+		}
+	}
 
 	@Override
 	public @NonNull String getName() {
@@ -908,6 +937,10 @@ public class PivotTestCase extends TestCase
 		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
 		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
+	//	IWorkbench workbench = PlatformUI.getWorkbench();									// XXX
+	//	IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+	//	IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
+
 	}
 
 	@Override
@@ -921,13 +954,13 @@ public class PivotTestCase extends TestCase
 				uninstall();
 				makeCopyOfGlobalState.restoreGlobalState();
 				makeCopyOfGlobalState = null;
-				System.gc();
-				System.runFinalization();
+				gc(null);
 				//			MetamodelManagerResourceAdapter.INSTANCES.show();
 			}
 			if (DEBUG_ID) {
 				PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
 			}
+			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
 			/**
 			 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
 			 * and which might be resolved using the wrong strategy in another test.
@@ -949,15 +982,24 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	protected void uninstall() {
+	protected void uninstall() throws InterruptedException {
+	//	gc("GC-ed5");
 		IdiomsStandaloneSetup.doTearDown();
+	//	gc("GC-ed5a");
 		PivotStandaloneSetup.doTearDown();
+	//	gc("GC-ed5b");
 		BaseStandaloneSetup.doTearDown();
+	//	gc("GC-ed5c");
 		CompleteOCLStandaloneSetup.doTearDown();
+	//	gc("GC-ed5d");
 		EssentialOCLStandaloneSetup.doTearDown();
+	//	gc("GC-ed5e");
 		MarkupStandaloneSetup.doTearDown();
+	//	gc("GC-ed5f");
 		OCLinEcoreStandaloneSetup.doTearDown();
+	//	gc("GC-ed5g");
 		OCLstdlibStandaloneSetup.doTearDown();
+	//	gc("GC-ed6");
 		GlobalEnvironmentFactory.disposeInstance();
 		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
 		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI);

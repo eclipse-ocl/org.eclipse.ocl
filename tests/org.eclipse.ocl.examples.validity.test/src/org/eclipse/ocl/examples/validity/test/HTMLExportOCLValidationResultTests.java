@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
-import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +64,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Override
 	@Before
 	public void setUp() throws Exception {
-		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		super.setUp();
 		exportedFileName = getProjectFileName(getTestName() + ".html");
 		initExporter(HTMLExporter.EXPORTER_TYPE);
