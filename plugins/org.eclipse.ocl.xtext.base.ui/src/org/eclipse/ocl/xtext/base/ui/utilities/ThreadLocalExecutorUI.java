@@ -110,6 +110,13 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	/**
+	 * Return the IPartListener for test purposes.
+	 */
+	public static @NonNull IPartListener internalGetPartListener() {
+		return (ThreadLocalExecutorUI)get();
+	}
+
+	/**
 	 * Return true if OCL activity for partThread requires wrapping to enforce partThread
 	 * as the prevailing context. If the current thread has no EnvironmentFactory, it is inferred
 	 * from the partThread.
@@ -142,6 +149,11 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	 * The currently active part which is initPart else activatedPart.
 	 */
 	private @Nullable ThreadLocalExecutor activePartThread = NOT_A_PART_THREAD;
+
+	/**
+	 * The currently partClosed(), null if partDeactivated.
+	 */
+	private @Nullable ThreadLocalExecutor closingPartThread = NOT_A_PART_THREAD;
 
 	/**
 	 * An IWorkbenchPart to EnvironmentFactoryInternal binding is present for every OCL-using IWorkbenchPart.
@@ -215,6 +227,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+		assert closingPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.localAttachEnvironmentFactory(newEnvironmentFactory);
 		//	debugState();
@@ -226,7 +239,10 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
-		if (activePartThread != null) {
+		if (closingPartThread != null) {
+			return closingPartThread.localBasicGetEnvironmentFactory();
+		}
+		else if (activePartThread != null) {
 			return activePartThread.localBasicGetEnvironmentFactory();
 		}
 		else {
@@ -236,6 +252,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public @Nullable Executor localBasicGetExecutor() {
+		assert closingPartThread == null;
 		if (activePartThread != null) {
 			return activePartThread.localBasicGetExecutor();
 		}
@@ -246,7 +263,10 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
-		if (activePartThread != null) {
+		if (closingPartThread != null) {
+			closingPartThread.localDetachEnvironmentFactory(environmentFactory);
+		}
+		else if (activePartThread != null) {
 			activePartThread.localDetachEnvironmentFactory(environmentFactory);
 		}
 		else {
@@ -255,6 +275,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	private void localCloseEditors() {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		for (@NonNull IWorkbenchPart part : new ArrayList<>(part2partThread.keySet())) {
 			if (part instanceof IEditorPart) {
@@ -296,6 +317,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 	@Override
 	public void localInit(@NonNull ThreadLocalExecutor initPartThread, @NonNull InitWrapperCallBack<?,?> callBack, @NonNull NeedsInit needsInit) {
+		assert closingPartThread == null;
 	//	assert activePart != NOT_A_PART_THREAD;			// First init is from NOT_A_PART_THREAD
 		if (needsInit == NeedsInit.WRAP_WITH_PART_THREAD) {
 			assert this.activePartThread == this.activatedPartThread;
@@ -314,6 +336,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void localRemoveEnvironmentFactory() {
+		assert closingPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.localRemoveEnvironmentFactory();
 		}
@@ -324,6 +347,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public synchronized void localReset() {
+		assert closingPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.localReset();
 		}
@@ -334,6 +358,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void localSetExecutor(@Nullable Executor executor) {
+		assert closingPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.localSetExecutor(executor);
 		}
@@ -344,6 +369,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void partActivated(IWorkbenchPart newActivePart) {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		assert newActivePart != null;
 		ThreadLocalExecutor newPartThread = getPartThread(newActivePart);
@@ -358,6 +384,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void partBroughtToTop(IWorkbenchPart part) {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partBroughtToTop [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(part) + "] " + toString());
@@ -367,6 +394,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void partClosed(IWorkbenchPart oldOpenPart) {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		assert oldOpenPart != null;
 		assert oldOpenPart != activatedPartThread;
@@ -376,17 +404,28 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		@SuppressWarnings("unused")
 		ThreadLocalExecutor oldPartThread = part2partThread.remove(oldOpenPart);
 	//	assert oldPartThread != null;				-- may not have been observed to open e.g. ProblemsView
+		if (oldPartThread != null) {
+			try {
+				closingPartThread = oldPartThread;
+				oldPartThread.setEnvironmentFactory(null);
+			}
+			finally {
+				closingPartThread = NOT_A_PART_THREAD;
+			}
+		}
 		activePartThread = activatedPartThread;
 	//	debugState();
 	}
 
 	@Override
 	public void partDeactivated(IWorkbenchPart oldActivePart) {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		assert oldActivePart != null;
 	//	assert activePartThread != NOT_A_PART_THREAD;
 		if (activePartThread != NOT_A_PART_THREAD) {		// May never have been activated
-			assert activePartThread == part2partThread.get(oldActivePart);
+			ThreadLocalExecutor oldPartThread = part2partThread.get(oldActivePart);		// XXX
+			assert activePartThread == oldPartThread;
 		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partDeactivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(oldActivePart) + "] " + toString());
@@ -398,6 +437,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void partOpened(IWorkbenchPart newOpenPart) {
+		assert closingPartThread == null;
 		assert newOpenPart != null;
 		assert initPartThread == null;
 		getPartThread(newOpenPart);
@@ -409,6 +449,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	@Override
 	public void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
+		assert closingPartThread == null;
 		assert initPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.setEnvironmentFactory(newEnvironmentFactory);

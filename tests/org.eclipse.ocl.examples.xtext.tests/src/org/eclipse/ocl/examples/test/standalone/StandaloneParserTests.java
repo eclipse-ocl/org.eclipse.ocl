@@ -464,7 +464,6 @@ public class StandaloneParserTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneParser_usingOCLJavaUmlLocators() throws Exception {
-	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),

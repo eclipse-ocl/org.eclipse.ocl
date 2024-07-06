@@ -708,11 +708,8 @@ public class EmbeddedXtextEditor
 	}
 
 	public void dispose() {
-		OCL ocl2 = ocl;
-//		if (ocl2 != null) {
-//			ocl = null;
-			ocl2.dispose();
-//		}
+		fHighlightingHelper.uninstall();
+		ocl.dispose();
 	}
 
 	public ResourceSet getResourceSet() {

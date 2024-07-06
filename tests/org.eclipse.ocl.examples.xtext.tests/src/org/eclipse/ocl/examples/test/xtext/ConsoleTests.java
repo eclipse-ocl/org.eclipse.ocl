@@ -21,6 +21,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
+import org.eclipse.debug.internal.ui.views.launch.LaunchView;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,7 +36,16 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Tests that exercise the Xtext OCL Console.
@@ -46,6 +56,7 @@ public class ConsoleTests extends AbstractConsoleTests
 	public void testConsole_oclLog() throws Exception {
 		assertConsoleResult(consolePage, null, "7", "7\n");
 		assertConsoleResult(consolePage, null, "7.oclLog('seven = ')", "seven = 7\n7\n");
+		getClass();
 	}
 
 	public void testConsole_debugger() throws Exception {
@@ -53,15 +64,26 @@ public class ConsoleTests extends AbstractConsoleTests
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}
+		//		VMVirtualMachine.LOCATION.setState(true);
+		//		VMVirtualMachine.PRE_VISIT.setState(true);
+		//		VMVirtualMachine.POST_VISIT.setState(true);
+		//		VMVirtualMachine.VISITOR_STACK.setState(true);
+		//		VMVirtualMachine.VM_EVENT.setState(true);
+		//		VMVirtualMachine.VM_REQUEST.setState(true);
+		//		VMVirtualMachine.VM_RESPONSE.setState(true);
+	//	TestUIUtil.wait(60000);
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow initialWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		assert initialWorkbenchWindow != null;
+		IWorkbenchPage initialPage = initialWorkbenchWindow.getActivePage();
+		assert initialPage != null;
+		IPartService initialPartService = initialWorkbenchWindow.getPartService();
+		assert initialPartService != null;
+		IWorkbenchPart initialPart = initialPartService.getActivePart();
+		assert initialPart != null;
+		//
 		ILaunch launch = null;
 		try {
-			//		VMVirtualMachine.LOCATION.setState(true);
-			//		VMVirtualMachine.PRE_VISIT.setState(true);
-			//		VMVirtualMachine.POST_VISIT.setState(true);
-			//		VMVirtualMachine.VISITOR_STACK.setState(true);
-			//		VMVirtualMachine.VM_EVENT.setState(true);
-			//		VMVirtualMachine.VM_REQUEST.setState(true);
-			//		VMVirtualMachine.VM_RESPONSE.setState(true);
 			TestUIUtil.enableSwitchToDebugPerspectivePreference();
 			assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.name <> null", "true\n");
 			launch = consolePage.launchDebugger();
@@ -127,17 +149,33 @@ public class ConsoleTests extends AbstractConsoleTests
 		catch (Throwable e) {
 			if (launch != null) {
 				launch.terminate();
-				TestUIUtil.wait(1000);
+				TestUIUtil.waitForLaunchToTerminate(launch, 10000);
 			}
 			throw e;
 		}
 		finally {
+			IPartListener threadLocalExecutorUIPartListener = ThreadLocalExecutorUI.internalGetPartListener();
 			//
 			ILaunch[] launches = DebugPlugin.getDefault().getLaunchManager().getLaunches();
 			TestUIUtil.removeTerminatedLaunches(launches);
-			//		SourceLookupFacility.shutdown();		// BUG 468902 this doesn't work
-			Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
-			TestUIUtil.wait(1000);
+			//	SourceLookupFacility.shutdown();		// BUG 468902 this doesn't work
+			initialPage.closeAllEditors(false);
+			gc("After closeAllEditors");
+			IViewReference[] viewReferences = initialPage.getViewReferences();
+			for (IViewReference viewReference : viewReferences) {
+				IViewPart viewPart = viewReference.getView(false);
+				if (viewPart instanceof LaunchView) {
+					threadLocalExecutorUIPartListener.partDeactivated(viewPart);
+					threadLocalExecutorUIPartListener.partClosed(viewPart);
+				}
+			}
+			gc("After close LaunchView");
+			initialPage.activate(initialPart);
+		//	partListener.partActivated(initialPart);
+		//	initialPart.dispose();					-- leads to an NPE downstream
+			threadLocalExecutorUIPartListener.partDeactivated(initialPart);		// Find the appropriate UI call
+			threadLocalExecutorUIPartListener.partClosed(initialPart);
+		//	TestUIUtil.wait(10000);
 		}
 	}
 

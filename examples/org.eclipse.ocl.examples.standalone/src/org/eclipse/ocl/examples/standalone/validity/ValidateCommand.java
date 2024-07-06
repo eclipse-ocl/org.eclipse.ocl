@@ -444,50 +444,56 @@ public class ValidateCommand extends StandaloneCommand
 			logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_ModelLoadProblem, modelFileName));
 			return StandaloneResponse.FAIL;
 		}
-		if (!processResources(modelFileName, oclFileNames)) {
+		CompleteOCLLoader completeOCLLoader = processResources(modelFileName, oclFileNames);
+		if (completeOCLLoader == null) {
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}
-		final @Nullable EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
-			return StandaloneResponse.FAIL;
-		}
-		StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet());
-
-		if (validityManager != null) {
-			// run the validation
-			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
-
-			Thread validationThread = new Thread(new ValidationRunnable(validityManager, environmentFactory), "Standalone Validation");
-			validationThread.start();
-			synchronized (validationThread) {
-				try {
-					validationThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
-				} catch (InterruptedException e) {
-					// Don't care -- e.printStackTrace();
-				}
-			//	if (DEBUG_GC) {
-			//		System.gc();
-			//		System.runFinalization();
-			//	}
-			//	if (validationThread.throwable != null) {
-			//		throw validationThread.throwable;
-			//	}
+		try {
+			final @Nullable EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory == null) {
+				logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
+				return StandaloneResponse.FAIL;
 			}
-			//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
+			StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet());
 
-			// export results
-			File outputFile = outputToken.getOutputFile();
-			exportValidationResults(validityManager.getRootNode(), outputFile);
-			//			try {
-			//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
-			//			} catch (IOException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
+			if (validityManager != null) {
+				// run the validation
+				//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
+
+				Thread validationThread = new Thread(new ValidationRunnable(validityManager, environmentFactory), "Standalone Validation");
+				validationThread.start();
+				synchronized (validationThread) {
+					try {
+						validationThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+					} catch (InterruptedException e) {
+						// Don't care -- e.printStackTrace();
+					}
+				//	if (DEBUG_GC) {
+				//		System.gc();
+				//		System.runFinalization();
+				//	}
+				//	if (validationThread.throwable != null) {
+				//		throw validationThread.throwable;
+				//	}
+				}
+				//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
+
+				// export results
+				File outputFile = outputToken.getOutputFile();
+				exportValidationResults(validityManager.getRootNode(), outputFile);
+				//			try {
+				//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
+				//			} catch (IOException e) {
+				//				// TODO Auto-generated catch block
+				//				e.printStackTrace();
+				//			}
+			}
+			return StandaloneResponse.OK;
 		}
-		return StandaloneResponse.OK;
+		finally {
+			completeOCLLoader.dispose();
+		}
 	}
 
 	/**
@@ -543,9 +549,9 @@ public class ValidateCommand extends StandaloneCommand
 	 *            the model to validate file path.
 	 * @param oclPaths
 	 *            the ocl files paths.
-	 * @return true if there is not problem while loading, false otherwise.
+	 * @return a CompleteOCLLoader which needs disposing if there is not problem while loading, null otherwise.
 	 */
-	private boolean processResources(@NonNull String modelFilePath, @NonNull List<String> oclFileNames) {
+	private @Nullable CompleteOCLLoader processResources(@NonNull String modelFilePath, @NonNull List<String> oclFileNames) {
 		boolean allOk = true;
 
 		CompleteOCLLoader helper = new CompleteOCLLoader(standaloneApplication.getEnvironmentFactory()) {
@@ -593,7 +599,12 @@ public class ValidateCommand extends StandaloneCommand
 		}
 
 		helper.installPackages();
-		helper.dispose();
-		return allOk;
+		if (!allOk) {
+			helper.dispose();
+			return null;
+		}
+		else {
+			return helper;
+		}
 	}
 }

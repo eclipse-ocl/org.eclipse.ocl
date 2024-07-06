@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -245,11 +246,12 @@ public class EcoreOCLEValidator implements EValidator
 
 		@Override
 		public void finalize() {
-			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazrad on ocl.dsipose()
+			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazard on ocl.dispose()
 			{
 				@Override
 				public void run() {
-				//	System.out.println("[" + Thread.currentThread().getName() + "] EcoreOCLEValidator.WeakOCLReference-" + count + ".finalize()");
+				//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EcoreOCLEValidator.WeakOCLReference-" + count + ".finalize()");
+					ThreadLocalExecutor.incrementFinalizerReleases();
 					ocl.dispose();
 				}
 			}.start();
@@ -756,7 +758,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (eAnnotation == null) {
 			return true;
 		}
-		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak referen ce that garbage collects
+		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak reference that garbage collects
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		NamedElement asElement = getASOf(environmentFactory, NamedElement.class, eOperation, diagnostics, context);
 		if (asElement == null) {

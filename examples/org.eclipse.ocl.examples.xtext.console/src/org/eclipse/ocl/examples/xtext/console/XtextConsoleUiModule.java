@@ -15,7 +15,6 @@ import org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.contentassist.IContentAssistantFactory;
 import org.eclipse.xtext.ui.editor.model.edit.IssueModificationContext;
-import org.eclipse.xtext.ui.resource.IResourceSetProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -36,10 +35,5 @@ public class XtextConsoleUiModule extends EssentialOCLUiModule
 
 	public Class<? extends IssueModificationContext> bindIssueModificationContext() {
 		return XtextConsoleIssueModificationContext.class;
-	}
-
-	@Override
-	public Class<? extends IResourceSetProvider> bindIResourceSetProvider() {
-		return XtextConsoleResourceSetProvider.class;
 	}
 }
