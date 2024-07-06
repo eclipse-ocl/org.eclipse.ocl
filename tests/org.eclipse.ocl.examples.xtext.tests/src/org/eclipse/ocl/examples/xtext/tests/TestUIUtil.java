@@ -47,6 +47,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
@@ -61,6 +62,7 @@ import junit.framework.TestCase;
 public class TestUIUtil
 {
 	private static boolean testedEgitUiBundle = false;
+	public static final @NonNull String PLUGIN_ID = TestUIUtil.class.getPackage().getName();
 
 	public static void closeIntro() {
 		IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
@@ -202,46 +204,38 @@ public class TestUIUtil
 	}
 
 	public static @Nullable List<@NonNull IStatus> waitForLaunchToTerminate(@NonNull ILaunch launch) throws InterruptedException, DebugException {
-		while (true) {
-			for (int i = 0; i < 10; i++){
-				TestUIUtil.flushEvents();
-				Thread.sleep(100);
-			}
+		return waitForLaunchToTerminate(launch, 60000);
+	}
+
+	public static @Nullable List<@NonNull IStatus> waitForLaunchToTerminate(@NonNull ILaunch launch, int timeoutInMillseconds) throws InterruptedException, DebugException {
+		int timeStep = 100;
+		for (int timeSoFar = 0; timeSoFar < timeoutInMillseconds; timeSoFar += timeStep) {
+			TestUIUtil.flushEvents();
+			Thread.sleep(timeStep);
 			boolean allTerminated = true;
-			List<@NonNull IStatus> allResults = null;
-			/*	for (IDebugTarget debugTarget : launch.getDebugTargets()) {
-				IProcess process = debugTarget.getProcess();
-				if (!process.isTerminated()) {
-					allDead = false;
-				}
-				for (IThread debugThread : debugTarget.getThreads()) {
-					if (!debugThread.isTerminated()) {
-						allTerminated = false;
-					}
-				}
-			} */
 			for (IProcess process : launch.getProcesses()) {
 				if (!process.isTerminated()) {
 					allTerminated = false;
 				}
-				else {
-					if (allResults == null) {
-						allResults = new ArrayList<>();
-					}
-					if (process instanceof Job) {
-						IStatus result = ((Job)process).getResult();
-						assert result != null;		// isTerminated() => non-null result
-						allResults.add(result);
-					}
-					else {
-						allResults.add(new Status(process.getExitValue(), (String)null, (String)null));
-					}
-				}
 			}
 			if (allTerminated) {
-				return allResults;
+				break;
 			}
 		}
+		List<@NonNull IStatus> allResults = new ArrayList<>();
+		for (IProcess process : launch.getProcesses()) {
+			if (process.isTerminated()) {
+				if (process instanceof Job) {
+					IStatus result = ((Job)process).getResult();
+					assert result != null;		// isTerminated() => non-null result
+					allResults.add(result);
+				}
+				else {
+					allResults.add(new Status(process.getExitValue(), PLUGIN_ID, "non-Job " + process.getLabel() + " failed to terminate"));
+				}
+			}
+		}
+		return allResults;
 	}
 
 	public static void waitForNotStepping(@NonNull IThread vmThread) throws InterruptedException, DebugException {
@@ -271,6 +265,17 @@ public class TestUIUtil
 			flushEvents();
 			Thread.sleep(100);
 			if (vmThread.isTerminated()) {
+				return;
+			}
+		}
+		TestCase.fail("Failed to terminate");
+	}
+
+	public static void waitForTerminated(@NonNull VMVirtualMachine vmVirtualMachine) throws InterruptedException, DebugException {
+		for (int i = 0; i < 10; i++){
+			flushEvents();
+			Thread.sleep(100);
+			if (vmVirtualMachine.isTerminated()) {
 				return;
 			}
 		}

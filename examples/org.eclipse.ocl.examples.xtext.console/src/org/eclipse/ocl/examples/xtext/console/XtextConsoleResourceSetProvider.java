@@ -18,7 +18,7 @@ import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-
+@Deprecated /* @deprecated not used - Bug 339640 was fixed in 2011 for 2.1.0; we require >= 2.10 */
 public class XtextConsoleResourceSetProvider extends XtextResourceSetProvider
 {
 	@Inject
