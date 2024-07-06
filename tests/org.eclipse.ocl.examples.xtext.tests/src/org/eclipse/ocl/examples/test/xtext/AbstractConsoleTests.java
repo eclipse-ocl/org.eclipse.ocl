@@ -33,6 +33,8 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
@@ -119,7 +121,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		@Override
 		protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
 			EnvironmentFactoryInternal testEnvironmentFactory = new TestEnvironmentFactory();
-			ThreadLocalExecutor.attachEnvironmentFactory(testEnvironmentFactory);
+		//	ThreadLocalExecutor.attachEnvironmentFactory(testEnvironmentFactory);
 			return super.createEditor(s1);
 		}
 
@@ -162,7 +164,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 	}
 
 	/**
-	 * See Bug 570894. Overridden to override LazyEcoreModelManager coonstruction to avoid
+	 * See Bug 570894. Overridden to override LazyEcoreModelManager construction to avoid
 	 * all the sibling ResourceSet roots being found in the extent.
 	 */
 	protected static class TestEnvironmentFactory extends PivotEnvironmentFactory
@@ -246,10 +248,12 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 	@Override
 	protected void tearDown() throws Exception {
 		TestUIUtil.cancelAndWaitForValidationJob();
-		//		System.out.println(Thread.currentThread().getName() + " pre-tearDown " + NameUtil.debugSimpleName(this));
+	//	gc(ThreadLocalExecutor.getBracketedThreadName() + " pre-tearDown " + NameUtil.debugSimpleName(this));
 		TestConsole.getInstance().close();
 		consolePage = null;
 		super.tearDown();
-		//		System.out.println(Thread.currentThread().getName() + " post-tearDown " + NameUtil.debugSimpleName(this));
+	//	TestUIUtil.wait(1000);
+		gc(ThreadLocalExecutor.getBracketedThreadName() + " post-tearDown " + NameUtil.debugSimpleName(this));
+		AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
 	}
 }

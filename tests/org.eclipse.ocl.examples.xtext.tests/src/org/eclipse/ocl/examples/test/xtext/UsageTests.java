@@ -1400,8 +1400,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						@SuppressWarnings("unused")
 						Object duck = eObject.eGet(duckFeature);
 					}
-				}
-				ocl2.dispose(); */
+				} */
+				ocl2.dispose();
 			}
 		});
 	}

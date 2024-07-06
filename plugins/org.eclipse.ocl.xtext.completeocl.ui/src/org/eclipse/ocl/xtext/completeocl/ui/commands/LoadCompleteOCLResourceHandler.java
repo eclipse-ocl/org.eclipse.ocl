@@ -153,8 +153,12 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			protected IStatus run(final IProgressMonitor monitor) {
 				ThreadLocalExecutor.resetEnvironmentFactory();		// Reset in case last thread user (validation job) not yet finalized
 				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
-				processedResourcesReturn = processResources();
-				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				try {
+					processedResourcesReturn = processResources();
+				}
+				finally {
+					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				}
 				Display.getDefault().asyncExec(new Runnable()
 				{
 					@Override

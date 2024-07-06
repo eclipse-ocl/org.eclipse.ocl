@@ -55,6 +55,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocato
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.examples.emf.validation.validity.utilities.IVisibilityFilter;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.WeakOCLReference;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -222,7 +223,8 @@ public class ValidityManager
 	public @NonNull Map<Object, Object> createDefaultContext() {
 		Map<Object, Object> context2 = context;
 		if (context2 == null) {		// Local ValidationRegistry context normally set by setInput().
-			context = Diagnostician.INSTANCE.createDefaultContext();
+			context = context2 = Diagnostician.INSTANCE.createDefaultContext();
+			assert context2 != null;
 		}
 		return context2;
 	}
@@ -600,6 +602,15 @@ public class ValidityManager
 							monitor.worked(100);
 						}
 						i++;
+					}
+				}
+			}
+			if (context != null) {
+				Object oclRef = context.get(WeakOCLReference.class);
+				if (oclRef instanceof WeakOCLReference) {
+					OCL ocl = ((WeakOCLReference)oclRef).get();
+					if (ocl != null) {
+						ocl.dispose();
 					}
 				}
 			}

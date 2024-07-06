@@ -378,8 +378,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				adapter.unloadDelegates();
 			}
 		}
+	//	gc("GC-ed3");
 		autoTearDown();
+	//	gc("GC-ed4");
 		super.tearDown();
+	//	gc("GC-ed9");
 	//	System.gc();
 	//	System.runFinalization();
 	}
@@ -1172,6 +1175,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws InvocationTargetException {
+			//	System.out.println("Starting " + Thread.currentThread().getName());
 				TestUtil.doEssentialOCLSetup();
 				ResourceSet resourceSet = createResourceSet();
 				initModelWithErrors(resourceSet);
@@ -1179,8 +1183,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				EOperation operation = getOperation(badClassInstance.eClass(), "operationEvaluatingToNull");
 				assertEquals(null, invoke(badClassInstance, operation));
 				unloadResourceSet(resourceSet);
+			//	System.out.println("Ending " + Thread.currentThread().getName());
 			}
 		});
+		getClass();
 	}
 
 	public void test_operationEvaluatingToWrongType() throws Throwable {

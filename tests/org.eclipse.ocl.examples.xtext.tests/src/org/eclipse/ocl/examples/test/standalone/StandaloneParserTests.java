@@ -27,7 +27,6 @@ import org.eclipse.ocl.examples.standalone.StandaloneCommand.CommandToken;
 import org.eclipse.ocl.examples.standalone.StandaloneCommandAnalyzer;
 import org.eclipse.ocl.examples.standalone.validity.ValidateCommand;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
-import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -465,7 +464,6 @@ public class StandaloneParserTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneParser_usingOCLJavaUmlLocators() throws Exception {
-		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
