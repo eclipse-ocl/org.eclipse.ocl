@@ -786,6 +786,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneExecution_validate_listOfOCLFilesToStdout() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(NullAppendable.INSTANCE);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),

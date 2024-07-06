@@ -486,36 +486,37 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					}
 				}
 				OCLConsolePage.this.selectionChanged(selection);
-			}};
-			selectionService = getSite().getWorkbenchWindow().getSelectionService();
-			selectionService.addPostSelectionListener(selectionListener);
+			}
+		};
+		selectionService = getSite().getWorkbenchWindow().getSelectionService();
+		selectionService.addPostSelectionListener(selectionListener);
 
-			// get current selection
-			//		ISelection selection = selectionService.getSelection();			// Doesn't have a value preceding console start
-			ISelection selection = BaseUIUtil.getActiveSelection(getSite());
-			selectionChanged(selection);
+		// get current selection
+		//		ISelection selection = selectionService.getSelection();			// Doesn't have a value preceding console start
+		ISelection selection = BaseUIUtil.getActiveSelection(getSite());
+		selectionChanged(selection);
 
-			((SashForm) page).setWeights(new int[] {2, 1});
+		((SashForm) page).setWeights(new int[] {2, 1});
 
-			ClearOutputAction clear = new ClearOutputAction(output);
-			CloseAction close = new CloseAction();
-			SaveExpressionAction saveExpression = new SaveExpressionAction(this);
-			LoadExpressionAction loadExpression = new LoadExpressionAction(this);
-			debugAction = new DebugAction(this);
+		ClearOutputAction clear = new ClearOutputAction(output);
+		CloseAction close = new CloseAction();
+		SaveExpressionAction saveExpression = new SaveExpressionAction(this);
+		LoadExpressionAction loadExpression = new LoadExpressionAction(this);
+		debugAction = new DebugAction(this);
 
-			IMenuManager menu = getSite().getActionBars().getMenuManager();
-			menu.add(loadExpression);
-			menu.add(saveExpression);
-			menu.add(clear);
-			menu.add(close);
-			menu.add(debugAction);
+		IMenuManager menu = getSite().getActionBars().getMenuManager();
+		menu.add(loadExpression);
+		menu.add(saveExpression);
+		menu.add(clear);
+		menu.add(close);
+		menu.add(debugAction);
 
-			IToolBarManager toolbar = getSite().getActionBars().getToolBarManager();
-			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, loadExpression);
-			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, saveExpression);
-			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, clear);
-			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, close);
-			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, debugAction);
+		IToolBarManager toolbar = getSite().getActionBars().getToolBarManager();
+		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, loadExpression);
+		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, saveExpression);
+		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, clear);
+		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, close);
+		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, debugAction);
 	}
 
 	private int convertHeightInCharsToPixels(int i) {

@@ -252,6 +252,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	}
 
 	protected void tearDownField(@NonNull Field field) throws IllegalAccessException {
+	//	System.out.println("tearDownField " + field + " " + NameUtil.debugSimpleName(this));
 		field.set(this, null);
 	}
 
@@ -264,6 +265,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 
 	protected void tearDownUsing(@NonNull Method method)
 			throws IllegalAccessException, InvocationTargetException {
+	//	System.out.println("tearDownUsing " + method + " " + NameUtil.debugSimpleName(this));
 		method.invoke(this);
 	}
 }

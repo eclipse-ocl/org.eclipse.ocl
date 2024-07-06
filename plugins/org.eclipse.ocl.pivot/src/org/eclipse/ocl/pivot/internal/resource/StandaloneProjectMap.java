@@ -1510,12 +1510,12 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The platform resource URI of the EPackage (e.g. platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
-		private @Nullable  URI platformResourceURI = null;
+		private @Nullable URI platformResourceURI = null;
 
 		/**
 		 * The platform plugin URI of the EPackage (e.g. platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
-		private @Nullable  URI platformPluginURI = null;
+		private @Nullable URI platformPluginURI = null;
 
 		/**
 		 * The package descriptors for each of the multiple packages in the genmodel.
@@ -3171,7 +3171,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public void unload(@NonNull ResourceSet resourceSet) {
 		resourceSet.eAdapters().remove(this);
 		if (project2descriptor != null) {
-			for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
+			for (@NonNull IProjectDescriptor projectDescriptor : project2descriptor.values()) {
 				projectDescriptor.unload(resourceSet);
 			}
 		}

@@ -27,6 +27,10 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
+import org.eclipse.debug.internal.ui.sourcelookup.SourceLookupFacility;
+import org.eclipse.debug.internal.ui.viewers.model.TreeModelContentProvider;
+import org.eclipse.debug.internal.ui.viewers.model.provisional.TreeModelViewer;
+import org.eclipse.debug.internal.ui.views.variables.VariablesView;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -53,6 +57,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -61,10 +66,17 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 import com.google.inject.Injector;
-
-import junit.framework.TestCase;
 
 /**
  * Tests that load a model and verify that there are no unresolved proxies as a result.
@@ -164,11 +176,29 @@ public class DebuggerTests extends XtextTestCase
 		return URI.createPlatformResourceURI(getTestBundleName() + "/models/" + filePath, true);
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		TestUIUtil.cancelAndWaitForValidationJob();
+		gc(ThreadLocalExecutor.getBracketedThreadName() + " pre-tearDown " + NameUtil.debugSimpleName(this));
+		super.tearDown();
+	//	TestUIUtil.wait(1000);
+		gc(ThreadLocalExecutor.getBracketedThreadName() + " post-tearDown " + NameUtil.debugSimpleName(this));
+		AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
+	}
+
 	public void testDebugger_Launch() throws Exception {
-	//			AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-	//			ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUIUtil.closeIntro();
 		TestUIUtil.enableSwitchToDebugPerspectivePreference();
+		//
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow initialWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		assert initialWorkbenchWindow != null;
+		IWorkbenchPage initialPage = initialWorkbenchWindow.getActivePage();
+		assert initialPage != null;
+		IPartService initialPartService = initialWorkbenchWindow.getPartService();
+		assert initialPartService != null;
+		IWorkbenchPart initialPart = initialPartService.getActivePart();
+		assert initialPart != null;
 		//
 		Injector injector = CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
 		injector.getInstance(BaseEditorCallback.class).setDontAskForNatureAgain();
@@ -304,37 +334,59 @@ public class DebuggerTests extends XtextTestCase
 			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
 			//
 			vmThread.stepInto();
-			//		TestUIUtil.waitForTerminated(vmThread);
-			boolean hasTerminated = false;
-			for (int i = 0; i < 10; i++){
-				TestUIUtil.flushEvents();
-				Thread.sleep(100);
-				if (vmThread.isTerminated()) {
-					hasTerminated = true;
-					break;
-				}
-			}
-			if (!hasTerminated) {
-				IStackFrame topStackFrame = vmThread.getTopStackFrame();
-				IVariable[] variables = topStackFrame.getVariables();
-				if (variables != null){
-					for (IVariable variable : variables) {
-						if (VMVirtualMachine.EXCEPTION_NAME.equals(variable.getName()) && (variable instanceof VMVariable)) {
-							Object valueObject = ((VMVariable)variable).getVmVar().valueObject;
-							throw (Exception)valueObject;
-						}
-					}
-				}
-				TestCase.fail("Failed to terminate");
-			}
-			assertEquals(0, vm.getExitCode());
-			//		TestUIUtil.waitForLaunchToTerminate(launch);
-			ThreadLocalExecutorUI.closeEditors();
-			TestUIUtil.flushEvents();
-			ocl.dispose();
+			TestUIUtil.waitForTerminated(vmThread);
 		}
 		finally {
-			debugTarget.killAfterTest();
+			try {
+				launch.terminate();
+				TestUIUtil.waitForLaunchToTerminate(launch, 10000);
+			}
+			finally {
+				IPartListener threadLocalExecutorUIPartListener = ThreadLocalExecutorUI.internalGetPartListener();
+				//
+				ILaunch[] launches = DebugPlugin.getDefault().getLaunchManager().getLaunches();
+				TestUIUtil.removeTerminatedLaunches(launches);
+				SourceLookupFacility.shutdown();		// XXX BUG 468902 this doesn't work -- oh yes it does
+				initialPage.closeAllEditors(false);
+				TestUIUtil.wait(1000);
+				gc("After closeAllEditors");
+
+
+			/*	Process process = getSystemProcess();
+				assert process != null;
+				List<ProcessHandle> descendants = Collections.emptyList();
+			//	if (fTerminateDescendants) {
+					try { // List of descendants of process is only a snapshot!
+						descendants = process.descendants().collect(Collectors.toList());
+					} catch (UnsupportedOperationException e) {
+						// JVM may not support toHandle() -> assume no
+						// descendants
+					}
+			//	}
+
+				process.destroy();
+				descendants.forEach(ProcessHandle::destroy); */
+
+
+
+				IViewReference[] viewReferences = initialPage.getViewReferences();
+				for (IViewReference viewReference : viewReferences) {
+					IViewPart viewPart = viewReference.getView(false);
+					if (viewPart instanceof VariablesView) {
+						VariablesView variablesView = (VariablesView)viewPart;
+						variablesView.getViewer().setInput(null);
+						TreeModelViewer treeModelViewer = (TreeModelViewer)variablesView.getViewer();
+						treeModelViewer.setContentProvider(new TreeModelContentProvider());
+					}
+				}
+				gc("After close LaunchView");
+				initialPage.activate(initialPart);
+			//	partListener.partActivated(initialPart);
+			//	initialPart.dispose();					-- leads to an NPE downstream
+				threadLocalExecutorUIPartListener.partDeactivated(initialPart);		// Find the appropriate UI call
+				threadLocalExecutorUIPartListener.partClosed(initialPart);
+			//	TestUIUtil.wait(10000);
+			}
 		}
 	}
 }

@@ -771,18 +771,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		assert projectMap == getEnvironmentFactory().getProjectManager();
 	}
 
-	//	@Override
-	//	public void setURI(URI uri) {
-	//		assert uri != null;
-	//		assert !PivotUtilInternal.isASURI(uri);
-	//		super.setURI(uri);
-	//	}
-
 	@Override
 	public final void update(@NonNull IDiagnosticConsumer diagnosticConsumer) {
 		PivotUtilInternal.debugDeprecation(getClass().getName() + ".update");
-		CS2AS cs2as = getCS2AS();
-		cs2as.update(diagnosticConsumer);
+		update(getEnvironmentFactory(), diagnosticConsumer);
 	}
 
 	@Override
