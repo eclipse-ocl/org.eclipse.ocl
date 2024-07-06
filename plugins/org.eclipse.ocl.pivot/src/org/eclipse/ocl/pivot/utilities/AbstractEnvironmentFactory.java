@@ -108,6 +108,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
 
+	/**
+	 * @since 1.22
+	 */
+	public static void diagnoseLiveEnvironmentFactories() {
+		if ((liveEnvironmentFactories != null) && !liveEnvironmentFactories.isEmpty()) {
+			StringBuilder s = new StringBuilder();
+			s.append(" live");
+			for (@NonNull EnvironmentFactory key : new ArrayList<>(liveEnvironmentFactories.keySet())) {
+				s.append(" @" + Integer.toHexString(key.hashCode()));
+			}
+			System.out.println(s.toString());
+		}
+	}
+
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
@@ -151,6 +165,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 * Beware, stale EnvironmentFactory instances may live on beyond a test until GC catches up. To ensure
+	 * timely GC, set DEBUG_GC (and probably DEBUG_ID) true in the PivotTestCase static initialization.
 	 *
 	 * @since 1.14
 	 */
@@ -199,7 +215,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet));
+			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
 		adapt(externalResourceSet);
 		this.completeEnvironment = createCompleteEnvironment();
@@ -315,6 +331,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		attachOwners.add(System.identityHashCode(attachOwner));
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Attach(" + (attachCount-1) + ":" + attachCount + ") " + toDebugString() + " " + NameUtil.debugSimpleName(attachOwner));
+			getClass();					// Debugging breakpoint opportunity
 		}
 	}
 
@@ -658,9 +675,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void detachRedundantThreadLocal() {
-		if ((attachCount == 1) && (ThreadLocalExecutor.basicGetEnvironmentFactory() == this)) {
-			ThreadLocalExecutor.detachEnvironmentFactory(this);
-		}
+		ThreadLocalExecutor.detachEnvironmentFactory(this);
 	}
 
 	@Override
@@ -690,7 +705,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			if (externalResourceSetWasNull || isGlobal) {
 				//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
 				projectManager.unload(externalResourceSet);
-				externalResourceSetAdapters.remove(projectManager);
+				externalResourceSetAdapters.remove(projectManager);							// XXX cf PivotTestSuite.disposeResourceSet
 				//			StandaloneProjectMap.dispose(externalResourceSet2);
 				externalResourceSet.setPackageRegistry(null);
 				externalResourceSet.setResourceFactoryRegistry(null);
@@ -766,22 +781,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
-	@Override
+/*	@Override
 	protected void finalize() throws Throwable {
 //		PivotUtilInternal.debugPrintln("Finalize " + toDebugString());
-		if (liveEnvironmentFactories != null) {
-			PivotUtilInternal.debugPrintln("Finalize " + toDebugString());
-			List<@NonNull EnvironmentFactory> keySet = new ArrayList<>(liveEnvironmentFactories.keySet());
-			if (!keySet.isEmpty()) {
-				StringBuilder s = new StringBuilder();
-				s.append(" live");
-				for (@NonNull EnvironmentFactory environmentFactory : keySet) {
-					s.append(" @" + Integer.toHexString(environmentFactory.hashCode()));
-				}
-				System.out.println(s.toString());
-			}
-		}
-	}
+		diagnoseLiveEnvironmentFactories(this);
+	} */
 
 	/**
 	 * Return the pivot model class for className with the Pivot Model.
@@ -947,6 +951,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.22
 	 */
+	@Override
 	public boolean isDisposing() {
 		return isDisposing;
 	}

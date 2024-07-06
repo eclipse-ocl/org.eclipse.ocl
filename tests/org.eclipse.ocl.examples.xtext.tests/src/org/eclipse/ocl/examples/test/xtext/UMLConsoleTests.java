@@ -24,18 +24,6 @@ import org.eclipse.ocl.pivot.utilities.OCL;
  */
 public class UMLConsoleTests extends AbstractConsoleTests
 {
-	//	@Override
-	//	protected void setUp() throws Exception {
-	//		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-	//		super.setUp();
-	//	}
-
-	//	@Override
-	//	protected void tearDown() throws Exception {
-	//		super.tearDown();
-	//		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(false);
-	//	}
-
 	public void testConsole_Bug400090() throws Exception {
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 

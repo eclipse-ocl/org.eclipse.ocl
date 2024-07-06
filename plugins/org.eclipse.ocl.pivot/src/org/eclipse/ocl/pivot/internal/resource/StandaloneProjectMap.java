@@ -3171,7 +3171,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public void unload(@NonNull ResourceSet resourceSet) {
 		resourceSet.eAdapters().remove(this);
 		if (project2descriptor != null) {
-			for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
+			for (@NonNull IProjectDescriptor projectDescriptor : project2descriptor.values()) {
 				projectDescriptor.unload(resourceSet);
 			}
 		}

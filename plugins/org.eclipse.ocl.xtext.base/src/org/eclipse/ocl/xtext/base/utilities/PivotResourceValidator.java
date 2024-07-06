@@ -21,6 +21,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -163,108 +166,132 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 	} */
 
+	private @Nullable Integer previousCancelIndicator = null;
 	// FIXME BUG 389675 Remove duplication with respect to inherited method
 	@Override
 	public List<Issue> validate(Resource resource, final CheckMode mode, CancelIndicator mon) {
-		//		System.out.println(Thread.currentThread().getName() + " validate start " + NameUtil.debugSimpleName(resource));
+	//	System.out.println(Thread.currentThread().getName() + " validate " + NameUtil.debugSimpleName(resource) + " '" + resource.getURI() + "' for " + NameUtil.debugSimpleName(mon));
 		//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + Thread.currentThread().getName());
 	//	ThreadLocalExecutor.reset();
-		assert ThreadLocalExecutor.basicGetEnvironmentFactory() != null;
-		final CancelIndicator monitor = mon == null ? CancelIndicator.NullImpl : mon;
-		resolveProxies(resource, monitor);
-		if (monitor.isCanceled())
-			return Collections.emptyList();
-
-		final List<Issue> result = Lists.newArrayListWithExpectedSize(resource.getErrors().size()
-			+ resource.getWarnings().size());
-		try {
-			IAcceptor<Issue> acceptor = createAcceptor(result);
-			// Syntactical and linking errors
-			// Collect EMF Resource Diagnostics
-			if (mode.shouldCheck(CheckType.FAST)) {
-				for (int i = 0; i < resource.getErrors().size(); i++) {
-					if (monitor.isCanceled())
-						return Collections.emptyList();
-					issueFromXtextResourceDiagnostic(resource.getErrors().get(i), Severity.ERROR, acceptor);
-				}
-
-				for (int i = 0; i < resource.getWarnings().size(); i++) {
-					if (monitor.isCanceled())
-						return Collections.emptyList();
-					issueFromXtextResourceDiagnostic(resource.getWarnings().get(i), Severity.WARNING, acceptor);
-				}
+		Integer thisCancelIndicator = mon != null ? System.identityHashCode(mon) : null;
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			if ((previousCancelIndicator != null) && !previousCancelIndicator.equals(thisCancelIndicator)) {
+				ThreadLocalExecutor.reset();	// Reset if Worker Thread re-used for a distinct validation before GC has cleaned up.
+				environmentFactory = null;
 			}
-
+			else {
+				// can re-use with old EnvironmentFactory since the CancelIndicator is re-used.
+			}
+		}
+		previousCancelIndicator = thisCancelIndicator;
+		boolean locallyCreatedEnvironmentFactory = false;
+		if (environmentFactory == null) {
+			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resource);		// GC will eventually clean up
+			locallyCreatedEnvironmentFactory = true;
+		}
+		assert environmentFactory != null;
+		final CancelIndicator monitor = mon == null ? CancelIndicator.NullImpl : mon;
+		try {
+			resolveProxies(resource, monitor);
 			if (monitor.isCanceled())
 				return Collections.emptyList();
-			boolean syntaxDiagFail = !result.isEmpty();
-			logCheckStatus(resource, syntaxDiagFail, "Syntax");
 
-			// Validation errors
-			// Collect validator Diagnostics
-			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
-			ValidationContext validationContext = new ValidationContext(validationRegistry);
-			Diagnostician diagnostician = validationContext.getDiagnostician();
-			for (EObject ele : resource.getContents()) {
-				try {
-					if (monitor.isCanceled())
-						return Collections.emptyList();
-					validationContext.put(CheckMode.KEY, mode);
-					validationContext.put(CancelableDiagnostician.CANCEL_INDICATOR, monitor);
-					// disable concrete syntax validation, since a semantic model that has been parsed
-					// from the concrete syntax always complies with it - otherwise there are parse errors.
-					validationContext.put(ConcreteSyntaxEValidator.DISABLE_CONCRETE_SYNTAX_EVALIDATOR, Boolean.TRUE);
-					// see EObjectValidator.getRootEValidator(Map<Object, Object>)
-					boolean hasSyntaxError = false;
-					if (resource instanceof XtextResource) {
-						validationContext.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
-						if (resource instanceof BaseCSResource) {
-							BaseCSResource csResource = (BaseCSResource)resource;
-							@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
-							hasSyntaxError = ElementUtil.hasSyntaxError(errors);
-							if (hasSyntaxError) {
-								validationContext.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
-							}
-						}
+			final List<Issue> result = Lists.newArrayListWithExpectedSize(resource.getErrors().size()
+				+ resource.getWarnings().size());
+			try {
+				IAcceptor<Issue> acceptor = createAcceptor(result);
+				// Syntactical and linking errors
+				// Collect EMF Resource Diagnostics
+				if (mode.shouldCheck(CheckType.FAST)) {
+					for (int i = 0; i < resource.getErrors().size(); i++) {
+						if (monitor.isCanceled())
+							return Collections.emptyList();
+						issueFromXtextResourceDiagnostic(resource.getErrors().get(i), Severity.ERROR, acceptor);
 					}
-					if (!hasSyntaxError) {
-						Diagnostic diagnostic = diagnostician.validate(ele, validationContext);
-						if (!diagnostic.getChildren().isEmpty()) {
-							for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-								issueFromEValidatorDiagnostic(childDiagnostic, acceptor);
-							}
-						} else {
-							issueFromEValidatorDiagnostic(diagnostic, acceptor);
-						}
-					}
-				} catch (RuntimeException e) {
-					if (!monitor.isCanceled()) {		// Fix Bug 462544 working around Xtext Bug 461764
-						log.error(e.getMessage(), e);
+
+					for (int i = 0; i < resource.getWarnings().size(); i++) {
+						if (monitor.isCanceled())
+							return Collections.emptyList();
+						issueFromXtextResourceDiagnostic(resource.getWarnings().get(i), Severity.WARNING, acceptor);
 					}
 				}
+
+				if (monitor.isCanceled())
+					return Collections.emptyList();
+				boolean syntaxDiagFail = !result.isEmpty();
+				logCheckStatus(resource, syntaxDiagFail, "Syntax");
+
+				// Validation errors
+				// Collect validator Diagnostics
+				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+				ValidationContext validationContext = new ValidationContext(validationRegistry);
+				Diagnostician diagnostician = validationContext.getDiagnostician();
+				for (EObject ele : resource.getContents()) {
+					try {
+						if (monitor.isCanceled())
+							return Collections.emptyList();
+						validationContext.put(CheckMode.KEY, mode);
+						validationContext.put(CancelableDiagnostician.CANCEL_INDICATOR, monitor);
+						// disable concrete syntax validation, since a semantic model that has been parsed
+						// from the concrete syntax always complies with it - otherwise there are parse errors.
+						validationContext.put(ConcreteSyntaxEValidator.DISABLE_CONCRETE_SYNTAX_EVALIDATOR, Boolean.TRUE);
+						// see EObjectValidator.getRootEValidator(Map<Object, Object>)
+						boolean hasSyntaxError = false;
+						if (resource instanceof XtextResource) {
+							validationContext.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
+							if (resource instanceof BaseCSResource) {
+								BaseCSResource csResource = (BaseCSResource)resource;
+								@NonNull List<Resource.@NonNull Diagnostic> errors = csResource.getErrors();
+								hasSyntaxError = ElementUtil.hasSyntaxError(errors);
+								if (hasSyntaxError) {
+									validationContext.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
+								}
+							}
+						}
+						if (!hasSyntaxError) {
+							Diagnostic diagnostic = diagnostician.validate(ele, validationContext);
+							if (!diagnostic.getChildren().isEmpty()) {
+								for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+									issueFromEValidatorDiagnostic(childDiagnostic, acceptor);
+								}
+							} else {
+								issueFromEValidatorDiagnostic(diagnostic, acceptor);
+							}
+						}
+					} catch (RuntimeException e) {
+						if (!monitor.isCanceled()) {		// Fix Bug 462544 working around Xtext Bug 461764
+							log.error(e.getMessage(), e);
+						}
+					}
+				}
+			} catch (RuntimeException e) {
+				log.error(e.getMessage(), e);
 			}
-		} catch (RuntimeException e) {
-			log.error(e.getMessage(), e);
+			if (monitor.isCanceled())
+				return Collections.emptyList();
+			if (resource instanceof BaseCSResource) {
+				BaseCSResource csResource = (BaseCSResource)resource;
+				CS2AS cs2as = csResource.findCS2AS();
+				if (cs2as != null) {
+					Resource asResource = cs2as.getASResource();
+					IAcceptor<Issue> acceptor = createAcceptor(result);
+					//				if (mode.shouldCheck(CheckType.EXPENSIVE)) {
+					performValidation(acceptor, asResource, monitor);
+					//				}
+					//				else {
+					//					reuseValidation(acceptor, asResource, monitor);
+					//				}
+				}
+			}
+			return result;
 		}
-		if (monitor.isCanceled())
-			return Collections.emptyList();
-		if (resource instanceof BaseCSResource) {
-			BaseCSResource csResource = (BaseCSResource)resource;
-			CS2AS cs2as = csResource.findCS2AS();
-			if (cs2as != null) {
-				Resource asResource = cs2as.getASResource();
-				IAcceptor<Issue> acceptor = createAcceptor(result);
-				//				if (mode.shouldCheck(CheckType.EXPENSIVE)) {
-				performValidation(acceptor, asResource, monitor);
-				//				}
-				//				else {
-				//					reuseValidation(acceptor, asResource, monitor);
-				//				}
+		finally {
+			//		System.out.println(Thread.currentThread().getName() + " validate end " + NameUtil.debugSimpleName(resource));
+			if (locallyCreatedEnvironmentFactory) {
+				ThreadLocalExecutor.resetEnvironmentFactory();
 			}
 		}
-		//		System.out.println(Thread.currentThread().getName() + " validate end " + NameUtil.debugSimpleName(resource));
-		ThreadLocalExecutor.resetEnvironmentFactory();
-		return result;
 	}
 
 
