@@ -290,6 +290,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 * Tests uses of allInstances on a stereotype
 	 */
 	@Test public void test_type_literals_Bug580140() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCLWithProjectMap();
 		EObject umlTrain = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
@@ -317,6 +318,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		//	ocl.assertQueryEquals(aTrain, false, "let t = TestProfile::Train in self.oclIsKindOf(t)");
 		//	ocl.assertQueryEquals(aTrain, false, "self.oclIsKindOf(TestProfile::Train)");
 		ocl.dispose();
+		ocl = null;
+
 	}
 
 	/**
