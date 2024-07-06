@@ -381,14 +381,14 @@ public class OCL
 	public synchronized void dispose() {
 		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
-			environmentFactory = null;
 			environmentFactory2.detach(this);
-			environmentFactory2.detachRedundantThreadLocal();
+			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory2);		// XXX ??? only if attachCount == 1
+			environmentFactory = null;
 		}
 	}
 
 	/**
-	 * Dsipose this OCL and if force, give other threads a chance to run simple finalizers before dispose() happens.
+	 * Dispose this OCL and if force, give other threads a chance to run simple finalizers before dispose() happens.
 	 *
 	 * @since 1.17
 	 */
@@ -447,6 +447,7 @@ public class OCL
 		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
 			environmentFactory = null;
+			ThreadLocalExecutor.incrementFinalizerReleases();
 			environmentFactory2.detach(this);
 		}
 	}

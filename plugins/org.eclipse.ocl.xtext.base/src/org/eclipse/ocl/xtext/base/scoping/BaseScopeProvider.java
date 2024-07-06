@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
@@ -46,9 +45,7 @@ public class BaseScopeProvider extends AbstractDeclarativeScopeProvider
 		if (!(csResource instanceof BaseCSResource)) {
 			return IScope.NULLSCOPE;
 		}
-	//	CS2AS cs2as = ((BaseCSResource)csResource).getCS2AS();
-	//	EnvironmentFactoryInternal environmentFactory = cs2as.getEnvironmentFactory();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)((CSResource)csResource).getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)((BaseCSResource)csResource).getEnvironmentFactory();
 		return BaseScopeView.getScopeView(environmentFactory, (ElementCS) context, reference);
 	}
 }

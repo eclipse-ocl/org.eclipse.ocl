@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntUnaryOperator;
+
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -79,6 +82,13 @@ public class ThreadLocalExecutor implements Nameable
 	private static @Nullable ThreadLocalExecutor CREATOR = null;
 
 	private static final Logger logger = Logger.getLogger(ThreadLocalExecutor.class);
+
+	/**
+	 * Count (non-zero) of finalize() executions that released resources and so may require further GC and finalize().
+	 * This is primarily intended to allow test code to loop intelligently until GC has completed
+	 * and so localize leaks to a particular test.
+	 */
+	private static final @NonNull AtomicInteger finalizerReleases = new AtomicInteger(0);
 
 	/**
 	 * Register the start of environmentFactory's activity. If another EnvironmentFactory is already
@@ -176,6 +186,17 @@ public class ThreadLocalExecutor implements Nameable
 		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
 	} */
 
+	/**
+	 * Register execution of a finalizer that may release some resource that may also need finalization.
+	 *
+	 * @since 1.22
+	 */
+	public static int incrementFinalizerReleases() {
+		int count = finalizerReleases.incrementAndGet();
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " incrementFinalizerReleases " + count);
+		return count;
+	}
+
 	private static @Nullable ThreadLocalExecutor readExtension() {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
@@ -225,6 +246,24 @@ public class ThreadLocalExecutor implements Nameable
 		if (threadLocalExecutor != null) {
 			threadLocalExecutor.localReset();
 		}
+	}
+
+	/**
+	 * Restart the finalizer-has-released count. Returns the pre-rest value.
+	 *
+	 * @since 1.22
+	 */
+	public static synchronized int resetFinalizerReleases() {
+		int count = finalizerReleases.get();
+		finalizerReleases.updateAndGet(new IntUnaryOperator()
+		{
+			@Override
+			public int applyAsInt(int operand) {
+				return 0;
+			}
+		});
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " resetFinalizerReleases " + count);
+		return count;
 	}
 
 	/**
@@ -310,7 +349,7 @@ public class ThreadLocalExecutor implements Nameable
 	private @Nullable Executor executor = null;
 
 	/**
-	 * True if the thread application code use a finalizer to release its resources.
+	 * True if the thread application code uses a finalizer to release its resources.
 	 * e.g. EMF validation worker thread lazily discovers that it needs OCL and so must resort to
 	 * a finalizer to release it.
 	 */
@@ -356,10 +395,20 @@ public class ThreadLocalExecutor implements Nameable
 
 	@Override
 	protected void finalize() throws Throwable {
-		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Finalize " + toString());
+		if (usesFinalizer) {
+			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Finalize " + toString());
+			}
+			assert environmentFactory != null;
+			incrementFinalizerReleases();
+			localReset();
 		}
-		localReset();
+		else {
+			assert environmentFactory == null;
+			if (environmentFactory != null) {
+				localReset();
+			}
+		}
 	}
 
 	@Override
@@ -453,10 +502,14 @@ public class ThreadLocalExecutor implements Nameable
 			EnvironmentFactoryInternal environmentFactory = initPartThread.environmentFactory;
 			assert environmentFactory != null;
 			localAttachEnvironmentFactory(environmentFactory);
-			//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
-			callBack.run();
-			localDetachEnvironmentFactory(environmentFactory);
-		//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+			try {
+				//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+				callBack.run();
+			}
+			finally {
+				localDetachEnvironmentFactory(environmentFactory);
+				//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+			}
 		}
 		else {
 		//	assert this.activePartThread == this.activatedPartThread;
@@ -516,7 +569,7 @@ public class ThreadLocalExecutor implements Nameable
 				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Reset " + toString());
 			}
 		}
-	//s	debugState();
+	//	debugState();
 	}
 
 	/**
@@ -526,11 +579,13 @@ public class ThreadLocalExecutor implements Nameable
 		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
-			//	this.environmentFactory = null;
-				oldEnvironmentFactory.detach(this);
 				this.environmentFactory = null;
+				oldEnvironmentFactory.detach(this);
+			//	oldEnvironmentFactory.detachRedundantThreadLocal();
+			//	this.environmentFactory = null;
 				if (usesFinalizer) {
 				//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
+					this.executor = null;
 					System.gc();
 					usesFinalizer = false;
 				}
@@ -585,7 +640,7 @@ public class ThreadLocalExecutor implements Nameable
 			return true;
 		}
 		for (int i = 0; i < 10; i++) {
-			environmentFactory2.detachRedundantThreadLocal();
+			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory2);
 			System.gc();
 			System.runFinalization();
 			if (environmentFactory2.isDisposed()) {
