@@ -240,11 +240,12 @@ public abstract class PivotDiagnostician extends Diagnostician
 
 		@Override
 		public void finalize() {
-			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazrad on ocl.dsipose()
+			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazard on ocl.dispose()
 			{
 				@Override
 				public void run() {
-				//	System.out.println("[" + Thread.currentThread().getName() + "] PivotDiagnostician.WeakOCLReference-" + count + ".finalize()");
+				//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PivotDiagnostician.WeakOCLReference-" + count + ".finalize()");
+					ThreadLocalExecutor.incrementFinalizerReleases();
 					ocl.dispose();
 				}
 			}.start();
