@@ -157,10 +157,21 @@ public class OCLinEcoreEditorCallback extends BaseEditorCallback
 		}
 	}
 
+	private IAdapterFactory factory = null;
+
 	@Override
 	public void afterCreatePartControl(XtextEditor editor) {
 		super.afterCreatePartControl(editor);
-		IAdapterFactory factory = new XtextEditor_EcoreEditor_AdapterFactory(editor);
+		factory = new XtextEditor_EcoreEditor_AdapterFactory(editor);
 		Platform.getAdapterManager().registerAdapters(factory, XtextEditor.class);
+	}
+
+	@Override
+	public void beforeDispose(XtextEditor editor) {
+		if (factory != null) {
+			Platform.getAdapterManager().unregisterAdapters(factory, XtextEditor.class);
+			factory = null;
+		}
+		super.beforeDispose(editor);
 	}
 }
