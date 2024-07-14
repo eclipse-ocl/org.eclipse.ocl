@@ -1343,6 +1343,8 @@ public class StandaloneProjectMap implements ProjectManager
 				} catch (ClassNotFoundException e) {		// quite possibly a broken plugin.xml
 				//	throw new WrappedException(e);
 					return null;
+				} catch (NoClassDefFoundError e) {			// quite possibly classpath omits a transitive dependency of eINSTANCE init
+					return null;
 				} catch (IllegalAccessException e) {
 					throw new WrappedException(e);
 				} catch (NoSuchFieldException e) {
