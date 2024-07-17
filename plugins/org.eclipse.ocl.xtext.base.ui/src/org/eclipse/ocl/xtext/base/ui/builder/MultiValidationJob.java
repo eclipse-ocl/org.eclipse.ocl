@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -664,6 +665,9 @@ public class MultiValidationJob extends Job
 				throwable = e;
 			}
 			monitor.worked(1);			// Work Item 2 - Load done
+			if (ResourcesPlugin.getPlugin() == null) {			// If Eclipse has exited (? not started)
+				return;
+			}
 			operation = new AddMarkersOperation(file, markerType);
 			if (resource != null) {
 				EcoreUtil.resolveAll(resourceSet);
@@ -775,6 +779,9 @@ public class MultiValidationJob extends Job
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
+		if (ResourcesPlugin.getPlugin() == null) {			// If Eclipse has exited (? not started)
+			return Status.CANCEL_STATUS;
+		}
 		List<@NonNull ValidationEntry> validationList;
 		while (!(validationList = validationQueue.getValidationList()).isEmpty()) {
 			SubMonitor subMonitor = SubMonitor.convert(monitor, 5 * validationList.size());
