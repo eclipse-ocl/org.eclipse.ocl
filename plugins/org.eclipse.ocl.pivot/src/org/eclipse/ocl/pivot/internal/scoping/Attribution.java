@@ -23,15 +23,33 @@ import org.eclipse.jdt.annotation.Nullable;
  * of a type. All helpers are static and stateless, although some may maintain state using an Adapter on the
  * target element.
  *
- * The REGISTRY maintains the helpsers for each type. Missing entries may be lazily populated by following the
+ * The REGISTRY maintains the helpers for each type. Missing entries may be lazily populated by following the
  * primary superclasses until an entry is found.
  */
 public interface Attribution
 {
 	/**
+	 * @since 1.22
+	 */
+	public static class AttributionRegistry extends HashMap<@NonNull EClassifier, @NonNull Attribution>
+	{
+		private static final long serialVersionUID = 1L;
+
+		// Bug 583509 - the GlobalState save and restore should include this registry.
+		@SuppressWarnings("null")
+		@Override
+		public @NonNull Attribution put(@NonNull EClassifier key, @NonNull Attribution newValue) {
+			Attribution oldValue = super.put(key, newValue);
+			if (oldValue != null) {
+				assert oldValue.getClass().isAssignableFrom(newValue.getClass()) : newValue.getClass().getName() + " for " + key.getName() + " key does not refine " + oldValue.getClass().getName();
+			}
+			return oldValue;
+		}
+	}
+	/**
 	 * The per-classifier registry of attributions.
 	 */
-	public static @NonNull Map<@NonNull EClassifier, @NonNull Attribution> REGISTRY = new HashMap<>();
+	public static @NonNull Map<@NonNull EClassifier, @NonNull Attribution> REGISTRY = new AttributionRegistry();
 
 	/**
 	 * Add the local lookup contributions to a view of an Environment.
