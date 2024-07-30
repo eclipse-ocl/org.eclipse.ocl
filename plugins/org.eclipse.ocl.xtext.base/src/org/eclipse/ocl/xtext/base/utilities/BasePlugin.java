@@ -181,7 +181,7 @@ public final class BasePlugin extends EMFPlugin {
 
 		@Override
 		public void start(BundleContext context) throws Exception {
-			BaseStandaloneSetup.doSetup();
+			BaseStandaloneSetup.init();
 			super.start(context);
 		}
 	}
