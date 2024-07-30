@@ -11,10 +11,12 @@
 
 package org.eclipse.ocl.xtext.oclinecore;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.xtext.oclinecore.utilities.OCLinEcoreASResourceFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
@@ -26,6 +28,7 @@ public class OCLinEcoreStandaloneSetup extends OCLinEcoreStandaloneSetupGenerate
 	private static Injector injector = null;
 
 	public static void doSetup() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 381901/382058 fix
 		if (injector == null) {
 			new OCLinEcoreStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
@@ -35,21 +38,30 @@ public class OCLinEcoreStandaloneSetup extends OCLinEcoreStandaloneSetupGenerate
 		injector = null;
 	}
 
+	/**
+	 * Return the Injector for this plugin.
+	 */
+	public static final Injector getInjector() {
+		if (injector == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				doSetup();
+			}
+			else {
+				injector = Guice.createInjector(new OCLinEcoreRuntimeModule());
+			}
+		}
+		return injector;
+	}
+
 	public static void init() {
 		OCLinEcoreASResourceFactory.getInstance();
 //		OCLinEcoreAS2CS.FACTORY.getClass();
 		EPackage.Registry.INSTANCE.put(OCLinEcoreCSPackage.eNS_URI, OCLinEcoreCSPackage.eINSTANCE);
 	}
 
-	/**
-	 * Return the Injector for this plugin.
-	 */
-	public static final Injector getInjector() {
-		return injector;
-	}
-
 	@Override
 	public Injector createInjector() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		init();
 		injector = super.createInjector();
 		return injector;

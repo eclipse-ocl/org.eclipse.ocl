@@ -21,6 +21,7 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFacto
 import org.eclipse.ocl.xtext.completeocl.utilities.PathNameDeclCSLabelGenerator;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
@@ -32,6 +33,7 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 	private static Injector injector = null;
 
 	public static void doSetup() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 381901/382058 fix
 		if (injector == null) {
 			new CompleteOCLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
@@ -39,6 +41,21 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 
 	public static void doTearDown() {
 		injector = null;
+	}
+
+	/**
+	 * Return the Injector for this plugin.
+	 */
+	public static final Injector getInjector() {
+		if (injector == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				doSetup();
+			}
+			else {
+				injector = Guice.createInjector(new CompleteOCLRuntimeModule());
+			}
+		}
+		return injector;
 	}
 
 	public static void init() {
@@ -51,15 +68,9 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 		PathNameDeclCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);
 	}
 
-	/**
-	 * Return the Injector for this plugin.
-	 */
-	public static final Injector getInjector() {
-		return injector;
-	}
-
 	@Override
 	public Injector createInjector() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		init();
 		injector = super.createInjector();
 		return injector;
