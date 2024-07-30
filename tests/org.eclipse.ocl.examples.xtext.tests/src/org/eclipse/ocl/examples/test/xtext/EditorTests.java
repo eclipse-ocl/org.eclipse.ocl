@@ -134,34 +134,6 @@ public class EditorTests extends XtextTestCase
 		TestUIUtil.flushEvents();
 	}
 
-	protected void zzdoTearDown2(@NonNull XtextEditor editor, FileEditorInput fileEditorInput) throws InterruptedException {
-		TestUIUtil.flushEvents();
-		editor.setInput(null);
-		IContentOutlinePage outlinePage = editor.getAdapter(IContentOutlinePage.class);
-		if (outlinePage != null) {
-			outlinePage.dispose();
-		}
-		editor.getSelectionProvider().setSelection(TextSelection.emptySelection());
-		editor.close(false);
-		TestUIUtil.flushEvents();
-		gc("post-close");
-	/*	IWorkbench workbench = PlatformUI.getWorkbench();
-		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-		ISelectionService selectionService = activeWorkbenchWindow.getSelectionService();
-		ISelection selection = selectionService.getSelection();
-		try {
-			IEditorPart editor2 = IDE.openEditor(page, fileEditorInput, "org.eclipse.ui.DefaultTextEditor", true);
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		TestUIUtil.wait(7500); */
-
-		TestUIUtil.flushEvents();
-//		partService = activeWorkbenchWindow.getModel().getContext().get(SelectionService.class);
-	}
-
 	public void doTestEditor(@NonNull String editorId, @NonNull String testFile, @NonNull String testContent) throws Exception {
 		XtextEditor editor = doStartUp(editorId, testFile, testContent);
 		checkContent(editor, testContent);
@@ -475,8 +447,6 @@ public class EditorTests extends XtextTestCase
 
 	// FIXME Bug 399762 fails on Hudson
 	public void testEditor_OpenOCLinEcoreEditor4Test_Ecore_Update() throws Exception {
-	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);// XXX
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow initialWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		assert initialWorkbenchWindow != null;
@@ -522,58 +492,8 @@ public class EditorTests extends XtextTestCase
 		assertEquals(oldPivotContent.size(), newPivotContent.size());
 		TestUIUtil.flushEvents();
 		assertEquals(oldPivotContent, newPivotContent);
-		TestUIUtil.flushEvents();
-	//	doTearDown2(editor, fileEditorInput2);
-
-	//	TestUIUtil.flushEvents();
-	//	editor.setInput(null);
-	//	IContentOutlinePage outlinePage = editor.getAdapter(IContentOutlinePage.class);
-	//	if (outlinePage != null) {
-	//		outlinePage.dispose();
-	//	}
-	//	editor.getSelectionProvider().setSelection(TextSelection.emptySelection());
-	//	editor.close(false);
-		TestUIUtil.flushEvents();
-		gc("post-close");
-	//	ISelection selection1 = selectionService.getSelection();
-	/*	IWorkbench workbench = PlatformUI.getWorkbench();
-		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-		ISelectionService selectionService = activeWorkbenchWindow.getSelectionService();
-		ISelection selection = selectionService.getSelection();
-		try {
-			IEditorPart editor2 = IDE.openEditor(page, fileEditorInput, "org.eclipse.ui.DefaultTextEditor", true);
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		TestUIUtil.wait(7500); */
-
-		TestUIUtil.flushEvents();
-//		partService = activeWorkbenchWindow.getModel().getContext().get(SelectionService.class);
-
-	//	IPartListener threadLocalExecutorUIPartListener = ThreadLocalExecutorUI.internalGetPartListener();
-
-		initialPage.closeAllEditors(false);
-		gc("After closeAllEditors");
-	//	ISelection selection2 = selectionService.getSelection();
-	//	IViewReference[] viewReferences = initialPage.getViewReferences();
-	//	for (IViewReference viewReference : viewReferences) {
-	//		IViewPart viewPart = viewReference.getView(false);
-		//	if (viewPart instanceof LaunchView) {
-		//		threadLocalExecutorUIPartListener.partDeactivated(viewPart);
-		//		threadLocalExecutorUIPartListener.partClosed(viewPart);
-		//	}
-	//	}
-	//	gc("After close LaunchView");
 		initialPage.activate(initialPart);
-	//	partListener.partActivated(initialPart);
-	//	initialPart.dispose();					-- leads to an NPE downstream
-	//	threadLocalExecutorUIPartListener.partDeactivated(initialPart);		// Find the appropriate UI call
-	//	threadLocalExecutorUIPartListener.partClosed(initialPart);
-	//	TestUIUtil.wait(10000);
-
-
-
+		initialPage.closeAllEditors(false);
+		gc(null);
 	}
 }
