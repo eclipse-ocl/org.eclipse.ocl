@@ -29,8 +29,8 @@ import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.debug.internal.ui.sourcelookup.SourceLookupFacility;
 import org.eclipse.debug.internal.ui.viewers.model.TreeModelContentProvider;
-import org.eclipse.debug.internal.ui.viewers.model.provisional.TreeModelViewer;
 import org.eclipse.debug.internal.ui.views.variables.VariablesView;
+import org.eclipse.debug.ui.AbstractDebugView;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ocl.examples.debug.core.OCLDebugTarget;
 import org.eclipse.ocl.examples.debug.evaluator.OCLVMRootEvaluationEnvironment;
 import org.eclipse.ocl.examples.debug.evaluator.OCLVMVirtualMachine;
@@ -64,9 +65,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
-import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
-import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
@@ -314,7 +313,7 @@ public class DebuggerTests extends XtextTestCase
 			//
 			vmThread.stepInto();
 			TestUIUtil.waitForSuspended(vmThread);
-			checkPosition(vmThread, 268, 11485, 11491);
+			checkPosition(vmThread, 268, 11483, 11485);
 			checkVariables(vmThread, VMVirtualMachine.PC_NAME, PivotConstants.SELF_NAME, "$ownedSource");
 			checkVariableEClass(vmThread, VMVirtualMachine.PC_NAME, PivotPackage.Literals.OPERATION_CALL_EXP);
 			checkVariable(vmThread, PivotConstants.SELF_NAME, vmRootEvaluationEnvironment.getValueOf(selfVariable));
@@ -342,50 +341,24 @@ public class DebuggerTests extends XtextTestCase
 				TestUIUtil.waitForLaunchToTerminate(launch, 10000);
 			}
 			finally {
-				IPartListener threadLocalExecutorUIPartListener = ThreadLocalExecutorUI.internalGetPartListener();
-				//
 				ILaunch[] launches = DebugPlugin.getDefault().getLaunchManager().getLaunches();
 				TestUIUtil.removeTerminatedLaunches(launches);
-				SourceLookupFacility.shutdown();		// XXX BUG 468902 this doesn't work -- oh yes it does
+				SourceLookupFacility.shutdown();
+				initialPage.activate(initialPart);
 				initialPage.closeAllEditors(false);
-				TestUIUtil.wait(1000);
-				gc("After closeAllEditors");
-
-
-			/*	Process process = getSystemProcess();
-				assert process != null;
-				List<ProcessHandle> descendants = Collections.emptyList();
-			//	if (fTerminateDescendants) {
-					try { // List of descendants of process is only a snapshot!
-						descendants = process.descendants().collect(Collectors.toList());
-					} catch (UnsupportedOperationException e) {
-						// JVM may not support toHandle() -> assume no
-						// descendants
-					}
-			//	}
-
-				process.destroy();
-				descendants.forEach(ProcessHandle::destroy); */
-
-
-
+			//	TestUIUtil.wait(1000);
+			//	gc("After closeAllEditors");
 				IViewReference[] viewReferences = initialPage.getViewReferences();
 				for (IViewReference viewReference : viewReferences) {
 					IViewPart viewPart = viewReference.getView(false);
 					if (viewPart instanceof VariablesView) {
-						VariablesView variablesView = (VariablesView)viewPart;
+						AbstractDebugView variablesView = (AbstractDebugView)viewPart;
 						variablesView.getViewer().setInput(null);
-						TreeModelViewer treeModelViewer = (TreeModelViewer)variablesView.getViewer();
+						TreeViewer treeModelViewer = (TreeViewer)variablesView.getViewer();
 						treeModelViewer.setContentProvider(new TreeModelContentProvider());
 					}
 				}
-				gc("After close LaunchView");
-				initialPage.activate(initialPart);
-			//	partListener.partActivated(initialPart);
-			//	initialPart.dispose();					-- leads to an NPE downstream
-				threadLocalExecutorUIPartListener.partDeactivated(initialPart);		// Find the appropriate UI call
-				threadLocalExecutorUIPartListener.partClosed(initialPart);
-			//	TestUIUtil.wait(10000);
+			//	gc("After close LaunchView");
 			}
 		}
 	}

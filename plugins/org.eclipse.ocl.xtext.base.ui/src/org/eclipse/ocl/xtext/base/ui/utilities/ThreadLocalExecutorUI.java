@@ -89,10 +89,10 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	/**
 	 * Return the IPartListener for test purposes.
-	 */
+	 *
 	public static @NonNull IPartListener internalGetPartListener() {
 		return (ThreadLocalExecutorUI)get();
-	}
+	} */
 
 	/**
 	 * Return true if OCL activity for partThread requires wrapping to enforce partThread
