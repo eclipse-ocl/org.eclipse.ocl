@@ -26,6 +26,7 @@ public class MarkupStandaloneSetup extends MarkupStandaloneSetupGenerated
 	private static Injector injector = null;
 
 	public static void doSetup() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 381901/382058 fix
 		if (injector == null) {
 			new MarkupStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
@@ -35,7 +36,10 @@ public class MarkupStandaloneSetup extends MarkupStandaloneSetupGenerated
 		injector = null;
 	}
 
-	public static Injector getInjector() {
+	/**
+	 * Return the Injector for this plugin.
+	 */
+	public static final Injector getInjector() {
 		if (injector == null) {
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 				doSetup();
@@ -53,6 +57,7 @@ public class MarkupStandaloneSetup extends MarkupStandaloneSetupGenerated
 
 	@Override
 	public Injector createInjector() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		init();
 		injector = super.createInjector();
 		return injector;

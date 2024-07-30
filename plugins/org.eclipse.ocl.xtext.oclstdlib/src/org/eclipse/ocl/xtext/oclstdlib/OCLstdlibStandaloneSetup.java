@@ -11,12 +11,14 @@
 
 package org.eclipse.ocl.xtext.oclstdlib;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibASResourceFactory;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSValidator;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
@@ -28,6 +30,7 @@ public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 	private static Injector injector = null;
 
 	public static void doSetup() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 381901/382058 fix
 		if (injector == null) {
 			new OCLstdlibStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
@@ -35,6 +38,21 @@ public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 
 	public static void doTearDown() {
 		injector = null;
+	}
+
+	/**
+	 * Return the Injector for this plugin.
+	 */
+	public static final Injector getInjector() {
+		if (injector == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				doSetup();
+			}
+			else {
+				injector = Guice.createInjector(new OCLstdlibRuntimeModule());
+			}
+		}
+		return injector;
 	}
 
 	public static void init() {
@@ -45,15 +63,9 @@ public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 		EValidator.Registry.INSTANCE.put(OCLstdlibCSPackage.eINSTANCE, OCLstdlibCSValidator.INSTANCE);
 	}
 
-	/**
-	 * Return the Injector for this plugin.
-	 */
-	public static final Injector getInjector() {
-		return injector;
-	}
-
 	@Override
 	public Injector createInjector() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		init();
 		injector = super.createInjector();
 		return injector;

@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.idioms;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EPackage;
+
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
@@ -23,6 +26,7 @@ public class IdiomsStandaloneSetup extends IdiomsStandaloneSetupGenerated
 	private static Injector injector = null;
 
 	public static void doSetup() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 381901/382058 fix
 		if (injector == null) {
 			new IdiomsStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
@@ -32,19 +36,28 @@ public class IdiomsStandaloneSetup extends IdiomsStandaloneSetupGenerated
 		injector = null;
 	}
 
-	public static void init() {
-		EPackage.Registry.INSTANCE.put(IdiomsPackage.eNS_URI, IdiomsPackage.eINSTANCE);
-	}
-
 	/**
 	 * Return the Injector for this plugin.
 	 */
 	public static final Injector getInjector() {
+		if (injector == null) {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				doSetup();
+			}
+			else {
+				injector = Guice.createInjector(new IdiomsRuntimeModule());
+			}
+		}
 		return injector;
+	}
+
+	public static void init() {
+		EPackage.Registry.INSTANCE.put(IdiomsPackage.eNS_URI, IdiomsPackage.eINSTANCE);
 	}
 
 	@Override
 	public Injector createInjector() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING;
 		init();
 		injector = super.createInjector();
 		return injector;
