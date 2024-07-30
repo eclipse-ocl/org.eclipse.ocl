@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
+import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
@@ -133,6 +134,20 @@ public class TestUtil
 		}
 		else {
 			Guice.createInjector(new org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule());
+		}
+	}
+
+	/**
+	 * Perform the appropriate initialization to support Idioms parsing and editing using Xtext.
+	 * NB. This must be called before setUp() creates a GlobalStateMemento if the aggressive DEBUG_GC
+	 * garbage collection is enabled.
+	 */
+	public static void doIdiomsSetup() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			IdiomsStandaloneSetup.doSetup();
+		}
+		else {
+			Guice.createInjector(new org.eclipse.ocl.xtext.idioms.IdiomsRuntimeModule());
 		}
 	}
 
