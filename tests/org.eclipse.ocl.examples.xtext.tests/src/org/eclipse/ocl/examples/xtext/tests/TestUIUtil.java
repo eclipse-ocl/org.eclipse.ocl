@@ -48,6 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
@@ -128,25 +129,10 @@ public class TestUIUtil
 
 	public static void flushEvents() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
+		Display display = workbench.getDisplay();
 		for (int i = 0; i < 10; i++) {
-			while (workbench.getDisplay().readAndDispatch());
+			while (display.readAndDispatch());
 		}
-		/*		for (int i = 0; i < 10; i++) {
-			IWorkbench workbench = PlatformUI.getWorkbench();
-			try {
-				while (workbench.getDisplay().readAndDispatch())
-					;
-			}
-//			catch (InterruptedException e) {
-//				throw e;
-//			}
-			catch (Throwable e) {
-				if (e instanceof InterruptedException) {
-					throw (InterruptedException)e;
-				}
-				e.printStackTrace();
-			}
-		} */
 	}
 
 	public static void removeTerminatedLaunches(ILaunch[] elements) {

@@ -500,23 +500,25 @@ public class ThreadLocalExecutor implements Nameable
 		if (needsInit == NeedsInit.ATTACH_FROM_PART_THREAD) {
 		//	assert this.activePartThread == this.activatedPartThread;
 			EnvironmentFactoryInternal environmentFactory = initPartThread.environmentFactory;
-			assert environmentFactory != null;
-			localAttachEnvironmentFactory(environmentFactory);
-			try {
-				//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
-				callBack.run();
-			}
-			finally {
-				localDetachEnvironmentFactory(environmentFactory);
-				//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+			if (environmentFactory != null) {
+				localAttachEnvironmentFactory(environmentFactory);
+				try {
+					//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+					callBack.run();
+				}
+				finally {
+					localDetachEnvironmentFactory(environmentFactory);
+					//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
+				}
+				return;
 			}
 		}
-		else {
+	//	else {
 		//	assert this.activePartThread == this.activatedPartThread;
 			//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
 			callBack.run();
 		//	System.out.println(getBracketedThreadName() + " activePartThread " + NameUtil.debugSimpleName(activePartThread));
-		}
+	//	}
 	}
 
 	/**
@@ -581,8 +583,6 @@ public class ThreadLocalExecutor implements Nameable
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
 				this.environmentFactory = null;
 				oldEnvironmentFactory.detach(this);
-			//	oldEnvironmentFactory.detachRedundantThreadLocal();
-			//	this.environmentFactory = null;
 				if (usesFinalizer) {
 				//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
 					this.executor = null;
