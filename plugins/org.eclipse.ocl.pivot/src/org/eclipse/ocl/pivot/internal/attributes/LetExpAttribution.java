@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class LetExpAttribution extends AbstractAttribution
 {
-	public static final LetExpAttribution INSTANCE = new LetExpAttribution();
+	public static final @NonNull LetExpAttribution INSTANCE = new LetExpAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

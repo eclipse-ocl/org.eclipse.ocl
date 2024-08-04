@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class EnumerationAttribution extends AbstractAttribution
 {
-	public static final EnumerationAttribution INSTANCE = new EnumerationAttribution();
+	public static final @NonNull EnumerationAttribution INSTANCE = new EnumerationAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
