@@ -27,6 +27,10 @@ import org.eclipse.xtext.resource.impl.BinaryGrammarResourceFactoryImpl;
  */
 public abstract class AbstractGrammarTests extends XtextTestCase
 {
+	protected AbstractGrammarTests(@NonNull TestHelper testHelper) {
+		super(testHelper);
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
