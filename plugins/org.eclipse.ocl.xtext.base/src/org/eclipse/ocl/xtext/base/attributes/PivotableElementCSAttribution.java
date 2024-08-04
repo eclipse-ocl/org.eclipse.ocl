@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
 public class PivotableElementCSAttribution extends AbstractAttribution
 {
-	public static final PivotableElementCSAttribution INSTANCE = new PivotableElementCSAttribution();
+	public static final @NonNull PivotableElementCSAttribution INSTANCE = new PivotableElementCSAttribution();
 
 	@Override
 	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
