@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.scoping;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -35,12 +34,22 @@ public interface Attribution
 	{
 		private static final long serialVersionUID = 1L;
 
-		// Bug 583509 - the GlobalState save and restore should include this registry.
-		@SuppressWarnings("null")
+		@Override
+		public void clear() {		// XXX
+			super.clear();
+		}
+
 		@Override
 		public @NonNull Attribution put(@NonNull EClassifier key, @NonNull Attribution newValue) {
+			return install(key,  newValue, null);
+		}
+
+		// Bug 583509 - the GlobalState save and restore should include this registry.
+		@SuppressWarnings("null")
+		private @NonNull Attribution install(/*@NonNull*/ EClassifier key, @NonNull Attribution newValue, @Nullable Class<?> scopingClass) {
+			assert key != null;
 			Attribution oldValue = super.put(key, newValue);
-			if (oldValue != null) {
+			if ((oldValue != null) && (oldValue != newValue)) {			// XXX
 				assert oldValue.getClass().isAssignableFrom(newValue.getClass()) : newValue.getClass().getName() + " for " + key.getName() + " key does not refine " + oldValue.getClass().getName();
 			}
 		//	System.out.println("AttributionRegistry[" + size() + "] «" + (scopingClass != null ? scopingClass.getSimpleName() : "inferred") + "» "
@@ -48,11 +57,32 @@ public interface Attribution
 		//			+ newValue.getClass().getName() + (oldValue != null ? " / " + oldValue.getClass().getName() : ""));
 			return oldValue;
 		}
+
+		public @NonNull AttributionRegistryInstaller getInstaller(@NonNull Class<?> scopingClass) {
+			return new AttributionRegistryInstaller(scopingClass);
+		}
 	}
+
+	/**
+	 * @since 1.22
+	 */
+	public static class AttributionRegistryInstaller
+	{
+		protected final @NonNull Class<?> scopingClass;
+
+		public AttributionRegistryInstaller(@NonNull Class<?> scopingClass) {
+			this.scopingClass = scopingClass;
+		}
+
+		public void install(/*@NonNull*/ EClassifier key, @NonNull Attribution newValue) {
+			REGISTRY.install(key,  newValue, scopingClass);
+		}
+	}
+
 	/**
 	 * The per-classifier registry of attributions.
 	 */
-	public static @NonNull Map<@NonNull EClassifier, @NonNull Attribution> REGISTRY = new AttributionRegistry();
+	public static @NonNull AttributionRegistry REGISTRY = new AttributionRegistry();
 
 	/**
 	 * Add the local lookup contributions to a view of an Environment.

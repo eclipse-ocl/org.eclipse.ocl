@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 
 public class ContextCSAttribution extends PivotableElementCSAttribution
 {
-	public static final ContextCSAttribution INSTANCE = new ContextCSAttribution();
+	public static final @NonNull ContextCSAttribution INSTANCE = new ContextCSAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

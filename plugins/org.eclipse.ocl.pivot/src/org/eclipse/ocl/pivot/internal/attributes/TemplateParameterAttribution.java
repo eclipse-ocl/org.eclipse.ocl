@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class TemplateParameterAttribution extends AbstractAttribution
 {
-	public static final TemplateParameterAttribution INSTANCE = new TemplateParameterAttribution();
+	public static final @NonNull TemplateParameterAttribution INSTANCE = new TemplateParameterAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
