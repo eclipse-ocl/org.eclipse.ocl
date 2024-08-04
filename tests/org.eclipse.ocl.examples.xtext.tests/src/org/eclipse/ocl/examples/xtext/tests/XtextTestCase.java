@@ -285,6 +285,14 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
+	public XtextTestCase() {
+		this(TestHelper.INSTANCE);
+	}
+
+	public XtextTestCase(@NonNull TestHelper testHelper) {
+		super(testHelper);
+	}
+
 	@SuppressWarnings("null")
 	protected void assertPivotIsValid(URI pivotURI) {
 		OCL ocl = OCL.newInstance(getProjectMap());
