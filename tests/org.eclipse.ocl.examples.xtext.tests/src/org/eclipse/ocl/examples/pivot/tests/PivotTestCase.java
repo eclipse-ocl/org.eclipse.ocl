@@ -16,57 +16,34 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
-import org.eclipse.ocl.examples.xtext.tests.TestUtil;
-import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
-import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
@@ -75,63 +52,35 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
-import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.Value;
-import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
-import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
-import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
-import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
-import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
-import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
-import org.eclipse.xtext.XtextPackage;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
-import org.junit.Rule;
-import org.junit.rules.TestName;
-
-import junit.framework.TestCase;
 
 /**
  * Tests for OclAny operations.
  */
-public class PivotTestCase extends TestCase
+public class PivotTestCase extends AbstractPivotTestCase
 {
 	public static final @NonNull String @NonNull [] NO_MESSAGES = new @NonNull String[] {};
 	public static final @NonNull String @NonNull [] SUPPRESS_VALIDATION = new @NonNull String[] {"FIXME"};	// FIXME should not be needed
-	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.examples.xtext.tests";
-	public static final @NonNull TracingOption TEST_START = new TracingOption(PLUGIN_ID, "test/start");
 	//	private static StandaloneProjectMap projectMap = null;
 	private static Writer testLog = null;
 
-	/*
-	 * The following may be tweaked to assist debugging.
-	 */
-	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
-	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-		PivotUtilInternal.noDebug = false;
-		DEBUG_GC = true;
-		DEBUG_ID = true;
-		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
 	//	ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
@@ -234,92 +183,6 @@ public class PivotTestCase extends TestCase
 		return ecoreResource;
 	}
 
-	@Deprecated /* @deprecated provide resource argument */
-	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
-		return assertDiagnostics(prefix, null, diagnostics, messages);
-	}
-
-	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @Nullable Resource resource, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
-		Map<String, Integer> expected = new HashMap<String, Integer>();
-		for (@NonNull String message : messages) {
-			Integer count = expected.get(message);
-			count = count == null ? 1 : count + 1;
-			expected.put(message, count);
-		}
-		StringBuilder s1 = null;
-		for (Diagnostic diagnostic : diagnostics) {
-			String actual = diagnostic.getMessage();
-			Integer expectedCount = expected.get(actual);
-			if ((expectedCount == null) || (expectedCount <= 0)) {
-				if (s1 == null) {
-					s1 = new StringBuilder();
-					s1.append("\nUnexpected errors");
-					if (resource != null) {
-						s1.append(" in '");
-						s1.append(resource.getURI());
-						s1.append("'");
-					}
-				}
-				s1.append("\n");
-				s1.append(actual);
-			}
-			else {
-				expected.put(actual, expectedCount-1);
-			}
-		}
-		StringBuilder s2 = null;
-		for (String key : expected.keySet()) {
-			Integer count = expected.get(key);
-			assert count != null;
-			while (count-- > 0) {
-				if (s2 == null) {
-					s2 = new StringBuilder();
-					s2.append("\nMissing errors");
-					if (resource != null) {
-						s2.append(" in '");
-						s2.append(resource.getURI());
-						s2.append("'");
-					}
-				}
-				s2.append("\n");
-				s2.append(key);
-			}
-		}
-		if (s1 == null) {
-			if (s2 != null) {
-				fail(prefix + s2.toString());
-			}
-		}
-		else {
-			if (s2 == null) {
-				fail(prefix + s1.toString());
-			}
-			else {
-				fail(prefix + s1.toString() + s2.toString());
-			}
-		}
-		return diagnostics;
-	}
-
-	public static void assertNoDiagnosticErrors(@NonNull String message, @NonNull XtextResource xtextResource) {
-		List<Diagnostic> diagnostics = xtextResource.validateConcreteSyntax();
-		if (diagnostics.size() > 0) {
-			StringBuilder s = new StringBuilder();
-			s.append(message);
-			for (Diagnostic diagnostic : diagnostics) {
-				s.append("\n");
-				s.append(diagnostic.toString());
-			}
-			fail(s.toString());
-		}
-	}
-
-	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
-		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix, "\n\t");
-		if (message != null)
-			fail(message);
-	}
-
 	public static void assertNoResourceErrorsOrWarnings(@NonNull String prefix, @NonNull Resource resource) {
 		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix, "\n\t");
 		if (message != null)
@@ -327,38 +190,6 @@ public class PivotTestCase extends TestCase
 		message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getWarnings()), prefix, "\n\t");
 		if (message != null)
 			fail(message);
-	}
-
-	public static void assertNoUnresolvedProxies(@NonNull String message, @NonNull Resource resource) {
-		Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(resource);
-		if (unresolvedProxies.size() > 0) {
-			StringBuilder s = new StringBuilder();
-			s.append(unresolvedProxies.size());
-			s.append(" unresolved proxies in ");
-			s.append(message);
-			for (Map.Entry<EObject, Collection<Setting>> entry : unresolvedProxies.entrySet()) {
-				s.append("\n");
-				BasicEObjectImpl eTarget = (BasicEObjectImpl) entry.getKey();
-				URI eProxyURI = eTarget.eProxyURI();
-				s.append(eProxyURI);
-				for (Setting setting : entry.getValue()) {
-					s.append("\n\t");
-					EObject eSource = setting.getEObject();
-					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-					try {
-						Object eGet = eSource.eGet(eStructuralFeature);		// XXX
-						if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
-							EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
-						}
-						s.append(eSource.toString());
-					}
-					catch (Exception e) {
-						s.append(EcoreUtil.getURI(eSource).toString());
-					}
-				}
-			}
-			fail(s.toString());
-		}
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull Resource resource) {
@@ -475,71 +306,12 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
-		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
-		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
-	}
-
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull ValidationContext validationContext, @NonNull String @Nullable [] messages) {
-		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
-		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
-		try {
-			List<Diagnostic> diagnostics = new ArrayList<>();
-			for (EObject eObject : resource.getContents()) {
-				Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
-				diagnostics.addAll(diagnostic.getChildren());
-			}
-			return messages != null ? assertDiagnostics(prefix, resource, diagnostics, messages) : Collections.emptyList();
-		}
-		finally {
-			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
-				ThreadLocalExecutor.setExecutor(null);
-			}
-			else if (savedExecutor != null) {
-				if (savedInterpretedExecutor != savedExecutor.basicGetInterpretedExecutor()) {
-					savedExecutor.setInterpretedExecutor(null);
-				}
-			}
-		}
-	}
-
-	public static @Nullable StandaloneProjectMap basicGetProjectMap() {
-		EnvironmentFactory globalEnvironmentFactory = GlobalEnvironmentFactory.basicGetInstance();
-		return globalEnvironmentFactory != null ? (StandaloneProjectMap)globalEnvironmentFactory.getProjectManager() : null; //projectMap;
-	}
-
 	public static void closeTestLog() {
 		if (testLog != null) {
 			try {
 				testLog.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Install a platform:/resource/project... mapping for all folders in
-	 * $WORKSPACE_LOC/* if defined, or $user.dir/../* otherwise.
-	 */
-	public static void configurePlatformResources() {
-		if (!eclipseIsRunning()) {
-			String urlString = System.getProperty("WORKSPACE_LOC");
-			File workspaceLoc;
-			if (urlString != null) {
-				workspaceLoc = new File(urlString);
-			}
-			else {
-				workspaceLoc = new File(System.getProperty("user.dir")).getParentFile();
-			}
-			File[] files = workspaceLoc.listFiles();
-			for (File file : files) {
-				if (file.isDirectory()) {
-					String name = file.getName();
-					EcorePlugin.getPlatformResourceMap().put(name, URI.createFileURI(file.toString() + "/"));
-				}
 			}
 		}
 	}
@@ -617,76 +389,6 @@ public class PivotTestCase extends TestCase
 	}
 
 	/**
-	 * Perform the appropriate initialization to support Complete OCL parsing and editing using Xtext.
-	 * NB. This must be called before setUp() creates a GlobalStateMemento if the aggressive DEBUG_GC
-	 * garbage collection is enabled.
-	 * @deprecated Use TestUtil
-	 */
-	@Deprecated
-	public static void doCompleteOCLSetup() {
-		TestUtil.doCompleteOCLSetup();
-	}
-
-	/**
-	 * Perform the appropriate initialization to support Essential OCL parsing and editing using Xtext.
-	 * NB. This must be called before setUp() creates a GlobalStateMemento if the aggressive DEBUG_GC
-	 * garbage collection is enabled.
-	 * @deprecated Use TestUtil
-	 */
-	@Deprecated
-	public static void doEssentialOCLSetup() {
-		TestUtil.doEssentialOCLSetup();
-	}
-
-	/**
-	 * Perform the appropriate initialization to support OCLinEcore parsing and editing using Xtext.
-	 * NB. This must be called before setUp() creates a GlobalStateMemento if the aggressive DEBUG_GC
-	 * garbage collection is enabled.
-	 * @deprecated Use TestUtil
-	 */
-	@Deprecated
-	public static void doOCLinEcoreSetup() {
-		TestUtil.doOCLinEcoreSetup();
-	}
-
-	/**
-	 * Perform the appropriate initialization to support OCLstdlib parsing and editing using Xtext.
-	 * NB. This must be called before setUp() creates a GlobalStateMemento if the aggressive DEBUG_GC
-	 * garbage collection is enabled.
-	 * @deprecated Use TestUtil
-	 */
-	@Deprecated
-	public static void doOCLstdlibSetup() {
-		TestUtil.doOCLstdlibSetup();
-	}
-
-	public static boolean eclipseIsRunning() {
-		try {
-			Class<?> platformClass = Class.forName("org.eclipse.core.runtime.Platform");
-			Method isRunningMethod = platformClass.getDeclaredMethod("isRunning");
-			return Boolean.TRUE.equals(isRunningMethod.invoke(null));
-		} catch (Exception e) {
-		}
-		return false;
-	}
-
-	protected static Value failOn(@NonNull String expression, @Nullable Throwable e) {
-		if (e instanceof EvaluationException) {
-			Throwable eCause = e.getCause();
-			if (eCause != null) {
-				return failOn(expression, eCause);
-			}
-			throw new Error(StringUtil.bind("Failed to evaluate ''{0}'' : {1}", expression, e.getMessage()), e);
-		}
-		else if (e instanceof EvaluationException) {
-			throw new Error("Failed to parse or evaluate \"" + expression + "\"", e);
-		}
-		else {
-			throw new Error("Failure for \"" + expression + "\"", e);
-		}
-	}
-
-	/**
 	 * Return the difference between expectedMessages and actualMessages, or null if no differences.
 	 *
 	 * The return is formatted one message per line with a leading new-line followed by
@@ -717,39 +419,6 @@ public class PivotTestCase extends TestCase
 			messageArray[i] = message;
 		}
 		return messageArray;
-	}
-
-	public static @NonNull StandaloneProjectMap getProjectMap() {
-		return (StandaloneProjectMap)ProjectManager.CLASS_PATH;
-		//		StandaloneProjectMap projectMap2 = projectMap;
-		//		if (projectMap2 == null) {
-		//			projectMap = projectMap2 = EcorePlugin.IS_ECLIPSE_RUNNING ? new ProjectMap() : new StandaloneProjectMap();
-		//		}
-		//		return projectMap2;
-	}
-
-	public static boolean isWindows() {
-		String os = System.getProperty("os.name");
-		return (os != null) && os.startsWith("Windows");
-	}
-
-	public static void unloadResourceSet(@NonNull ResourceSet resourceSet) {
-		StandaloneProjectMap projectMap = StandaloneProjectMap.findAdapter(resourceSet);
-		if (projectMap != null) {
-			projectMap.unload(resourceSet);
-		}
-		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-		if (environmentFactoryAdapter != null) {
-			EnvironmentFactoryInternal environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
-			ProjectManager projectManager = environmentFactory.getProjectManager();
-			projectManager.unload(resourceSet);
-		}
-		EList<@NonNull Resource> resources = resourceSet.getResources();
-		for (int i = 0; i < resources.size(); i++) {		// Avoid rare CME - see Bug 582925
-			Resource resource = resources.get(i);
-			resource.unload();
-		}
-		resourceSet.eAdapters().clear();
 	}
 
 	protected static abstract class TestRunnable implements Runnable
@@ -816,14 +485,6 @@ public class PivotTestCase extends TestCase
 		// trarDown() cleans up / resets
 	}
 
-	@Deprecated /* @deprecated not used */
-	protected @NonNull File getProjectFile() {
-		String projectName = getProjectName();
-		URL projectURL = getTestResource(projectName);
-		assertNotNull(projectURL);
-		return new File(projectURL.getFile());
-	}
-
 	@Deprecated /* @deprecated use getTestModelURI to facilitate legacy inherited testing */
 	protected @NonNull URI getProjectFileURI(@NonNull String referenceName) {
 		throw new UnsupportedOperationException();
@@ -831,79 +492,15 @@ public class PivotTestCase extends TestCase
 		//		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
 
-	protected @NonNull String getProjectName() {
-		return getClass().getPackage().getName().replace('.', '/') + "/models";
-	}
-
-	@Rule public TestName testName = new TestName();
-
-	protected void gc(String pfx) throws InterruptedException {
-	//	if (DEBUG_GC) {
-	//		AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories(null);
-	//	}
-		// UMLValidateTest.testValidate_Bug417062_uml is most demanding
-		for (int i = 0; i < 3; i++) {
-		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " gc-" + i + "-pre");
-			System.gc();
-		//	System.runFinalization();
-			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-				TestUIUtil.wait(180);
-			}
-			else {
-				Thread.sleep(80);				// ?? need to sleep long enough to let finalizers run
-			}
-		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " gc-" + i + "-post");
-			if (ThreadLocalExecutor.resetFinalizerReleases() == 0) {
-				break;				// need to loop till finalizers stop de-referencing
-			}
-		}
-		if (DEBUG_GC) {
-			if (pfx != null) {
-				System.out.println(pfx + " " + Thread.currentThread().getName());
-			}
-			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
-		}
-	}
-
-	@Override
-	public @NonNull String getName() {
-		return TestUtil.getName(getTestName());
-	}
-
-	public @NonNull String getTestName() {
-		String name = super.getName();
-		if (name != null) {
-			return name;
-		}
-		String methodName = testName.getMethodName();
-		return methodName != null ? methodName : "<unnamed>";
-	}
-
-	public static @NonNull URI getTestModelURI(@NonNull String localFileName) {
-		String testPlugInPrefix = PLUGIN_ID + "/";
-		URI testPlugURI = EcorePlugin.IS_ECLIPSE_RUNNING ? URI.createPlatformPluginURI(testPlugInPrefix, true) : URI.createPlatformResourceURI(testPlugInPrefix, true);
-		URI localURI = URI.createURI(localFileName.startsWith("/") ? localFileName.substring(1) : localFileName);
-		return localURI.resolve(testPlugURI);
-	}
-
-	@Deprecated /* @deprecated not used */
-	protected @NonNull URL getTestResource(@NonNull String resourceName) {
-		URL projectURL = getClass().getClassLoader().getResource(resourceName);
-		try {
-			if ((projectURL != null) && Platform.isRunning()) {
-				try {
-					projectURL = FileLocator.resolve(projectURL);
-				} catch (IOException e) {
-					TestCase.fail(e.getMessage());
-					assert false;;
-				}
-			}
-		}
-		catch (Throwable e) {}
-		return ClassUtil.nonNullState(projectURL);
-	}
-
 	private GlobalStateMemento makeCopyOfGlobalState = null;
+
+	protected PivotTestCase() {
+		this(TestHelper.INSTANCE);
+	}
+
+	protected PivotTestCase(@NonNull TestHelper testHelper) {
+		super(testHelper);
+	}
 
 	public void resetRegistries() {
 		final Object object = ValidationDelegate.Factory.Registry.INSTANCE.get(OCLConstants.OCL_DELEGATE_URI);
@@ -951,7 +548,7 @@ public class PivotTestCase extends TestCase
 			//		}
 			ThreadLocalExecutor.reset();
 			if (DEBUG_GC) {
-				uninstall();
+				testHelper.doTearDown();
 				makeCopyOfGlobalState.restoreGlobalState();
 				makeCopyOfGlobalState = null;
 				gc(null);
@@ -979,104 +576,6 @@ public class PivotTestCase extends TestCase
 		}
 		finally {
 			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : getName() + " failed to detach EnvironmentFactory.";
-		}
-	}
-
-	protected void uninstall() throws InterruptedException {
-	//	gc("GC-ed5");
-		IdiomsStandaloneSetup.doTearDown();
-	//	gc("GC-ed5a");
-		PivotStandaloneSetup.doTearDown();
-	//	gc("GC-ed5b");
-		BaseStandaloneSetup.doTearDown();
-	//	gc("GC-ed5c");
-		CompleteOCLStandaloneSetup.doTearDown();
-	//	gc("GC-ed5d");
-		EssentialOCLStandaloneSetup.doTearDown();
-	//	gc("GC-ed5e");
-		MarkupStandaloneSetup.doTearDown();
-	//	gc("GC-ed5f");
-		OCLinEcoreStandaloneSetup.doTearDown();
-	//	gc("GC-ed5g");
-		OCLstdlibStandaloneSetup.doTearDown();
-	//	gc("GC-ed6");
-		GlobalEnvironmentFactory.disposeInstance();
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
-		//		OCLstdlib.uninstall(); // should be able to persist
-		//		if (projectMap != null) {
-		//			projectMap.dispose();
-		//			projectMap = null;
-		//		}
-	}
-
-	public static class GlobalStateMemento
-	{
-		private @NonNull HashMap<EPackage, Object> validatorReg;
-		private @NonNull HashMap<String, Object> epackageReg;
-		private @NonNull HashMap<String, Object> protocolToFactoryMap;
-		private @NonNull HashMap<String, Object> extensionToFactoryMap;
-		private @NonNull HashMap<String, Object> contentTypeIdentifierToFactoryMap;
-		private @NonNull HashMap<String, Object> protocolToServiceProviderMap;
-		private @NonNull HashMap<String, Object> extensionToServiceProviderMap;
-		private @NonNull HashMap<String, Object> contentTypeIdentifierToServiceProviderMap;
-
-		public GlobalStateMemento() {
-			validatorReg = new HashMap<EPackage, Object>(EValidator.Registry.INSTANCE);
-			epackageReg = new HashMap<String, Object>(EPackage.Registry.INSTANCE);
-			protocolToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
-
-			protocolToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
-		}
-
-		public void restoreGlobalState() {
-			clearGlobalRegistries();
-			EValidator.Registry.INSTANCE.putAll(validatorReg);
-			EPackage.Registry.INSTANCE.putAll(epackageReg);
-
-			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToFactoryMap);
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToFactoryMap);
-			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToFactoryMap);
-
-			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToServiceProviderMap);
-			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToServiceProviderMap);
-			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToServiceProviderMap);
-		}
-
-		public static void clearGlobalRegistries() {
-			//			Registry eValidatorRegistry = EValidator.Registry.INSTANCE;
-			//			for (EPackage key : eValidatorRegistry.keySet()) {
-			//				Object object = eValidatorRegistry.get(key);
-			//				System.out.println("key : " + key.getNsURI() + " => " + object.getClass().getName());
-			//			}
-			EValidator.Registry.INSTANCE.clear();
-			EPackage.Registry.INSTANCE.clear();
-			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().clear();
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().clear();
-			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-
-			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().clear();
-			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().clear();
-			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-			initializeDefaults();
-		}
-
-		public static void initializeDefaults() {
-			//EMF Standalone setup
-			if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))
-				Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-					"ecore", new EcoreResourceFactoryImpl());
-			if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
-				Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-					"xmi", new XMIResourceFactoryImpl());
-			if (!EPackage.Registry.INSTANCE.containsKey(EcorePackage.eNS_URI))
-				EPackage.Registry.INSTANCE.put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-			if (!EPackage.Registry.INSTANCE.containsKey(XtextPackage.eNS_URI))
-				EPackage.Registry.INSTANCE.put(XtextPackage.eNS_URI, XtextPackage.eINSTANCE);
 		}
 	}
 }
