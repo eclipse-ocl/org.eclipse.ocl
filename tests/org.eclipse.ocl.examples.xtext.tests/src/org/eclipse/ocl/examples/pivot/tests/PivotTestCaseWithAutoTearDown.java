@@ -57,6 +57,14 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	public @Nullable TestProject testProject = null;
 	public @Nullable ProjectManager testProjectManager = null;
 
+	protected PivotTestCaseWithAutoTearDown() {
+		this(TestHelper.INSTANCE);
+	}
+
+	protected PivotTestCaseWithAutoTearDown(@NonNull TestHelper testHelper) {
+		super(testHelper);
+	}
+
 	@SuppressWarnings("null")
 	protected void autoTearDown() throws Exception {
 		//
