@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class ElementCSAttribution extends AbstractAttribution
 {
-	public static final ElementCSAttribution INSTANCE = new ElementCSAttribution();
+	public static final @NonNull ElementCSAttribution INSTANCE = new ElementCSAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

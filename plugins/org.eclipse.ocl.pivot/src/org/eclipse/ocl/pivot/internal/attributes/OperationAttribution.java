@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class OperationAttribution extends AbstractAttribution
 {
-	public static final OperationAttribution INSTANCE = new OperationAttribution();
+	public static final @NonNull OperationAttribution INSTANCE = new OperationAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
