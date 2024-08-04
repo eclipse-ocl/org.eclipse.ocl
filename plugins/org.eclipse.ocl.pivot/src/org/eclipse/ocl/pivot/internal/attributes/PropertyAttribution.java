@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
 public class PropertyAttribution extends AbstractAttribution
 {
-	public static final PropertyAttribution INSTANCE = new PropertyAttribution();
+	public static final @NonNull PropertyAttribution INSTANCE = new PropertyAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
