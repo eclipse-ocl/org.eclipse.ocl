@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.essentialocl.scoping;
 
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -26,6 +25,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution.AttributionRegistryInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
@@ -66,13 +66,13 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 public class EssentialOCLScoping
 {
 	public static void init() {
-		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
-		registry.put(EssentialOCLCSPackage.Literals.CONTEXT_CS, ContextCSAttribution.INSTANCE);
-		registry.put(EssentialOCLCSPackage.Literals.LET_EXP_CS, LetExpCSAttribution.INSTANCE);
-		registry.put(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS, LetVariableCSAttribution.INSTANCE);  // Needed for let deeply nested in Iterator/CollectionLiteral
-		registry.put(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS, NavigatingArgCSAttribution.INSTANCE);
-		registry.put(EssentialOCLCSPackage.Literals.INFIX_EXP_CS, NavigationOperatorCSAttribution.INSTANCE);
-		registry.put(EssentialOCLCSPackage.Literals.SHADOW_PART_CS, ShadowPartCSAttribution.INSTANCE);
+		AttributionRegistryInstaller registryInstaller = Attribution.REGISTRY.getInstaller(EssentialOCLScoping.class);
+		registryInstaller.install(EssentialOCLCSPackage.Literals.CONTEXT_CS, ContextCSAttribution.INSTANCE);
+		registryInstaller.install(EssentialOCLCSPackage.Literals.LET_EXP_CS, LetExpCSAttribution.INSTANCE);
+		registryInstaller.install(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS, LetVariableCSAttribution.INSTANCE);  // Needed for let deeply nested in Iterator/CollectionLiteral
+		registryInstaller.install(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS, NavigatingArgCSAttribution.INSTANCE);
+		registryInstaller.install(EssentialOCLCSPackage.Literals.INFIX_EXP_CS, NavigationOperatorCSAttribution.INSTANCE);
+		registryInstaller.install(EssentialOCLCSPackage.Literals.SHADOW_PART_CS, ShadowPartCSAttribution.INSTANCE);
 		CS2AS.addUnresolvedProxyMessageProvider(new PathElementCSUnresolvedProxyMessageProvider());
 	}
 
