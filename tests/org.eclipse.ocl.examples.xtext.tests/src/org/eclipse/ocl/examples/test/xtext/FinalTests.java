@@ -19,6 +19,10 @@ import org.eclipse.ocl.xtext.base.ui.builder.MultiValidationJob;
  */
 public class FinalTests extends AbstractGrammarTests
 {
+	public FinalTests() {
+		super(TestHelper.INSTANCE);
+	}
+
 	/**
 	 * Delay while background jobs sort themseleves out.
 	 */

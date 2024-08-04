@@ -23,6 +23,10 @@ import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibGrammarResource;
  */
 public class GrammarTests extends AbstractGrammarTests
 {
+	public GrammarTests() {
+		super(TestHelper.INSTANCE);
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		TestUtil.doMarkupSetup();

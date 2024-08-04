@@ -43,6 +43,9 @@ public interface Attribution
 			if (oldValue != null) {
 				assert oldValue.getClass().isAssignableFrom(newValue.getClass()) : newValue.getClass().getName() + " for " + key.getName() + " key does not refine " + oldValue.getClass().getName();
 			}
+		//	System.out.println("AttributionRegistry[" + size() + "] «" + (scopingClass != null ? scopingClass.getSimpleName() : "inferred") + "» "
+		//			+ /*NameUtil.debugSimpleName(key) + ":" +*/ key.getEPackage().getName() + "::" + key.getName() + " "
+		//			+ newValue.getClass().getName() + (oldValue != null ? " / " + oldValue.getClass().getName() : ""));
 			return oldValue;
 		}
 	}

@@ -220,11 +220,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	@Override
-	protected @NonNull File getProjectFile() {
-		return getTestProject().getFile();
-	}
-
-	@Override
 	protected @NonNull URI getProjectFileURI(@NonNull String referenceName) {
 		return getTestFileURI(referenceName);
 	}
@@ -247,7 +242,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	protected void tearDown() throws Exception {
 	//	ThreadLocalExecutor.waitForGC();
 		log = null;
-		uninstall();
+		testHelper.doTearDown();
 		super.tearDown();
 	}
 
