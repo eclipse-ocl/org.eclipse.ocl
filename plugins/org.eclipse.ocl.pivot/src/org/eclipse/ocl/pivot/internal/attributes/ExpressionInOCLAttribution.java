@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class ExpressionInOCLAttribution extends AbstractAttribution
 {
-	public static final ExpressionInOCLAttribution INSTANCE = new ExpressionInOCLAttribution();
+	public static final @NonNull ExpressionInOCLAttribution INSTANCE = new ExpressionInOCLAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

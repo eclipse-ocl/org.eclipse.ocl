@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class ClassAttribution extends AbstractAttribution
 {
-	public static final ClassAttribution INSTANCE = new ClassAttribution();
+	public static final @NonNull ClassAttribution INSTANCE = new ClassAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

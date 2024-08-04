@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class DataTypeAttribution extends AbstractAttribution
 {
-	public static final DataTypeAttribution INSTANCE = new DataTypeAttribution();
+	public static final @NonNull DataTypeAttribution INSTANCE = new DataTypeAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

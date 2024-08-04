@@ -43,7 +43,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class ImportCSAttribution extends AbstractAttribution implements UnresolvedProxyMessageProvider
 {
-	public static final ImportCSAttribution INSTANCE = new ImportCSAttribution();
+	public static final @NonNull ImportCSAttribution INSTANCE = new ImportCSAttribution();
 
 	private static class ImportAdapter extends AdapterImpl
 	{

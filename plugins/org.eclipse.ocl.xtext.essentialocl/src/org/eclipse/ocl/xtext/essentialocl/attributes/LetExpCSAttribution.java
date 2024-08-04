@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 
 public class LetExpCSAttribution extends AbstractAttribution
 {
-	public static final LetExpCSAttribution INSTANCE = new LetExpCSAttribution();
+	public static final @NonNull LetExpCSAttribution INSTANCE = new LetExpCSAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

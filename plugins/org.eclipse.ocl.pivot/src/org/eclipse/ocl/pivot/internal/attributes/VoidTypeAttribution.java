@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class VoidTypeAttribution extends ClassAttribution
 {
-	public static final VoidTypeAttribution INSTANCE = new VoidTypeAttribution();
+	public static final @NonNull VoidTypeAttribution INSTANCE = new VoidTypeAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

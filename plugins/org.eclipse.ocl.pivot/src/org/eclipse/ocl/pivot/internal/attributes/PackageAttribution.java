@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PackageAttribution extends AbstractAttribution
 {
-	public static final PackageAttribution INSTANCE = new PackageAttribution();
+	public static final @NonNull PackageAttribution INSTANCE = new PackageAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

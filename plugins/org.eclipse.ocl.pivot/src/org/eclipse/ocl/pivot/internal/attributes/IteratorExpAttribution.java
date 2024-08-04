@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class IteratorExpAttribution extends AbstractAttribution
 {
-	public static final IteratorExpAttribution INSTANCE = new IteratorExpAttribution();
+	public static final @NonNull IteratorExpAttribution INSTANCE = new IteratorExpAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

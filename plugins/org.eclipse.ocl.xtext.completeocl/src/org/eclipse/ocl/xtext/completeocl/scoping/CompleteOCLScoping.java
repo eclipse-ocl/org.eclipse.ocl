@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.scoping;
 
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution.AttributionRegistryInstaller;
 import org.eclipse.ocl.xtext.completeocl.attributes.ClassifierContextCSAttribution;
 import org.eclipse.ocl.xtext.completeocl.attributes.CompleteOCLDocumentCSAttribution;
 import org.eclipse.ocl.xtext.completeocl.attributes.OperationContextCSAttribution;
@@ -24,11 +22,11 @@ import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 public class CompleteOCLScoping
 {
 	public static void init() {
-		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
-		registry.put(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS, ClassifierContextCSAttribution.INSTANCE);
-		registry.put(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS, CompleteOCLDocumentCSAttribution.INSTANCE);
-		registry.put(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS, OperationContextCSAttribution.INSTANCE);
-		registry.put(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS, PackageDeclarationCSAttribution.INSTANCE);
-		registry.put(CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS, PropertyContextCSAttribution.INSTANCE);
+		AttributionRegistryInstaller registryInstaller = Attribution.REGISTRY.getInstaller(CompleteOCLScoping.class);
+		registryInstaller.install(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS, ClassifierContextCSAttribution.INSTANCE);
+		registryInstaller.install(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS, CompleteOCLDocumentCSAttribution.INSTANCE);
+		registryInstaller.install(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS, OperationContextCSAttribution.INSTANCE);
+		registryInstaller.install(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS, PackageDeclarationCSAttribution.INSTANCE);
+		registryInstaller.install(CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS, PropertyContextCSAttribution.INSTANCE);
 	}
 }

@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 
 public class LibraryAttribution extends PackageAttribution
 {
-	public static final LibraryAttribution INSTANCE = new LibraryAttribution();
+	public static final @NonNull LibraryAttribution INSTANCE = new LibraryAttribution();
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {

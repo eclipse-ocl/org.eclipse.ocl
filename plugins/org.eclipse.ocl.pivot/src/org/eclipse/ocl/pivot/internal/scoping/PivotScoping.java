@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.scoping;
 
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.attributes.ClassAttribution;
 import org.eclipse.ocl.pivot.internal.attributes.DataTypeAttribution;
@@ -30,29 +27,30 @@ import org.eclipse.ocl.pivot.internal.attributes.PropertyAttribution;
 import org.eclipse.ocl.pivot.internal.attributes.TemplateParameterAttribution;
 import org.eclipse.ocl.pivot.internal.attributes.VariableAttribution;
 import org.eclipse.ocl.pivot.internal.attributes.VoidTypeAttribution;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution.AttributionRegistryInstaller;
 
 public class PivotScoping
-{	
+{
 	public static void init() {
-		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
-		registry.put(PivotPackage.Literals.CLASS, ClassAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.DATA_TYPE, DataTypeAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.ELEMENT, EmptyAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.ENUMERATION, EnumerationAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.EXPRESSION_IN_OCL, ExpressionInOCLAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.INVALID_TYPE, VoidTypeAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.ITERATE_EXP, IterateExpAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.ITERATOR_EXP, IteratorExpAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.LAMBDA_TYPE, EmptyAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.LET_EXP, LetExpAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.LIBRARY, LibraryAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.MODEL, ModelAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.OPERATION, OperationAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.OPERATION_CALL_EXP, OperationCallExpAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.PACKAGE, PackageAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.PROPERTY, PropertyAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.TEMPLATE_PARAMETER, TemplateParameterAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.VARIABLE, VariableAttribution.INSTANCE);
-		registry.put(PivotPackage.Literals.VOID_TYPE, VoidTypeAttribution.INSTANCE);
+		AttributionRegistryInstaller registryInstaller = Attribution.REGISTRY.getInstaller(PivotScoping.class);
+		registryInstaller.install(PivotPackage.Literals.CLASS, ClassAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.DATA_TYPE, DataTypeAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.ELEMENT, EmptyAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.ENUMERATION, EnumerationAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.EXPRESSION_IN_OCL, ExpressionInOCLAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.INVALID_TYPE, VoidTypeAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.ITERATE_EXP, IterateExpAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.ITERATOR_EXP, IteratorExpAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.LAMBDA_TYPE, EmptyAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.LET_EXP, LetExpAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.LIBRARY, LibraryAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.MODEL, ModelAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.OPERATION, OperationAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.OPERATION_CALL_EXP, OperationCallExpAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.PACKAGE, PackageAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.PROPERTY, PropertyAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.TEMPLATE_PARAMETER, TemplateParameterAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.VARIABLE, VariableAttribution.INSTANCE);
+		registryInstaller.install(PivotPackage.Literals.VOID_TYPE, VoidTypeAttribution.INSTANCE);
 	}
 }

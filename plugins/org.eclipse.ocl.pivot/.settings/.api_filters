@@ -44,6 +44,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/scoping/Attribution.java" type="org.eclipse.ocl.pivot.internal.scoping.Attribution">
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.Attribution"/>
+                <message_argument value="REGISTRY"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
         <filter id="404000815">
             <message_arguments>
