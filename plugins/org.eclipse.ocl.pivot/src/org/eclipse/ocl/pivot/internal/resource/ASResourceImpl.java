@@ -119,6 +119,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						if (featureID == RESOURCE__WARNINGS) {
 							return;
 						}
+						featureID = notification.getFeatureID(Resource.class);		// XXX
 					}
 					else if (notifier instanceof Element) {
 						if (feature == PivotPackage.Literals.ELEMENT__OWNED_EXTENSIONS) {
@@ -157,6 +158,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				else if (eventType == Notification.SET) {
 					if (notifier instanceof Resource) {
 						int featureID = notification.getFeatureID(Resource.class);		// Occurs after unloading has finished
+						if (featureID == RESOURCE__RESOURCE_SET) {
+							return;
+						}
 						if (featureID == RESOURCE__IS_LOADED) {
 							return;
 						}
@@ -212,7 +216,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					}
 				}
 				// Drop through for nearly everything including REMOVE - see Bug 541380#c6
-				throw new IllegalStateException(formatMutationMessage(notification));
+				throw new IllegalStateException(formatMutationMessage(notification));	// XXX testQVTcLoad_HSV2HSL_qvtias provokes a ResourceSet.getResources).add(REsource)
 			}
 		}
 
