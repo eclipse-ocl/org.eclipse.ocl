@@ -277,7 +277,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 	@SuppressWarnings("null")
 	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
-		TestUtil.doCompleteOCLSetup();
 		Resource ecoreResource = initModelWithErrors(resourceSet);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
@@ -339,9 +338,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//	TEST_START.setState(true);
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		TestUtil.doEssentialOCLSetup();
+		TestUtil.doCompleteOCLSetup();
 		super.setUp();
 		TestCaseAppender.INSTANCE.install();
-		TestUtil.doEssentialOCLSetup();
 		//
 		usedLocalRegistry = false;
 		/**
@@ -1177,7 +1177,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			public void runWithThrowable() throws InvocationTargetException {
 			//	System.out.println("Starting " + Thread.currentThread().getName());
-				TestUtil.doEssentialOCLSetup();
 				ResourceSet resourceSet = createResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);

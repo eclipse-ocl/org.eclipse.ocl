@@ -51,6 +51,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.pivot.tests.AbstractPivotTestCase;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
@@ -115,6 +116,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doCompleteOCLSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			CompleteOCLStandaloneSetup.doSetup();
 		}
@@ -129,6 +131,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doEssentialOCLSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			EssentialOCLStandaloneSetup.doSetup();
 		}
@@ -143,6 +146,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doIdiomsSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IdiomsStandaloneSetup.doSetup();
 		}
@@ -157,6 +161,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doMarkupSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			MarkupStandaloneSetup.doSetup();
 		}
@@ -171,6 +176,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doOCLinEcoreSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
 		}
@@ -185,6 +191,7 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doOCLstdlibSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLstdlibStandaloneSetup.doSetup();			// FIXME BUG 382058
 		}
@@ -194,6 +201,7 @@ public class TestUtil
 	}
 
 	public static void doXtextSetup() {
+		assert AbstractPivotTestCase.assertTestIsNotSetup();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			XtextStandaloneSetup.doSetup();			// FIXME BUG 382058
 		}
