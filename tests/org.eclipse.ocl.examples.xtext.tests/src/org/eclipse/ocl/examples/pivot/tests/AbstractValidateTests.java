@@ -157,11 +157,11 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
-		TestCaseAppender.INSTANCE.install();
 		TestUtil.doCompleteOCLSetup();
 		TestUtil.doOCLinEcoreSetup();
 		TestUtil.doOCLstdlibSetup();
+		super.setUp();
+		TestCaseAppender.INSTANCE.install();
 		//		OCLstdlib.install();
 		//        OCLDelegateDomain.initialize(null);
 	}
