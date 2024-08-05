@@ -559,11 +559,11 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
-		TestCaseAppender.INSTANCE.install();
 		TestUtil.doCompleteOCLSetup();
 		TestUtil.doOCLinEcoreSetup();
 		TestUtil.doOCLstdlibSetup();
+		super.setUp();
+		TestCaseAppender.INSTANCE.install();
 	//	ResourceSet resourceSet = new ResourceSetImpl();
 	//	ProjectMap.initializeURIResourceMap(resourceSet);
 	//	Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();

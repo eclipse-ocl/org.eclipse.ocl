@@ -217,10 +217,10 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 
 	@Override
 	protected void setUp() throws Exception {
+		TestUtil.doEssentialOCLSetup();
 		super.setUp();
 		TestCaseAppender.INSTANCE.install();
 		OCLstdlib.install();
-		TestUtil.doEssentialOCLSetup();
 		if ((resourceSet != null) && DISPOSE_RESOURCE_SET) {
 			disposeResourceSet();
 		}
