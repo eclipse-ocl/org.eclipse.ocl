@@ -137,6 +137,13 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class PivotUtil
 {
 	/**
+	 * Prefix to be emitted by errPrintln. Initially null, set non-null at the start of some context such as a test. Set
+	 * null again once emitted as a prefix.
+	 * @since 1.22
+	 */
+	public static @Nullable String contextLine = null;
+
+	/**
 	 * 'Highest' precedence first
 	 *
 	 * @deprecated (Not used) The Precedence.order is not a constant in a shared library. Use the PrecedenceManager.
@@ -891,6 +898,17 @@ public class PivotUtil
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	public static void errPrintln(@Nullable String string) {
+		if (contextLine != null) {
+			System.err.println(contextLine);
+			contextLine = null;
+		}
+		System.err.println(String.valueOf(string));
 	}
 
 	public static String formatDiagnostics(@NonNull Diagnostic diagnostic, @NonNull String newLine) {
