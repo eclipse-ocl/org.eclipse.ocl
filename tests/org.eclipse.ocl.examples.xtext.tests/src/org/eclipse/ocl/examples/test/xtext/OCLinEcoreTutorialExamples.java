@@ -289,10 +289,10 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 
 	@Override
 	protected void setUp() throws Exception {
+		TestUtil.doEssentialOCLSetup();
 		super.setUp();
 		resetRegistries();
 		OCLstdlib.install();
-		TestUtil.doEssentialOCLSetup();
 		resourceSet = new ResourceSetImpl();
 	}
 
