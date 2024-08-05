@@ -216,8 +216,12 @@ public class IdiomsLoadTests extends XtextTestCase
 
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
 		TestUtil.doIdiomsSetup();
+		//	TestUtil.doCompleteOCLSetup();
+		//	TestUtil.doOCLstdlibSetup();
+			TestUtil.doEssentialOCLSetup();
+			TestUtil.doXtextSetup();
+		super.setUp();
 //		configurePlatformResources();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 //		DeclarativeFormatter.FORMATTER_FRAGMENTS.setState(true);
@@ -273,10 +277,6 @@ public class IdiomsLoadTests extends XtextTestCase
 			System.err.println(getName() + " has been disabled -see Bug 569138");
 			return;
 		}
-	//	TestUtil.doCompleteOCLSetup();
-	//	TestUtil.doOCLstdlibSetup();
-		TestUtil.doEssentialOCLSetup();
-		TestUtil.doXtextSetup();
 		TestOCL ocl = createOCL();
 		ClasspathURIHandler.init(ocl.getResourceSet());
 		URI idiomsURI = getTestFileURI("EssentialOCL.idioms", EssentialOCLStandaloneSetup.class.getResourceAsStream("EssentialOCL.idioms"));

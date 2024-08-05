@@ -41,12 +41,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -99,6 +101,8 @@ public class AbstractPivotTestCase extends TestCase
 		DEBUG_ID = true;
 		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	}
+
+	static long startTime;
 
 	public static class GlobalStateMemento
 	{
@@ -398,6 +402,19 @@ public class AbstractPivotTestCase extends TestCase
 		}
 	} */
 
+	/**
+	 * Assert that no test is currently setup() anf not yet tearDown().
+	 */
+	public static boolean assertTestIsNotSetup() {
+		try {
+			assert !IS_SETUP;
+		}
+		finally {
+			IS_SETUP = false;		// Avoid gratuiytpus failures of subsequent tests
+		}
+		return true;
+	}
+
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
@@ -584,6 +601,8 @@ public class AbstractPivotTestCase extends TestCase
 
 	@Rule public TestName testName = new TestName();
 
+	protected GlobalStateMemento makeCopyOfGlobalState = null;
+
 	protected AbstractPivotTestCase(@NonNull TestHelper testHelper) {
 		this.testHelper = testHelper;
 	}
@@ -638,4 +657,45 @@ public class AbstractPivotTestCase extends TestCase
 	public @NonNull String getTestName() {
 		return ClassUtil.nonNullState(super.getName());
 	} */
+
+	private static boolean IS_SETUP = false;		// Debug flag to enable enforcement of init before memento
+
+	@Override
+	protected void setUp() throws Exception {
+		IS_SETUP = true;
+		PivotUtilInternal.debugReset();
+		GlobalEnvironmentFactory.resetSafeNavigationValidations();
+		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
+		ThreadLocalExecutor.reset();
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			TestUIUtil.closeIntro();			// Ensure that the default part is a stable PackageExplorerPart
+			TestUIUtil.flushEvents();
+		}
+
+		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
+		PivotUtilInternal.DEBUG_DEPRECATIONS.setState(true);
+		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
+		if (DEBUG_GC) {
+			XMLNamespacePackage.eINSTANCE.getClass();
+			makeCopyOfGlobalState = new GlobalStateMemento();
+		}
+
+		if (!TEST_START.isActive()) {
+			PivotUtil.contextLine = "-----Starting " + getClass().getSimpleName() + "." + getName() + "-----";
+		}
+		super.setUp();
+		if (DEBUG_ID) {
+			PivotUtilInternal.debugPrintln("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
+		}
+		//	TracingOption.resetAll();
+		ThreadLocalExecutor.reset();
+		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
+		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
+		startTime = System.nanoTime();
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		IS_SETUP = false;
+	}
 }
