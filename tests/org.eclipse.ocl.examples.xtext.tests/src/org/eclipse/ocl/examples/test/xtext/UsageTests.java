@@ -205,10 +205,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	//	TEST_START.setState(true);
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		TestUtil.doOCLinEcoreSetup();
 		super.setUp();
 		log = Logger.getLogger(UsageTests.class);
 		// AcceleoNature.class.getName(); // Pull in the plugin for Hudson
-		TestUtil.doOCLinEcoreSetup();
 		configurePlatformResources();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 		//			.put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$

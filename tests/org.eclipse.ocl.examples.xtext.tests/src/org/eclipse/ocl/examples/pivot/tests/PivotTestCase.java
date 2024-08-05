@@ -492,8 +492,6 @@ public class PivotTestCase extends AbstractPivotTestCase
 		//		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
 
-	private GlobalStateMemento makeCopyOfGlobalState = null;
-
 	protected PivotTestCase() {
 		this(TestHelper.INSTANCE);
 	}
@@ -509,36 +507,15 @@ public class PivotTestCase extends AbstractPivotTestCase
 		}
 	}
 
-	@Override
+	/*	@Override
 	protected void setUp() throws Exception {
-		PivotUtilInternal.debugReset();
-		GlobalEnvironmentFactory.resetSafeNavigationValidations();
-		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
-		ThreadLocalExecutor.reset();
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			TestUIUtil.closeIntro();			// Ensure that the default part is a stable PackageExplorerPart
-			TestUIUtil.flushEvents();
-		}
-
-		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		PivotUtilInternal.DEBUG_DEPRECATIONS.setState(true);
-		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
-		if (DEBUG_GC) {
-			XMLNamespacePackage.eINSTANCE.getClass();
-			makeCopyOfGlobalState = new GlobalStateMemento();
-		}
 		super.setUp();
-		if (DEBUG_ID) {
-			PivotUtilInternal.debugPrintln("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
-		}
-		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
-		EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
+	//	EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
 		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
 	//	IWorkbench workbench = PlatformUI.getWorkbench();									// XXX
 	//	IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 	//	IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-
-	}
+	} */
 
 	@Override
 	protected void tearDown() throws Exception {
