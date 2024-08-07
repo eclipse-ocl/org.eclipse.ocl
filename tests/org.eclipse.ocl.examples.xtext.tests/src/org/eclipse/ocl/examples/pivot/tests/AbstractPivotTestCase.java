@@ -19,12 +19,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -54,7 +54,9 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -96,10 +98,10 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-		PivotUtilInternal.noDebug = false;
-		DEBUG_GC = true;
-		DEBUG_ID = true;
-		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+//		PivotUtilInternal.noDebug = false;
+//		DEBUG_GC = true;
+//		DEBUG_ID = true;
+//		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	}
 
 	static long startTime;
@@ -178,24 +180,26 @@ public class AbstractPivotTestCase extends TestCase
 	{
 		public static final @NonNull TestHelper INSTANCE = new TestHelper();
 
+		public void doStartUp() {
+			IdiomsStandaloneSetup.class.getName();
+			PivotStandaloneSetup.class.getName();
+			BaseStandaloneSetup.class.getName();
+			CompleteOCLStandaloneSetup.class.getName();
+			EssentialOCLStandaloneSetup.class.getName();
+			MarkupStandaloneSetup.class.getName();
+			OCLinEcoreStandaloneSetup.class.getName();
+			OCLstdlibStandaloneSetup.class.getName();
+		}
+
 		public void doTearDown() {
-			//	gc("GC-ed5");
 			IdiomsStandaloneSetup.doTearDown();
-		//	gc("GC-ed5a");
 			PivotStandaloneSetup.doTearDown();
-		//	gc("GC-ed5b");
 			BaseStandaloneSetup.doTearDown();
-		//	gc("GC-ed5c");
 			CompleteOCLStandaloneSetup.doTearDown();
-		//	gc("GC-ed5d");
 			EssentialOCLStandaloneSetup.doTearDown();
-		//	gc("GC-ed5e");
 			MarkupStandaloneSetup.doTearDown();
-		//	gc("GC-ed5f");
 			OCLinEcoreStandaloneSetup.doTearDown();
-		//	gc("GC-ed5g");
 			OCLstdlibStandaloneSetup.doTearDown();
-		//	gc("GC-ed6");
 			GlobalEnvironmentFactory.disposeInstance();
 			GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
 			GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
@@ -601,7 +605,7 @@ public class AbstractPivotTestCase extends TestCase
 
 	@Rule public TestName testName = new TestName();
 
-	protected GlobalStateMemento makeCopyOfGlobalState = null;
+	private GlobalStateMemento makeCopyOfGlobalState = null;
 
 	protected AbstractPivotTestCase(@NonNull TestHelper testHelper) {
 		this.testHelper = testHelper;
@@ -677,6 +681,7 @@ public class AbstractPivotTestCase extends TestCase
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
 			XMLNamespacePackage.eINSTANCE.getClass();
+			testHelper.doStartUp();					// Ensure all plugins are started before saving global state
 			makeCopyOfGlobalState = new GlobalStateMemento();
 		}
 
@@ -696,6 +701,41 @@ public class AbstractPivotTestCase extends TestCase
 
 	@Override
 	protected void tearDown() throws Exception {
-		IS_SETUP = false;
+		try {
+			//		if (DEBUG_ID) {
+			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
+			//		}
+			ThreadLocalExecutor.reset();
+			if (DEBUG_GC) {
+				testHelper.doTearDown();
+				makeCopyOfGlobalState.restoreGlobalState();
+				makeCopyOfGlobalState = null;
+				gc(null);
+				//			MetamodelManagerResourceAdapter.INSTANCES.show();
+			}
+			if (DEBUG_ID) {
+				PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
+			}
+			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
+			/**
+			 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
+			 * and which might be resolved using the wrong strategy in another test.
+			 */
+			OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
+			if (oclstdlib != null) {
+				for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
+					EObject eObject = tit.next();
+					if (eObject instanceof PivotObjectImpl) {
+						PivotObjectImpl asObject = (PivotObjectImpl)eObject;
+						asObject.resetStaleESObject();
+					}
+				}
+			}
+			IS_SETUP = false;
+			super.tearDown();
+		}
+		finally {
+			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : getName() + " failed to detach EnvironmentFactory.";
+		}
 	}
 }
