@@ -22,37 +22,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
-import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -516,43 +505,4 @@ public class PivotTestCase extends AbstractPivotTestCase
 	//	IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 	//	IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 	} */
-
-	@Override
-	protected void tearDown() throws Exception {
-		try {
-			//		if (DEBUG_ID) {
-			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
-			//		}
-			ThreadLocalExecutor.reset();
-			if (DEBUG_GC) {
-				testHelper.doTearDown();
-				makeCopyOfGlobalState.restoreGlobalState();
-				makeCopyOfGlobalState = null;
-				gc(null);
-				//			MetamodelManagerResourceAdapter.INSTANCES.show();
-			}
-			if (DEBUG_ID) {
-				PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
-			}
-			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
-			/**
-			 * Reset any PivotEObject.target that may have reverted to proxies when a ProjectMap unloaded,
-			 * and which might be resolved using the wrong strategy in another test.
-			 */
-			OCLstdlib oclstdlib = OCLstdlib.basicGetDefault();
-			if (oclstdlib != null) {
-				for (TreeIterator<EObject> tit = oclstdlib.getAllContents(); tit.hasNext(); ) {
-					EObject eObject = tit.next();
-					if (eObject instanceof PivotObjectImpl) {
-						PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-						asObject.resetStaleESObject();
-					}
-				}
-			}
-			super.tearDown();
-		}
-		finally {
-			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : getName() + " failed to detach EnvironmentFactory.";
-		}
-	}
 }
