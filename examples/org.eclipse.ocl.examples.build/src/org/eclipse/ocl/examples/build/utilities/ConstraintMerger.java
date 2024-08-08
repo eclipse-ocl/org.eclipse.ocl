@@ -148,7 +148,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				log.info("Merging " + uri);
 				CSResource csResource = ocl.getCSResource(uri);
 				ResourceUtils.checkResourceSet(ocl.getResourceSet());
-				@SuppressWarnings("unused") Resource oclResource = csResource.getASResource();
+				@SuppressWarnings("unused") Resource oclResource = csResource.getCS2AS(ocl.getEnvironmentFactory()).getASResource();
 				ResourceUtils.checkResourceSet(asResourceSet);
 			}
 			ResourceUtils.checkResourceSet(asResourceSet);

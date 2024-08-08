@@ -283,11 +283,10 @@ public class ElementUtil
 		return delegationModes;
 	}
 
+	@Deprecated	/* @deprecated transitively not used */
 	public static @Nullable RootCSAttribution getDocumentAttribution(@NonNull ElementCS context) {
-		ParserContext parserContext = basicGetParserContext(context);
 		for (ElementCS target = context, parent; (parent = target.getParent()) != null; target = parent) {
-			@SuppressWarnings("deprecation")
-			Attribution attribution = parserContext != null ? parserContext.getAttribution(parent) : PivotUtilInternal.getAttribution(parent);
+			Attribution attribution = Attribution.REGISTRY.getAttribution(parent);
 			if (attribution instanceof RootCSAttribution) {
 				return (RootCSAttribution) attribution;
 			}

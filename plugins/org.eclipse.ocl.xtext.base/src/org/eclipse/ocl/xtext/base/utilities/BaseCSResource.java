@@ -67,17 +67,20 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	@NonNull URI getASURI(@NonNull URI csURI);
 
 	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
-	@NonNull CS2AS getCS2AS();			// XXX
+	@NonNull CS2AS getCS2AS();			// no longer used
 
+	/**
+	 * Return the CS2AS adapter to convert this CSResource to its (new) AS Resource equivalent.
+	 */
 	@Override
 	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory);
 
 	/**
-	 * Return the CS2AS adapter for this resource.
+	 * Return the CS2AS adapter to convert this CSResource to its known AS Resource equivalent.
 	 * If no CS2AS adapter installed, one is created and installed using the provided metamodelManager,
 	 * which if null is also created.
 	 */
-	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);			// XXX
+	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	/**
 	 * Return the name of the editor for use in diagnostics.

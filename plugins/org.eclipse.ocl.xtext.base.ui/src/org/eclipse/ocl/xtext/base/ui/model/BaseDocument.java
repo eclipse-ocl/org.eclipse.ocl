@@ -235,6 +235,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		}
 	}
 
+	@Deprecated	/* @deprecated not used */
 	protected RootCSAttribution getDocumentAttribution() {
 		return readOnly(new IUnitOfWork<RootCSAttribution, XtextResource>()
 		{
