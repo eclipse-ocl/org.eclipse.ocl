@@ -858,8 +858,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			assert csPathName != null;
 		}
 		else {
-			invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,			// XXX debugging
-				sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
+		//	invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,			// debugging
+		//		sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 			checkForInvalidImplicitSourceType(csNameExp);
 			CS2AS.setPathElement(ClassUtil.nonNullState(csPathName), null, null);
 		}

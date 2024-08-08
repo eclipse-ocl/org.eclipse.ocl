@@ -382,10 +382,10 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		assert initPartThread == null;
 		assert oldActivePart != null;
 	//	assert activePartThread != NOT_A_PART_THREAD;
-		if (activePartThread != NOT_A_PART_THREAD) {		// May never have been activated
-			ThreadLocalExecutor oldPartThread = part2partThread.get(oldActivePart);		// XXX
-			assert activePartThread == oldPartThread;
-		}
+	//	if (activePartThread != NOT_A_PART_THREAD) {		// May never have been activated
+	//		ThreadLocalExecutor oldPartThread = part2partThread.get(oldActivePart);		// debugging
+	//		assert activePartThread == oldPartThread;
+	//	}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partDeactivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(oldActivePart) + "] " + toString());
 		}

@@ -705,7 +705,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			if (externalResourceSetWasNull || isGlobal) {
 				//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
 				projectManager.unload(externalResourceSet);
-				externalResourceSetAdapters.remove(projectManager);							// XXX cf PivotTestSuite.disposeResourceSet
+				externalResourceSetAdapters.remove(projectManager);							// cf PivotTestSuite.disposeResourceSet
 				//			StandaloneProjectMap.dispose(externalResourceSet2);
 				externalResourceSet.setPackageRegistry(null);
 				externalResourceSet.setResourceFactoryRegistry(null);
