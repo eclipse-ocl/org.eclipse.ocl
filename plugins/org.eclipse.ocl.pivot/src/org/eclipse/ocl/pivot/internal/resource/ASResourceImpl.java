@@ -216,7 +216,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					}
 				}
 				// Drop through for nearly everything including REMOVE - see Bug 541380#c6
-				throw new IllegalStateException(formatMutationMessage(notification));	// XXX testQVTcLoad_HSV2HSL_qvtias provokes a ResourceSet.getResources).add(REsource)
+				throw new IllegalStateException(formatMutationMessage(notification));	// XXX testQVTcLoad_HSV2HSL_qvtias provokes a ResourceSet.getResources).add(Resource)
 			}
 		}
 

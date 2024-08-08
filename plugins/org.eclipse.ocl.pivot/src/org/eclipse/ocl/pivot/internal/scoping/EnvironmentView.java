@@ -294,7 +294,6 @@ public class EnvironmentView
 		return disambiguatorMap.get(key);
 	}
 
-	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
@@ -319,20 +318,12 @@ public class EnvironmentView
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated not used */
 	public EnvironmentView(@NonNull ParserContext parserContext, @NonNull EStructuralFeature reference, @Nullable String name) {
-		this.parserContext = parserContext;
-		this.environmentFactory = (EnvironmentFactoryInternal)parserContext.getEnvironmentFactory();
-		this.reference = reference;
-		this.requiredType = reference.getEType();
-		this.name = name;
+		this((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), reference, name);
 	}
 
-	/**
-	 * @deprecated Use ParserContext constructor
-	 */
-	@Deprecated
 	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
-		this.parserContext = null;
 		this.environmentFactory = environmentFactory;
 		this.reference = reference;
 		this.requiredType = reference.getEType();
@@ -858,7 +849,7 @@ public class EnvironmentView
 
 	public int computeLookups(@NonNull Element target, @Nullable Element child) {
 		@SuppressWarnings("deprecation")
-		ScopeView pivotScopeView = parserContext != null ? new PivotScopeView(parserContext, target, child, false) : new PivotScopeView(environmentFactory, target, child, false);
+		ScopeView pivotScopeView = new PivotScopeView(environmentFactory, target, child, false);
 		return computeLookups(pivotScopeView);
 	}
 
@@ -888,40 +879,16 @@ public class EnvironmentView
 
 	public void computeQualifiedLookups(@NonNull Element target) {
 		@SuppressWarnings("deprecation")
-		ScopeView parentScopeView = parserContext != null ? new PivotScopeView(parserContext, target, null, true) : new PivotScopeView(environmentFactory, target, null, true);
+		ScopeView parentScopeView = new PivotScopeView(environmentFactory, target, null, true);
 		addElementsOfScope(target, parentScopeView);
 	}
 
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Attribution.REGISTRY.getAttribution(eObject) */
 	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
-		if (parserContext != null) {
-			return parserContext.getAttribution(eObject);
-		}
-		if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
-			logger.warn("getAttribution for proxy " + eObject);
-			return NullAttribution.INSTANCE;
-		}
-		else {
-			EClass eClass = eObject.eClass();
-			assert eClass != null;
-			Attribution attribution = Attribution.REGISTRY.get(eClass);
-			if (attribution == null) {
-				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
-					superClass = superClass.getESuperTypes().get(0);
-					attribution = Attribution.REGISTRY.get(superClass);
-					if (attribution != null) {
-						break;
-					}
-				}
-				if (attribution == null) {
-					attribution = NullAttribution.INSTANCE;
-				}
-				Attribution.REGISTRY.put(eClass, attribution);
-			}
-			return attribution;
-		}
+		return Attribution.REGISTRY.getAttribution(eObject);
 	}
 
 	public @Nullable EObject getContent() {

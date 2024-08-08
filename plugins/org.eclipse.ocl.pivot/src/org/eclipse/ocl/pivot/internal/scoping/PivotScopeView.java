@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 
 /**
@@ -68,7 +67,6 @@ public class PivotScopeView implements ScopeView
 		}
 	};
 
-	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull Element target;							// AST node in which a lookup is to be performed
 	protected final @Nullable Element child;							// AST node from which a lookup is to be performed
@@ -79,20 +77,12 @@ public class PivotScopeView implements ScopeView
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated ParserContext not required */
 	protected PivotScopeView(@NonNull ParserContext parserContext, @NonNull Element target, @Nullable Element child, boolean isQualified) {
-		this.parserContext = parserContext;
-		this.environmentFactory = (EnvironmentFactoryInternal) parserContext.getEnvironmentFactory();
-		this.target = target;
-		this.child = child;
-		this.isQualified = isQualified;
+		this((EnvironmentFactoryInternal) parserContext.getEnvironmentFactory(), target, child, isQualified);
 	}
 
-	/**
-	 * @deprecated Provide a ParserContext
-	 */
-	@Deprecated
 	protected PivotScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Element target, @Nullable Element child, boolean isQualified) {
-		this.parserContext = null;
 		this.environmentFactory = environmentFactory;
 		this.target = target;
 		this.child = child;
@@ -102,7 +92,7 @@ public class PivotScopeView implements ScopeView
 	public @Nullable ScopeView computeLookup(@NonNull EnvironmentView environmentView, @NonNull EObject aTarget) {
 		assert aTarget instanceof Element;
 		if (attribution == null) {
-			attribution = environmentView.getAttribution(target);
+			attribution = Attribution.REGISTRY.getAttribution(target);
 		}
 		return attribution.computeLookup(aTarget, environmentView, this);
 	}
@@ -112,7 +102,7 @@ public class PivotScopeView implements ScopeView
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;
 		if (attribution2 == null) {
-			attribution2 = parserContext != null ? parserContext.getAttribution(target) : PivotUtilInternal.getAttribution(target);
+			attribution2 = Attribution.REGISTRY.getAttribution(target);
 			attribution = attribution2;
 		}
 		return attribution2;
@@ -139,7 +129,7 @@ public class PivotScopeView implements ScopeView
 		if (parent2 == null) {
 			EObject pParent = target.eContainer();
 			if (pParent instanceof Element) {
-				parent2 = parserContext != null ? new PivotScopeView(parserContext, (Element)pParent, target, isQualified) : new PivotScopeView(environmentFactory, (Element)pParent, target, isQualified);
+				parent2 = new PivotScopeView(environmentFactory, (Element)pParent, target, isQualified);
 			}
 			else {
 				parent2 = NULLSCOPEVIEW;

@@ -186,7 +186,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 				for (Object key : options.keySet()) {
 					saveOptions.put(String.valueOf(key), options.get(key));
 				}
-				// XXX cf PivotSaveImpl
 			}
 			ASResource asResource = cs2as.getASResource();
 			ResourceSet asResourceSet = asResource.getResourceSet();
@@ -252,7 +251,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		return asResourceFactory;
 	}
 
-	public @NonNull URI getASURI(@NonNull URI csURI) {				// XXX
+	public @NonNull URI getASURI(@NonNull URI csURI) {
 		return csURI.appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION);
 	}
 

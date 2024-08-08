@@ -230,7 +230,7 @@ public class ClassUtil
 
 	/**
 	 * Return aT as @Nullable to suppress the compiler's insistence that the value is non-null.
-	 * This may be necessary fo methods that access final non-null fields during construction.
+	 * This may be necessary for methods that access final non-null fields during construction.
 	 *
 	 * @since 1.13
 	 */

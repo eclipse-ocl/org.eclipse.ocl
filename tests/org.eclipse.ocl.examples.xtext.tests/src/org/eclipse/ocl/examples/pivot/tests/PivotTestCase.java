@@ -471,7 +471,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null;
 			assert ThreadLocalExecutor.basicGetExecutor() == null;
 		}
-		// trarDown() cleans up / resets
+		// tearDown() cleans up / resets
 	}
 
 	@Deprecated /* @deprecated use getTestModelURI to facilitate legacy inherited testing */
@@ -495,14 +495,4 @@ public class PivotTestCase extends AbstractPivotTestCase
 			((org.eclipse.ocl.common.internal.delegate.OCLValidationDelegateMapping)object).reset();
 		}
 	}
-
-	/*	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-	//	EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
-		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
-	//	IWorkbench workbench = PlatformUI.getWorkbench();									// XXX
-	//	IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-	//	IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-	} */
 }

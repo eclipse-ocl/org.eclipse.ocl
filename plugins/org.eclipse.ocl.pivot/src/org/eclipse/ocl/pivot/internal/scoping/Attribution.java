@@ -12,10 +12,13 @@ package org.eclipse.ocl.pivot.internal.scoping;
 
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * An Attribution provides a helper to assist in evaluating the inheriteed or synthesized attributes
@@ -33,14 +36,11 @@ public interface Attribution
 	public static class AttributionRegistry extends HashMap<@NonNull EClassifier, @NonNull Attribution>
 	{
 		private static final long serialVersionUID = 1L;
+		private static final Logger logger = Logger.getLogger(AttributionRegistry.class);
 
-		@Override
-		public void clear() {		// XXX
-			super.clear();
-		}
-
-		@Override
+		@Override @Deprecated /* @deprecated use new AttributionRegistryInstaller().install() for better debugging */
 		public @NonNull Attribution put(@NonNull EClassifier key, @NonNull Attribution newValue) {
+			assert false; // XXX
 			return install(key,  newValue, null);
 		}
 
@@ -56,6 +56,32 @@ public interface Attribution
 		//			+ /*NameUtil.debugSimpleName(key) + ":" +*/ key.getEPackage().getName() + "::" + key.getName() + " "
 		//			+ newValue.getClass().getName() + (oldValue != null ? " / " + oldValue.getClass().getName() : ""));
 			return oldValue;
+		}
+
+		public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
+			if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
+				logger.warn("getAttribution for proxy " + eObject);
+				return NullAttribution.INSTANCE;
+			}
+			else {
+				EClass eClass = eObject.eClass();
+				assert eClass != null;
+				Attribution attribution = ClassUtil.maybeNull(get(eClass));
+				if (attribution == null) {
+					for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
+						superClass = superClass.getESuperTypes().get(0);
+						attribution = ClassUtil.maybeNull(get(superClass));
+						if (attribution != null) {
+							break;
+						}
+					}
+					if (attribution == null) {
+						attribution = NullAttribution.INSTANCE;
+					}
+					install(eClass, attribution, null);
+				}
+				return attribution;
+			}
 		}
 
 		public @NonNull AttributionRegistryInstaller getInstaller(@NonNull Class<?> scopingClass) {
