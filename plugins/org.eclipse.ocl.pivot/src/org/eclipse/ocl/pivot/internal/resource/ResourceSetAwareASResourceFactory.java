@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * ResourceSetAwareASResourceFactory provides additional ASResourceFactory capabilities to allow a reference
@@ -69,10 +68,8 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 			if (!uriConverter.exists(uri, null)) {						// If AS URI is missing
 				URI csURI = getCSuri(uri);
 				if (uriConverter.exists(csURI, null)) {					// If CS URI exists, create AS by loading CS
-					ResourceSet csResourceSet = getCSResourceSet(resourceSet);			// XXX
-					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-					assert environmentFactory != null;
-					assert environmentFactory.getResourceSet() == csResourceSet;
+					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);	// There may be no EF if an AS is loaded directly
+					ResourceSet csResourceSet = environmentFactory.getResourceSet();
 					CSResource csResource = (CSResource)csResourceSet.getResource(csURI, true);
 					ICS2AS cs2as = csResource.getCS2AS(environmentFactory);
 					ASResource asResource = cs2as.getASResource();

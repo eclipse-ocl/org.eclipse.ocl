@@ -130,7 +130,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				issues.addError(this, message, null, null, null);
 				return;
 			}
-			ASResource asResource = xtextResource.getASResource();
+			ASResource asResource = xtextResource.getCS2AS(environmentFactory).getASResource();
 			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(asResource);
 			ValidationContext validationContext = new ValidationContext(validationRegistry);
 			Diagnostician diagnostician = validationContext.getDiagnostician();
