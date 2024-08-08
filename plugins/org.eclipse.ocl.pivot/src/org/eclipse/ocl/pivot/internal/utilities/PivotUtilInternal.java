@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -77,7 +76,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
-import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -196,33 +194,11 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @deprecated use ElementUtil.getParserContext(eObject).getAttribution, or
+	 * @deprecated use Attribution.REGISTRY.getAttribution(eObject)
 	 */
 	@Deprecated
 	public static @NonNull Attribution getAttribution(@NonNull EObject eObject) {
-		if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
-			logger.warn("getAttribution for proxy " + eObject);
-			return NullAttribution.INSTANCE;
-		}
-		else {
-			EClass eClass = eObject.eClass();
-			assert eClass != null;
-			Attribution attribution = Attribution.REGISTRY.get(eClass);
-			if (attribution == null) {
-				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
-					superClass = superClass.getESuperTypes().get(0);
-					attribution = Attribution.REGISTRY.get(superClass);
-					if (attribution != null) {
-						break;
-					}
-				}
-				if (attribution == null) {
-					attribution = NullAttribution.INSTANCE;
-				}
-				Attribution.REGISTRY.put(eClass, attribution);
-			}
-			return attribution;
-		}
+		return Attribution.REGISTRY.getAttribution(eObject);
 	}
 
 	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */

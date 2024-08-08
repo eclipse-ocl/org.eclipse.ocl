@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
@@ -66,9 +65,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		if (ASResourceImpl.PROXIES.isActive()) {
 			s = new StringBuilder();
 			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
-		}
-		if (proxy instanceof BagType) {
-			getClass();			// XXX
 		}
 		EObject resolvedProxy = super.eResolveProxy(proxy);
 	/*	if (resolvedProxy instanceof Pivotable) {
@@ -151,9 +147,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.22
 	 */
 	protected void resetESObject() {
-	//	if ("my::AType::referenced() : my::BType[?]".equals(toString())) {
-	//		getClass();				// XXX
-	//	}
 	    InternalEObject result = eInternalContainer();
 	    assert result != null;
 		Notifier esNotifier = getESObject();

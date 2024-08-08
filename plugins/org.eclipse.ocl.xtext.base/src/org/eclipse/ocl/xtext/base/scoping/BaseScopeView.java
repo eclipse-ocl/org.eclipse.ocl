@@ -37,10 +37,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
-import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -149,8 +147,6 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	protected final boolean isQualified;								// FIXME always false
 	private Attribution attribution = null;								// Lazily computed Attributes helper for the target CS node
 
-	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
-
 	protected BaseScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @Nullable ElementCS child, @NonNull EReference targetReference, boolean isQualified) {
 		super(getParent(environmentFactory, target, targetReference, isQualified), false);
 		this.environmentFactory = environmentFactory;
@@ -158,15 +154,11 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		this.child = child;
 		this.targetReference = targetReference;
 		this.isQualified = isQualified;
-		this.parserContext = ElementUtil.basicGetParserContext(target);
-		if (parserContext != null) {
-			assert parserContext.getMetamodelManager().getEnvironmentFactory() == environmentFactory;
-		}
 	}
 
 	@SuppressWarnings("deprecation")
 	protected @NonNull EnvironmentView createEnvironmentView(@Nullable String name) {
-		return parserContext != null ? new EnvironmentView(parserContext, targetReference, name) : new EnvironmentView(environmentFactory, targetReference, name);
+		return new EnvironmentView(environmentFactory, targetReference, name);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -174,7 +166,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;
 		if (attribution2 == null) {
-			attribution2 = parserContext != null ? parserContext.getAttribution(target) : PivotUtilInternal.getAttribution(target);
+			attribution2 = PivotUtilInternal.getAttribution(target);
 			attribution = attribution2;
 		}
 		return attribution2;
