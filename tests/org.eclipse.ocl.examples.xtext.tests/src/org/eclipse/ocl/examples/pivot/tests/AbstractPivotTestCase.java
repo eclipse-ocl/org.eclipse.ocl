@@ -28,7 +28,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
@@ -369,10 +368,10 @@ public class AbstractPivotTestCase extends TestCase
 					EObject eSource = setting.getEObject();
 					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 					try {
-						Object eGet = eSource.eGet(eStructuralFeature);		// XXX
-						if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
-							EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
-						}
+					//	Object eGet = eSource.eGet(eStructuralFeature);		// debugging
+					//	if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
+					//		EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
+					//	}
 						s.append(eSource.toString());
 					}
 					catch (Exception e) {

@@ -105,7 +105,6 @@ public class ImportImpl extends NamedElementImpl implements Import
 	protected ImportImpl()
 	{
 		super();
-	// XXX	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -158,7 +157,6 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	public void setImportedNamespace(Namespace newImportedNamespace)
 	{
-	// XXX	System.out.println("setImportedNamespace " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newImportedNamespace) + " " + String.valueOf(newImportedNamespace));
 		Namespace oldImportedNamespace = importedNamespace;
 		importedNamespace = newImportedNamespace;
 		if (eNotificationRequired())
@@ -345,7 +343,6 @@ public class ImportImpl extends NamedElementImpl implements Import
 	@Override
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		Namespace namespace = basicGetImportedNamespace();
-	// XXX	System.out.println("resolveESNotifier " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(namespace));
 		if ((namespace != null) && !namespace.eIsProxy()) {
 			if (namespace instanceof Model) {
 				EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();

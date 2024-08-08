@@ -218,7 +218,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	protected void tearDown() throws Exception {
 	//	ThreadLocalExecutor.waitForGC();
 		log = null;
-		testHelper.doTearDown();			// XXX
 		super.tearDown();
 	}
 

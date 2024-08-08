@@ -27,9 +27,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -567,19 +569,27 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	public @Nullable VariableDeclaration lookupSelf(@NonNull ElementCS csElement) {
 		for (EObject eObject = csElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Pivotable) {
+				ExpressionInOCL asExpression = null;
 				Element asElement = ((Pivotable)eObject).getPivot();
 				if (asElement instanceof ExpressionInOCL) {
-					Variable ownedContext = ((ExpressionInOCL)asElement).getOwnedContext();
-					return PivotConstants.SELF_NAME.equals(ownedContext.getName()) ? ownedContext : null;	// Renamed context is not self
+					asExpression = (ExpressionInOCL)asElement;
+				}
+				else if (asElement instanceof Constraint) {
+					LanguageExpression asSpecification = ((Constraint)asElement).getOwnedSpecification();
+					if (asSpecification instanceof ExpressionInOCL) {
+						asExpression = (ExpressionInOCL)asSpecification;
+					}
+				}
+				if (asExpression != null) {
+					Variable ownedContext = asExpression.getOwnedContext();
+					return (ownedContext != null) && PivotConstants.SELF_NAME.equals(ownedContext.getName()) ? ownedContext : null;	// Renamed context is not self
 				}
 			}
 		}
-	//	return null;
-
-		// XXX
+		assert false;			// XXX never happens
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
 		ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
-		EnvironmentView environmentView = new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME);
+		EnvironmentView environmentView = new EnvironmentView((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
 		VariableDeclaration variableDeclaration = (VariableDeclaration) environmentView.getContent();
