@@ -311,7 +311,7 @@ public class LoadTests extends XtextTestCase
 			if (validateCompleteOCLMessages != null) {
 				reloadCS.load(null);
 				assertNoResourceErrors("Load failed", reloadCS);
-				Resource reloadAS = reloadCS.getASResource();
+				Resource reloadAS = reloadCS.getCS2AS(ocl.getEnvironmentFactory()).getASResource();
 				assertNoUnresolvedProxies("Unresolved proxies", reloadAS);
 				assertValidationDiagnostics("Reloading", reloadAS, validateCompleteOCLMessages);
 			}
