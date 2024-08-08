@@ -76,6 +76,7 @@ extends TestCase {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
 		TestSuite result = new TestSuite(testSuiteName);
+		result.addTestSuite(FirstTest.class);
 		result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);
 		result.addTestSuite(OCLstdlibTests.class);
