@@ -27,8 +27,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -76,6 +81,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -101,6 +107,8 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 import junit.framework.TestCase;
 
@@ -871,8 +879,39 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
+	static int debugRegistrations = 0;
+	private void debugRegistrations() {
+		if (debugRegistrations++ == 0) {
+			System.out.println(debugRegistrations + " : " + NameUtil.debugSimpleName(this));
+			BundleContext bundleContext = InternalPlatform.getDefault().getBundleContext();
+			if (bundleContext != null) {
+				for (Bundle bundle : bundleContext.getBundles()) {
+					System.out.println(bundle.getSymbolicName() + " : " + bundle.getState());
+				}
+			}
+			for (Map.Entry entry : Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().entrySet()) {
+				System.out.println(entry.getKey() + " => " + NameUtil.debugSimpleName(entry.getValue()));
+			}
+
+		    IExtensionRegistry registry = RegistryFactory.getRegistry();
+		    if (registry != null) {
+				String pluginID = EcorePlugin.INSTANCE.getSymbolicName();
+				String extensionPointID = EcorePlugin.EXTENSION_PARSER_PPID;
+				final IExtensionPoint point = registry.getExtensionPoint(pluginID, extensionPointID);
+			    if (point != null)
+			    {
+					for (IConfigurationElement element : point.getConfigurationElements()) {
+						System.out.println(element.getNamespaceIdentifier()
+						+ " : " + element.getAttribute("type") + " => " + element.getAttribute("class"));
+					}
+			    }
+		    }
+		}
+	}
+
 	@Override
 	protected void setUp() throws Exception {
+		debugRegistrations();
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		ThreadLocalExecutor.reset();
