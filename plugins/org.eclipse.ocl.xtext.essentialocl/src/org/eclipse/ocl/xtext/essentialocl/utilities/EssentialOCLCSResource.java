@@ -461,7 +461,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	/*final*/ public @NonNull CS2AS getCS2AS() {			// XXX
+	/*final*/ public @NonNull CS2AS getCS2AS() {			// deprecated and assert trapped
 		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
 		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
 		return getCS2AS(environmentFactory);

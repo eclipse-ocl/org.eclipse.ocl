@@ -51,6 +51,7 @@ public interface ParserContext // extends Adapter
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Attribution.REGISTRY.getAttribution(eObject) */
 	@NonNull Attribution getAttribution(@NonNull EObject eObject);
 
 	/**
