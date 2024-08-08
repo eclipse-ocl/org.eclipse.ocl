@@ -10,6 +10,13 @@
  ******************************************************************************/
 package org.eclipse.ocl.examples.eventmanager.tests;
 
+import java.util.Map;
+
+import org.eclipse.core.internal.runtime.InternalPlatform;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -22,6 +29,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,6 +43,8 @@ import org.eclipse.ocl.examples.eventmanager.tests.filters.ClassFilterTest;
 import org.eclipse.ocl.examples.eventmanager.tests.filters.EventFilterTest;
 import org.eclipse.ocl.examples.eventmanager.tests.util.BaseTest;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 import junit.textui.TestRunner;
 
@@ -79,8 +90,52 @@ public class EventManagerTest extends BaseTest {
 		return fixture;
 	}
 
+	static int debugRegistrations = 0;
+
+	private void debugRegistrations() {
+		if (debugRegistrations++ == 0) {
+			System.out.println(debugRegistrations + " : " + debugSimpleName(this));
+			BundleContext bundleContext = InternalPlatform.getDefault().getBundleContext();
+			if (bundleContext != null) {
+				for (Bundle bundle : bundleContext.getBundles()) {
+					System.out.println(bundle.getSymbolicName() + " : " + bundle.getState());
+				}
+			}
+			for (Map.Entry entry : Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().entrySet()) {
+				System.out.println(entry.getKey() + " => " + debugSimpleName(entry.getValue()));
+			}
+
+		    IExtensionRegistry registry = RegistryFactory.getRegistry();
+		    if (registry != null) {
+				String pluginID = EcorePlugin.INSTANCE.getSymbolicName();
+				String extensionPointID = EcorePlugin.EXTENSION_PARSER_PPID;
+				final IExtensionPoint point = registry.getExtensionPoint(pluginID, extensionPointID);
+			    if (point != null)
+			    {
+					for (IConfigurationElement element : point.getConfigurationElements()) {
+						System.out.println(element.getNamespaceIdentifier()
+						+ " : " + element.getAttribute("type") + " => " + element.getAttribute("class"));
+					}
+			    }
+		    }
+		}
+	}
+
+	public static String debugSimpleName(Object object) {
+		if (object == null) {
+			return "null";
+		}
+		else {
+			String name = object.getClass().getName();
+			int lastIndex = name.lastIndexOf(".");
+			return (lastIndex >= 0 ? name.substring(lastIndex+1) : name) + "@" + Integer.toHexString(System.identityHashCode(object));
+		}
+	}
+
 	@Override
 	public void setUp() throws  Exception {
+		debugRegistrations();
+		System.err.println("IdiomsLoadTests.setup1: idioms => " + debugSimpleName(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().get("idioms")));
 		super.setUp();
 		ResourceSet set = new ResourceSetImpl();
 		res = new ResourceImpl();
