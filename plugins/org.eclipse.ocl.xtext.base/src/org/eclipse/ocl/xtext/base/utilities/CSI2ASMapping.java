@@ -424,11 +424,11 @@ public class CSI2ASMapping implements ICSI2ASMapping
 					if (pivotElement != null) {
 						map.put(pivotElement, csElement);
 					}
-					//					System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
+					//	System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
 				}
 			}
 		}
-		return map;		// XXX ?? Add Resource-to-Model to allow Model lookup
+		return map;		// ?? Add Resource-to-Model to allow Model lookup
 	}
 
 	@Override

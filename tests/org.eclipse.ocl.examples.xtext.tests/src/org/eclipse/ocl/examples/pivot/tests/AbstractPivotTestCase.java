@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
@@ -191,6 +192,9 @@ public class AbstractPivotTestCase extends TestCase
 		}
 
 		public void doTearDown() {
+			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+				Attribution.REGISTRY.clear();
+			}
 			IdiomsStandaloneSetup.doTearDown();
 			PivotStandaloneSetup.doTearDown();
 			BaseStandaloneSetup.doTearDown();

@@ -164,5 +164,4 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
 	}
-
 } //ParameterVariableImpl

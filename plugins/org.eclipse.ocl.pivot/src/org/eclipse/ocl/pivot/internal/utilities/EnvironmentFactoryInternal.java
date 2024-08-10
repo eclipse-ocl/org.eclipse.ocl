@@ -146,7 +146,6 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 *
 	 * @since 1.14
 	 */
-	@Deprecated /* @deprecated not used - use ThreadLocalExecutor.detachEnvironmentFactory(this) */
 	default void detachRedundantThreadLocal() {}
 
 	void dispose();
