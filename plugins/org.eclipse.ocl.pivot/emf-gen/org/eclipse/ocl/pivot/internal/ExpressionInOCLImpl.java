@@ -31,7 +31,9 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -538,5 +540,15 @@ public class ExpressionInOCLImpl
 	@Override
 	public String getLanguage() {
 		return PivotConstants.OCL_LANGUAGE;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public void preUnload() {
+	    assert eResource() != null;
+	//	assert getESObject() == null;
+		ASResourceImpl.PROXIES.println("No proxy needed for " + NameUtil.debugSimpleName(this));
 	}
 } //ExpressionInOCLImpl
