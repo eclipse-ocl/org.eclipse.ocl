@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
@@ -91,7 +90,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 				if (esObject != null) {
 					return super.getHREF(esObject);
 				}
-				//	Look for complete ES
+				//	Look for complete ES (referenceable metamodel entries)
 				CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 				if (obj instanceof org.eclipse.ocl.pivot.Package) {
 					CompletePackageInternal completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)obj);
@@ -139,15 +138,18 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 						}
 					}
 				}
-				// Look for a specific CS
-				ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+				// Else an internal CS-defined element such as an IteratorVariable
+				ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
 				if (csi2asMapping == null) {
-					ASResourceImpl.PROXIES.println("No CSI2ASMapping when CS-saving  " + NameUtil.debugSimpleName(this));
+				//	ASResourceImpl.PROXIES.println("No CSI2ASMappings when CS-saving  " + NameUtil.debugSimpleName(this));
 				}
 				else {
 					EObject csElement = csi2asMapping.getCSElement((ElementImpl)obj);
-					if (csElement != null) {						// XXX never happens CS is never externally referenced
-						return super.getHREF(csElement);			// e.g. CS-defined implementation without Ecore
+					if (csElement == null) {
+					//	ASResourceImpl.PROXIES.println("No CSI2ASMapping for " + NameUtil.debugSimpleName(obj) + " when CS-saving  " + NameUtil.debugSimpleName(this));
+					}
+					else {
+						return super.getHREF(csElement);
 					}
 				}
 			}

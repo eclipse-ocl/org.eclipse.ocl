@@ -75,7 +75,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	 */
 	@Deprecated /* @deprecated dynamic Attribution entries no longer required. */
 	protected void addAttribution(/*@NonNull*/ EClass eClass, @NonNull Attribution attribution) {
-		PivotUtilInternal.debugDeprecation("AbstractParserContext.addAttribution");
+		assert PivotUtilInternal.debugDeprecation("AbstractParserContext.addAttribution");
 	}
 
 	@Override

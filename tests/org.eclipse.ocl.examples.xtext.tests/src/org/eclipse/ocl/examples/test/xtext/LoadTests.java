@@ -1379,23 +1379,31 @@ public class LoadTests extends XtextTestCase
 	public void testLoadSaveAsCSLoad_OCLTest_ocl() throws IOException, InterruptedException {
 		URI inputURI = getTestModelURI("models/ecore/OCLTest.ocl");
 		OCL ocl1 = createOCLWithProjectMap();
-		@SuppressWarnings("unused") BaseCSResource csResource = doLoadOCL(ocl1, inputURI);
-		ocl1.dispose();
+		try {
+			@SuppressWarnings("unused") BaseCSResource csResource = doLoadOCL(ocl1, inputURI);
+		}
+		finally {
+			ocl1.dispose();
+		}
 
 		URI xmiOutputURI = getXMIoutputURI(inputURI);
 		OCL ocl2 = createOCLWithProjectMap();
-		Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
-		assertNoResourceErrors("CS load", xmiResource);
-		assertNoUnresolvedProxies("CS load", xmiResource);
-		assertNoValidationErrors("CS load", xmiResource);
-		CS2AS cs2as = ((BaseCSXMIResourceImpl)xmiResource).getCS2AS(ocl2.getEnvironmentFactory());
-		ASResource asResource = cs2as.getASResource();
-		asResource.setSaveable(true);					// XXX why needed
-		asResource.save(XMIUtil.createSaveOptions(asResource));
-		assertNoResourceErrors("CS2AS load", asResource);
-		assertNoUnresolvedProxies("CS2AS load", asResource);
-		assertNoValidationErrors("CS2AS load", asResource);
-		ocl2.dispose();
+		try {
+			Resource xmiResource = ocl2.getResourceSet().getResource(xmiOutputURI, true);
+			assertNoResourceErrors("CS load", xmiResource);
+			assertNoUnresolvedProxies("CS load", xmiResource);
+			assertNoValidationErrors("CS load", xmiResource);
+			CS2AS cs2as = ((BaseCSXMIResourceImpl)xmiResource).getCS2AS(ocl2.getEnvironmentFactory());
+			ASResource asResource = cs2as.getASResource();
+			//	asResource.setSaveable(true);					// Override default AS not-saveable
+			asResource.save(XMIUtil.createSaveOptions(asResource));
+			assertNoResourceErrors("CS2AS load", asResource);
+			assertNoUnresolvedProxies("CS2AS load", asResource);
+			assertNoValidationErrors("CS2AS load", asResource);
+		}
+		finally {
+			ocl2.dispose();
+		}
 	}
 
 	public void testLoad_Pivot_ocl() throws IOException, InterruptedException {
@@ -1423,7 +1431,7 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_NullFree_uml() throws IOException, InterruptedException, ParserException {
 		UMLStandaloneSetup.init();
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		URI uri = getTestModelURI("models/uml/NullFree.uml");
 		Model model = doLoadUML(ocl, uri, false, true, NO_MESSAGES, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
