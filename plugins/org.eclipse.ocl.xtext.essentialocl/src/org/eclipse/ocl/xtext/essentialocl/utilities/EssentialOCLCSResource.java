@@ -292,7 +292,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
 		if (asResource2 instanceof ASResource) {
-			((ASResource)asResource2).setSaveable(false);
+			((ASResource)asResource2).setSaveable(false);		// Revert AS Resources to not saveable
 		}
 		return (ASResource) asResource2;
 	}
@@ -441,10 +441,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return ASResource.ESSENTIALOCL_CONTENT_TYPE;
 	}
 
-	@Override
+	@Override @Deprecated /* @deprecated use getCS2AS(getEnvironmentFactory()).getASResource() since EnvironmentFactory usually known */
 	public final @NonNull ASResource getASResource() {
-		System.out.println(getClass().getName() + ".getASResource() pass getEnvironmentFactory");		// XXX
-		assert false;
+		assert PivotUtilInternal.debugDeprecation("EssentialOCLCSResource.getASResource()");
 		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
 		ASResource asResource = cs2as.getASResource();
 		return asResource;
@@ -487,8 +486,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
 		CS2AS cs2as = null;
-		if (parserContext instanceof ExtendedParserContext) {
-			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);				// XXX wip less parserContext for direct CS load
+		if (parserContext instanceof ExtendedParserContext) {			// Creates a UMLXCS2AS
+			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
 		}
 		if (cs2as == null) {
 			cs2as = createCS2AS(environmentFactoryInternal, asResource);
@@ -773,7 +772,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final void update(@NonNull IDiagnosticConsumer diagnosticConsumer) {
-		PivotUtilInternal.debugDeprecation(getClass().getName() + ".update");
+		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".update");
 		update(getEnvironmentFactory(), diagnosticConsumer);
 	}
 

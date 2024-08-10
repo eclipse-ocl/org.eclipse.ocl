@@ -247,7 +247,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 										//
 										//	Restore the old visible expanded elements
 										//
-										expandedConstrainingNodes = gatherNodes(getConstrainingNodesViewer().getTree().getItems(), new HashSet<>(), expandedConstrainingElements);			// XXX too soon move to ChangeSelectionJob
+										expandedConstrainingNodes = gatherNodes(getConstrainingNodesViewer().getTree().getItems(), new HashSet<>(), expandedConstrainingElements);			// ?? too soon move to ChangeSelectionJob
 										expandedValidatableNodes = gatherNodes(getValidatableNodesViewer().getTree().getItems(), new HashSet<>(), expandedValidatableElements);
 										setExpandedNodes(true);
 										setExpandedNodes(false);
