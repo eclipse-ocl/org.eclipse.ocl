@@ -586,9 +586,9 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 				}
 			}
 		}
-		assert false;			// XXX never happens
+		assert PivotUtilInternal.debugDeprecation("CS2AS.lookupSelf");			// never happens
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();				// XXX The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
+		ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();				// The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
 		EnvironmentView environmentView = new EnvironmentView((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
