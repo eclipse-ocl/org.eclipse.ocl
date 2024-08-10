@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -40,7 +41,7 @@ public interface Attribution
 
 		@Override @Deprecated /* @deprecated use new AttributionRegistryInstaller().install() for better debugging */
 		public @NonNull Attribution put(@NonNull EClassifier key, @NonNull Attribution newValue) {
-			assert false; // XXX
+			assert PivotUtilInternal.debugDeprecation("AttributionRegistry.put");
 			return install(key,  newValue, null);
 		}
 
@@ -49,7 +50,7 @@ public interface Attribution
 		private @NonNull Attribution install(/*@NonNull*/ EClassifier key, @NonNull Attribution newValue, @Nullable Class<?> scopingClass) {
 			assert key != null;
 			Attribution oldValue = super.put(key, newValue);
-			if ((oldValue != null) && (oldValue != newValue)) {			// XXX
+			if (oldValue != null) {
 				assert oldValue.getClass().isAssignableFrom(newValue.getClass()) : newValue.getClass().getName() + " for " + key.getName() + " key does not refine " + oldValue.getClass().getName();
 			}
 		//	System.out.println("AttributionRegistry[" + size() + "] «" + (scopingClass != null ? scopingClass.getSimpleName() : "inferred") + "» "

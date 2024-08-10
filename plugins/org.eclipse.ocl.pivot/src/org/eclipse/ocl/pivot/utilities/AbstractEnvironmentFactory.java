@@ -281,7 +281,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void analyzeExpressions(@NonNull EObject eRootObject,
 			@NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {
-		Type oclElementType = standardLibrary.getOclElementType();
+		@SuppressWarnings("unused") Type oclElementType = standardLibrary.getOclElementType();
 		Type classType = standardLibrary.getClassType();
 		OperationId allInstancesOperationId = classType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
 		for (EObject eObject : new TreeIterable(eRootObject, true)) {
@@ -675,7 +675,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void detachRedundantThreadLocal() {
-		ThreadLocalExecutor.detachEnvironmentFactory(this);
+		if (attachCount == 1) {
+			ThreadLocalExecutor.detachEnvironmentFactory(this);
+		}
 	}
 
 	@Override
