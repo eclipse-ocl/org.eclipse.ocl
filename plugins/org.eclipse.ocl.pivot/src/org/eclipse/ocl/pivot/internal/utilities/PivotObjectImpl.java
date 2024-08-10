@@ -133,7 +133,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	public void preUnload() {
 	    assert eResource() != null;
 		for (EObject eObject : eContents()) {
-			if (eObject instanceof PivotObjectImpl) {
+			if (eObject instanceof PivotObjectImpl) {		// Propagate resetESObject through hierarchy (except for internal ExpressionInOCL)
 				((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
 			}
 		}
@@ -147,43 +147,45 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * @since 1.22
 	 */
 	protected void resetESObject() {
-	    InternalEObject result = eInternalContainer();
-	    assert result != null;
-		Notifier esNotifier = getESObject();
-		if (esNotifier == null) {
+	    InternalEObject eInternalContainer = eInternalContainer();
+	    assert eInternalContainer != null;
+		Notifier esProxyTarget = null;
+		EObject esObject = getESObject();
+		if (esObject != null) {						// If there is a known ES
+			esProxyTarget = esObject;				//  use es to create proxy
+		}
+		else {										// else need a CS
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				ASResourceImpl.PROXIES.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+				return;
 			}
-			else {
-				// Look for a specific CS
-				ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-				if (csi2asMapping == null) {
-					ASResourceImpl.PROXIES.println("No CSI2ASMapping when proxifying  " + NameUtil.debugSimpleName(this));
-				}
-				else {
-					EObject csElement = csi2asMapping.getCSElement(this);
-					if (csElement != null) {		// XXX never happens CS is never externally referenced
-						esNotifier = csElement;
-					//	ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " fixup-cs " + uri);
-					}
-				}
-				if ((esNotifier == null) && !environmentFactory.isDisposing()) {
-					// Else any old ES
-					esNotifier = resolveESNotifier(environmentFactory.getCompleteModel());
-				}
+			// Look for a specific CS
+			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+			if (csi2asMapping == null) {
+				ASResourceImpl.PROXIES.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
+				return;
+			}
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement == null) {		// If a CS Element references that AS Element
+				ASResourceImpl.PROXIES.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+			}
+			esProxyTarget = csElement;
+			if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
+				// Else any old ES
+				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
 			}
 		}
-		if (esNotifier instanceof EObject) {
-			URI uri = EcoreUtil.getURI((EObject)esNotifier);
+		if (esProxyTarget instanceof EObject) {
+			URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
 			eSetProxyURI(uri);
 		}
-		else if (esNotifier instanceof Resource) {
-			URI uri = ((Resource)esNotifier).getURI();
+		else if (esProxyTarget instanceof Resource) {
+			URI uri = ((Resource)esProxyTarget).getURI();
 			eSetProxyURI(uri);
 		}
 		else {
-			ASResourceImpl.PROXIES.println("No esObject when proxifying " + NameUtil.debugSimpleName(this));
+			ASResourceImpl.PROXIES.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
 		}
 		this.esObject = null;
 	}

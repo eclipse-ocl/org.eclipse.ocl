@@ -16,7 +16,6 @@ import java.util.Map;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
@@ -25,6 +24,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.examples.xtext.console.XtextConsolePlugin;
 import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.swt.SWT;
@@ -39,14 +40,14 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 public class SaveExpressionAction extends Action
 {
     static Map<String, Object> saveOptions = new java.util.HashMap<String, Object>();
-    
+
     static {
         saveOptions.put(XMLResource.OPTION_SAVE_TYPE_INFORMATION, true);
     }
 
     protected final OCLConsolePage consolePage;
 	private final String tip;
-	
+
 	/**
 	 * Initializes me.
 	 */
@@ -61,21 +62,21 @@ public class SaveExpressionAction extends Action
 		this.consolePage = consolePage;
 		tip = ConsoleMessages.SaveAction_Tip;
 	}
-	
+
 	@Override
     public String getToolTipText() {
 		return tip;
 	}
-	
+
 	@Override
     public void run() {
 		Shell shell = consolePage.getControl().getShell();
-		
+
 		if (consolePage.getLastOCLExpression() != null) {
 			FileDialog dlg = new FileDialog(shell, SWT.SAVE);
 			dlg.setFilterExtensions(new String[] {"*.xmi"}); //$NON-NLS-1$
 			dlg.setText(ConsoleMessages.SaveAction_Title);
-			
+
 			final String file = dlg.open();
 			if (file != null) {
 				try {
@@ -85,7 +86,9 @@ public class SaveExpressionAction extends Action
 						@Override
 						public Object exec(@Nullable XtextResource resource) throws Exception {
 							if (resource instanceof BaseCSResource) {
-								Resource asResource = ((BaseCSResource)resource).getASResource();
+								BaseCSResource csResource = (BaseCSResource)resource;
+								CS2AS cs2as = csResource.getCS2AS(csResource.getEnvironmentFactory());
+								ASResource asResource = cs2as.getASResource();
 								asResource.setURI(URI.createFileURI(file));
 								asResource.save(saveOptions);
 							}
