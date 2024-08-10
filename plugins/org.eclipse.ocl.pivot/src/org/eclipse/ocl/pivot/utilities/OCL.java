@@ -382,7 +382,7 @@ public class OCL
 		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
 			environmentFactory2.detach(this);
-			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory2);		// XXX ??? only if attachCount == 1
+			environmentFactory2.detachRedundantThreadLocal();			// Detach the TLE ownership only if attachCount == 1
 			environmentFactory = null;
 		}
 	}
