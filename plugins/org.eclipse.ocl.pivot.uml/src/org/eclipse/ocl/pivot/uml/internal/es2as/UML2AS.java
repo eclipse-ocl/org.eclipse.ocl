@@ -478,12 +478,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		@Override
 		public void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-			//			if ((eObject instanceof ENamedElement) && "EnglishClass".equals(((ENamedElement)eObject).getName())) {
-			//				System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
-			//			}
-			//			else if ((eObject instanceof org.eclipse.uml2.uml.NamedElement) && "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
-			//				System.out.println("Define " + ClassUtil.debugSimpleName(eObject) + " => " + ClassUtil.debugSimpleName(pivotElement));
-			//			}
+			//	if (eObject instanceof ENamedElement) {//&& "EnglishClass".equals(((ENamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
+			//	}
+			//	else if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {//&& "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement));
+			//	}
 			@SuppressWarnings("unused")
 			Element oldElement = createMap.put(eObject, pivotElement);
 			/*			if ((oldElement != null) && (oldElement != pivotElement)) {

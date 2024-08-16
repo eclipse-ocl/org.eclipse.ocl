@@ -59,7 +59,7 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 	}
 
 	public static void init() {
-		CompleteOCLScoping.init();
+		CompleteOCLScoping.init();			// XXX CompleteOCL delegate URI registration
 		CompleteOCLASResourceFactory.getInstance();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSXMIResourceFactory());

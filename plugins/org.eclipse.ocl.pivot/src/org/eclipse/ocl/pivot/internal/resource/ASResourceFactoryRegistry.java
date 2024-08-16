@@ -149,9 +149,17 @@ public class ASResourceFactoryRegistry
 		if (csResourceSet != null) {
 			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
 			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
+				throw new UnsupportedOperationException();					// XXX
+			//	return environmentFactoryAdapter.getEnvironmentFactory();
 			}
 		}
+		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	public @NonNull EnvironmentFactoryInternal createEnvironmentFactoryIgnoringEnvironmentFactoryAdapter(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
 		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
 	}
 

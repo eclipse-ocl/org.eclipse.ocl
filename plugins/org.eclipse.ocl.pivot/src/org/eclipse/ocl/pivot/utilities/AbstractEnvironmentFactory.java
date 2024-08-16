@@ -236,7 +236,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
 				if (esResource instanceof CSResource) {
-					ASResource asResource = ((CSResource)esResource).getASResource();
+				// XXX	ASResource asResource = ((CSResource)esResource).getASResource();
 				}
 				else {
 					// XXX Ecore

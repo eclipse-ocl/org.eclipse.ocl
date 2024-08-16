@@ -30,7 +30,16 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * DelegateEClassifierAdapter extends an EClassifier to cache its ValidationDelegate.
  */
-public class DelegateEClassifierAdapter extends AdapterImpl {
+public class DelegateEClassifierAdapter extends AdapterImpl
+{
+	/**
+	 *	Return the DelegateEClassifierAdapter for eClassifier, if there is one, or null if none.
+	 *
+	 * @since 1.22
+	 */
+	public static @Nullable DelegateEClassifierAdapter findAdapter(@NonNull EClassifier eClassifier) {
+		return (DelegateEClassifierAdapter) EcoreUtil.getAdapter(eClassifier.eAdapters(), DelegateEClassifierAdapter.class);
+	}
 
 	public static @NonNull DelegateEClassifierAdapter getAdapter(@NonNull EClassifier eClassifier) {
 		DelegateEClassifierAdapter adapter;
@@ -54,9 +63,16 @@ public class DelegateEClassifierAdapter extends AdapterImpl {
 		return validationDelegateMap.get(delegateURI);
 	}
 
-	public synchronized  @NonNull Map<String, ValidationDelegate> getValidationDelegates() {
+	public @NonNull Map<String, ValidationDelegate> getValidationDelegates() {
+		return getValidationDelegates(false);
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	public synchronized @NonNull Map<String, ValidationDelegate> getValidationDelegates(boolean force) {
 		Map<String, ValidationDelegate> validationDelegateMap2 = validationDelegateMap;
-		if (validationDelegateMap2 == null) {
+		if (force || (validationDelegateMap2 == null)) {
 			EClassifier eClassifier = ClassUtil.nonNullState(getTarget());
 			validationDelegateMap = validationDelegateMap2 = new HashMap<>();
 			List<ValidationDelegate.Factory> factories = ValidationBehavior.INSTANCE.getFactories(eClassifier);

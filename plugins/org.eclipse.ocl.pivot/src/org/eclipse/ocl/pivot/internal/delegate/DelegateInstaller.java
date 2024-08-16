@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -550,6 +551,7 @@ public class DelegateInstaller
 						if (esObject instanceof EClass) {			// XXX ignores UML's Class
 							EClass eClass = (EClass)esObject;
 							EPackage ePackage = eClass.getEPackage();
+							assert ePackage != null;
 							ePackages.add(ePackage);
 							UniqueList<@NonNull Constraint> constraints = eClass2constraints.get(eClass);
 							if (constraints == null) {
@@ -587,7 +589,14 @@ public class DelegateInstaller
 					constraintName = "";
 				}
 				newConstraintNames.add(constraintName);			// XXX bad name
-				EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, constraintName, "$$complete-ocl$$");		// XXX toString
+				EAnnotation eAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				if (eAnnotation == null) {
+					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					eAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+					eClass.getEAnnotations().add(eAnnotation);
+				}
+				String old = eAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
+				((ConstraintImpl)asConstraint).setESObject(eAnnotation);
 			}
 			Collections.sort(newConstraintNames);
 			String splicedConstraintNames = StringUtil.splice(newConstraintNames, " ");
@@ -599,7 +608,7 @@ public class DelegateInstaller
 			}
 		}
 		//
-		//	Install EPackage EAnnotations.
+		//	Install EPackage EAnnotations and force DelegateEPackageAdapter recomputation.
 		//
 		for (EPackage ePackage : ePackages) {
 			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
@@ -609,13 +618,23 @@ public class DelegateInstaller
 				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
 				DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(ePackage);
 				if (adapter != null) {
-					adapter.getDelegateDomains(true);			// XXX Force recomputation with additional delegateURI
+					adapter.getDelegateDomains(true);			// Force recomputation with additional delegateURI
 				}
 			}
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 			if (eValidator instanceof EcoreValidator) {
 				eValidator = DynamicEcoreValidator.get(environmentFactory);
 				EValidator.Registry.INSTANCE.put(ePackage, eValidator);
+			}
+			else {}		// XXX
+		}
+		//
+		//	Force DelegateEClassifierAdapter recomputation.
+		//
+		for (@NonNull EClass eClass : eClass2constraints.keySet()) {
+			DelegateEClassifierAdapter adapter = DelegateEClassifierAdapter.findAdapter(eClass);
+			if (adapter != null) {
+				adapter.getValidationDelegates(true);			// Force recomputation with additional delegateURI
 			}
 		}
 	}
