@@ -11,8 +11,10 @@
 package org.eclipse.ocl.xtext.completeocl.utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResourceStatus;
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
@@ -37,13 +40,15 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -78,18 +83,18 @@ public abstract class CompleteOCLLoader
 
 	protected final @NonNull OCLInternal ocl;
 	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
-	protected final @NonNull Set<@NonNull EPackage> mmPackages;
+	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage;
 
 	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
-		this.mmPackages = new HashSet<>();
+		this.mmPackage2completePackage = new HashMap<>();
 	}
 
 	public void dispose() {
 		ocl.dispose();
 	}
 
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return ocl.getEnvironmentFactory();
 	}
 
@@ -98,33 +103,42 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadMetamodels() {
-		for (Resource resource : ocl.getResourceSet().getResources()) {
-			assert resource != null;
-			External2AS ecore2as = Ecore2AS.findAdapter(resource, ocl.getEnvironmentFactory());
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		List<@NonNull Resource> esResources = ocl.getResourceSet().getResources();
+		for (int index = 0; index < esResources.size(); index++) {		// Tolerate 'concurrent' profile resolution
+			@NonNull Resource resource = esResources.get(index);
+			External2AS ecore2as = Ecore2AS.findAdapter(resource, environmentFactory);
 			if (ecore2as == null) {			// Pivot has its own validation
 				for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 					EObject eObject = tit.next();
 					EClass eClass = eObject.eClass();
-					if (eClass != null) {
+					if (eClass != null) {																		// Skip UML-Ecore EAnnotations
 						EPackage mmPackage = eClass.getEPackage();
-						if (mmPackage != null) {
-							mmPackages.add(mmPackage);
+						if ((mmPackage != null) && !mmPackage2completePackage.containsKey(mmPackage)) {			// XXX http://www.eclipse.org/emf/2002/Ecore may be a late discovery
+							try {
+								org.eclipse.ocl.pivot.Package asPackage = environmentFactory.getASOf(org.eclipse.ocl.pivot.Package.class, mmPackage);
+								assert asPackage != null;
+								CompletePackage completePackage = ocl.getMetamodelManager().getCompletePackage(asPackage);
+								mmPackage2completePackage.put(mmPackage, completePackage);
+							} catch (ParserException e) {
+								// XXX Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}
  			}
 		}
-		Set<Resource> mmResources = new HashSet<Resource>();
-		for (@NonNull EPackage mmPackage : mmPackages) {
+		Set<@NonNull Resource> mmResources = new HashSet<>();
+		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {
 			Resource mmResource = EcoreUtil.getRootContainer(mmPackage).eResource();
 			if (mmResource != null) {
 				mmResources.add(mmResource);
 			}
 		}
-		for (Resource mmResource : mmResources) {
-			assert mmResource != null;
+		for (@NonNull Resource  mmResource : mmResources) {
 			try {
-				Element pivotModel = ocl.getEnvironmentFactory().loadResource(mmResource, null);
+				Element pivotModel = environmentFactory.loadResource(mmResource, null);
 				if (pivotModel != null) {
 					List<org.eclipse.emf.ecore.resource.Resource.Diagnostic> errors = pivotModel.eResource().getErrors();
 					assert errors != null;
@@ -149,11 +163,28 @@ public abstract class CompleteOCLLoader
 		//
 		//	Install validation for all the complemented packages
 		//
-		ResourceSet resourceSet = ocl.getEnvironmentFactory().getResourceSet();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
-		PivotEObjectValidator extraEValidator = new PivotEObjectValidator(oclModels);
-		for (EPackage mmPackage : mmPackages) {
-			localValidationRegistry.add(mmPackage, extraEValidator);
+		PivotEObjectValidator extraEValidator = null;
+		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {
+			CompletePackage completePackage = mmPackage2completePackage.get(mmPackage);
+			assert completePackage != null;
+			boolean needsValidator = false;
+			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+				ASResource asResource = (ASResource)asPackage.eResource();
+				Technology technology = asResource.getASResourceFactory().getTechnology();
+				if (technology.needsPivotValidator()) {			// XXX and has constraints
+					needsValidator = true;
+				}
+			}
+			if (needsValidator) {
+				if (extraEValidator == null) {
+					extraEValidator = new PivotEObjectValidator(oclModels);
+					PivotUtil.errPrintln(NameUtil.debugSimpleName(extraEValidator));		// XXX
+				}
+				localValidationRegistry.add(mmPackage, extraEValidator);
+			}
 		}
 	}
 
@@ -172,14 +203,15 @@ public abstract class CompleteOCLLoader
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
-			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-				org.eclipse.ocl.pivot.Package aPackage = metamodelManager.getPrimaryPackage((org.eclipse.ocl.pivot.Package)eObject);
-				if (aPackage instanceof PivotObjectImpl) {
-					EObject mmPackage = ((PivotObjectImpl)aPackage).getESObject();
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
+				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
+				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
+			//	if (aPackage instanceof PivotObjectImpl) {
+					EObject mmPackage = aPackage.getESObject();
 					if (mmPackage instanceof EPackage) {
-						mmPackages.add((EPackage)mmPackage);
+						mmPackage2completePackage.put((EPackage)mmPackage, completePackage);
 					}
-				}
+			//	}
 			}
 			else if (eObject instanceof Type) {
 				tit.prune();
@@ -252,13 +284,14 @@ public abstract class CompleteOCLLoader
 			assert errors != null;
 			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 			if (message2 == null) {
-				CS2AS cs2as = xtextResource.getCS2AS(getEnvironmentFactory());
+				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+				CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
 				ASResource asResource = cs2as.getASResource();
 				errors = asResource.getErrors();
 				assert errors != null;
 				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 				if (message2 == null) {
-					DelegateInstaller delegateInstaller = new DelegateInstaller(ocl.getEnvironmentFactory(), null);
+					DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
 					delegateInstaller.installCompleteOCLDelegates(asResource);
 					return asResource;
 				}
