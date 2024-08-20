@@ -155,4 +155,14 @@ implements CollectionLiteralPart {
 		return visitor.visitCollectionLiteralPart(this);
 	}
 
+	/**
+	 * @return
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		assert getESObject() == null;
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
+	}
 } //CollectionLiteralPartImpl

@@ -219,11 +219,6 @@ public class DetailImpl
 		return eDynamicIsSet(featureID);
 	}
 
-	@Override
-	protected void resetESObject() {
-		assert getESObject() == null;
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -239,4 +234,14 @@ public class DetailImpl
 		return visitor.visitDetail(this);
 	}
 
+	/**
+	 * @return
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		assert getESObject() == null;
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
+	}
 } //DetailImpl

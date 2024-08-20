@@ -61,7 +61,7 @@ public interface Technology
 
 	/**
 	 * Whether validation needs a Composed PivotEObjectValidator or the standard EcoreValidator will validate via EMF Validation Delegates.
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	boolean needsPivotValidator();
 }

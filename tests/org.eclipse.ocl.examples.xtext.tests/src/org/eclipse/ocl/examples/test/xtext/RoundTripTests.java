@@ -100,7 +100,7 @@ public class RoundTripTests extends XtextTestCase
 			return asResource;
 		}
 		finally {
-			xtextResource.dispose();
+		//	xtextResource.dispose();		-- inhibits proxification
 		}
 	}
 	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
@@ -297,6 +297,7 @@ public class RoundTripTests extends XtextTestCase
 		String actual = EmfFormatter.listToStr(pivotResource3.getContents()).replace(".regenerated.oclinecore", ".oclinecore");
 		assertEquals(expected, actual);
 		ocl3.dispose();
+		ocl1.activate();
 		ocl1.dispose();
 	}
 

@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.SendSignalAction;
 import org.eclipse.uml2.uml.State;
 
 /**
- * @since 5.22
+ * @since 5.23
  */
 public class ToStringVisitor extends org.eclipse.ocl.util.ToStringVisitor<
 		Classifier, Operation, Property,

@@ -156,6 +156,9 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			lazyInitializeLocals(resourceSet, oclDelegateURI, true, null);
 		}
 	}
+	/**
+	 * @since 1.23
+	 */
 	public static void initialize2(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
 		lazyInitializeGlobals2(oclDelegateURI, true);
 		if (resourceSet != null) {
@@ -177,6 +180,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * Initialize the local resourceSet delegate registries to support the oclDelegateURI.
 	 * A non-null delegateFactoryFactory may be specified for test purposes to intercept factory creation.
+	 * @since 1.23
 	 */
 	public static void lazyInitializeLocals(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
 			@Nullable FactoryFactory delegateFactoryFactory) {
@@ -236,6 +240,9 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			putDelegateResourceSetRegistry(adapter, QueryDelegate.Factory.Registry.class, queryDelegateFactoryRegistry);
 		}
 	}
+	/**
+	 * @since 1.23
+	 */
 	public static void lazyInitializeLocals2(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
 			@Nullable FactoryFactory delegateFactoryFactory) {
 		if (delegateFactoryFactory == null) {
@@ -270,6 +277,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 	/**
 	 * Initialize any currently uninitialized global delegate registries to support the oclDelegateURI.
+	 * @since 1.23
 	 */
 	public static void lazyInitializeGlobals(@NonNull String oclDelegateURI, boolean forceInitialization) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
@@ -291,6 +299,9 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			}
 		}
 	}
+	/**
+	 * @since 1.23
+	 */
 	public static void lazyInitializeGlobals2(@NonNull String oclDelegateURI, boolean forceInitialization) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
 			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;

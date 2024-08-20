@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -71,14 +72,14 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * If RESOLVE_PROXY is set active, the deproxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final TracingOption RESOLVE_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/resolve-proxy"); //$NON-NLS-1$
 
 	/**
 	 * If SET_PROXY is set active, the proxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final TracingOption SET_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/set-proxy"); //$NON-NLS-1$
 
@@ -273,6 +274,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private boolean isUpdating = false;
 
 	/**
+	 * True to avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
+	 */
+	private boolean isSkipPreUnload = false;
+
+	/**
 	 * Creates an instance of the resource.
 	 */
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
@@ -369,9 +375,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
-			for (EObject eObject : getContents()) {				// XXX toString() debug
-				if (eObject instanceof PivotObjectImpl) {
-					((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+			if (!isSkipPreUnload && isSaveable) {
+				for (EObject eObject : getContents()) {
+					if (eObject instanceof PivotObjectImpl) {
+						((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+					}
 				}
 			}
 			super.doUnload();
@@ -581,6 +589,14 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return wasSaveable;
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public void setSkipPreUnload(boolean isSkipPreUnload) {
+		this.isSkipPreUnload = isSkipPreUnload;
+	}
+
 	@Override
 	public boolean setUpdating(boolean isUpdating) {
 		boolean wasUpdating = this.isUpdating;
@@ -605,6 +621,26 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	protected String superGetURIFragment(EObject eObject) {
 		return super.getURIFragment(eObject);		// Bypass assignIds for use by OrphanResource
+	}
+
+	@Override
+	protected void unloaded(InternalEObject internalEObject) {
+		URI eProxyURI = internalEObject.eProxyURI();
+		if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
+			internalEObject.eAdapters().clear();
+		}
+		else {
+
+		    if (eProxyURI == null)
+		    {
+		      URI appendFragment = uri.appendFragment(getURIFragment(internalEObject));
+				if ((appendFragment != null) && appendFragment.toString().contains(".oclas")) {
+					getClass();		// XXX
+				}
+		    }
+
+			super.unloaded(internalEObject);
+		}
 	}
 
 	@Override

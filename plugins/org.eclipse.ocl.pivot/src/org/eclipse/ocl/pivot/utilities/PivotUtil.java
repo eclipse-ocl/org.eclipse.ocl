@@ -139,7 +139,7 @@ public class PivotUtil
 	/**
 	 * Prefix to be emitted by errPrintln. Initially null, set non-null at the start of some context such as a test. Set
 	 * null again once emitted as a prefix.
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static @Nullable String contextLine = null;
 
@@ -891,7 +891,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static boolean debugWellContainedness(Element type) {
 		if (type.eResource() == null) {
@@ -909,7 +909,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static void errPrintln(@Nullable String string) {
 		if (contextLine != null) {

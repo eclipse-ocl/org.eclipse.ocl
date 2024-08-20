@@ -157,7 +157,7 @@ public class ASResourceFactoryRegistry
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactoryIgnoringEnvironmentFactoryAdapter(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
 		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);

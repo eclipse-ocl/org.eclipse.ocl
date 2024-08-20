@@ -394,4 +394,13 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		return visitor.visitResultVariable(this);
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		assert getESObject() == null;
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
+	}
 } //ResultVariableImpl

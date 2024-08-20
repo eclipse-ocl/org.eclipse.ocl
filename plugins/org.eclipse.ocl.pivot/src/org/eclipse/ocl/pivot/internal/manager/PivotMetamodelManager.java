@@ -812,18 +812,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Return all constraints applicable to a type and its superclasses.
 	 */
 	@Override
-	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {		// XXX semantic API changed; move change to caller
+	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
 		Set<Constraint> knownInvariants = new HashSet<>();
 		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
 				if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
-					for (Constraint asConstraint : partialSuperType.getOwnedInvariants()) {
-						EObject esObject = asConstraint.getESObject();				// Non-null EAnnotation esObject is a complete ocl constraint realized by its Ecore ES
-						if ((esObject == null) || ((esObject instanceof EAnnotation) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(((EAnnotation)esObject).getSource()))) {
-							knownInvariants.add(asConstraint);
-						}
-					}
+					knownInvariants.addAll(partialSuperType.getOwnedInvariants());
 				}
 			}
 		}

@@ -525,6 +525,9 @@ public class DelegateInstaller
 	//	}
 
 
+	/**
+	 * @since 1.23
+	 */
 	public static @NonNull EValidator init(@NonNull EnvironmentFactory environmentFactory) {
 		return DynamicEcoreValidator.get(environmentFactory);
 	}
@@ -533,7 +536,7 @@ public class DelegateInstaller
 	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations
 	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void installCompleteOCLDelegates(@NonNull ASResource asResource) {
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();

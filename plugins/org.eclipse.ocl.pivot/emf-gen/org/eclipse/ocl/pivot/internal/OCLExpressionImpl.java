@@ -114,11 +114,6 @@ implements OCLExpression {
 		return typeValue;
 	}
 
-	@Override
-	protected void resetESObject() {
-		assert getESObject() == null;
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -391,6 +386,17 @@ implements OCLExpression {
 		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
 		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
+	}
+
+	/**
+	 * @return
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+	//XXX	assert getESObject() == null;				-- may be not null for UMLX2QVTr
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
 	}
 } //OCLExpressionImpl
 

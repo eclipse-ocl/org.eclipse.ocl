@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -502,46 +501,10 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @since 1.22
 	 */
 	@Override
-	protected void resetESObject() {		// Overridden since there is no eInternalContainer or esObject
+	protected boolean setReloadableProxy() {		// Overridden since there is no eInternalContainer or esObject
 		InternalEObject eInternalContainer = eInternalContainer();
 		assert eInternalContainer == null;
-	//	Notifier esProxyTarget = null;
-	//	EObject esObject = getESObject();
-	//	assert esObject == null;
-		eSetProxyURI(URI.createURI(externalURI));
-/*
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ASResourceImpl.PROXIES.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-			return;
-		}
-		// Look for a specific CS
-		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-		if (csi2asMapping == null) {
-			ASResourceImpl.PROXIES.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
-			return;
-		}
-		EObject csElement = csi2asMapping.getCSElement(this);
-		if (csElement == null) {		// If a CS Element references that AS Element
-			ASResourceImpl.PROXIES.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
-		}
-		esProxyTarget = csElement;
-		if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
-			// Else any old ES
-			esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
-		}
-		if (esProxyTarget instanceof EObject) {
-			URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
-			eSetProxyURI(uri);
-		}
-		else if (esProxyTarget instanceof Resource) {
-			URI uri = ((Resource)esProxyTarget).getURI();
-			eSetProxyURI(uri);
-		}
-		else {
-			ASResourceImpl.PROXIES.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
-		}
-	//	this.esObject = null; */
+		return setReloadableProxy(this);
 	}
 
 	@Override

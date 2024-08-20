@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -225,8 +226,11 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	@Override
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
-		ASResourceImpl.SET_PROXY.println(NameUtil.debugSimpleName(this) + " " + uri);
-		if ("platform:/resource/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore#//BadClass".equals(uri.toString())) {
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
+		if ("platform:/resource/_OCL_UsageTests__testBug570894_uml/Bug570894.profile.ecore#//Farm/animal".equals(uri.toString())) {
+			getClass();		// XXX
+		}
+		if ((uri != null) && uri.toString().contains(".oclas")) {
 			getClass();		// XXX
 		}
 		super.eSetProxyURI(uri);

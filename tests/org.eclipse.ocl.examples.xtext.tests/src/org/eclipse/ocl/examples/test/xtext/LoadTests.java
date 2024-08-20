@@ -236,18 +236,18 @@ public class LoadTests extends XtextTestCase
 		}
 		finally {
 			if (xtextResource != null) {
-				xtextResource.dispose();
+			//	xtextResource.dispose();	-- early dispose may be tidy but it inhibits AS unload proxification
 			}
-			unloadResourceSet(resourceSet);
+		//	unloadResourceSet(resourceSet);		-- early unload may be tidy but it inhibits AS unload proxification
 		}
 		assert xtextResource != null;
-		Resource xmiResource = resourceSet.createResource(xmiOutputURI);
-		xmiResource.getContents().addAll(xtextResource.getContents());
+	//	Resource xmiResource = resourceSet.createResource(xmiOutputURI);
+	//	xmiResource.getContents().addAll(xtextResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		//		xmiResource.save(null);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		//		assertNoResourceErrors("Save failed", xmiResource);
-		return xmiResource;
+		return xtextResource;
 	}
 
 	public void doLoadEcore(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
@@ -1362,13 +1362,16 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
-	//	ASResourceImpl.PROXIES.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.SET_PROXY.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		BaseCSResource csResource = doLoadOCL(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		ResourceSet asResourceSet = environmentFactory.getMetamodelManager().getASResourceSet();
-		for (Resource asResource : asResourceSet.getResources()) {
+		List<@NonNull Resource> resources = asResourceSet.getResources();
+		((ASResource)resources.get(0)).setSaveable(true);
+		for (Resource asResource : resources) {
 			asResource.unload();
 		}
 		ResourceSet externalResourceSet = environmentFactory.getResourceSet();

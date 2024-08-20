@@ -10,25 +10,34 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -44,9 +53,43 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, metamodelManagerInternal.getEnvironmentFactory());
 		Type type = ecore2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
-			Constraint constraint = NameUtil.getNameable(metamodelManagerInternal.getAllInvariants(type), constraintName);
-			if (constraint != null) {
-				return constraint;
+			VirtualDelegateMapping registry = VirtualDelegateMapping.getRegistry(eClassifier);
+			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
+			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {
+				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
+					org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
+					if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
+						for (Constraint asConstraint : partialSuperType.getOwnedInvariants()) {
+							if (constraintName.equals(asConstraint.getName())) {
+								knownInvariants.add(asConstraint);
+							}
+						}
+					}
+				}
+			}
+			for (@NonNull Constraint asConstraint : knownInvariants) {
+				EObject esObject = asConstraint.getESObject();
+				if (esObject == null) {					// null esObject is a CS2AS result - should have an ES in a sibling type
+			//		PivotUtil.errPrintln("getConstraint:CS2AS " + constraintName + " => " + asConstraint + " <= " + null);
+					return asConstraint;
+				}
+				else {
+					EAnnotation eAnnotation = (EAnnotation)esObject;
+					String delegateURI = eAnnotation.getSource();
+					String resolvedURI = registry.resolve(delegateURI);
+					if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(resolvedURI)) {
+			//			PivotUtil.errPrintln("getConstraint:CS " + constraintName + " => " + asConstraint + " <= " + esObject);
+					//	return asConstraint;
+					}
+					else if (PivotConstants.OCL_DELEGATE_URI_PIVOT.equals(resolvedURI)) {
+			//			PivotUtil.errPrintln("getConstraint:ES " + constraintName + " => " + asConstraint + " <= " + esObject);
+						return asConstraint;
+					}
+					else {
+			//			PivotUtil.errPrintln("getConstraint:?? " + constraintName + " => " + asConstraint + " <= " + esObject);
+						return asConstraint;
+					}
+				}
 			}
 		}
 		throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.CONSTRAINT_ROLE));

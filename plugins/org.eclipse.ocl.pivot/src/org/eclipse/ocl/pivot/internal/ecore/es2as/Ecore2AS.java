@@ -297,6 +297,7 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	@Override
 	public void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement) {
+	//	System.out.println("addMapping " + (eObject instanceof ENamedElement ? ((ENamedElement)eObject).getName() : "???") + " " + NameUtil.debugSimpleName(eObject) + " " + NameUtil.debugSimpleName(pivotElement));	// XXX
 		if (pivotElement instanceof PivotObjectImpl) {
 			((PivotObjectImpl)pivotElement).setESObject(eObject);
 		}

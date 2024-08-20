@@ -381,6 +381,7 @@ public class OCL
 	public synchronized void dispose() {
 		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
+		//	assert environmentFactory2 == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Disposing non-thread EnvironmentFactory";
 			environmentFactory2.detach(this);
 			environmentFactory2.detachRedundantThreadLocal();			// Detach the TLE ownership only if attachCount == 1
 			environmentFactory = null;

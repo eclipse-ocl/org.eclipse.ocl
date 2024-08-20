@@ -19,11 +19,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
@@ -174,27 +173,15 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	}
 
 	@Override
-	public EObject eResolveProxy(InternalEObject proxy) {
-		// XXX Auto-generated method stub
-		return super.eResolveProxy(proxy);
-	}
-
-	@Override
-	public void eSetProxyURI(URI uri) {
-		// XXX Auto-generated method stub
-		super.eSetProxyURI(uri);
-	}
-
-	@Override
-	public @Nullable Notifier getESelseCSobject() {
+	public @Nullable Notifier getReloadableNotifier() {
 		EObject esObject = super.getESObject();
 		assert esObject == null;
 		Parameter asParameter = getRepresentedParameter();
 		if (asParameter != null) {
-			return ((PivotObjectImpl)asParameter).getESelseCSobject();		// XXX else cs
+			return ((PivotObjectImpl)asParameter).getReloadableNotifier();		// XXX else cs
 		}
 		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		return ((PivotObjectImpl)getType()).getESelseCSobject();
+		return ((PivotObjectImpl)getType()).getReloadableNotifier();
 	}
 
 	@Override
@@ -212,52 +199,41 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	return esObject;
 	}
 
+	/**
+	 * @since 1.22
+	 */
 	@Override
-	public void preUnload() {
-		// XXX Auto-generated method stub
-		super.preUnload();
-	}
-
-	@Override
-	protected void resetESObject() {
-		// XXX Auto-generated method stub
-	//	super.resetESObject();
-		if (representedParameter != null) {
-			Notifier esProxyTarget = ((ParameterImpl)representedParameter).getESelseCSobject();
+	protected boolean setReloadableProxy() {
+		assert super.getESObject() == null;
+		EReference eContainmentFeature = eContainmentFeature();
+		if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
+		//	assert representedParameter == null;		-- null for OCL self, non-null for QVTd this
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
+			assert representedParameter == null;
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+			assert representedParameter != null;
+			Notifier esProxyTarget = ((PivotObjectImpl)representedParameter).getReloadableNotifier();		// XXX else cs
 			if (esProxyTarget instanceof EObject) {
 				URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
 				eSetProxyURI(uri);
+				return true;
+			}
+			else {
+				assert false;			// XXX
+				eSetProxyURI(NO_UNLOAD_PROXY_URI);
+				return false;
 			}
 		}
 		else {
-			eSetProxyURI(null);
+			assert false;			// XXX
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
 		}
-	//	URI uri = ((Resource)esProxyTarget).getURI();
-	//	eSetProxyURI(uri);
-	}
-
-	@Override
-	public void resetStaleESObject() {
-		// XXX Auto-generated method stub
-		super.resetStaleESObject();
-	}
-
-	@Override
-	protected @Nullable Notifier resolveESNotifier(
-			@NonNull CompleteModel completeModel) {
-		// XXX Auto-generated method stub
-		return super.resolveESNotifier(completeModel);
-	}
-
-	@Override
-	public void setESObject(@NonNull EObject newTarget) {
-		// XXX Auto-generated method stub
-		super.setESObject(newTarget);
-	}
-
-	@Override
-	public void setName(String newName) {
-		// XXX Auto-generated method stub
-		super.setName(newName);
 	}
 } //ParameterVariableImpl

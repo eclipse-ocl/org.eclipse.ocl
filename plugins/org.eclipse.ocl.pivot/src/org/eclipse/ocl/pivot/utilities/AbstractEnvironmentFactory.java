@@ -118,7 +118,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static void diagnoseLiveEnvironmentFactories() {
 		if ((liveEnvironmentFactories != null) && !liveEnvironmentFactories.isEmpty()) {
@@ -132,7 +132,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
-	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 * Leak debugging aid. Set non-null by AbstractPivotTestCase to diagnose EnvironmentFactory construction and finalization.
 	 *
 	 * @since 1.14
 	 */

@@ -465,12 +465,14 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	}
 
 	/**
+	 * @return
 	 * @since 1.22
 	 */
 	@Override
-	protected void resetESObject() {
-		super.resetESObject();
-		setClass(null);
+	protected boolean setReloadableProxy() {
+		boolean isReloadableProxy = super.setReloadableProxy();
+		setClass(null);					// XXX ??? redundant
+		return isReloadableProxy;
 	}
 
 	@Override
