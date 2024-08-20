@@ -17,11 +17,16 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -32,6 +37,7 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
@@ -156,7 +162,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setReferredElement(Element newReferredElement)
 	{
-		ASResourceImpl.PROXIES.println("setReferredElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newReferredElement));
+		ASResourceImpl.RESOLVE_PROXY.println(NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newReferredElement));
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
@@ -361,13 +367,55 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
-			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + proxy.eProxyURI());
+		}
+		if (proxy instanceof org.eclipse.ocl.pivot.Package) {
+			getClass();		// XXX
+		}
+		else if (proxy instanceof ParameterVariable) {
+			getClass();		// XXX
+		}
+		else if (proxy instanceof Parameter) {
+			getClass();		// XXX
 		}
 		EObject resolvedProxy = super.eResolveProxy(proxy);
 		if (resolvedProxy instanceof Pivotable) {
 			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+			if (proxy instanceof ParameterVariable) {
+				ExpressionInOCL asExpression = null;
+				for (EObject eObject = this; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof PivotableElementCS) {
+						Element asElement = ((PivotableElementCS)eObject).getPivot();
+						if (asElement instanceof ExpressionInOCL) {
+							asExpression = (ExpressionInOCL)asElement;
+							break;
+						}
+					}
+				}
+				if (asExpression != null) {
+					ParameterVariable proxyParameterVariable = (ParameterVariable)proxy;
+					if (resolvedProxy instanceof Parameter) {
+						assert proxy.eContainingFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS;
+					//	proxyParameterVariable.setRepresentedParameter((Parameter)resolvedProxy);
+						ExpressionInOCL proxyExpressionInOCL = (ExpressionInOCL)((BasicEObjectImpl)proxyParameterVariable).eInternalContainer();
+					//	((ParameterVariableImpl)proxy).eSetProxyURI(null);
+						resolvedProxy = asExpression.getOwnedParameters().get(proxyExpressionInOCL.getOwnedParameters().indexOf(proxy));
+					}
+					else if (resolvedProxy instanceof Type) {
+						assert proxy.eContainingFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+						proxyParameterVariable.setRepresentedParameter(null);
+					//	((ParameterVariableImpl)proxy).eSetProxyURI(null);
+						resolvedProxy = asExpression.getOwnedContext();
+					}
+					else {
+						throw new IllegalStateException();
+					}
+				}
+			}
+
+
 		}
 		else if (resolvedProxy instanceof EModelElement) {
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// CS2AS
@@ -381,7 +429,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		}
 		if (s != null) {
 			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
-			ASResourceImpl.PROXIES.println(s.toString());
+			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
 		return resolvedProxy;
 	}

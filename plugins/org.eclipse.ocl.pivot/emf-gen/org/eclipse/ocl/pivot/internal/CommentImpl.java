@@ -140,6 +140,11 @@ public class CommentImpl
 		return body;
 	}
 
+	@Override
+	protected void resetESObject() {				// FIXME Comment is not adequately reified in CS
+		assert getESObject() == null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

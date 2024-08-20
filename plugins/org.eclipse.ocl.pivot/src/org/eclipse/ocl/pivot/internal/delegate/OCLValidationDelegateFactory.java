@@ -165,7 +165,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 
 		@Override
 		public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
-			Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
+		/*	Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
 			ValidationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(classifier, castClass, null);
 			if (localRegistry != null) {
 				ValidationDelegate.Factory factory = localRegistry.getValidationDelegate(delegateURI);
@@ -173,7 +173,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 					return factory.createValidationDelegate(classifier);
 				}
 			}
-		//	return super.createValidationDelegate(classifier);
+		//	return super.createValidationDelegate(classifier); */
 			EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
 			OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 			if (delegateDomain == null) {

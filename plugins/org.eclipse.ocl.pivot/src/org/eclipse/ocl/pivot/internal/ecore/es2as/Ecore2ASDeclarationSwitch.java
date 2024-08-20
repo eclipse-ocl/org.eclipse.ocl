@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -923,6 +924,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					if (invariant == null) {
 						invariant = PivotFactory.eINSTANCE.createConstraint();
 						invariant.setName(invariantName);
+						((ConstraintImpl)invariant).setESObject(oclAnnotation);
 					}
 					else {
 						specification = invariant.getOwnedSpecification();

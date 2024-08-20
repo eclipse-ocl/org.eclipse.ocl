@@ -338,6 +338,20 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	}
 
 	@Override
+	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+/*	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
+		CS2AS cs2as = getCS2AS(environmentFactory);
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		cs2as.update(consumer);
+		getErrors().addAll(consumer.getResult(Severity.ERROR));
+		getWarnings().addAll(consumer.getResult(Severity.WARNING));
+
+		return cs2as.getASResource(); */
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}

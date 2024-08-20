@@ -79,6 +79,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
 import org.eclipse.xtext.diagnostics.AbstractDiagnostic;
 import org.eclipse.xtext.diagnostics.DiagnosticMessage;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.linking.impl.XtextLinkingDiagnostic;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.nodemodel.INode;
@@ -86,6 +87,7 @@ import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.Triple;
 
@@ -631,6 +633,24 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		catch (IllegalArgumentException e) {
 			logger.error("Failed to reparse", e);
 		}
+	}
+
+//	@Override
+//	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {
+//		throw new UnsupportedOperationException();			// XXX
+//	}
+
+	@Override
+	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
+		CS2AS cs2as = getCS2AS(environmentFactory);
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		cs2as.update(consumer);
+		getErrors().addAll(consumer.getResult(Severity.ERROR));
+		getWarnings().addAll(consumer.getResult(Severity.WARNING));
+
+		return cs2as.getASResource();
 	}
 
 	@Override

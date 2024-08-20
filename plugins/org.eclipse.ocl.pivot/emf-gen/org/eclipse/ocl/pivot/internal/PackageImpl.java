@@ -830,7 +830,12 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public URI eProxyURI() {
-		// TODO Auto-generated method stub
+		// XXX TODO Auto-generated method stub
 		return super.eProxyURI();
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {	// XXX
+		super.eSetProxyURI(uri);
 	}
 } //PackageImpl

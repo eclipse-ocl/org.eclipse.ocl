@@ -114,6 +114,11 @@ implements OCLExpression {
 		return typeValue;
 	}
 
+	@Override
+	protected void resetESObject() {
+		assert getESObject() == null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

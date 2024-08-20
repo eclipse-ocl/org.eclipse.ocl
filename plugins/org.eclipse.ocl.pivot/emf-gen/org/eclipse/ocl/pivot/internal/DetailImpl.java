@@ -219,6 +219,11 @@ public class DetailImpl
 		return eDynamicIsSet(featureID);
 	}
 
+	@Override
+	protected void resetESObject() {
+		assert getESObject() == null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
