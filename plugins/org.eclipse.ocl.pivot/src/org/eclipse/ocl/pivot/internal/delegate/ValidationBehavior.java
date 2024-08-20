@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -40,11 +39,12 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 	public static final @NonNull String NAME = "validationDelegates"; //$NON-NLS-1$
 
 	public Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
+		MetamodelManagerInternal metamodelManagerInternal = (MetamodelManagerInternal)metamodelManager;
 		Resource ecoreMetamodel = ClassUtil.nonNullEMF(eClassifier.eResource());
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, (EnvironmentFactoryInternal) metamodelManager.getEnvironmentFactory());
+		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, metamodelManagerInternal.getEnvironmentFactory());
 		Type type = ecore2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
-			Constraint constraint = NameUtil.getNameable(((MetamodelManagerInternal)metamodelManager).getAllInvariants(type), constraintName);
+			Constraint constraint = NameUtil.getNameable(metamodelManagerInternal.getAllInvariants(type), constraintName);
 			if (constraint != null) {
 				return constraint;
 			}

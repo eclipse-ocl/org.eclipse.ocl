@@ -82,6 +82,9 @@ public class PathElementCSAttribution extends AbstractAttribution
 				}
 			}
 			if (index <= 0) {						// First path element is resolved in parent's parent scope
+				if ("verdict".equals(environmentView.getName())) {
+					getClass();		// XXX
+				}
 				environmentView.computeLookups(scopeView.getParent().getParent());
 			}
 			else {									// Subsequent elements in previous scope

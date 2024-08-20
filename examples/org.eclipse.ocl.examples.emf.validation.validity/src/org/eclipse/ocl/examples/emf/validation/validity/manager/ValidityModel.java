@@ -522,7 +522,7 @@ public class ValidityModel
 
 					if (!constraint.isEnabled() || !resultConstrainingNode.isEnabled()) {
 						result.setSeverity(Severity.UNKNOWN);
-					} else {
+					} else {				// XXX Why else ???
 						results.add(result);
 					}
 				}

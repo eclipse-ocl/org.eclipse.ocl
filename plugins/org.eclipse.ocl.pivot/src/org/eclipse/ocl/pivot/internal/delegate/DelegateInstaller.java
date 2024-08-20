@@ -279,7 +279,7 @@ public class DelegateInstaller
 		}
 
 		private final @NonNull EPackage delegate = new DelegatingEPackage(EcorePackage.eINSTANCE);
-		private final @NonNull WeakHashMap<@NonNull EnvironmentFactory, @NonNull DynamicEcoreValidator> setOfEnvironmentFactory = new WeakHashMap<>();
+		private final @NonNull WeakHashMap<@NonNull EnvironmentFactory, @NonNull DynamicEcoreValidator> setOfEnvironmentFactory = new WeakHashMap<>();			// XXX
 
 		private void add(@NonNull EnvironmentFactory environmentFactory) {
 			setOfEnvironmentFactory.put(environmentFactory, this);
@@ -524,6 +524,10 @@ public class DelegateInstaller
 	//		return metamodelManager;
 	//	}
 
+
+	public static @NonNull EValidator init(@NonNull EnvironmentFactory environmentFactory) {
+		return DynamicEcoreValidator.get(environmentFactory);
+	}
 
 	/**
 	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations

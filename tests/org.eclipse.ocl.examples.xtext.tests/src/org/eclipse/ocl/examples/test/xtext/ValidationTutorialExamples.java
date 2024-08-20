@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -71,11 +72,13 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 
 	public void testValidationTutorial() throws Throwable {
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.SET_PROXY.setState(true);
 		GlobalEnvironmentFactory.disposeInstance();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		OCLDelegateDomain.initialize2(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		getProjectMap().initializeResourceSet(resourceSet);
 
 		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
@@ -105,7 +108,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert ocl4xmiResource != null;
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
 		assert ocl4ecoreResource != null;
-
+		helper.dispose();
 		String xmiObjectLabel = LabelUtil.getLabel(xmiObject);			// Beware: uses settingDelegate and so the prevailing OCL
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
 
@@ -116,6 +119,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 //				GlobalEnvironmentFactory.disposeInstance();
 				OCL ocl1 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+				EValidator eValidator = DelegateInstaller.init(ocl1.getEnvironmentFactory());		// XXX move to EF ctor
 				//
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
 					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));

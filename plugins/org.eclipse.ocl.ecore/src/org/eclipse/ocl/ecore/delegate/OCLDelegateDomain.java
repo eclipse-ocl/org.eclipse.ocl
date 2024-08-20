@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *   E.D.Willink - Bug 360072
@@ -43,7 +43,7 @@ import org.eclipse.ocl.ecore.opposites.EcoreEnvironmentFactoryWithHiddenOpposite
 /**
  * An implementation of a delegate domain for an OCL enhanced package. The domain
  * maintains an OCL facade to be shared by all delegates within the package.
- * 
+ *
  * @since 3.0
  */
 public class OCLDelegateDomain implements DelegateDomain
@@ -84,10 +84,10 @@ public class OCLDelegateDomain implements DelegateDomain
 	 * keys.
 	 * <p>
 	 * Note also that validation must be enabled by specifying an EClassifier Ecore annotation with a space separated list
-	 * of invariant <tt><i>constraintName</i></tt>s as the value of the <tt>constraints</tt> details key. 
+	 * of invariant <tt><i>constraintName</i></tt>s as the value of the <tt>constraints</tt> details key.
 	 * <p>
 	 * See <tt>/org.eclipse.ocl.ecore.tests/model/Company.ecore</tt> or <tt>http://wiki.eclipse.org/MDT/OCLinEcore</tt> for an example.
-	 * 
+	 *
 	 * @deprecated use OCLConstants.OCL_DELEGATE_URI
 	 */
 	@Deprecated
@@ -98,24 +98,24 @@ public class OCLDelegateDomain implements DelegateDomain
 	 * the value is the fully qualified name of the class to be used as the {@link EnvironmentFactory}
 	 * for parsing and evaluation for OCL constraints defined in the EPackage. The class must have a
 	 * a constructor that takes a single {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} argument.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public static final String KEY_FOR_ENVIRONMENT_FACTORY_CLASS = "environmentFactoryClass"; //$NON-NLS-1$
-	
+
 	/**
 	 * If the EPackage annotation with source {@link #OCL_DELEGATE_URI} has a detail using this key with a
 	 * value of "true", the {@link EcoreEnvironmentFactoryWithHiddenOpposites} is used instead of
 	 * the default {@link EcoreEnvironmentFactory}, making the OCL environment used by the delegates
 	 * support "hidden opposites" and the {@link OppositePropertyCallExp}.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public static final String OCL_DELEGATES_USE_HIDDEN_OPPOSITES_KEY = "hiddenOpposites"; //$NON-NLS-1$
 
 	/**
 	 * Initialize the resourceSet registries, if non-null, or the global registries, if null,
-	 * to support usage of the LPG OCL Delegate Evaluator for the LPG OCL Delegate URI. 
+	 * to support usage of the LPG OCL Delegate Evaluator for the LPG OCL Delegate URI.
 	 *
 	 * @since 3.2
 	 */
@@ -123,10 +123,10 @@ public class OCLDelegateDomain implements DelegateDomain
 		initialize(resourceSet, OCLConstants.OCL_DELEGATE_URI_LPG);
 		initializeMappingFrom(resourceSet, OCLConstants.OCL_DELEGATE_URI);
 	}
-	
+
 	/**
 	 * Initialize the resourceSet registries, if non-null, or the global registries, if null,
-	 * to support usage of the LPG OCL Delegate Evaluator for the oclDelegateURI. 
+	 * to support usage of the LPG OCL Delegate Evaluator for the oclDelegateURI.
 	 *
 	 * @since 3.2
 	 */
@@ -142,34 +142,34 @@ public class OCLDelegateDomain implements DelegateDomain
 			DelegateResourceSetAdapter adapter = DelegateResourceSetAdapter.getAdapter(resourceSet);
 			VirtualDelegateMapping delegationMode = CommonOptions.DEFAULT_DELEGATION_MODE;
 			adapter.putRegistry(VirtualDelegateMapping.class, new VirtualDelegateMapping(delegationMode.getPluginId(), delegationMode.getKey(), delegationMode.getPreferredValue()));
-	
+
 			// Install a local DelegateDomain.Factory
 			DelegateDomain.Factory.Registry.Impl delegateDomainFactory = new DelegateDomain.Factory.Registry.Impl();
 			delegateDomainFactory.put(oclDelegateURI, new OCLDelegateDomainFactory());
 			adapter.putRegistry(DelegateDomain.Factory.Registry.class, delegateDomainFactory);
-					
+
 			// Install a local ValidationDelegate.Factory
 			ValidationDelegate.Factory.Registry validationDelegateFactoryRegistry = new ValidationDelegate.Factory.Registry.Impl();
 			validationDelegateFactoryRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory(oclDelegateURI));
 			adapter.putRegistry(ValidationDelegate.Factory.Registry.class, validationDelegateFactoryRegistry);
-	
+
 			// Install a local SettingDelegate.Factory
 			EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingDelegateFactoryRegistry = new EStructuralFeature.Internal.SettingDelegate.Factory.Registry.Impl();
 			settingDelegateFactoryRegistry.put(oclDelegateURI, new OCLSettingDelegateFactory(oclDelegateURI));
 			adapter.putRegistry(EStructuralFeature.Internal.SettingDelegate.Factory.Registry.class, settingDelegateFactoryRegistry);
-	
+
 			// Install a local InvocationDelegate.Factory
 			EOperation.Internal.InvocationDelegate.Factory.Registry invocationDelegateFactoryRegistry = new EOperation.Internal.InvocationDelegate.Factory.Registry.Impl();
 			invocationDelegateFactoryRegistry.put(oclDelegateURI, new OCLInvocationDelegateFactory(oclDelegateURI));
-			adapter.putRegistry(EOperation.Internal.InvocationDelegate.Factory.Registry.class, invocationDelegateFactoryRegistry);	
-	
+			adapter.putRegistry(EOperation.Internal.InvocationDelegate.Factory.Registry.class, invocationDelegateFactoryRegistry);
+
 			// Install a local QueryDelegate.Factory
 			QueryDelegate.Factory.Registry queryDelegateFactoryRegistry = new QueryDelegate.Factory.Registry.Impl();
 			queryDelegateFactoryRegistry.put(oclDelegateURI, new OCLQueryDelegateFactory(oclDelegateURI));
 			adapter.putRegistry(QueryDelegate.Factory.Registry.class, queryDelegateFactoryRegistry);
 		}
 	}
-	
+
 	/**
 	 * @since 3.2
 	 */
@@ -191,31 +191,31 @@ public class OCLDelegateDomain implements DelegateDomain
 			if (virtualDelegateMapping == null) {
 				virtualDelegateMapping = CommonOptions.DEFAULT_DELEGATION_MODE;
 			}
-	
+
 			// Install a local DelegateDomain.Factory
 			DelegateDomain.Factory.Registry delegateDomainFactory = adapter.getRegistry(DelegateDomain.Factory.Registry.class);
 			if (delegateDomainFactory != null) {
 				delegateDomainFactory.put(oclDelegateURI, new OCLDelegateDomainFactory.Delegator(delegateDomainFactory));
 			}
-					
+
 			// Install a local ValidationDelegate.Mapping
 			ValidationDelegate.Factory.Registry validationDelegateFactoryRegistry = adapter.getRegistry(ValidationDelegate.Factory.Registry.class);
 			if (validationDelegateFactoryRegistry != null) {
 				validationDelegateFactoryRegistry.put(oclDelegateURI, new OCLValidationDelegateMapping(validationDelegateFactoryRegistry, virtualDelegateMapping));
 			}
-	
+
 			// Install a local SettingDelegate.Mapping
 			EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingDelegateFactoryRegistry = adapter.getRegistry(EStructuralFeature.Internal.SettingDelegate.Factory.Registry.class);
 			if (settingDelegateFactoryRegistry != null) {
 				settingDelegateFactoryRegistry.put(oclDelegateURI, new OCLSettingDelegateMapping(settingDelegateFactoryRegistry, virtualDelegateMapping));
 			}
-	
+
 			// Install a local InvocationDelegate.Mapping
 			EOperation.Internal.InvocationDelegate.Factory.Registry invocationDelegateFactoryRegistry = adapter.getRegistry(EOperation.Internal.InvocationDelegate.Factory.Registry.class);
 			if (invocationDelegateFactoryRegistry != null) {
 				invocationDelegateFactoryRegistry.put(oclDelegateURI, new OCLInvocationDelegateMapping(invocationDelegateFactoryRegistry, virtualDelegateMapping));
 			}
-	
+
 			// Install a local QueryDelegate.Mapping
 			QueryDelegate.Factory.Registry queryDelegateFactoryRegistry = adapter.getRegistry(QueryDelegate.Factory.Registry.class);
 			if (queryDelegateFactoryRegistry != null) {
@@ -223,19 +223,19 @@ public class OCLDelegateDomain implements DelegateDomain
 			}
 		}
 	}
-	
+
 	protected final String uri;
 	protected final EPackage ePackage;
 	protected final OCL ocl;
-	
+
 	/**
 	 * Initializes me with my delegate URI and package.
-	 * 
+	 *
 	 * @param delegateURI
 	 *            the delegate namespace I handle
 	 * @param ePackage
 	 *            the package that I handle
-	 * 
+	 *
 	 * @throws ParserException
 	 *             if the operation's OCL body expression is invalid
 	 */
@@ -285,6 +285,7 @@ public class OCLDelegateDomain implements DelegateDomain
 		this.ocl = OCL.newInstance(envFactory);
 	}
 
+	@Override
 	public void dispose() {
 		if (ocl != null) {
 			ocl.dispose();
@@ -294,11 +295,13 @@ public class OCLDelegateDomain implements DelegateDomain
 	public OCL getOCL() {
 		return ocl;
 	}
-	
+
+	@Override
 	public String getURI() {
 		return uri;
 	}
 
+	@Override
 	public String toString() {
 		return ePackage.getName() + " : " + getURI(); //$NON-NLS-1$
 	}

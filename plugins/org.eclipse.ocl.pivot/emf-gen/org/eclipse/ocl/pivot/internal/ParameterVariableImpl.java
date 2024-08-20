@@ -13,12 +13,19 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -26,6 +33,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -163,5 +171,93 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
+	}
+
+	@Override
+	public EObject eResolveProxy(InternalEObject proxy) {
+		// XXX Auto-generated method stub
+		return super.eResolveProxy(proxy);
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+		// XXX Auto-generated method stub
+		super.eSetProxyURI(uri);
+	}
+
+	@Override
+	public @Nullable Notifier getESelseCSobject() {
+		EObject esObject = super.getESObject();
+		assert esObject == null;
+		Parameter asParameter = getRepresentedParameter();
+		if (asParameter != null) {
+			return ((PivotObjectImpl)asParameter).getESelseCSobject();		// XXX else cs
+		}
+		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+		return ((PivotObjectImpl)getType()).getESelseCSobject();
+	}
+
+	@Override
+	public @Nullable EObject getESObject() {
+		EObject esObject = super.getESObject();
+		assert esObject == null;
+	/*	Parameter asParameter = getRepresentedParameter();
+		if (asParameter != null) {
+			return asParameter.getESObject();		// XXX else cs
+		}
+		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+		return getType().getESObject();
+	//	}
+	//	getContextVar */
+	return esObject;
+	}
+
+	@Override
+	public void preUnload() {
+		// XXX Auto-generated method stub
+		super.preUnload();
+	}
+
+	@Override
+	protected void resetESObject() {
+		// XXX Auto-generated method stub
+	//	super.resetESObject();
+		if (representedParameter != null) {
+			Notifier esProxyTarget = ((ParameterImpl)representedParameter).getESelseCSobject();
+			if (esProxyTarget instanceof EObject) {
+				URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
+				eSetProxyURI(uri);
+			}
+		}
+		else {
+			eSetProxyURI(null);
+		}
+	//	URI uri = ((Resource)esProxyTarget).getURI();
+	//	eSetProxyURI(uri);
+	}
+
+	@Override
+	public void resetStaleESObject() {
+		// XXX Auto-generated method stub
+		super.resetStaleESObject();
+	}
+
+	@Override
+	protected @Nullable Notifier resolveESNotifier(
+			@NonNull CompleteModel completeModel) {
+		// XXX Auto-generated method stub
+		return super.resolveESNotifier(completeModel);
+	}
+
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		// XXX Auto-generated method stub
+		super.setESObject(newTarget);
+	}
+
+	@Override
+	public void setName(String newName) {
+		// XXX Auto-generated method stub
+		super.setName(newName);
 	}
 } //ParameterVariableImpl

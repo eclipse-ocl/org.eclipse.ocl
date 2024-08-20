@@ -115,4 +115,6 @@ public interface CSResource extends Resource
 	void update(int index, int length, String newString);
 
 	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
+
+	ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory);			// XXX
 }

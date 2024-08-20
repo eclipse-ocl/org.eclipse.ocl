@@ -225,19 +225,22 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	@Override
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
-		ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		ASResourceImpl.SET_PROXY.println(NameUtil.debugSimpleName(this) + " " + uri);
+		if ("platform:/resource/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore#//BadClass".equals(uri.toString())) {
+			getClass();		// XXX
+		}
 		super.eSetProxyURI(uri);
 	}
 
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		URI eProxyURI = proxy.eProxyURI();
-		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
-			s = new StringBuilder();
-			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + eProxyURI);
-			ASResourceImpl.PROXIES.println(s.toString());
-		}
+	//	StringBuilder s = null;
+	//	if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
+	//		s = new StringBuilder();
+	//		s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + eProxyURI);
+	//		ASResourceImpl.RESOLVE_PROXY.println(s.toString());
+	//	}
 		if ((eProxyURI != null) && !eProxyURI.hasFragment()) {
 		    Resource resource = eResource().getResourceSet().getResource(eProxyURI, true);
 			return resource.getContents().get(0);

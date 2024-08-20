@@ -210,7 +210,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);				// XXX externalResourceSet
 		}
 		else {
 			this.externalResourceSetWasNull = true;
@@ -236,7 +236,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
 				if (esResource instanceof CSResource) {
-				// XXX	ASResource asResource = ((CSResource)esResource).getASResource();
+
+
+				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+					ASResource asResource = ((CSResource)esResource).reloadIn(this);
 				}
 				else {
 					// XXX Ecore

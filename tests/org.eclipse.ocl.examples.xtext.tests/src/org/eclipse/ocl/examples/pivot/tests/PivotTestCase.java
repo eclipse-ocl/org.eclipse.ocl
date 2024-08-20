@@ -471,6 +471,9 @@ public class PivotTestCase extends AbstractPivotTestCase
 			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null;
 			assert ThreadLocalExecutor.basicGetExecutor() == null;
 		}
+		if (testRunnable.throwable != null) {
+			throw testRunnable.throwable;
+		}
 		// tearDown() cleans up / resets
 	}
 
