@@ -115,7 +115,7 @@ implements OCLExpression {
 	}
 
 	@Override
-	protected void resetESObject() {
+	protected void proxifyESObject() {
 		assert getESObject() == null;
 	}
 

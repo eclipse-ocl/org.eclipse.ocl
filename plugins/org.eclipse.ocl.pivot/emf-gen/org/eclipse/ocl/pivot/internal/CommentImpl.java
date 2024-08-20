@@ -141,7 +141,7 @@ public class CommentImpl
 	}
 
 	@Override
-	protected void resetESObject() {				// FIXME Comment is not adequately reified in CS
+	protected void proxifyESObject() {				// FIXME Comment is not adequately reified in CS
 		assert getESObject() == null;
 	}
 

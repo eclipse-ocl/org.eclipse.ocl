@@ -1772,10 +1772,10 @@ implements Property {
 	 * @since 1.22
 	 */
 	@Override
-	protected void resetESObject() {
+	protected void proxifyESObject() {
 		ASResource asResource = (ASResource)eResource();
-		super.resetESObject();
-		Property asOpposite = basicGetOpposite();
+		super.proxifyESObject();
+		Property asOpposite = basicGetOpposite();					// XXX ??? redundant
 		if (asOpposite != null) {
 			Resource eResource = asOpposite.eResource();
 			if ((eResource != null) && (eResource != asResource)) {

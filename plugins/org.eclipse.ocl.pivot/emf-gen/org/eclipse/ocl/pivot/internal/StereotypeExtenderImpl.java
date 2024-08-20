@@ -468,9 +468,9 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 	 * @since 1.22
 	 */
 	@Override
-	protected void resetESObject() {
-		super.resetESObject();
-		setClass(null);
+	protected void proxifyESObject() {
+		super.proxifyESObject();
+		setClass(null);					// XXX ??? redundant
 	}
 
 	@Override

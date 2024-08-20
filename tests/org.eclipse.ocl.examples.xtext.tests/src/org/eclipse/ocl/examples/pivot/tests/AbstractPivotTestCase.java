@@ -730,7 +730,7 @@ public class AbstractPivotTestCase extends TestCase
 					EObject eObject = tit.next();
 					if (eObject instanceof PivotObjectImpl) {
 						PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-						asObject.resetStaleESObject();
+						asObject.tearDownESObject();
 					}
 				}
 			}

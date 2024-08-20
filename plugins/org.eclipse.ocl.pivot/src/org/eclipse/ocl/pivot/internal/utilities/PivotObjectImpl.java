@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -175,19 +174,16 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 				((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
 			}
 		}
-		resetESObject();
+		proxifyESObject();
 	}
 
 	/**
-	 * resetESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
+	 * proxifyESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
 	 * and optionally to diagnose non-proxies.
 	 *
 	 * @since 1.22
 	 */
-	protected void resetESObject() {
-		if (this instanceof ParameterVariable) {
-			getClass();					// XXX
-		}
+	protected void proxifyESObject() {
 		Notifier esProxyTarget = getESelseCSobject();
 		if (esProxyTarget instanceof EObject) {
 			URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
@@ -204,9 +200,11 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
+	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
+	 *
 	 * @since 1.22
 	 */
-	public void resetStaleESObject() {
+	public void tearDownESObject() {
 		if ((esObject != null) && eIsProxy()) {
 			esObject = null;
 		}

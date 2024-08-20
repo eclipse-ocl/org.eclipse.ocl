@@ -213,15 +213,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	}
 
 	@Override
-	public void preUnload() {
-		// XXX Auto-generated method stub
-		super.preUnload();
-	}
-
-	@Override
-	protected void resetESObject() {
-		// XXX Auto-generated method stub
-	//	super.resetESObject();
+	protected void proxifyESObject() {
 		if (representedParameter != null) {
 			Notifier esProxyTarget = ((ParameterImpl)representedParameter).getESelseCSobject();
 			if (esProxyTarget instanceof EObject) {
@@ -232,14 +224,6 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		else {
 			eSetProxyURI(null);
 		}
-	//	URI uri = ((Resource)esProxyTarget).getURI();
-	//	eSetProxyURI(uri);
-	}
-
-	@Override
-	public void resetStaleESObject() {
-		// XXX Auto-generated method stub
-		super.resetStaleESObject();
 	}
 
 	@Override
@@ -253,11 +237,5 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	public void setESObject(@NonNull EObject newTarget) {
 		// XXX Auto-generated method stub
 		super.setESObject(newTarget);
-	}
-
-	@Override
-	public void setName(String newName) {
-		// XXX Auto-generated method stub
-		super.setName(newName);
 	}
 } //ParameterVariableImpl
