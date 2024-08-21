@@ -701,8 +701,8 @@ public class ValidateTests extends AbstractValidateTests
 					return false;
 				}
 			};
-			assertTrue(helper.loadMetamodels());
 			assertTrue(helper.loadDocument(testFile.getFileURI()));
+			assertTrue(helper.loadMetamodels());
 			helper.installPackages();
 
 			@NonNull String[] messages = getMessages(//validationContext,
