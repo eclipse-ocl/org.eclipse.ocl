@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -37,7 +38,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -53,10 +53,7 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, metamodelManagerInternal.getEnvironmentFactory());
 		Type type = ecore2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
-//			Constraint constraint = NameUtil.getNameable(metamodelManagerInternal.getAllInvariants(type), constraintName);
-//			if (constraint != null) {
-//				return constraint;
-//			}
+			VirtualDelegateMapping registry = VirtualDelegateMapping.getRegistry(eClassifier);
 			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
 			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
@@ -73,22 +70,23 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 			for (@NonNull Constraint asConstraint : knownInvariants) {
 				EObject esObject = asConstraint.getESObject();
 				if (esObject == null) {					// null esObject is a CS2AS result - should have an ES in a sibling type
-					PivotUtil.errPrintln("getConstraint:CS2AS " + constraintName + " => " + asConstraint + " <= " + null);
+			//		PivotUtil.errPrintln("getConstraint:CS2AS " + constraintName + " => " + asConstraint + " <= " + null);
 					return asConstraint;
 				}
 				else {
 					EAnnotation eAnnotation = (EAnnotation)esObject;
-					String source = eAnnotation.getSource();
-					if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(source)) {
-						PivotUtil.errPrintln("getConstraint:CS " + constraintName + " => " + asConstraint + " <= " + esObject);
+					String delegateURI = eAnnotation.getSource();
+					String resolvedURI = registry.resolve(delegateURI);
+					if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(resolvedURI)) {
+			//			PivotUtil.errPrintln("getConstraint:CS " + constraintName + " => " + asConstraint + " <= " + esObject);
 					//	return asConstraint;
 					}
-					else if (PivotConstants.OCL_DELEGATE_URI_PIVOT.equals(source)) {
-						PivotUtil.errPrintln("getConstraint:ES " + constraintName + " => " + asConstraint + " <= " + esObject);
+					else if (PivotConstants.OCL_DELEGATE_URI_PIVOT.equals(resolvedURI)) {
+			//			PivotUtil.errPrintln("getConstraint:ES " + constraintName + " => " + asConstraint + " <= " + esObject);
 						return asConstraint;
 					}
 					else {
-						PivotUtil.errPrintln("getConstraint:?? " + constraintName + " => " + asConstraint + " <= " + esObject);
+			//			PivotUtil.errPrintln("getConstraint:?? " + constraintName + " => " + asConstraint + " <= " + esObject);
 						return asConstraint;
 					}
 				}

@@ -132,7 +132,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
-	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 * Leak debugging aid. Set non-null by AbstractPivotTestCase to diagnose EnvironmentFactory construction and finalization.
 	 *
 	 * @since 1.14
 	 */

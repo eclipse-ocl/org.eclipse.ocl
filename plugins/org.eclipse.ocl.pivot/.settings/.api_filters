@@ -35,6 +35,18 @@
                 <message_argument value="PROXIES"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
+                <message_argument value="RESOLVE_PROXY"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
+                <message_argument value="SET_PROXY"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ICSI2ASMapping.java" type="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping">
         <filter id="404000815">
@@ -66,6 +78,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/PivotObjectImpl.java" type="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"/>
+                <message_argument value="NO_UNLOAD_PROXY_URI"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/PivotUtilInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal">
         <filter id="336658481">
             <message_arguments>
@@ -79,6 +99,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="createCS2AS(EnvironmentFactoryInternal, ASResource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="reloadIn(EnvironmentFactory)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -127,12 +153,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="removeExternalResource(External2AS)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="removeExternalResource(Resource)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">

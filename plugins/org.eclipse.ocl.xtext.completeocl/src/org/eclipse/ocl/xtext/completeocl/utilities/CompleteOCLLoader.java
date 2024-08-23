@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -181,7 +180,7 @@ public abstract class CompleteOCLLoader
 			if (needsValidator) {
 				if (extraEValidator == null) {
 					extraEValidator = new PivotEObjectValidator(oclModels);
-					PivotUtil.errPrintln(NameUtil.debugSimpleName(extraEValidator));		// XXX
+				//	PivotUtil.errPrintln(NameUtil.debugSimpleName(extraEValidator));		// XXX
 				}
 				localValidationRegistry.add(mmPackage, extraEValidator);
 			}

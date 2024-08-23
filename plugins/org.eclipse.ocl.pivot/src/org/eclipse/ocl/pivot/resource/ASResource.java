@@ -147,6 +147,13 @@ public interface ASResource extends XMIResource
 	boolean setSaveable(boolean isSaveable);
 
 	/**
+	 * Avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
+	 *
+	 * @since 1.22
+	 */
+	default void setSkipPreUnload(boolean isSkipPreUnload) {}
+
+	/**
 	 * Configure an immutable ASResource to tolerate updates, returning the prior state for restoration
 	 * once the immutable updates are done.
 	 *

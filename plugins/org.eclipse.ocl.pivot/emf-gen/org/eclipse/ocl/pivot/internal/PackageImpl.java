@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -40,9 +40,15 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -740,6 +746,48 @@ implements org.eclipse.ocl.pivot.Package {
 		return packageId2;
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public @Nullable Notifier getReloadableNotifier() {
+		if (Orphanage.isOrphan(this)) {
+			return null;
+		}
+		// Look for a specific ES
+		EObject esObject = getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		// Look for a specific CS
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {		// If a CS Element references that AS Element
+				return csElement;
+			}
+		}
+		// Look for any ES
+		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(this);
+		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+			esObject = asPackage.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		if (csi2asMapping == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		return null;
+	}
+
 	public boolean isIgnoreInvariants() {
 		return ignoreInvariants;
 	}
@@ -754,8 +802,9 @@ implements org.eclipse.ocl.pivot.Package {
 	/**
 	 * @since 1.22
 	 */
-	@Override
+	@Override @Deprecated
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		assert false;		// XXX
 		CompletePackage completePackage = completeModel.getCompletePackage(this);
 		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
 			EObject esObject = asPackage.getESObject();
@@ -797,6 +846,15 @@ implements org.eclipse.ocl.pivot.Package {
 		this.packageId = packageId;
 	}
 
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		Notifier reloadableNotifier = getReloadableNotifier();
+		return setReloadableProxy(reloadableNotifier);
+	}
+
 	@Override
 	public void setURI(String newURI) {
 		String oldURI = uri;
@@ -826,16 +884,5 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	@Override
-	public URI eProxyURI() {
-		// XXX TODO Auto-generated method stub
-		return super.eProxyURI();
-	}
-
-	@Override
-	public void eSetProxyURI(URI uri) {	// XXX
-		super.eSetProxyURI(uri);
 	}
 } //PackageImpl

@@ -550,4 +550,15 @@ public class ExpressionInOCLImpl
 	//	assert getESObject() == null;
 //		super.resetESObject();
 //	}
+
+	/**
+	 * @return
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+	//	assert getESObject() == null;			UML has an OpaqueExpressionImpl but it doesn't need referencing
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
+	}
 } //ExpressionInOCLImpl

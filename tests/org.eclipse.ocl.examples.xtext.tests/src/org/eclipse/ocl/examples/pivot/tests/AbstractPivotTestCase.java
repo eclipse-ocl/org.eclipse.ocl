@@ -667,6 +667,15 @@ public class AbstractPivotTestCase extends TestCase
 
 	private static boolean IS_SETUP = false;		// Debug flag to enable enforcement of init before memento
 
+	/**
+	 * Dispose of an OCL making sure it uses the current Thread's EnvironmentFactory.
+	 *
+	protected void oclDispose(@NonNull OCL ocl) {
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		ThreadLocalExecutor.attachEnvironmentFactory((EnvironmentFactoryInternal)ocl.getEnvironmentFactory());
+		ocl.dispose();
+	} */
+
 	@Override
 	protected void setUp() throws Exception {
 		IS_SETUP = true;

@@ -116,5 +116,8 @@ public interface CSResource extends Resource
 
 	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
 
+	/**
+	 * @since 1.22
+	 */
 	ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory);			// XXX
 }

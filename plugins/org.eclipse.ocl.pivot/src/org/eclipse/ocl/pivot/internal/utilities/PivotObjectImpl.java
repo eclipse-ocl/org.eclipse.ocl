@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -35,6 +36,11 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
+	/**
+	 * @since 1.22
+	 */
+	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
+
 	private @Nullable EObject esObject;		// always null for Model.
 
 	@Override
@@ -95,45 +101,14 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
-		ASResourceImpl.SET_PROXY.println(NameUtil.debugSimpleName(this) + " " + uri);
-	//	if ("platform:/resource/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore#//BadClass".equals(uri.toString())) {
-	//		getClass();		// XXX
-	//	}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
+		if ((uri != null) && "platform:/resource/_OCL_UsageTests__testBug570894_uml/Bug570894.profile.ecore#//Farm/animal".equals(uri.toString())) {
+			getClass();		// XXX
+		}
+		if ((uri != null) && uri.toString().contains(".oclas")) {
+			getClass();		// XXX happens for testStandaloneExecution_execute_model_self_closure
+		}
 		super.eSetProxyURI(uri);
-	}
-
-	public @Nullable Notifier getESelseCSobject() {
-		InternalEObject eInternalContainer = eInternalContainer();
-		assert eInternalContainer != null;
-		Notifier esProxyTarget = null;
-		EObject esObject = getESObject();
-		if (esObject != null) {						// If there is a known ES
-			esProxyTarget = esObject;				//  use es to create proxy
-		}
-		else {										// else need a CS
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory == null) {
-				ASResourceImpl.SET_PROXY.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			// Look for a specific CS
-			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-			if (csi2asMapping == null) {
-				ASResourceImpl.SET_PROXY.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			EObject csElement = csi2asMapping.getCSElement(this);
-			if (csElement == null) {		// If a CS Element references that AS Element
-				csElement = csi2asMapping.getCSElement(this);			// XXX
-				ASResourceImpl.SET_PROXY.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
-			}
-			esProxyTarget = csElement;
-			if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
-				// Else any old ES
-				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
-			}
-		}
-		return esProxyTarget;
 	}
 
 	public @Nullable EObject getESObject() {
@@ -149,6 +124,43 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public Object getImage() {
 		return null;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	public @Nullable Notifier getReloadableNotifier() {
+		InternalEObject eInternalContainer = eInternalContainer();
+		assert eInternalContainer != null;
+		Notifier esProxyTarget = null;
+		EObject esObject = getESObject();
+		if (esObject != null) {						// If there is a known ES
+			esProxyTarget = esObject;				//  use es to create proxy
+		}
+		else {										// else need a CS
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory == null) {
+				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+				return null;
+			}
+			// Look for a specific CS
+			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+			if (csi2asMapping == null) {
+				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+				return null;
+			}
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if ((csElement == null) && !(this instanceof Constraint)) {		// If a CS Element references that AS Element
+				csElement = csi2asMapping.getCSElement(this);			// XXX happens for UML2Ecore2AS, and for the Java-implemented Ecore constraints
+				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+			}
+			esProxyTarget = csElement;
+			if (esProxyTarget == null) { // XXX && !environmentFactory.isDisposing()) {
+				// XXX Else any old ES
+				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
+			}
+		}
+		return esProxyTarget;
 	}
 
 	@Deprecated // Use getESObject()
@@ -170,44 +182,126 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	public void preUnload() {
 	    assert eResource() != null;
 		for (EObject eObject : eContents()) {
-			if (eObject instanceof PivotObjectImpl) {		// Propagate resetESObject through hierarchy (except for internal ExpressionInOCL)
+			if (eObject instanceof PivotObjectImpl) {		// Propagate setReloadableProxy through hierarchy to
 				((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
 			}
 		}
-		proxifyESObject();
-	}
+		boolean expectedIsReloadableProxy = setReloadableProxy();
+	/*	if (unloadProxifies()) {
+	      URI appendFragment = eResource().getURI().appendFragment(eResource().getURIFragment(this));
+			if ((appendFragment != null) && appendFragment.toString().contains(".oclas")) {
+			      appendFragment = eResource().getURI().appendFragment(eResource().getURIFragment(this));
+				getClass();		// XXX
+			}
+		} */
+		URI eProxyURI = eProxyURI();
+		boolean eIsProxy = eIsProxy();
+		boolean isRedundantProxy = eProxyURI == NO_UNLOAD_PROXY_URI;
+		boolean isReloadableProxy = eIsProxy && !isRedundantProxy;
 
-	/**
-	 * proxifyESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
-	 * and optionally to diagnose non-proxies.
-	 *
-	 * @since 1.22
-	 */
-	protected void proxifyESObject() {
-		Notifier esProxyTarget = getESelseCSobject();
-		if (esProxyTarget instanceof EObject) {
-			URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
-			eSetProxyURI(uri);
+		assert eProxyURI != null;
+		assert expectedIsReloadableProxy == isReloadableProxy;
+		assert expectedIsReloadableProxy == !isRedundantProxy;
+
+	/*	if (this instanceof Annotation) {
+		//	assert !eIsProxy : NameUtil.debugSimpleName(this) + ":" + this;							// XXX
+		//	System.out.println(NameUtil.debugSimpleName(this) + " " + this + " " + eIsProxy);
+			if (!eIsProxy) {
+				getClass();		// XXX
+			}
 		}
-		else if (esProxyTarget instanceof Resource) {
-			URI uri = ((Resource)esProxyTarget).getURI();
-			eSetProxyURI(uri);
+		else if (this instanceof DynamicBehavior) {
+			assert isRedundantProxy : NameUtil.debugSimpleName(this);
 		}
+		else if (this instanceof org.eclipse.ocl.pivot.Class) {
+			boolean isSynthetic = Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)this);
+			assert (isSynthetic ? isRedundantProxy : isReloadableProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Constraint) {
+		//	assert isReloadableProxy : NameUtil.debugSimpleName(this);							// XXX
+		}
+		else if (this instanceof DynamicElement) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof DynamicValueSpecification) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof EnumerationLiteral) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Import) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Operation) {
+			boolean isSynthetic = ((OperationImpl)this).isIsImplicit();
+			assert (isSynthetic ? isRedundantProxy : isReloadableProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof org.eclipse.ocl.pivot.Package) {
+			boolean isSynthetic = Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)this);
+			assert (isSynthetic ? isRedundantProxy : isReloadableProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Parameter) {
+			Operation asOperation = ((Parameter)this).getOwningOperation();
+			boolean isSynthetic = (asOperation instanceof OperationImpl) && ((OperationImpl)asOperation).isIsImplicit();
+			assert (isSynthetic ? isRedundantProxy : isReloadableProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof ParameterVariable) {
+			boolean isParameter = eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS;
+			assert (isParameter ? isReloadableProxy : isRedundantProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Precedence) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof ProfileApplication) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Property) {
+			Property asProperty = (Property)this;
+		//	boolean isSynthetic = Orphanage.isOrphan(asProperty) || asProperty.isIsDerived() || asProperty.isIsImplicit() || asProperty.isIsTransient() || asProperty.isIsVolatile();
+			boolean isSynthetic = Orphanage.isOrphan(asProperty) || asProperty.isIsImplicit();
+			assert (isSynthetic ? isRedundantProxy : isReloadableProxy) : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Slot) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof StereotypeExtender) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof TemplateParameter) {
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		//
+		//	Non-leaf last
+		//
+		else if (this instanceof Namespace) {
+			// Model / Region / State / Transition
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		else if (this instanceof Vertex) {
+			// ConnectionPointReference / Pseudostate / State
+			assert isReloadableProxy : NameUtil.debugSimpleName(this);
+		}
+		//
+		//	Default - commonest case
+		//
 		else {
-			ASResourceImpl.SET_PROXY.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
-		}
-		this.esObject = null;
-	}
-
-	/**
-	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
-	 *
-	 * @since 1.22
-	 */
-	public void tearDownESObject() {
-		if ((esObject != null) && eIsProxy()) {
-			esObject = null;
-		}
+			// CollectionItem
+			// CollectionRange
+			// Comment
+			// Detail
+			// ExpressionInOCL
+			// IteratorVariable
+			// LetVariable
+			// MapLiteralPart
+			// OCLExpression
+			// ResultVariable
+			// ShadowPart
+			// TemplateBinding
+			// TemplateParameterSubstitution
+			// TemplateSignature
+			// TupleLiteralPart
+			assert isRedundantProxy : NameUtil.debugSimpleName(this);
+		} */
 	}
 
 	/**
@@ -229,6 +323,72 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Deprecated // Use setESObject()
 	public void setTarget(@Nullable EObject newTarget) {
 		esObject = newTarget;
+	}
+
+	/**
+	 * setUnloadedProxy is called at the end of preUnload() to assign a proxy URI so that a reload can reconstruct references.
+	 * <br>
+	 * For regular AS elements with an esObject the esObjects's URI is assigned. Else if there is an associated CS element the
+	 * CS element's URI is assigned.
+	 * <br>
+	 * For elements that cannot be referenced such as Comment/Detail/OCLExpression the NO_UNLOAD_PROXY_URI is assigned to aid debugging; it is
+	 * never used.
+	 * <br>
+	 * For elements without 1:1 CS2AS such as ParameterVariable the Parameter / context type's URI is assigned.
+	 *
+	 * @since 1.22
+	 */
+	protected boolean setReloadableProxy() {
+		Notifier esProxyTarget = getReloadableNotifier();
+		boolean isReloadableProxy = setReloadableProxy(esProxyTarget);
+		if (esProxyTarget == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
+		}
+		return isReloadableProxy;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	protected boolean setReloadableProxy(@Nullable Notifier notifier) {
+		if ((notifier instanceof EObjectImpl) && ((EObject)notifier).eIsProxy()) {
+			eSetProxyURI(((EObjectImpl)notifier).eProxyURI());
+			return true;
+		}
+		else if (notifier instanceof Model) {
+			URI uri = URI.createURI(((Model)notifier).getExternalURI());
+			if (uri.fragment() == null) {
+				uri = uri.appendFragment("/");
+			}
+			eSetProxyURI(uri);
+			return true;
+		}
+		else if (notifier instanceof EObject) {
+			URI uri = EcoreUtil.getURI((EObject)notifier);
+			eSetProxyURI(uri);
+			return true;
+		}
+		else if (notifier instanceof Resource) {
+			URI uri = ((Resource)notifier).getURI();
+			eSetProxyURI(uri);
+			return true;
+		}
+		else {
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+	//	this.esObject = null;
+	}
+
+	/**
+	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
+	 *
+	 * @since 1.22
+	 */
+	public void tearDownESObject() {
+		if ((esObject != null) && eIsProxy()) {
+			esObject = null;
+		}
 	}
 
 	@Deprecated /* @deprecated no longer used, moved to preUnload() */

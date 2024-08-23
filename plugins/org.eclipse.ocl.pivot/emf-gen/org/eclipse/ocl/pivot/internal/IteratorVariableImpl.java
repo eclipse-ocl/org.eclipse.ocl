@@ -165,4 +165,14 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 		return visitor.visitIteratorVariable(this);
 	}
 
+	/**
+	 * @return
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		assert getESObject() == null;
+		eSetProxyURI(NO_UNLOAD_PROXY_URI);
+		return false;
+	}
 } //IteratorVariableImpl

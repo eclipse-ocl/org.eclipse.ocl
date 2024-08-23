@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -1625,6 +1626,13 @@ implements Operation {
 	/**
 	 * @since 1.22
 	 */
+	public boolean isIsImplicit() {
+		return implementation instanceof JavaCompareToOperation;			// FIXME Promote to Feature
+	}
+
+	/**
+	 * @since 1.22
+	 */
 	@Override
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
 		org.eclipse.ocl.pivot.Class asOwningClass = getOwningClass();
@@ -1639,5 +1647,18 @@ implements Operation {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	protected boolean setReloadableProxy() {
+		if (isIsImplicit()) {
+			return setReloadableProxy(null);
+		}
+		else {
+			return super.setReloadableProxy();
+		}
 	}
 } //OperationImpl
