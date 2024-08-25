@@ -284,7 +284,10 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 			if (genModelURI != null) {
 				if (genModelURI.isPlatformResource()) {			// URI mapping may not (yet) be in place.
 					String platformResourcePath = genModelURI.toPlatformString(true);
-					genModelURI = URI.createPlatformPluginURI(platformResourcePath, true);
+					URI genModelURI2 = URI.createPlatformPluginURI(platformResourcePath, true);
+					if (uriConverter.exists(genModelURI2, null)) {
+						genModelURI = genModelURI2;
+					}
 				}
 				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
 				if (nsURI2className == null) {
