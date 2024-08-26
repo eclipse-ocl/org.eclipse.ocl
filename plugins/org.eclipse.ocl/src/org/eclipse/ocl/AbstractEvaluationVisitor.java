@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2012, 2019 IBM Corporation, Zeligsoft Inc., Borland Software Corp., and others.
+ * Copyright (c) 2005, 2012, 2024 IBM Corporation, Zeligsoft Inc., Borland Software Corp., and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
