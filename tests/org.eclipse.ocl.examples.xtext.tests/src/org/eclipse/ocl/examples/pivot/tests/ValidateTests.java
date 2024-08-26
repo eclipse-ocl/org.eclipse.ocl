@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
@@ -122,8 +121,37 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Simple_oclinecore() throws IOException, InterruptedException {
+	//	EPackage ecoreEPackage = EcorePackage.eINSTANCE;
+	//	EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
+		//
+		//	Create model
+		//
+		OCL ocl = createOCL();
+		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
+		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		//
+		//	Create test model
+		//
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
+		EObject testInstance = eCreate(simplePackage, "Simple");
+		testResource.getContents().add(testInstance);
+		//
+		//	Validate it
+		//
+		String objectLabel1 = LabelUtil.getLabel(testInstance);
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel1));
+
+		ocl.dispose();
+	}
+
+
+	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
 		EPackage ecoreEPackage = EcorePackage.eINSTANCE;
-		EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
+	//	EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
 		//
 		//	Create model
 		//
@@ -132,6 +160,18 @@ public class ValidateTests extends AbstractValidateTests
 		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
 		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
 		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
+
+
+		ResourceSet testResourceSet1 = new ResourceSetImpl();
+		Resource testResource1 = testResourceSet1.createResource(URI.createURI("test:test.test"));
+		EObject testInstance1 = eCreate(simplePackage, "Simple");
+		testResource1.getContents().add(testInstance1);
+		//
+		String objectLabel1 = LabelUtil.getLabel(testInstance1);
+		checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel1));
+
+
 		ThreadLocalExecutor.resetEnvironmentFactory();
 
 
