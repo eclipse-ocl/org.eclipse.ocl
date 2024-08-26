@@ -13,9 +13,7 @@ package org.eclipse.ocl.pivot.internal.delegate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,7 +35,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -68,25 +65,10 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 				}
 			}
 			for (@NonNull Constraint asConstraint : knownInvariants) {
-				EObject esObject = asConstraint.getESObject();
-				if (esObject == null) {					// null esObject is a CS2AS result - should have an ES in a sibling type
-			//		PivotUtil.errPrintln("getConstraint:CS2AS " + constraintName + " => " + asConstraint + " <= " + null);
-					return asConstraint;
-				}
-				else {
-					EAnnotation eAnnotation = (EAnnotation)esObject;
-					String delegateURI = eAnnotation.getSource();
-					String resolvedURI = registry.resolve(delegateURI);
-					if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(resolvedURI)) {
-			//			PivotUtil.errPrintln("getConstraint:CS " + constraintName + " => " + asConstraint + " <= " + esObject);
-					//	return asConstraint;
-					}
-					else if (PivotConstants.OCL_DELEGATE_URI_PIVOT.equals(resolvedURI)) {
-			//			PivotUtil.errPrintln("getConstraint:ES " + constraintName + " => " + asConstraint + " <= " + esObject);
-						return asConstraint;
-					}
-					else {
-			//			PivotUtil.errPrintln("getConstraint:?? " + constraintName + " => " + asConstraint + " <= " + esObject);
+				LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
+				if (asSpecification instanceof ExpressionInOCL) {
+					ExpressionInOCL asExpression = (ExpressionInOCL)asSpecification;
+					if ((asExpression.getOwnedBody() != null) || (asExpression.getBody() != null)) {
 						return asConstraint;
 					}
 				}
