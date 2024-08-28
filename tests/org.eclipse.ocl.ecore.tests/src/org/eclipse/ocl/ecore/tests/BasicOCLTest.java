@@ -17,6 +17,8 @@ package org.eclipse.ocl.ecore.tests;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -33,16 +35,31 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
+import org.eclipse.ocl.ecore.EcoreOCLStandardLibrary;
 import org.eclipse.ocl.ecore.OCL;
 import org.eclipse.ocl.ecore.OCL.Helper;
 import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.ecore.TypeExp;
+import org.eclipse.ocl.ecore.impl.AnyTypeImpl;
+import org.eclipse.ocl.ecore.impl.BagTypeImpl;
+import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
+import org.eclipse.ocl.ecore.impl.InvalidTypeImpl;
+import org.eclipse.ocl.ecore.impl.MessageTypeImpl;
+import org.eclipse.ocl.ecore.impl.OrderedSetTypeImpl;
+import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
+import org.eclipse.ocl.ecore.impl.SequenceTypeImpl;
+import org.eclipse.ocl.ecore.impl.SetTypeImpl;
+import org.eclipse.ocl.ecore.impl.TupleTypeImpl;
+import org.eclipse.ocl.ecore.impl.TypeTypeImpl;
+import org.eclipse.ocl.ecore.impl.VoidTypeImpl;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.options.EvaluationOptions;
 import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.CollectionType;
+
+import junit.framework.TestCase;
 
 /**
  * Basic tests for OCL engine.
@@ -832,6 +849,38 @@ public class BasicOCLTest
         } catch (ParserException e) {
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
+    }
+
+    public void testEcoreOCLStandardLibrary() {
+    	new EcoreOCLStandardLibrary()
+    	{
+			@Override
+			protected Set<EClassifier> resolveLibrary() {
+			//	EClassifier oclElement = OCLStandardLibraryImpl.INSTANCE.getOclElement();	-- no ocl features
+			//	EClassifier state = OCLStandardLibraryImpl.INSTANCE.getState();				-- no ocl features
+				Set<EClassifier> library = super.resolveLibrary();
+				TestCase.assertEquals("Library EClassifiers", 23, library.size());
+				Map<Class<?>, Integer> name2count = new HashMap<>();
+				for (EClassifier eClassifier : library) {
+					Class<? extends EClassifier> jClass = eClassifier.getClass();
+					Integer count = name2count.get(jClass);
+					name2count.put(jClass, count != null ? count+1 : 1);
+				}
+				TestCase.assertEquals("AnyTypeImpl", Integer.valueOf(3), name2count.get(AnyTypeImpl.class));				// OclAny, T, T2
+				TestCase.assertEquals("BagTypeImpl", Integer.valueOf(2), name2count.get(BagTypeImpl.class));				// Bag(T), Bag(T2)
+				TestCase.assertEquals("CollectionTypeImpl", Integer.valueOf(2), name2count.get(CollectionTypeImpl.class));	// Collection(T), Collection(T2)
+				TestCase.assertEquals("InvalidTypeImpl", Integer.valueOf(1), name2count.get(InvalidTypeImpl.class));		// OclInvalid
+				TestCase.assertEquals("MessageTypeImpl", Integer.valueOf(1), name2count.get(MessageTypeImpl.class));		// MessageType
+				TestCase.assertEquals("OrderedSetTypeImpl", Integer.valueOf(1), name2count.get(OrderedSetTypeImpl.class));	// OrderedSet(T)
+				TestCase.assertEquals("PrimitiveTypeImpl", Integer.valueOf(5), name2count.get(PrimitiveTypeImpl.class));	// Boolean, Integer, Real, String, UnlimitedNatural
+				TestCase.assertEquals("SequenceTypeImpl", Integer.valueOf(2), name2count.get(SequenceTypeImpl.class));		// Sequence(T), Sequence(T2)
+				TestCase.assertEquals("SetTypeImpl", Integer.valueOf(3), name2count.get(SetTypeImpl.class));				// Set(T), Set(T2), Set(Tuple...)
+				TestCase.assertEquals("TupleTypeImpl", Integer.valueOf(1), name2count.get(TupleTypeImpl.class));			// Tuple(...)
+				TestCase.assertEquals("TypeTypeImpl", Integer.valueOf(1), name2count.get(TypeTypeImpl.class));				// OclType
+				TestCase.assertEquals("VoidTypeImpl", Integer.valueOf(1), name2count.get(VoidTypeImpl.class));				// OclVoid
+				return library;
+			}
+    	};
     }
 
 	private void assertInvalidString(String input) {
