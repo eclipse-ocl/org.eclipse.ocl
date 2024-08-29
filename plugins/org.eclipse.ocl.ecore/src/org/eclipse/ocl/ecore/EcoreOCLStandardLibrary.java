@@ -10,11 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.ecore;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
@@ -47,6 +53,47 @@ public class EcoreOCLStandardLibrary implements OCLStandardLibrary<EClassifier>{
 	 */
 	private final OCLStandardLibraryImpl stdLibBuilder;
 
+	private static final class ENamedElementComparator implements Comparator<ENamedElement>
+	{
+		public static final ENamedElementComparator INSTANCE = new ENamedElementComparator();
+
+		@Override
+		public int compare(ENamedElement o1, ENamedElement o2) {
+			if (o1 == o2) {
+				return 0;		// Short circuit containment compare / independent searches
+			}
+			String n1 = o1.getName();
+			String n2 = o2.getName();
+			int comparison = safeCompareTo(n1, n2);
+			if (comparison != 0) {
+				return comparison;
+			}
+			if ((o1 instanceof EPackage) && (o2 instanceof EPackage)) {
+				n1 = ((EPackage)o1).getNsURI();
+				n2 = ((EPackage)o2).getNsURI();
+				comparison = safeCompareTo(n1, n2);
+				if (comparison != 0) {
+					return comparison;
+				}
+			}
+			EObject p1 = o1.eContainer();
+			EObject p2 = o2.eContainer();
+			if ((p1 instanceof ENamedElement) && (p2 instanceof ENamedElement)) {
+				return compare((ENamedElement)p1, (ENamedElement)p2);
+			}
+			return comparison;
+		}
+
+		public static <T extends Comparable<T>> int safeCompareTo(T object, T otherObject) {
+			if (object == null) {
+				return otherObject == null ? 0 : 1;
+			}
+			else {
+				return otherObject == null ? -1 : object.compareTo(otherObject);
+			}
+		}
+	}
+
 	public EcoreOCLStandardLibrary() {
 		super();
 		resolveLibrary();
@@ -60,7 +107,9 @@ public class EcoreOCLStandardLibrary implements OCLStandardLibrary<EClassifier>{
 		// Bug 582625 eagerly initialize the whole library - invoke all oclIterators/Operations/Properties.
 		// nb transitive type traversal needed to find the TupleType in the product() return.
 		Set<EClassifier> resolvedEClassifiers = new HashSet<>();
-		for (EClassifier eClassifier : OCLStandardLibraryImpl.stdlibPackage.getEClassifiers()) {
+		List<EClassifier> eClassifiers = new ArrayList<>(OCLStandardLibraryImpl.stdlibPackage.getEClassifiers());
+		Collections.sort(eClassifiers, ENamedElementComparator.INSTANCE);
+		for (EClassifier eClassifier : eClassifiers) {
 			resolveEClassifier(resolvedEClassifiers, eClassifier);
 		}
 		return resolvedEClassifiers;
@@ -72,8 +121,14 @@ public class EcoreOCLStandardLibrary implements OCLStandardLibrary<EClassifier>{
 	@SuppressWarnings("unchecked")
 	protected void resolveEClassifier(Set<EClassifier> resolvedEClassifiers, EClassifier eClassifier) {
 		if ((eClassifier instanceof PredefinedType<?>) && resolvedEClassifiers.add(eClassifier)) {
-		//	System.out.println("Resolve " + eClassifier);
-			for (EOperation eOperation : ((PredefinedType<EOperation>)eClassifier).oclOperations()) {
+			System.out.println("Resolve " + eClassifier);
+			List<EOperation> oclOperations = new ArrayList<>(((PredefinedType<EOperation>)eClassifier).oclOperations());
+			Collections.sort(oclOperations, ENamedElementComparator.INSTANCE);
+			int i = 0;
+			for (EOperation eOperation : oclOperations) {
+				System.out.println("\t " + i++ + " " + eOperation);
+			}
+			for (EOperation eOperation : oclOperations) {
 				resolveEOperation(resolvedEClassifiers, eOperation);
 			}
 			if (eClassifier instanceof CollectionType) {

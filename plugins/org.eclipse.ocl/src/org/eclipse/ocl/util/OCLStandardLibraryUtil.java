@@ -1984,10 +1984,16 @@ public final class OCLStandardLibraryUtil {
 			NOT_EMPTY_NAME));
 
 		OCLFactory oclFactory = env.getOCLFactory();
-		C resultType = getSetType(env, oclFactory, getTupleType(env,
-			oclFactory, createTupleParts(env, stdlib.getT(), stdlib.getT2())));
-		result.add(createBinaryOperation(uml, resultType, PRODUCT_NAME,
-			getCollectionType(env, oclFactory, stdlib.getT2()), "c2"));//$NON-NLS-1$
+		EList<Variable<C, PM>> tupleParts0 = createTupleParts(env, stdlib.getT(), stdlib.getT2());
+		C tupleType0 = getTupleType(env, oclFactory, tupleParts0);
+		C resultType0 = getSetType(env, oclFactory, tupleType0);
+		C collectionType0 = getCollectionType(env, oclFactory, stdlib.getT2());
+		result.add(createBinaryOperation(uml, resultType0, PRODUCT_NAME, collectionType0, "c2"));//$NON-NLS-1$
+	//	EList<Variable<C, PM>> tupleParts1 = createTupleParts(env, stdlib.getT(), stdlib.getT2());
+	//	C tupleType1 = getTupleType(env, oclFactory, tupleParts1);
+	//	C resultType1 = getSetType(env, oclFactory, tupleType1);
+	//	C collectionType1 = getCollectionType(env, oclFactory, stdlib.getT2());
+	//	result.add(createBinaryOperation(uml, resultType1, PRODUCT_NAME+"2", collectionType1, "c2"));//$NON-NLS-1$
 		result.add(createUnaryOperation(uml, stdlib.getReal(), SUM_NAME));
 		result.add(createUnaryOperation(uml, stdlib.getInteger(), SIZE_NAME));
 		result.add(createUnaryOperation(uml, stdlib.getReal(), MAX_NAME));

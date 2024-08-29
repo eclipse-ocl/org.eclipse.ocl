@@ -13,6 +13,8 @@ package org.eclipse.ocl.uml.tests;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -22,7 +24,19 @@ import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.ocl.uml.UMLOCLStandardLibrary;
+import org.eclipse.ocl.uml.impl.AnyTypeImpl;
+import org.eclipse.ocl.uml.impl.BagTypeImpl;
+import org.eclipse.ocl.uml.impl.CollectionTypeImpl;
+import org.eclipse.ocl.uml.impl.InvalidTypeImpl;
+import org.eclipse.ocl.uml.impl.MessageTypeImpl;
+import org.eclipse.ocl.uml.impl.OrderedSetTypeImpl;
+import org.eclipse.ocl.uml.impl.PrimitiveTypeImpl;
+import org.eclipse.ocl.uml.impl.SequenceTypeImpl;
+import org.eclipse.ocl.uml.impl.SetTypeImpl;
+import org.eclipse.ocl.uml.impl.TupleTypeImpl;
+import org.eclipse.ocl.uml.impl.TypeTypeImpl;
+import org.eclipse.ocl.uml.impl.VoidTypeImpl;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Enumeration;
@@ -30,6 +44,8 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.VisibilityKind;
+
+import junit.framework.TestCase;
 
 /**
  * Basic tests for OCL engine.
@@ -40,11 +56,11 @@ import org.eclipse.uml2.uml.VisibilityKind;
 @SuppressWarnings("nls")
 public class BasicOCLTest
 	extends AbstractTestSuite {
-    
+
     public void hide_test_createStandardLibrary() {
         Resource res = ocl.getEnvironment().getOCLStandardLibrary().getOclAny().eResource();
         URI oldURI = res.getURI();
-        
+
         res.setURI(URI.createFileURI("c:/temp/oclstdlib.uml"));
         try {
             res.save(Collections.EMPTY_MAP);
@@ -55,7 +71,7 @@ public class BasicOCLTest
             res.setURI(oldURI);
         }
     }
-    
+
     /**
      * Tests that the results of the <tt>oclOperations()</tt> and <tt>oclIterators()</tt>
      * methods are the same regardless of which is invoked first.
@@ -63,223 +79,223 @@ public class BasicOCLTest
     public void test_collectionsAndIteratorsAccess_222747() {
         CollectionType<Classifier, Operation> type = ocl.getEnvironment().getOCLFactory().createSetType(
                 ocl.getEnvironment().getOCLStandardLibrary().getOclInvalid());
-        
+
         Set<Operation> iterators = new java.util.HashSet<Operation>(type.oclIterators());
         Set<Operation> operations = new java.util.HashSet<Operation>(type.oclOperations());
-        
+
         // compute the set difference
         Set<Operation> difference = new java.util.HashSet<Operation>(operations);
         difference.removeAll(iterators);
-        
+
         assertEquals(difference.size(), operations.size());
         assertTrue(operations.size() > 0);
         assertTrue(iterators.size() > 0);
     }
-	
+
 	public void testTrivialExpressions() {
 		OCLExpression<Classifier> constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true " +
 			"endpackage");
-		
+
 		Object result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
 	}
-	
+
 	public void testLogicalConnectives() {
 		OCLExpression<Classifier> constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true and true " +
 			"endpackage");
-		
+
 		Object result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: false or false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true and false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true or false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: not true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true implies true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: true implies false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.FALSE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: false implies true " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
-		
+
 		constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: false implies false " +
 			"endpackage");
-		
+
 		result = evaluate(constraint);
 		assertEquals(Boolean.TRUE, result);
 	}
-	
+
 	public void testSimpleAttributeExpressions() {
-		Class eCls = umlf.createClass();
+		org.eclipse.uml2.uml.Class eCls = umlf.createClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<Classifier> constraint = parseConstraint(
 			"package UML context Class " +
 			"inv: self.name <> 'foo' " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
-		
+
 		eCls.setName("foo");
 		assertFalse(check(constraint, eCls));
 	}
-	
+
 	public void testCollectionExpressions() {
 		DataType eCls = umlf.createDataType();
 		eCls.setName("bar");
-		
+
 		eCls.createOwnedAttribute("att1", null);
 		eCls.createOwnedAttribute("att2", null);
-		
+
 		assertEquals(eCls.getOwnedAttributes().size(),2);
-		
+
 		OCLExpression<Classifier> constraint = parseConstraint(
 			"package UML context DataType " +
 			"inv: self.ownedAttribute->size() = 2 " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
-		
+
 		OCLExpression<Classifier> constraint2 = parseConstraint(
 			"package UML context DataType " +
 			"inv: Tuple{status:Boolean=self.ownedAttribute->size() = 2}.status " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint2, eCls));
-		
+
 		constraint = parseConstraint(
 			"package UML context DataType " +
 			"inv: self.ownedAttribute->forAll(a: Property | not a.isDerived) " +
 			"endpackage");
-		
+
 		assertTrue(check(constraint, eCls));
 	}
-	
+
 	public void testNonBooleansExpressions() {
 		Enumeration eCls = umlf.createEnumeration();
 		eCls.setName("bar");
-		
+
 		OCLExpression<Classifier> expr = parse(
 			"package UML context Enumeration " +
 			"inv: self.name " +
 			"endpackage ");
-		
+
 		Object result = evaluate(expr, eCls);
 		assertEquals("bar", result);
-		
+
 		expr = parse(
 			"package UML context Enumeration " +
 			"inv: self " +
 			"endpackage");
-		
+
 		result = evaluate(expr, eCls);
 		assertSame(eCls, result);
 	}
-	
+
 	public void testIfExpressions() {
-		Class eCls = umlf.createClass();
+		org.eclipse.uml2.uml.Class eCls = umlf.createClass();
 		eCls.setName("bar");
-		
+
 		OCLExpression<Classifier> expr = parse(
 			"package UML context Class " +
 			"inv: if self.isAbstract then name = 'bar' else name <> 'bar' endif " +
 			"endpackage ");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		eCls.setIsAbstract(true);
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("foo");
-		
+
 		assertFalse(check(expr, eCls));
 	}
-	
+
 	public void testLetExpressions() {
 		DataType eCls = umlf.createDataType();
 		eCls.setName("foo");
-		
+
 		OCLExpression<Classifier> expr = parse(
 			"package UML context DataType " +
 			"inv: let feats : OrderedSet(Property) = self.ownedAttribute in " +
 			"  feats->isEmpty() implies name <> 'bar' " +
 			"endpackage ");
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("bar");
-		
+
 		assertFalse(check(expr, eCls));
-		
+
 		eCls.createOwnedAttribute("att1", null);
-		
+
 		assertTrue(check(expr, eCls));
-		
+
 		eCls.setName("foo");
-		
+
 		assertTrue(check(expr, eCls));
 	}
-	
+
 	/**
 	 * Tests the support for data types as context classifiers, rather than
 	 * EClasses.  The parser now supports arbitrary EClassifiers.
@@ -289,18 +305,18 @@ public class BasicOCLTest
 			"package PrimitiveTypes context \"String\" " +
 			"inv: self.toUpper() <> self.toLower() " +
 			"endpackage ");
-		
+
 		assertTrue(check(expr, "anything"));
 		assertTrue(check(expr, "ANYTHING"));
-		
+
 		expr = parse(
 			"package PrimitiveTypes context \"String\" " +
 			"inv: self.toUpper() " +
 			"endpackage ");
-		
+
 		assertEquals("ANYTHING", evaluate(expr, "anything"));
 	}
-	
+
 	/**
 	 * Tests the overrides for equality of primitive values.  In OCL, reals
 	 * can equal integers, but not in Java.
@@ -310,30 +326,30 @@ public class BasicOCLTest
 		assertTrue(check("1 = 1.0"));
 		assertTrue(check("1.0 = 1"));
 		assertTrue(check("1.0 = 1.0"));
-		
+
 		assertTrue(check("'foo' = 'foo'"));
-		
+
 		assertTrue(check("ocltest::Color::red = ocltest::Color::red"));
 		assertFalse(check("ocltest::Color::red = ocltest::Color::black"));
 	}
-    
+
     public void test_evaluationEnvironment_getType_178901() {
-        EvaluationEnvironment<Classifier, Operation, Property, Class, EObject>
+        EvaluationEnvironment<Classifier, Operation, Property, org.eclipse.uml2.uml.Class, EObject>
         evalEnv = ocl.getEvaluationEnvironment();
-        
+
         assertSame(getMetametaclass("Package"), evalEnv.getType(fruitPackage));
         assertSame(getMetametaclass("Class"), evalEnv.getType(fruit));
         assertSame(getOCLStandardLibrary().getString(), evalEnv.getType("foo"));
         assertSame(getOCLStandardLibrary().getOclAny(), evalEnv.getType(this));
     }
-    
+
     /**
      * Tests the OclAny::oclIsKindOf() operation.
      */
     public void test_oclIsKindOf() {
         helper.setContext(getMetaclass("Stereotype"));
         Stereotype stereo = umlf.createStereotype();
-        
+
         try {
             assertTrue(check(helper, stereo, "self.oclIsKindOf(Class)"));
             assertTrue(check(helper, stereo, "self.oclIsKindOf(Stereotype)"));
@@ -342,14 +358,14 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests the OclAny::oclIsTypeOf() operation.
      */
     public void test_oclIsTypeOf_196264() {
         helper.setContext(getMetaclass("Stereotype"));
         Stereotype stereo = umlf.createStereotype();
-        
+
         try {
             assertFalse(check(helper, stereo, "self.oclIsTypeOf(Class)"));
             assertTrue(check(helper, stereo, "self.oclIsTypeOf(Stereotype)"));
@@ -358,19 +374,51 @@ public class BasicOCLTest
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
     }
-    
+
     /**
      * Tests that the value of an enumeration literal expression is the Java
      * enumerated type instance, not the <tt>EnumerationLiteral</tt> model element.
      */
     public void test_enumerationLiteralValue_198945() {
     	helper.setContext(getMetaclass("VisibilityKind"));
-        
+
         try {
             assertSame(VisibilityKind.PROTECTED_LITERAL,
                 evaluate(helper, VisibilityKind.PUBLIC_LITERAL, "VisibilityKind::protected"));
         } catch (ParserException e) {
             fail("Failed to parse or evaluate: " + e.getLocalizedMessage());
         }
+    }
+
+    public void testUMLOCLStandardLibrary() {
+    	new UMLOCLStandardLibrary()
+    	{
+			@Override
+			protected Set<Classifier> resolveLibrary() {
+			//	EClassifier oclElement = OCLStandardLibraryImpl.INSTANCE.getOclElement();	-- no ocl features
+			//	EClassifier state = OCLStandardLibraryImpl.INSTANCE.getState();				-- no ocl features
+				Set<Classifier> library = super.resolveLibrary();
+		// 31		TestCase.assertEquals("Library Classifiers", 23, library.size());
+				Map<Class<?>, Integer> name2count = new HashMap<>();
+				for (Classifier uClassifier : library) {
+					Class<? extends Classifier> jClass = uClassifier.getClass();
+					Integer count = name2count.get(jClass);
+					name2count.put(jClass, count != null ? count+1 : 1);
+				}
+				TestCase.assertEquals("AnyTypeImpl", Integer.valueOf(3), name2count.get(AnyTypeImpl.class));				// OclAny, T, T2
+				TestCase.assertEquals("BagTypeImpl", Integer.valueOf(2), name2count.get(BagTypeImpl.class));				// Bag(T), Bag(T2)
+				TestCase.assertEquals("CollectionTypeImpl", Integer.valueOf(2), name2count.get(CollectionTypeImpl.class));	// Collection(T), Collection(T2)
+				TestCase.assertEquals("InvalidTypeImpl", Integer.valueOf(1), name2count.get(InvalidTypeImpl.class));		// OclInvalid
+				TestCase.assertEquals("MessageTypeImpl", Integer.valueOf(1), name2count.get(MessageTypeImpl.class));		// MessageType
+				TestCase.assertEquals("OrderedSetTypeImpl", Integer.valueOf(1), name2count.get(OrderedSetTypeImpl.class));	// OrderedSet(T)
+				TestCase.assertEquals("PrimitiveTypeImpl", Integer.valueOf(5), name2count.get(PrimitiveTypeImpl.class));	// Boolean, Integer, Real, String, UnlimitedNatural
+				TestCase.assertEquals("SequenceTypeImpl", Integer.valueOf(2), name2count.get(SequenceTypeImpl.class));		// Sequence(T), Sequence(T2)
+				TestCase.assertEquals("SetTypeImpl", Integer.valueOf(3), name2count.get(SetTypeImpl.class));				// Set(T), Set(T2), Set(Tuple...)
+				TestCase.assertEquals("TupleTypeImpl", Integer.valueOf(1), name2count.get(TupleTypeImpl.class));			// Tuple(
+				TestCase.assertEquals("TypeTypeImpl", Integer.valueOf(1), name2count.get(TypeTypeImpl.class));				// OclType
+				TestCase.assertEquals("VoidTypeImpl", Integer.valueOf(1), name2count.get(VoidTypeImpl.class));				// OclVoid
+				return library;
+			}
+    	};
     }
 }
