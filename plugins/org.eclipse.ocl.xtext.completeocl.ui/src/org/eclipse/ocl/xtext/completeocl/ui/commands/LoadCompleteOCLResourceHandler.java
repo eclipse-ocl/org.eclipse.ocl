@@ -198,7 +198,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 							StringBuilder s = new StringBuilder();
 							if (!helper.loadDocument(oclURI, s)) {
 								return false;
-							};
+							}
 						}
 						catch (Throwable e) {
 							IStatus status = new Status(IStatus.ERROR, CompleteOCLUiModule.PLUGIN_ID, e.getLocalizedMessage(), e);

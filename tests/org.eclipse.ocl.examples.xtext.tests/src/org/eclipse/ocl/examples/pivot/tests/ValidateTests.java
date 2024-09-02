@@ -745,13 +745,19 @@ public class ValidateTests extends AbstractValidateTests
 			assertTrue(helper.loadMetamodels());
 			helper.installPackages();
 
+			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
+
 			@NonNull String[] messages = getMessages(//validationContext,
 				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library lib::Book b2"));
 			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
-			assertValidationDiagnostics("With Complete OCL", resource, messages);
+		//	assertValidationDiagnostics("With Complete OCL", resource, messages);
+			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+			ValidationContext validationContext = new ValidationContext(validationRegistry);
+		//	validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
+			assertValidationDiagnostics("With Complete OCL", resource, validationContext, messages);
 			//		disposeResourceSet(resourceSet);
 			helper.dispose();
 		}
