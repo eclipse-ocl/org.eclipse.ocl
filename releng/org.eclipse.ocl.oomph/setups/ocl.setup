@@ -52,7 +52,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2024-03"
+      defaultValue="2024-09"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -111,6 +111,27 @@
             url="https://download.eclipse.org/releases/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/latest"/>
+      </repositoryList>
+      <repositoryList
+          name="2024-12">
+        <repository
+            url="https://download.eclipse.org/releases/2024-12"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-12"/>
+      </repositoryList>
+      <repositoryList
+          name="2024-09">
+        <repository
+            url="https://download.eclipse.org/releases/2024-09"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-09"/>
+      </repositoryList>
+      <repositoryList
+          name="2024-06">
+        <repository
+            url="https://download.eclipse.org/releases/2024-06"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-06"/>
       </repositoryList>
       <repositoryList
           name="2024-03">
@@ -594,6 +615,12 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.22.0"
+        label="6.22.0 (2024-09)"/>
+    <stream
+        name="6.21.0"
+        label="6.21.0 (2024-06)"/>
+    <stream
         name="6.20.0"
         label="6.20.0 (2024-03)"/>
     <stream
@@ -802,6 +829,12 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.22.0"
+        label="6.22.0 (2024-09)"/>
+    <stream
+        name="6.21.0"
+        label="6.21.0 (2024-06)"/>
     <stream
         name="6.20.0"
         label="6.20.0 (2024-03)"/>
@@ -1383,6 +1416,12 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.22.0"
+        label="6.22.0 (2024-09)"/>
+    <stream
+        name="6.21.0"
+        label="6.21.0 (2024-06)"/>
     <stream
         name="6.20.0"
         label="6.20.0 (2024-03)"/>
