@@ -426,7 +426,7 @@ public class AbstractPivotTestCase extends TestCase
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
+		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(resource));
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}
 

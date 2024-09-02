@@ -150,7 +150,7 @@ public class ValidateTests extends AbstractValidateTests
 
 
 	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
-		EPackage ecoreEPackage = EcorePackage.eINSTANCE;
+	//	EPackage ecoreEPackage = EcorePackage.eINSTANCE;
 	//	EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
 		//
 		//	Create model
@@ -226,6 +226,8 @@ public class ValidateTests extends AbstractValidateTests
 
 
 		ocl.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testValidate_Bug366229_oclinecore() throws IOException, InterruptedException {
@@ -740,9 +742,12 @@ public class ValidateTests extends AbstractValidateTests
 					return false;
 				}
 			};
-			assertTrue(helper.loadDocument(testFile.getFileURI()));
+			URI oclURI = testFile.getFileURI();
+			String problems = helper.installDocuments(oclURI);
+			assertNull("Failed to load " + oclURI, problems);
 			assertTrue(helper.loadMetamodels());
-			helper.installPackages();
+
+			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
 
 			@NonNull String[] messages = getMessages(//validationContext,
 				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
@@ -751,6 +756,10 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library lib::Book b2"));
 			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
 			assertValidationDiagnostics("With Complete OCL", resource, messages);
+		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+		//	ValidationContext validationContext = new ValidationContext(validationRegistry);
+		//	validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
+		//	assertValidationDiagnostics("With Complete OCL", resource, validationContext, messages);
 			//		disposeResourceSet(resourceSet);
 			helper.dispose();
 		}
@@ -821,9 +830,10 @@ public class ValidateTests extends AbstractValidateTests
 				return false;
 			}
 		};
+		URI oclURI = testFile.getFileURI();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		assertTrue(helper.loadMetamodels());
-		assertTrue(helper.loadDocument(testFile.getFileURI()));
-		helper.installPackages();
 		String objectLabel1 = LabelUtil.getLabel(uNamed);
 		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
 		//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());

@@ -329,7 +329,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 			}
 		}
 		if (metamodelManager == null) {
-			metamodelManager = delegateDomain.getMetamodelManager();
+			metamodelManager = delegateDomain.getMetamodelManager();				// XXX why ignore ResourceSet
 		}
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);

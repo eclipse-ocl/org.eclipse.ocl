@@ -253,8 +253,8 @@ public abstract class AbstractValidityTestCase extends TestCase
 		if (oclResource2 == null) {
 			fail(helper.toString());
 		}
-		assertTrue(helper.loadMetamodels());
-		helper.installPackages();
+		String problems = helper.installDocuments();
+		assertNull("Failed to install " + oclURI + " and " + oclURI2, problems);
 
 		helper.dispose();
 	}
