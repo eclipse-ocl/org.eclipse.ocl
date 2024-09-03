@@ -246,15 +246,24 @@ public class PivotUtilInternal //extends PivotUtil
 		if (environmentFactory == null) {
 			ProjectManager projectManager = null;
 			ResourceSet asResourceSet = null;
-			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
-				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
-				projectManager = ProjectMap.findAdapter(asResourceSet);
+			ResourceSet externalResourceSet = null;
+			if (resource != null) {
+				ResourceSet resourceSet = resource.getResourceSet();
+				if (resourceSet != null) {
+					projectManager = ProjectMap.findAdapter(resourceSet);
+					if (resource instanceof ASResource) {
+						asResourceSet = resourceSet;
+					}
+					else  {
+						externalResourceSet = resourceSet;
+					}
+				}
 			}
 			if (projectManager == null) {
 				projectManager = ProjectManager.CLASS_PATH;
 			}
 		//	environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactoryIgnoringEnvironmentFactoryAdapter(projectManager, null, asResourceSet);  // XXX
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactoryIgnoringEnvironmentFactoryAdapter(projectManager, externalResourceSet, asResourceSet);  // XXX
 			ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 		}
 		return environmentFactory;
