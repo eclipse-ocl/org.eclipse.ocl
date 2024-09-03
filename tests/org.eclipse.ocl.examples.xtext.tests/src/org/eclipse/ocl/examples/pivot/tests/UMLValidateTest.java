@@ -210,13 +210,9 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels");
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
+		assertTrue(helper.loadMetamodels());
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("lowercase");
 		//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
@@ -255,13 +251,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
 		disposeResourceSet(resourceSet);
@@ -290,13 +281,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
 		disposeResourceSet(resourceSet);
@@ -466,13 +452,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
 		Stereotype appliedStereotype = umlClass1.getAppliedStereotype("Profile1::St1");

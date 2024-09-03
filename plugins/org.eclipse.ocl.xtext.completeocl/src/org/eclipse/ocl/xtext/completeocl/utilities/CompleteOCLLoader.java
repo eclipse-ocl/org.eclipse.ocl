@@ -102,6 +102,10 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadMetamodels() {
+		return loadMetamodels(null);
+	}
+
+	public boolean loadMetamodels(@Nullable StringBuilder sErrors) {
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		List<@NonNull Resource> esResources = ocl.getResourceSet().getResources();
 		for (int index = 0; index < esResources.size(); index++) {		// Tolerate 'concurrent' profile resolution
@@ -135,7 +139,9 @@ public abstract class CompleteOCLLoader
 				mmResources.add(mmResource);
 			}
 		}
+		boolean allOk = true;
 		for (@NonNull Resource  mmResource : mmResources) {
+			String message2 = null;
 			try {
 				Element pivotModel = environmentFactory.loadResource(mmResource, null);
 				if (pivotModel != null) {
@@ -143,20 +149,54 @@ public abstract class CompleteOCLLoader
 					assert errors != null;
 					String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 					if (message != null) {
-						return error("Failed to load Pivot from '" + mmResource.getURI(), message);
+						message2 = message;
 					}
 				}
 				else {
-					return error("Failed to load Pivot from '" + mmResource.getURI(), "");
+					message2 = "";
 				}
 			} catch (ParserException e) {
-				return error("Failed to load Pivot from '" + mmResource.getURI(), e.getMessage());
+				message2 = e.getMessage();
+			}
+			if (message2 != null) {
+				allOk = false;
+				String message1 = "Failed to load Pivot from '" + mmResource.getURI();
+				if (sErrors != null) {
+					if (sErrors.length() > 0) {
+						sErrors.append("\n");
+					}
+					sErrors.append(message1 + message2);
+				}
+				else {
+					return error(message1, message2);
+				}
 			}
 		}
-		return true;
+		return allOk;
 	}
 
 	protected abstract boolean error(@NonNull String primaryMessage, @Nullable String detailMessage);
+
+	/**
+	 * Install each of the oclURIs documents, then loadMetamodels and finally installPackages.
+	 *
+	 * Returns a non-null String describing any problems.
+	 */
+	public @Nullable String installDocuments(@NonNull URI... oclURIs) {
+		StringBuilder s = new StringBuilder();
+		if (oclURIs != null) {
+			for (URI oclURI : oclURIs) {
+				if (!loadDocument(oclURI, s)) {
+					return s.toString();
+				}
+			}
+		}
+		if (!loadMetamodels(s)) {
+			return s.toString();
+		}
+		installPackages();
+		return null;
+	}
 
 	public void installPackages() {
 		//
