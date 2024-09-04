@@ -212,7 +212,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
-		assertTrue(helper.loadMetamodels());
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("lowercase");
 		//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
