@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.Element"/>
-                <message_argument value="getESNotifier()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.NumberValue"/>
                 <message_argument value="asNumber()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore$InverseConversion">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion"/>
+                <message_argument value="asModel"/>
             </message_arguments>
         </filter>
     </resource>
@@ -37,12 +37,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceImpl.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
-                <message_argument value="PROXIES"/>
-            </message_arguments>
-        </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
@@ -71,6 +65,12 @@
                 <message_argument value="REGISTRY"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.Attribution"/>
+                <message_argument value="ATTRIBUTION_REGISTRY"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
         <filter id="404000815">
@@ -83,6 +83,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="loadCompleteOCLResource(EPackage, URI)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/External2AS.java" type="org.eclipse.ocl.pivot.internal.utilities.External2AS">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.External2AS"/>
+                <message_argument value="setEcoreURI(URI)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -103,64 +111,10 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
-        <filter id="403804204">
+        <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="createCS2AS(EnvironmentFactoryInternal, ASResource)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="reloadIn(EnvironmentFactory)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="addExternal2ASNew(External2AS)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="addExternalResource(Resource)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="createTemplateParameterSubstitutionVisitor(Type, Type)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="getES2AS(Resource)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="loadCompleteOCLResource(EPackage, URI)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="loadExternalElement(URI)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="loadImportedElement(URI)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="removeExternalResource(External2AS)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -178,12 +132,20 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="reloadIn(EnvironmentFactory)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource$CSResourceExtension2">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2"/>
                 <message_argument value="isDerived()"/>
             </message_arguments>
         </filter>
-        <filter id="404000815">
+        <filter id="405901410">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2"/>
                 <message_argument value="setDerived(boolean)"/>
             </message_arguments>
         </filter>

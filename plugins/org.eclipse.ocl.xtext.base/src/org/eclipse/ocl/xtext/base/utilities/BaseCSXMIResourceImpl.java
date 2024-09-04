@@ -332,10 +332,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	 */
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
 
-	@Override
-	public boolean isDerived() {												// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
@@ -348,11 +344,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource(); */
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
 		throw new UnsupportedOperationException();
 	}
 

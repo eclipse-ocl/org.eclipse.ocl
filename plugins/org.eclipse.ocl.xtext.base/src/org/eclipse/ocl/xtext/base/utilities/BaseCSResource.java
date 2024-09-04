@@ -94,7 +94,6 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 * Return true if this BaseCSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
-	@Override
 	boolean isDerived();
 
 	/**
@@ -111,7 +110,6 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 * Set whether this BaseCSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
-	@Override
 	void setDerived(boolean isDerived);
 
 	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */

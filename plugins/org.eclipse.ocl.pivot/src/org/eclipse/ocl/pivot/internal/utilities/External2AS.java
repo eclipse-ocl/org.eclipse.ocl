@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -50,7 +51,7 @@ public interface External2AS
 	/**
 	 * Return the AS model that results from this conversion.
 	 *
-	 * FIXME Only the asResource is a tually needed, and only by UML support.
+	 * FIXME Only the asResource is a actually needed, and only by UML support.
 	 */
 	@NonNull Model getASModel() throws ParserException;
 
@@ -62,7 +63,7 @@ public interface External2AS
 	/**
 	 * Return the map of all external objects to all AS elements.
 	 */
-	@Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap();
+	@Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap();
 
 	/**
 	 * Return the external resource.
@@ -73,4 +74,9 @@ public interface External2AS
 	 * Return the URI of the external resource.
 	 */
 	@NonNull URI getURI();
+
+	/**
+	 * @since 1.23
+	 */
+	default void setEcoreURI(@NonNull URI uri) {}
 }

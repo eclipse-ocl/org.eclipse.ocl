@@ -108,7 +108,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * @since 1.23
 	 */
 	default @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	/**
@@ -116,7 +116,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * @since 1.23
 	 */
 	default @NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	/**
@@ -148,7 +148,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * @since 1.23
 	 */
 	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();					// XXX
 	}
 
 	/**

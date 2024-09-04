@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -220,14 +221,14 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * Mapping of source Ecore objects to their resulting pivot element in a previous conversion.
+	 * Mapping of source Ecore elements to their resulting pivot element in a previous conversion.
 	 */
 	private Map<@NonNull String, @NonNull Element> oldIdMap = null;
 
 	/**
-	 * Mapping of source Ecore objects to their resulting pivot element in the current conversion.
+	 * Mapping of source Ecore elements to their resulting pivot element in the current conversion.
 	 */
-	private Map<@NonNull EObject, @NonNull Element> newCreateMap = null;
+	private Map<@NonNull Notifier, @NonNull Element> newCreateMap = null;
 
 	/**
 	 * Set of all Ecore objects requiring further work during the reference pass.
@@ -284,9 +285,17 @@ public class Ecore2AS extends AbstractExternal2AS
 		this.environmentFactory.addExternal2AS(this);
 	}
 
-	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
+	/**
+	 * @since 1.23
+	 */
+	protected void addCreated(@NonNull Notifier eNotifier, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
-		Element oldElement = newCreateMap.put(eObject, pivotElement);
+		Element oldElement = newCreateMap.put(eNotifier, pivotElement);
+	}
+
+	@Deprecated /* @deprecated use Notifier argument */
+	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
+		addCreated((Notifier)eObject, pivotElement);
 	}
 
 	@Override
@@ -306,7 +315,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			assert eDataTypes != null;
 			eDataTypes.add((EDataType) eObject);
 		}
-		addCreated(eObject, pivotElement1);
+		addCreated((Notifier)eObject, pivotElement1);
 	}
 
 	@Override
@@ -344,7 +353,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				Ecore2AS converter = getAdapter(resource, environmentFactory);
 				if (allConverters.add(converter)) {
 					converter.getASModel();
-					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
+					for (Map.Entry<@NonNull Notifier, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
 						addCreated(entry.getKey(), entry.getValue());
 					}
 				}
@@ -403,7 +412,7 @@ public class Ecore2AS extends AbstractExternal2AS
 					converter.getASModel();
 					//					allEClassifiers.addAll(converter.allEClassifiers);
 					//					allNames.addAll(converter.allNames);
-					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
+					for (Map.Entry<@NonNull Notifier, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
 						addCreated(entry.getKey(), entry.getValue());
 					}
 				}
@@ -458,7 +467,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+	public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
 		assert eDataTypes == null;
 		return newCreateMap;
 	}
@@ -489,14 +498,14 @@ public class Ecore2AS extends AbstractExternal2AS
 			AnyType asAnyType = standardLibrary.basicGetOclAnyType();
 			org.eclipse.ocl.pivot.Package asLibrary = asAnyType != null ? asAnyType.getOwningPackage() : null;
 			if (asLibrary != null) {
-				addCreated(libraryEPackage, asLibrary);
+				addCreated((Notifier)libraryEPackage, asLibrary);
 				List<org.eclipse.ocl.pivot.Class> ownedTypes = asLibrary.getOwnedClasses();
 				//			int prefix = LibraryConstants.ECORE_STDLIB_PREFIX.length();
 				for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : libraryEPackage.getEClassifiers()) {
 					String name = environmentFactory.getTechnology().getOriginalName(eClassifier); //.substring(prefix);
 					Type asType = NameUtil.getNameable(ownedTypes, name);
 					if (asType != null) {
-						addCreated(eClassifier, asType);
+						addCreated((Notifier)eClassifier, asType);
 					}
 				}
 				Model containingRoot = PivotUtil.getContainingModel(asLibrary);
@@ -543,11 +552,11 @@ public class Ecore2AS extends AbstractExternal2AS
 		return pivotModel2;
 	}
 
-	private @Nullable Map<@NonNull EObject, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
+	private @Nullable Map<@NonNull Notifier, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
 		Model pivotModel2 = pivotModel;
 		assert pivotModel2 != null;
 		if (asResource instanceof OCLmetamodel) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
+			Map<@NonNull Notifier, @NonNull Element> createMap = new HashMap<>();
 			for (TreeIterator<EObject> tit = pivotModel2.eAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				if (eObject instanceof Element) {
@@ -566,7 +575,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			return createMap;
 		}
 		else if (asResource instanceof OCLstdlib) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
+			Map<@NonNull Notifier, @NonNull Element> createMap = new HashMap<>();
 			for (EObject eObject : new TreeIterable(pivotModel2, false)) {
 				if (eObject instanceof Element) {
 					Element asElement = (Element)eObject;
@@ -847,7 +856,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-	/*	Element oldElement = */ addCreated(eModelElement, castElement);
+	/*	Element oldElement = */ addCreated((Notifier)eModelElement, castElement);
 	//	assert oldElement == null;
 		return castElement;
 	}
@@ -887,7 +896,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		for (@NonNull EDataType eDataType : eDataTypes) {
 			Type pivotType = ecore2asMap.get(eDataType);
 			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				addCreated(eDataType, pivotType);	// remap to the library type
+				addCreated((Notifier)eDataType, pivotType);	// remap to the library type
 			}
 		}
 		eDataTypes = null;
@@ -1023,7 +1032,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		for (@NonNull EGenericType eGenericType : genericTypes) {
 			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
 			if (pivotType != null) {
-				addCreated(eGenericType, pivotType);
+				addCreated((Notifier)eGenericType, pivotType);
 			}
 		}
 		genericTypes = null;
@@ -1099,7 +1108,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			pivotType = resolveSimpleType(eClassifier);
 		}
 		if (pivotType != null) {
-			addCreated(eGenericType, pivotType);
+			addCreated((Notifier)eGenericType, pivotType);
 		}
 		return pivotType;
 	}
@@ -1146,7 +1155,8 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * Define the loadableURI to be used to form the AS URI that is then used as part of the serialized XMI.
 	 */
-	public void setEcoreURI(URI ecoreURI) {
+	@Override
+	public void setEcoreURI(@NonNull URI ecoreURI) {
 		this.ecoreURI = ecoreURI;
 	}
 

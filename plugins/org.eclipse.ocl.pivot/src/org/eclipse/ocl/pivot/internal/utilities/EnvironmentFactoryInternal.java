@@ -183,7 +183,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * @since 1.23
 	 */
 	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) {
-		return null;
+		return null;			// XXX
 	}
 
 	/**

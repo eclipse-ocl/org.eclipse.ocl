@@ -41,7 +41,9 @@ public interface CSResource extends Resource
 	 * Create the CS2AS converter for the asResource conversions using environmentFactory.
 	 * @since 1.23
 	 */
-	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+		throw new UnsupportedOperationException();		// XXX
+	}
 
 	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
@@ -67,7 +69,7 @@ public interface CSResource extends Resource
 	 * @since 1.23
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	/**
@@ -86,22 +88,6 @@ public interface CSResource extends Resource
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
 	@NonNull ProjectManager getProjectManager();
 
-	/**
-	 * Return true if this CSResource is derived from an ASResource.
-	 * @since 1.23
-	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default boolean isDerived() {
-		return false;
-	}
-
-	/**
-	 * Set whether this CSResource is derived from an ASResource.
-	 * @since 1.23
-	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default void setDerived(boolean isDerived) {}
-
 	@Deprecated /* @deprecated only for BaseCSResource */
 	void setParserContext(@Nullable ParserContext parserContext);
 
@@ -119,5 +105,7 @@ public interface CSResource extends Resource
 	/**
 	 * @since 1.23
 	 */
-	ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory);			// XXX
+	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+		throw new UnsupportedOperationException();
+	}
 }
