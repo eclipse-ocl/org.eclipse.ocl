@@ -159,8 +159,8 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.23
 	 */
-	public static void initialize2(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
-		lazyInitializeGlobals2(oclDelegateURI, true);
+	public static void initialize2(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {		// XXX
+		lazyInitializeGlobalValidationRegistry(oclDelegateURI, true, true);
 		if (resourceSet != null) {
 			lazyInitializeLocals2(resourceSet, oclDelegateURI, true, null);
 		}
@@ -289,24 +289,22 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			if (forceInitialization || !settingRegistry.containsKey(oclDelegateURI)) {
 				settingRegistry.put(oclDelegateURI, new OCLSettingDelegateFactory.Global());
 			}
-			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				validationRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory.Global());
-			}
+			lazyInitializeGlobalValidationRegistry(oclDelegateURI, forceInitialization, false);
 			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
 			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {
 				queryRegistry.put(oclDelegateURI, new OCLQueryDelegateFactory.Global());
 			}
 		}
 	}
+
 	/**
 	 * @since 1.23
 	 */
-	public static void lazyInitializeGlobals2(@NonNull String oclDelegateURI, boolean forceInitialization) {
+	public static void lazyInitializeGlobalValidationRegistry(@NonNull String oclDelegateURI, boolean forceInitialization, boolean isCompleteOCL) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
 			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				validationRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory.CompleteOCL());
+				validationRegistry.put(oclDelegateURI, isCompleteOCL ? new OCLValidationDelegateFactory.CompleteOCL() : new OCLValidationDelegateFactory.Global());
 			}
 		}
 	}

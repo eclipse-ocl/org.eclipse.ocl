@@ -54,7 +54,7 @@ public class PivotStandaloneSetup //implements ISetup
 
 	public static void init() {
 		OCLDelegateDomain.lazyInitializeGlobals(PivotConstants.OCL_DELEGATE_URI_PIVOT, false);
-		OCLDelegateDomain.lazyInitializeGlobals2(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, false);	// XXX
+		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, false, true);
 		OCLASResourceFactory theOCLASResourceFactory = OCLASResourceFactory.getInstance();
 		OCLstdlib.lazyInstall();
 		OCLmetamodel.lazyInstall();
