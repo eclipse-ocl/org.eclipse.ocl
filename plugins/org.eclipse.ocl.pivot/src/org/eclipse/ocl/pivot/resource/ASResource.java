@@ -149,7 +149,7 @@ public interface ASResource extends XMIResource
 	/**
 	 * Avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default void setSkipPreUnload(boolean isSkipPreUnload) {}
 

@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
 
@@ -127,7 +127,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public @Nullable Notifier getReloadableNotifier() {
 		InternalEObject eInternalContainer = eInternalContainer();
@@ -177,7 +177,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * preUnload() is invoked to support the depth-first traversal of an ASResource contents from ASResourceImpl.doUnload().
 	 * The traversal assigns proxies from the esObject that is then set to null. Other pivot artefacts are also reset.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void preUnload() {
 	    assert eResource() != null;
@@ -309,7 +309,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
 	 * bypass bloated AS such as Import.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		return null;
@@ -336,7 +336,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * <br>
 	 * For elements without 1:1 CS2AS such as ParameterVariable the Parameter / context type's URI is assigned.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected boolean setReloadableProxy() {
 		Notifier esProxyTarget = getReloadableNotifier();
@@ -348,7 +348,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected boolean setReloadableProxy(@Nullable Notifier notifier) {
 		if ((notifier instanceof EObjectImpl) && ((EObject)notifier).eIsProxy()) {
@@ -383,7 +383,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	/**
 	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void tearDownESObject() {
 		if ((esObject != null) && eIsProxy()) {

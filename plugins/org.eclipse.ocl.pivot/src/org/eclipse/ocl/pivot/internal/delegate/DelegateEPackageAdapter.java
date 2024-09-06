@@ -105,7 +105,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public synchronized @NonNull Map<String, DelegateDomain> getDelegateDomains(boolean force) {
 		Map<String, DelegateDomain> delegateDomainMap2 = delegateDomainMap;

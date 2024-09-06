@@ -118,7 +118,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static void diagnoseLiveEnvironmentFactories() {
 		if ((liveEnvironmentFactories != null) && !liveEnvironmentFactories.isEmpty()) {

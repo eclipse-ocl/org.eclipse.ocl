@@ -60,7 +60,7 @@ public interface PivotConstants
 	static final @NonNull String DOT_OCL_AS_FILE_EXTENSION = "." + OCL_AS_FILE_EXTENSION;
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	static final @NonNull String OCL_CS_FILE_EXTENSION = "oclcs";
 
@@ -203,7 +203,7 @@ public interface PivotConstants
 	/**
 	 * The delegate URI for run-time synthesised Ecore annotations to support Complete OCL document using the Pivot evaluator.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	static final @NonNull String OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL = OCLConstants.OCL_DELEGATE_URI_PIVOT + "/CompleteOCL";
 }

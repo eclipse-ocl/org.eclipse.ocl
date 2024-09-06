@@ -800,7 +800,7 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override @Deprecated
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {

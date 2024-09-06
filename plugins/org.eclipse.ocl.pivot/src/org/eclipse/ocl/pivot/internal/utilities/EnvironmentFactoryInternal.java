@@ -170,7 +170,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull Technology getTechnology();
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default boolean isDisposing() { return false; }
 
@@ -180,7 +180,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
 	 * overheads up front. Returns the ASResource if successful.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) {
 		return null;
