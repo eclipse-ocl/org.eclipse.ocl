@@ -102,8 +102,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 		try {
 			pivotModel = conversion.getASModel();
 		} catch (ParserException e) {
-			// XXX TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException(e);				// Never happens in inverse direction
 		}
 		String uriFragment = uri != null ? uri.fragment() : null;
 		if (uriFragment == null) {

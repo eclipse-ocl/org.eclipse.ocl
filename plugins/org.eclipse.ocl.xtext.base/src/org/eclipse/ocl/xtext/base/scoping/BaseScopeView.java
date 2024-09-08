@@ -261,6 +261,9 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public /*@NonNull*/ Iterable<IEObjectDescription> getElements(QualifiedName name) {
 		if (name == null)
 			throw new NullPointerException("name"); //$NON-NLS-1$
+		if ("Simple.oclinecore".equals(name.toString())) {
+			getClass();		// XXX
+		}
 		EnvironmentView environmentView = createEnvironmentView(name.toString());
 		int size = environmentView.computeLookups(this);
 		if (size <= 0) {

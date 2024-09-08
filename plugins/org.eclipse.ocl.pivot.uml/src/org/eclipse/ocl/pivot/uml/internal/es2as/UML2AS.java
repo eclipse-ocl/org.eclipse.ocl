@@ -1555,6 +1555,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 		addCreated(umlElement, pivotElement);
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
 	public void setEcoreURI(@NonNull URI ecoreURI) {
 		throw new IllegalStateException();			// XXX
