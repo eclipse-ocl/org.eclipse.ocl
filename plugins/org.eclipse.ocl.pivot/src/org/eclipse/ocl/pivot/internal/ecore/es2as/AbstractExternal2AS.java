@@ -71,6 +71,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	public void dispose() {
 		Model pivotModel2 = basicGetPivotModel();
 		if (pivotModel2 != null) {
+		//	metamodelManager.uninstall(pivotModel2);
 			Resource asResource = pivotModel2.eResource();
 			if (asResource != null) {
 				asResource.unload();

@@ -512,39 +512,13 @@ public class DelegateInstaller
 		return oclAnnotation;
 	}
 
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return environmentFactory;
-	}
-
-	public @Nullable String getExportDelegateURI() {
-		return exportDelegateURI;
-	}
-
-	//	public @NonNull MetamodelManager getMetamodelManager() {
-	//		return metamodelManager;
-	//	}
-
-
 	/**
+	 * Analyze asResource and return all EPackages to ePackages and all Class invariant Constraints to eClass2constraints.
 	 * @since 1.23
 	 */
-	public static @NonNull EValidator init(@NonNull EnvironmentFactory environmentFactory) {
-		return DynamicEcoreValidator.get(environmentFactory);
-	}
-
-	/**
-	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations
-	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
-	 *
-	 * @since 1.23
-	 */
-	public void installCompleteOCLDelegates(@NonNull ASResource asResource) {
+	protected void gatherConstraints(@NonNull ASResource asResource, @NonNull List<@NonNull EPackage> ePackages,
+			@NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints) {
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
-		//
-		//	Determine AS Constraints per EClass and the containing EPackages.
-		//
-		List<@NonNull EPackage> ePackages = new UniqueList<>();
-		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
 		for (EObject eObject : new TreeIterable(asResource)) {
 			if (eObject instanceof Constraint) {
 				Constraint asConstraint = (Constraint)eObject;
@@ -572,6 +546,41 @@ public class DelegateInstaller
 				}
 			}
 		}
+	}
+
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return environmentFactory;
+	}
+
+	public @Nullable String getExportDelegateURI() {
+		return exportDelegateURI;
+	}
+
+	//	public @NonNull MetamodelManager getMetamodelManager() {
+	//		return metamodelManager;
+	//	}
+
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EValidator init(@NonNull EnvironmentFactory environmentFactory) {
+		return DynamicEcoreValidator.get(environmentFactory);
+	}
+
+	/**
+	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations
+	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
+	 *
+	 * @since 1.23
+	 */
+	public void installCompleteOCLDelegates(@NonNull ASResource asResource) {
+		//
+		//	Determine AS Constraints per EClass and the containing EPackages.
+		//
+		List<@NonNull EPackage> ePackages = new UniqueList<>();
+		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
+		gatherConstraints(asResource, ePackages, eClass2constraints);
 		//
 		//	Install EClass EAnnotations for AS Constraints.
 		//
@@ -580,9 +589,9 @@ public class DelegateInstaller
 			UniqueList<@NonNull Constraint> asConstraints = entry.getValue();
 			Collections.sort(asConstraints, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull String> newConstraintNames = new UniqueList<>();
-			EAnnotation eClassAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
-			if (eClassAnnotation != null) {
-				String oldConstraintNames = eClassAnnotation.getDetails().get("constraints");
+			EAnnotation constraintNamesAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+			if (constraintNamesAnnotation != null) {
+				String oldConstraintNames = constraintNamesAnnotation.getDetails().get("constraints");
 				StringTokenizer stringTokenizer = new StringTokenizer(oldConstraintNames);
 				while (stringTokenizer.hasMoreTokens()) {
 					String oldConstraintName = stringTokenizer.nextToken();
@@ -590,28 +599,28 @@ public class DelegateInstaller
 					newConstraintNames.add(oldConstraintName);
 				}
 			}
+			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 			for (@NonNull Constraint asConstraint : asConstraints) {
 				String constraintName = asConstraint.getName();
 				if (constraintName == null) {
-					constraintName = "";
+					constraintName = "$$" + asConstraints.indexOf(asConstraint);
 				}
-				newConstraintNames.add(constraintName);			// XXX bad name
-				EAnnotation eAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-				if (eAnnotation == null) {
-					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-					eClass.getEAnnotations().add(eAnnotation);
+				newConstraintNames.add(constraintName);
+				if (completeOCLbodiesAnnotation == null) {
+					completeOCLbodiesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					completeOCLbodiesAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+					eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
 				}
-				String old = eAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
-				((ConstraintImpl)asConstraint).setESObject(eAnnotation);
+				String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
+				((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 			}
 			Collections.sort(newConstraintNames);
 			String splicedConstraintNames = StringUtil.splice(newConstraintNames, " ");
-			if (eClassAnnotation == null) {
+			if (constraintNamesAnnotation == null) {
 				EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, "constraints", splicedConstraintNames);
 			}
 			else {
-				eClassAnnotation.getDetails().put("constraints", splicedConstraintNames);
+				constraintNamesAnnotation.getDetails().put("constraints", splicedConstraintNames);
 			}
 		}
 		//
@@ -798,17 +807,17 @@ public class DelegateInstaller
 				}
 			}
 		}
-		EAnnotation eAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
+		EAnnotation constraintNamesAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if (s != null) {
-			if (eAnnotation == null) {
-				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(EcorePackage.eNS_URI);
-				eClassifier.getEAnnotations().add(/*0,*/ eAnnotation);
+			if (constraintNamesAnnotation == null) {
+				constraintNamesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				constraintNamesAnnotation.setSource(EcorePackage.eNS_URI);
+				eClassifier.getEAnnotations().add(/*0,*/ constraintNamesAnnotation);
 			}
-			eAnnotation.getDetails().put("constraints", s.toString());
+			constraintNamesAnnotation.getDetails().put("constraints", s.toString());
 		}
 		else {
-			eClassifier.getEAnnotations().remove(eAnnotation);
+			eClassifier.getEAnnotations().remove(constraintNamesAnnotation);
 		}
 	}
 
@@ -860,5 +869,103 @@ public class DelegateInstaller
 			eAnnotations.remove(annotation4);
 		}
 		return oclAnnotation;
+	}
+
+	/**
+	 * Synthesize the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations
+	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
+	 *
+	 * @since 1.23
+	 */
+	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) {
+		//
+		//	Determine AS Constraints per EClass and the containing EPackages.
+		//
+		List<@NonNull EPackage> ePackages = new UniqueList<>();
+		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
+		gatherConstraints(asResource, ePackages, eClass2constraints);
+		//
+		//	Uninstall EClass EAnnotations for AS Constraints.
+		//
+		for (Map.Entry<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> entry : eClass2constraints.entrySet()) {
+			EClass eClass = entry.getKey();
+			UniqueList<@NonNull Constraint> asConstraints = entry.getValue();
+			Collections.sort(asConstraints, NameUtil.NAMEABLE_COMPARATOR);
+			List<@NonNull String> newConstraintNames = new UniqueList<>();
+			EAnnotation constraintNamesAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+			if (constraintNamesAnnotation != null) {
+				String oldConstraintNames = constraintNamesAnnotation.getDetails().get("constraints");
+				StringTokenizer stringTokenizer = new StringTokenizer(oldConstraintNames);
+				while (stringTokenizer.hasMoreTokens()) {
+					String oldConstraintName = stringTokenizer.nextToken();
+					assert oldConstraintName != null;
+					newConstraintNames.add(oldConstraintName);
+				}
+			}
+			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+			if (completeOCLbodiesAnnotation != null) {
+				for (@NonNull Constraint asConstraint : asConstraints) {
+					String constraintName = asConstraint.getName();
+					if (constraintName == null) {
+						constraintName = "$$" + asConstraints.indexOf(asConstraint);
+					}
+					newConstraintNames.remove(constraintName);
+					String old = completeOCLbodiesAnnotation.getDetails().removeKey(constraintName);			// XXX toString
+				//	((ConstraintImpl)asConstraint).setESObject(null);
+				}
+				if (newConstraintNames.size() > 0) {
+					Collections.sort(newConstraintNames);
+					String splicedConstraintNames = StringUtil.splice(newConstraintNames, " ");
+					if (constraintNamesAnnotation == null) {
+						EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, "constraints", splicedConstraintNames);
+					}
+					else {
+						constraintNamesAnnotation.getDetails().put("constraints", splicedConstraintNames);
+					}
+				}
+				else {
+					if (completeOCLbodiesAnnotation.getDetails().size() <= 0) {
+						eClass.getEAnnotations().remove(completeOCLbodiesAnnotation);
+					}
+				}
+			}
+		}
+		//
+		//	Uninstall EPackage EAnnotations and force DelegateEPackageAdapter recomputation.
+		//
+		for (EPackage ePackage : ePackages) {
+			boolean usesCompleteOCL = false;
+			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+				EAnnotation completeOCLbodiesAnnotation = eClassifier.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				if (completeOCLbodiesAnnotation != null) {
+					usesCompleteOCL = true;
+				}
+			}
+			if (!usesCompleteOCL) {
+				List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
+				if (validationDelegates.remove(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+					validationDelegates = Lists.newArrayList(validationDelegates);
+				//	validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+					EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
+					DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(ePackage);
+					if (adapter != null) {
+						adapter.getDelegateDomains(true);			// Force recomputation without delegateURI
+					}
+				}
+				EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+				if (eValidator instanceof DynamicEcoreValidator) {
+					EValidator.Registry.INSTANCE.put(ePackage, EcoreValidator.INSTANCE);
+				}
+			}
+		}
+		//
+		//	Force DelegateEClassifierAdapter recomputation.
+		//
+		for (@NonNull EClass eClass : eClass2constraints.keySet()) {
+			DelegateEClassifierAdapter adapter = DelegateEClassifierAdapter.findAdapter(eClass);
+			if (adapter != null) {
+				adapter.getValidationDelegates(true);			// Force recomputation without delegateURI
+			}
+		}
 	}
 }

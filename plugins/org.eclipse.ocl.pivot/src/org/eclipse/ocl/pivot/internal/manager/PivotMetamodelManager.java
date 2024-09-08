@@ -282,13 +282,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	protected @Nullable Resource asLibraryResource = null;
 
-	private final @NonNull Map<String, Namespace> globalNamespaces = new HashMap<>();
-	private final @NonNull Set<Type> globalTypes = new HashSet<>();
+	private final @NonNull Map<@NonNull String, @NonNull Namespace> globalNamespaces = new HashMap<>();
+	private final @NonNull Set<@NonNull Type> globalTypes = new HashSet<>();
 
 	/**
-	 * Map of URI to external resource converter.
+	 * Map of external resource URI to external resource converter.
 	 */
-	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
+	private final @NonNull Map<@NonNull URI, @NonNull External2AS> external2asMap = new HashMap<>();
 
 	/**
 	 * Elements protected from garbage collection
@@ -297,7 +297,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	private boolean autoLoadASmetamodel = true;
 
-	private @Nullable Map<String, GenPackage> genPackageMap = null;
+	private @Nullable Map<@NonNull String, @NonNull GenPackage> genPackageMap = null;
 
 	/**
 	 * Lazily computed, eagerly invalidated analysis of final classes and operations.
@@ -309,7 +309,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
-	private @Nullable Map<Resource,External2AS> es2ases = null;
+	/**
+	 * Map of external resource URI to external resource converter.
+	 */
+	private final @NonNull Map<@NonNull Resource, @NonNull External2AS> es2ases = new HashMap<>();
 
 	/**
 	 * Construct a MetamodelManager that will use environmentFactory to create its artefacts
@@ -342,13 +345,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public void addExternal2AS(@NonNull External2AS es2as) {
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 == null){
-			es2ases = es2ases2 = new HashMap<>();
-		}
 		Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
-		External2AS oldES2AS = es2ases2.put(resource, es2as);
+		External2AS oldES2AS = es2ases.put(resource, es2as);
 		assert oldES2AS == null;
 		oldES2AS = external2asMap.put(uri, es2as);
 		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
@@ -362,11 +361,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void addGenPackage(@NonNull GenPackage genPackage) {
-		Map<String, GenPackage> genPackageMap2 = genPackageMap;
+		Map<@NonNull String, @NonNull GenPackage> genPackageMap2 = genPackageMap;
 		if (genPackageMap2 == null) {
 			genPackageMap = genPackageMap2 = new HashMap<>();
 		}
-		genPackageMap2.put(genPackage.getNSURI(), genPackage);
+		genPackageMap2.put(String.valueOf(genPackage.getNSURI()), genPackage);
 	}
 
 	@Override
@@ -691,13 +690,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		globalNamespaces.clear();
 		globalTypes.clear();
 		external2asMap.clear();
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 != null) {
-			for (External2AS es2as : es2ases2.values()) {
-				es2as.dispose();
-			}
-			es2ases = null;
+		for (External2AS es2as : es2ases.values()) {
+			es2as.dispose();
 		}
+		es2ases.clear();
 		lockingAnnotation = null;
 		completeModel.dispose();
 		if (precedenceManager != null) {

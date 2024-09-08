@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
 public abstract class CompleteOCLLoader
@@ -232,15 +234,15 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadDocument(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
-		Resource resource = loadResource(oclURI, sErrors);
-		if (resource == null) {
+		Resource csResource = loadResource(oclURI, sErrors);
+		if (csResource == null) {
 			return false;
 		}
 		//
 		//	Identify the packages which the Complete OCL document complements.
 		//
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
-		for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
+		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
 				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
@@ -256,7 +258,7 @@ public abstract class CompleteOCLLoader
 				tit.prune();
 			}
 			else if (eObject instanceof Model) {
-				oclModels .add((Model)eObject);
+				oclModels.add((Model)eObject);
 			}
 		}
 		return true;
@@ -347,5 +349,103 @@ public abstract class CompleteOCLLoader
 			error(message1, message2);
 		}
 		return null;
+	}
+
+	public @Nullable String uninstallDocuments(@NonNull URI... oclURIs) {
+		StringBuilder s = new StringBuilder();
+		if (oclURIs != null) {
+			for (URI oclURI : oclURIs) {
+				unloadDocument(oclURI, s);
+			}
+		}
+	//	if (!unloadMetamodels(s)) {
+	//		return s.toString();
+	//	}
+	//	uninstallPackages();
+		return null;
+	}
+
+	public void unloadDocument(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
+		CSResource csResource = (CSResource)ocl.getEnvironmentFactory().getResourceSet().getResource(oclURI, false);
+		unloadResource(csResource, sErrors);
+		//
+		//	XXX Identify the packages which the Complete OCL document complements.
+		//
+		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
+			EObject eObject = tit.next();
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
+				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
+				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
+			//	if (aPackage instanceof PivotObjectImpl) {
+					EObject mmPackage = aPackage.getESObject();
+					if (mmPackage instanceof EPackage) {
+						mmPackage2completePackage.remove(mmPackage);
+					}
+			//	}
+			}
+			else if (eObject instanceof Type) {
+				tit.prune();
+			}
+			else if (eObject instanceof Model) {
+				oclModels.remove(eObject);
+			}
+		}
+	}
+
+	/**
+	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
+	 * If sErrors is null, return null after invoking error() to display any errors in a pop-up.
+	 * Else returns error messages to sErrors.
+	 */
+	public void unloadResource(@NonNull CSResource csResource, @Nullable StringBuilder sErrors) {
+		ResourceSet resourceSet = ocl.getResourceSet();
+	/*	Resource resource = null;
+		URI loadURI = oclURI;
+		String message2 = null;
+		try {
+			resource = resourceSet.getResource(loadURI, true);
+		}
+		catch (WrappedException e) {
+			URI retryURI = null;
+			Throwable cause = e.getCause();
+			if (cause instanceof CoreException) {
+				IStatus status = ((CoreException)cause).getStatus();
+				if ((status.getCode() == IResourceStatus.RESOURCE_NOT_FOUND) && status.getPlugin().equals(ResourcesPlugin.PI_RESOURCES)) {
+					if (oclURI.isPlatformResource()) {
+						retryURI = URI.createPlatformPluginURI(oclURI.toPlatformString(false), false);
+					}
+				}
+			}
+			if (retryURI != null) {
+				loadURI = retryURI;
+				resource = resourceSet.getResource(retryURI, true);
+			}
+			else {
+				throw e;
+			}
+		} */
+	/*	BaseCSResource xtextResource = null;
+		if (csResource instanceof BaseCSResource) {
+			xtextResource = (BaseCSResource)csResource;
+		}
+		else {
+			message2 = "An " + resource.getClass().getName() + " loaded rather than the required BaseCSResource.";
+		}
+		ASResource asResource = xtextResource.getASResource();
+		errors = asResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			error("Failed to load '" + oclURI + "' as an OCL document.", message);
+			return null;
+		} */
+		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
+		assert iCSI2ASMapping != null;
+		ASResource asResource = iCSI2ASMapping.getASResource(csResource);
+		assert asResource != null;
+		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
+		delegateInstaller.uninstallCompleteOCLDelegates(asResource);
 	}
 }

@@ -86,6 +86,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	}
 
 	protected void didRemove(@NonNull Model partialModel) {
+	//	assert false;		// XXX
 		((ModelImpl)partialModel).removeRootListener(this);
 		CompleteModelInternal completeModel = getCompleteModel();
 		for (org.eclipse.ocl.pivot.Package pivotPackage : partialModel.getOwnedPackages()) {
