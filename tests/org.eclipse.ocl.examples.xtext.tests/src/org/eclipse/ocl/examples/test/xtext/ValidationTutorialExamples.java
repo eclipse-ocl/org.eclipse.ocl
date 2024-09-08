@@ -78,7 +78,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		OCLDelegateDomain.initialize2(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		OCLDelegateDomain.initialize2(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);			// XXX
 		getProjectMap().initializeResourceSet(resourceSet);
 
 		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);

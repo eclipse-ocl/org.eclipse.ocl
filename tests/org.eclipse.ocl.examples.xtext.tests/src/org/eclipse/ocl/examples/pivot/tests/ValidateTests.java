@@ -152,7 +152,7 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 
-	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
+	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {	// XXXport ecore variant
 		PartialPackages.PARTIAL_PACKAGES.setState(true);
 		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		//
@@ -212,6 +212,7 @@ public class ValidateTests extends AbstractValidateTests
 		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel));
 		//
+		// XXX reload again
 		ocl.dispose();
 	}
 

@@ -2136,7 +2136,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 								External2AS external2as2 = external2asMap.get(packageURI);
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
+									if ((knownResource != null) && (knownResource != resource)) {			// XXX isCompatible
 										for (EObject eContent : resource.getContents()) {
 											if (eContent instanceof Pivotable) {
 												Element pivot = ((Pivotable)firstContent).getPivot();
