@@ -108,7 +108,7 @@ public class AS2Ecore extends AbstractConversion
 
 		@Override
 		public @NonNull Model getASModel() {
-			return asModel;
+			return asModel;				// XXX if proxy reconvert
 		}
 
 		@Override
@@ -157,7 +157,7 @@ public class AS2Ecore extends AbstractConversion
 
 		@Override
 		public void setEcoreURI(@NonNull URI uri) {
-		//	assert uri.equals(ecoreResource.getURI());		-- XXX check that uri is oclinecore variant
+			assert uri.toString().equals(asModel.getExternalURI());
 		}
 	}
 
