@@ -159,7 +159,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.23
 	 */
-	public static void initialize2(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
+	public static void initialize2(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {		// XXX
 		lazyInitializeGlobalValidationRegistry(oclDelegateURI, true, true);
 		if (resourceSet != null) {
 			lazyInitializeLocals2(resourceSet, oclDelegateURI, true, null);
@@ -289,16 +289,14 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			if (forceInitialization || !settingRegistry.containsKey(oclDelegateURI)) {
 				settingRegistry.put(oclDelegateURI, new OCLSettingDelegateFactory.Global());
 			}
-			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				validationRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory.Global());
-			}
+			lazyInitializeGlobalValidationRegistry(oclDelegateURI, forceInitialization, false);
 			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
 			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {
 				queryRegistry.put(oclDelegateURI, new OCLQueryDelegateFactory.Global());
 			}
 		}
 	}
+
 	/**
 	 * @since 1.23
 	 */

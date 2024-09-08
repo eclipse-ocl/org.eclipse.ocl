@@ -148,94 +148,54 @@ public class ValidateTests extends AbstractValidateTests
 
 
 	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
-	//	EPackage ecoreEPackage = EcorePackage.eINSTANCE;
-	//	EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
+		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		//
-		//	Create model
+		//	Load the model from OCLinECore and Save as Ecore.
 		//
-		URI ecoreURI;
-	//	{
-			OCL ocl1 = createOCL();
-			URI inputURI = getTestFile("Simple.oclinecore", ocl1, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
-			ecoreURI = getTestFile("Simple.ecore").getFileURI();
-			Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
-			EPackage simplePackage1 = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
-
-
-			ResourceSet testResourceSet1 = new ResourceSetImpl();
-			Resource testResource1 = testResourceSet1.createResource(URI.createURI("test:test.test"));
-			EObject testInstance1 = eCreate(simplePackage1, "Simple");
-			testResource1.getContents().add(testInstance1);
-			//
-			String objectLabel1 = LabelUtil.getLabel(testInstance1);
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel1));
-	//		ocl1.dispose();
-	//	}
-	//	ThreadLocalExecutor.resetEnvironmentFactory();
-
-
-
-
-		OCL ocl = ocl1;//createOCL();
+		OCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
-
+		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
+		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		//
+		//	Create an instance of Simple.
+		//
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
+		EObject testInstance = eCreate(simplePackage, "Simple");
+		testResource.getContents().add(testInstance);
+		//
+		//	Validate using the OCLinEcore constraints.
+		//
+		String objectLabel = LabelUtil.getLabel(testInstance);
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel));
+		//
+		//	Load Simple.ocl using the already loaded Simple.oclinecore.
+		//
 		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
-
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(environmentFactory);
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
-
-	//	CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(simplePackage, oclURI);
-	//	ASResource asResource = environmentFactory.loadCompleteOCLResource(simplePackage, oclURI);
-	//	assert asResource != null;
-	//	DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
-	//	delegateInstaller.installCompleteOCLDelegates(asResource);
-
-		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-		assert validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-	//	if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
-	//		validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, new OCLValidationDelegateFactory.CompleteOCL());		// XXX
-	//	}
-
-
-	//	ThreadLocalExecutor.resetEnvironmentFactory();
-
-	//	ResourceSet testResourceSet = environmentFactory.getResourceSet(); // new ResourceSetImpl();
-	//	Resource ecoreResource = testResourceSet.getResource(ecoreURI, true);
-	//	EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
-	//	Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
-	//	EObject testInstance = eCreate(simplePackage1, "Simple");
-	//	testResource.getContents().add(testInstance);
-
 		//
-		//	Basic validation - just OCLinEcore
+		//	Validate using the OCLinEcore and Complete OCL constraints.
 		//
-		String template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-		String objectLabel = LabelUtil.getLabel(testInstance1);
-		checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel),
-			StringUtil.bind(template, "CompleteOCLAlwaysFalse", objectLabel));
-
-	//	ThreadLocalExecutor.resetEnvironmentFactory();
-
-	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-	//	completeOCLEObjectValidator.initialize(environmentFactory);
-	//	ResourceSet testResourceSet = new ResourceSetImpl();
-	//	ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
-
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel),
+			StringUtil.bind(VIOLATED_TEMPLATE, "CompleteOCLAlwaysFalse", objectLabel));
 		//
-		//	Basic revalidation - just OCLinEcore active, CompleteOCL quiescent
+		//	Unload the Complete OCL.
 		//
-		template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-		objectLabel = LabelUtil.getLabel(testInstance1);
-		checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel));
-
-
+		Resource oclResource = environmentFactory.getResourceSet().getResource(oclURI, false);
+		oclResource.unload();
+		//
+		//	Validate using just the OCLinEcore constraints.
+		//
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel));
+		//
 		ocl.dispose();
-	//	ocl1.activate();
-	//	ocl1.dispose();
 	}
 
 	public void testValidate_Bug366229_oclinecore() throws IOException, InterruptedException {
