@@ -810,10 +810,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Return all constraints applicable to a type and its superclasses.
+	 *
+	 * @deprecated use CompleteModel.getAllCompleteInvariants()
 	 */
-	@Override
+	@Override @Deprecated
 	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
-		Set<Constraint> knownInvariants = new HashSet<>();
+		List<Constraint> knownInvariants = new ArrayList<>();
 		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
@@ -822,6 +824,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 		}
+		assert new HashSet<>(knownInvariants).size() == knownInvariants.size();
 		return knownInvariants;
 	}
 
@@ -2140,24 +2143,27 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 								External2AS external2as2 = external2asMap.get(packageURI);
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {
+									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
 										for (EObject eContent : resource.getContents()) {
 											if (eContent instanceof Pivotable) {
 												Element pivot = ((Pivotable)firstContent).getPivot();
-												if (pivot instanceof Model) {
+												if (pivot instanceof Model) {				// XXX straight to get(0)
 													Model root = (Model)pivot;
-													completeModel.getPartialModels().remove(root);
+													return root;
+												/*	completeModel.getPartialModels().remove(root);
 													ASResource asResource = (ASResource) root.eResource();
 													if (asResource != null) {
+														assert false;				// XXX
 														boolean wasUpdating = asResource.setUpdating(true);
 														asResourceSet.getResources().remove(asResource);
 														asResource.unload();
 														asResource.setUpdating(wasUpdating);
-													}
+														break;	// XXX No point iterating the proxies
+													} */
 												}
 											}
 										}
-										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {
+										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
 											logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
 										}
 										//											resource.unload();

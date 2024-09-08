@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -831,6 +832,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	@Override
 	public void setProjectManager(@Nullable ProjectManager projectMap) {
 		assert projectMap == getEnvironmentFactory().getProjectManager();
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
 	}
 
 	@Override

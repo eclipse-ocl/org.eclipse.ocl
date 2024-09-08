@@ -1335,7 +1335,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Imports_ocl() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoadOCL(ocl, getTestModelURI("models/ecore/Imports.ocl"));
 		ocl.dispose();
 	}

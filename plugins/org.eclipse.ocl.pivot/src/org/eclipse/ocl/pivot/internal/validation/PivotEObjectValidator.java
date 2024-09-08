@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.validation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,8 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+
+import com.google.common.collect.Iterables;
 
 /**
  * A PivotEObjectValidator augments EObjectValidator validation by validation of
@@ -218,8 +221,18 @@ public class PivotEObjectValidator implements EValidator
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
-			for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
-				if (constraint !=  null) {
+			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
+			for (@NonNull Object invariantOrInvariants : all(allInvariantOrInvariants)) {
+				Constraint constraint;
+				if (invariantOrInvariants instanceof Constraint) {
+					constraint = (Constraint)invariantOrInvariants;
+				}
+				else {
+					@SuppressWarnings("unchecked")
+					List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
+					constraint = invariants.get(0);
+				}
+				if (constraint != null) {
 					if (complementingModels != null) {
 						Model containingModel = PivotUtil.getContainingModel(constraint);
 						if (!complementingModels.contains(containingModel)) {
@@ -240,6 +253,20 @@ public class PivotEObjectValidator implements EValidator
 			}
 		}
 		return allOk;
+	}
+
+	@Deprecated // XXX experimenting
+	private @NonNull Iterable<@NonNull Object> all(Iterable<@NonNull Object> onesOrSomes) {
+		List<@NonNull Object> all = new ArrayList<>();
+		for (@NonNull Object oneOrSome : onesOrSomes) {
+			if (oneOrSome instanceof Iterable<?>) {
+				Iterables.addAll(all, (Iterable<?>)oneOrSome);
+			}
+			else {
+				all.add(oneOrSome);
+			}
+		}
+		return all;
 	}
 
 	/**

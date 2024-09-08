@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
@@ -621,6 +622,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	protected String superGetURIFragment(EObject eObject) {
 		return super.getURIFragment(eObject);		// Bypass assignIds for use by OrphanResource
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
 	}
 
 	@Override
