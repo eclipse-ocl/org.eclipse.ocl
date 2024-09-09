@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteModel.java" type="org.eclipse.ocl.pivot.CompleteModel">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CompleteModel"/>
+                <message_argument value="getAllCompleteInvariants(Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
         <filter id="404000815">
             <message_arguments>

@@ -611,7 +611,7 @@ implements org.eclipse.ocl.pivot.Package {
 
 	private PackageId packageId = null;
 	private @Nullable PackageListeners<PackageListeners.IPackageListener> packageListeners = null;
-	private boolean ignoreInvariants = false;		// FIXME Model this (used to suppress bad OMG UML 2.5 invariants)
+	private boolean ignoreInvariants = false;		// FIXME Model this (used to suppress bad OMG UML 2.5 invariants) / Change to a multi-invariant filter
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {

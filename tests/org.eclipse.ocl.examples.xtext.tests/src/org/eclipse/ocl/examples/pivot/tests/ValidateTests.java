@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -601,9 +602,11 @@ public class ValidateTests extends AbstractValidateTests
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl0 = createOCL();
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
-		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
+		CompleteOCLEObjectValidator completeOCLEObjectValidator1 = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
+		CompleteOCLEObjectValidator completeOCLEObjectValidator2 = new CompleteOCLEObjectValidator(validatePackage2, oclURI);
 		ResourceSet testResourceSet = new ResourceSetImpl();
-		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator1);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage2, completeOCLEObjectValidator2);
 		try {
 			EObject testInstance1 = eCreate(validatePackage1, "Level3");
 			EObject testInstance2 = eCreate(validatePackage2, "Level3");
@@ -611,7 +614,8 @@ public class ValidateTests extends AbstractValidateTests
 			testResource.getContents().add(testInstance1);
 			testResource.getContents().add(testInstance2);
 			String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-			String objectLabel;
+			String objectLabel1 = LabelUtil.getLabel(testInstance1);
+			String objectLabel2 = LabelUtil.getLabel(testInstance2);
 			//
 			//	No errors
 			//
@@ -626,7 +630,11 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yy");
 			eSet(testInstance2, "l2b", "yy");
 			eSet(testInstance2, "l3", "yy");
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
+		//	checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
+			String message = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level2b", objectLabel2, "Level3.yy",
+				StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_,  "Level2b", objectLabel2, "Level3.yy", "self.l2b"));
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING, message);
+			ocl2.activate();
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	CompleteOCL errors all round
@@ -642,12 +650,11 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yyy");
 			eSet(testInstance2, "l2b", "yyy");
 			eSet(testInstance2, "l3", "yyy");
-			objectLabel = LabelUtil.getLabel(testInstance1);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template, "Level1::L1_size", objectLabel),
-				StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
-				StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
-				StringUtil.bind(template, "Level3::L3_size", objectLabel));
+				StringUtil.bind(template, "Level1::L1_size", objectLabel1),
+				StringUtil.bind(template, "Level2a::L2a_size", objectLabel1),
+				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
+				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	One CompleteOCl and one OCLinEcore
@@ -663,13 +670,11 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "bad");
 			eSet(testInstance2, "l2b", "ok");
 			eSet(testInstance2, "l3", "ok");
-			objectLabel = LabelUtil.getLabel(testInstance1);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel),
-				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel));
-			objectLabel = LabelUtil.getLabel(testInstance2);
+				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel1),
+				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel1));
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3 ok", objectLabel));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3 ok", objectLabel2));
 		}
 		finally {
 			ocl0.dispose();
