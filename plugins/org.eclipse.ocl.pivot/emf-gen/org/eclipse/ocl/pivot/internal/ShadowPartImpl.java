@@ -583,15 +583,4 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitShadowPart(this);
 	}
-
-	/**
-	 * @return
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-		assert getESObject() == null;
-		eSetProxyURI(NO_UNLOAD_PROXY_URI);
-		return false;
-	}
 } //ConstructorPartImpl

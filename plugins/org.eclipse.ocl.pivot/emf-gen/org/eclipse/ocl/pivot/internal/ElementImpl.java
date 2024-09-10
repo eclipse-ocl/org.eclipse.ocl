@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -36,6 +37,9 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration.LibraryIterationExtension;
@@ -44,7 +48,9 @@ import org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -244,7 +250,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
@@ -432,5 +438,45 @@ public abstract class ElementImpl
 	@Override
 	public String toString() {
 		return ToStringVisitor.toString(this);
+	}
+
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		// Look for a specific ES
+		EObject esObject = getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		// Look for a specific CS
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {		// If a CS Element references that AS Element
+				return csElement;
+			}
+		}
+	/*	// Look for any ES
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
+		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+			esObject = asClass.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		} */
+		if (csi2asMapping == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		return null;
 	}
 } //ElementImpl

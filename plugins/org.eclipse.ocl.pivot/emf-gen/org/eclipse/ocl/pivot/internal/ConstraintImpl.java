@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -891,18 +890,8 @@ implements Constraint {
 		return getContext() != null;
 	}
 
-	/**
-	 * @since 1.22
-	 */
 	@Override
-	protected boolean setReloadableProxy() {
-		Notifier esProxyTarget = getReloadableNotifier();				// may be null for UML2Ecore2AS, and for the dummy ConsistentTransient in Ecore
-		return setReloadableProxy(esProxyTarget);
-	}
-
-	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
 	}
 } //ConstraintImpl

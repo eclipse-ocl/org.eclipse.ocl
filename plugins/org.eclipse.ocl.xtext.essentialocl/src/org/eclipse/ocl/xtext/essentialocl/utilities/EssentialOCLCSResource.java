@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +25,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -435,10 +431,21 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	protected void doUnload() {
-		Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(this);
+	/*	Map<EObject, Collection<Setting>> map = new EcoreUtil.ExternalCrossReferencer(this)
+		{
+			@Override
+			protected Map<EObject, Collection<EStructuralFeature.Setting>> findExternalCrossReferences() {
+				return super.findExternalCrossReferences();
+			}
+
+			@Override
+			protected boolean resolve() {
+				return false;
+			}
+		}.findExternalCrossReferences(); */
 		EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
 		@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
-		for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+	/*	for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
 			boolean hasReference = false;
 			for (Setting setting : entry.getValue()) {
 				EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
@@ -467,7 +474,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 					Resource eResource = (Resource)reloadableNotifier;
 					assert eResource != null;
 					reloadableURI = eResource.getURI();
-				} */
+				} * /
 			//	EObject proxyObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 			//	((InternalEObject)proxyObject).eSetProxyURI(reloadableURI);
 			//	System.out.println("\t" + NameUtil.debugSimpleName(eTarget) + " " + eTarget + NameUtil.debugSimpleName(reloadableNotifier) + " " + reloadableURI);
@@ -482,7 +489,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 					}
 				}
 			}
-		}
+		} */
 		super.doUnload();
 	}
 

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.utilities;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -28,21 +27,14 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterVariable;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -82,7 +74,18 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		@Override
 		public String getHREF(EObject obj) {
 			if (obj instanceof ElementImpl) {
-				//	Use known ES
+				Object reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
+				if (reloadableEObjectOrURI instanceof URI) {
+					return reloadableEObjectOrURI.toString();
+				}
+				else if (reloadableEObjectOrURI == null) {
+					reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
+					return "null://null";
+				}
+				else {
+					return super.getHREF((EObject)reloadableEObjectOrURI);
+				}
+			/*	//	Use known ES
 				if (obj instanceof Model) {
 					return ((Model)obj).getExternalURI();
 				}
@@ -151,7 +154,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 					else {
 						return super.getHREF(csElement);
 					}
-				}
+				} */
 			}
 			return super.getHREF(obj);								// e.g. built-in oclstdlib-defined implementation without Ecore
 		}

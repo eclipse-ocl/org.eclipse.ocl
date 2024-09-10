@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -498,13 +499,11 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
-	protected boolean setReloadableProxy() {		// Overridden since there is no eInternalContainer or esObject
-		InternalEObject eInternalContainer = eInternalContainer();
-		assert eInternalContainer == null;
-		return setReloadableProxy(this);
+	public @NonNull URI getReloadableEObjectOrURI() {
+		return URI.createURI(externalURI);
 	}
 
 	@Override

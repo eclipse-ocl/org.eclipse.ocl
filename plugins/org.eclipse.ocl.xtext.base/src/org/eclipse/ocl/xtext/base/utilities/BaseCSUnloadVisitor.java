@@ -13,17 +13,16 @@ package org.eclipse.ocl.xtext.base.utilities;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.util.AbstractExtendingBaseCSVisitor;
@@ -37,10 +36,19 @@ public class BaseCSUnloadVisitor extends AbstractExtendingBaseCSVisitor<Object, 
 		super(context);
 	}
 
-	protected @NonNull Element getProxy(@NonNull Element asElement) {
+	protected <T extends Element> @NonNull T getProxy(@NonNull T asElement) {
 		Element asProxy = target2proxy.get(asElement);
 		if (asProxy == null) {
-			Notifier reloadableNotifier = asElement;
+			Object reloadableEObjectOrURI = ((ElementImpl)asElement).getReloadableEObjectOrURI();
+			URI reloadableURI;
+			if (reloadableEObjectOrURI instanceof URI) {
+				reloadableURI = (URI)reloadableEObjectOrURI;
+			}
+			else {
+				reloadableURI = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
+			}
+			assert !reloadableURI.toString().contains(".oclas") : NameUtil.debugSimpleName(asElement) + " => " + reloadableURI;
+		/*	Notifier reloadableNotifier = asElement;
 			Notifier reloadableNotifier2 = ((ElementImpl)asElement).getReloadableNotifier();		// XXX
 			if (reloadableNotifier2 != null) {
 				reloadableNotifier = reloadableNotifier2;
@@ -54,13 +62,14 @@ public class BaseCSUnloadVisitor extends AbstractExtendingBaseCSVisitor<Object, 
 				Resource eResource = (Resource)reloadableNotifier;
 				assert eResource != null;
 				reloadableURI = eResource.getURI();
-			}
+			} */
 			EClass eClass = asElement.eClass();
 			asProxy = (Element)eClass.getEPackage().getEFactoryInstance().create(eClass);
 			((InternalEObject)asProxy).eSetProxyURI(reloadableURI);
 			target2proxy.put(asElement, asProxy);
 		}
-		return asProxy;
+		System.out.println(NameUtil.debugSimpleName(asElement) + " => " + NameUtil.debugSimpleName(asProxy) + " " + EcoreUtil.getURI(asProxy));
+		return (T)asProxy;
 	}
 
 	public @NonNull Map<@NonNull Element, @NonNull Element> proxify() {

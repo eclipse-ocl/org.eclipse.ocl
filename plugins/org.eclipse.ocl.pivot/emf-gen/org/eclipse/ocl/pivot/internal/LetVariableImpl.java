@@ -333,14 +333,4 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitLetVariable(this);
 	}
-
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-		assert getESObject() == null;
-		eSetProxyURI(NO_UNLOAD_PROXY_URI);
-		return false;
-	}
 } //LetVariableImpl

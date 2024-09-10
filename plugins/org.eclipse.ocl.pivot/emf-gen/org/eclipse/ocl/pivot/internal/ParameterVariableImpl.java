@@ -13,14 +13,10 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -172,16 +168,19 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		return visitor.visitParameterVariable(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		EObject esObject = super.getESObject();
 		assert esObject == null;
 		Parameter asParameter = getRepresentedParameter();
 		if (asParameter != null) {
-			return ((PivotObjectImpl)asParameter).getReloadableNotifier();		// XXX else cs
+			return ((PivotObjectImpl)asParameter).getReloadableEObjectOrURI();		// XXX else cs
 		}
 		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
-		return ((PivotObjectImpl)getType()).getReloadableNotifier();
+		return ((PivotObjectImpl)getType()).getReloadableEObjectOrURI();
 	}
 
 	@Override
@@ -201,7 +200,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 
 	/**
 	 * @since 1.22
-	 */
+	 *
 	@Override
 	protected boolean setReloadableProxy() {
 		assert super.getESObject() == null;
@@ -235,5 +234,5 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 			eSetProxyURI(NO_UNLOAD_PROXY_URI);
 			return false;
 		}
-	}
+	} */
 } //ParameterVariableImpl

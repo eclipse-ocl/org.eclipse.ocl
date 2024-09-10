@@ -333,14 +333,4 @@ public class AnnotationImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitAnnotation(this);
 	}
-
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-	//	assert getESObject() == null;				ExtendedMetaData EAnnotations have esObjects
-		eSetProxyURI(NO_UNLOAD_PROXY_URI);
-		return false;
-	}
 } //AnnotationImpl
