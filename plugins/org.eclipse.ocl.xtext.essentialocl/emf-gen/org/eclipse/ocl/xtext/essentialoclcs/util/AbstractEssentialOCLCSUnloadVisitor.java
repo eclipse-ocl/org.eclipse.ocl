@@ -15,6 +15,7 @@
  *******************************************************************************/
 package	org.eclipse.ocl.xtext.essentialoclcs.util;
 
+import java.lang.Object;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.CSResource;

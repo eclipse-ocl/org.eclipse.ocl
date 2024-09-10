@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.oclinecorecs.*;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS;

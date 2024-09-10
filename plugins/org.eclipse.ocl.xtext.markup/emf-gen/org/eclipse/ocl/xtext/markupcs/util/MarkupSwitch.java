@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.markupcs.*;
 import org.eclipse.ocl.xtext.markupcs.BulletElement;
 import org.eclipse.ocl.xtext.markupcs.CompoundElement;
 import org.eclipse.ocl.xtext.markupcs.FigureElement;
