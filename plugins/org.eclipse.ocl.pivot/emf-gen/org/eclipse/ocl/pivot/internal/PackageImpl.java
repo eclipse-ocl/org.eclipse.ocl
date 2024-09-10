@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -747,10 +746,10 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		if (Orphanage.isOrphan(this)) {
 			return null;
 		}
@@ -844,15 +843,6 @@ implements org.eclipse.ocl.pivot.Package {
 
 	public void setPackageId(@NonNull PackageId packageId) {
 		this.packageId = packageId;
-	}
-
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-		Notifier reloadableNotifier = getReloadableNotifier();
-		return setReloadableProxy(reloadableNotifier);
 	}
 
 	@Override

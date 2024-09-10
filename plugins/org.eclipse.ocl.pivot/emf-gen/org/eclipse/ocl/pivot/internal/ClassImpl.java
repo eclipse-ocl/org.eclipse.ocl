@@ -18,7 +18,6 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -1367,7 +1366,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 1.22
 	 */
 	@Override
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		if ("Class".equals(name)) {
 			getClass();			// XXX
 		}
@@ -1516,15 +1515,6 @@ implements org.eclipse.ocl.pivot.Class {
 		if ((owningPackage instanceof PackageImpl) && (newName != null) && !newName.equals(oldName)) {
 			((PackageImpl)owningPackage).didAddClass(this);
 		}
-	}
-
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-		Notifier reloadableNotifier = getReloadableNotifier();
-		return setReloadableProxy(reloadableNotifier);
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 		CompleteOCLScoping.init();			// XXX CompleteOCL delegate URI registration
 		CompleteOCLASResourceFactory.getInstance();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSXMIResourceFactory());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSXMIResourceFactory());			// XXX
 		}
 		EPackage.Registry.INSTANCE.put(CompleteOCLCSPackage.eNS_URI, CompleteOCLCSPackage.eINSTANCE);
 		PathNameDeclCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);

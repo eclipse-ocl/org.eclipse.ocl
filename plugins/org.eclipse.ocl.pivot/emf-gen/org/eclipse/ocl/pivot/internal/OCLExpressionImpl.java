@@ -387,16 +387,5 @@ implements OCLExpression {
 		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
 	}
-
-	/**
-	 * @return
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-	//XXX	assert getESObject() == null;				-- may be not null for UMLX2QVTr
-		eSetProxyURI(NO_UNLOAD_PROXY_URI);
-		return false;
-	}
 } //OCLExpressionImpl
 

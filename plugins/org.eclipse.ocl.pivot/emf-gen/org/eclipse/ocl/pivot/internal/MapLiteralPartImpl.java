@@ -14,7 +14,6 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -361,7 +360,7 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	}
 
 	@Override
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		return null;			// MapLiteralPart cannot be referenced
 	}
 } //MapLiteralPartImpl

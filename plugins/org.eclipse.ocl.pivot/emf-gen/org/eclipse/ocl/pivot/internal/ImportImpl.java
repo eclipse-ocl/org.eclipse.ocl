@@ -341,7 +341,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @since 1.22
 	 */
 	@Override
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
@@ -358,20 +358,20 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return namespace;
 			}
 			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
-				return ((PackageImpl)namespace).getReloadableNotifier();
+				return ((PackageImpl)namespace).getReloadableEObjectOrURI();
 			/*	CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
 				for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-					reloadableNotifier = ((PackageImpl)asPackage).getReloadableNotifier();
+					reloadableNotifier = ((PackageImpl)asPackage).getReloadableEObjectOrURI();
 					if (reloadableNotifier != null) {
 						break;
 					}
 				} */
 			}
 			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
-				return ((ClassImpl)namespace).getReloadableNotifier();
+				return ((ClassImpl)namespace).getReloadableEObjectOrURI();
 			/*	CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
 				for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-					reloadableNotifier = ((ClassImpl)asClass).getReloadableNotifier();
+					reloadableNotifier = ((ClassImpl)asClass).getReloadableEObjectOrURI();
 					if (reloadableNotifier != null) {
 						break;
 					}

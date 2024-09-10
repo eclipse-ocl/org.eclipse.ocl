@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +22,12 @@ import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -47,7 +40,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -81,13 +73,11 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
-import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLAS2CS;
 import org.eclipse.ocl.xtext.essentialocl.attributes.NavigationUtil;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
-import org.eclipse.ocl.xtext.essentialoclcs.util.AbstractExtendingEssentialOCLCSVisitor;
 import org.eclipse.xtext.diagnostics.AbstractDiagnostic;
 import org.eclipse.xtext.diagnostics.DiagnosticMessage;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
@@ -202,72 +192,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		@Override
 		public @NonNull ResourceSet getResourceSet() {
 			return asResourceSet;
-		}
-	}
-
-	public static class EssentialOCLUnloadVisitor extends AbstractExtendingEssentialOCLCSVisitor<Object, EssentialOCLCSResource>
-	{
-		protected final @NonNull Map<@NonNull Element, @NonNull Element> target2proxy = new HashMap<>();
-
-		protected EssentialOCLUnloadVisitor(EssentialOCLCSResource context) {
-			super(context);
-		}
-
-		protected @NonNull Element getProxy(@NonNull Element asElement) {
-			Element asProxy = target2proxy.get(asElement);
-			if (asProxy == null) {
-				Notifier reloadableNotifier = asElement;
-				Notifier reloadableNotifier2 = ((ElementImpl)asElement).getReloadableNotifier();		// XXX
-				if (reloadableNotifier2 != null) {
-					reloadableNotifier = reloadableNotifier2;
-				}
-				URI reloadableURI;
-				if (reloadableNotifier instanceof EObject) {
-					EObject eObject = (EObject)reloadableNotifier;
-					reloadableURI = EcoreUtil.getURI(eObject);
-				}
-				else {
-					Resource eResource = (Resource)reloadableNotifier;
-					assert eResource != null;
-					reloadableURI = eResource.getURI();
-				}
-				EClass eClass = asElement.eClass();
-				asProxy = (Element)eClass.getEPackage().getEFactoryInstance().create(eClass);
-				((InternalEObject)asProxy).eSetProxyURI(reloadableURI);
-				target2proxy.put(asElement, asProxy);
-			}
-			return asProxy;
-		}
-
-		public @NonNull Map<@NonNull Element, @NonNull Element> proxify() {
-			for (EObject eObject : context.getContents()) {
-				((VisitableCS)eObject).accept(this);
-			}
-			return target2proxy;
-		}
-
-		@Override
-		public Object visitElementCS(@NonNull ElementCS csElement) {
-			for (EObject eObject : csElement.eContents()) {
-				((VisitableCS)eObject).accept(this);
-			}
-			return null;
-		}
-
-		@Override
-		public Object visitPathElementCS(@NonNull PathElementCS csPathElement) {
-			Element asElement = csPathElement.getReferredElement();
-			if (asElement != null) {
-				Element asProxy = getProxy(asElement);
-				System.out.println(NameUtil.debugSimpleName(csPathElement) + ".referredElement => " + NameUtil.debugSimpleName(asProxy) + " " + EcoreUtil.getURI(asProxy));
-				csPathElement.setReferredElement(asProxy);
-			}
-			return visitElementCS(csPathElement);
-		}
-
-		@Override
-		public Object visiting(@NonNull VisitableCS visitable) {
-			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -428,8 +352,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
-	protected @NonNull EssentialOCLUnloadVisitor createUnloadVisitor() {
-		return new EssentialOCLUnloadVisitor(this);
+	protected @NonNull EssentialOCLCSUnloadVisitor createUnloadVisitor() {
+		return new EssentialOCLCSUnloadVisitor(this);
 	}
 
 	@Override
@@ -507,10 +431,21 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	protected void doUnload() {
-		Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(this);
-		EssentialOCLUnloadVisitor unloadVisitor = createUnloadVisitor();
+	/*	Map<EObject, Collection<Setting>> map = new EcoreUtil.ExternalCrossReferencer(this)
+		{
+			@Override
+			protected Map<EObject, Collection<EStructuralFeature.Setting>> findExternalCrossReferences() {
+				return super.findExternalCrossReferences();
+			}
+
+			@Override
+			protected boolean resolve() {
+				return false;
+			}
+		}.findExternalCrossReferences(); */
+		EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
 		@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
-		for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+	/*	for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
 			boolean hasReference = false;
 			for (Setting setting : entry.getValue()) {
 				EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
@@ -539,7 +474,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 					Resource eResource = (Resource)reloadableNotifier;
 					assert eResource != null;
 					reloadableURI = eResource.getURI();
-				} */
+				} * /
 			//	EObject proxyObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 			//	((InternalEObject)proxyObject).eSetProxyURI(reloadableURI);
 			//	System.out.println("\t" + NameUtil.debugSimpleName(eTarget) + " " + eTarget + NameUtil.debugSimpleName(reloadableNotifier) + " " + reloadableURI);
@@ -554,7 +489,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 					}
 				}
 			}
-		}
+		} */
 		super.doUnload();
 	}
 

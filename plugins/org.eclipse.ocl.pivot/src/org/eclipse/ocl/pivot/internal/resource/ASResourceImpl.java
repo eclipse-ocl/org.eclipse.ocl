@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -632,10 +631,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		URI eProxyURI = internalEObject.eProxyURI();
-		if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
-			internalEObject.eAdapters().clear();
-		}
-		else {
+	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
+	//		internalEObject.eAdapters().clear();
+	//	}
+	//	else {
 
 		    if (eProxyURI == null)
 		    {
@@ -646,7 +645,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		    }
 
 			super.unloaded(internalEObject);
-		}
+	//	}
 	}
 
 	@Override

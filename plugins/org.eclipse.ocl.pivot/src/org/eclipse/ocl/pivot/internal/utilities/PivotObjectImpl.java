@@ -16,8 +16,6 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
@@ -38,8 +36,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
 	/**
 	 * @since 1.23
-	 */
-	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
+	 *
+	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/"); */
 
 	private @Nullable EObject esObject;		// always null for Model.
 
@@ -129,7 +127,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	/**
 	 * @since 1.23
 	 */
-	public @Nullable Notifier getReloadableNotifier() {
+	public @Nullable Object getReloadableEObjectOrURI() {
 		InternalEObject eInternalContainer = eInternalContainer();
 		assert eInternalContainer != null;
 		Notifier esProxyTarget = null;
@@ -337,7 +335,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * For elements without 1:1 CS2AS such as ParameterVariable the Parameter / context type's URI is assigned.
 	 *
 	 * @since 1.23
-	 */
+	 *
+	@Deprecated
 	protected boolean setReloadableProxy() {
 		Notifier esProxyTarget = getReloadableNotifier();
 		boolean isReloadableProxy = setReloadableProxy(esProxyTarget);
@@ -345,11 +344,11 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
 		}
 		return isReloadableProxy;
-	}
+	} */
 
 	/**
 	 * @since 1.23
-	 */
+	 *
 	protected boolean setReloadableProxy(@Nullable Notifier notifier) {
 		if ((notifier instanceof EObjectImpl) && ((EObject)notifier).eIsProxy()) {
 			eSetProxyURI(((EObjectImpl)notifier).eProxyURI());
@@ -378,7 +377,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			return false;
 		}
 	//	this.esObject = null;
-	}
+	} */
 
 	/**
 	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()

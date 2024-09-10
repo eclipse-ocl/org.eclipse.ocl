@@ -464,17 +464,6 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		return visitor.visitStereotypeExtender(this);
 	}
 
-	/**
-	 * @return
-	 * @since 1.22
-	 */
-	@Override
-	protected boolean setReloadableProxy() {
-		boolean isReloadableProxy = super.setReloadableProxy();
-		setClass(null);					// XXX ??? redundant
-		return isReloadableProxy;
-	}
-
 	@Override
 	public String toString() {
 		return super.toString();

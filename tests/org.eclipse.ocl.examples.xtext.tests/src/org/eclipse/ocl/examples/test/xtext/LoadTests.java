@@ -93,6 +93,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResourceImpl;
 import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceSaveImpl;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -694,6 +695,7 @@ public class LoadTests extends XtextTestCase
 	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("oclcs", new CompleteOCLCSXMIResourceFactory()); // XXX $NON-NLS-1$
 		Resource xmiResource = resourceSet.createResource(xmiURI);
 		xmiResource.getContents().addAll(resource.getContents());
 		Map<Object, Object> options = XMIUtil.createSaveOptions();
