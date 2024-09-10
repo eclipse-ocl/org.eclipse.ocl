@@ -26,6 +26,11 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 	}
 
 	@Override
+	protected @NonNull OCLstdlibCSUnloadVisitor createUnloadVisitor() {
+		return new OCLstdlibCSUnloadVisitor(this);
+	}
+
+	@Override
 	public @NonNull String getASContentType() {
 		return ASResource.OCLSTDLIB_CONTENT_TYPE;
 	}

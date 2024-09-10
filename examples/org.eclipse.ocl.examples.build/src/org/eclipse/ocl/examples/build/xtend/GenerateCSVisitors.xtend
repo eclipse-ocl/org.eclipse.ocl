@@ -12,8 +12,9 @@ package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
+import org.eclipse.ocl.pivot.resource.CSResource
 
- class GenerateCSVisitors extends GenerateVisitorsXtend
+class GenerateCSVisitors extends GenerateVisitorsXtend
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();
@@ -27,5 +28,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 		ePackage.generateAbstractDelegatingVisitor();
 		ePackage.generateAbstractExtendingVisitor();
 		/* ePackage.generateAbstractExtendingDelegatingVisitor();*/
+		if (isDerived()) {
+			ePackage.generateAbstractGenericVisitor("Unload", typeof(Object), typeof(CSResource));
+		}
 	}
 }

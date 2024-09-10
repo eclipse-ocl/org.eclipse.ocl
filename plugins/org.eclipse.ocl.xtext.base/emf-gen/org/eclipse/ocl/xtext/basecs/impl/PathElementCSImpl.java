@@ -162,7 +162,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setReferredElement(Element newReferredElement)
 	{
-		ASResourceImpl.RESOLVE_PROXY.println(NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newReferredElement));
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())

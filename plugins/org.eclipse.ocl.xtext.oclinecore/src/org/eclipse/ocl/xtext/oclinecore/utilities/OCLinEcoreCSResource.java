@@ -46,6 +46,11 @@ public class OCLinEcoreCSResource extends EssentialOCLCSResource
 	}
 
 	@Override
+	protected @NonNull OCLinEcoreCSUnloadVisitor createUnloadVisitor() {
+		return new OCLinEcoreCSUnloadVisitor(this);
+	}
+
+	@Override
 	public void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
 		if (getContents().size() > 0) {
 			super.doSave(outputStream, options);	// Avoid NPE or ISE from XtextResource
