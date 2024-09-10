@@ -277,7 +277,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * True to avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
 	 */
-	private boolean isSkipPreUnload = false;
+// XXX	private boolean isSkipPreUnload = false;
 
 	/**
 	 * Creates an instance of the resource.
@@ -376,13 +376,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
-			if (!isSkipPreUnload && isSaveable) {
+		/*	if (!isSkipPreUnload && isSaveable) {
 				for (EObject eObject : getContents()) {
 					if (eObject instanceof PivotObjectImpl) {
-						((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+						((PivotObjectImpl)eObject).preUnload();		// XXX proxify the esObject before the eContainer() vanishes
 					}
 				}
-			}
+			} */
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -592,11 +592,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	/**
 	 * @since 1.22
-	 */
+	 * XXX
 	@Override
 	public void setSkipPreUnload(boolean isSkipPreUnload) {
 		this.isSkipPreUnload = isSkipPreUnload;
-	}
+	} */
 
 	@Override
 	public boolean setUpdating(boolean isUpdating) {

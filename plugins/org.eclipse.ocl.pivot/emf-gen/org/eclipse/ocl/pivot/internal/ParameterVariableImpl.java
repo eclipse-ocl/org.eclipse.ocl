@@ -180,7 +180,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		if (asParameter != null) {
 			return ((PivotObjectImpl)asParameter).getReloadableNotifier();		// XXX else cs
 		}
-		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
 		return ((PivotObjectImpl)getType()).getReloadableNotifier();
 	}
 

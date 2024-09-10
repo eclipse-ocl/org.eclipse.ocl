@@ -30,6 +30,7 @@ import org.eclipse.ocl.xtext.base.cs2as.SingleContinuation;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
@@ -44,7 +45,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 {
 	static final Logger logger = Logger.getLogger(EssentialOCLCSPostOrderVisitor.class);
 
-	public class ConstraintCSCompletion extends SingleContinuation<ConstraintCS>
+	public class ConstraintCSCompletion extends SingleContinuation<@NonNull ConstraintCS>
 	{
 		public ConstraintCSCompletion(@NonNull CS2ASConversion context, @NonNull ConstraintCS csElement) {
 			super(context, null, null, csElement);
@@ -96,7 +97,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 		}
 	}
 
-	protected static class ContextCSCompletion extends SingleContinuation<ContextCS>
+	protected static class ContextCSCompletion extends SingleContinuation<@NonNull ContextCS>
 	{
 		public ContextCSCompletion(@NonNull CS2ASConversion context, @NonNull ContextCS csElement) {
 			super(context, null, null, csElement);
@@ -109,7 +110,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 		}
 	}
 
-	public class ExpSpecificationCSCompletion extends SingleContinuation<ExpSpecificationCS>
+	public class ExpSpecificationCSCompletion extends SingleContinuation<@NonNull ExpSpecificationCS>
 	{
 		public ExpSpecificationCSCompletion(@NonNull CS2ASConversion context, @NonNull ExpSpecificationCS csElement) {
 			super(context, null, null, csElement);

@@ -1009,10 +1009,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (ecoreResource == null) {
 			return null;
 		}
-		Ecore2AS ecore2as = Ecore2AS.basicGetAdapter(ecoreResource, this);
+	//	Ecore2AS ecore2as = Ecore2AS.basicGetAdapter(ecoreResource, this);									// XXX hits bad cast
+		External2AS ecore2as = External2AS.findAdapter(ecoreResource, this);
 		if (ecore2as != null) {
-			Model asModel = ecore2as.getASModel();
-			return (ASResource)asModel.eResource();
+			Model asModel;
+			try {
+				asModel = ecore2as.getASModel();
+				return (ASResource)asModel.eResource();
+			} catch (ParserException e) {
+				// XXX TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new IllegalStateException(e);
+			}
 		}
 		ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
 		List<Diagnostic> errors = ecoreResource.getErrors();
@@ -1022,7 +1030,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			logger.error("Failed to load Ecore '" + ecoreResource.getURI() + message);
 			return null;
 		}
-		Model asModel2 = ecore2as.getASModel();
+		Model asModel2;
+		try {
+			asModel2 = ecore2as.getASModel();				// XXX only need ASResource
+		} catch (ParserException e) {
+			//assert false; // XXX never happens for ES2AS
+			//e.printStackTrace();
+			throw new IllegalStateException(e);
+		}
+		assert asModel2 != null;
 		Model pivotModel = asModel2;
 		errors = pivotModel.eResource().getErrors();
 		assert errors != null;
