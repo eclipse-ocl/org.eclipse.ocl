@@ -27,7 +27,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 /**
  * A BasicContinuation defines a conversion activity that needs to be performed once
  * its dependencies have been satisfied. All BasicContinuations are implicitly dependent
- * on the end of the pre and posrt order traversals.
+ * on the end of the pre and post order traversals.
  *
  * @param <T>
  */

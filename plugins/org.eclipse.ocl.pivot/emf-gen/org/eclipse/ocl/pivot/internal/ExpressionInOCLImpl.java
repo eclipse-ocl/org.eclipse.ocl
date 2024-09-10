@@ -540,17 +540,6 @@ public class ExpressionInOCLImpl
 		return PivotConstants.OCL_LANGUAGE;
 	}
 
-	//
-	//	Cannot short circuit since must traverse down to proxify ParameterVariable / IteratorVariable.
-	//
-	// public void preUnload() {}
-
-// XXX	@Override
-//	protected void resetESObject() {
-	//	assert getESObject() == null;
-//		super.resetESObject();
-//	}
-
 	/**
 	 * @return
 	 * @since 1.22

@@ -651,6 +651,34 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
+	/*	for (@NonNull Resource asResource : new ArrayList<>(environmentFactory.getResourceSet().getResources())) {
+			System.out.println("Unloading " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
+			Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(asResource);
+			for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+				boolean hasReference = false;
+				for (Setting setting : entry.getValue()) {
+					EStructuralFeature ef = setting.getEStructuralFeature();
+					if (!ef.isTransient() && !ef.isVolatile()) {
+						hasReference = true;
+					}
+				}
+				if (hasReference) {
+					EObject e1 = entry.getKey();
+					EObject reloadableNotifier = e1;
+					if (e1 instanceof ElementImpl) {
+						reloadableNotifier = (EObject) ((ElementImpl)e1).getReloadableNotifier();
+					}
+					System.out.println("\t" + NameUtil.debugSimpleName(e1) + " " + e1 + NameUtil.debugSimpleName(reloadableNotifier) + " " + EcoreUtil.getURI(reloadableNotifier));
+					for (Setting setting : entry.getValue()) {
+						EObject e2 = setting.getEObject();
+						EStructuralFeature ef = setting.getEStructuralFeature();
+						if (!ef.isTransient() && !ef.isVolatile()) {
+							System.out.println("\t\t" + ef.getName() + " " + NameUtil.debugSimpleName(e2) + " " + e2.toString().replace("\n", "\\n"));
+						}
+					}
+				}
+			}
+		} */
 		for (@NonNull Resource asResource : new ArrayList<>(asResources)) {
 			asResource.unload();
 			asResource.eAdapters().clear();

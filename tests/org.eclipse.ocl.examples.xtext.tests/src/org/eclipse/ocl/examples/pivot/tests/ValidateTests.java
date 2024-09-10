@@ -614,10 +614,12 @@ public class ValidateTests extends AbstractValidateTests
 			testResource.getContents().add(testInstance1);
 			testResource.getContents().add(testInstance2);
 			String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-			String objectLabel1 = LabelUtil.getLabel(testInstance1);
-			String objectLabel2 = LabelUtil.getLabel(testInstance2);
+			String objectLabel1; // = LabelUtil.getLabel(testInstance1);
+			String objectLabel2; // = LabelUtil.getLabel(testInstance2);
+			String message1;
+			String message2;
 			//
-			//	No errors
+			//	No errors when EPackage is consistent
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xx");
@@ -630,11 +632,27 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yy");
 			eSet(testInstance2, "l2b", "yy");
 			eSet(testInstance2, "l3", "yy");
-		//	checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
-			String message = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level2b", objectLabel2, "Level3.yy",
-				StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_,  "Level2b", objectLabel2, "Level3.yy", "self.l2b"));
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING, message);
-			ocl2.activate();
+			objectLabel1 = LabelUtil.getLabel(testInstance1);
+			objectLabel2 = LabelUtil.getLabel(testInstance2);
+			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1,
+				StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "Validate::Level1::l1", objectLabel1, "self.l1"));
+			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2,
+				StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "Validate::Level1::l1", objectLabel2, "self.l1"));
+			// yet another OCL - OCL's EPackage is dynamically loaded to match first testInstance1 and so not testInstance2
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING, message2);
+			ThreadLocalExecutor.resetEnvironmentFactory();
+			// yet another OCL - OCL's EPackage is dynamically loaded to match first testInstance2 and so not testInstance1
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, message1);
+			ocl0.activate();	// OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, message1);
+			ocl1.activate();	// OCL's EPackage is inconsistent for testInstance2 and statically parsed Complete OCL
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING, message2);
+			ocl2.activate();	// OCL's EPackage is inconsistent for testInstance1 and statically parsed Complete OCL
+			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, message1);
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
 			//	CompleteOCL errors all round

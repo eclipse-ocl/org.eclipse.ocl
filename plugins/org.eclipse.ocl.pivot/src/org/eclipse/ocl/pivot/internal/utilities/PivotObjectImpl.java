@@ -178,7 +178,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * The traversal assigns proxies from the esObject that is then set to null. Other pivot artefacts are also reset.
 	 *
 	 * @since 1.23
-	 */
+	 *
 	public void preUnload() {
 	    assert eResource() != null;
 		for (EObject eObject : eContents()) {
@@ -193,7 +193,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			      appendFragment = eResource().getURI().appendFragment(eResource().getURIFragment(this));
 				getClass();		// XXX
 			}
-		} */
+		} * /
 		URI eProxyURI = eProxyURI();
 		boolean eIsProxy = eIsProxy();
 		boolean isRedundantProxy = eProxyURI == NO_UNLOAD_PROXY_URI;
@@ -301,8 +301,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			// TemplateSignature
 			// TupleLiteralPart
 			assert isRedundantProxy : NameUtil.debugSimpleName(this);
-		} */
-	}
+		} * /
+	} */
 
 	/**
 	 * resolveESNotifier is called from resetESObject() to locate the ES Object that provides the Proxy URI.
