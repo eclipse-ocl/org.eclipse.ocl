@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
@@ -567,11 +569,13 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Number createBigNumberFromString(EDataType eDataType, String initialValue)
 	{
-		return (Number)super.createFromString(eDataType, initialValue);
+		assert initialValue != null;
+		NumberValue numberValue = ValueUtil.numberValueOf(initialValue);
+		return numberValue.asNumber();
 	}
 
 	/**
