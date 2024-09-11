@@ -1156,6 +1156,24 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * Creates an IntegerValue/RElaValue/UnlimitedNaturalValue representation for aValue.
+	 * @param aValue the string representation of a number
+	 * @return the numeric representation
+	 * @since 1.24
+	 */
+	public static @NonNull NumberValue numberValueOf(@NonNull String aValue) {
+		if (aValue.contains("*")) {
+			return unlimitedNaturalValueOf(aValue);
+		}
+		else if (aValue.contains(".")) {
+			return realValueOf(aValue);
+		}
+		else {
+			return integerValueOf(aValue);
+		}
+	}
+
 	public static @NonNull String oclToString(@NonNull Object value) {
 		@SuppressWarnings("null") @NonNull String result = value.toString();
 		return result;
@@ -1233,7 +1251,7 @@ public abstract class ValueUtil
 			stringValue = NULL_STRING;
 		}
 		else if (aValue instanceof Value) {							// Needed for Iterable Values such as CollectionValue
-			stringValue = ((Value)aValue).toString();
+			stringValue = aValue.toString();
 		}
 		else if (aValue instanceof String) {
 			stringValue = "'" + StringUtil.convertToOCLString((String)aValue) + "'";

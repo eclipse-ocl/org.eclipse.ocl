@@ -45,11 +45,6 @@ public interface RealValue extends NumberValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Number asNumber();
-
-	/**
-	 * @generated NOT
-	 */
 	@NonNull BigDecimal bigDecimalValue();
 
 	/**
