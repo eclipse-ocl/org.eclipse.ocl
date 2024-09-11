@@ -588,7 +588,7 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public PathRole createPathRoleFromString(EDataType eDataType, String initialValue)
 	{

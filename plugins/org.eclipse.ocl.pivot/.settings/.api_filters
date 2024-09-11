@@ -775,6 +775,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.NumberValue"/>
+                <message_argument value="asNumber()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
         <filter id="403804204">
             <message_arguments>
