@@ -26,6 +26,12 @@ public interface NumberValue extends ComparableValue<NumberValue>
 {
 	/**
 	 * @generated NOT
+	 * @since 1.23
+	 */
+	default @NonNull Number asNumber() { return Integer.valueOf(0); }
+
+	/**
+	 * @generated NOT
 	 */
 	int commutatedCompareToInteger(@NonNull IntegerValue right);
 
