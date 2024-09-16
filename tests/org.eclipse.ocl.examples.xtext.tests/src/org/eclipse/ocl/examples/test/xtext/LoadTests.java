@@ -682,7 +682,7 @@ public class LoadTests extends XtextTestCase
 	protected @NonNull URI getXMIoutputURI(@NonNull URI inputURI) {
 		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
-		String xmiOutputName = stem + ".oclcs";
+		String xmiOutputName = stem + "." + extension + "cs";
 		return getTestFileURI(xmiOutputName);
 	}
 
