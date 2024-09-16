@@ -432,6 +432,12 @@ public class TemplateParameterImpl
 	}
 
 	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		// XXX Auto-generated method stub
+		return super.getReloadableEObjectOrURI();
+	}
+
+	@Override
 	public @NonNull TemplateParameterId getTypeId() {
 		return getTemplateParameterId();
 	}

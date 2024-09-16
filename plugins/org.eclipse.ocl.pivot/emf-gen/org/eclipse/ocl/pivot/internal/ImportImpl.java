@@ -338,7 +338,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {

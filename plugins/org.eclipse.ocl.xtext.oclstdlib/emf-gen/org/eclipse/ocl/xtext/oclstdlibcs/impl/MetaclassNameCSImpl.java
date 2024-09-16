@@ -11,9 +11,12 @@
 package org.eclipse.ocl.xtext.oclstdlibcs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
@@ -73,6 +76,7 @@ public class MetaclassNameCSImpl
 	 */
 	protected MetaclassNameCSImpl() {
 		super();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -102,6 +106,7 @@ public class MetaclassNameCSImpl
 	 */
 	@Override
 	public void setName(String newName) {
+		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);			// XXX
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
@@ -193,5 +198,12 @@ public class MetaclassNameCSImpl
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public NotificationChain eSetResource(Internal resource, NotificationChain notifications) {
+		// XXX Auto-generated method stub
+		System.out.println("eSetResource " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(resource) + " " + (resource != null ? resource.getURI() : "<<null>>"));
+		return super.eSetResource(resource, notifications);
 	}
 } //MetaTypeNameImpl

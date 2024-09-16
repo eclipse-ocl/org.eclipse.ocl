@@ -22,6 +22,7 @@ import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -66,6 +67,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResourceImpl;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
@@ -331,6 +333,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
 		}
 		else {
+			System.out.println("createDiagnostic " + NameUtil.debugSimpleName(this) + " " + message.getMessage());
 			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
 			{
 				@Override
@@ -352,8 +355,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
+	@Deprecated			// XXX
 	protected @NonNull EssentialOCLCSUnloadVisitor createUnloadVisitor() {
 		return new EssentialOCLCSUnloadVisitor(this);
+	}
+
+	protected @NonNull OCLCSResourceSaveImpl createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSaveImpl(uri, getASResourceFactory(), this);
 	}
 
 	@Override
@@ -443,8 +451,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 				return false;
 			}
 		}.findExternalCrossReferences(); */
-		EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
-		@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
+	//	EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
+	//	@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
 	/*	for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
 			boolean hasReference = false;
 			for (Setting setting : entry.getValue()) {
@@ -491,6 +499,44 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 		} */
 		super.doUnload();
+	}
+
+	/**
+	 * OCLCSResourceSaveImpl supports saving the contents of a CS Resource using regular XMI serialization.
+	 * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
+	 * It ensures that references to AS elements within the XMI are serialized as equivalent CS/AS references.
+	 */
+	protected static class OCLCSResourceSaveImpl extends BaseCSXMIResourceImpl
+	{
+		protected final @NonNull CSResource csResource;
+
+		public OCLCSResourceSaveImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+			super(uri, asResourceFactory);
+			this.csResource = csResource;
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
+		}
+
+		@Deprecated			// XXX not used
+		public @NonNull CSResource getCSResource() {
+			return csResource;
+		}
+
+		/**
+		 * Return the top level resource contents delegating to the Xtext-friendly CSResource.
+		 */
+		@Override
+		public @NonNull EList<@NonNull EObject> getContents() {
+			return csResource.getContents();
+		}
+
+		@Override
+		public @NonNull EnvironmentFactory getEnvironmentFactory() {
+			return csResource.getEnvironmentFactory();
+		}
 	}
 
 	@Override
@@ -840,6 +886,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 		}
 		super.resolveLazyCrossReferences(mon);
+	}
+
+	@Override
+	public @NonNull CSResource saveAsXMI(@NonNull URI uri) throws IOException {
+		OCLCSResourceSaveImpl xmiResource = createCSResourceSave(uri);
+		xmiResource.save(null);
+		return xmiResource;
 	}
 
 	@Override
