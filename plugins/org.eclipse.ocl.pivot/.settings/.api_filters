@@ -73,6 +73,12 @@
                 <message_argument value="SET_PROXY"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ASResource"/>
+                <message_argument value="ASResourceImpl"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ICSI2ASMapping.java" type="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping">
         <filter id="404000815">

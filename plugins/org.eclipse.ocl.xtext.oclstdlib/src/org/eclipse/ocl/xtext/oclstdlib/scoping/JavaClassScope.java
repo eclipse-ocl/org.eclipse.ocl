@@ -62,6 +62,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 {
 	public static boolean SUPPRESS_WORK_THREAD = false;		// Set true to avoid WorkerThread delay when testing
 
+	@Deprecated // XXX
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull ClassLoader classLoader) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -71,6 +72,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
+	@Deprecated // XXX
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -80,6 +82,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
+	@Deprecated // XXX
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull IProject project) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -296,30 +299,8 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return getEObjectDescription(name);
 	}
 
-	/**
-	 * Refresh the known classes in the CS Resource root.
-	 */
 	@Override
-	public void installContents(@NonNull CSResource csResource) {
-	/*	Set<JavaClassCS> javaClasses = new HashSet<JavaClassCS>();
-		EList<EObject> contents = csResource.getContents();
-		for (int i = contents.size(); --i >= 0; ) {
-			EObject eObject = contents.get(i);
-			if (eObject instanceof JavaClassCS) {
-				contents.remove(i);
-			}
-		}
-		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof JavaImplementationCS) {
-				JavaClassCS implementation = ((JavaImplementationCS)eObject).getImplementation();
-				if (implementation != null) {
-					javaClasses.add(implementation);
-				}
-			}
-		}
-		contents.addAll(javaClasses); */
-	}
+	public void installContents(@NonNull CSResource csResource) {}
 
 	protected @Nullable String resolveClassName(@NonNull String name) {
 		if (!name.endsWith(".class")) {
