@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.completeocl.utilities;
+package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
@@ -16,23 +16,23 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResourceImpl;
-import org.eclipse.ocl.xtext.completeocl.cs2as.CompleteOCLCS2AS;
+import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
 
 /**
- * The CompleteOCLCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
+ * The OCLstdlibCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
  */
-public class CompleteOCLCSXMIResourceImpl extends BaseCSXMIResourceImpl
+public class OCLstdlibCSXMIResourceImpl extends BaseCSXMIResourceImpl
 {
 	/**
 	 * Creates an instance of the resource.
 	 */
-	public CompleteOCLCSXMIResourceImpl(@NonNull URI uri) {
-		super(uri, CompleteOCLASResourceFactory.getInstance());
+	protected OCLstdlibCSXMIResourceImpl(@NonNull URI uri) {
+		super(uri, OCLstdlibASResourceFactory.getInstance());
 	}
 
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		return new CompleteOCLCS2AS(environmentFactory, this, asResource);
+		return new OCLstdlibCS2AS(environmentFactory, this, asResource);
 	}
 }

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.oclstdlib.ui;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 
@@ -20,6 +21,11 @@ public class OCLstdlibEditor extends BaseEditor
 
 	public OCLstdlibEditor() {
 		super();
+	}
+
+	@Override
+	public @NonNull String getCSXMIfileExtension() {
+		return PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION;
 	}
 
 	@Override

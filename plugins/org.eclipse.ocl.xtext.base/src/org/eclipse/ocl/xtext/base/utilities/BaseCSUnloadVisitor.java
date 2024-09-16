@@ -44,6 +44,9 @@ public class BaseCSUnloadVisitor extends AbstractExtendingBaseCSVisitor<Object, 
 			if (reloadableEObjectOrURI instanceof URI) {
 				reloadableURI = (URI)reloadableEObjectOrURI;
 			}
+			else if (reloadableEObjectOrURI == null) {
+				reloadableURI = EcoreUtil.getURI(asElement);
+			}
 			else {
 				reloadableURI = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
 			}

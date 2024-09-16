@@ -54,13 +54,18 @@ import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 /**
  * The BaseCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
+ * <br>
+ * Derived implementations provide the appropriate CS2AS mapping.
+ * <br>
+ * While this implementation supports saving as XMI rather than Xtext serialization, it is not intended to be used as a regular
+ * Resource. It is not expected to be added to a ResourceSet or to be unloaded then reloaded. (A reload should be a load from XMI.)
  */
 public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements CSResource
 {
 	/**
-	 * CSXMISaveHelper overloads getHREF to persist references to the internal AS elements to their persistable CS/ES equivalents.
+	 * CSXMISaveHelper overloads getHREF to persist references to internal AS elements as their persistable CS/ES equivalents.
 	 */
-	protected static final class CSXMISaveHelper extends XMIHelperImpl
+	protected static class CSXMISaveHelper extends XMIHelperImpl
 	{
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
@@ -78,11 +83,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 				if (reloadableEObjectOrURI instanceof URI) {
 					return reloadableEObjectOrURI.toString();
 				}
-				else if (reloadableEObjectOrURI == null) {
-					reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
-					return "null://null";
-				}
-				else {
+				else if (reloadableEObjectOrURI != null) {
 					return super.getHREF((EObject)reloadableEObjectOrURI);
 				}
 			/*	//	Use known ES
@@ -156,6 +157,11 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 					}
 				} */
 			}
+			else {
+				String eClassName = obj.eClass().getName();
+				assert !eClassName.contains("JavaClassCS") : "Should be using OCLstdlibCSResourceSaveImpl";
+				assert !eClassName.contains("MetaclassNameCS") : "Should be using OCLstdlibCSResourceSaveImpl";
+			}
 			return super.getHREF(obj);								// e.g. built-in oclstdlib-defined implementation without Ecore
 		}
 
@@ -215,7 +221,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		this.asResourceFactory = asResourceFactory;
 	}
 
-
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
 		URI uri = ClassUtil.nonNullState(getURI());
 		URI asURI = getASURI(uri);
@@ -238,8 +243,8 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 
 	@Override
 	protected @NonNull XMLSave createXMLSave() {
-		XMIHelperImpl xmlHelper = new BaseCSXMIResourceImpl.CSXMISaveHelper(this);
-		return new BaseCSXMIResourceImpl.CSXMISave(xmlHelper);
+		XMIHelperImpl xmlHelper = new CSXMISaveHelper(this);
+		return new CSXMISave(xmlHelper);
 	}
 
 	public @NonNull String getASContentType() {
@@ -268,7 +273,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		EnvironmentFactoryInternal environmentFactoryInternal = (EnvironmentFactoryInternal)environmentFactory;
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactoryInternal);
 		if (csi2asMapping != null) {
-			cs2as = csi2asMapping.getCS2AS(this);
+			cs2as = csi2asMapping.getCS2AS(this);				// XXX misses for OCLstdlibCSXMIResourceImpl reload
 			if (cs2as != null) {
 				return cs2as;
 			}
@@ -338,7 +343,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 
 	@Override
 	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
-/*	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
 		CS2AS cs2as = getCS2AS(environmentFactory);
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
@@ -346,8 +351,8 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
-		return cs2as.getASResource(); */
-		throw new UnsupportedOperationException();
+		return cs2as.getASResource();
+	//	throw new UnsupportedOperationException();
 	}
 
 	@Override

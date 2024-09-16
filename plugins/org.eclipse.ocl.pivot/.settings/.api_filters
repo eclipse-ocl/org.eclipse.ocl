@@ -11,8 +11,24 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
         <filter id="404000815">
             <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Element"/>
+                <message_argument value="getESNotifier()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
+        <filter id="404000815">
+            <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.NumberValue"/>
                 <message_argument value="asNumber()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore"/>
+                <message_argument value="getCreated(Class&lt;T&gt;, Element)"/>
             </message_arguments>
         </filter>
     </resource>

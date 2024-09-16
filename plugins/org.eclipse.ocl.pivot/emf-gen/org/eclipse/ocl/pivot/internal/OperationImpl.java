@@ -1696,35 +1696,4 @@ implements Operation {
 		}
 		return null;
 	}
-
-	@Override
-	public void setESObject(@NonNull EObject newTarget) {
-		System.out.println("setESObject " + this + " " + newTarget);
-		super.setESObject(newTarget);
-	}
-
-	@Override
-	public void setTarget(@Nullable EObject newTarget) {
-		System.out.println("setTarget " + this + " " + newTarget);
-		super.setTarget(newTarget);
-	}
-
-	@Override
-	public void tearDownESObject() {
-		System.out.println("tearDownESObject " + this);
-		super.tearDownESObject();
-	}
-
-	/**
-	 * @since 1.22
-	 *
-	@Override
-	protected boolean setReloadableProxy() {
-		if (isIsImplicit()) {
-			return setReloadableProxy(null);
-		}
-		else {
-			return super.setReloadableProxy();
-		}
-	} */
 } //OperationImpl

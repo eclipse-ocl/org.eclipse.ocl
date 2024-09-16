@@ -1363,7 +1363,7 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {

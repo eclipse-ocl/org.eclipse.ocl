@@ -23,10 +23,10 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.IJavaElement;
@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
@@ -104,6 +103,8 @@ public class JavaClassScope extends AbstractJavaClassScope
 	 * Map from known class names to their allocated EObjects.
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull JavaClassCS> name2class = new HashMap<@NonNull String, @NonNull JavaClassCS>();
+
+	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("xxx"));
 
 	private boolean doneFullScan = false;
 
@@ -212,15 +213,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	}
 
 	protected IEObjectDescription getEObjectDescription(@NonNull String name) {
-		JavaClassCS csJavaClass;
-		synchronized (name2class) {
-			csJavaClass = name2class.get(name);
-			if (csJavaClass == null) {
-				csJavaClass = OCLstdlibCSFactory.eINSTANCE.createJavaClassCS();
-				csJavaClass.setName(name);
-				name2class.put(name, csJavaClass);
-			}
-		}
+		JavaClassCS csJavaClass = getJavaClassCS(name);
 		return EObjectDescription.create(name, csJavaClass);
 	}
 
@@ -230,6 +223,19 @@ public class JavaClassScope extends AbstractJavaClassScope
 		if (result != null)
 			return singleton(result);
 		return emptySet();
+	}
+
+	public @NonNull JavaClassCS getJavaClassCS(@NonNull String name) {
+		synchronized (name2class) {
+			JavaClassCS csJavaClass = name2class.get(name);
+			if (csJavaClass == null) {
+				csJavaClass = OCLstdlibCSFactory.eINSTANCE.createJavaClassCS();
+				csJavaClass.setName(name);
+				name2class.put(name, csJavaClass);
+				javaResource.getContents().add(csJavaClass);
+			}
+			return csJavaClass;
+		}
 	}
 
 	@Override
@@ -295,7 +301,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	 */
 	@Override
 	public void installContents(@NonNull CSResource csResource) {
-		Set<JavaClassCS> javaClasses = new HashSet<JavaClassCS>();
+	/*	Set<JavaClassCS> javaClasses = new HashSet<JavaClassCS>();
 		EList<EObject> contents = csResource.getContents();
 		for (int i = contents.size(); --i >= 0; ) {
 			EObject eObject = contents.get(i);
@@ -312,7 +318,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 				}
 			}
 		}
-		contents.addAll(javaClasses);
+		contents.addAll(javaClasses); */
 	}
 
 	protected @Nullable String resolveClassName(@NonNull String name) {

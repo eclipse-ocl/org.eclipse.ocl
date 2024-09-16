@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlibcs.impl;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -75,5 +77,12 @@ public class JavaClassCSImpl extends NamedElementCSImpl implements JavaClassCS
 	@Override
 	public String toString() {
 		return String.valueOf(name);
+	}
+
+	@Override
+	public NotificationChain eSetResource(Internal resource,
+			NotificationChain notifications) {
+		// XXX Auto-generated method stub
+		return super.eSetResource(resource, notifications);
 	}
 } //JavaClassCSImpl
