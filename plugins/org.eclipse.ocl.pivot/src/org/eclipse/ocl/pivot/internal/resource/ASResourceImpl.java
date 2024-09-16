@@ -56,8 +56,6 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 /**
  * ASResourceImpl is the mandatory implementation of the ASResource interface that refines an
  * a standard EMF XMIResource to be used as a Pivot AS Resource.
- * @author ed
- *
  */
 public class ASResourceImpl extends XMIResourceImpl implements ASResource
 {
@@ -153,7 +151,17 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					}
 				}
 				else if (eventType == Notification.REMOVE) {
-					if (notifier instanceof org.eclipse.ocl.pivot.Class) {
+					if (notifier instanceof Resource) {
+						int featureID = notification.getFeatureID(Resource.class);		// Occurs after unloading has finished
+						if (featureID == RESOURCE__ERRORS) {
+							return;
+						}
+						if (featureID == RESOURCE__WARNINGS) {
+							return;
+						}
+						featureID = notification.getFeatureID(Resource.class);			// missing container case
+					}
+					else if (notifier instanceof org.eclipse.ocl.pivot.Class) {
 						if (feature == PivotPackage.Literals.CLASS__OWNED_PROPERTIES) {
 							Object oldValue = notification.getOldValue();
 							if ((oldValue instanceof Property) && ((Property)oldValue).isIsImplicit()) {	// Late QVTr trace properties

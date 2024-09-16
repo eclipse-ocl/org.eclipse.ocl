@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -280,8 +281,15 @@ public abstract class LUSSIDs
 			}
 		}
 		if (s != null) {
+			List<@NonNull Diagnostic> errors = asResource.getErrors();
+			for (int i = errors.size(); --i >= 0; ) {
+				Diagnostic diagnostic = errors.get(i);
+				if (diagnostic instanceof UnstableXMIIDDiagnostics) {
+					errors.remove(i);
+				}
+			}
 			String message = StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, s.toString());
-			asResource.getErrors().add(new UnstableXMIIDDiagnostics(message));
+			errors.add(new UnstableXMIIDDiagnostics(message));
 		}
 	}
 

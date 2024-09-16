@@ -64,12 +64,6 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
-                <message_argument value="PROXIES"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
                 <message_argument value="RESOLVE_PROXY"/>
             </message_arguments>
         </filter>
@@ -77,6 +71,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
                 <message_argument value="SET_PROXY"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ASResource"/>
+                <message_argument value="ASResourceImpl"/>
             </message_arguments>
         </filter>
     </resource>
