@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibASResourceFactory;
-import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSXMIResourceFactory;
+import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource.OCLstdlibCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSValidator;
 
@@ -62,7 +62,7 @@ public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 		OCLstdlibCSPackage.eINSTANCE.getName();
 		OCLstdlibASResourceFactory.getInstance();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION, new OCLstdlibCSXMIResourceFactory());			// XXX
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION, new OCLstdlibCSResourceLoadFactory());			// XXX
 		}
 		EPackage.Registry.INSTANCE.put(OCLstdlibCSPackage.eNS_URI, OCLstdlibCSPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(OCLstdlibCSPackage.eINSTANCE, OCLstdlibCSValidator.INSTANCE);

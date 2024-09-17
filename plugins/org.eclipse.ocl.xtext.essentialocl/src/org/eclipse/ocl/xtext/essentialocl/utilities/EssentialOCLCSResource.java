@@ -69,7 +69,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResourceImpl;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
@@ -357,13 +357,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
-	@Deprecated			// XXX
-	protected @NonNull EssentialOCLCSUnloadVisitor createUnloadVisitor() {
-		return new EssentialOCLCSUnloadVisitor(this);
-	}
-
-	protected @NonNull OCLCSResourceSaveImpl createCSResourceSave(@NonNull URI uri) {
-		return new OCLCSResourceSaveImpl(uri, getASResourceFactory(), this);
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
 	}
 
 	@Override
@@ -504,15 +499,33 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	/**
-	 * OCLCSResourceSaveImpl supports saving the contents of a CS Resource using regular XMI serialization.
+	 * OCLCSResourceLoad supports loading the contents of a CS Resource using regular XMI serialization.
+	 * References to CS/ES elements are resolved to equivalent AS references.
+	 * This is typically used to load directly from a persisted XMI Resource as XMI rather than parsing text.
+	 */
+	protected static abstract class OCLCSResourceLoad extends BaseCSXMIResource
+	{
+		public OCLCSResourceLoad(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+			super(uri, asResourceFactory);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this);
+			return new CSXMISave(xmlHelper);
+		}
+	}
+
+	/**
+	 * OCLCSResourceSave supports saving the contents of a CS Resource using regular XMI serialization.
 	 * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
 	 * It ensures that references to AS elements within the XMI are serialized as equivalent CS/AS references.
 	 */
-	protected static class OCLCSResourceSaveImpl extends BaseCSXMIResourceImpl
+	protected static class OCLCSResourceSave extends BaseCSXMIResource
 	{
 		protected final @NonNull CSResource csResource;
 
-		public OCLCSResourceSaveImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+		public OCLCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
 			super(uri, asResourceFactory);
 			this.csResource = csResource;
 		}
@@ -526,11 +539,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		protected @NonNull XMLSave createXMLSave() {
 			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this.csResource);
 			return new CSXMISave(xmlHelper);
-		}
-
-		@Deprecated			// XXX not used
-		public @NonNull CSResource getCSResource() {
-			return csResource;
 		}
 
 		/**
@@ -898,7 +906,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public @NonNull CSResource saveAsXMI(@NonNull URI uri) throws IOException {
-		OCLCSResourceSaveImpl xmiResource = createCSResourceSave(uri);
+		OCLCSResourceSave xmiResource = createCSResourceSave(uri);
 		xmiResource.save(null);
 		return xmiResource;
 	}

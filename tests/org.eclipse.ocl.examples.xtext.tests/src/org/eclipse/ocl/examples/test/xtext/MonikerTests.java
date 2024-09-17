@@ -33,8 +33,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSXMIResourceFactory;
-import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSXMIResourceImpl;
+import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource.OCLstdlibCSResourceLoadFactory;
+import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource.OCLstdlibCSResourceLoad;
 
 /**
  * Tests.
@@ -261,9 +261,9 @@ public class MonikerTests extends XtextTestCase
 	//	assertNoUnresolvedProxies("Loading CS from XMI", xmiResource);
 	//	xmiResource.unload();
 		resourceSet.getResources().clear();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION, new OCLstdlibCSXMIResourceFactory());
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION, new OCLstdlibCSResourceLoadFactory());
 		Resource csxmiResource = resourceSet.getResource(xmiURI, true);
-		assertEquals(OCLstdlibCSXMIResourceImpl.class, csxmiResource.getClass());
+		assertEquals(OCLstdlibCSResourceLoad.class, csxmiResource.getClass());
 		assertNoResourceErrors("Loading CS from csXMI", csxmiResource);
 		assertNoUnresolvedProxies("Loading CS from csXMI", csxmiResource);
 	}
