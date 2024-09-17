@@ -722,9 +722,9 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
 			assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
-				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3")));
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3")));
 			//
 			CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
 				@Override
@@ -741,10 +741,10 @@ public class ValidateTests extends AbstractValidateTests
 			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
 
 			@NonNull String[] messages = getMessages(//validationContext,
-				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library lib::Book b2"));
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library::lib::Book::b2"));
 			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
 			assertValidationDiagnostics("With Complete OCL", resource, messages);
 		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);

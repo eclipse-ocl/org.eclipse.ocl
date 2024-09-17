@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -333,7 +335,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
 		}
 		else {
-			System.out.println("createDiagnostic " + NameUtil.debugSimpleName(this) + " " + message.getMessage());
+		//	System.out.println("createDiagnostic " + NameUtil.debugSimpleName(this) + " " + message.getMessage());
 			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
 			{
 				@Override
@@ -518,6 +520,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		@Override
 		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 			return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this.csResource);
+			return new CSXMISave(xmlHelper);
 		}
 
 		@Deprecated			// XXX not used

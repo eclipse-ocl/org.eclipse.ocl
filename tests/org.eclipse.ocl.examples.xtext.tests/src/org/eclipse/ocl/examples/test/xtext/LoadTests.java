@@ -197,7 +197,7 @@ public class LoadTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
-		csResource.setURI(oclOutputURI);
+		assert csResource.getURI().equals(oclOutputURI);			// XXX
 		return csResource;
 	}
 

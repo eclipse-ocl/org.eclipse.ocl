@@ -40,8 +40,8 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 		 */
 		protected static final class OCLstdlibCSXMISaveHelper extends CSXMISaveHelper
 		{
-			protected OCLstdlibCSXMISaveHelper(XMLResource resource) {
-				super(resource);
+			protected OCLstdlibCSXMISaveHelper(@NonNull XMLResource xmiResource, @NonNull CSResource csResource) {
+				super(xmiResource, csResource);
 			}
 
 			@Override
@@ -70,7 +70,7 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 
 		@Override
 		protected @NonNull XMLSave createXMLSave() {
-			XMIHelperImpl xmlHelper = new OCLstdlibCSXMISaveHelper(this);
+			XMIHelperImpl xmlHelper = new OCLstdlibCSXMISaveHelper(this, this.csResource);
 			return new CSXMISave(xmlHelper);
 		}
 	}
