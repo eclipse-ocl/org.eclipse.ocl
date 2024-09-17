@@ -11,6 +11,8 @@
 package org.eclipse.ocl.xtext.completeocl.utilities;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -34,5 +36,11 @@ public class CompleteOCLCSXMIResourceImpl extends BaseCSXMIResourceImpl
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 		return new CompleteOCLCS2AS(environmentFactory, this, asResource);
+	}
+
+	@Override
+	protected @NonNull XMLSave createXMLSave() {
+		XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this);				// XXX rationalize inheritance
+		return new CSXMISave(xmlHelper);
 	}
 }
