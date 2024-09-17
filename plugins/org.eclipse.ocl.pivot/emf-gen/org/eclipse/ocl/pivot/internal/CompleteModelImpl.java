@@ -835,6 +835,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		this.completeEnvironment = completeEnvironment;
 		this.environmentFactory = completeEnvironment.getEnvironmentFactory();
 		partialModels = new PartialModels(this);
+		assert !environmentFactory.isDisposed() && !environmentFactory.isDisposing();
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;
 	}

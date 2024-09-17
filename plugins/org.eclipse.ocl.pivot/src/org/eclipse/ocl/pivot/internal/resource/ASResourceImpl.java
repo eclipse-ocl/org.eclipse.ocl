@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -639,6 +641,25 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		URI eProxyURI = internalEObject.eProxyURI();
+		if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
+			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
+			URI uri = null;
+			if (reloadableEObjectOrURI instanceof EObject) {
+				uri = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
+			}
+			else if (reloadableEObjectOrURI instanceof URI) {
+				uri = (URI)reloadableEObjectOrURI;
+			}
+			if (uri != null) {
+				if (uri.toString().contains(".oclas")) {
+					getClass();		// XXX
+				}
+			//	internalEObject.eSetProxyURI(uri);		// XXX disrupts UML unload
+			}
+			else {
+			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
+			}
+		}
 	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
 	//		internalEObject.eAdapters().clear();
 	//	}

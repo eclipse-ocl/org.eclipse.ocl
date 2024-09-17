@@ -12,8 +12,6 @@ package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
@@ -35,36 +33,10 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 	 * An OCLstdlibCSResourceLoadFactory supports creation of an OCLstdlibCSXMIResourceImpl that supports persistence of the CS model directly as XMI
 	 * rather than exploiting Xtext to serialize to / parse from a text file.
 	 */
-	public static class OCLstdlibCSResourceLoadFactory extends ResourceFactoryImpl
+	public static class OCLstdlibCSResourceLoadFactory extends OCLCSResourceLoadFactory
 	{
-		/**
-		 * Creates an instance of the resource factory.
-		 */
-		public OCLstdlibCSResourceLoadFactory() {}
-
-		@Override
-		public Resource createResource(URI uri) {
-			assert uri != null;
-			return new OCLstdlibCSResourceLoad(uri);
-		}
-	}
-
-	/**
-	 * The OCLstdlibCSResourceLoad implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
-	 * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
-	 */
-	public static class OCLstdlibCSResourceLoad extends OCLCSResourceLoad
-	{
-		/**
-		 * Creates an instance of the resource.
-		 */
-		protected OCLstdlibCSResourceLoad(@NonNull URI uri) {
-			super(uri, OCLstdlibASResourceFactory.getInstance());
-		}
-
-		@Override
-		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-			return new OCLstdlibCS2AS(environmentFactory, this, asResource);
+		public OCLstdlibCSResourceLoadFactory() {
+			super(OCLstdlibASResourceFactory.getInstance());
 		}
 	}
 

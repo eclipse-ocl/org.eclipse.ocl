@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -503,10 +504,15 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	 * References to CS/ES elements are resolved to equivalent AS references.
 	 * This is typically used to load directly from a persisted XMI Resource as XMI rather than parsing text.
 	 */
-	protected static abstract class OCLCSResourceLoad extends BaseCSXMIResource
+	public static class OCLCSResourceLoad extends BaseCSXMIResource
 	{
 		public OCLCSResourceLoad(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 			super(uri, asResourceFactory);
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)asResourceFactory.createCS2AS(environmentFactory, this, asResource);
 		}
 
 		@Override
@@ -515,6 +521,29 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new CSXMISave(xmlHelper);
 		}
 	}
+
+	/**
+	 * An OCLCSResourceLoadFactory supports creation of an OCLCSResourceLoad that supports persistence of the CS model directly as XMI
+	 * rather than exploiting Xtext to serialize to / parse from a text file.
+	 */
+	public static class OCLCSResourceLoadFactory extends ResourceFactoryImpl
+	{
+		protected final @NonNull ASResourceFactory asResourceFactory;
+
+		/**
+		 * Creates an instance of the resource factory.
+		 */
+		public OCLCSResourceLoadFactory(@NonNull ASResourceFactory asResourceFactory) {
+			this.asResourceFactory = asResourceFactory;
+		}
+
+		@Override
+		public final @NonNull Resource createResource(URI uri) {
+			assert uri != null;
+			return new OCLCSResourceLoad(uri, asResourceFactory);
+		}
+	}
+
 
 	/**
 	 * OCLCSResourceSave supports saving the contents of a CS Resource using regular XMI serialization.
