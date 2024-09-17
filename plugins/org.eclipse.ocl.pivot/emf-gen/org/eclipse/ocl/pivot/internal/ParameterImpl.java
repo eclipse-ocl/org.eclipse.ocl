@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -28,6 +29,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -407,12 +409,35 @@ public class ParameterImpl
 	 */
 	@Override
 	public String toString() {
-		return super.toString();
+		return NameUtil.debugSimpleName(this) + ":" + super.toString();
 	}
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameter(this);
+	}
+
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		// XXX Auto-generated method stub
+		return super.getReloadableEObjectOrURI();
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+		// XXX Auto-generated method stub
+		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newContainer));
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+	}
+
+	@Override
+	public void setName(String newName) {
+		// XXX Auto-generated method stub
+		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);
+		if ("text".equals(newName)) {
+			getClass();
+		}
+		super.setName(newName);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
@@ -537,5 +538,11 @@ public class OperationContextDeclCSImpl
 			return null;
 		}
 		return (Operation) ownedPathName.getReferredElement();
+	}
+
+	@Override
+	public void setPivot(Element newPivot) {
+		// XXX Auto-generated method stub
+		super.setPivot(newPivot);
 	}
 } //OperationContextDeclCSImpl

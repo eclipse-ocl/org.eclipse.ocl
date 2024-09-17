@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -67,10 +68,12 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	 */
 	protected static class CSXMISaveHelper extends XMIHelperImpl
 	{
+		protected final @NonNull CSResource csResource;
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
-		protected CSXMISaveHelper(XMLResource resource) {
-			super(resource);
+		public CSXMISaveHelper(@NonNull XMLResource xmiResource, @NonNull CSResource csResource) {
+			super(xmiResource);
+			this.csResource = csResource;
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			assert environmentFactory != null : "No EnvironmentFactory when CS-saving " + NameUtil.debugSimpleName(this);
 			this.environmentFactory = environmentFactory;
@@ -78,15 +81,32 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 
 		@Override
 		public String getHREF(EObject obj) {
-			if (obj instanceof ElementImpl) {
+			if (obj instanceof ElementImpl) {										// AS is not persisted and so not referenceable
+				if (obj instanceof Parameter) {
+					getClass();			// XXX
+				}
 				Object reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
-				if (reloadableEObjectOrURI instanceof URI) {
+				if (reloadableEObjectOrURI instanceof EObject) {
+					EObject reloadableEObject = (EObject)reloadableEObjectOrURI;
+					String href2 = super.getHREF(reloadableEObject);
+					if (reloadableEObject.eResource() == csResource) {				// Internal reference within original 'Xtext' CS
+						int index = href2.indexOf("#");
+						if (index >= 0) {
+							href2 = href2.substring(index);							// relocate to XMI CS
+						}
+					}
+					return href2;
+				}
+				else if (reloadableEObjectOrURI instanceof URI) {					// Model returns externalURI in place of an 'EResource' EObject
 					return reloadableEObjectOrURI.toString();
 				}
 				else if (reloadableEObjectOrURI != null) {
-					return super.getHREF((EObject)reloadableEObjectOrURI);
+					throw new IllegalStateException("getHREF of " + obj.getClass().getName());
 				}
-			/*	//	Use known ES
+				else {																// No replacement available
+				//	throw new NullPointerException("getHREF");
+				}
+			/*	//	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
 				if (obj instanceof Model) {
 					return ((Model)obj).getExternalURI();
 				}
@@ -243,8 +263,9 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 
 	@Override
 	protected @NonNull XMLSave createXMLSave() {
-		XMIHelperImpl xmlHelper = new CSXMISaveHelper(this);
-		return new CSXMISave(xmlHelper);
+	//	XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, ((OCLCSResourceSaveImpl)this).csResource);
+	//	return new CSXMISave(xmlHelper);
+		throw new UnsupportedOperationException();			// XXX move save classes down a level
 	}
 
 	public @NonNull String getASContentType() {
