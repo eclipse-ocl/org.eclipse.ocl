@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.completeocl.scoping.CompleteOCLScoping;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLASResourceFactory;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFactory;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeocl.utilities.PathNameDeclCSLabelGenerator;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 
@@ -62,7 +62,7 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 		CompleteOCLScoping.init();			// XXX CompleteOCL delegate URI registration
 		CompleteOCLASResourceFactory.getInstance();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSXMIResourceFactory());			// XXX
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSResourceLoadFactory());			// XXX
 		}
 		EPackage.Registry.INSTANCE.put(CompleteOCLCSPackage.eNS_URI, CompleteOCLCSPackage.eINSTANCE);
 		PathNameDeclCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);

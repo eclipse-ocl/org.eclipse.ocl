@@ -91,8 +91,8 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResourceImpl;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFactory;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -692,7 +692,7 @@ public class LoadTests extends XtextTestCase
 	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSXMIResourceFactory()); // XXX $NON-NLS-1$
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSResourceLoadFactory()); // XXX $NON-NLS-1$
 		Resource xmiResource = resourceSet.createResource(xmiURI);
 		xmiResource.getContents().addAll(resource.getContents());
 		Map<Object, Object> options = XMIUtil.createSaveOptions();
@@ -1361,8 +1361,8 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
-	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
-	//	ASResourceImpl.SET_PROXY.setState(true);
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
+		ASResourceImpl.SET_PROXY.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		BaseCSResource csResource = doLoadOCL(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
@@ -1395,7 +1395,7 @@ public class LoadTests extends XtextTestCase
 			assertNoResourceErrors("CS load", xmiResource);
 			assertNoUnresolvedProxies("CS load", xmiResource);
 			assertNoValidationErrors("CS load", xmiResource);
-			CS2AS cs2as = ((BaseCSXMIResourceImpl)xmiResource).getCS2AS(ocl2.getEnvironmentFactory());
+			CS2AS cs2as = ((BaseCSXMIResource)xmiResource).getCS2AS(ocl2.getEnvironmentFactory());
 			ASResource asResource = cs2as.getASResource();
 			//	asResource.setSaveable(true);					// Override default AS not-saveable
 			asResource.save(XMIUtil.createSaveOptions(asResource));

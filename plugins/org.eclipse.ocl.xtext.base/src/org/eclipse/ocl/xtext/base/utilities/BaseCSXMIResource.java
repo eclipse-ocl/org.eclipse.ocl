@@ -53,7 +53,7 @@ import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 /**
- * The BaseCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
+ * The BaseCSXMIResource implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
  * <br>
  * Derived implementations provide the appropriate CS2AS mapping.
@@ -61,7 +61,7 @@ import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
  * While this implementation supports saving as XMI rather than Xtext serialization, it is not intended to be used as a regular
  * Resource. It is not expected to be added to a ResourceSet or to be unloaded then reloaded. (A reload should be a load from XMI.)
  */
-public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements CSResource
+public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSResource
 {
 	/**
 	 * CSXMISaveHelper overloads getHREF to persist references to internal AS elements as their persistable CS/ES equivalents.
@@ -236,7 +236,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	/**
 	 * Creates an instance of the resource.
 	 */
-	protected BaseCSXMIResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+	protected BaseCSXMIResource(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 	}
@@ -262,11 +262,11 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	@Override
-	protected @NonNull XMLSave createXMLSave() {
+	protected abstract @NonNull XMLSave createXMLSave();// {
 	//	XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, ((OCLCSResourceSaveImpl)this).csResource);
 	//	return new CSXMISave(xmlHelper);
-		throw new UnsupportedOperationException();			// XXX move save classes down a level
-	}
+//		throw new UnsupportedOperationException();			// XXX move save classes down a level
+//	}
 
 	public @NonNull String getASContentType() {
 		return asResourceFactory.getContentType();

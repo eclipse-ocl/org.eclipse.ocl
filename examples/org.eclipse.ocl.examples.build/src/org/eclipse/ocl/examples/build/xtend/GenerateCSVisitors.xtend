@@ -28,8 +28,5 @@ class GenerateCSVisitors extends GenerateVisitorsXtend
 		ePackage.generateAbstractDelegatingVisitor();
 		ePackage.generateAbstractExtendingVisitor();
 		/* ePackage.generateAbstractExtendingDelegatingVisitor();*/
-		if (isDerived()) {
-			ePackage.generateAbstractGenericVisitor("Unload", typeof(Object), typeof(CSResource));
-		}
 	}
 }

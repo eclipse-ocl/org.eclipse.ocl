@@ -12,6 +12,8 @@ package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
@@ -30,10 +32,47 @@ import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 public class OCLstdlibCSResource extends EssentialOCLCSResource
 {
 	/**
-	 * OCLstdlibCSResourceSaveImpl refines saving the contents of a CS Resource using regular XMI serialization
+	 * An OCLstdlibCSResourceLoadFactory supports creation of an OCLstdlibCSXMIResourceImpl that supports persistence of the CS model directly as XMI
+	 * rather than exploiting Xtext to serialize to / parse from a text file.
+	 */
+	public static class OCLstdlibCSResourceLoadFactory extends ResourceFactoryImpl
+	{
+		/**
+		 * Creates an instance of the resource factory.
+		 */
+		public OCLstdlibCSResourceLoadFactory() {}
+
+		@Override
+		public Resource createResource(URI uri) {
+			assert uri != null;
+			return new OCLstdlibCSResourceLoad(uri);
+		}
+	}
+
+	/**
+	 * The OCLstdlibCSResourceLoad implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
+	 * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
+	 */
+	public static class OCLstdlibCSResourceLoad extends OCLCSResourceLoad
+	{
+		/**
+		 * Creates an instance of the resource.
+		 */
+		protected OCLstdlibCSResourceLoad(@NonNull URI uri) {
+			super(uri, OCLstdlibASResourceFactory.getInstance());
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return new OCLstdlibCS2AS(environmentFactory, this, asResource);
+		}
+	}
+
+	/**
+	 * OCLstdlibCSResourceSave refines saving the contents of a CS Resource using regular XMI serialization
 	 * to support proprietary URIs for the Java class and OCL metaclassl references.
 	 */
-	protected static class OCLstdlibCSResourceSaveImpl extends OCLCSResourceSaveImpl
+	protected static class OCLstdlibCSResourceSave extends OCLCSResourceSave
 	{
 		/**
 		 * CSXMISaveHelper extends the overload getHREF to provide simple proprietary URIs for the Java class and OCL metaclassl references.
@@ -59,7 +98,7 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 			}
 		}
 
-		public OCLstdlibCSResourceSaveImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+		public OCLstdlibCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
 			super(uri, asResourceFactory, csResource);
 		}
 
@@ -81,13 +120,8 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 	}
 
 	@Override
-	protected @NonNull OCLstdlibCSUnloadVisitor createUnloadVisitor() {
-		return new OCLstdlibCSUnloadVisitor(this);
-	}
-
-	@Override
-	protected @NonNull OCLCSResourceSaveImpl createCSResourceSave(@NonNull URI uri) {
-		return new OCLstdlibCSResourceSaveImpl(uri, getASResourceFactory(), this);
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLstdlibCSResourceSave(uri, getASResourceFactory(), this);
 	}
 
 	@Override
