@@ -875,6 +875,11 @@ implements Constraint {
 		return null;
 	}
 
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

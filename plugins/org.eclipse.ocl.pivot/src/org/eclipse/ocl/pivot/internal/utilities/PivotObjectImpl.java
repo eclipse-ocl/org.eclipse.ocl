@@ -36,8 +36,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
 	/**
 	 * @since 1.23
-	 *
-	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/"); */
+	 */
+	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
 
 	private @Nullable EObject esObject;		// always null for Model.
 
