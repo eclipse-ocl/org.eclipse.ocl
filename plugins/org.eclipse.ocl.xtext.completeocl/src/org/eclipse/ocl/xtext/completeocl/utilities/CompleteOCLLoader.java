@@ -256,7 +256,7 @@ public abstract class CompleteOCLLoader
 				tit.prune();
 			}
 			else if (eObject instanceof Model) {
-				oclModels .add((Model)eObject);
+				oclModels.add((Model)eObject);
 			}
 		}
 		return true;
