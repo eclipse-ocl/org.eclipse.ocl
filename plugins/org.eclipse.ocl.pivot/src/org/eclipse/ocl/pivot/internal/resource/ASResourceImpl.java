@@ -15,9 +15,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
@@ -246,6 +248,36 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
+	 * The UnloadedProxyAdapter is populated in the unload() process to identify the proxies to be assigned later in unloaded().
+	 * The population occurs early while an EnvironmentFactory is still available (not yet disposed). Proxies are not set directly
+	 * since too-early proxies seem to disrupt the content iteration over UML models.
+	 */
+	private class UnloadedProxyAdapter extends AdapterImpl
+	{
+		protected final @NonNull Map<@NonNull EObject, @NonNull URI> eObject2uri = new HashMap<>();
+
+		public @Nullable URI get(@NonNull EObject eObject) {
+			return eObject2uri.get(eObject);
+		}
+
+		@Override
+		public Notifier getTarget() {
+			return ASResourceImpl.this;
+		}
+
+		public void put(@NonNull EObject eObject, @NonNull URI uri) {
+			URI old = eObject2uri.put(eObject,  uri);
+			assert old == null;
+		}
+
+		@Override
+		public void setTarget(Notifier newTarget) {}
+
+		@Override
+		public void unsetTarget(Notifier oldTarget) {}
+	}
+
+	/**
 	 * ImmutableResource provides additional API for derived ReadOnly/Immutable implementations.
 	 *
 	 * @since 1.5
@@ -287,6 +319,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * True to avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
 	 */
 // XXX	private boolean isSkipPreUnload = false;
+
+	private @Nullable UnloadedProxyAdapter unloadedProxyAdapter = null;
 
 	/**
 	 * Creates an instance of the resource.
@@ -385,13 +419,44 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
-		/*	if (!isSkipPreUnload && isSaveable) {
-				for (EObject eObject : getContents()) {
-					if (eObject instanceof PivotObjectImpl) {
-						((PivotObjectImpl)eObject).preUnload();		// XXX proxify the esObject before the eContainer() vanishes
+			/*	if (!isSkipPreUnload && isSaveable) { */
+			UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
+			if (unloadedProxyAdapter2 == null) {
+				List<Adapter> eAdapters = eAdapters();
+				for (Adapter eAdapter : eAdapters) {
+					if (eAdapter instanceof UnloadedProxyAdapter) {
+						unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
+						break;
 					}
 				}
-			} */
+				if (unloadedProxyAdapter2 == null) {
+					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
+				}
+				unloadedProxyAdapter = unloadedProxyAdapter2;
+			}
+			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof PivotObjectImpl) {
+					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
+					URI eProxyURI = asElement.eProxyURI();
+					if (eProxyURI == null) {
+						Object reloadableEObjectOrURI = asElement.getReloadableEObjectOrURI();
+						URI uri = null;
+						if (reloadableEObjectOrURI instanceof EObject) {
+							uri = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
+						}
+						else if (reloadableEObjectOrURI instanceof URI) {
+							uri = (URI)reloadableEObjectOrURI;
+						}
+						if (uri != null) {
+							if (uri.toString().contains(".oclas")) {
+								getClass();		// XXX
+							}
+							unloadedProxyAdapter2.put(eObject, uri);
+						}
+					}
+				}
+			}
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
