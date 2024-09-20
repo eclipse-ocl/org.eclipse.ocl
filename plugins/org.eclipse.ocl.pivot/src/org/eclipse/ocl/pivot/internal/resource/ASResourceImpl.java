@@ -657,7 +657,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			//	internalEObject.eSetProxyURI(uri);		// XXX disrupts UML unload
 			}
 			else {
-				internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
+			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
 			}
 		}
 	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
