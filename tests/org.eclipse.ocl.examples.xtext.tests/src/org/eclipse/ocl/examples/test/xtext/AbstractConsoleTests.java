@@ -233,7 +233,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 				return consolePage;
 			}
 		}
-		assert false;
+		fail("Failed to locate Console Page");
 		return null;
 	}
 

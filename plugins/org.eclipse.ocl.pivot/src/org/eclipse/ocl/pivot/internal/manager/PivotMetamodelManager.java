@@ -129,11 +129,11 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -538,7 +538,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
-		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
+		if (!upper.equals(ValueUtil.ONE_VALUE)) {
 			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
@@ -648,6 +648,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
+		assert environmentFactory == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Can only dispose() the current EnvironmentFactory";
+	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
+	//		System.err.println("Correcting current EnvironmentFactory to facilitate dispose()");
+	//		environmentFactory.activate();
+	//	}
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
@@ -2115,7 +2120,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
 				if (eResource instanceof XMLResource) {
-					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
+					EObject eObject = eResource.getEObject(fragment);
 					if (eObject != null) {
 						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
 						if (asElement != null) {
