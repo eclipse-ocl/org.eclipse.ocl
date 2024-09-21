@@ -355,4 +355,10 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
 		return visitor.visitConstraintCS(this);
 	}
+
+	@Override
+	public void setName(String newName) {
+		// TODO Auto-generated method stub
+		super.setName(newName);
+	}
 } //ConstraintCSImpl

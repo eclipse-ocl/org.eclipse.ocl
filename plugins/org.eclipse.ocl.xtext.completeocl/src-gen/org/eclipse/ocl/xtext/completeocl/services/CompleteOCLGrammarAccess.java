@@ -917,11 +917,10 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cOwnedTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_3_0 = (RuleCall)cOwnedTypeAssignment_3.eContents().get(0);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Assignment cOwnedDefaultExpressionsAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
-		private final RuleCall cOwnedDefaultExpressionsDeriveSpecificationCSParserRuleCall_4_0_0 = (RuleCall)cOwnedDefaultExpressionsAssignment_4_0.eContents().get(0);
-		private final Assignment cOwnedDefaultExpressionsAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
-		private final RuleCall cOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_1_0 = (RuleCall)cOwnedDefaultExpressionsAssignment_4_1.eContents().get(0);
+		private final Assignment cOwnedDefaultExpressionsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Alternatives cOwnedDefaultExpressionsAlternatives_4_0 = (Alternatives)cOwnedDefaultExpressionsAssignment_4.eContents().get(0);
+		private final RuleCall cOwnedDefaultExpressionsDeriveSpecificationCSParserRuleCall_4_0_0 = (RuleCall)cOwnedDefaultExpressionsAlternatives_4_0.eContents().get(0);
+		private final RuleCall cOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_0_1 = (RuleCall)cOwnedDefaultExpressionsAlternatives_4_0.eContents().get(1);
 
 		///*
 		// * A property context declaration complements an existing property with additional details.
@@ -948,15 +947,11 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		// */
 		//PropertyContextDeclCS returns PropertyContextDeclCS:
 		//    'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
-		//    (ownedDefaultExpressions+=deriveSpecificationCS
-		//    | ownedDefaultExpressions+=initSpecificationCS
-		//    )*;
+		//    ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
-		//(ownedDefaultExpressions+=deriveSpecificationCS
-		//| ownedDefaultExpressions+=initSpecificationCS
-		//)*
+		//ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*
 		public Group getGroup() { return cGroup; }
 
 		//'context'
@@ -977,22 +972,17 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_3_0() { return cOwnedTypeTypeExpCSParserRuleCall_3_0; }
 
-		//(ownedDefaultExpressions+=deriveSpecificationCS
-		//| ownedDefaultExpressions+=initSpecificationCS
-		//)*
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		//ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*
+		public Assignment getOwnedDefaultExpressionsAssignment_4() { return cOwnedDefaultExpressionsAssignment_4; }
 
-		//ownedDefaultExpressions+=deriveSpecificationCS
-		public Assignment getOwnedDefaultExpressionsAssignment_4_0() { return cOwnedDefaultExpressionsAssignment_4_0; }
+		//(deriveSpecificationCS|initSpecificationCS)
+		public Alternatives getOwnedDefaultExpressionsAlternatives_4_0() { return cOwnedDefaultExpressionsAlternatives_4_0; }
 
 		//deriveSpecificationCS
 		public RuleCall getOwnedDefaultExpressionsDeriveSpecificationCSParserRuleCall_4_0_0() { return cOwnedDefaultExpressionsDeriveSpecificationCSParserRuleCall_4_0_0; }
 
-		//ownedDefaultExpressions+=initSpecificationCS
-		public Assignment getOwnedDefaultExpressionsAssignment_4_1() { return cOwnedDefaultExpressionsAssignment_4_1; }
-
 		//initSpecificationCS
-		public RuleCall getOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_1_0() { return cOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_1_0; }
+		public RuleCall getOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_0_1() { return cOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_0_1; }
 	}
 	public class SpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.SpecificationCS");
@@ -1023,132 +1013,132 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 	public class BodySpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.bodySpecificationCS");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cBodyKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final RuleCall cUnrestrictedNameParserRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
-		private final Keyword cColonKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cOwnedExpressionAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cOwnedExpressionExpCSParserRuleCall_0_3_0 = (RuleCall)cOwnedExpressionAssignment_0_3.eContents().get(0);
-		private final Assignment cExprStringAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0 = (RuleCall)cExprStringAssignment_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cBodyKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cUnrestrictedNameParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cOwnedExpressionAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cOwnedExpressionExpCSParserRuleCall_3_0_0 = (RuleCall)cOwnedExpressionAssignment_3_0.eContents().get(0);
+		private final Assignment cExprStringAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0 = (RuleCall)cExprStringAssignment_3_1.eContents().get(0);
 
 		//bodySpecificationCS returns essentialocl::ExpSpecificationCS:
-		//    'body' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+		//    'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 		@Override public ParserRule getRule() { return rule; }
 
-		//'body' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//'body' UnrestrictedName? ':' ownedExpression=ExpCS
-		public Group getGroup_0() { return cGroup_0; }
+		//'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Group getGroup() { return cGroup; }
 
 		//'body'
-		public Keyword getBodyKeyword_0_0() { return cBodyKeyword_0_0; }
+		public Keyword getBodyKeyword_0() { return cBodyKeyword_0; }
 
 		//UnrestrictedName?
-		public RuleCall getUnrestrictedNameParserRuleCall_0_1() { return cUnrestrictedNameParserRuleCall_0_1; }
+		public RuleCall getUnrestrictedNameParserRuleCall_1() { return cUnrestrictedNameParserRuleCall_1; }
 
 		//':'
-		public Keyword getColonKeyword_0_2() { return cColonKeyword_0_2; }
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//(ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//ownedExpression=ExpCS
-		public Assignment getOwnedExpressionAssignment_0_3() { return cOwnedExpressionAssignment_0_3; }
+		public Assignment getOwnedExpressionAssignment_3_0() { return cOwnedExpressionAssignment_3_0; }
 
 		//ExpCS
-		public RuleCall getOwnedExpressionExpCSParserRuleCall_0_3_0() { return cOwnedExpressionExpCSParserRuleCall_0_3_0; }
+		public RuleCall getOwnedExpressionExpCSParserRuleCall_3_0_0() { return cOwnedExpressionExpCSParserRuleCall_3_0_0; }
 
 		//exprString=UNQUOTED_STRING
-		public Assignment getExprStringAssignment_1() { return cExprStringAssignment_1; }
+		public Assignment getExprStringAssignment_3_1() { return cExprStringAssignment_3_1; }
 
 		//UNQUOTED_STRING
-		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0; }
+		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0; }
 	}
 	public class DeriveSpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.deriveSpecificationCS");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cDeriveKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final RuleCall cUnrestrictedNameParserRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
-		private final Keyword cColonKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cOwnedExpressionAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cOwnedExpressionExpCSParserRuleCall_0_3_0 = (RuleCall)cOwnedExpressionAssignment_0_3.eContents().get(0);
-		private final Assignment cExprStringAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0 = (RuleCall)cExprStringAssignment_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cDeriveKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cUnrestrictedNameParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cOwnedExpressionAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cOwnedExpressionExpCSParserRuleCall_3_0_0 = (RuleCall)cOwnedExpressionAssignment_3_0.eContents().get(0);
+		private final Assignment cExprStringAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0 = (RuleCall)cExprStringAssignment_3_1.eContents().get(0);
 
 		//deriveSpecificationCS returns essentialocl::ExpSpecificationCS:
-		//    'derive' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+		//    'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 		@Override public ParserRule getRule() { return rule; }
 
-		//'derive' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//'derive' UnrestrictedName? ':' ownedExpression=ExpCS
-		public Group getGroup_0() { return cGroup_0; }
+		//'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Group getGroup() { return cGroup; }
 
 		//'derive'
-		public Keyword getDeriveKeyword_0_0() { return cDeriveKeyword_0_0; }
+		public Keyword getDeriveKeyword_0() { return cDeriveKeyword_0; }
 
 		//UnrestrictedName?
-		public RuleCall getUnrestrictedNameParserRuleCall_0_1() { return cUnrestrictedNameParserRuleCall_0_1; }
+		public RuleCall getUnrestrictedNameParserRuleCall_1() { return cUnrestrictedNameParserRuleCall_1; }
 
 		//':'
-		public Keyword getColonKeyword_0_2() { return cColonKeyword_0_2; }
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//(ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//ownedExpression=ExpCS
-		public Assignment getOwnedExpressionAssignment_0_3() { return cOwnedExpressionAssignment_0_3; }
+		public Assignment getOwnedExpressionAssignment_3_0() { return cOwnedExpressionAssignment_3_0; }
 
 		//ExpCS
-		public RuleCall getOwnedExpressionExpCSParserRuleCall_0_3_0() { return cOwnedExpressionExpCSParserRuleCall_0_3_0; }
+		public RuleCall getOwnedExpressionExpCSParserRuleCall_3_0_0() { return cOwnedExpressionExpCSParserRuleCall_3_0_0; }
 
 		//exprString=UNQUOTED_STRING
-		public Assignment getExprStringAssignment_1() { return cExprStringAssignment_1; }
+		public Assignment getExprStringAssignment_3_1() { return cExprStringAssignment_3_1; }
 
 		//UNQUOTED_STRING
-		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0; }
+		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0; }
 	}
 	public class InitSpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.initSpecificationCS");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cInitKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final RuleCall cUnrestrictedNameParserRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
-		private final Keyword cColonKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cOwnedExpressionAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cOwnedExpressionExpCSParserRuleCall_0_3_0 = (RuleCall)cOwnedExpressionAssignment_0_3.eContents().get(0);
-		private final Assignment cExprStringAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0 = (RuleCall)cExprStringAssignment_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cInitKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cUnrestrictedNameParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cOwnedExpressionAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cOwnedExpressionExpCSParserRuleCall_3_0_0 = (RuleCall)cOwnedExpressionAssignment_3_0.eContents().get(0);
+		private final Assignment cExprStringAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0 = (RuleCall)cExprStringAssignment_3_1.eContents().get(0);
 
 		//initSpecificationCS returns essentialocl::ExpSpecificationCS:
-		//    'init' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+		//    'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 		@Override public ParserRule getRule() { return rule; }
 
-		//'init' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//'init' UnrestrictedName? ':' ownedExpression=ExpCS
-		public Group getGroup_0() { return cGroup_0; }
+		//'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Group getGroup() { return cGroup; }
 
 		//'init'
-		public Keyword getInitKeyword_0_0() { return cInitKeyword_0_0; }
+		public Keyword getInitKeyword_0() { return cInitKeyword_0; }
 
 		//UnrestrictedName?
-		public RuleCall getUnrestrictedNameParserRuleCall_0_1() { return cUnrestrictedNameParserRuleCall_0_1; }
+		public RuleCall getUnrestrictedNameParserRuleCall_1() { return cUnrestrictedNameParserRuleCall_1; }
 
 		//':'
-		public Keyword getColonKeyword_0_2() { return cColonKeyword_0_2; }
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//(ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//ownedExpression=ExpCS
-		public Assignment getOwnedExpressionAssignment_0_3() { return cOwnedExpressionAssignment_0_3; }
+		public Assignment getOwnedExpressionAssignment_3_0() { return cOwnedExpressionAssignment_3_0; }
 
 		//ExpCS
-		public RuleCall getOwnedExpressionExpCSParserRuleCall_0_3_0() { return cOwnedExpressionExpCSParserRuleCall_0_3_0; }
+		public RuleCall getOwnedExpressionExpCSParserRuleCall_3_0_0() { return cOwnedExpressionExpCSParserRuleCall_3_0_0; }
 
 		//exprString=UNQUOTED_STRING
-		public Assignment getExprStringAssignment_1() { return cExprStringAssignment_1; }
+		public Assignment getExprStringAssignment_3_1() { return cExprStringAssignment_3_1; }
 
 		//UNQUOTED_STRING
-		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_1_0; }
+		public RuleCall getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0() { return cExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0; }
 	}
 	public class TemplateSignatureCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.completeocl.CompleteOCL.TemplateSignatureCS");
@@ -1797,9 +1787,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 	// */
 	//PropertyContextDeclCS returns PropertyContextDeclCS:
 	//    'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
-	//    (ownedDefaultExpressions+=deriveSpecificationCS
-	//    | ownedDefaultExpressions+=initSpecificationCS
-	//    )*;
+	//    ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*;
 	public PropertyContextDeclCSElements getPropertyContextDeclCSAccess() {
 		return pPropertyContextDeclCS;
 	}
@@ -1819,7 +1807,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 
 	//bodySpecificationCS returns essentialocl::ExpSpecificationCS:
-	//    'body' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	//    'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 	public BodySpecificationCSElements getBodySpecificationCSAccess() {
 		return pBodySpecificationCS;
 	}
@@ -1829,7 +1817,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 
 	//deriveSpecificationCS returns essentialocl::ExpSpecificationCS:
-	//    'derive' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	//    'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 	public DeriveSpecificationCSElements getDeriveSpecificationCSAccess() {
 		return pDeriveSpecificationCS;
 	}
@@ -1839,7 +1827,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 
 	//initSpecificationCS returns essentialocl::ExpSpecificationCS:
-	//    'init' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	//    'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 	public InitSpecificationCSElements getInitSpecificationCSAccess() {
 		return pInitSpecificationCS;
 	}

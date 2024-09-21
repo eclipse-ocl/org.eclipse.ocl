@@ -82,7 +82,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[196];
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[107];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [26] @NonNull [];
-	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[203];
+	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[204];
 	private final @NonNull SubstringStep @NonNull [] substringSteps = new @NonNull SubstringStep[11];
 	private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {" *"};
 	private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {"/*"};
@@ -121,7 +121,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 
 	@Override
 	protected int getFirstGlobalSerializationStepLiteralIndex() {
-		return 104;
+		return 105;
 	}
 
 	@Override
@@ -136,12 +136,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 
 	@Override
 	protected int getLastGlobalSerializationStepAssignmentIndex() {
-		return 103;
+		return 104;
 	}
 
 	@Override
 	protected int getLastGlobalSerializationStepLiteralIndex() {
-		return 154;
+		return 155;
 	}
 
 	@Override
@@ -345,12 +345,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			createSerializationRules(
 				29 /* SpecificationCS-0: ExpSpecificationCS::ownedExpression=ExpCS */,
 				30 /* SpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */,
-				34 /* bodySpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */,
 				33 /* bodySpecificationCS-0: 'body' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
-				36 /* deriveSpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */,
+				34 /* bodySpecificationCS-1: 'body' ':' SpecificationCS::exprString=UNQUOTED_STRING */,
 				35 /* deriveSpecificationCS-0: 'derive' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
-				38 /* initSpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */,
-				37 /* initSpecificationCS-0: 'init' ':' ExpSpecificationCS::ownedExpression=ExpCS */
+				36 /* deriveSpecificationCS-1: 'derive' ':' SpecificationCS::exprString=UNQUOTED_STRING */,
+				37 /* initSpecificationCS-0: 'init' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
+				38 /* initSpecificationCS-1: 'init' ':' SpecificationCS::exprString=UNQUOTED_STRING */
 			),
 			new @NonNull EReference_TargetGrammarRuleVector [] {
 				createEReference_TargetGrammarRuleVector(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION,
@@ -926,7 +926,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 0	/* ownedType=CollectionTypeCS : [value] | [value] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* ownedParts+=CollectionLiteralPartCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
@@ -953,7 +953,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* ownedType=CollectionTypeCS : [value] | [value] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* ownedParts+=PatternExpCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
@@ -1006,7 +1006,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {CurlyBracketedClauseCS} : [value] | [value] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* ownedParts+=ShadowPartCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
@@ -1028,7 +1028,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			createSerializationRules(
 				20	/* DefOperationCS-0: (DefCS::isStatic?='static')[V0:?] 'def' ':' (TemplateableElementCS::ownedSignature=TemplateSignatureCS)[V1:?] NamedElementCS::name=UnrestrictedName '(' (DefOperationCS::ownedParameters+=DefParameterCS (',' DefOperationCS::ownedParameters+=DefParameterCS)[V3:*])[V2:?] ')' ':' (TypedElementCS::ownedType=TypeExpCS)[V4:?] '=' DefCS::ownedSpecification=SpecificationCS */
 			),
-			(0 << 16) | 25	/* Group : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* isStatic?="static"? : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 13	/* "def" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* UnrestrictedName? : [value] | [value] */,
@@ -1044,7 +1044,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */,
 			(0 << 16) | 13	/* ":" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedType=TypeExpCS? : [value] | [value] */,
-			(0 << 16) | 20	/* "=" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* "=" : [value] | [soft-space, value, soft-new-line, push] */,
 			(0 << 16) | 0	/* ownedSpecification=SpecificationCS : [value] | [value] */
 		);
 		grammarRuleValues[17] = createParserRuleValue(17, "DefParameterCS", -1,
@@ -1060,7 +1060,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			createSerializationRules(
 				22	/* DefPropertyCS-0: (DefCS::isStatic?='static')[V0:?] 'def' ':' NamedElementCS::name=UnrestrictedName ':' TypedElementCS::ownedType=TypeExpCS '=' DefCS::ownedSpecification=SpecificationCS */
 			),
-			(0 << 16) | 25	/* Group : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* isStatic?="static"? : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 13	/* "def" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* UnrestrictedName? : [value] | [value] */,
@@ -1068,7 +1068,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 13	/* name=UnrestrictedName : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 13	/* ":" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedType=TypeExpCS : [value] | [value] */,
-			(0 << 16) | 20	/* "=" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* "=" : [value] | [soft-space, value, soft-new-line, push] */,
 			(0 << 16) | 0	/* ownedSpecification=SpecificationCS : [value] | [value] */
 		);
 		grammarRuleValues[19] = new TerminalRuleValue(19, "ESCAPED_CHARACTER");
@@ -1078,7 +1078,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				50	/* ElseIfThenExpCS-0: 'elseif' IfThenExpCS::ownedCondition=ExpCS 'then' IfThenExpCS::ownedThenExpression=ExpCS */
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
-			(0 << 16) | 24	/* "elseif" : [value] | [soft-new-line, pop, soft-space, value, push, soft-space] */,
+			(0 << 16) | 25	/* "elseif" : [value] | [soft-new-line, pop, soft-space, value, push, soft-space] */,
 			(0 << 16) | 0	/* ownedCondition=ExpCS : [value] | [value] */,
 			(0 << 16) | 15	/* "then" : [value] | [pop, value, push, soft-space] */,
 			(0 << 16) | 0	/* ownedThenExpression=ExpCS : [value] | [value] */
@@ -1145,14 +1145,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				52	/* IfExpCS-0: 'if' IfExpCS::ownedCondition=ExpCS|PatternExpCS 'then' IfExpCS::ownedThenExpression=ExpCS (IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS)[V0:*] 'else' IfExpCS::ownedElseExpression=ExpCS 'endif' */
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
-			(0 << 16) | 17	/* "if" : [value] | [soft-new-line, value, push, soft-space] */,
+			(0 << 16) | 18	/* "if" : [value] | [soft-new-line, value, push, soft-space] */,
 			(0 << 16) | 0	/* ownedCondition=(ExpCS|PatternExpCS) : [value] | [value] */,
-			(0 << 16) | 21	/* "then" : [value] | [pop, soft-space, value, push, soft-space] */,
+			(0 << 16) | 22	/* "then" : [value] | [pop, soft-space, value, push, soft-space] */,
 			(0 << 16) | 0	/* ownedThenExpression=ExpCS : [value] | [value] */,
 			(0 << 16) | 0	/* ownedIfThenExpressions+=ElseIfThenExpCS* : [value] | [value] */,
-			(0 << 16) | 22	/* "else" : [value] | [soft-new-line, pop, value, push, soft-space] */,
+			(0 << 16) | 23	/* "else" : [value] | [soft-new-line, pop, value, push, soft-space] */,
 			(0 << 16) | 0	/* ownedElseExpression=ExpCS : [value] | [value] */,
-			(0 << 16) | 16	/* "endif" : [value] | [soft-new-line, pop, value, soft-space] */
+			(0 << 16) | 17	/* "endif" : [value] | [soft-new-line, pop, value, soft-space] */
 		);
 		grammarRuleValues[34] = createParserRuleValue(34, "ImportCS", -1,
 			createSerializationRules(
@@ -1187,7 +1187,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 13	/* "Lambda" : [value] | [soft-space, value, soft-space] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* ownedExpressionCS=ExpCS : [value] | [value] */,
 			(0 << 16) | 14	/* "}" : [value] | [pop, soft-new-line, value, soft-new-line] */
 		);
@@ -1201,7 +1201,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
 			(0 << 16) | 9	/* "," : [value] | [no-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedVariables+=LetVariableCS : [value] | [value] */,
-			(0 << 16) | 18	/* "in" : [value] | [soft-space, pop, value, soft-new-line] */,
+			(0 << 16) | 19	/* "in" : [value] | [soft-space, pop, value, soft-new-line] */,
 			(0 << 16) | 0	/* ownedInExpression=ExpCS : [value] | [value] */
 		);
 		grammarRuleValues[41] = createParserRuleValue(41, "LetVariableCS", -1,
@@ -1225,7 +1225,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 0	/* ownedType=MapTypeCS : [value] | [value] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* ownedParts+=MapLiteralPartCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
@@ -1522,7 +1522,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 0	/* ownedPathName=UnreservedPathNameCS : [value] | [value] */,
 			(0 << 16) | 0	/* ownedInvariants+=invConstraintCS* : [value] | [value] */,
 			(0 << 16) | 0	/* ownedContexts+=ContextDeclCS* : [value] | [value] */,
-			(0 << 16) | 23	/* "endpackage" : [value] | [soft-new-line, pop, value, soft-new-line, half-new-line] */
+			(0 << 16) | 16	/* "endpackage" : [value] | [pop, value, soft-new-line, half-new-line] */
 		);
 		grammarRuleValues[65] = createParserRuleValue(65, "ParameterCS", -1,
 			createSerializationRules(
@@ -1654,9 +1654,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 0	/* ownedPathName=UnreservedPathNameCS : [value] | [value] */,
 			(0 << 16) | 13	/* ":" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* ownedType=TypeExpCS : [value] | [value] */,
-			(0 << 16) | 0	/* Alternatives* : [value] | [value] */,
-			(0 << 16) | 0	/* ownedDefaultExpressions+=deriveSpecificationCS : [value] | [value] */,
-			(0 << 16) | 0	/* ownedDefaultExpressions+=initSpecificationCS : [value] | [value] */
+			(0 << 16) | 0	/* ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)* : [value] | [value] */
 		);
 		grammarRuleValues[75] = createParserRuleValue(75, "RoundBracketedClauseCS", -1,
 			createSerializationRules(
@@ -1771,7 +1769,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			),
 			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 13	/* "Tuple" : [value] | [soft-space, value, soft-space] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* ownedParts+=TupleLiteralPartCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
 			(0 << 16) | 8	/* "," : [value] | [no-space, value, soft-new-line] */,
@@ -1880,7 +1878,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* ownedCurlyBracketedClause=CurlyBracketedClauseCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 19	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
+			(0 << 16) | 20	/* "{" : [value] | [soft-space, value, push, soft-new-line] */,
 			(0 << 16) | 0	/* ownedPatternGuard=ExpCS : [value] | [value] */,
 			(0 << 16) | 14	/* "}" : [value] | [pop, soft-new-line, value, soft-new-line] */
 		);
@@ -1993,39 +1991,39 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		grammarRuleValues[115] = createParserRuleValue(115, "bodySpecificationCS", -1,
 			createSerializationRules(
 				33	/* bodySpecificationCS-0: 'body' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
-				34	/* bodySpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */
+				34	/* bodySpecificationCS-1: 'body' ':' SpecificationCS::exprString=UNQUOTED_STRING */
 			),
-			(0 << 16) | 2	/* Alternatives : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
-			(0 << 16) | 0	/* Group : [value] | [value] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "body" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* UnrestrictedName? : [value] | [value] */,
-			(0 << 16) | 13	/* ":" : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* ownedExpression=ExpCS : [value] | [value] */,
 			(0 << 16) | 13	/* exprString=UNQUOTED_STRING : [value] | [soft-space, value, soft-space] */
 		);
 		grammarRuleValues[116] = createParserRuleValue(116, "deriveSpecificationCS", -1,
 			createSerializationRules(
 				35	/* deriveSpecificationCS-0: 'derive' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
-				36	/* deriveSpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */
+				36	/* deriveSpecificationCS-1: 'derive' ':' SpecificationCS::exprString=UNQUOTED_STRING */
 			),
-			(0 << 16) | 25	/* Alternatives : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
-			(0 << 16) | 0	/* Group : [value] | [value] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "derive" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* UnrestrictedName? : [value] | [value] */,
-			(0 << 16) | 20	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* ownedExpression=ExpCS : [value] | [value] */,
 			(0 << 16) | 13	/* exprString=UNQUOTED_STRING : [value] | [soft-space, value, soft-space] */
 		);
 		grammarRuleValues[117] = createParserRuleValue(117, "initSpecificationCS", -1,
 			createSerializationRules(
 				37	/* initSpecificationCS-0: 'init' ':' ExpSpecificationCS::ownedExpression=ExpCS */,
-				38	/* initSpecificationCS-1: SpecificationCS::exprString=UNQUOTED_STRING */
+				38	/* initSpecificationCS-1: 'init' ':' SpecificationCS::exprString=UNQUOTED_STRING */
 			),
-			(0 << 16) | 25	/* Alternatives : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
-			(0 << 16) | 0	/* Group : [value] | [value] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "init" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* UnrestrictedName? : [value] | [value] */,
-			(0 << 16) | 20	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* ownedExpression=ExpCS : [value] | [value] */,
 			(0 << 16) | 13	/* exprString=UNQUOTED_STRING : [value] | [soft-space, value, soft-space] */
 		);
@@ -2033,7 +2031,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			createSerializationRules(
 				39	/* invConstraintCS-0: 'inv' (NamedElementCS::name=UnrestrictedName ('(' ConstraintCS::ownedMessageSpecification=SpecificationCS ')')[V1:?])[V0:?] ':' ConstraintCS::ownedSpecification=SpecificationCS */
 			),
-			(0 << 16) | 25	/* Group : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "inv" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 13	/* name=UnrestrictedName : [value] | [soft-space, value, soft-space] */,
@@ -2041,14 +2039,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 7	/* "(" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedMessageSpecification=SpecificationCS : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */,
-			(0 << 16) | 20	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
 			(0 << 16) | 0	/* ownedSpecification=SpecificationCS : [value] | [value] */
 		);
 		grammarRuleValues[119] = createParserRuleValue(119, "postConstraintCS", -1,
 			createSerializationRules(
 				40	/* postConstraintCS-0: 'post' (NamedElementCS::name=UnrestrictedName ('(' ConstraintCS::ownedMessageSpecification=SpecificationCS ')')[V1:?])[V0:?] ':' ConstraintCS::ownedSpecification=SpecificationCS */
 			),
-			(0 << 16) | 25	/* Group : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "post" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 13	/* name=UnrestrictedName : [value] | [soft-space, value, soft-space] */,
@@ -2056,14 +2054,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 7	/* "(" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedMessageSpecification=SpecificationCS : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */,
-			(0 << 16) | 20	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
 			(0 << 16) | 0	/* ownedSpecification=SpecificationCS : [value] | [value] */
 		);
 		grammarRuleValues[120] = createParserRuleValue(120, "preConstraintCS", -1,
 			createSerializationRules(
 				41	/* preConstraintCS-0: 'pre' (NamedElementCS::name=UnrestrictedName ('(' ConstraintCS::ownedMessageSpecification=SpecificationCS ')')[V1:?])[V0:?] ':' ConstraintCS::ownedSpecification=SpecificationCS */
 			),
-			(0 << 16) | 25	/* Group : [value] | [soft-new-line, push, value, pop, pop, soft-new-line] */,
+			(0 << 16) | 24	/* Group : [value] | [soft-new-line, push, value, pop, pop] */,
 			(0 << 16) | 13	/* "pre" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 13	/* name=UnrestrictedName : [value] | [soft-space, value, soft-space] */,
@@ -2071,7 +2069,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			(0 << 16) | 7	/* "(" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedMessageSpecification=SpecificationCS : [value] | [value] */,
 			(0 << 16) | 1	/* ")" : [value] | [no-space, value] */,
-			(0 << 16) | 20	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
+			(0 << 16) | 21	/* ":" : [value] | [soft-space, value, soft-new-line, push] */,
 			(0 << 16) | 0	/* ownedSpecification=SpecificationCS : [value] | [value] */
 		);
 	}
@@ -3104,7 +3102,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				39		/* assert (|PathElementCS::referredElement| - 1) == 0 */
 			),
 			createSerializationSteps(
-				202		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
+				203		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
@@ -3118,10 +3116,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				25		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
-				5		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				112		/* '..' || no-space value no-space */,
-				103		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */
+				6		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				113		/* '..' || no-space value no-space */,
+				104		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
@@ -3135,13 +3133,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				25		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				5		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				112		/* '..' || no-space value no-space */,
-				103		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
-				153		/* '|?' || no-space value no-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				6		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				113		/* '..' || no-space value no-space */,
+				104		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				154		/* '|?' || no-space value no-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
@@ -3155,13 +3153,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				25		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				5		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				112		/* '..' || no-space value no-space */,
-				103		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
-				2		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				6		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				113		/* '..' || no-space value no-space */,
+				104		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				3		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false,
@@ -3178,12 +3176,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				25		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				5		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				112		/* '..' || no-space value no-space */,
-				103		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				6		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				113		/* '..' || no-space value no-space */,
+				104		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
@@ -3196,10 +3194,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				27		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				100		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-				153		/* '|?' || no-space value no-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				101		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				154		/* '|?' || no-space value no-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
@@ -3213,10 +3211,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				27		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				100		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-				2		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				101		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				3		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false,
@@ -3233,9 +3231,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				27		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				100		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				101		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
@@ -3249,7 +3247,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				27		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				100		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */
+				101		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
@@ -3262,7 +3260,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				39		/* assert (|PathElementCS::referredElement| - 1) == 0 */
 			),
 			createSerializationSteps(
-				201		/* PathElementCS::referredElement=UnreservedName || soft-space value soft-space */
+				202		/* PathElementCS::referredElement=UnreservedName || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
@@ -3272,10 +3270,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		serializationRules[10] = createSerializationRule("PathNameCS-0", 66,
 			null,	// run-time resolution using SerializationSteps
 			createSerializationSteps(
-				195		/* PathNameCS::ownedPathElements+=FirstPathElementCS || value */,
-				159		/* V00*2-steps || value */,
-				115		/* '::' || no-space value no-space */,
-				196		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
+				196		/* PathNameCS::ownedPathElements+=FirstPathElementCS || value */,
+				160		/* V00*2-steps || value */,
+				116		/* '::' || no-space value no-space */,
+				197		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 20/* FirstPathElementCS,NextPathElementCS */,
@@ -3292,12 +3290,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				87		/* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			),
 			createSerializationSteps(
-				76		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
-				159		/* V00*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				76		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
-				165		/* V01*1-steps || value */,
-				47		/* TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value */
+				77		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
+				160		/* V00*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				77		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
+				166		/* V01*1-steps || value */,
+				48		/* TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 15/* MultiplicityCS */,
@@ -3315,7 +3313,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				47		/* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			),
 			createSerializationSteps(
-				10		/* TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				11		/* TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 46/* TypeRefCS */,
@@ -3332,14 +3330,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				122		/* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				134		/* 'extends' || soft-space value soft-space */,
-				31		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */,
-				169		/* V01*2-steps || value */,
-				104		/* '&&' || soft-space value soft-space */,
-				31		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				135		/* 'extends' || soft-space value soft-space */,
+				32		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */,
+				170		/* V01*2-steps || value */,
+				105		/* '&&' || soft-space value soft-space */,
+				32		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -3358,11 +3356,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				52		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
-				65		/* TypedTypeRefCS::ownedPathName=PathNameCS || value */,
-				160		/* V00*3-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				11		/* TypedTypeRefCS::ownedBinding=TemplateBindingCS || value */,
-				107		/* ')' || no-space value */
+				66		/* TypedTypeRefCS::ownedPathName=PathNameCS || value */,
+				161		/* V00*3-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				12		/* TypedTypeRefCS::ownedBinding=TemplateBindingCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 35/* TemplateBindingCS */,
@@ -3379,10 +3377,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				85		/* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			),
 			createSerializationSteps(
-				196		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */,
-				159		/* V00*2-steps || value */,
-				115		/* '::' || no-space value no-space */,
-				196		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
+				197		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */,
+				160		/* V00*2-steps || value */,
+				116		/* '::' || no-space value no-space */,
+				197		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 19/* NextPathElementCS */,
@@ -3397,10 +3395,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				115		/* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			),
 			createSerializationSteps(
-				120		/* '?' || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				134		/* 'extends' || soft-space value soft-space */,
-				32		/* WildcardTypeRefCS::ownedExtends=TypedRefCS || value */
+				121		/* '?' || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				135		/* 'extends' || soft-space value soft-space */,
+				33		/* WildcardTypeRefCS::ownedExtends=TypedRefCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 47/* TypedRefCS */,
@@ -3422,17 +3420,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				110		/* assign V0 = |TemplateableElementCS::ownedSignature| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				127		/* 'context' || soft-new-line value soft-space */,
-				155		/* V00*1-steps || value */,
-				72		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
-				165		/* V01*1-steps || value */,
-				99		/* ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space */,
-				63		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
-				174		/* V02*1-steps || value */,
-				40		/* ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value */,
-				178		/* V03*1-steps || value */,
-				22		/* ClassifierContextDeclCS::ownedDefinitions+=DefCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				128		/* 'context' || soft-new-line value soft-space */,
+				156		/* V00*1-steps || value */,
+				73		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
+				166		/* V01*1-steps || value */,
+				100		/* ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space */,
+				64		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
+				175		/* V02*1-steps || value */,
+				41		/* ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value */,
+				179		/* V03*1-steps || value */,
+				23		/* ClassifierContextDeclCS::ownedDefinitions+=DefCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -3464,17 +3462,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				110		/* assign V0 = |TemplateableElementCS::ownedSignature| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				127		/* 'context' || soft-new-line value soft-space */,
-				155		/* V00*1-steps || value */,
-				72		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
-				165		/* V01*1-steps || value */,
-				99		/* ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space */,
-				63		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
-				173		/* V02*1-steps || value */,
-				40		/* ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value */,
-				179		/* V03*1-steps || value */,
-				22		/* ClassifierContextDeclCS::ownedDefinitions+=DefCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				128		/* 'context' || soft-new-line value soft-space */,
+				156		/* V00*1-steps || value */,
+				73		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
+				166		/* V01*1-steps || value */,
+				100		/* ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space */,
+				64		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
+				174		/* V02*1-steps || value */,
+				41		/* ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value */,
+				180		/* V03*1-steps || value */,
+				23		/* ClassifierContextDeclCS::ownedDefinitions+=DefCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -3504,13 +3502,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				108		/* assign V0 = |RootCS::ownedImports| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				156		/* V00*1-steps || value */,
-				34		/* RootCS::ownedImports+=ImportCS || value half-new-line */,
-				167		/* V01*1-steps || half-new-line value half-new-line */,
-				51		/* CompleteOCLDocumentCS::ownedPackages+=PackageDeclarationCS || value */,
-				173		/* V02*1-steps || value */,
-				17		/* CompleteOCLDocumentCS::ownedContexts+=ContextDeclCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				157		/* V00*1-steps || value */,
+				35		/* RootCS::ownedImports+=ImportCS || value half-new-line */,
+				168		/* V01*1-steps || half-new-line value half-new-line */,
+				52		/* CompleteOCLDocumentCS::ownedPackages+=PackageDeclarationCS || value */,
+				174		/* V02*1-steps || value */,
+				18		/* CompleteOCLDocumentCS::ownedContexts+=ContextDeclCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 3/* ContextDeclCS */,
@@ -3542,26 +3540,26 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				144		/* assign V3 = (|DefOperationCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				155		/* V00*1-steps || value */,
-				4		/* DefCS::isStatic?='static' || soft-space value soft-space */,
-				128		/* 'def' || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				165		/* V01*1-steps || value */,
-				72		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				106		/* '(' || no-space value no-space */,
-				176		/* V02*4-steps || value */,
-				52		/* DefOperationCS::ownedParameters+=DefParameterCS || value */,
-				181		/* V03*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				52		/* DefOperationCS::ownedParameters+=DefParameterCS || value */,
-				107		/* ')' || no-space value */,
-				113		/* ':' || soft-space value soft-space */,
-				182		/* V04*1-steps || value */,
-				87		/* TypedElementCS::ownedType=TypeExpCS || value */,
-				118		/* '=' || soft-space value soft-new-line push */,
-				74		/* DefCS::ownedSpecification=SpecificationCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				156		/* V00*1-steps || value */,
+				5		/* DefCS::isStatic?='static' || soft-space value soft-space */,
+				129		/* 'def' || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				166		/* V01*1-steps || value */,
+				73		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				107		/* '(' || no-space value no-space */,
+				177		/* V02*4-steps || value */,
+				53		/* DefOperationCS::ownedParameters+=DefParameterCS || value */,
+				182		/* V03*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				53		/* DefOperationCS::ownedParameters+=DefParameterCS || value */,
+				108		/* ')' || no-space value */,
+				114		/* ':' || soft-space value soft-space */,
+				183		/* V04*1-steps || value */,
+				88		/* TypedElementCS::ownedType=TypeExpCS || value */,
+				119		/* '=' || soft-space value soft-new-line push */,
+				75		/* DefCS::ownedSpecification=SpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(CompleteOCLCSPackage.Literals.DEF_CS__IS_STATIC, false,
@@ -3592,10 +3590,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				87		/* TypedElementCS::ownedType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				88		/* TypedElementCS::ownedType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -3617,16 +3615,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				96		/* assign V0 = |DefCS::isStatic.'static'| */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				155		/* V00*1-steps || value */,
-				4		/* DefCS::isStatic?='static' || soft-space value soft-space */,
-				128		/* 'def' || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				87		/* TypedElementCS::ownedType=TypeExpCS || value */,
-				118		/* '=' || soft-space value soft-new-line push */,
-				74		/* DefCS::ownedSpecification=SpecificationCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				156		/* V00*1-steps || value */,
+				5		/* DefCS::isStatic?='static' || soft-space value soft-space */,
+				129		/* 'def' || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				88		/* TypedElementCS::ownedType=TypeExpCS || value */,
+				119		/* '=' || soft-space value soft-new-line push */,
+				75		/* DefCS::ownedSpecification=SpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(CompleteOCLCSPackage.Literals.DEF_CS__IS_STATIC, false,
@@ -3650,14 +3648,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				101		/* assign V0 = |NamedElementCS::name| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				136		/* 'import' || value */,
-				158		/* V00*2-steps || value */,
-				191		/* NamedElementCS::name=Identifier || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				62		/* ImportCS::ownedPathName=URIPathNameCS || value */,
-				165		/* V01*1-steps || value */,
-				1		/* ImportCS::isAll?='::*' || soft-space value soft-space */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				137		/* 'import' || value */,
+				159		/* V00*2-steps || value */,
+				192		/* NamedElementCS::name=Identifier || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				63		/* ImportCS::ownedPathName=URIPathNameCS || value */,
+				166		/* V01*1-steps || value */,
+				2		/* ImportCS::isAll?='::*' || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, false,
@@ -3674,7 +3672,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */
 			),
 			createSerializationSteps(
-				121		/* '?' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				122		/* '?' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			null);
 		// CompleteOCL::OperationContextDeclCS-0(completeoclcs::OperationContextDeclCS): { "context" ownedSignature=TemplateSignatureCS[?] ownedPathName=UnreservedPathNameCS "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" ":" ownedType=TypeExpCS[?] { ownedPreconditions+=preConstraintCS[*] ownedPostconditions+=postConstraintCS[*] ownedBodies+=bodySpecificationCS[*] } }
@@ -3698,27 +3696,27 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				138		/* assign V2 = (|OperationContextDeclCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				127		/* 'context' || soft-new-line value soft-space */,
-				155		/* V00*1-steps || value */,
-				72		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
-				63		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
-				106		/* '(' || no-space value no-space */,
-				171		/* V01*4-steps || value */,
-				53		/* OperationContextDeclCS::ownedParameters+=ParameterCS || value */,
-				175		/* V02*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				53		/* OperationContextDeclCS::ownedParameters+=ParameterCS || value */,
-				107		/* ')' || no-space value */,
-				113		/* ':' || soft-space value soft-space */,
-				177		/* V03*1-steps || value */,
-				83		/* FeatureContextDeclCS::ownedType=TypeExpCS || value */,
-				183		/* V04*1-steps || value */,
-				69		/* OperationContextDeclCS::ownedPreconditions+=preConstraintCS || value */,
-				184		/* V05*1-steps || value */,
-				68		/* OperationContextDeclCS::ownedPostconditions+=postConstraintCS || value */,
-				185		/* V06*1-steps || value */,
-				12		/* OperationContextDeclCS::ownedBodies+=bodySpecificationCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				128		/* 'context' || soft-new-line value soft-space */,
+				156		/* V00*1-steps || value */,
+				73		/* TemplateableElementCS::ownedSignature=TemplateSignatureCS || value */,
+				64		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
+				107		/* '(' || no-space value no-space */,
+				172		/* V01*4-steps || value */,
+				54		/* OperationContextDeclCS::ownedParameters+=ParameterCS || value */,
+				176		/* V02*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				54		/* OperationContextDeclCS::ownedParameters+=ParameterCS || value */,
+				108		/* ')' || no-space value */,
+				114		/* ':' || soft-space value soft-space */,
+				178		/* V03*1-steps || value */,
+				84		/* FeatureContextDeclCS::ownedType=TypeExpCS || value */,
+				184		/* V04*1-steps || value */,
+				70		/* OperationContextDeclCS::ownedPreconditions+=preConstraintCS || value */,
+				185		/* V05*1-steps || value */,
+				69		/* OperationContextDeclCS::ownedPostconditions+=postConstraintCS || value */,
+				186		/* V06*1-steps || value */,
+				13		/* OperationContextDeclCS::ownedBodies+=bodySpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES, 61/* bodySpecificationCS */,
@@ -3755,14 +3753,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				41		/* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				144		/* 'package' || half-new-line value push */,
-				63		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
-				156		/* V00*1-steps || value */,
-				41		/* PackageDeclarationCS::ownedInvariants+=invConstraintCS || value */,
-				166		/* V01*1-steps || value */,
-				18		/* PackageDeclarationCS::ownedContexts+=ContextDeclCS || value */,
-				133		/* 'endpackage' || soft-new-line pop value soft-new-line half-new-line */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				145		/* 'package' || half-new-line value push */,
+				64		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
+				157		/* V00*1-steps || value */,
+				42		/* PackageDeclarationCS::ownedInvariants+=invConstraintCS || value */,
+				167		/* V01*1-steps || value */,
+				19		/* PackageDeclarationCS::ownedContexts+=ContextDeclCS || value */,
+				134		/* 'endpackage' || pop value soft-new-line half-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 3/* ContextDeclCS */,
@@ -3786,11 +3784,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				101		/* assign V0 = |NamedElementCS::name| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				158		/* V00*2-steps || value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				87		/* TypedElementCS::ownedType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				159		/* V00*2-steps || value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				88		/* TypedElementCS::ownedType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -3811,13 +3809,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				41		/* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				127		/* 'context' || soft-new-line value soft-space */,
-				63		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
-				113		/* ':' || soft-space value soft-space */,
-				83		/* FeatureContextDeclCS::ownedType=TypeExpCS || value */,
-				156		/* V00*1-steps || value */,
-				21		/* PropertyContextDeclCS::ownedDefaultExpressions+=deriveSpecificationCS|initSpecificationCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				128		/* 'context' || soft-new-line value soft-space */,
+				64		/* PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value */,
+				114		/* ':' || soft-space value soft-space */,
+				84		/* FeatureContextDeclCS::ownedType=TypeExpCS || value */,
+				157		/* V00*1-steps || value */,
+				22		/* PropertyContextDeclCS::ownedDefaultExpressions+=deriveSpecificationCS|initSpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, 62/* deriveSpecificationCS,initSpecificationCS */,
@@ -3840,7 +3838,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				9		/* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				28		/* ExpSpecificationCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				29		/* ExpSpecificationCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 9/* ExpCS */,
@@ -3855,7 +3853,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				46		/* assert (|SpecificationCS::exprString| - 1) == 0 */
 			),
 			createSerializationSteps(
-				0		/* SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				1		/* SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, true, GrammarCardinality.ONE)
@@ -3868,13 +3866,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				88		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				106		/* '(' || no-space value no-space */,
-				54		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
-				159		/* V00*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				54		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
-				107		/* ')' || no-space value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				107		/* '(' || no-space value no-space */,
+				55		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				160		/* V00*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				55		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 45/* TypeParameterCS */,
@@ -3889,13 +3887,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				88		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				116		/* '<' || soft-space value soft-space */,
-				54		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
-				159		/* V00*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				54		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
-				119		/* '>' || soft-space value soft-space */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				117		/* '<' || soft-space value soft-space */,
+				55		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				160		/* V00*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				55		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				120		/* '>' || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 45/* TypeParameterCS */,
@@ -3911,17 +3909,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				9		/* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				126		/* 'body' || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				27		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				127		/* 'body' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				28		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 9/* ExpCS */,
 					(28/*ExpCS*/ << 4) | 0 /*[1]*/
 				)
 			});
-		// CompleteOCL::bodySpecificationCS-1(essentialoclcs::ExpSpecificationCS): exprString=UNQUOTED_STRING
+		// CompleteOCL::bodySpecificationCS-1(essentialoclcs::ExpSpecificationCS): { "body" ":" exprString=UNQUOTED_STRING }
 		serializationRules[34] = createSerializationRule("bodySpecificationCS-1", 115,
 			createSerializationMatchSteps(
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
@@ -3929,7 +3927,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				46		/* assert (|SpecificationCS::exprString| - 1) == 0 */
 			),
 			createSerializationSteps(
-				0		/* SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				127		/* 'body' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				0		/* SpecificationCS::exprString=UNQUOTED_STRING || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, true, GrammarCardinality.ONE)
@@ -3943,17 +3944,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				9		/* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				129		/* 'derive' || soft-space value soft-space */,
-				114		/* ':' || soft-space value soft-new-line push */,
-				27		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				130		/* 'derive' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				28		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 9/* ExpCS */,
 					(28/*ExpCS*/ << 4) | 0 /*[1]*/
 				)
 			});
-		// CompleteOCL::deriveSpecificationCS-1(essentialoclcs::ExpSpecificationCS): exprString=UNQUOTED_STRING
+		// CompleteOCL::deriveSpecificationCS-1(essentialoclcs::ExpSpecificationCS): { "derive" ":" exprString=UNQUOTED_STRING }
 		serializationRules[36] = createSerializationRule("deriveSpecificationCS-1", 116,
 			createSerializationMatchSteps(
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
@@ -3961,7 +3962,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				46		/* assert (|SpecificationCS::exprString| - 1) == 0 */
 			),
 			createSerializationSteps(
-				0		/* SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				130		/* 'derive' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				0		/* SpecificationCS::exprString=UNQUOTED_STRING || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, true, GrammarCardinality.ONE)
@@ -3975,17 +3979,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				9		/* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				139		/* 'init' || soft-space value soft-space */,
-				114		/* ':' || soft-space value soft-new-line push */,
-				27		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				140		/* 'init' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				28		/* ExpSpecificationCS::ownedExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 9/* ExpCS */,
 					(28/*ExpCS*/ << 4) | 0 /*[1]*/
 				)
 			});
-		// CompleteOCL::initSpecificationCS-1(essentialoclcs::ExpSpecificationCS): exprString=UNQUOTED_STRING
+		// CompleteOCL::initSpecificationCS-1(essentialoclcs::ExpSpecificationCS): { "init" ":" exprString=UNQUOTED_STRING }
 		serializationRules[38] = createSerializationRule("initSpecificationCS-1", 117,
 			createSerializationMatchSteps(
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
@@ -3993,7 +3997,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				46		/* assert (|SpecificationCS::exprString| - 1) == 0 */
 			),
 			createSerializationSteps(
-				0		/* SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				140		/* 'init' || soft-space value soft-space */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				0		/* SpecificationCS::exprString=UNQUOTED_STRING || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, true, GrammarCardinality.ONE)
@@ -4010,16 +4017,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				127		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				140		/* 'inv' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				170		/* V01*3-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				46		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
-				107		/* ')' || no-space value */,
-				114		/* ':' || soft-space value soft-new-line push */,
-				73		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				141		/* 'inv' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				171		/* V01*3-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				47		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
+				108		/* ')' || no-space value */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				74		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -4042,16 +4049,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				127		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				145		/* 'post' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				170		/* V01*3-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				46		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
-				107		/* ')' || no-space value */,
-				114		/* ':' || soft-space value soft-new-line push */,
-				73		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				146		/* 'post' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				171		/* V01*3-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				47		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
+				108		/* ')' || no-space value */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				74		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -4074,16 +4081,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				127		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
-				187		/* wrapper || soft-new-line push value pop pop soft-new-line */,
-				146		/* 'pre' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				170		/* V01*3-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				46		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
-				107		/* ')' || no-space value */,
-				114		/* ':' || soft-space value soft-new-line push */,
-				73		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
+				188		/* wrapper || soft-new-line push value pop pop */,
+				147		/* 'pre' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				171		/* V01*3-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				47		/* ConstraintCS::ownedMessageSpecification=SpecificationCS || value */,
+				108		/* ')' || no-space value */,
+				115		/* ':' || soft-space value soft-new-line push */,
+				74		/* ConstraintCS::ownedSpecification=SpecificationCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -4101,7 +4108,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				1		/* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				101		/* BooleanLiteralExpCS::symbol='false|true' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				102		/* BooleanLiteralExpCS::symbol='false|true' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, false,
@@ -4118,11 +4125,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				88		/* VariableCS::ownedType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				89		/* VariableCS::ownedType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -4141,15 +4148,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				116		/* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				80		/* CollectionLiteralExpCS::ownedType=CollectionTypeCS || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				161		/* V00*4-steps || value */,
-				55		/* CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value */,
-				169		/* V01*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				55		/* CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				81		/* CollectionLiteralExpCS::ownedType=CollectionTypeCS || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				162		/* V00*4-steps || value */,
+				56		/* CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value */,
+				170		/* V01*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				56		/* CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 1/* CollectionLiteralPartCS */,
@@ -4169,11 +4176,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				3		/* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				24		/* CollectionLiteralPartCS::ownedExpression=ExpCS || value */,
-				158		/* V00*2-steps || value */,
-				112		/* '..' || no-space value no-space */,
-				44		/* CollectionLiteralPartCS::ownedLastExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				25		/* CollectionLiteralPartCS::ownedExpression=ExpCS || value */,
+				159		/* V00*2-steps || value */,
+				113		/* '..' || no-space value no-space */,
+				45		/* CollectionLiteralPartCS::ownedLastExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 9/* ExpCS */,
@@ -4192,7 +4199,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				3		/* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				25		/* CollectionLiteralPartCS::ownedExpression=PatternExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				26		/* CollectionLiteralPartCS::ownedExpression=PatternExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 24/* PatternExpCS */,
@@ -4211,16 +4218,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				4		/* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
-				81		/* CollectionPatternCS::ownedType=CollectionTypeCS || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				163		/* V00*6-steps || value */,
-				56		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
-				169		/* V01*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				56		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
-				109		/* '++' || soft-space value soft-space */,
-				97		/* CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				82		/* CollectionPatternCS::ownedType=CollectionTypeCS || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				164		/* V00*6-steps || value */,
+				57		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
+				170		/* V01*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				57		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
+				110		/* '++' || soft-space value soft-space */,
+				98		/* CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -4242,13 +4249,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				125		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
-				6		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				82		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
-				165		/* V01*1-steps || value */,
-				14		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
-				107		/* ')' || no-space value */
+				7		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				83		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
+				166		/* V01*1-steps || value */,
+				15		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true, GrammarCardinality.ONE),
@@ -4268,13 +4275,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				118		/* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				152		/* '{' || soft-space value push soft-new-line */,
-				161		/* V00*4-steps || value */,
-				57		/* CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value */,
-				169		/* V01*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				57		/* CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				153		/* '{' || soft-space value push soft-new-line */,
+				162		/* V00*4-steps || value */,
+				58		/* CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value */,
+				170		/* V01*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				58		/* CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 31/* ShadowPartCS */,
@@ -4291,11 +4298,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				14		/* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				131		/* 'elseif' || soft-new-line pop soft-space value push soft-space */,
-				16		/* IfThenExpCS::ownedCondition=ExpCS || value */,
-				149		/* 'then' || pop value push soft-space */,
-				79		/* IfThenExpCS::ownedThenExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				132		/* 'elseif' || soft-new-line pop soft-space value push soft-space */,
+				17		/* IfThenExpCS::ownedCondition=ExpCS || value */,
+				150		/* 'then' || pop value push soft-space */,
+				80		/* IfThenExpCS::ownedThenExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 9/* ExpCS */,
@@ -4316,10 +4323,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				17		/* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				45		/* InfixExpCS::ownedLeft=PrefixedPrimaryExpCS || value */,
-				188		/* NamedElementCS::name=BinaryOperatorName || soft-space value soft-space */,
-				197		/* OperatorExpCS::ownedRight=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				46		/* InfixExpCS::ownedLeft=PrefixedPrimaryExpCS || value */,
+				189		/* NamedElementCS::name=BinaryOperatorName || soft-space value soft-space */,
+				198		/* OperatorExpCS::ownedRight=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -4345,16 +4352,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				11		/* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				135		/* 'if' || soft-new-line value push soft-space */,
-				15		/* IfExpCS::ownedCondition=ExpCS|PatternExpCS || value */,
-				150		/* 'then' || pop soft-space value push soft-space */,
-				78		/* IfExpCS::ownedThenExpression=ExpCS || value */,
-				156		/* V00*1-steps || value */,
-				33		/* IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS || value */,
-				130		/* 'else' || soft-new-line pop value push soft-space */,
-				23		/* IfExpCS::ownedElseExpression=ExpCS || value */,
-				132		/* 'endif' || soft-new-line pop value soft-space */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				136		/* 'if' || soft-new-line value push soft-space */,
+				16		/* IfExpCS::ownedCondition=ExpCS|PatternExpCS || value */,
+				151		/* 'then' || pop soft-space value push soft-space */,
+				79		/* IfExpCS::ownedThenExpression=ExpCS || value */,
+				157		/* V00*1-steps || value */,
+				34		/* IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS || value */,
+				131		/* 'else' || soft-new-line pop value push soft-space */,
+				24		/* IfExpCS::ownedElseExpression=ExpCS || value */,
+				133		/* 'endif' || soft-new-line pop value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, 25/* ExpCS,PatternExpCS */,
@@ -4377,7 +4384,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */
 			),
 			createSerializationSteps(
-				141		/* 'invalid' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				142		/* 'invalid' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			null);
 		// EssentialOCL::LambdaLiteralExpCS-0(essentialoclcs::LambdaLiteralExpCS): { "Lambda" "{" ownedExpressionCS=ExpCS "}" }
@@ -4388,11 +4395,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				18		/* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				122		/* 'Lambda' || soft-space value soft-space */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				30		/* LambdaLiteralExpCS::ownedExpressionCS=ExpCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				123		/* 'Lambda' || soft-space value soft-space */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				31		/* LambdaLiteralExpCS::ownedExpressionCS=ExpCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 9/* ExpCS */,
@@ -4410,14 +4417,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				83		/* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				142		/* 'let' || soft-space value push */,
-				91		/* LetExpCS::ownedVariables+=LetVariableCS || value */,
-				159		/* V00*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				91		/* LetExpCS::ownedVariables+=LetVariableCS || value */,
-				138		/* 'in' || soft-space pop value soft-new-line */,
-				35		/* LetExpCS::ownedInExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				143		/* 'let' || soft-space value push */,
+				92		/* LetExpCS::ownedVariables+=LetVariableCS || value */,
+				160		/* V00*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				92		/* LetExpCS::ownedVariables+=LetVariableCS || value */,
+				139		/* 'in' || soft-space pop value soft-new-line */,
+				36		/* LetExpCS::ownedInExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 9/* ExpCS */,
@@ -4440,15 +4447,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				155		/* V00*1-steps || value */,
-				71		/* LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value */,
-				168		/* V01*2-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				88		/* VariableCS::ownedType=TypeExpCS || value */,
-				117		/* '=' || soft-space value soft-space */,
-				39		/* VariableCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				156		/* V00*1-steps || value */,
+				72		/* LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value */,
+				169		/* V01*2-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				89		/* VariableCS::ownedType=TypeExpCS || value */,
+				118		/* '=' || soft-space value soft-space */,
+				40		/* VariableCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -4473,15 +4480,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				119		/* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				84		/* MapLiteralExpCS::ownedType=MapTypeCS || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				161		/* V00*4-steps || value */,
-				58		/* MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value */,
-				169		/* V01*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				58		/* MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				85		/* MapLiteralExpCS::ownedType=MapTypeCS || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				162		/* V00*4-steps || value */,
+				59		/* MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value */,
+				170		/* V01*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				59		/* MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 13/* MapLiteralPartCS */,
@@ -4501,10 +4508,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				21		/* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				42		/* MapLiteralPartCS::ownedKey=ExpCS || value */,
-				151		/* 'with' || value */,
-				89		/* MapLiteralPartCS::ownedValue=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				43		/* MapLiteralPartCS::ownedKey=ExpCS || value */,
+				152		/* 'with' || value */,
+				90		/* MapLiteralPartCS::ownedValue=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 9/* ExpCS */,
@@ -4525,13 +4532,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				23		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				7		/* MapTypeCS::name='Map' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				43		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
-				111		/* ',' || no-space value soft-space */,
-				90		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
-				107		/* ')' || no-space value */
+				8		/* MapTypeCS::name='Map' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				44		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
+				112		/* ',' || no-space value soft-space */,
+				91		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false,
@@ -4554,7 +4561,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				7		/* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				26		/* ContextCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				27		/* ContextCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 9/* ExpCS */,
@@ -4576,17 +4583,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				0		/* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				61		/* AbstractNameExpCS::ownedPathName=PathNameCS || value */,
-				156		/* V00*1-steps || value */,
-				75		/* AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS || value */,
-				165		/* V01*1-steps || value */,
-				70		/* AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value */,
-				172		/* V02*1-steps || value */,
-				19		/* AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
-				180		/* V03*2-steps || value */,
-				3		/* AbstractNameExpCS::isPre?='@' || soft-space value no-space */,
-				147		/* 'pre' || no-space value soft-space */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				62		/* AbstractNameExpCS::ownedPathName=PathNameCS || value */,
+				157		/* V00*1-steps || value */,
+				76		/* AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS || value */,
+				166		/* V01*1-steps || value */,
+				71		/* AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value */,
+				173		/* V02*1-steps || value */,
+				20		/* AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
+				181		/* V03*2-steps || value */,
+				4		/* AbstractNameExpCS::isPre?='@' || soft-space value no-space */,
+				148		/* 'pre' || no-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, false,
@@ -4617,9 +4624,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				32		/* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 40/* TypeExpCS */,
@@ -4641,16 +4648,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				31		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				158		/* V00*2-steps || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				168		/* V01*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				159		/* V00*2-steps || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				169		/* V01*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 0/* CoIteratorVariableCS */,
@@ -4683,16 +4690,16 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				31		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				158		/* V00*2-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				168		/* V01*2-steps || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				137		/* 'in' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				159		/* V00*2-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				169		/* V01*2-steps || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				138		/* 'in' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 0/* CoIteratorVariableCS */,
@@ -4722,13 +4729,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				31		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				158		/* V00*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				159		/* V00*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 0/* CoIteratorVariableCS */,
@@ -4753,7 +4760,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				31		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				51		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 16/* NavigatingArgExpCS */,
@@ -4774,15 +4781,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				130		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				93		/* NavigatingArgCS::prefix='|' || soft-space value soft-space */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				162		/* V00*5-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				168		/* V01*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				94		/* NavigatingArgCS::prefix='|' || soft-space value soft-space */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				163		/* V00*5-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				169		/* V01*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4813,17 +4820,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				33		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				95		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				158		/* V00*2-steps || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				168		/* V01*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				96		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				159		/* V00*2-steps || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				169		/* V01*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4857,17 +4864,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				33		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				95		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				158		/* V00*2-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				168		/* V01*2-steps || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				137		/* 'in' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				96		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				159		/* V00*2-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				169		/* V01*2-steps || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				138		/* 'in' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4900,14 +4907,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				33		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				95		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				151		/* 'with' || value */,
-				13		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
-				158		/* V00*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				96		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				152		/* 'with' || value */,
+				14		/* NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value */,
+				159		/* V00*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4935,9 +4942,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				33		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				95		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				96		/* NavigatingArgCS::prefix=',' || no-space value soft-space */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4961,15 +4968,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				130		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				94		/* NavigatingArgCS::prefix=';' || no-space value soft-new-line */,
-				49		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
-				162		/* V00*5-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				85		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
-				168		/* V01*2-steps || value */,
-				117		/* '=' || soft-space value soft-space */,
-				36		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				95		/* NavigatingArgCS::prefix=';' || no-space value soft-new-line */,
+				50		/* NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value */,
+				163		/* V00*5-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				86		/* NavigatingArgCS::ownedType=TypeExpCS || value */,
+				169		/* V01*2-steps || value */,
+				118		/* '=' || soft-space value soft-space */,
+				37		/* NavigatingArgCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false,
@@ -4993,10 +5000,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				36		/* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				105		/* '(' || value no-space */,
-				29		/* NestedExpCS::ownedExpression=ExpCS || value */,
-				107		/* ')' || no-space value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				106		/* '(' || value no-space */,
+				30		/* NestedExpCS::ownedExpression=ExpCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 9/* ExpCS */,
@@ -5009,7 +5016,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */
 			),
 			createSerializationSteps(
-				143		/* 'null' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				144		/* 'null' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			null);
 		// EssentialOCL::NumberLiteralExpCS-0(essentialoclcs::NumberLiteralExpCS): symbol=NUMBER_LITERAL
@@ -5019,7 +5026,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				37		/* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			),
 			createSerializationSteps(
-				102		/* NumberLiteralExpCS::symbol=NUMBER_LITERAL || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				103		/* NumberLiteralExpCS::symbol=NUMBER_LITERAL || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, true, GrammarCardinality.ONE)
@@ -5033,11 +5040,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				106		/* assign V0 = |PatternExpCS::patternVariableName| */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				155		/* V00*1-steps || value */,
-				92		/* PatternExpCS::patternVariableName=UnrestrictedName || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				67		/* PatternExpCS::ownedPatternType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				156		/* V00*1-steps || value */,
+				93		/* PatternExpCS::patternVariableName=UnrestrictedName || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				68		/* PatternExpCS::ownedPatternType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -5054,9 +5061,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				189		/* NamedElementCS::name=UnaryOperatorName || soft-space value soft-space */,
-				198		/* OperatorExpCS::ownedRight=PrefixedLetExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				190		/* NamedElementCS::name=UnaryOperatorName || soft-space value soft-space */,
+				199		/* OperatorExpCS::ownedRight=PrefixedLetExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -5073,9 +5080,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				189		/* NamedElementCS::name=UnaryOperatorName || soft-space value soft-space */,
-				199		/* OperatorExpCS::ownedRight=PrefixedPrimaryExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				190		/* NamedElementCS::name=UnaryOperatorName || soft-space value soft-space */,
+				200		/* OperatorExpCS::ownedRight=PrefixedPrimaryExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -5090,7 +5097,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				43		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				8		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */
+				9		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true, GrammarCardinality.ONE)
@@ -5099,12 +5106,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		serializationRules[80] = createSerializationRule("RoundBracketedClauseCS-0", 75,
 			null,	// run-time resolution using SerializationSteps
 			createSerializationSteps(
-				106		/* '(' || no-space value no-space */,
-				160		/* V00*3-steps || value */,
-				192		/* RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS || value */,
-				166		/* V01*1-steps || value */,
-				193		/* RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS || value */,
-				107		/* ')' || no-space value */
+				107		/* '(' || no-space value no-space */,
+				161		/* V00*3-steps || value */,
+				193		/* RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS || value */,
+				167		/* V01*1-steps || value */,
+				194		/* RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 18/* NavigatingArgCS,NavigatingBarArgCS,NavigatingCommaArgCS,NavigatingSemiArgCS */,
@@ -5121,7 +5128,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */
 			),
 			createSerializationSteps(
-				148		/* 'self' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				149		/* 'self' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			null);
 		// EssentialOCL::ShadowPartCS-0(essentialoclcs::ShadowPartCS): { referredProperty=UnrestrictedName "=" ownedInitExpression=(ExpCS|PatternExpCS) }
@@ -5133,10 +5140,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				45		/* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				96		/* ShadowPartCS::referredProperty=UnrestrictedName || soft-space value soft-space */,
-				117		/* '=' || soft-space value soft-space */,
-				37		/* ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				97		/* ShadowPartCS::referredProperty=UnrestrictedName || soft-space value soft-space */,
+				118		/* '=' || soft-space value soft-space */,
+				38		/* ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 25/* ExpCS,PatternExpCS */,
@@ -5155,7 +5162,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				44		/* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
-				38		/* ShadowPartCS::ownedInitExpression=StringLiteralExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				39		/* ShadowPartCS::ownedInitExpression=StringLiteralExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 34/* StringLiteralExpCS */,
@@ -5169,7 +5176,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				40		/* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			),
 			createSerializationSteps(
-				195		/* PathNameCS::ownedPathElements+=FirstPathElementCS || value */
+				196		/* PathNameCS::ownedPathElements+=FirstPathElementCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 10/* FirstPathElementCS */,
@@ -5183,12 +5190,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				86		/* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			),
 			createSerializationSteps(
-				124		/* '[' || no-space value no-space */,
-				77		/* SquareBracketedClauseCS::ownedTerms+=ExpCS || value */,
-				159		/* V00*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				77		/* SquareBracketedClauseCS::ownedTerms+=ExpCS || value */,
-				125		/* ']' || no-space value */
+				125		/* '[' || no-space value no-space */,
+				78		/* SquareBracketedClauseCS::ownedTerms+=ExpCS || value */,
+				160		/* V00*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				78		/* SquareBracketedClauseCS::ownedTerms+=ExpCS || value */,
+				126		/* ']' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 9/* ExpCS */,
@@ -5202,8 +5209,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				109		/* assign V0 = |StringLiteralExpCS::segments| */
 			),
 			createSerializationSteps(
-				157		/* V00*1-steps || value */,
-				98		/* StringLiteralExpCS::segments+=StringLiteral || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				158		/* V00*1-steps || value */,
+				99		/* StringLiteralExpCS::segments+=StringLiteral || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, false, GrammarCardinality.ONE_OR_MORE)
@@ -5216,14 +5223,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				89		/* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				123		/* 'Tuple' || soft-space value soft-space */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				59		/* TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value */,
-				159		/* V00*2-steps || value */,
-				110		/* ',' || no-space value soft-new-line */,
-				59		/* TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				124		/* 'Tuple' || soft-space value soft-space */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				60		/* TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value */,
+				160		/* V00*2-steps || value */,
+				111		/* ',' || no-space value soft-new-line */,
+				60		/* TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 38/* TupleLiteralPartCS */,
@@ -5241,13 +5248,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				158		/* V00*2-steps || value */,
-				113		/* ':' || soft-space value soft-space */,
-				88		/* VariableCS::ownedType=TypeExpCS || value */,
-				117		/* '=' || soft-space value soft-space */,
-				39		/* VariableCS::ownedInitExpression=ExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				159		/* V00*2-steps || value */,
+				114		/* ':' || soft-space value soft-space */,
+				89		/* VariableCS::ownedType=TypeExpCS || value */,
+				118		/* '=' || soft-space value soft-space */,
+				40		/* VariableCS::ownedInitExpression=ExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -5269,10 +5276,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				28		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				186		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-				190		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
-				113		/* ':' || soft-space value soft-space */,
-				87		/* TypedElementCS::ownedType=TypeExpCS || value */
+				187		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				191		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				114		/* ':' || soft-space value soft-space */,
+				88		/* TypedElementCS::ownedType=TypeExpCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
@@ -5291,15 +5298,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				139		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				9		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
-				164		/* V00*7-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				171		/* V01*4-steps || value */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				175		/* V02*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				107		/* ')' || no-space value */
+				10		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
+				165		/* V00*7-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				172		/* V01*4-steps || value */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				176		/* V02*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				108		/* ')' || no-space value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false,
@@ -5317,9 +5324,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				43		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				8		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */,
-				155		/* V00*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				9		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */,
+				156		/* V00*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true, GrammarCardinality.ONE),
@@ -5339,15 +5346,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				125		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
-				6		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				82		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
-				165		/* V01*1-steps || value */,
-				14		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
-				107		/* ')' || no-space value */,
-				172		/* V02*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				7		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				83		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
+				166		/* V01*1-steps || value */,
+				15		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
+				108		/* ')' || no-space value */,
+				173		/* V02*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true, GrammarCardinality.ONE),
@@ -5373,15 +5380,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				23		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				7		/* MapTypeCS::name='Map' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				43		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
-				111		/* ',' || no-space value soft-space */,
-				90		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
-				107		/* ')' || no-space value */,
-				165		/* V01*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				8		/* MapTypeCS::name='Map' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				44		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
+				112		/* ',' || no-space value soft-space */,
+				91		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
+				108		/* ')' || no-space value */,
+				166		/* V01*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false,
@@ -5410,15 +5417,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				134		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			),
 			createSerializationSteps(
-				64		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
-				162		/* V00*5-steps || value */,
-				20		/* TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
-				170		/* V01*3-steps || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				66		/* TypeNameExpCS::ownedPatternGuard=ExpCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */,
-				172		/* V02*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				65		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
+				163		/* V00*5-steps || value */,
+				21		/* TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
+				171		/* V01*3-steps || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				67		/* TypeNameExpCS::ownedPatternGuard=ExpCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */,
+				173		/* V02*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 4/* CurlyBracketedClauseCS */,
@@ -5447,18 +5454,18 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				4		/* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
-				81		/* CollectionPatternCS::ownedType=CollectionTypeCS || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				163		/* V00*6-steps || value */,
-				56		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
-				169		/* V01*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				56		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
-				109		/* '++' || soft-space value soft-space */,
-				97		/* CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space */,
-				154		/* '}' || pop soft-new-line value soft-new-line */,
-				172		/* V02*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				82		/* CollectionPatternCS::ownedType=CollectionTypeCS || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				164		/* V00*6-steps || value */,
+				57		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
+				170		/* V01*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				57		/* CollectionPatternCS::ownedParts+=PatternExpCS || value */,
+				110		/* '++' || soft-space value soft-space */,
+				98		/* CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space */,
+				155		/* '}' || pop soft-new-line value soft-new-line */,
+				173		/* V02*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, false, GrammarCardinality.ZERO_OR_ONE),
@@ -5484,17 +5491,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				139		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				9		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
-				164		/* V00*7-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				171		/* V01*4-steps || value */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				175		/* V02*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				107		/* ')' || no-space value */,
-				177		/* V03*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				10		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
+				165		/* V00*7-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				172		/* V01*4-steps || value */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				176		/* V02*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				108		/* ')' || no-space value */,
+				178		/* V03*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false,
@@ -5516,7 +5523,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				49		/* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
-				86		/* TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				87		/* TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 43/* TypeLiteralWithMultiplicityCS */,
@@ -5531,9 +5538,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				43		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
-				8		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */,
-				155		/* V00*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				9		/* PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space */,
+				156		/* V00*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true, GrammarCardinality.ONE),
@@ -5553,15 +5560,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				125		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
-				6		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				82		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
-				165		/* V01*1-steps || value */,
-				14		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
-				107		/* ')' || no-space value */,
-				172		/* V02*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				7		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				83		/* CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value */,
+				166		/* V01*1-steps || value */,
+				15		/* CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value */,
+				108		/* ')' || no-space value */,
+				173		/* V02*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true, GrammarCardinality.ONE),
@@ -5587,15 +5594,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				23		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
 			createSerializationSteps(
-				7		/* MapTypeCS::name='Map' || soft-space value soft-space */,
-				162		/* V00*5-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				43		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
-				111		/* ',' || no-space value soft-space */,
-				90		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
-				107		/* ')' || no-space value */,
-				165		/* V01*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				8		/* MapTypeCS::name='Map' || soft-space value soft-space */,
+				163		/* V00*5-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				44		/* MapTypeCS::ownedKeyType=TypeExpCS || value */,
+				112		/* ',' || no-space value soft-space */,
+				91		/* MapTypeCS::ownedValueType=TypeExpCS || value */,
+				108		/* ')' || no-space value */,
+				166		/* V01*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false,
@@ -5623,17 +5630,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				139		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
-				9		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
-				164		/* V00*7-steps || value */,
-				106		/* '(' || no-space value no-space */,
-				171		/* V01*4-steps || value */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				175		/* V02*2-steps || value */,
-				111		/* ',' || no-space value soft-space */,
-				60		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
-				107		/* ')' || no-space value */,
-				177		/* V03*1-steps || value */,
-				48		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
+				10		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
+				165		/* V00*7-steps || value */,
+				107		/* '(' || no-space value no-space */,
+				172		/* V01*4-steps || value */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				176		/* V02*2-steps || value */,
+				112		/* ',' || no-space value soft-space */,
+				61		/* TupleTypeCS::ownedParts+=TuplePartCS || value */,
+				108		/* ')' || no-space value */,
+				178		/* V03*1-steps || value */,
+				49		/* TypedRefCS::ownedMultiplicity=MultiplicityCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false,
@@ -5658,13 +5665,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				134		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			),
 			createSerializationSteps(
-				64		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
-				162		/* V00*5-steps || value */,
-				20		/* TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
-				170		/* V01*3-steps || value */,
-				152		/* '{' || soft-space value push soft-new-line */,
-				66		/* TypeNameExpCS::ownedPatternGuard=ExpCS || value */,
-				154		/* '}' || pop soft-new-line value soft-new-line */
+				65		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
+				163		/* V00*5-steps || value */,
+				21		/* TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value */,
+				171		/* V01*3-steps || value */,
+				153		/* '{' || soft-space value push soft-new-line */,
+				67		/* TypeNameExpCS::ownedPatternGuard=ExpCS || value */,
+				155		/* '}' || pop soft-new-line value soft-new-line */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 4/* CurlyBracketedClauseCS */,
@@ -5683,7 +5690,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				39		/* assert (|PathElementCS::referredElement| - 1) == 0 */
 			),
 			createSerializationSteps(
-				200		/* PathElementCS::referredElement=URI || soft-space value soft-space */
+				201		/* PathElementCS::referredElement=URI || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
@@ -5695,7 +5702,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				39		/* assert (|PathElementCS::referredElement| - 1) == 0 */
 			),
 			createSerializationSteps(
-				202		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
+				203		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
@@ -5705,10 +5712,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		serializationRules[105] = createSerializationRule("URIPathNameCS-0", 107,
 			null,	// run-time resolution using SerializationSteps
 			createSerializationSteps(
-				194		/* PathNameCS::ownedPathElements+=URIFirstPathElementCS || value */,
-				159		/* V00*2-steps || value */,
-				115		/* '::' || no-space value no-space */,
-				196		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
+				195		/* PathNameCS::ownedPathElements+=URIFirstPathElementCS || value */,
+				160		/* V00*2-steps || value */,
+				116		/* '::' || no-space value no-space */,
+				197		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationReference(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 49/* NextPathElementCS,URIFirstPathElementCS */,
@@ -5722,7 +5729,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				61		/* assert |ModelElementCS::ownedAnnotations| == 0 */
 			),
 			createSerializationSteps(
-				108		/* '*' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+				109		/* '*' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
 			),
 			null);
 	}
@@ -5808,45 +5815,44 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			SerializationSegment.SOFT_SPACE /* soft-space */
 		};
 		serializationSegments[16] = new @NonNull SerializationSegment @NonNull [] {
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.VALUE /* value */,
-			SerializationSegment.SOFT_SPACE /* soft-space */
+			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
+			SerializationSegment.HALF_NEW_LINE /* half-new-line */
 		};
 		serializationSegments[17] = new @NonNull SerializationSegment @NonNull [] {
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
+			SerializationSegment.POP /* pop */,
+			SerializationSegment.VALUE /* value */,
+			SerializationSegment.SOFT_SPACE /* soft-space */
+		};
+		serializationSegments[18] = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.PUSH /* push */,
 			SerializationSegment.SOFT_SPACE /* soft-space */
 		};
-		serializationSegments[18] = new @NonNull SerializationSegment @NonNull [] {
+		serializationSegments[19] = new @NonNull SerializationSegment @NonNull [] {
 			SerializationSegment.SOFT_SPACE /* soft-space */,
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.VALUE /* value */,
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */
-		};
-		serializationSegments[19] = new @NonNull SerializationSegment @NonNull [] {
-			SerializationSegment.SOFT_SPACE /* soft-space */,
-			SerializationSegment.VALUE /* value */,
-			SerializationSegment.PUSH /* push */,
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */
 		};
 		serializationSegments[20] = new @NonNull SerializationSegment @NonNull [] {
 			SerializationSegment.SOFT_SPACE /* soft-space */,
 			SerializationSegment.VALUE /* value */,
+			SerializationSegment.PUSH /* push */,
+			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */
+		};
+		serializationSegments[21] = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.SOFT_SPACE /* soft-space */,
+			SerializationSegment.VALUE /* value */,
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
 			SerializationSegment.PUSH /* push */
 		};
-		serializationSegments[21] = new @NonNull SerializationSegment @NonNull [] {
+		serializationSegments[22] = new @NonNull SerializationSegment @NonNull [] {
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
-			SerializationSegment.VALUE /* value */,
-			SerializationSegment.PUSH /* push */,
-			SerializationSegment.SOFT_SPACE /* soft-space */
-		};
-		serializationSegments[22] = new @NonNull SerializationSegment @NonNull [] {
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			SerializationSegment.POP /* pop */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.PUSH /* push */,
 			SerializationSegment.SOFT_SPACE /* soft-space */
@@ -5855,10 +5861,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.VALUE /* value */,
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			SerializationSegment.HALF_NEW_LINE /* half-new-line */
+			SerializationSegment.PUSH /* push */,
+			SerializationSegment.SOFT_SPACE /* soft-space */
 		};
 		serializationSegments[24] = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
+			SerializationSegment.PUSH /* push */,
+			SerializationSegment.VALUE /* value */,
+			SerializationSegment.POP /* pop */,
+			SerializationSegment.POP /* pop */
+		};
+		serializationSegments[25] = new @NonNull SerializationSegment @NonNull [] {
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
@@ -5866,426 +5879,420 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			SerializationSegment.PUSH /* push */,
 			SerializationSegment.SOFT_SPACE /* soft-space */
 		};
-		serializationSegments[25] = new @NonNull SerializationSegment @NonNull [] {
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			SerializationSegment.PUSH /* push */,
-			SerializationSegment.VALUE /* value */,
-			SerializationSegment.POP /* pop */,
-			SerializationSegment.POP /* pop */,
-			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */
-		};
 	}
 
 	/**
 	 * Initialize the various serialization steps used to serialize a serialization rule.
 	 */
 	private void initSerializationSteps() {
-		// 0: SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[0] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 103 /*UNQUOTED_STRING*/, 2);
-		// 1: ImportCS::isAll?='::*' || soft-space value soft-space
-		serializationSteps[1] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, 2 /* '::*' */, 13);
-		// 2: MultiplicityCS::isNullFree?='|1' || no-space value no-space
-		serializationSteps[2] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, 10 /* '|1' */, 7);
-		// 3: AbstractNameExpCS::isPre?='@' || soft-space value no-space
-		serializationSteps[3] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, 4 /* '@' */, 11);
-		// 4: DefCS::isStatic?='static' || soft-space value soft-space
-		serializationSteps[4] = createSerializationStepAssignKeyword(CompleteOCLCSPackage.Literals.DEF_CS__IS_STATIC, 8 /* 'static' */, 13);
-		// 5: MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space
-		serializationSteps[5] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 38 /*LOWER*/, 13);
-		// 6: CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space
-		serializationSteps[6] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, 9 /*CollectionTypeIdentifier*/, 13);
-		// 7: MapTypeCS::name='Map' || soft-space value soft-space
-		serializationSteps[7] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, 5 /* 'Map' */, 13);
-		// 8: PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space
-		serializationSteps[8] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, 73 /*PrimitiveTypeIdentifier*/, 13);
-		// 9: TupleTypeCS::name='Tuple' || soft-space value soft-space
-		serializationSteps[9] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, 6 /* 'Tuple' */, 13);
-		// 10: TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[10] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 100 /*TypeRefCS*/, 2);
-		// 11: TypedTypeRefCS::ownedBinding=TemplateBindingCS || value
-		serializationSteps[11] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 86 /*TemplateBindingCS*/, 0);
-		// 12: OperationContextDeclCS::ownedBodies+=bodySpecificationCS || value
-		serializationSteps[12] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES, 115 /*bodySpecificationCS*/, 0);
-		// 13: NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value
-		serializationSteps[13] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 4 /*CoIteratorVariableCS*/, 0);
-		// 14: CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value
-		serializationSteps[14] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
-		// 15: IfExpCS::ownedCondition=ExpCS|PatternExpCS || value
-		serializationSteps[15] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, -1, new int[] { 28/*ExpCS*/,67/*PatternExpCS*/}, 0);
-		// 16: IfThenExpCS::ownedCondition=ExpCS || value
-		serializationSteps[16] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 28 /*ExpCS*/, 0);
-		// 17: CompleteOCLDocumentCS::ownedContexts+=ContextDeclCS || value
-		serializationSteps[17] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 12 /*ContextDeclCS*/, 0);
-		// 18: PackageDeclarationCS::ownedContexts+=ContextDeclCS || value
-		serializationSteps[18] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 12 /*ContextDeclCS*/, 0);
-		// 19: AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value
-		serializationSteps[19] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 13 /*CurlyBracketedClauseCS*/, 0);
-		// 20: TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value
-		serializationSteps[20] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 13 /*CurlyBracketedClauseCS*/, 0);
-		// 21: PropertyContextDeclCS::ownedDefaultExpressions+=deriveSpecificationCS|initSpecificationCS || value
-		serializationSteps[21] = createSerializationStepAssigns(CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, -1, new int[] { 116/*deriveSpecificationCS*/,117/*initSpecificationCS*/}, 0);
-		// 22: ClassifierContextDeclCS::ownedDefinitions+=DefCS || value
-		serializationSteps[22] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, 15 /*DefCS*/, 0);
-		// 23: IfExpCS::ownedElseExpression=ExpCS || value
-		serializationSteps[23] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 24: CollectionLiteralPartCS::ownedExpression=ExpCS || value
-		serializationSteps[24] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 25: CollectionLiteralPartCS::ownedExpression=PatternExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[25] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 67 /*PatternExpCS*/, 2);
-		// 26: ContextCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[26] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 2);
-		// 27: ExpSpecificationCS::ownedExpression=ExpCS || value
-		serializationSteps[27] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 28: ExpSpecificationCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[28] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 2);
-		// 29: NestedExpCS::ownedExpression=ExpCS || value
-		serializationSteps[29] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 30: LambdaLiteralExpCS::ownedExpressionCS=ExpCS || value
-		serializationSteps[30] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 28 /*ExpCS*/, 0);
-		// 31: TypeParameterCS::ownedExtends+=TypedRefCS || value
-		serializationSteps[31] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 101 /*TypedRefCS*/, 0);
-		// 32: WildcardTypeRefCS::ownedExtends=TypedRefCS || value
-		serializationSteps[32] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 101 /*TypedRefCS*/, 0);
-		// 33: IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS || value
-		serializationSteps[33] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 21 /*ElseIfThenExpCS*/, 0);
-		// 34: RootCS::ownedImports+=ImportCS || value half-new-line
-		serializationSteps[34] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 34 /*ImportCS*/, 3);
-		// 35: LetExpCS::ownedInExpression=ExpCS || value
-		serializationSteps[35] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 36: NavigatingArgCS::ownedInitExpression=ExpCS || value
-		serializationSteps[36] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 37: ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS || value
-		serializationSteps[37] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, -1, new int[] { 28/*ExpCS*/,67/*PatternExpCS*/}, 0);
-		// 38: ShadowPartCS::ownedInitExpression=StringLiteralExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[38] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 85 /*StringLiteralExpCS*/, 2);
-		// 39: VariableCS::ownedInitExpression=ExpCS || value
-		serializationSteps[39] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 40: ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value
-		serializationSteps[40] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS, 118 /*invConstraintCS*/, 0);
-		// 41: PackageDeclarationCS::ownedInvariants+=invConstraintCS || value
-		serializationSteps[41] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS, 118 /*invConstraintCS*/, 0);
-		// 42: MapLiteralPartCS::ownedKey=ExpCS || value
-		serializationSteps[42] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 28 /*ExpCS*/, 0);
-		// 43: MapTypeCS::ownedKeyType=TypeExpCS || value
-		serializationSteps[43] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 93 /*TypeExpCS*/, 0);
-		// 44: CollectionLiteralPartCS::ownedLastExpression=ExpCS || value
-		serializationSteps[44] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 45: InfixExpCS::ownedLeft=PrefixedPrimaryExpCS || value
-		serializationSteps[45] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 69 /*PrefixedPrimaryExpCS*/, 0);
-		// 46: ConstraintCS::ownedMessageSpecification=SpecificationCS || value
-		serializationSteps[46] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 82 /*SpecificationCS*/, 0);
-		// 47: TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value
-		serializationSteps[47] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
-		// 48: TypedRefCS::ownedMultiplicity=MultiplicityCS || value
-		serializationSteps[48] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
-		// 49: NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value
-		serializationSteps[49] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 54 /*NavigatingArgExpCS*/, 0);
-		// 50: NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[50] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 54 /*NavigatingArgExpCS*/, 2);
-		// 51: CompleteOCLDocumentCS::ownedPackages+=PackageDeclarationCS || value
-		serializationSteps[51] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES, 64 /*PackageDeclarationCS*/, 0);
-		// 52: DefOperationCS::ownedParameters+=DefParameterCS || value
-		serializationSteps[52] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.DEF_OPERATION_CS__OWNED_PARAMETERS, 17 /*DefParameterCS*/, 0);
-		// 53: OperationContextDeclCS::ownedParameters+=ParameterCS || value
-		serializationSteps[53] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS, 65 /*ParameterCS*/, 0);
-		// 54: TemplateSignatureCS::ownedParameters+=TypeParameterCS || value
-		serializationSteps[54] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 99 /*TypeParameterCS*/, 0);
-		// 55: CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value
-		serializationSteps[55] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 6 /*CollectionLiteralPartCS*/, 0);
-		// 56: CollectionPatternCS::ownedParts+=PatternExpCS || value
-		serializationSteps[56] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 67 /*PatternExpCS*/, 0);
-		// 57: CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value
-		serializationSteps[57] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 80 /*ShadowPartCS*/, 0);
-		// 58: MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value
-		serializationSteps[58] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 45 /*MapLiteralPartCS*/, 0);
-		// 59: TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value
-		serializationSteps[59] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 90 /*TupleLiteralPartCS*/, 0);
-		// 60: TupleTypeCS::ownedParts+=TuplePartCS || value
-		serializationSteps[60] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 91 /*TuplePartCS*/, 0);
-		// 61: AbstractNameExpCS::ownedPathName=PathNameCS || value
-		serializationSteps[61] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
-		// 62: ImportCS::ownedPathName=URIPathNameCS || value
-		serializationSteps[62] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 107 /*URIPathNameCS*/, 0);
-		// 63: PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value
-		serializationSteps[63] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME, 111 /*UnreservedPathNameCS*/, 0);
-		// 64: TypeNameExpCS::ownedPathName=PathNameCS || value
-		serializationSteps[64] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
-		// 65: TypedTypeRefCS::ownedPathName=PathNameCS || value
-		serializationSteps[65] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
-		// 66: TypeNameExpCS::ownedPatternGuard=ExpCS || value
-		serializationSteps[66] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 28 /*ExpCS*/, 0);
-		// 67: PatternExpCS::ownedPatternType=TypeExpCS || value
-		serializationSteps[67] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 93 /*TypeExpCS*/, 0);
-		// 68: OperationContextDeclCS::ownedPostconditions+=postConstraintCS || value
-		serializationSteps[68] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS, 119 /*postConstraintCS*/, 0);
-		// 69: OperationContextDeclCS::ownedPreconditions+=preConstraintCS || value
-		serializationSteps[69] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS, 120 /*preConstraintCS*/, 0);
-		// 70: AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value
-		serializationSteps[70] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 75 /*RoundBracketedClauseCS*/, 0);
-		// 71: LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value
-		serializationSteps[71] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 75 /*RoundBracketedClauseCS*/, 0);
-		// 72: TemplateableElementCS::ownedSignature=TemplateSignatureCS || value
-		serializationSteps[72] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 88 /*TemplateSignatureCS*/, 0);
-		// 73: ConstraintCS::ownedSpecification=SpecificationCS || value
-		serializationSteps[73] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 82 /*SpecificationCS*/, 0);
-		// 74: DefCS::ownedSpecification=SpecificationCS || value
-		serializationSteps[74] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION, 82 /*SpecificationCS*/, 0);
-		// 75: AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS || value
-		serializationSteps[75] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 83 /*SquareBracketedClauseCS*/, 0);
-		// 76: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value
-		serializationSteps[76] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 87 /*TemplateParameterSubstitutionCS*/, 0);
-		// 77: SquareBracketedClauseCS::ownedTerms+=ExpCS || value
-		serializationSteps[77] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 28 /*ExpCS*/, 0);
-		// 78: IfExpCS::ownedThenExpression=ExpCS || value
-		serializationSteps[78] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 79: IfThenExpCS::ownedThenExpression=ExpCS || value
-		serializationSteps[79] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 28 /*ExpCS*/, 0);
-		// 80: CollectionLiteralExpCS::ownedType=CollectionTypeCS || value
-		serializationSteps[80] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 8 /*CollectionTypeCS*/, 0);
-		// 81: CollectionPatternCS::ownedType=CollectionTypeCS || value
-		serializationSteps[81] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 8 /*CollectionTypeCS*/, 0);
-		// 82: CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value
-		serializationSteps[82] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 94 /*TypeExpWithoutMultiplicityCS*/, 0);
-		// 83: FeatureContextDeclCS::ownedType=TypeExpCS || value
-		serializationSteps[83] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
-		// 84: MapLiteralExpCS::ownedType=MapTypeCS || value
-		serializationSteps[84] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 46 /*MapTypeCS*/, 0);
-		// 85: NavigatingArgCS::ownedType=TypeExpCS || value
-		serializationSteps[85] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
-		// 86: TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[86] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 97 /*TypeLiteralWithMultiplicityCS*/, 2);
-		// 87: TypedElementCS::ownedType=TypeExpCS || value
-		serializationSteps[87] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
-		// 88: VariableCS::ownedType=TypeExpCS || value
-		serializationSteps[88] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
-		// 89: MapLiteralPartCS::ownedValue=ExpCS || value
-		serializationSteps[89] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 28 /*ExpCS*/, 0);
-		// 90: MapTypeCS::ownedValueType=TypeExpCS || value
-		serializationSteps[90] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 93 /*TypeExpCS*/, 0);
-		// 91: LetExpCS::ownedVariables+=LetVariableCS || value
-		serializationSteps[91] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 41 /*LetVariableCS*/, 0);
-		// 92: PatternExpCS::patternVariableName=UnrestrictedName || soft-space value soft-space
-		serializationSteps[92] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, 112 /*UnrestrictedName*/, 13);
-		// 93: NavigatingArgCS::prefix='|' || soft-space value soft-space
-		serializationSteps[93] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 9 /* '|' */, 13);
-		// 94: NavigatingArgCS::prefix=';' || no-space value soft-new-line
-		serializationSteps[94] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 3 /* ';' */, 8);
-		// 95: NavigatingArgCS::prefix=',' || no-space value soft-space
-		serializationSteps[95] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 1 /* ',' */, 9);
-		// 96: ShadowPartCS::referredProperty=UnrestrictedName || soft-space value soft-space
-		serializationSteps[96] = createSerializationStepCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"), 112, 13);
-		// 97: CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space
-		serializationSteps[97] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, 32 /*Identifier*/, 13);
-		// 98: StringLiteralExpCS::segments+=StringLiteral || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[98] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, 84 /*StringLiteral*/, 2);
-		// 99: ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space
-		serializationSteps[99] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, 112 /*UnrestrictedName*/, 13);
-		// 100: MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space
-		serializationSteps[100] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */, 13);
-		// 101: BooleanLiteralExpCS::symbol='false|true' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[101] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, 7 /* 'false|true' */, 2);
-		// 102: NumberLiteralExpCS::symbol=NUMBER_LITERAL || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[102] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, 51 /*NUMBER_LITERAL*/, 2);
-		// 103: MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space
-		serializationSteps[103] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 104 /*UPPER*/, 13);
-		// 104: '&&' || soft-space value soft-space
-		serializationSteps[104] = createSerializationStepKeyword("&&", 13);
-		// 105: '(' || value no-space
-		serializationSteps[105] = createSerializationStepKeyword("(", 4);
-		// 106: '(' || no-space value no-space
-		serializationSteps[106] = createSerializationStepKeyword("(", 7);
-		// 107: ')' || no-space value
-		serializationSteps[107] = createSerializationStepKeyword(")", 1);
-		// 108: '*' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[108] = createSerializationStepKeyword("*", 2);
-		// 109: '++' || soft-space value soft-space
-		serializationSteps[109] = createSerializationStepKeyword("++", 13);
-		// 110: ',' || no-space value soft-new-line
-		serializationSteps[110] = createSerializationStepKeyword(",", 8);
-		// 111: ',' || no-space value soft-space
-		serializationSteps[111] = createSerializationStepKeyword(",", 9);
-		// 112: '..' || no-space value no-space
-		serializationSteps[112] = createSerializationStepKeyword("..", 7);
-		// 113: ':' || soft-space value soft-space
-		serializationSteps[113] = createSerializationStepKeyword(":", 13);
-		// 114: ':' || soft-space value soft-new-line push
-		serializationSteps[114] = createSerializationStepKeyword(":", 20);
-		// 115: '::' || no-space value no-space
-		serializationSteps[115] = createSerializationStepKeyword("::", 7);
-		// 116: '<' || soft-space value soft-space
-		serializationSteps[116] = createSerializationStepKeyword("<", 13);
-		// 117: '=' || soft-space value soft-space
-		serializationSteps[117] = createSerializationStepKeyword("=", 13);
-		// 118: '=' || soft-space value soft-new-line push
-		serializationSteps[118] = createSerializationStepKeyword("=", 20);
-		// 119: '>' || soft-space value soft-space
-		serializationSteps[119] = createSerializationStepKeyword(">", 13);
-		// 120: '?' || soft-space value soft-space
-		serializationSteps[120] = createSerializationStepKeyword("?", 13);
-		// 121: '?' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[121] = createSerializationStepKeyword("?", 2);
-		// 122: 'Lambda' || soft-space value soft-space
-		serializationSteps[122] = createSerializationStepKeyword("Lambda", 13);
-		// 123: 'Tuple' || soft-space value soft-space
-		serializationSteps[123] = createSerializationStepKeyword("Tuple", 13);
-		// 124: '[' || no-space value no-space
-		serializationSteps[124] = createSerializationStepKeyword("[", 7);
-		// 125: ']' || no-space value
-		serializationSteps[125] = createSerializationStepKeyword("]", 1);
-		// 126: 'body' || soft-space value soft-space
-		serializationSteps[126] = createSerializationStepKeyword("body", 13);
-		// 127: 'context' || soft-new-line value soft-space
-		serializationSteps[127] = createSerializationStepKeyword("context", 10);
-		// 128: 'def' || soft-space value soft-space
-		serializationSteps[128] = createSerializationStepKeyword("def", 13);
-		// 129: 'derive' || soft-space value soft-space
-		serializationSteps[129] = createSerializationStepKeyword("derive", 13);
-		// 130: 'else' || soft-new-line pop value push soft-space
-		serializationSteps[130] = createSerializationStepKeyword("else", 22);
-		// 131: 'elseif' || soft-new-line pop soft-space value push soft-space
-		serializationSteps[131] = createSerializationStepKeyword("elseif", 24);
-		// 132: 'endif' || soft-new-line pop value soft-space
-		serializationSteps[132] = createSerializationStepKeyword("endif", 16);
-		// 133: 'endpackage' || soft-new-line pop value soft-new-line half-new-line
-		serializationSteps[133] = createSerializationStepKeyword("endpackage", 23);
-		// 134: 'extends' || soft-space value soft-space
-		serializationSteps[134] = createSerializationStepKeyword("extends", 13);
-		// 135: 'if' || soft-new-line value push soft-space
-		serializationSteps[135] = createSerializationStepKeyword("if", 17);
-		// 136: 'import' || value
-		serializationSteps[136] = createSerializationStepKeyword("import", 0);
-		// 137: 'in' || soft-space value soft-space
-		serializationSteps[137] = createSerializationStepKeyword("in", 13);
-		// 138: 'in' || soft-space pop value soft-new-line
-		serializationSteps[138] = createSerializationStepKeyword("in", 18);
-		// 139: 'init' || soft-space value soft-space
-		serializationSteps[139] = createSerializationStepKeyword("init", 13);
-		// 140: 'inv' || soft-space value soft-space
-		serializationSteps[140] = createSerializationStepKeyword("inv", 13);
-		// 141: 'invalid' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[141] = createSerializationStepKeyword("invalid", 2);
-		// 142: 'let' || soft-space value push
-		serializationSteps[142] = createSerializationStepKeyword("let", 12);
-		// 143: 'null' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[143] = createSerializationStepKeyword("null", 2);
-		// 144: 'package' || half-new-line value push
-		serializationSteps[144] = createSerializationStepKeyword("package", 6);
-		// 145: 'post' || soft-space value soft-space
-		serializationSteps[145] = createSerializationStepKeyword("post", 13);
-		// 146: 'pre' || soft-space value soft-space
-		serializationSteps[146] = createSerializationStepKeyword("pre", 13);
-		// 147: 'pre' || no-space value soft-space
-		serializationSteps[147] = createSerializationStepKeyword("pre", 9);
-		// 148: 'self' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[148] = createSerializationStepKeyword("self", 2);
-		// 149: 'then' || pop value push soft-space
-		serializationSteps[149] = createSerializationStepKeyword("then", 15);
-		// 150: 'then' || pop soft-space value push soft-space
-		serializationSteps[150] = createSerializationStepKeyword("then", 21);
-		// 151: 'with' || value
-		serializationSteps[151] = createSerializationStepKeyword("with", 0);
-		// 152: '{' || soft-space value push soft-new-line
-		serializationSteps[152] = createSerializationStepKeyword("{", 19);
-		// 153: '|?' || no-space value no-space
-		serializationSteps[153] = createSerializationStepKeyword("|?", 7);
-		// 154: '}' || pop soft-new-line value soft-new-line
-		serializationSteps[154] = createSerializationStepKeyword("}", 14);
-		// 155: V00*1-steps || value
-		serializationSteps[155] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 1, 0);
+		// 0: SpecificationCS::exprString=UNQUOTED_STRING || soft-space value soft-space
+		serializationSteps[0] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 103 /*UNQUOTED_STRING*/, 13);
+		// 1: SpecificationCS::exprString=UNQUOTED_STRING || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[1] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 103 /*UNQUOTED_STRING*/, 2);
+		// 2: ImportCS::isAll?='::*' || soft-space value soft-space
+		serializationSteps[2] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, 2 /* '::*' */, 13);
+		// 3: MultiplicityCS::isNullFree?='|1' || no-space value no-space
+		serializationSteps[3] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, 10 /* '|1' */, 7);
+		// 4: AbstractNameExpCS::isPre?='@' || soft-space value no-space
+		serializationSteps[4] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, 4 /* '@' */, 11);
+		// 5: DefCS::isStatic?='static' || soft-space value soft-space
+		serializationSteps[5] = createSerializationStepAssignKeyword(CompleteOCLCSPackage.Literals.DEF_CS__IS_STATIC, 8 /* 'static' */, 13);
+		// 6: MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space
+		serializationSteps[6] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 38 /*LOWER*/, 13);
+		// 7: CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space
+		serializationSteps[7] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, 9 /*CollectionTypeIdentifier*/, 13);
+		// 8: MapTypeCS::name='Map' || soft-space value soft-space
+		serializationSteps[8] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, 5 /* 'Map' */, 13);
+		// 9: PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier || soft-space value soft-space
+		serializationSteps[9] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, 73 /*PrimitiveTypeIdentifier*/, 13);
+		// 10: TupleTypeCS::name='Tuple' || soft-space value soft-space
+		serializationSteps[10] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, 6 /* 'Tuple' */, 13);
+		// 11: TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[11] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 100 /*TypeRefCS*/, 2);
+		// 12: TypedTypeRefCS::ownedBinding=TemplateBindingCS || value
+		serializationSteps[12] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 86 /*TemplateBindingCS*/, 0);
+		// 13: OperationContextDeclCS::ownedBodies+=bodySpecificationCS || value
+		serializationSteps[13] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES, 115 /*bodySpecificationCS*/, 0);
+		// 14: NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS || value
+		serializationSteps[14] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 4 /*CoIteratorVariableCS*/, 0);
+		// 15: CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS || value
+		serializationSteps[15] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
+		// 16: IfExpCS::ownedCondition=ExpCS|PatternExpCS || value
+		serializationSteps[16] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, -1, new int[] { 28/*ExpCS*/,67/*PatternExpCS*/}, 0);
+		// 17: IfThenExpCS::ownedCondition=ExpCS || value
+		serializationSteps[17] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 28 /*ExpCS*/, 0);
+		// 18: CompleteOCLDocumentCS::ownedContexts+=ContextDeclCS || value
+		serializationSteps[18] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 12 /*ContextDeclCS*/, 0);
+		// 19: PackageDeclarationCS::ownedContexts+=ContextDeclCS || value
+		serializationSteps[19] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 12 /*ContextDeclCS*/, 0);
+		// 20: AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value
+		serializationSteps[20] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 13 /*CurlyBracketedClauseCS*/, 0);
+		// 21: TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS || value
+		serializationSteps[21] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 13 /*CurlyBracketedClauseCS*/, 0);
+		// 22: PropertyContextDeclCS::ownedDefaultExpressions+=deriveSpecificationCS|initSpecificationCS || value
+		serializationSteps[22] = createSerializationStepAssigns(CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, -1, new int[] { 116/*deriveSpecificationCS*/,117/*initSpecificationCS*/}, 0);
+		// 23: ClassifierContextDeclCS::ownedDefinitions+=DefCS || value
+		serializationSteps[23] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, 15 /*DefCS*/, 0);
+		// 24: IfExpCS::ownedElseExpression=ExpCS || value
+		serializationSteps[24] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 25: CollectionLiteralPartCS::ownedExpression=ExpCS || value
+		serializationSteps[25] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 26: CollectionLiteralPartCS::ownedExpression=PatternExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[26] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 67 /*PatternExpCS*/, 2);
+		// 27: ContextCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[27] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 2);
+		// 28: ExpSpecificationCS::ownedExpression=ExpCS || value
+		serializationSteps[28] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 29: ExpSpecificationCS::ownedExpression=ExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[29] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 2);
+		// 30: NestedExpCS::ownedExpression=ExpCS || value
+		serializationSteps[30] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 31: LambdaLiteralExpCS::ownedExpressionCS=ExpCS || value
+		serializationSteps[31] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 28 /*ExpCS*/, 0);
+		// 32: TypeParameterCS::ownedExtends+=TypedRefCS || value
+		serializationSteps[32] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 101 /*TypedRefCS*/, 0);
+		// 33: WildcardTypeRefCS::ownedExtends=TypedRefCS || value
+		serializationSteps[33] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 101 /*TypedRefCS*/, 0);
+		// 34: IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS || value
+		serializationSteps[34] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 21 /*ElseIfThenExpCS*/, 0);
+		// 35: RootCS::ownedImports+=ImportCS || value half-new-line
+		serializationSteps[35] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 34 /*ImportCS*/, 3);
+		// 36: LetExpCS::ownedInExpression=ExpCS || value
+		serializationSteps[36] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 37: NavigatingArgCS::ownedInitExpression=ExpCS || value
+		serializationSteps[37] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 38: ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS || value
+		serializationSteps[38] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, -1, new int[] { 28/*ExpCS*/,67/*PatternExpCS*/}, 0);
+		// 39: ShadowPartCS::ownedInitExpression=StringLiteralExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[39] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 85 /*StringLiteralExpCS*/, 2);
+		// 40: VariableCS::ownedInitExpression=ExpCS || value
+		serializationSteps[40] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 41: ClassifierContextDeclCS::ownedInvariants+=invConstraintCS || value
+		serializationSteps[41] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS, 118 /*invConstraintCS*/, 0);
+		// 42: PackageDeclarationCS::ownedInvariants+=invConstraintCS || value
+		serializationSteps[42] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS, 118 /*invConstraintCS*/, 0);
+		// 43: MapLiteralPartCS::ownedKey=ExpCS || value
+		serializationSteps[43] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 28 /*ExpCS*/, 0);
+		// 44: MapTypeCS::ownedKeyType=TypeExpCS || value
+		serializationSteps[44] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 93 /*TypeExpCS*/, 0);
+		// 45: CollectionLiteralPartCS::ownedLastExpression=ExpCS || value
+		serializationSteps[45] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 46: InfixExpCS::ownedLeft=PrefixedPrimaryExpCS || value
+		serializationSteps[46] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 69 /*PrefixedPrimaryExpCS*/, 0);
+		// 47: ConstraintCS::ownedMessageSpecification=SpecificationCS || value
+		serializationSteps[47] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 82 /*SpecificationCS*/, 0);
+		// 48: TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value
+		serializationSteps[48] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
+		// 49: TypedRefCS::ownedMultiplicity=MultiplicityCS || value
+		serializationSteps[49] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 49 /*MultiplicityCS*/, 0);
+		// 50: NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || value
+		serializationSteps[50] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 54 /*NavigatingArgExpCS*/, 0);
+		// 51: NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[51] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 54 /*NavigatingArgExpCS*/, 2);
+		// 52: CompleteOCLDocumentCS::ownedPackages+=PackageDeclarationCS || value
+		serializationSteps[52] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES, 64 /*PackageDeclarationCS*/, 0);
+		// 53: DefOperationCS::ownedParameters+=DefParameterCS || value
+		serializationSteps[53] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.DEF_OPERATION_CS__OWNED_PARAMETERS, 17 /*DefParameterCS*/, 0);
+		// 54: OperationContextDeclCS::ownedParameters+=ParameterCS || value
+		serializationSteps[54] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS, 65 /*ParameterCS*/, 0);
+		// 55: TemplateSignatureCS::ownedParameters+=TypeParameterCS || value
+		serializationSteps[55] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 99 /*TypeParameterCS*/, 0);
+		// 56: CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS || value
+		serializationSteps[56] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 6 /*CollectionLiteralPartCS*/, 0);
+		// 57: CollectionPatternCS::ownedParts+=PatternExpCS || value
+		serializationSteps[57] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 67 /*PatternExpCS*/, 0);
+		// 58: CurlyBracketedClauseCS::ownedParts+=ShadowPartCS || value
+		serializationSteps[58] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 80 /*ShadowPartCS*/, 0);
+		// 59: MapLiteralExpCS::ownedParts+=MapLiteralPartCS || value
+		serializationSteps[59] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 45 /*MapLiteralPartCS*/, 0);
+		// 60: TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS || value
+		serializationSteps[60] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 90 /*TupleLiteralPartCS*/, 0);
+		// 61: TupleTypeCS::ownedParts+=TuplePartCS || value
+		serializationSteps[61] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 91 /*TuplePartCS*/, 0);
+		// 62: AbstractNameExpCS::ownedPathName=PathNameCS || value
+		serializationSteps[62] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
+		// 63: ImportCS::ownedPathName=URIPathNameCS || value
+		serializationSteps[63] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 107 /*URIPathNameCS*/, 0);
+		// 64: PathNameDeclCS::ownedPathName=UnreservedPathNameCS || value
+		serializationSteps[64] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME, 111 /*UnreservedPathNameCS*/, 0);
+		// 65: TypeNameExpCS::ownedPathName=PathNameCS || value
+		serializationSteps[65] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
+		// 66: TypedTypeRefCS::ownedPathName=PathNameCS || value
+		serializationSteps[66] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 66 /*PathNameCS*/, 0);
+		// 67: TypeNameExpCS::ownedPatternGuard=ExpCS || value
+		serializationSteps[67] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 28 /*ExpCS*/, 0);
+		// 68: PatternExpCS::ownedPatternType=TypeExpCS || value
+		serializationSteps[68] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 93 /*TypeExpCS*/, 0);
+		// 69: OperationContextDeclCS::ownedPostconditions+=postConstraintCS || value
+		serializationSteps[69] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS, 119 /*postConstraintCS*/, 0);
+		// 70: OperationContextDeclCS::ownedPreconditions+=preConstraintCS || value
+		serializationSteps[70] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS, 120 /*preConstraintCS*/, 0);
+		// 71: AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value
+		serializationSteps[71] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 75 /*RoundBracketedClauseCS*/, 0);
+		// 72: LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS || value
+		serializationSteps[72] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 75 /*RoundBracketedClauseCS*/, 0);
+		// 73: TemplateableElementCS::ownedSignature=TemplateSignatureCS || value
+		serializationSteps[73] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 88 /*TemplateSignatureCS*/, 0);
+		// 74: ConstraintCS::ownedSpecification=SpecificationCS || value
+		serializationSteps[74] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 82 /*SpecificationCS*/, 0);
+		// 75: DefCS::ownedSpecification=SpecificationCS || value
+		serializationSteps[75] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION, 82 /*SpecificationCS*/, 0);
+		// 76: AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS || value
+		serializationSteps[76] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 83 /*SquareBracketedClauseCS*/, 0);
+		// 77: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value
+		serializationSteps[77] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 87 /*TemplateParameterSubstitutionCS*/, 0);
+		// 78: SquareBracketedClauseCS::ownedTerms+=ExpCS || value
+		serializationSteps[78] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 28 /*ExpCS*/, 0);
+		// 79: IfExpCS::ownedThenExpression=ExpCS || value
+		serializationSteps[79] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 80: IfThenExpCS::ownedThenExpression=ExpCS || value
+		serializationSteps[80] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 28 /*ExpCS*/, 0);
+		// 81: CollectionLiteralExpCS::ownedType=CollectionTypeCS || value
+		serializationSteps[81] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 8 /*CollectionTypeCS*/, 0);
+		// 82: CollectionPatternCS::ownedType=CollectionTypeCS || value
+		serializationSteps[82] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 8 /*CollectionTypeCS*/, 0);
+		// 83: CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS || value
+		serializationSteps[83] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 94 /*TypeExpWithoutMultiplicityCS*/, 0);
+		// 84: FeatureContextDeclCS::ownedType=TypeExpCS || value
+		serializationSteps[84] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
+		// 85: MapLiteralExpCS::ownedType=MapTypeCS || value
+		serializationSteps[85] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 46 /*MapTypeCS*/, 0);
+		// 86: NavigatingArgCS::ownedType=TypeExpCS || value
+		serializationSteps[86] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
+		// 87: TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[87] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 97 /*TypeLiteralWithMultiplicityCS*/, 2);
+		// 88: TypedElementCS::ownedType=TypeExpCS || value
+		serializationSteps[88] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
+		// 89: VariableCS::ownedType=TypeExpCS || value
+		serializationSteps[89] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 93 /*TypeExpCS*/, 0);
+		// 90: MapLiteralPartCS::ownedValue=ExpCS || value
+		serializationSteps[90] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 28 /*ExpCS*/, 0);
+		// 91: MapTypeCS::ownedValueType=TypeExpCS || value
+		serializationSteps[91] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 93 /*TypeExpCS*/, 0);
+		// 92: LetExpCS::ownedVariables+=LetVariableCS || value
+		serializationSteps[92] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 41 /*LetVariableCS*/, 0);
+		// 93: PatternExpCS::patternVariableName=UnrestrictedName || soft-space value soft-space
+		serializationSteps[93] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, 112 /*UnrestrictedName*/, 13);
+		// 94: NavigatingArgCS::prefix='|' || soft-space value soft-space
+		serializationSteps[94] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 9 /* '|' */, 13);
+		// 95: NavigatingArgCS::prefix=';' || no-space value soft-new-line
+		serializationSteps[95] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 3 /* ';' */, 8);
+		// 96: NavigatingArgCS::prefix=',' || no-space value soft-space
+		serializationSteps[96] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, 1 /* ',' */, 9);
+		// 97: ShadowPartCS::referredProperty=UnrestrictedName || soft-space value soft-space
+		serializationSteps[97] = createSerializationStepCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"), 112, 13);
+		// 98: CollectionPatternCS::restVariableName=Identifier || soft-space value soft-space
+		serializationSteps[98] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, 32 /*Identifier*/, 13);
+		// 99: StringLiteralExpCS::segments+=StringLiteral || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[99] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, 84 /*StringLiteral*/, 2);
+		// 100: ClassifierContextDeclCS::selfName=UnrestrictedName || soft-space value soft-space
+		serializationSteps[100] = createSerializationStepAssignedRuleCall(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, 112 /*UnrestrictedName*/, 13);
+		// 101: MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space
+		serializationSteps[101] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */, 13);
+		// 102: BooleanLiteralExpCS::symbol='false|true' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[102] = createSerializationStepAssignKeyword(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, 7 /* 'false|true' */, 2);
+		// 103: NumberLiteralExpCS::symbol=NUMBER_LITERAL || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[103] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, 51 /*NUMBER_LITERAL*/, 2);
+		// 104: MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space
+		serializationSteps[104] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 104 /*UPPER*/, 13);
+		// 105: '&&' || soft-space value soft-space
+		serializationSteps[105] = createSerializationStepKeyword("&&", 13);
+		// 106: '(' || value no-space
+		serializationSteps[106] = createSerializationStepKeyword("(", 4);
+		// 107: '(' || no-space value no-space
+		serializationSteps[107] = createSerializationStepKeyword("(", 7);
+		// 108: ')' || no-space value
+		serializationSteps[108] = createSerializationStepKeyword(")", 1);
+		// 109: '*' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[109] = createSerializationStepKeyword("*", 2);
+		// 110: '++' || soft-space value soft-space
+		serializationSteps[110] = createSerializationStepKeyword("++", 13);
+		// 111: ',' || no-space value soft-new-line
+		serializationSteps[111] = createSerializationStepKeyword(",", 8);
+		// 112: ',' || no-space value soft-space
+		serializationSteps[112] = createSerializationStepKeyword(",", 9);
+		// 113: '..' || no-space value no-space
+		serializationSteps[113] = createSerializationStepKeyword("..", 7);
+		// 114: ':' || soft-space value soft-space
+		serializationSteps[114] = createSerializationStepKeyword(":", 13);
+		// 115: ':' || soft-space value soft-new-line push
+		serializationSteps[115] = createSerializationStepKeyword(":", 21);
+		// 116: '::' || no-space value no-space
+		serializationSteps[116] = createSerializationStepKeyword("::", 7);
+		// 117: '<' || soft-space value soft-space
+		serializationSteps[117] = createSerializationStepKeyword("<", 13);
+		// 118: '=' || soft-space value soft-space
+		serializationSteps[118] = createSerializationStepKeyword("=", 13);
+		// 119: '=' || soft-space value soft-new-line push
+		serializationSteps[119] = createSerializationStepKeyword("=", 21);
+		// 120: '>' || soft-space value soft-space
+		serializationSteps[120] = createSerializationStepKeyword(">", 13);
+		// 121: '?' || soft-space value soft-space
+		serializationSteps[121] = createSerializationStepKeyword("?", 13);
+		// 122: '?' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[122] = createSerializationStepKeyword("?", 2);
+		// 123: 'Lambda' || soft-space value soft-space
+		serializationSteps[123] = createSerializationStepKeyword("Lambda", 13);
+		// 124: 'Tuple' || soft-space value soft-space
+		serializationSteps[124] = createSerializationStepKeyword("Tuple", 13);
+		// 125: '[' || no-space value no-space
+		serializationSteps[125] = createSerializationStepKeyword("[", 7);
+		// 126: ']' || no-space value
+		serializationSteps[126] = createSerializationStepKeyword("]", 1);
+		// 127: 'body' || soft-space value soft-space
+		serializationSteps[127] = createSerializationStepKeyword("body", 13);
+		// 128: 'context' || soft-new-line value soft-space
+		serializationSteps[128] = createSerializationStepKeyword("context", 10);
+		// 129: 'def' || soft-space value soft-space
+		serializationSteps[129] = createSerializationStepKeyword("def", 13);
+		// 130: 'derive' || soft-space value soft-space
+		serializationSteps[130] = createSerializationStepKeyword("derive", 13);
+		// 131: 'else' || soft-new-line pop value push soft-space
+		serializationSteps[131] = createSerializationStepKeyword("else", 23);
+		// 132: 'elseif' || soft-new-line pop soft-space value push soft-space
+		serializationSteps[132] = createSerializationStepKeyword("elseif", 25);
+		// 133: 'endif' || soft-new-line pop value soft-space
+		serializationSteps[133] = createSerializationStepKeyword("endif", 17);
+		// 134: 'endpackage' || pop value soft-new-line half-new-line
+		serializationSteps[134] = createSerializationStepKeyword("endpackage", 16);
+		// 135: 'extends' || soft-space value soft-space
+		serializationSteps[135] = createSerializationStepKeyword("extends", 13);
+		// 136: 'if' || soft-new-line value push soft-space
+		serializationSteps[136] = createSerializationStepKeyword("if", 18);
+		// 137: 'import' || value
+		serializationSteps[137] = createSerializationStepKeyword("import", 0);
+		// 138: 'in' || soft-space value soft-space
+		serializationSteps[138] = createSerializationStepKeyword("in", 13);
+		// 139: 'in' || soft-space pop value soft-new-line
+		serializationSteps[139] = createSerializationStepKeyword("in", 19);
+		// 140: 'init' || soft-space value soft-space
+		serializationSteps[140] = createSerializationStepKeyword("init", 13);
+		// 141: 'inv' || soft-space value soft-space
+		serializationSteps[141] = createSerializationStepKeyword("inv", 13);
+		// 142: 'invalid' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[142] = createSerializationStepKeyword("invalid", 2);
+		// 143: 'let' || soft-space value push
+		serializationSteps[143] = createSerializationStepKeyword("let", 12);
+		// 144: 'null' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[144] = createSerializationStepKeyword("null", 2);
+		// 145: 'package' || half-new-line value push
+		serializationSteps[145] = createSerializationStepKeyword("package", 6);
+		// 146: 'post' || soft-space value soft-space
+		serializationSteps[146] = createSerializationStepKeyword("post", 13);
+		// 147: 'pre' || soft-space value soft-space
+		serializationSteps[147] = createSerializationStepKeyword("pre", 13);
+		// 148: 'pre' || no-space value soft-space
+		serializationSteps[148] = createSerializationStepKeyword("pre", 9);
+		// 149: 'self' || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[149] = createSerializationStepKeyword("self", 2);
+		// 150: 'then' || pop value push soft-space
+		serializationSteps[150] = createSerializationStepKeyword("then", 15);
+		// 151: 'then' || pop soft-space value push soft-space
+		serializationSteps[151] = createSerializationStepKeyword("then", 22);
+		// 152: 'with' || value
+		serializationSteps[152] = createSerializationStepKeyword("with", 0);
+		// 153: '{' || soft-space value push soft-new-line
+		serializationSteps[153] = createSerializationStepKeyword("{", 20);
+		// 154: '|?' || no-space value no-space
+		serializationSteps[154] = createSerializationStepKeyword("|?", 7);
+		// 155: '}' || pop soft-new-line value soft-new-line
+		serializationSteps[155] = createSerializationStepKeyword("}", 14);
 		// 156: V00*1-steps || value
-		serializationSteps[156] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 1, 0);
+		serializationSteps[156] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 1, 0);
 		// 157: V00*1-steps || value
-		serializationSteps[157] = createSerializationStepSequence((0/*V0*/ << 4) | 3/*[+]*/, 1, 0);
-		// 158: V00*2-steps || value
-		serializationSteps[158] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 2, 0);
+		serializationSteps[157] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 1, 0);
+		// 158: V00*1-steps || value
+		serializationSteps[158] = createSerializationStepSequence((0/*V0*/ << 4) | 3/*[+]*/, 1, 0);
 		// 159: V00*2-steps || value
-		serializationSteps[159] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 2, 0);
-		// 160: V00*3-steps || value
-		serializationSteps[160] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 3, 0);
-		// 161: V00*4-steps || value
-		serializationSteps[161] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 4, 0);
-		// 162: V00*5-steps || value
-		serializationSteps[162] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 5, 0);
-		// 163: V00*6-steps || value
-		serializationSteps[163] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 6, 0);
-		// 164: V00*7-steps || value
-		serializationSteps[164] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 7, 0);
-		// 165: V01*1-steps || value
-		serializationSteps[165] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 1, 0);
+		serializationSteps[159] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 2, 0);
+		// 160: V00*2-steps || value
+		serializationSteps[160] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 2, 0);
+		// 161: V00*3-steps || value
+		serializationSteps[161] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 3, 0);
+		// 162: V00*4-steps || value
+		serializationSteps[162] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 4, 0);
+		// 163: V00*5-steps || value
+		serializationSteps[163] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 5, 0);
+		// 164: V00*6-steps || value
+		serializationSteps[164] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 6, 0);
+		// 165: V00*7-steps || value
+		serializationSteps[165] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 7, 0);
 		// 166: V01*1-steps || value
-		serializationSteps[166] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 1, 0);
-		// 167: V01*1-steps || half-new-line value half-new-line
-		serializationSteps[167] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 1, 5);
-		// 168: V01*2-steps || value
-		serializationSteps[168] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 2, 0);
+		serializationSteps[166] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 1, 0);
+		// 167: V01*1-steps || value
+		serializationSteps[167] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 1, 0);
+		// 168: V01*1-steps || half-new-line value half-new-line
+		serializationSteps[168] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 1, 5);
 		// 169: V01*2-steps || value
-		serializationSteps[169] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 2, 0);
-		// 170: V01*3-steps || value
-		serializationSteps[170] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 3, 0);
-		// 171: V01*4-steps || value
-		serializationSteps[171] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 4, 0);
-		// 172: V02*1-steps || value
-		serializationSteps[172] = createSerializationStepSequence((2/*V2*/ << 4) | 1/*[?]*/, 1, 0);
+		serializationSteps[169] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 2, 0);
+		// 170: V01*2-steps || value
+		serializationSteps[170] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 2, 0);
+		// 171: V01*3-steps || value
+		serializationSteps[171] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 3, 0);
+		// 172: V01*4-steps || value
+		serializationSteps[172] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 4, 0);
 		// 173: V02*1-steps || value
-		serializationSteps[173] = createSerializationStepSequence((2/*V2*/ << 4) | 2/*[*]*/, 1, 0);
+		serializationSteps[173] = createSerializationStepSequence((2/*V2*/ << 4) | 1/*[?]*/, 1, 0);
 		// 174: V02*1-steps || value
-		serializationSteps[174] = createSerializationStepSequence((2/*V2*/ << 4) | 3/*[+]*/, 1, 0);
-		// 175: V02*2-steps || value
-		serializationSteps[175] = createSerializationStepSequence((2/*V2*/ << 4) | 2/*[*]*/, 2, 0);
-		// 176: V02*4-steps || value
-		serializationSteps[176] = createSerializationStepSequence((2/*V2*/ << 4) | 1/*[?]*/, 4, 0);
-		// 177: V03*1-steps || value
-		serializationSteps[177] = createSerializationStepSequence((3/*V3*/ << 4) | 1/*[?]*/, 1, 0);
+		serializationSteps[174] = createSerializationStepSequence((2/*V2*/ << 4) | 2/*[*]*/, 1, 0);
+		// 175: V02*1-steps || value
+		serializationSteps[175] = createSerializationStepSequence((2/*V2*/ << 4) | 3/*[+]*/, 1, 0);
+		// 176: V02*2-steps || value
+		serializationSteps[176] = createSerializationStepSequence((2/*V2*/ << 4) | 2/*[*]*/, 2, 0);
+		// 177: V02*4-steps || value
+		serializationSteps[177] = createSerializationStepSequence((2/*V2*/ << 4) | 1/*[?]*/, 4, 0);
 		// 178: V03*1-steps || value
-		serializationSteps[178] = createSerializationStepSequence((3/*V3*/ << 4) | 2/*[*]*/, 1, 0);
+		serializationSteps[178] = createSerializationStepSequence((3/*V3*/ << 4) | 1/*[?]*/, 1, 0);
 		// 179: V03*1-steps || value
-		serializationSteps[179] = createSerializationStepSequence((3/*V3*/ << 4) | 3/*[+]*/, 1, 0);
-		// 180: V03*2-steps || value
-		serializationSteps[180] = createSerializationStepSequence((3/*V3*/ << 4) | 1/*[?]*/, 2, 0);
+		serializationSteps[179] = createSerializationStepSequence((3/*V3*/ << 4) | 2/*[*]*/, 1, 0);
+		// 180: V03*1-steps || value
+		serializationSteps[180] = createSerializationStepSequence((3/*V3*/ << 4) | 3/*[+]*/, 1, 0);
 		// 181: V03*2-steps || value
-		serializationSteps[181] = createSerializationStepSequence((3/*V3*/ << 4) | 2/*[*]*/, 2, 0);
-		// 182: V04*1-steps || value
-		serializationSteps[182] = createSerializationStepSequence((4/*V4*/ << 4) | 1/*[?]*/, 1, 0);
+		serializationSteps[181] = createSerializationStepSequence((3/*V3*/ << 4) | 1/*[?]*/, 2, 0);
+		// 182: V03*2-steps || value
+		serializationSteps[182] = createSerializationStepSequence((3/*V3*/ << 4) | 2/*[*]*/, 2, 0);
 		// 183: V04*1-steps || value
-		serializationSteps[183] = createSerializationStepSequence((4/*V4*/ << 4) | 2/*[*]*/, 1, 0);
-		// 184: V05*1-steps || value
-		serializationSteps[184] = createSerializationStepSequence((5/*V5*/ << 4) | 2/*[*]*/, 1, 0);
-		// 185: V06*1-steps || value
-		serializationSteps[185] = createSerializationStepSequence((6/*V6*/ << 4) | 2/*[*]*/, 1, 0);
-		// 186: wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[186] = createSerializationStepWrapper(2);
-		// 187: wrapper || soft-new-line push value pop pop soft-new-line
-		serializationSteps[187] = createSerializationStepWrapper(25);
-		// 188: NamedElementCS::name=BinaryOperatorName || soft-space value soft-space
-		serializationSteps[188] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 1 /*BinaryOperatorName*/, 13);
-		// 189: NamedElementCS::name=UnaryOperatorName || soft-space value soft-space
-		serializationSteps[189] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 108 /*UnaryOperatorName*/, 13);
-		// 190: NamedElementCS::name=UnrestrictedName || soft-space value soft-space
-		serializationSteps[190] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 112 /*UnrestrictedName*/, 13);
-		// 191: NamedElementCS::name=Identifier || soft-space value soft-space
-		serializationSteps[191] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 32 /*Identifier*/, 13);
-		// 192: RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS || value
-		serializationSteps[192] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 53 /*NavigatingArgCS*/, 0);
-		// 193: RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS || value
-		serializationSteps[193] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, -1, new int[] { 56/*NavigatingCommaArgCS*/,57/*NavigatingSemiArgCS*/,55/*NavigatingBarArgCS*/}, 0);
-		// 194: PathNameCS::ownedPathElements+=URIFirstPathElementCS || value
-		serializationSteps[194] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 106 /*URIFirstPathElementCS*/, 0);
-		// 195: PathNameCS::ownedPathElements+=FirstPathElementCS || value
-		serializationSteps[195] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 29 /*FirstPathElementCS*/, 0);
-		// 196: PathNameCS::ownedPathElements+=NextPathElementCS || value
-		serializationSteps[196] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 60 /*NextPathElementCS*/, 0);
-		// 197: OperatorExpCS::ownedRight=ExpCS || value
-		serializationSteps[197] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 28 /*ExpCS*/, 0);
-		// 198: OperatorExpCS::ownedRight=PrefixedLetExpCS || value
-		serializationSteps[198] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 68 /*PrefixedLetExpCS*/, 0);
-		// 199: OperatorExpCS::ownedRight=PrefixedPrimaryExpCS || value
-		serializationSteps[199] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69 /*PrefixedPrimaryExpCS*/, 0);
-		// 200: PathElementCS::referredElement=URI || soft-space value soft-space
-		serializationSteps[200] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"), 105, 13);
-		// 201: PathElementCS::referredElement=UnreservedName || soft-space value soft-space
-		serializationSteps[201] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"), 110, 13);
-		// 202: PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space
-		serializationSteps[202] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"), 112, 13);
+		serializationSteps[183] = createSerializationStepSequence((4/*V4*/ << 4) | 1/*[?]*/, 1, 0);
+		// 184: V04*1-steps || value
+		serializationSteps[184] = createSerializationStepSequence((4/*V4*/ << 4) | 2/*[*]*/, 1, 0);
+		// 185: V05*1-steps || value
+		serializationSteps[185] = createSerializationStepSequence((5/*V5*/ << 4) | 2/*[*]*/, 1, 0);
+		// 186: V06*1-steps || value
+		serializationSteps[186] = createSerializationStepSequence((6/*V6*/ << 4) | 2/*[*]*/, 1, 0);
+		// 187: wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[187] = createSerializationStepWrapper(2);
+		// 188: wrapper || soft-new-line push value pop pop
+		serializationSteps[188] = createSerializationStepWrapper(24);
+		// 189: NamedElementCS::name=BinaryOperatorName || soft-space value soft-space
+		serializationSteps[189] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 1 /*BinaryOperatorName*/, 13);
+		// 190: NamedElementCS::name=UnaryOperatorName || soft-space value soft-space
+		serializationSteps[190] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 108 /*UnaryOperatorName*/, 13);
+		// 191: NamedElementCS::name=UnrestrictedName || soft-space value soft-space
+		serializationSteps[191] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 112 /*UnrestrictedName*/, 13);
+		// 192: NamedElementCS::name=Identifier || soft-space value soft-space
+		serializationSteps[192] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 32 /*Identifier*/, 13);
+		// 193: RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS || value
+		serializationSteps[193] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 53 /*NavigatingArgCS*/, 0);
+		// 194: RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS || value
+		serializationSteps[194] = createSerializationStepAssigns(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, -1, new int[] { 56/*NavigatingCommaArgCS*/,57/*NavigatingSemiArgCS*/,55/*NavigatingBarArgCS*/}, 0);
+		// 195: PathNameCS::ownedPathElements+=URIFirstPathElementCS || value
+		serializationSteps[195] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 106 /*URIFirstPathElementCS*/, 0);
+		// 196: PathNameCS::ownedPathElements+=FirstPathElementCS || value
+		serializationSteps[196] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 29 /*FirstPathElementCS*/, 0);
+		// 197: PathNameCS::ownedPathElements+=NextPathElementCS || value
+		serializationSteps[197] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 60 /*NextPathElementCS*/, 0);
+		// 198: OperatorExpCS::ownedRight=ExpCS || value
+		serializationSteps[198] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 28 /*ExpCS*/, 0);
+		// 199: OperatorExpCS::ownedRight=PrefixedLetExpCS || value
+		serializationSteps[199] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 68 /*PrefixedLetExpCS*/, 0);
+		// 200: OperatorExpCS::ownedRight=PrefixedPrimaryExpCS || value
+		serializationSteps[200] = createSerializationStepAssignedRuleCall(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69 /*PrefixedPrimaryExpCS*/, 0);
+		// 201: PathElementCS::referredElement=URI || soft-space value soft-space
+		serializationSteps[201] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"), 105, 13);
+		// 202: PathElementCS::referredElement=UnreservedName || soft-space value soft-space
+		serializationSteps[202] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"), 110, 13);
+		// 203: PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space
+		serializationSteps[203] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"), 112, 13);
 	}
 
 	/**
@@ -6297,23 +6304,23 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// 1: '.' : [no-space, value, no-space]
 		substringSteps[1] = createSubstringStep(".", 7 /* no-space, value, no-space */);
 		// 2: '=' : [soft-space, value, soft-new-line, push]
-		substringSteps[2] = createSubstringStep("=", 20 /* soft-space, value, soft-new-line, push */);
+		substringSteps[2] = createSubstringStep("=", 21 /* soft-space, value, soft-new-line, push */);
 		// 3: '?->' : [no-space, value, no-space]
 		substringSteps[3] = createSubstringStep("?->", 7 /* no-space, value, no-space */);
 		// 4: '?.' : [no-space, value, no-space]
 		substringSteps[4] = createSubstringStep("?.", 7 /* no-space, value, no-space */);
 		// 5: 'else' : [soft-new-line, pop, value, push, soft-space]
-		substringSteps[5] = createSubstringStep("else", 22 /* soft-new-line, pop, value, push, soft-space */);
+		substringSteps[5] = createSubstringStep("else", 23 /* soft-new-line, pop, value, push, soft-space */);
 		// 6: 'endif' : [soft-new-line, pop, value, soft-space]
-		substringSteps[6] = createSubstringStep("endif", 16 /* soft-new-line, pop, value, soft-space */);
+		substringSteps[6] = createSubstringStep("endif", 17 /* soft-new-line, pop, value, soft-space */);
 		// 7: 'if' : [soft-new-line, value, push, soft-space]
-		substringSteps[7] = createSubstringStep("if", 17 /* soft-new-line, value, push, soft-space */);
+		substringSteps[7] = createSubstringStep("if", 18 /* soft-new-line, value, push, soft-space */);
 		// 8: 'in' : [soft-space, pop, value, soft-new-line]
-		substringSteps[8] = createSubstringStep("in", 18 /* soft-space, pop, value, soft-new-line */);
+		substringSteps[8] = createSubstringStep("in", 19 /* soft-space, pop, value, soft-new-line */);
 		// 9: 'let' : [soft-space, value, push]
 		substringSteps[9] = createSubstringStep("let", 12 /* soft-space, value, push */);
 		// 10: 'then' : [pop, soft-space, value, push, soft-space]
-		substringSteps[10] = createSubstringStep("then", 21 /* pop, soft-space, value, push, soft-space */);
+		substringSteps[10] = createSubstringStep("then", 22 /* pop, soft-space, value, push, soft-space */);
 	}
 }
 

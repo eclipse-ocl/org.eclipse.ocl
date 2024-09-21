@@ -1566,7 +1566,7 @@ rulePropertyContextDeclCS returns [EObject current=null]
 					{
 						newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsDeriveSpecificationCSParserRuleCall_4_0_0());
 					}
-					lv_ownedDefaultExpressions_4_0=rulederiveSpecificationCS
+					lv_ownedDefaultExpressions_4_1=rulederiveSpecificationCS
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
@@ -1574,19 +1574,15 @@ rulePropertyContextDeclCS returns [EObject current=null]
 						add(
 							$current,
 							"ownedDefaultExpressions",
-							lv_ownedDefaultExpressions_4_0,
+							lv_ownedDefaultExpressions_4_1,
 							"org.eclipse.ocl.xtext.completeocl.CompleteOCL.deriveSpecificationCS");
 						afterParserOrEnumRuleCall();
 					}
-				)
-			)
-			    |
-			(
-				(
+					    |
 					{
-						newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsInitSpecificationCSParserRuleCall_4_0_1());
 					}
-					lv_ownedDefaultExpressions_5_0=ruleinitSpecificationCS
+					lv_ownedDefaultExpressions_4_2=ruleinitSpecificationCS
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
@@ -1594,7 +1590,7 @@ rulePropertyContextDeclCS returns [EObject current=null]
 						add(
 							$current,
 							"ownedDefaultExpressions",
-							lv_ownedDefaultExpressions_5_0,
+							lv_ownedDefaultExpressions_4_2,
 							"org.eclipse.ocl.xtext.completeocl.CompleteOCL.initSpecificationCS");
 						afterParserOrEnumRuleCall();
 					}
@@ -1677,31 +1673,31 @@ rulebodySpecificationCS returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='body'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getBodySpecificationCSAccess().getBodyKeyword_0());
+		}
 		(
-			otherlv_0='body'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getBodySpecificationCSAccess().getBodyKeyword_0_0());
+				/* */
 			}
-			(
-				{
-					/* */
-				}
-				{
-					newCompositeNode(grammarAccess.getBodySpecificationCSAccess().getUnrestrictedNameParserRuleCall_0_1());
-				}
-				ruleUnrestrictedName
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)?
-			otherlv_2=':'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getBodySpecificationCSAccess().getColonKeyword_0_2());
+				newCompositeNode(grammarAccess.getBodySpecificationCSAccess().getUnrestrictedNameParserRuleCall_1());
 			}
+			ruleUnrestrictedName
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)?
+		otherlv_2=':'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getBodySpecificationCSAccess().getColonKeyword_2());
+		}
+		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getBodySpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getBodySpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_3_0_0());
 					}
 					lv_ownedExpression_3_0=ruleExpCS
 					{
@@ -1717,24 +1713,24 @@ rulebodySpecificationCS returns [EObject current=null]
 					}
 				)
 			)
-		)
-		    |
-		(
+			    |
 			(
-				lv_exprString_4_0=RULE_UNQUOTED_STRING
-				{
-					newLeafNode(lv_exprString_4_0, grammarAccess.getBodySpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getBodySpecificationCSRule());
+				(
+					lv_exprString_4_0=RULE_UNQUOTED_STRING
+					{
+						newLeafNode(lv_exprString_4_0, grammarAccess.getBodySpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"exprString",
-						lv_exprString_4_0,
-						"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getBodySpecificationCSRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"exprString",
+							lv_exprString_4_0,
+							"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
+					}
+				)
 			)
 		)
 	)
@@ -1756,31 +1752,31 @@ rulederiveSpecificationCS returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='derive'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getDeriveSpecificationCSAccess().getDeriveKeyword_0());
+		}
 		(
-			otherlv_0='derive'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getDeriveSpecificationCSAccess().getDeriveKeyword_0_0());
+				/* */
 			}
-			(
-				{
-					/* */
-				}
-				{
-					newCompositeNode(grammarAccess.getDeriveSpecificationCSAccess().getUnrestrictedNameParserRuleCall_0_1());
-				}
-				ruleUnrestrictedName
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)?
-			otherlv_2=':'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getDeriveSpecificationCSAccess().getColonKeyword_0_2());
+				newCompositeNode(grammarAccess.getDeriveSpecificationCSAccess().getUnrestrictedNameParserRuleCall_1());
 			}
+			ruleUnrestrictedName
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)?
+		otherlv_2=':'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getDeriveSpecificationCSAccess().getColonKeyword_2());
+		}
+		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDeriveSpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getDeriveSpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_3_0_0());
 					}
 					lv_ownedExpression_3_0=ruleExpCS
 					{
@@ -1796,24 +1792,24 @@ rulederiveSpecificationCS returns [EObject current=null]
 					}
 				)
 			)
-		)
-		    |
-		(
+			    |
 			(
-				lv_exprString_4_0=RULE_UNQUOTED_STRING
-				{
-					newLeafNode(lv_exprString_4_0, grammarAccess.getDeriveSpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getDeriveSpecificationCSRule());
+				(
+					lv_exprString_4_0=RULE_UNQUOTED_STRING
+					{
+						newLeafNode(lv_exprString_4_0, grammarAccess.getDeriveSpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"exprString",
-						lv_exprString_4_0,
-						"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDeriveSpecificationCSRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"exprString",
+							lv_exprString_4_0,
+							"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
+					}
+				)
 			)
 		)
 	)
@@ -1835,31 +1831,31 @@ ruleinitSpecificationCS returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='init'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getInitSpecificationCSAccess().getInitKeyword_0());
+		}
 		(
-			otherlv_0='init'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getInitSpecificationCSAccess().getInitKeyword_0_0());
+				/* */
 			}
-			(
-				{
-					/* */
-				}
-				{
-					newCompositeNode(grammarAccess.getInitSpecificationCSAccess().getUnrestrictedNameParserRuleCall_0_1());
-				}
-				ruleUnrestrictedName
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)?
-			otherlv_2=':'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getInitSpecificationCSAccess().getColonKeyword_0_2());
+				newCompositeNode(grammarAccess.getInitSpecificationCSAccess().getUnrestrictedNameParserRuleCall_1());
 			}
+			ruleUnrestrictedName
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)?
+		otherlv_2=':'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getInitSpecificationCSAccess().getColonKeyword_2());
+		}
+		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getInitSpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getInitSpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_3_0_0());
 					}
 					lv_ownedExpression_3_0=ruleExpCS
 					{
@@ -1875,24 +1871,24 @@ ruleinitSpecificationCS returns [EObject current=null]
 					}
 				)
 			)
-		)
-		    |
-		(
+			    |
 			(
-				lv_exprString_4_0=RULE_UNQUOTED_STRING
-				{
-					newLeafNode(lv_exprString_4_0, grammarAccess.getInitSpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getInitSpecificationCSRule());
+				(
+					lv_exprString_4_0=RULE_UNQUOTED_STRING
+					{
+						newLeafNode(lv_exprString_4_0, grammarAccess.getInitSpecificationCSAccess().getExprStringUNQUOTED_STRINGTerminalRuleCall_3_1_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"exprString",
-						lv_exprString_4_0,
-						"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getInitSpecificationCSRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"exprString",
+							lv_exprString_4_0,
+							"org.eclipse.ocl.xtext.completeocl.CompleteOCL.UNQUOTED_STRING");
+					}
+				)
 			)
 		)
 	)

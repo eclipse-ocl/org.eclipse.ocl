@@ -163,18 +163,16 @@ ParameterCS returns base::ParameterCS:
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:
 	'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
-	(ownedDefaultExpressions+=deriveSpecificationCS
-	| ownedDefaultExpressions+=initSpecificationCS
-	)*;
+	ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*;
 
 SpecificationCS returns essentialocl::ExpSpecificationCS:
 	ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
 bodySpecificationCS returns essentialocl::ExpSpecificationCS:
-	'body' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 deriveSpecificationCS returns essentialocl::ExpSpecificationCS:
-	'derive' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 initSpecificationCS returns essentialocl::ExpSpecificationCS:
-	'init' UnrestrictedName? ':' ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+	'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 
 //---------------------------------------------------------------------------------
 //	Base overrides

@@ -265,9 +265,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS)),
-					setCardinality("*", createAlternatives(
-						createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_deriveSpecificationCS)),
-						createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_initSpecificationCS))))));
+					setCardinality("*", createAssignment("ownedDefaultExpressions", "+=", createAlternatives(
+						createRuleCall(PR_deriveSpecificationCS),
+						createRuleCall(PR_initSpecificationCS))))));
 			PR_SpecificationCS.setAlternatives(
 				createAlternatives(
 					createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
@@ -302,29 +302,29 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("library")));
 			addAnnotation(PR_UnrestrictedName, "Override");
 			PR_bodySpecificationCS.setAlternatives(
-				createAlternatives(
-					createGroup(
-						createKeyword("body"),
-						setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-						createKeyword(":"),
-						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS))),
-					createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING))));
+				createGroup(
+					createKeyword("body"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
 			PR_deriveSpecificationCS.setAlternatives(
-				createAlternatives(
-					createGroup(
-						createKeyword("derive"),
-						setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-						createKeyword(":"),
-						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS))),
-					createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING))));
+				createGroup(
+					createKeyword("derive"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
 			PR_initSpecificationCS.setAlternatives(
-				createAlternatives(
-					createGroup(
-						createKeyword("init"),
-						setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-						createKeyword(":"),
-						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS))),
-					createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING))));
+				createGroup(
+					createKeyword("init"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
 			PR_invConstraintCS.setAlternatives(
 				createGroup(
 					createKeyword("inv"),
