@@ -696,7 +696,9 @@ public class ValidateTests extends AbstractValidateTests
 		}
 		finally {
 			ocl0.dispose();
+			ocl1.activate();
 			ocl1.dispose();
+			ocl2.activate();
 			ocl2.dispose();
 		}
 	}

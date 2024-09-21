@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -420,36 +419,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		isUnloading = true;
 		try {
 			/*	if (!isSkipPreUnload && isSaveable) { */
-			UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
-			if (unloadedProxyAdapter2 == null) {
-				List<Adapter> eAdapters = eAdapters();
-				for (Adapter eAdapter : eAdapters) {
-					if (eAdapter instanceof UnloadedProxyAdapter) {
-						unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
-						break;
-					}
-				}
-				if (unloadedProxyAdapter2 == null) {
-					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
-				}
-				unloadedProxyAdapter = unloadedProxyAdapter2;
-			}
-			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof PivotObjectImpl) {
-					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
-					URI eProxyURI = asElement.eProxyURI();
-					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI();
-						if (uri != null) {
-							if (uri.toString().contains(".oclas")) {
-								getClass();		// XXX
-							}
-							unloadedProxyAdapter2.put(eObject, uri);
-						}
-					}
-				}
-			}
+			preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -599,6 +569,48 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
+	 * Populate the UnloadedProxyAdapter with proxy URIs for all referencable elements.
+	 * This should be invoked before unload to ensure that the full AS context is available.
+	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public void preUnload() {					// XXX ?? isSaveable ?? not built-in
+		UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
+		if (unloadedProxyAdapter2 == null) {
+			List<Adapter> eAdapters = eAdapters();
+			for (Adapter eAdapter : eAdapters) {
+				if (eAdapter instanceof UnloadedProxyAdapter) {
+					unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
+					break;
+				}
+			}
+			if (unloadedProxyAdapter2 == null) {
+				unloadedProxyAdapter2 = new UnloadedProxyAdapter();
+				eAdapters.add(unloadedProxyAdapter2);
+			}
+			unloadedProxyAdapter = unloadedProxyAdapter2;
+			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof PivotObjectImpl) {
+					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
+					URI eProxyURI = asElement.eProxyURI();
+					if (eProxyURI == null) {
+						URI uri = asElement.getReloadableURI();
+						if (uri != null) {
+							if (uri.toString().contains(".oclas")) {
+								getClass();		// XXX
+							}
+							unloadedProxyAdapter2.put(eObject, uri);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	@Override
@@ -697,9 +709,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
-	protected void unloaded(InternalEObject internalEObject) {
+	protected void unloaded(InternalEObject internalEObject) {								// XXX ?? isSaveable ?? not built-in
 		URI eProxyURI = internalEObject.eProxyURI();
-		if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
+	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
 			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
 			URI uri = null;
 			if (reloadableEObjectOrURI instanceof EObject) {
@@ -717,22 +729,26 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			else {
 			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
 			}
-		}
+		} */
 	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
 	//		internalEObject.eAdapters().clear();
 	//	}
 	//	else {
 
-		    if (eProxyURI == null)
-		    {
-		      URI appendFragment = uri.appendFragment(getURIFragment(internalEObject));
-				if ((appendFragment != null) && appendFragment.toString().contains(".oclas")) {
-					getClass();		// XXX
+		if (eProxyURI == null) {
+			for (Adapter eAdapter : eAdapters) {
+				if (eAdapter instanceof UnloadedProxyAdapter) {
+					UnloadedProxyAdapter unloadedProxyAdapter = (UnloadedProxyAdapter) eAdapter;
+					URI uri = unloadedProxyAdapter.get(internalEObject);
+					if (uri != null) {
+						internalEObject.eSetProxyURI(uri);
+					}
+					break;
 				}
-		    }
-
-			super.unloaded(internalEObject);
-	//	}
+			}
+		}
+		super.unloaded(internalEObject);
+		// }
 	}
 
 	@Override

@@ -656,7 +656,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
-	/*	for (@NonNull Resource asResource : new ArrayList<>(environmentFactory.getResourceSet().getResources())) {
+	/*	for (@NonNull Resource asResource : new ArrayList<>(environmentFactory.getResourceSet().getResources())) {		-- XXX tidy
 			System.out.println("Unloading " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
 			Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(asResource);
 			for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
@@ -684,8 +684,16 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 		} */
-		for (@NonNull Resource asResource : new ArrayList<>(asResources)) {
+		ArrayList<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
+		for (@NonNull Resource asResource : asResourcesCopy) {
+			if (asResource instanceof ASResource) {
+				((ASResource)asResource).preUnload();
+			}
+		}
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
+		}
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.eAdapters().clear();
 		}
 		asResources.clear();

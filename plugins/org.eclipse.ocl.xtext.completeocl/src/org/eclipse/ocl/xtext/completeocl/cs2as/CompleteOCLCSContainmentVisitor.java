@@ -329,6 +329,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		for (@NonNull PackageDeclarationCS csContextPackage : csContextPackages) {
 			org.eclipse.ocl.pivot.Package modelPackage = csContextPackage.getReferredPackage();
 			if (modelPackage != null) {
+				assert !modelPackage.eIsProxy();
 				modelPackages.add(modelPackage);
 			}
 		}
