@@ -419,37 +419,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		isUnloading = true;
 		try {
 			/*	if (!isSkipPreUnload && isSaveable) { */
-			UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
-			if (unloadedProxyAdapter2 == null) {
-				List<Adapter> eAdapters = eAdapters();
-				for (Adapter eAdapter : eAdapters) {
-					if (eAdapter instanceof UnloadedProxyAdapter) {
-						unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
-						break;
-					}
-				}
-				if (unloadedProxyAdapter2 == null) {
-					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
-					eAdapters.add(unloadedProxyAdapter2);
-				}
-				unloadedProxyAdapter = unloadedProxyAdapter2;
-			}
-			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof PivotObjectImpl) {
-					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
-					URI eProxyURI = asElement.eProxyURI();
-					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI();
-						if (uri != null) {
-							if (uri.toString().contains(".oclas")) {
-								getClass();		// XXX
-							}
-							unloadedProxyAdapter2.put(eObject, uri);
-						}
-					}
-				}
-			}
+			preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -596,6 +566,48 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	public boolean isSaveable() {
 		return isSaveable;
+	}
+
+	/**
+	 * Populate the UnloadedProxyAdapter with proxy URIs for all referencable elements.
+	 * This should be invoked before unload to ensure that the full AS context is available.
+	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public void preUnload() {
+		UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
+		if (unloadedProxyAdapter2 == null) {
+			List<Adapter> eAdapters = eAdapters();
+			for (Adapter eAdapter : eAdapters) {
+				if (eAdapter instanceof UnloadedProxyAdapter) {
+					unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
+					break;
+				}
+			}
+			if (unloadedProxyAdapter2 == null) {
+				unloadedProxyAdapter2 = new UnloadedProxyAdapter();
+				eAdapters.add(unloadedProxyAdapter2);
+			}
+			unloadedProxyAdapter = unloadedProxyAdapter2;
+			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof PivotObjectImpl) {
+					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
+					URI eProxyURI = asElement.eProxyURI();
+					if (eProxyURI == null) {
+						URI uri = asElement.getReloadableURI();
+						if (uri != null) {
+							if (uri.toString().contains(".oclas")) {
+								getClass();		// XXX
+							}
+							unloadedProxyAdapter2.put(eObject, uri);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
