@@ -249,6 +249,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public void activate() {
+		ThreadLocalExecutor.reset();
+		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	}
+
+	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);

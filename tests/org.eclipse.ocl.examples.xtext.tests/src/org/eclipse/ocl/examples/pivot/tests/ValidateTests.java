@@ -752,6 +752,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
 		//	assertValidationDiagnostics("With Complete OCL", resource, validationContext, messages);
 			//		disposeResourceSet(resourceSet);
+			ocl.activate();
 			helper.dispose();
 		}
 		finally {

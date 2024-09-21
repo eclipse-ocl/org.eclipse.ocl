@@ -169,15 +169,14 @@ public class OCL
 	}
 
 	/**
-	 * Configure this OCL as the provider of the Endeactivation provided by deactivate().vironmentFactory for the current thread. This may be used to
+	 * Configure this OCL's EnvironmentFactory as the EnvironmentFactory for the current thread. This may be used to
 	 * reverse the deactivation provided by deactivate().
 	 *
 	 * @since 1.14
 	 */
 	public void activate() {
-		ThreadLocalExecutor.reset();
 		assert environmentFactory != null;
-		ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+		environmentFactory.activate();
 	}
 
 	/**
