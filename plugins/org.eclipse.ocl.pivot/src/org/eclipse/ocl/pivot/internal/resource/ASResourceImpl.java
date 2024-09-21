@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -431,6 +430,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				}
 				if (unloadedProxyAdapter2 == null) {
 					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
+					eAdapters.add(unloadedProxyAdapter2);
 				}
 				unloadedProxyAdapter = unloadedProxyAdapter2;
 			}
@@ -699,7 +699,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		URI eProxyURI = internalEObject.eProxyURI();
-		if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
+	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
 			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
 			URI uri = null;
 			if (reloadableEObjectOrURI instanceof EObject) {
@@ -717,22 +717,26 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			else {
 			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
 			}
-		}
+		} */
 	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
 	//		internalEObject.eAdapters().clear();
 	//	}
 	//	else {
 
-		    if (eProxyURI == null)
-		    {
-		      URI appendFragment = uri.appendFragment(getURIFragment(internalEObject));
-				if ((appendFragment != null) && appendFragment.toString().contains(".oclas")) {
-					getClass();		// XXX
+		if (eProxyURI == null) {
+			for (Adapter eAdapter : eAdapters) {
+				if (eAdapter instanceof UnloadedProxyAdapter) {
+					UnloadedProxyAdapter unloadedProxyAdapter = (UnloadedProxyAdapter) eAdapter;
+					URI uri = unloadedProxyAdapter.get(internalEObject);
+					if (uri != null) {
+						internalEObject.eSetProxyURI(uri);
+					}
+					break;
 				}
-		    }
-
-			super.unloaded(internalEObject);
-	//	}
+			}
+		}
+		super.unloaded(internalEObject);
+		// }
 	}
 
 	@Override

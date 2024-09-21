@@ -512,6 +512,12 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	@Override
+	public void eSetProxyURI(URI uri) {
+		// TODO Auto-generated method stub
+		super.eSetProxyURI(uri);
+	}
+
+	@Override
 	public String toString() {
 		return super.toString();
 	}
