@@ -440,14 +440,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
 					URI eProxyURI = asElement.eProxyURI();
 					if (eProxyURI == null) {
-						Object reloadableEObjectOrURI = asElement.getReloadableEObjectOrURI();
-						URI uri = null;
-						if (reloadableEObjectOrURI instanceof EObject) {
-							uri = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
-						}
-						else if (reloadableEObjectOrURI instanceof URI) {
-							uri = (URI)reloadableEObjectOrURI;
-						}
+						URI uri = asElement.getReloadableURI();
 						if (uri != null) {
 							if (uri.toString().contains(".oclas")) {
 								getClass();		// XXX

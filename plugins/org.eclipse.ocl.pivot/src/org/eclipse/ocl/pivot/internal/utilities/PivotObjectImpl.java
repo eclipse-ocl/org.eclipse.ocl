@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
@@ -159,6 +160,22 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			}
 		}
 		return esProxyTarget;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public @Nullable URI getReloadableURI() {
+		Object reloadableEObjectOrURI = getReloadableEObjectOrURI();
+		if (reloadableEObjectOrURI instanceof EObject) {
+			return EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
+		}
+		else if (reloadableEObjectOrURI instanceof URI) {
+			return (URI)reloadableEObjectOrURI;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Deprecated // Use getESObject()

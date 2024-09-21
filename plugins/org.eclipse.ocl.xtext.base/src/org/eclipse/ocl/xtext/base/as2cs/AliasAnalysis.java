@@ -94,7 +94,7 @@ public class AliasAnalysis extends AdapterImpl
 	private @NonNull Map<@NonNull String, @Nullable Object> allNames = new HashMap<>();
 
 	/**
-	 * The known or assigned package aliases/
+	 * The known or assigned package aliases.
 	 */
 	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allAliases = new HashMap<>();
 
