@@ -846,5 +846,41 @@
         <targetRelease>2024-03</targetRelease>
       </properties>
     </profile>
+    <profile>
+      <id>2024-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
+        <targetRelease>2024-06</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2024-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
+        <targetRelease>2024-09</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2024-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
+        <targetRelease>2024-12</targetRelease>
+      </properties>
+    </profile>
   </profiles>
 </project>
