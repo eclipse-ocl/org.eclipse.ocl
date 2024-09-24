@@ -2,12 +2,12 @@
 <launchConfiguration type="org.eclipse.m2e.Maven2LaunchConfigurationType">
     <intAttribute key="M2_COLORS" value="0"/>
     <booleanAttribute key="M2_DEBUG_OUTPUT" value="false"/>
-    <stringAttribute key="M2_GOALS" value="clean test"/>
+    <stringAttribute key="M2_GOALS" value="clean test --global-toolchains ../../local-toolchains.xml"/>
     <booleanAttribute key="M2_NON_RECURSIVE" value="false"/>
     <booleanAttribute key="M2_OFFLINE" value="false"/>
-    <stringAttribute key="M2_PROFILES" value="branchTestsLatest"/>
+    <stringAttribute key="M2_PROFILES" value="release"/>
     <listAttribute key="M2_PROPERTIES">
-        <listEntry value="jvm=E:/Tools/Java/jdk1.5.0_22/bin/java.exe"/>
+        <listEntry value="jvm=E:/Tools/Java/jdk-1.8.0_371/bin/java.exe"/>
     </listAttribute>
     <stringAttribute key="M2_RUNTIME" value="EMBEDDED"/>
     <booleanAttribute key="M2_SKIP_TESTS" value="false"/>
@@ -21,5 +21,5 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17/"/>
-    <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/org.eclipse.ocl.standalone.uml.tests}"/>
+    <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/org.eclipse.ocl.standalone.ecore.tests}"/>
 </launchConfiguration>

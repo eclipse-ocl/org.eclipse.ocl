@@ -41,7 +41,7 @@
     <targetRelease>unspecified</targetRelease>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
-    <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
+    <tycho.scmUrl>scm:git:https://github.com/eclipse-ocl/org.eclipse.ocl</tycho.scmUrl>
     <!-- For launching Eclipse and running JUnit tests -->
     <runtime-jdk-version>1.8</runtime-jdk-version>
     <source-java-version>1.8</source-java-version>

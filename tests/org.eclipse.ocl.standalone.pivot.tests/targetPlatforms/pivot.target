@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
+<!-- WIP gets stuck on [ERROR]   Missing requirement: org.eclipse.e4.ui.services 1.6.300.v20231201-1637 requires 'osgi.service; (objectClass=org.osgi.service.event.EventAdmin)' but it could not be found -->
 <locations>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="com.google.guava" version="0.0.0"/>
@@ -14,6 +15,9 @@
     <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <unit id="jakarta.annotation-api" version="0.0.0"/>
+    <unit id="jakarta.inject.jakarta.inject-api" version="0.0.0"/>
+    <unit id="org.apache.felix.scr" version="0.0.0"/>
     <unit id="org.eclipse.ant.core" version="0.0.0"/>
     <unit id="org.eclipse.compare" version="0.0.0"/>
     <unit id="org.eclipse.compare.core" version="0.0.0"/>
@@ -28,8 +32,16 @@
     <unit id="org.eclipse.core.variables" version="0.0.0"/>
     <unit id="org.eclipse.debug.core" version="0.0.0"/>
     <unit id="org.eclipse.debug.ui" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.contexts" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.di" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.di.annotations" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.di.extensions" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.di.extensions.supplier" version="0.0.0"/>
+    <unit id="org.eclipse.e4.core.services" version="0.0.0"/>
+    <unit id="org.eclipse.e4.ui.di" version="0.0.0"/>
     <unit id="org.eclipse.e4.ui.css.core" version="0.0.0"/>
     <unit id="org.eclipse.e4.ui.css.core" version="0.0.0"/>
+    <unit id="org.eclipse.e4.ui.services" version="0.0.0"/>
     <unit id="org.eclipse.equinox.app" version="0.0.0"/>
     <unit id="org.eclipse.equinox.common" version="0.0.0"/>
     <unit id="org.eclipse.equinox.frameworkadmin" version="0.0.0"/>
@@ -58,6 +70,7 @@
     <unit id="org.eclipse.jdt.annotation" version="0.0.0"/>
     <unit id="org.eclipse.jdt.core" version="0.0.0"/>
     <!--unit id="org.eclipse.jdt.core" version="3.14.0.v20180516-0801"/-->   <!-- Bug 535509 -->
+    <unit id="org.eclipse.jdt.core.compiler.batch" version="0.0.0"/>
     <unit id="org.eclipse.jdt.debug" version="0.0.0"/>
     <unit id="org.eclipse.jdt.launching" version="0.0.0"/>
     <unit id="org.eclipse.jface" version="0.0.0"/>
@@ -109,8 +122,14 @@
 
     <unit id="org.hamcrest.core" version="0.0.0"/>
     <unit id="org.junit" version="0.0.0"/>
+    <unit id="org.osgi.service.component" version="0.0.0"/>
+    <unit id="org.osgi.service.event" version="0.0.0"/>
+    <unit id="org.osgi.service.prefs" version="0.0.0"/>
+    <unit id="org.osgi.util.promise" version="0.0.0"/>
     <!--repository location="https://download.eclipse.org/releases/photon/201805251000"/-->
-    <repository location="https://ci.eclipse.org/simrel/job/simrel.photon.runaggregator.BUILD__CLEAN/lastSuccessfulBuild/artifact/aggregation/final"/>
+    <!--repository location="https://ci.eclipse.org/simrel/job/simrel.photon.runaggregator.BUILD__CLEAN/lastSuccessfulBuild/artifact/aggregation/final"/-->
+    <!--repository location="https://download.eclipse.org/releases/latest"/-->
+    <repository location="https://download.eclipse.org/releases/2024-03"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
     <unit id="lpg.runtime.java" version="0.0.0"/>
@@ -127,7 +146,7 @@
     <unit id="org.eclipse.ocl.examples.emf.validation.validity.ui" version="0.0.0"/>
     <unit id="org.eclipse.ocl.examples.standalone" version="0.0.0"/>
     <unit id="org.eclipse.ocl.examples.ui" version="0.0.0"/>
-    <unit id="org.eclipse.ocl.examples.uml25" version="0.0.0"/>
+    <!--unit id="org.eclipse.ocl.examples.uml25" version="0.0.0"/-->
     <unit id="org.eclipse.ocl.examples.validity" version="0.0.0"/>
     <unit id="org.eclipse.ocl.examples.xtext.console" version="0.0.0"/>
     <unit id="org.eclipse.ocl.examples.xtext.tests" version="0.0.0"/>

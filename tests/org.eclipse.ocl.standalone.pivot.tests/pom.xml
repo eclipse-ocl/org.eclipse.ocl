@@ -40,9 +40,9 @@
     <targetRelease>unspecified</targetRelease>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
-    <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
+    <tycho.scmUrl>scm:git:https://github.com/eclipse-ocl/org.eclipse.ocl</tycho.scmUrl>
     <executionEnvironment>JavaSE-1.8</executionEnvironment>
-    <source-java-version>1.5</source-java-version>
+    <source-java-version>1.8</source-java-version>
     <target-java-version>${source-java-version}</target-java-version>
     <java-source-encoding>UTF-8</java-source-encoding>
     <resource-encoding>UTF-8</resource-encoding>
@@ -56,6 +56,9 @@
     <maven-compiler-version>3.1</maven-compiler-version>
     <maven-clean-version>2.5</maven-clean-version>
     <maven-surefire-version>2.17</maven-surefire-version>
+    <maven-toolchains-version>1.1</maven-toolchains-version>
+
+    <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>
   </properties>
 
   <build>
@@ -74,7 +77,7 @@
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
           <resolver>p2</resolver>
-          <executionEnvironment>JavaSE-1.8</executionEnvironment>
+          <executionEnvironment>JavaSE-17</executionEnvironment>
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
@@ -102,7 +105,26 @@
           </environments>
         </configuration>
       </plugin>
-      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>${maven-toolchains-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>17.0</version>
+              <vendor>oracle</vendor>
+            </jdk>
+          </toolchains>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
