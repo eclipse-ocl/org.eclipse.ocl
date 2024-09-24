@@ -163,6 +163,9 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
+		if (referredElement instanceof org.eclipse.ocl.pivot.Package) {
+			getClass();		// XXX
+		}
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldReferredElement, referredElement));
 	}
@@ -378,10 +381,20 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		else if (proxy instanceof Parameter) {
 			getClass();		// XXX
 		}
-		EObject superResolvedProxy = super.eResolveProxy(proxy);
-		EObject resolvedProxy = superResolvedProxy;
-		if (resolvedProxy instanceof Pivotable) {
-			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+		EObject esResolvedProxy = super.eResolveProxy(proxy);
+		EObject asResolvedProxy = null;
+		if (esResolvedProxy instanceof Pivotable) {
+			asResolvedProxy = ((Pivotable)esResolvedProxy).getPivot();
+			if ((asResolvedProxy != null) && asResolvedProxy.eIsProxy()) {
+			//	proxy = (InternalEObject)eResolveProxy(proxy);			// XXX need to displace stale AS
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ThreadLocalExecutor.getEnvironmentFactory();
+				try {
+					asResolvedProxy = environmentFactory.getASOf(Element.class, esResolvedProxy);
+				} catch (ParserException e) {
+					// XXX Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			if (proxy instanceof Parameter) {
 				ExpressionInOCL asExpression = null;
 				for (EObject eObject = this; eObject != null; eObject = eObject.eContainer()) {
@@ -395,10 +408,10 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				}
 				if (asExpression != null) {
 					Parameter asParameter = (Parameter)proxy;
-					if ("text".equals(((ParameterCS)superResolvedProxy).getName())) {
+					if ("text".equals(((ParameterCS)esResolvedProxy).getName())) {
 						getClass();
 					}
-					ParameterVariable asParameterVariable = (ParameterVariable)NameUtil.getNameable(asExpression.getOwnedParameters(), ((ParameterCS)superResolvedProxy).getName());
+					ParameterVariable asParameterVariable = (ParameterVariable)NameUtil.getNameable(asExpression.getOwnedParameters(), ((ParameterCS)esResolvedProxy).getName());
 					assert asParameterVariable != null;
 					/*	if (asParameterVariable == null) {
 						asParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
@@ -410,7 +423,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 							asExpression.getOwnedParameters().add(asParameterVariable);
 					//	}
 					} */
-					resolvedProxy = asParameterVariable;
+					asResolvedProxy = asParameterVariable;
 				/*	ParameterVariable proxyParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
 					if (resolvedProxy instanceof Parameter) {
 						Parameter asParameter = (Parameter)resolvedProxy;
@@ -435,21 +448,21 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				}
 			}
 		}
-		else if (resolvedProxy instanceof EModelElement) {
+		else if (esResolvedProxy instanceof EModelElement) {
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// CS2AS
 			if (environmentFactory != null) {
 				try {
-					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+					asResolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, esResolvedProxy);
 				} catch (ParserException e) {
 					e.printStackTrace();		// Never happens proxies do not parse
 				}
 			}
 		}
 		if (s != null) {
-			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
+			s.append(" => " + NameUtil.debugSimpleName(asResolvedProxy));
 			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
-		return resolvedProxy;
+		return asResolvedProxy != null ? asResolvedProxy : esResolvedProxy;
 	}
 
 	/**
@@ -465,6 +478,9 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			referredElement = (Element)eResolveProxy(oldReferredElement);
 			if (referredElement != oldReferredElement)
 			{
+				if (referredElement instanceof org.eclipse.ocl.pivot.Package) {
+					getClass();		// XXX
+				}
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldReferredElement, referredElement));
 			}

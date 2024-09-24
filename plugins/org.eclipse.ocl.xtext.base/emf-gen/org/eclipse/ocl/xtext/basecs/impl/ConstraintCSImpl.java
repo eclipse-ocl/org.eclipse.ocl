@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
@@ -357,8 +358,8 @@ public class ConstraintCSImpl extends NamedElementCSImpl implements ConstraintCS
 	}
 
 	@Override
-	public void setName(String newName) {
-		// TODO Auto-generated method stub
-		super.setName(newName);
+	public void setPivot(Element newPivot) {
+		// XXX Auto-generated method stub
+		super.setPivot(newPivot);
 	}
 } //ConstraintCSImpl

@@ -236,8 +236,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
 				if (esResource instanceof CSResource) {
-
-
+					// XXX Need to deproxify OCLinEcoreCS re.oad before CompleteOCLCS reload as in testValidate_Validate_completeocl
+					// XXX Need to deep copy if non-null/non-proxy AS references
 				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 					ASResource asResource = ((CSResource)esResource).reloadIn(this);
 				}

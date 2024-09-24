@@ -404,6 +404,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			}
 		}
 		Element element = ownedPathElements.get(iMax-1).getReferredElement();
+		if ((element != null) && element.eIsProxy()) {
+			element = ownedPathElements.get(iMax-1).getReferredElement();
+			return null;					// XXX
+		}
 		if ((element == null) || element.eIsProxy()) {
 			return null;
 		}

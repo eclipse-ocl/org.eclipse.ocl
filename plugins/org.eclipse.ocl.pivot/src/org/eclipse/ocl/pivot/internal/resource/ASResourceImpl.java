@@ -576,7 +576,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {
+	public void preUnload() {					// XXX ?? isSaveable ?? not built-in
 		UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
 		if (unloadedProxyAdapter2 == null) {
 			List<Adapter> eAdapters = eAdapters();
@@ -709,7 +709,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
-	protected void unloaded(InternalEObject internalEObject) {
+	protected void unloaded(InternalEObject internalEObject) {								// XXX ?? isSaveable ?? not built-in
 		URI eProxyURI = internalEObject.eProxyURI();
 	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
 			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();

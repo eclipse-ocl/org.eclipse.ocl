@@ -247,7 +247,13 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	//	}
 		if ((eProxyURI != null) && !eProxyURI.hasFragment()) {
 		    Resource resource = eResource().getResourceSet().getResource(eProxyURI, true);
-			return resource.getContents().get(0);
+			EObject eObject = resource.getContents().get(0);
+//			if ((eObject != null) && eObject.eIsProxy()) {
+//				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+//				ASResource asResource = ((CSResource)resource).reloadIn(environmentFactory);
+//				eObject = asResource.getContents().get(0);
+//			}
+			return eObject;
 		}
 		else {
 			return super.eResolveProxy(proxy);
