@@ -18,11 +18,7 @@ idiom AT_PRE {
 	at "pre" do no-space value soft-space;
 }
 
-idiom IMPORTS_SPACING1 at assignment completeoclcs::CompleteOCLDocumentCS::ownedImports do value half-new-line;
-
-idiom IMPORTS_SPACING2 at all assignment completeoclcs::CompleteOCLDocumentCS::ownedImports do half-new-line value half-new-line;
-
-idiom PACKAGES_SPACING at all assignment completeoclcs::CompleteOCLDocumentCS::ownedPackages do half-new-line value half-new-line;
+idiom IMPORTS_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedImports do half-new-line value half-new-line;
 
 idiom CLASSIFIER_SPACING1 for completeoclcs::ClassifierContextDeclCS {
 	at "context" do soft-new-line value soft-space;
@@ -82,8 +78,10 @@ idiom OPERATION_SPACING for completeoclcs::OperationContextDeclCS {
 
 idiom PACKAGE_SPACING for completeoclcs::PackageDeclarationCS {
 	at "package" do half-new-line value push;
-	at "endpackage" do pop value soft-new-line half-new-line;
+	at "endpackage" do pop soft-new-line value soft-new-line half-new-line;
 }
+
+idiom PACKAGES_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedPackages do half-new-line soft-new-line value half-new-line;
 
 idiom PROPERTY_SPACING for completeoclcs::PropertyContextDeclCS {
 	at "context" do soft-new-line value soft-space;
