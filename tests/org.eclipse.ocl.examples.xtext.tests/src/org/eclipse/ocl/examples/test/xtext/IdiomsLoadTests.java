@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
-import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
@@ -278,7 +277,6 @@ public class IdiomsLoadTests extends XtextTestCase
 			return;
 		}
 		TestOCL ocl = createOCL();
-		ClasspathURIHandler.init(ocl.getResourceSet());
 		URI idiomsURI = getTestFileURI("EssentialOCL.idioms", EssentialOCLStandaloneSetup.class.getResourceAsStream("EssentialOCL.idioms"));
 		doLoad_Idioms(ocl, idiomsURI);
 		ocl.dispose();
