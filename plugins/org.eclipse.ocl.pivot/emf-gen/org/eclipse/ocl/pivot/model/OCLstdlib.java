@@ -279,7 +279,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private Contents(@NonNull String asURI)
 		{
-			model = createModel(asURI);
+			model = createModel(asURI.replace(PivotConstants.DOT_OCL_AS_FILE_EXTENSION, ""));
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
 			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
 			installPackages();

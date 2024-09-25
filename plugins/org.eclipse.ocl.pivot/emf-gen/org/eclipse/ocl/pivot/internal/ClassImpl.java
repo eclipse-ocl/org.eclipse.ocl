@@ -1367,12 +1367,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {
-		if ("Class".equals(name)) {
-			getClass();			// XXX
-		}
-		if ("Artifact".equals(name)) {
-			getClass();			// XXX
-		}
 		if (Orphanage.isOrphan(this)) {
 			return null;
 		}

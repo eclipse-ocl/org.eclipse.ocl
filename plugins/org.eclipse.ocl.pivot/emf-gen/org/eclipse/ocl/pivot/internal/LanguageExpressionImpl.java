@@ -132,13 +132,6 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public void setBody(String newBody)
 	{
-		if ("$$complete-ocl$$".equals(newBody)) {
-			getClass();			// XXX
-		}
-		if ("if verdict then true else null endif".equals(newBody)) {
-			getClass();			// XXX
-		}
-
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())

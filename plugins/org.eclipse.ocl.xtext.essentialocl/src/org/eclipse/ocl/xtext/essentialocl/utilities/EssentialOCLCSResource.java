@@ -544,7 +544,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 	}
 
-
 	/**
 	 * OCLCSResourceSave supports saving the contents of a CS Resource using regular XMI serialization.
 	 * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
@@ -795,13 +794,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 	}
 
-//	@Override
-//	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {
-//		throw new UnsupportedOperationException();			// XXX
-//	}
-
 	@Override
-	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+	public @NonNull ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
 		CS2AS cs2as = getCS2AS(environmentFactory);

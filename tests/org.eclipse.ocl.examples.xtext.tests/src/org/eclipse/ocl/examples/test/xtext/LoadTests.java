@@ -208,7 +208,6 @@ public class LoadTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
-		assert csResource.getURI().equals(oclOutputURI);			// XXX
 		return csResource;
 	}
 
@@ -1677,7 +1676,7 @@ public class LoadTests extends XtextTestCase
 		//
 		//	Save the *.oclas and cache the xmi:ids
 		//
-		URI esasURI = getTestFileURI(ecoreFileName + ".oclas");
+		URI esasURI = getTestFileURI(ecoreFileName + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 		asResource.setSaveable(true);
 		asResource.setURI(esasURI);
 		Map<String, Object> options = new HashMap<String, Object>();

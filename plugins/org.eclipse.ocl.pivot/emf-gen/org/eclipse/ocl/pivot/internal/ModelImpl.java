@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * <!-- begin-user-doc -->
@@ -465,6 +466,10 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public void setExternalURI(String newExternalURI)
 	{
+	//	if (newExternalURI.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+	//		asElement.getReloadableURI();		// XXX
+	//	}
+		assert (newExternalURI == null) || !newExternalURI.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);			// XXX
 		setExternalURIGen(newExternalURI);
 		String newName;
 		if (externalURI != null) {

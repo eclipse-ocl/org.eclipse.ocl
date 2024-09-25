@@ -93,6 +93,8 @@ public abstract class CompleteOCLLoader
 		ocl.dispose();
 	}
 
+	protected abstract boolean error(@NonNull String primaryMessage, @Nullable String detailMessage);
+
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return ocl.getEnvironmentFactory();
 	}
@@ -175,8 +177,6 @@ public abstract class CompleteOCLLoader
 		return allOk;
 	}
 
-	protected abstract boolean error(@NonNull String primaryMessage, @Nullable String detailMessage);
-
 	/**
 	 * Install each of the oclURIs documents, then loadMetamodels and finally installPackages.
 	 *
@@ -220,7 +220,6 @@ public abstract class CompleteOCLLoader
 			if (needsValidator) {
 				if (extraEValidator == null) {
 					extraEValidator = new PivotEObjectValidator(oclModels);
-				//	PivotUtil.errPrintln(NameUtil.debugSimpleName(extraEValidator));		// XXX
 				}
 				localValidationRegistry.add(mmPackage, extraEValidator);
 			}

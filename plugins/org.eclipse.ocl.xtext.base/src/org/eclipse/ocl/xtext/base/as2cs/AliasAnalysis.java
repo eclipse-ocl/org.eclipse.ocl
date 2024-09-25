@@ -98,12 +98,12 @@ public class AliasAnalysis extends AdapterImpl
 	/**
 	 * The known package aliases assigned by an import declaration.
 	 */
-	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allKnownAliases = new HashMap<>();	// XXX distinguish actual from potential
+	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allKnownAliases = new HashMap<>();
 
 	/**
 	 * The candidate package aliases computed to determine distinct names for code generation
 	 */
-	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allAliases = new HashMap<>();	// XXX distinguish actual from potential
+	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allAliases = new HashMap<>();
 
 	public AliasAnalysis(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		resource.eAdapters().add(this);
@@ -115,22 +115,17 @@ public class AliasAnalysis extends AdapterImpl
 	 */
 	private void computeAliases(@NonNull Set<@NonNull CompletePackage> localCompletePackages,
 			@NonNull Set<@NonNull CompletePackage> otherCompletePackages) {
-	//	PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (@NonNull CompletePackage localCompletePackage : localCompletePackages) {
-		//	CompletePackage completePackage = metamodelManager.getCompletePackage(localPackage);
 			if ((localCompletePackage.getNsPrefix() != null) || (localCompletePackage.getOwningCompletePackage() == null)) {
-			//	if (!allAliases.containsKey(localCompletePackage)) {
-					String alias = computeCandidateAlias(localCompletePackage);
-					allAliases.put(localCompletePackage, alias);		// XXX assert old == null
-			//	}
+				String alias = computeCandidateAlias(localCompletePackage);
+				String old = allAliases.put(localCompletePackage, alias);
+				assert old == null;
 			}
 		}
 		for (@NonNull CompletePackage otherCompletePackage : otherCompletePackages) {
-		//	CompletePackage completePackage = metamodelManager.getCompletePackage(otherPackage);
-		//	if (!allAliases.containsKey(otherCompletePackage)) {
-				String alias = computeCandidateAlias(otherCompletePackage);
-				allAliases.put(otherCompletePackage, alias);			// XXX assert old == null
-		//	}
+			String alias = computeCandidateAlias(otherCompletePackage);
+			String old = allAliases.put(otherCompletePackage, alias);
+			assert old == null;
 		}
 	}
 
@@ -247,6 +242,7 @@ public class AliasAnalysis extends AdapterImpl
 			}
 		}
 		otherCompletePackages.removeAll(localCompletePackages);
+		otherCompletePackages.removeAll(allKnownAliases.keySet());
 		Set<@NonNull CompletePackage> nestedCompletePackages = new HashSet<>();
 		for (@NonNull CompletePackage localCompletePackage : localCompletePackages) {
 			EObject eContainer = localCompletePackage.eContainer();
@@ -258,6 +254,7 @@ public class AliasAnalysis extends AdapterImpl
 			}
 		}
 		localCompletePackages.removeAll(nestedCompletePackages);
+		localCompletePackages.removeAll(allKnownAliases.keySet());
 	}
 
 	public void dispose() {
@@ -274,7 +271,11 @@ public class AliasAnalysis extends AdapterImpl
 		}
 		if (eObject2 instanceof org.eclipse.ocl.pivot.Package) {
 			CompletePackage completePackage = environmentFactory.getMetamodelManager().getCompletePackage((org.eclipse.ocl.pivot.Package)eObject2);
-			String alias = allAliases.get(completePackage);
+			String alias = allKnownAliases.get(completePackage);
+			if (alias != null) {
+				return alias;
+			}
+			alias = allAliases.get(completePackage);
 			if (alias != null) {
 				return alias;
 			}

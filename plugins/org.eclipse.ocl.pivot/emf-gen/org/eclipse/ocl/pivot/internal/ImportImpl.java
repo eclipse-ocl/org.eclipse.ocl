@@ -355,27 +355,13 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return namespace;
 			}
 			else if (namespace instanceof Model) {
-				return namespace;
+				return ((ModelImpl)namespace).getReloadableEObjectOrURI();
 			}
 			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
 				return ((PackageImpl)namespace).getReloadableEObjectOrURI();
-			/*	CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
-				for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-					reloadableNotifier = ((PackageImpl)asPackage).getReloadableEObjectOrURI();
-					if (reloadableNotifier != null) {
-						break;
-					}
-				} */
 			}
 			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
 				return ((ClassImpl)namespace).getReloadableEObjectOrURI();
-			/*	CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
-				for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-					reloadableNotifier = ((ClassImpl)asClass).getReloadableEObjectOrURI();
-					if (reloadableNotifier != null) {
-						break;
-					}
-				} */
 			}
 		}
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement

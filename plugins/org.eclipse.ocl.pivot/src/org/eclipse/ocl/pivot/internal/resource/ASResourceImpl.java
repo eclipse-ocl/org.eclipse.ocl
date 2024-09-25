@@ -599,9 +599,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					if (eProxyURI == null) {
 						URI uri = asElement.getReloadableURI();
 						if (uri != null) {
-							if (uri.toString().contains(".oclas")) {
-								getClass();		// XXX
+							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+								asElement.getReloadableURI();		// XXX
 							}
+							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 							unloadedProxyAdapter2.put(eObject, uri);
 						}
 					}
@@ -721,7 +722,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				uri = (URI)reloadableEObjectOrURI;
 			}
 			if (uri != null) {
-				if (uri.toString().contains(".oclas")) {
+				if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 					getClass();		// XXX
 				}
 			//	internalEObject.eSetProxyURI(uri);		// XXX disrupts UML unload

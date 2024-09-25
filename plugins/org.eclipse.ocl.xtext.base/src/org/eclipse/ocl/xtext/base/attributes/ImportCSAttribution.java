@@ -118,7 +118,8 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 			}
 			try {
 				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, null, null);
-				if (importedElement != null) {				assert !importedElement.eIsProxy();					// XXX
+				if (importedElement != null) {
+					assert !importedElement.eIsProxy();					// XXX
 					Resource importedResource = importedElement.eResource();
 					if (importedResource != null) {
 						if (importedResource instanceof ASResource) {

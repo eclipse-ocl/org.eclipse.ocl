@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -82,9 +81,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		@Override
 		public String getHREF(EObject obj) {
 			if (obj instanceof ElementImpl) {										// AS is not persisted and so not referenceable
-				if (obj instanceof Parameter) {
-					getClass();			// XXX
-				}
 				Object reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
 				if (reloadableEObjectOrURI instanceof EObject) {
 					EObject reloadableEObject = (EObject)reloadableEObjectOrURI;
@@ -106,7 +102,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 				else {																// No replacement available
 				//	throw new NullPointerException("getHREF");
 				}
-			/*	//	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
+			/*	XXX //	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
 				if (obj instanceof Model) {
 					return ((Model)obj).getExternalURI();
 				}
@@ -372,7 +368,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource();
-	//	throw new UnsupportedOperationException();
 	}
 
 	@Override
