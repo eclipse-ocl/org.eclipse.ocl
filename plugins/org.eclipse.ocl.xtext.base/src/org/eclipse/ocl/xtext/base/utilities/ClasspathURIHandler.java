@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.xtext.tests;
+package org.eclipse.ocl.xtext.base.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -35,7 +36,26 @@ import org.eclipse.xtext.resource.ClasspathUriUtil;
 public class ClasspathURIHandler extends URIHandlerImpl
 {
 	public static void init(@NonNull ResourceSet resourceSet) {
-		resourceSet.getURIConverter().getURIHandlers().add(0, new ClasspathURIHandler());
+		URIConverter uriConverter = resourceSet.getURIConverter();
+		synchronized (uriConverter) {
+			EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
+			URIHandler classpathURIHandler = null;
+			int index = 0;
+			for (URIHandler uriHandler : uriHandlers) {
+				if (uriHandler instanceof ClasspathURIHandler) {
+					classpathURIHandler = uriHandler;
+					break;
+				}
+				index++;
+			}
+			if (classpathURIHandler == null) {
+				classpathURIHandler = new ClasspathURIHandler();
+				uriHandlers.add(0, classpathURIHandler);
+			}
+			else if (index != 0) {
+				uriHandlers.move(0, index);
+			}
+		}
 	}
 
 	private Logger log = Logger.getLogger(getClass());

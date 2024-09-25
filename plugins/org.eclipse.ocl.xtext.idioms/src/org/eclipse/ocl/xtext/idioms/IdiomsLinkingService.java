@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.linking.impl.DefaultLinkingService;
 import org.eclipse.xtext.linking.impl.IllegalNodeException;
@@ -53,6 +54,7 @@ public class IdiomsLinkingService extends DefaultLinkingService
 		else if (ref == IdiomsPackage.Literals.GRAMMAR_DECLARATION__GRAMMAR) {
 			Resource idiomsResource = context.eResource();
 			ResourceSet resourceSet = idiomsResource.getResourceSet();
+			ClasspathURIHandler.init(resourceSet);		// Ensure that the missing classpath: support is worked around - Xtext Bug 446073
 			URI baseURI = idiomsResource.getURI();
 			URI userURI = URI.createURI(text, true);
 			URI resolvedURI = userURI.resolve(baseURI);
