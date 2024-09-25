@@ -24,6 +24,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="Ecore2Moniker"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore">
         <filter id="338792546">
             <message_arguments>
@@ -99,6 +107,26 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.scoping.Attribution"/>
                 <message_argument value="ATTRIBUTION_REGISTRY"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AliasAdapter.java" type="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter"/>
+                <message_argument value="findAdapter(Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter"/>
+                <message_argument value="getAdapter(Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter.Creator"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
             </message_arguments>
         </filter>
     </resource>

@@ -90,7 +90,6 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.base.serializer.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
@@ -1367,6 +1366,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
+	//	SerializationBuilder.SERIALIZATION.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		URI inputURI = getTestModelURI("models/ecore/Names.ocl");
@@ -1387,7 +1387,7 @@ public class LoadTests extends XtextTestCase
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
 	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
-		SerializationBuilder.SERIALIZATION.setState(true);
+	//	SerializationBuilder.SERIALIZATION.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		URI inputURI = getTestModelURI("models/ecore/OCLTest.ocl");
