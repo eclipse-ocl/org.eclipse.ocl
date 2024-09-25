@@ -133,7 +133,7 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		@Override
-		public @Nullable Resource getResource() {
+		public @NonNull Resource getResource() {
 			return ecoreResource;
 		}
 

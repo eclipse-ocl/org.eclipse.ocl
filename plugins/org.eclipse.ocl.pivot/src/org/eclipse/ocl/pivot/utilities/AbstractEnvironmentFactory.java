@@ -248,6 +248,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
 	public void activate() {
 		ThreadLocalExecutor.reset();
@@ -843,6 +846,21 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable Resource eResource) throws ParserException {
+		if (eResource != null) {
+			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
+			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
+			if (bestHelper != null) {
+				return bestHelper.getASElement(this, pivotClass, eResource.getContents().get(0));		// XXX
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.10
 	 */
 	public @NonNull ResourceSet getASResourceSet() {
@@ -1189,5 +1207,30 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public Object toDebugString() {
 		return NameUtil.debugSimpleName(this) + "(" + attachCount + ")";
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public void unload(@NonNull CSResource csResource) {
+		ICSI2ASMapping csi2asMapping2 = csi2asMapping;
+		assert csi2asMapping2 != null;
+		ASResource asResource = csi2asMapping2.getASResource(csResource);
+		assert asResource != null;
+		Model asModel = PivotUtil.getModel(asResource);
+
+
+	//	Resource asResource = oclCSResource.eResource();
+	//	if (asResource != null) {
+			asResource.unload();
+	//	}
+		completeModel.getPartialModels().remove(asModel);
+		asResourceSet.getResources().remove(asResource);
+		csi2asMapping2.removeCSResource(csResource);
+	//	for (@NonNull External2AS es2as : es2ases.values()) {
+	//		Resource resource = es2as.getResource();
+	//	}
+	//	external2asMap.remove(external2as.getURI());
+	//	removeExternalResource(this);
 	}
 }

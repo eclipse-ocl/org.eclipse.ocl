@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
 public abstract class CompleteOCLLoader
@@ -80,13 +82,18 @@ public abstract class CompleteOCLLoader
 		}
 	}
 
+	/**
+	 * The prevailing OCL context.
+	 */
 	protected final @NonNull OCLInternal ocl;
+	/**
+	 * The currently loaded Complete OCL AS models that a distinct PivotEObjectValidator (e.g. UML but not Ecore).
+	 */
 	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
-	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage;
+	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage = new HashMap<>();
 
 	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
-		this.mmPackage2completePackage = new HashMap<>();
 	}
 
 	public void dispose() {
@@ -200,7 +207,7 @@ public abstract class CompleteOCLLoader
 
 	public void installPackages() {
 		//
-		//	Install validation for all the complemented packages
+		//	Install validation for all the complemented packages that need a distinct PivotEObjectValidator (e.g. UML but not Ecore).
 		//
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
@@ -231,18 +238,18 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadDocument(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
-		Resource resource = loadResource(oclURI, sErrors);
-		if (resource == null) {
+		Resource asResource = loadResource(oclURI, sErrors);
+		if (asResource == null) {
 			return false;
 		}
 		//
 		//	Identify the packages which the Complete OCL document complements.
 		//
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
-		for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
-				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
+		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+			EObject asElement = tit.next();
+			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
+				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
 				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
 			//	if (aPackage instanceof PivotObjectImpl) {
 					EObject mmPackage = aPackage.getESObject();
@@ -251,11 +258,11 @@ public abstract class CompleteOCLLoader
 					}
 			//	}
 			}
-			else if (eObject instanceof Type) {
+			else if (asElement instanceof Type) {
 				tit.prune();
 			}
-			else if (eObject instanceof Model) {
-				oclModels.add((Model)eObject);
+			else if (asElement instanceof Model) {
+				oclModels.add((Model)asElement);
 			}
 		}
 		return true;
@@ -347,4 +354,65 @@ public abstract class CompleteOCLLoader
 		}
 		return null;
 	}
+
+	public void uninstallDocuments(@NonNull URI... oclURIs) {
+		if (oclURIs != null) {
+			for (URI oclURI : oclURIs) {
+				unloadDocument(oclURI);
+			}
+		}
+	//	if (!unloadMetamodels(s)) {
+	//		return s.toString();
+	//	}
+	//	uninstallPackages();
+	//	return null;
+	}
+
+	public void unloadDocument(@NonNull URI oclURI) {
+		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		CSResource csResource = (CSResource)environmentFactory.getResourceSet().getResource(oclURI, false);
+		assert csResource != null;
+	//	ASResource asResource = unloadResource(csResource);
+		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
+		assert iCSI2ASMapping != null;
+		ASResource asResource = iCSI2ASMapping.getASResource(csResource);
+		assert asResource != null;
+		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
+		delegateInstaller.uninstallCompleteOCLDelegates(asResource);
+		//
+		//	XXX Identify the packages which the Complete OCL document complements.
+		//
+		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+			EObject asElement = tit.next();
+			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
+				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
+				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
+				EObject mmPackage = aPackage.getESObject();
+				if (mmPackage instanceof EPackage) {
+					mmPackage2completePackage.remove(mmPackage);
+				}
+			}
+			else if (asElement instanceof Type) {
+				tit.prune();
+			}
+			else if (asElement instanceof Model) {
+				oclModels.remove(asElement);
+			}
+		}
+	}
+
+	/**
+	 * Unload the CompleteOCL CS resource and its AS resource counterpart.
+	 *
+	public @NonNull ASResource unloadResource(@NonNull CSResource csResource) {
+		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
+		assert iCSI2ASMapping != null;
+		ASResource asResource = iCSI2ASMapping.getASResource(csResource);
+		assert asResource != null;
+		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
+		delegateInstaller.uninstallCompleteOCLDelegates(asResource);
+		return asResource;
+	} */
 }

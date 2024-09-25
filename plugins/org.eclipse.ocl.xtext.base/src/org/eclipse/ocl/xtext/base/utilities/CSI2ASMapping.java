@@ -458,6 +458,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Return the AS Resource corresponding to a given CS Resource.
 	 */
+	@Override
 	public @Nullable ASResource getASResource(@Nullable CSResource csResource) {
 		return cs2asResourceMap.get(csResource);
 	}
@@ -562,10 +563,15 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Remove the Resource mappings for all csResources. The CSI mappings persist until update() is called.
 	 */
+	@Override
 	public void removeCSResource(@NonNull CSResource csResource) {
 		as2cs = null;
 		cs2asResourceMap.remove(csResource);
-		cs2as2as.remove(csResource);
+		cs2as2as.remove(csResource);			// XXX csi2as too
+		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
+			EObject csElement = tit.next();
+			csi2as.remove(csElement);
+		}
 	}
 
 	/**
