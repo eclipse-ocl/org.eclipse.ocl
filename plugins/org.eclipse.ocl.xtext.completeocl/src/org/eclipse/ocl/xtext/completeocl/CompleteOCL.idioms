@@ -20,9 +20,7 @@ idiom AT_PRE {
 
 idiom IMPORTS_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedImports do half-new-line value half-new-line;
 
-idiom CLASSIFIER_SPACING1 for completeoclcs::ClassifierContextDeclCS {
-	at "context" do soft-new-line value soft-space;
-}
+idiom CLASSIFIER_SPACING1 for completeoclcs::ClassifierContextDeclCS at "context" do soft-new-line value soft-space;
 
 idiom invCONSTRAINT_SPACING {
 	at rule completeoclx::invConstraintCS do soft-new-line push value pop pop;
@@ -34,18 +32,14 @@ idiom postCONSTRAINT_SPACING1 in "postConstraintCS" {
 	at ":" do soft-space value soft-new-line push;
 }
 
-idiom postCONSTRAINT_SPACING2 in "postConstraintCS" {
-	at "=" do soft-space value string " =postConstraintCS " soft-space;
-}
+idiom postCONSTRAINT_SPACING2 in "postConstraintCS" at "=" do soft-space value string " =postConstraintCS " printable soft-space;
 
 idiom preCONSTRAINT_SPACING1 in "preConstraintCS" {
 	at rule completeoclx::preConstraintCS do soft-new-line push value pop pop;
 	at ":" do soft-space value soft-new-line push;
 }
 
-idiom preCONSTRAINT_SPACING2 in "preConstraintCS" {
-	at "=" do soft-space value soft-space;
-}
+idiom preCONSTRAINT_SPACING2 in "preConstraintCS" at "=" do soft-space value soft-space;
 
 idiom DEF_OPERATION_SPACING for completeoclcs::DefOperationCS {
 	at rule completeoclx::DefOperationCS do soft-new-line push value pop pop;
@@ -72,9 +66,7 @@ idiom INIT_SPECIFICATION_SPACING in "initSpecificationCS" {
 	at ":" do soft-space value soft-new-line push;
 }
 
-idiom OPERATION_SPACING for completeoclcs::OperationContextDeclCS {
-	at "context" do soft-new-line value soft-space;
-}
+idiom OPERATION_SPACING for completeoclcs::OperationContextDeclCS at "context" do soft-new-line value soft-space;
 
 idiom PACKAGE_SPACING for completeoclcs::PackageDeclarationCS {
 	at "package" do half-new-line value push;
@@ -83,6 +75,4 @@ idiom PACKAGE_SPACING for completeoclcs::PackageDeclarationCS {
 
 idiom PACKAGES_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedPackages do half-new-line soft-new-line value half-new-line;
 
-idiom PROPERTY_SPACING for completeoclcs::PropertyContextDeclCS {
-	at "context" do soft-new-line value soft-space;
-}
+idiom PROPERTY_SPACING for completeoclcs::PropertyContextDeclCS at "context" do soft-new-line value soft-space;
