@@ -13,6 +13,8 @@ package org.eclipse.ocl.pivot.internal.resource;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 
 /**
@@ -30,7 +32,19 @@ public interface ICSI2ASMapping
 	/**
 	 * @since 1.23
 	 */
+	default @Nullable ASResource getASResource(@NonNull CSResource csResource) {
+		return null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
 	default @Nullable EObject getCSElement(@NonNull PivotObject asElement) {
 		return null;
 	}
+
+	/**
+	 * @since 1.23
+	 */
+	default void removeCSResource(@NonNull CSResource csResource) {}
 }

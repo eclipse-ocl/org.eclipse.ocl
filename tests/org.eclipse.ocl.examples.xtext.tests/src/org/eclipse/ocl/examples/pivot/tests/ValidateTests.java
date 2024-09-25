@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
@@ -52,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -61,10 +63,12 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
@@ -151,7 +155,7 @@ public class ValidateTests extends AbstractValidateTests
 	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
 		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		//
-		//	Load the model from OCLinECore and Save as Ecore.
+		//	Load the model from OCLinEcore and Save as Ecore.
 		//
 		OCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
@@ -188,14 +192,26 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Unload the Complete OCL.
 		//
-		Resource oclResource = environmentFactory.getResourceSet().getResource(oclURI, false);
-		oclResource.unload();
+		helper.uninstallDocuments(oclURI);
+		CSResource oclCSResource = (CSResource)environmentFactory.getResourceSet().getResource(oclURI, false);
+		assert oclCSResource != null;
+		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
+		assert iCSI2ASMapping != null;
+		ASResource oclASResource = iCSI2ASMapping.getASResource(oclCSResource);
+		assert oclASResource != null;
+		Model asModel = PivotUtil.getModel(oclASResource);
+//		environmentFactory.getMetamodelManager().uninstall(asModel); //getASResourceSet().getResources().remove(oclASResource);
+		((AbstractEnvironmentFactory)environmentFactory).unload(oclCSResource); //getASResourceSet().getResources().remove(oclASResource);
+		assert asModel.eResource() == null;
+		assert oclASResource.getResourceSet() == null;
+	//	assert !oclASResource.isLoaded();
 		//
 		//	Validate using just the OCLinEcore constraints.
 		//
 		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel));
 		//
+		// XXX reload again
 		ocl.dispose();
 	}
 

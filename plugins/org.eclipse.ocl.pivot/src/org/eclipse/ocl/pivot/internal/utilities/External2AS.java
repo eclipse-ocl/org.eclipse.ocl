@@ -68,7 +68,7 @@ public interface External2AS
 	/**
 	 * Return the external resource.
 	 */
-	@Nullable Resource getResource();
+	@NonNull Resource getResource();
 
 	/**
 	 * Return the URI of the external resource.

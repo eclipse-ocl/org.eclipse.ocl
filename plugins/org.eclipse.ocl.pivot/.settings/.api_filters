@@ -92,7 +92,19 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
+                <message_argument value="getASResource(CSResource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
                 <message_argument value="getCSElement(PivotObject)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping"/>
+                <message_argument value="removeCSResource(CSResource)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -213,6 +225,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="activate()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory$EnvironmentFactoryExtension2">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension2"/>
+                <message_argument value="getASOf(Class&lt;T&gt;, Resource)"/>
             </message_arguments>
         </filter>
     </resource>

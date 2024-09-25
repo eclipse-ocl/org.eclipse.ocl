@@ -482,7 +482,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public @Nullable Resource getResource() {
+	public @NonNull Resource getResource() {
 		return ecoreResource;
 	}
 
