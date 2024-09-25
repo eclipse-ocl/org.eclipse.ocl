@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -153,9 +154,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			if (target instanceof PivotObjectImpl) {
 				URI uri = ((PivotObjectImpl)target).getReloadableURI();
 				if (uri != null) {
-					if (uri.toString().contains(".oclas")) {
-						getClass();		// XXX
-					}
+					assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 					URI baseURI = semanticObject.eResource().getURI();
 					URI deresolvedURI = URIUtil.deresolve(uri, baseURI);
 					String unconverted = deresolvedURI.toString();

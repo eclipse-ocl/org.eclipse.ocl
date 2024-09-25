@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
@@ -453,11 +452,5 @@ public class ClassifierContextDeclCSImpl
 				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	@Override
-	public void setPivot(Element newPivot) {
-		// XXX Auto-generated method stub
-		super.setPivot(newPivot);
 	}
 } //ClassifierContextDeclCSImpl

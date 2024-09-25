@@ -163,9 +163,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	{
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
-		if (referredElement instanceof org.eclipse.ocl.pivot.Package) {
-			getClass();		// XXX
-		}
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldReferredElement, referredElement));
 	}
@@ -372,15 +369,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + proxy.eProxyURI());
 		}
-		if (proxy instanceof org.eclipse.ocl.pivot.Package) {
-			getClass();		// XXX
-		}
-		else if (proxy instanceof ParameterVariable) {
-			getClass();		// XXX
-		}
-		else if (proxy instanceof Parameter) {
-			getClass();		// XXX
-		}
 		EObject esResolvedProxy = super.eResolveProxy(proxy);
 		EObject asResolvedProxy = null;
 		if (esResolvedProxy instanceof Pivotable) {
@@ -478,9 +466,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			referredElement = (Element)eResolveProxy(oldReferredElement);
 			if (referredElement != oldReferredElement)
 			{
-				if (referredElement instanceof org.eclipse.ocl.pivot.Package) {
-					getClass();		// XXX
-				}
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldReferredElement, referredElement));
 			}

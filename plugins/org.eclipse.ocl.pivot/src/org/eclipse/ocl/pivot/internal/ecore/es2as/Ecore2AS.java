@@ -175,7 +175,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		//
 		//		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		conversion.pivotModel = PivotUtil.createModel(ecoreASResource.getURI().toString());
+		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 
@@ -306,7 +306,7 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	@Override
 	public void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement) {
-	//	System.out.println("addMapping " + (eObject instanceof ENamedElement ? ((ENamedElement)eObject).getName() : "???") + " " + NameUtil.debugSimpleName(eObject) + " " + NameUtil.debugSimpleName(pivotElement));	// XXX
+	//	System.out.println("addMapping " + (eObject instanceof ENamedElement ? ((ENamedElement)eObject).getName() : "???") + " " + NameUtil.debugSimpleName(eObject) + " " + NameUtil.debugSimpleName(pivotElement));
 		if (pivotElement instanceof PivotObjectImpl) {
 			((PivotObjectImpl)pivotElement).setESObject(eObject);
 		}

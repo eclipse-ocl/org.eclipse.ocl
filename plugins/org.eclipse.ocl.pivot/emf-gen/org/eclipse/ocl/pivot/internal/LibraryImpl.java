@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -80,8 +79,6 @@ public class LibraryImpl extends PackageImpl implements Library
 	protected LibraryImpl()
 	{
 		super();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));			// XXX
-		getClass();		// XXX
 	}
 
 	/**

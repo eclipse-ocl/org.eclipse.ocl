@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -217,9 +216,6 @@ implements IfExp {
 	 */
 	@Override
 	public void setOwnedCondition(OCLExpression newOwnedCondition) {
-		if (newOwnedCondition instanceof InvalidLiteralExp) {
-			getClass();		// XXX
-		}
 		if (newOwnedCondition != ownedCondition)
 		{
 			NotificationChain msgs = null;

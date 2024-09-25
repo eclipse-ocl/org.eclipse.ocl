@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -101,10 +102,8 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
 		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
-		if ((uri != null) && "platform:/resource/_OCL_UsageTests__testBug570894_uml/Bug570894.profile.ecore#//Farm/animal".equals(uri.toString())) {
-			getClass();		// XXX
-		}
-		if ((uri != null) && uri.toString().contains(".oclas")) {
+		// XXX assert (uri == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+		if ((uri != null) && uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 			getClass();		// XXX happens for testStandaloneExecution_execute_model_self_closure
 		}
 		super.eSetProxyURI(uri);
@@ -204,7 +203,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		boolean expectedIsReloadableProxy = setReloadableProxy();
 	/*	if (unloadProxifies()) {
 	      URI appendFragment = eResource().getURI().appendFragment(eResource().getURIFragment(this));
-			if ((appendFragment != null) && appendFragment.toString().contains(".oclas")) {
+			if ((appendFragment != null) && appendFragment.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 			      appendFragment = eResource().getURI().appendFragment(eResource().getURIFragment(this));
 				getClass();		// XXX
 			}
