@@ -16,6 +16,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLstdlib.java" type="org.eclipse.ocl.pivot.model.OCLstdlib">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="create(String, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
         <filter id="404000815">
             <message_arguments>
