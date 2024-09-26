@@ -192,26 +192,36 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Unload the Complete OCL.
 		//
-		helper.uninstallDocuments(oclURI);
+		ASResource oclASResource = helper.unloadDocument(oclURI);
 		CSResource oclCSResource = (CSResource)environmentFactory.getResourceSet().getResource(oclURI, false);
 		assert oclCSResource != null;
 		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
 		assert iCSI2ASMapping != null;
-		ASResource oclASResource = iCSI2ASMapping.getASResource(oclCSResource);
-		assert oclASResource != null;
+		ASResource oclASResource2 = iCSI2ASMapping.getASResource(oclCSResource);
+		assert oclASResource2 == oclASResource;
 		Model asModel = PivotUtil.getModel(oclASResource);
-//		environmentFactory.getMetamodelManager().uninstall(asModel); //getASResourceSet().getResources().remove(oclASResource);
-		((AbstractEnvironmentFactory)environmentFactory).unload(oclCSResource); //getASResourceSet().getResources().remove(oclASResource);
+		((AbstractEnvironmentFactory)environmentFactory).unload(oclCSResource);
 		assert asModel.eResource() == null;
 		assert oclASResource.getResourceSet() == null;
-	//	assert !oclASResource.isLoaded();
+		assert !oclASResource.isLoaded();
+		assert oclCSResource.getResourceSet() == null;
+		assert !oclCSResource.isLoaded();
 		//
 		//	Validate using just the OCLinEcore constraints.
 		//
 		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel));
 		//
-		// XXX reload again
+		//	Load again
+		//
+		String problems2 = helper.installDocuments(oclURI);
+		assertNull("Failed to reload " + oclURI, problems2);
+		//
+		//	Validate using the OCLinEcore and Complete OCL constraints.
+		//
+		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel),
+			StringUtil.bind(VIOLATED_TEMPLATE, "CompleteOCLAlwaysFalse", objectLabel));
 		ocl.dispose();
 	}
 

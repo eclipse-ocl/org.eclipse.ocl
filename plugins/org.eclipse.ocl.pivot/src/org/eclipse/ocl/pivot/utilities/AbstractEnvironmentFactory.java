@@ -1218,19 +1218,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ASResource asResource = csi2asMapping2.getASResource(csResource);
 		assert asResource != null;
 		Model asModel = PivotUtil.getModel(asResource);
-
-
-	//	Resource asResource = oclCSResource.eResource();
-	//	if (asResource != null) {
-			asResource.unload();
-	//	}
 		completeModel.getPartialModels().remove(asModel);
+		asResource.unload();
 		asResourceSet.getResources().remove(asResource);
 		csi2asMapping2.removeCSResource(csResource);
-	//	for (@NonNull External2AS es2as : es2ases.values()) {
-	//		Resource resource = es2as.getResource();
-	//	}
-	//	external2asMap.remove(external2as.getURI());
-	//	removeExternalResource(this);
+		csResource.unload();
+		externalResourceSet.getResources().remove(csResource);
 	}
 }

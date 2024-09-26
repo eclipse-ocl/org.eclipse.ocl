@@ -368,7 +368,7 @@ public abstract class CompleteOCLLoader
 	//	return null;
 	}
 
-	public void unloadDocument(@NonNull URI oclURI) {
+	public @NonNull ASResource unloadDocument(@NonNull URI oclURI) {
 		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
 		CSResource csResource = (CSResource)environmentFactory.getResourceSet().getResource(oclURI, false);
 		assert csResource != null;
@@ -400,6 +400,7 @@ public abstract class CompleteOCLLoader
 				oclModels.remove(asElement);
 			}
 		}
+		return asResource;
 	}
 
 	/**
