@@ -61,7 +61,10 @@ public class ImplementationManager
 	}
 
 	public void addClassLoader(@NonNull ClassLoader classLoader) {
-		List<ClassLoader> classLoaders = getClassLoaders();
+		List<@NonNull ClassLoader> classLoaders2 = classLoaders;
+		if (classLoaders2 == null) {
+			classLoaders2 = classLoaders = new ArrayList<>();
+		}
 		if (!classLoaders.contains(classLoader)) {
 			classLoaders.add(classLoader);
 		}
@@ -70,7 +73,7 @@ public class ImplementationManager
 	public @NonNull List<@NonNull ClassLoader> getClassLoaders() {
 		List<@NonNull ClassLoader> classLoaders2 = classLoaders;
 		if (classLoaders2 == null) {
-			classLoaders2 = classLoaders = new ArrayList<@NonNull ClassLoader>();
+			classLoaders2 = classLoaders = new ArrayList<>();
 			ClassLoader classLoader = metamodelManager.getClass().getClassLoader();
 			assert classLoader != null;
 			classLoaders2.add(classLoader);

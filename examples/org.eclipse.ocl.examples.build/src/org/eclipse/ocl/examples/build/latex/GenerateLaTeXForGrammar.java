@@ -37,7 +37,7 @@ public abstract class GenerateLaTeXForGrammar extends GenerateLaTeXUtils
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		XtextStandaloneSetup.doSetup();
 		CompleteOCLStandaloneSetup.doSetup();
-		ClasspathURIHandler.init(resourceSet);
+		ClasspathURIHandler.init(resourceSet, null);
 		File folder = new File(rootPath + latexFolder);
 		folder.mkdirs();
 		try {

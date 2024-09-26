@@ -602,7 +602,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 								asElement.getReloadableURI();		// XXX
 							}
-							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
 							unloadedProxyAdapter2.put(eObject, uri);
 						}
 					}
