@@ -55,9 +55,10 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.importer.ecore.EcoreImporter;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
@@ -70,9 +71,9 @@ import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
-import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
@@ -2023,13 +2024,15 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						introManager.closeIntro(introManager.getIntro());
 						TestUIUtil.flushEvents();
 
-						ResourceSet pathedResourceSet = new ResourceSetImpl();
-						getTestProjectManager().initializeResourceSet(pathedResourceSet);
-						TestProject testProject = getTestProject();
-						URIConverter pathedURIConverter = pathedResourceSet.getURIConverter();
-						URI modelsURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", false);
-						testProject.copyFile(pathedURIConverter, null, modelsURI);
-						IProject project = testProject.getIProject();
+						ResourceSet resourceSet1 = new ResourceSetImpl();
+						Resource builtInResource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
+
+						TestFile testFile = getTestProject().getOutputFile("Pivot.oclas");
+						XMIResourceImpl clonedResource = new XMIResourceImpl(testFile.getURI());
+						clonedResource.getContents().addAll(EcoreUtil.copyAll(builtInResource.getContents()));
+						clonedResource.save(XMIUtil.createSaveOptions(clonedResource));
+
+						IProject project = getTestProject().getIProject();
 						IFile file = project.getFile("Pivot.oclas");
 
 						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
