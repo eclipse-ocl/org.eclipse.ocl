@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -24,11 +23,9 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -347,21 +344,13 @@ public class ImportImpl extends NamedElementImpl implements Import
 			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
 			return null;
 		}
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		Namespace namespace = basicGetImportedNamespace();
-		Notifier reloadableNotifier = null;
 		if (namespace != null) {
 			if (namespace.eIsProxy()) {
 				return namespace;
 			}
-			else if (namespace instanceof Model) {
-				return ((ModelImpl)namespace).getReloadableEObjectOrURI();
-			}
-			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
-				return ((PackageImpl)namespace).getReloadableEObjectOrURI();
-			}
-			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
-				return ((ClassImpl)namespace).getReloadableEObjectOrURI();
+			else {
+				return ((ElementImpl)namespace).getReloadableEObjectOrURI();
 			}
 		}
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement

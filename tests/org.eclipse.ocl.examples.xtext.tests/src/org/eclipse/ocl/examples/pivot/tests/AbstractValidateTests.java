@@ -170,6 +170,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	@Override
 	protected void tearDown() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
+		TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	}
 }
