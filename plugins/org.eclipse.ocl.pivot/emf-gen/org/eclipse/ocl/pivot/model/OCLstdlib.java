@@ -261,12 +261,14 @@ public class OCLstdlib extends ASResourceImpl
 		}
 	}
 
-	/**
-	 *	Construct a copy of the OCL Standard Library with specified resource URI,
-	 *  and package name, prefix and namespace URI.
-	 */
+	@Deprecated /* Provide externalURI */
 	public static @NonNull OCLstdlib create(@NonNull String asURI) {
 		Contents contents = new Contents(asURI);
+		return new OCLstdlib(asURI, contents.getModel());
+	}
+
+	public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
+		Contents contents = new Contents(externalURI);
 		return new OCLstdlib(asURI, contents.getModel());
 	}
 
