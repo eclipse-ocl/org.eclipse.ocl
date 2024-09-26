@@ -128,6 +128,7 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -2184,6 +2185,28 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
 									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
+										for (EObject eContent : resource.getContents()) {
+											if (eContent instanceof Pivotable) {
+												Element pivot = ((Pivotable)firstContent).getPivot();
+												if (pivot instanceof Model) {				// XXX straight to get(0)
+													Model root = (Model)pivot;
+													return root;
+												/*	completeModel.getPartialModels().remove(root);
+													ASResource asResource = (ASResource) root.eResource();
+													if (asResource != null) {
+														assert false;				// XXX
+														boolean wasUpdating = asResource.setUpdating(true);
+														asResourceSet.getResources().remove(asResource);
+														asResource.unload();
+														asResource.setUpdating(wasUpdating);
+														break;	// XXX No point iterating the proxies
+													} */
+												}
+											}
+										}
+										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
+											logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
+										}
 										return PivotUtil.getModel(resource);
 									//	if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
 									//		logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
