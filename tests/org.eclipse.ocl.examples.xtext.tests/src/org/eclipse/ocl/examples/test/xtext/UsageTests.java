@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,7 +28,6 @@ import javax.tools.JavaFileObject;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -58,7 +55,9 @@ import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -1893,24 +1892,19 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						introManager.closeIntro(introManager.getIntro());
 						TestUIUtil.flushEvents();
 
-						String testProjectName = "Open_Pivot";
 						ResourceSet resourceSet1 = new ResourceSetImpl();
-						Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
-						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-						resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-						resource.save(outputStream, XMIUtil.createSaveOptions());
+						Resource builtInResource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 
-						IWorkspace workspace = ResourcesPlugin.getWorkspace();
-						IProject project = workspace.getRoot().getProject(testProjectName);
-						if (!project.exists()) {
-							project.create(null);
-						}
-						project.open(null);
-						IFile file = project.getFile("Pivot.oclas");
-						file.create(new ByteArrayInputStream(outputStream.toByteArray()), true, null);
+						TestFile testFile = getTestProject().getOutputFile("Pivot.oclas");
+						XMIResourceImpl clonedResource = new XMIResourceImpl(testFile.getURI());
+						clonedResource.getContents().addAll(EcoreUtil.copyAll(builtInResource.getContents()));
+						clonedResource.save(XMIUtil.createSaveOptions(clonedResource));
+
+						IProject project = getTestProject().getIProject();
+						IFile ifile = project.getFile("Pivot.oclas");
 
 						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-						EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
+						EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, ifile, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
 						TestUIUtil.flushEvents();
 						ResourceSet resourceSet = openEditor.getEditingDomain().getResourceSet();
 						EList<Resource> resources = resourceSet.getResources();
