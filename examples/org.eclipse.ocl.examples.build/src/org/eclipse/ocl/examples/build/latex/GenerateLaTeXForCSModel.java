@@ -53,7 +53,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 		OCL ocl = OCL.newInstance();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		ClasspathURIHandler.init(resourceSet);
+		ClasspathURIHandler.init(resourceSet, null);
 		try {
 			org.eclipse.ocl.pivot.Package asPackage = null;
 			org.eclipse.ocl.pivot.Package cs2asPackage = null;

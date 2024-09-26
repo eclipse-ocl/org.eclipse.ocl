@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
@@ -37,6 +38,7 @@ public class LazyXMIidAssigningResourceImpl extends XMIResourceImpl
 
 	protected LazyXMIidAssigningResourceImpl(@NonNull URI uri) {
 		super(uri);
+		assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad resource URI " + uri;			// XXX
 	}
 
 	protected void assignIds(@NonNull String debugCalledFrom) {
@@ -89,6 +91,12 @@ public class LazyXMIidAssigningResourceImpl extends XMIResourceImpl
 			assignIds("getIDToEObjectMap");
 		}
 		return super.getIDToEObjectMap();
+	}
+
+	@Override
+	public void setURI(URI uri) {
+		assert (uri == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad resource URI " + uri;			// XXX
+		super.setURI(uri);
 	}
 
 	@Override
