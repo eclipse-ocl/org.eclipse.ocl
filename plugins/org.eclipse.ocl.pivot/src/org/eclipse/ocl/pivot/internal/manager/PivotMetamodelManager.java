@@ -684,12 +684,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 		} */
-		ArrayList<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
-		for (@NonNull Resource asResource : asResourcesCopy) {
-			if (asResource instanceof ASResource) {
-				((ASResource)asResource).preUnload();
-			}
-		}
+		List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
 		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
 		}

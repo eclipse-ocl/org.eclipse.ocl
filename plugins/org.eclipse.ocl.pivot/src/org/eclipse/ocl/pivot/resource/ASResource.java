@@ -114,6 +114,15 @@ public interface ASResource extends XMIResource
 	 int getXmiidVersion();
 
 	/**
+	 * Return true if this AS exists without a corresponding CS or ES.
+	 *
+	 * @since 1.23
+	 */
+	default boolean isASonly() {
+		return false;
+	}
+
+	/**
 	 * Return true if this Resource is a container for orphan model elements.
 	 *
 	 * @since 1.5
@@ -146,6 +155,14 @@ public interface ASResource extends XMIResource
 	void resetLUSSIDs();
 
 	/**
+	 * Specify that this AS exists without a corresponding CS or ES and so avoid invocation of preUnload()
+	 * and creation CS/ES proxies when unloading.
+	 *
+	 * @since 1.23
+	 */
+	default void setASonly(boolean isASonly) {}
+
+	/**
 	 * Enable or disable saving of this resource. Saving is normally disabled automatically for model content
 	 * that is created by a CS2AS or ES2AS conversion. A not-saveable resource may nonetheless be saved by setting
 	 * the resource saveable and ensuring that the URI references a writeable location (i.e probably not an
@@ -154,13 +171,6 @@ public interface ASResource extends XMIResource
 	 * @since 1.18
 	 */
 	boolean setSaveable(boolean isSaveable);
-
-	/**
-	 * Avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
-	 *
-	 * @since 1.23
-	 */
-	default void setSkipPreUnload(boolean isSkipPreUnload) {}
 
 	/**
 	 * Configure an immutable ASResource to tolerate updates, returning the prior state for restoration

@@ -26,7 +26,7 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 public class CompleteOCLCSResource extends EssentialOCLCSResource
 {
 	/**
-	 * A CompleteOCLCSResourceLoadFactory supports creation of an CompleteOCLCSXMIResourceImpl that supports persistence of the CS model directly as XMI
+	 * A CompleteOCLCSResourceLoadFactory supports creation of a BaseCSXMIResource that supports persistence of the CS model directly as XMI
 	 * rather than exploiting Xtext to serialize to / parse from a text file.
 	 */
 	public static class CompleteOCLCSResourceLoadFactory extends OCLCSResourceLoadFactory

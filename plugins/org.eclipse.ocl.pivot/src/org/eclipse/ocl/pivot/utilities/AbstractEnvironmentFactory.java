@@ -721,6 +721,17 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		List<@NonNull Resource> asResources = asResourceSet.getResources();
+		int savedSize = asResources.size();
+		for (int i = 0; i < asResources.size(); i++) {
+			@NonNull Resource asResource = asResources.get(i);
+			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
+				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
+			}
+			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
+				((ASResource)asResource).preUnload();
+			}
+		}
 		isDisposing = true;
 		disposeInternal();
 	}

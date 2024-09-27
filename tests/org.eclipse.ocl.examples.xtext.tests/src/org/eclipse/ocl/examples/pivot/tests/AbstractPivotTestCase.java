@@ -418,7 +418,7 @@ public class AbstractPivotTestCase extends TestCase
 			assert !IS_SETUP;
 		}
 		finally {
-			IS_SETUP = false;		// Avoid gratuiytpus failures of subsequent tests
+			IS_SETUP = false;		// Avoid gratuitous failures of subsequent tests
 		}
 		return true;
 	}

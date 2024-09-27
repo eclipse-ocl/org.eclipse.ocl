@@ -390,7 +390,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		Resource javaResource = OCLstdlib.getDefault();
 		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), libraryURI, javaResource, true);
-		asResource.setSkipPreUnload(true);
+		asResource.setASonly(true);
 		ocl.dispose();
 	}
 
@@ -416,7 +416,7 @@ public class OCLstdlibTests extends XtextTestCase
 		Resource javaResource = oclMetamodel.eResource();
 		@SuppressWarnings("unused")
 		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), pivotURI, javaResource, false);		// FIXME Contents are far from identical
-		asResource.setSkipPreUnload(true);
+		asResource.setASonly(true);
 		ocl.dispose();
 	}
 
@@ -442,7 +442,7 @@ public class OCLstdlibTests extends XtextTestCase
 		Resource javaResource = oclMetamodel.eResource();
 		@SuppressWarnings("unused")
 		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), pivotURI, javaResource, false);		// FIXME Contents are far from identical
-		asResource.setSkipPreUnload(true);
+		asResource.setASonly(true);
 		ocl.dispose();
 	}
 }
