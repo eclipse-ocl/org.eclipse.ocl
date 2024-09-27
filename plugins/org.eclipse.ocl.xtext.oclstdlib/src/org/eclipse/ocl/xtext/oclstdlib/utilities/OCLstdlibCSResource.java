@@ -30,7 +30,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 public class OCLstdlibCSResource extends EssentialOCLCSResource
 {
 	/**
-	 * An OCLstdlibCSResourceLoadFactory supports creation of an OCLstdlibCSXMIResourceImpl that supports persistence of the CS model directly as XMI
+	 * An OCLstdlibCSResourceLoadFactory supports creation of a BaseCSXMIResource that supports persistence of the CS model directly as XMI
 	 * rather than exploiting Xtext to serialize to / parse from a text file.
 	 */
 	public static class OCLstdlibCSResourceLoadFactory extends OCLCSResourceLoadFactory

@@ -315,9 +315,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private boolean isUpdating = false;
 
 	/**
-	 * True to avoid invocation of preUnload() and creation CS/ES proxies when working with primary ASResources.
+	 * True if this AS exists without corresponding CS/ES. Perehaps it is a built-in AS, perhaps it is a tranmsformation intermediate.
 	 */
-// XXX	private boolean isSkipPreUnload = false;
+	private boolean isASonly = false;
 
 	private @Nullable UnloadedProxyAdapter unloadedProxyAdapter = null;
 
@@ -559,6 +559,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
+	public boolean isASonly() {
+		return isASonly;
+	}
+
+	@Override
 	public boolean isOrphanage() {
 		return false;
 	}
@@ -576,34 +581,36 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {					// XXX ?? isSaveable ?? not built-in
-		UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
-		if (unloadedProxyAdapter2 == null) {
-			List<Adapter> eAdapters = eAdapters();
-			for (Adapter eAdapter : eAdapters) {
-				if (eAdapter instanceof UnloadedProxyAdapter) {
-					unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
-					break;
-				}
-			}
+	public void preUnload() {
+		if (!isASonly) {
+			UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
 			if (unloadedProxyAdapter2 == null) {
-				unloadedProxyAdapter2 = new UnloadedProxyAdapter();
-				eAdapters.add(unloadedProxyAdapter2);
-			}
-			unloadedProxyAdapter = unloadedProxyAdapter2;
-			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof PivotObjectImpl) {
-					PivotObjectImpl asElement = (PivotObjectImpl)eObject;
-					URI eProxyURI = asElement.eProxyURI();
-					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI();
-						if (uri != null) {
-							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-								asElement.getReloadableURI();		// XXX
+				List<Adapter> eAdapters = eAdapters();
+				for (Adapter eAdapter : eAdapters) {
+					if (eAdapter instanceof UnloadedProxyAdapter) {
+						unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
+						break;
+					}
+				}
+				if (unloadedProxyAdapter2 == null) {
+					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
+					eAdapters.add(unloadedProxyAdapter2);
+				}
+				unloadedProxyAdapter = unloadedProxyAdapter2;
+				for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+					EObject eObject = tit.next();
+					if (eObject instanceof PivotObjectImpl) {
+						PivotObjectImpl asElement = (PivotObjectImpl)eObject;
+						URI eProxyURI = asElement.eProxyURI();
+						if (eProxyURI == null) {
+							URI uri = asElement.getReloadableURI();
+							if (uri != null) {
+								if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+									asElement.getReloadableURI();		// XXX
+								}
+								assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+								unloadedProxyAdapter2.put(eObject, uri);
 							}
-							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
-							unloadedProxyAdapter2.put(eObject, uri);
 						}
 					}
 				}
@@ -640,6 +647,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 	}
 
+	@Override
+	public void setASonly(boolean isASonly) {
+		this.isASonly = isASonly;
+	}
+
 	/**
 	 * @since 1.5
 	 */
@@ -669,14 +681,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 		return wasSaveable;
 	}
-
-	/**
-	 * @since 1.22
-	 * XXX
-	@Override
-	public void setSkipPreUnload(boolean isSkipPreUnload) {
-		this.isSkipPreUnload = isSkipPreUnload;
-	} */
 
 	@Override
 	public boolean setUpdating(boolean isUpdating) {
@@ -736,7 +740,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	//	}
 	//	else {
 
-		if (eProxyURI == null) {
+		if ((eProxyURI == null) && (eAdapters != null)) {
 			for (Adapter eAdapter : eAdapters) {
 				if (eAdapter instanceof UnloadedProxyAdapter) {
 					UnloadedProxyAdapter unloadedProxyAdapter = (UnloadedProxyAdapter) eAdapter;

@@ -355,7 +355,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"referredType=\"pivot:Class &_2;#pDcbe\"",
 			"referredType=\"pivot:Class &_2;#0kVqz\""},
 			new @NonNull String[] {"<errors>"});
-		((ASResource)standaloneApplication.getEnvironmentFactory().getResourceSet().getResources().get(0)).setSkipPreUnload(true);
+		((ASResource)standaloneApplication.getEnvironmentFactory().getResourceSet().getResources().get(0)).setASonly(true);
 		standaloneApplication.stop();
 	}
 

@@ -721,6 +721,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		for (@NonNull Resource asResource : asResourceSet.getResources()) {
+			if (asResource instanceof ASResource) {
+				((ASResource)asResource).preUnload();
+			}
+		}
 		isDisposing = true;
 		disposeInternal();
 	}
