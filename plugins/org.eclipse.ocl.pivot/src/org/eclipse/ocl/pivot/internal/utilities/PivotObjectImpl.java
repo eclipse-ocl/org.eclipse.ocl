@@ -72,6 +72,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
 		}
+		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required";
 		EObject resolvedProxy = super.eResolveProxy(proxy);
 	/*	if (resolvedProxy instanceof Pivotable) {
 			Resource resource = resolvedProxy.eResource();

@@ -416,10 +416,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected void doUnload() {
+		System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
 		isUnloading = true;
 		try {
 			/*	if (!isSkipPreUnload && isSaveable) { */
-			preUnload();
+	//		preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -582,9 +583,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	@Override
 	public void preUnload() {
-		if (!isASonly) {
-			UnloadedProxyAdapter unloadedProxyAdapter2 = unloadedProxyAdapter;
-			if (unloadedProxyAdapter2 == null) {
+		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
+		if (!isASonly && (unloadedProxyAdapter == null)) {
+			UnloadedProxyAdapter unloadedProxyAdapter2 = null; //unloadedProxyAdapter;
+		//	if (unloadedProxyAdapter2 == null) {
 				List<Adapter> eAdapters = eAdapters();
 				for (Adapter eAdapter : eAdapters) {
 					if (eAdapter instanceof UnloadedProxyAdapter) {
@@ -614,7 +616,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						}
 					}
 				}
-			}
+		//	}
 		}
 	}
 

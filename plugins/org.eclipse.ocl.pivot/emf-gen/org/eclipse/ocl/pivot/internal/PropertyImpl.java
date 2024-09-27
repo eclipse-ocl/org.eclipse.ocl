@@ -612,6 +612,7 @@ implements Property {
 	 */
 	@Override
 	public void setOpposite(Property newOpposite) {
+		assert (eResource() == null) || (eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
@@ -1793,6 +1794,15 @@ implements Property {
 			getClass();				// XXX
 		}
 		super.setName(newName);
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
+		if ("platform:/resource/_QVTd_QVTrCompilerTests__testQVTrCompiler_Ecore2PivotRoot/Forward2Reverse.trace.ecore#//TmapEPackage/t4asModel".equals(uri.toString()) ) {
+			getClass();	// XXX
+		}
+		super.eSetProxyURI(uri);
 	}
 
 	/**
