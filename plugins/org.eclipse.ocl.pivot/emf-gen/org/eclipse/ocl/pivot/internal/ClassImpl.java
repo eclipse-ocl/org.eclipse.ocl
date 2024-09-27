@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -1534,5 +1535,17 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+//		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " : " + name + " : " + NameUtil.debugSimpleName(newContainer));
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
+		super.eSetProxyURI(uri);
 	}
 } //ClassImpl
