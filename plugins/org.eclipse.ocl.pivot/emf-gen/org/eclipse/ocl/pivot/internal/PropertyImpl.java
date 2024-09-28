@@ -1798,7 +1798,7 @@ implements Property {
 
 	@Override
 	public void eSetProxyURI(URI uri) {
-		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
+// XXX		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
 		if ("platform:/resource/_QVTd_QVTrCompilerTests__testQVTrCompiler_Ecore2PivotRoot/Forward2Reverse.trace.ecore#//TmapEPackage/t4asModel".equals(uri.toString()) ) {
 			getClass();	// XXX
 		}

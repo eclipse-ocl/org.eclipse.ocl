@@ -1539,13 +1539,13 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-//		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " : " + name + " : " + NameUtil.debugSimpleName(newContainer));
+// XXX		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " : " + name + " : " + NameUtil.debugSimpleName(newContainer));
 		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 
 	@Override
 	public void eSetProxyURI(URI uri) {
-		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
+// XXX		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + name + " : " + uri);
 		super.eSetProxyURI(uri);
 	}
 } //ClassImpl
