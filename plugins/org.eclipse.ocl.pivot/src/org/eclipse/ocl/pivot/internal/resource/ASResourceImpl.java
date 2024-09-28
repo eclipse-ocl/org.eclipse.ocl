@@ -15,11 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
@@ -43,8 +41,8 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -247,36 +245,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
-	 * The UnloadedProxyAdapter is populated in the unload() process to identify the proxies to be assigned later in unloaded().
-	 * The population occurs early while an EnvironmentFactory is still available (not yet disposed). Proxies are not set directly
-	 * since too-early proxies seem to disrupt the content iteration over UML models.
-	 */
-	private class UnloadedProxyAdapter extends AdapterImpl
-	{
-		protected final @NonNull Map<@NonNull EObject, @NonNull URI> eObject2uri = new HashMap<>();
-
-		public @Nullable URI get(@NonNull EObject eObject) {
-			return eObject2uri.get(eObject);
-		}
-
-		@Override
-		public Notifier getTarget() {
-			return ASResourceImpl.this;
-		}
-
-		public void put(@NonNull EObject eObject, @NonNull URI uri) {
-			URI old = eObject2uri.put(eObject,  uri);
-			assert old == null;
-		}
-
-		@Override
-		public void setTarget(Notifier newTarget) {}
-
-		@Override
-		public void unsetTarget(Notifier oldTarget) {}
-	}
-
-	/**
 	 * ImmutableResource provides additional API for derived ReadOnly/Immutable implementations.
 	 *
 	 * @since 1.5
@@ -319,7 +287,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	private boolean isASonly = false;
 
-	private @Nullable UnloadedProxyAdapter unloadedProxyAdapter = null;
+	/**
+	 * The asElement2reloadableURI map is populated during the preUnload() process to identify the proxies while an EnvironmentFactory
+	 * is still available (not yet disposed). The proxies identify a CS or ES element that can be converted to reload AS ele,emts in
+	 * this resource. Entries are omitted for AS elements that have no need for a CS/ES proxy. Proxies are assigned later during unloaded().
+	 * (Proxies are not set directly since too-early proxies seem to disrupt the content iteration over UML models.)
+	 */
+	private @Nullable Map<@NonNull ElementImpl, @NonNull URI> asElement2reloadableURI = null;
 
 	/**
 	 * Creates an instance of the resource.
@@ -428,6 +402,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 		finally {
 			isUnloading = false;
+			asElement2reloadableURI = null;
 		}
 	}
 
@@ -582,41 +557,28 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {
+	public void preUnload() {	assert resourceSet != null: "ResourceSet required";			// XXX
 		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
-		if (!isASonly && (unloadedProxyAdapter == null)) {
-			UnloadedProxyAdapter unloadedProxyAdapter2 = null; //unloadedProxyAdapter;
-		//	if (unloadedProxyAdapter2 == null) {
-				List<Adapter> eAdapters = eAdapters();
-				for (Adapter eAdapter : eAdapters) {
-					if (eAdapter instanceof UnloadedProxyAdapter) {
-						unloadedProxyAdapter2 = (UnloadedProxyAdapter)eAdapter;
-						break;
-					}
-				}
-				if (unloadedProxyAdapter2 == null) {
-					unloadedProxyAdapter2 = new UnloadedProxyAdapter();
-					eAdapters.add(unloadedProxyAdapter2);
-				}
-				unloadedProxyAdapter = unloadedProxyAdapter2;
-				for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
-					EObject eObject = tit.next();
-					if (eObject instanceof PivotObjectImpl) {
-						PivotObjectImpl asElement = (PivotObjectImpl)eObject;
-						URI eProxyURI = asElement.eProxyURI();
-						if (eProxyURI == null) {
-							URI uri = asElement.getReloadableURI();
-							if (uri != null) {
-								if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-									asElement.getReloadableURI();		// XXX
-								}
-								assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
-								unloadedProxyAdapter2.put(eObject, uri);
+		if (!isASonly && (asElement2reloadableURI == null)) {
+			Map<@NonNull ElementImpl, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
+			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof ElementImpl) {
+					ElementImpl asElement = (ElementImpl)eObject;
+					URI eProxyURI = asElement.eProxyURI();
+					if (eProxyURI == null) {
+						URI uri = asElement.getReloadableURI();
+						if (uri != null) {
+							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+								asElement.getReloadableURI();		// XXX
 							}
+							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+							asElement2reloadableURI2.put(asElement, uri);
 						}
 					}
 				}
-		//	}
+			}
+			asElement2reloadableURI = asElement2reloadableURI2;
 		}
 	}
 
@@ -716,7 +678,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
-	protected void unloaded(InternalEObject internalEObject) {								// XXX ?? isSaveable ?? not built-in
+	protected void unloaded(InternalEObject internalEObject) {		assert resourceSet != null: "ResourceSet required";			// XXX
 		URI eProxyURI = internalEObject.eProxyURI();
 	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
 			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
@@ -742,19 +704,21 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	//	}
 	//	else {
 
-		if ((eProxyURI == null) && (eAdapters != null)) {
-			for (Adapter eAdapter : eAdapters) {
-				if (eAdapter instanceof UnloadedProxyAdapter) {
-					UnloadedProxyAdapter unloadedProxyAdapter = (UnloadedProxyAdapter) eAdapter;
-					URI uri = unloadedProxyAdapter.get(internalEObject);
-					if (uri != null) {
-						internalEObject.eSetProxyURI(uri);
-					}
-					break;
+		if (eProxyURI == null) {
+			URI uri = null;
+			if (asElement2reloadableURI != null) {
+				uri = asElement2reloadableURI.get(internalEObject);
+				if (uri != null) {
+					internalEObject.eSetProxyURI(uri);
 				}
 			}
 		}
-		super.unloaded(internalEObject);
+//		super.unloaded(internalEObject);
+//	    if (!internalEObject.eIsProxy())
+//	    {
+//	      internalEObject.eSetProxyURI(uri.appendFragment(getURIFragment(internalEObject)));
+//	    }
+	    internalEObject.eAdapters().clear();
 		// }
 	}
 

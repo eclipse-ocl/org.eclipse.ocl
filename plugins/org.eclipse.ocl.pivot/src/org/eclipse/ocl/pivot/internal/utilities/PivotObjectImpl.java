@@ -39,7 +39,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	/**
 	 * @since 1.23
 	 */
-	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
+//	public static final @NonNull URI NO_UNLOAD_PROXY_URI = URI.createURI("null://unload/proxy#/");
 
 	private @Nullable EObject esObject;		// always null for Model.
 
@@ -103,7 +103,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
 		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
-		// XXX assert (uri == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+		assert (uri == null) || (eContainer == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad AS proxy " + uri;		// eContainer null during SAX parsing
 		if ((uri != null) && uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 			getClass();		// XXX happens for testStandaloneExecution_execute_model_self_closure
 		}
