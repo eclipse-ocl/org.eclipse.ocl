@@ -72,12 +72,17 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	public void dispose() {
 		Model pivotModel2 = basicGetPivotModel();
 		if (pivotModel2 != null) {
-			Resource asResource = pivotModel2.eResource();
-			if (asResource != null) {
-				asResource.unload();
+			if (pivotModel2.eIsProxy()) {
+				getClass();		// XXX
 			}
-			environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);
-			metamodelManager.getASResourceSet().getResources().remove(asResource);
+			if (!pivotModel2.eIsProxy()) {		// XXX already unloaded/unloading
+				Resource asResource = pivotModel2.eResource();
+				if (asResource != null) {
+					asResource.unload();
+				}
+				environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);
+				metamodelManager.getASResourceSet().getResources().remove(asResource);
+			}
 		}
 		metamodelManager.removeExternalResource(this);
 	}
