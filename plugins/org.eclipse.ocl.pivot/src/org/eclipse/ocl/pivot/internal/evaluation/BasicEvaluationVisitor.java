@@ -855,6 +855,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitTypeExp(@NonNull TypeExp t) {
+//		toString();// XXX
+//		t.toString();// XXX
 		return t.getReferredType();
 	}
 

@@ -74,6 +74,7 @@ public class Orphanage extends PackageImpl
 			super(uri, OCLASResourceFactory.getInstance());
 			setUpdating(true);
 			setSaveable(false);
+			setASonly(true);
 		}
 
 		@Override

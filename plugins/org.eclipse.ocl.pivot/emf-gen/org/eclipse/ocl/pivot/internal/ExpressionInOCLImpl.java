@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -541,8 +540,8 @@ public class ExpressionInOCLImpl
 		return PivotConstants.OCL_LANGUAGE;
 	}
 
-	@Override
-	public @Nullable Object getReloadableEObjectOrURI() {
-		return null;
-	}
+//	@Override
+//	public @Nullable Object getReloadableEObjectOrURI() {
+//		return null;
+//	}
 } //ExpressionInOCLImpl
