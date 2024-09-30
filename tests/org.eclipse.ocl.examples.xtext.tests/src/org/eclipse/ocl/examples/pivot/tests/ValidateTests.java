@@ -153,6 +153,8 @@ public class ValidateTests extends AbstractValidateTests
 
 
 	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
+		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		//
 		//	Load the model from OCLinEcore and Save as Ecore.
@@ -222,6 +224,8 @@ public class ValidateTests extends AbstractValidateTests
 		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel),
 			StringUtil.bind(VIOLATED_TEMPLATE, "CompleteOCLAlwaysFalse", objectLabel));
+		//
+		testResource.unload();
 		ocl.dispose();
 	}
 

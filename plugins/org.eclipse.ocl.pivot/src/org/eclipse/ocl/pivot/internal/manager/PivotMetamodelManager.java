@@ -648,11 +648,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
-		if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {		// XXX
+		EnvironmentFactoryInternal threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (threadEnvironmentFactory != environmentFactory) {		// XXX
 			System.out.println("[" + Thread.currentThread().getName() + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
-			System.out.println("[" + Thread.currentThread().getName() + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(ThreadLocalExecutor.basicGetEnvironmentFactory()));
+			System.out.println("[" + Thread.currentThread().getName() + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(threadEnvironmentFactory));
 		}
-		assert environmentFactory == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Can only dispose() the current EnvironmentFactory";
+		assert (threadEnvironmentFactory == null) || (threadEnvironmentFactory == environmentFactory) : "Cannot dispose() a foreign EnvironmentFactory";
 	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
 	//		System.err.println("Correcting current EnvironmentFactory to facilitate dispose()");
 	//		environmentFactory.activate();
@@ -1145,7 +1146,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
@@ -1156,7 +1157,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		String className = PivotUtil.getName(thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
 		if (thisClass == null) {
-			thisClass = PivotUtil.createClass(className);
+			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
 		}
 		return thisClass;

@@ -364,10 +364,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (allInstancesCompleteClasses.size() > 0) {
 			List<@NonNull EClass> allInstancesEClasses = new ArrayList<>();
 			for (@NonNull CompleteClass completeClass : allInstancesCompleteClasses) {
-				EObject esObject = completeClass.getESObject();
+				EObject esObject = /*completeClass.getESObject();
 				if (esObject == null) {
-					esObject = completeClass.getPrimaryClass().getESObject();
-				}
+					esObject =*/ completeClass.getPrimaryClass().getESObject();
+			//	}
 				if (esObject instanceof EClass) {
 					allInstancesEClasses.add((EClass)esObject);
 				}

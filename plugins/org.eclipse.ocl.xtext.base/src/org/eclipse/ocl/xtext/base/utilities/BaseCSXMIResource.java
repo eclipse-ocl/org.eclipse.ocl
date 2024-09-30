@@ -81,7 +81,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		@Override
 		public String getHREF(EObject obj) {
 			String href2 = getHREF2(obj);
-			System.out.println(obj + " => " + href2);		// XXX
+		//	System.out.println(obj + " => " + href2);		// XXX
 			return href2;
 		}
 
