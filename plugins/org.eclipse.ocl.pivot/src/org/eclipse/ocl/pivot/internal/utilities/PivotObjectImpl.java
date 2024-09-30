@@ -67,12 +67,13 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
+		assert proxy != null;
 		StringBuilder s = null;
 		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
 		}
-		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required";
+		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;
 		EObject resolvedProxy = super.eResolveProxy(proxy);
 	/*	if (resolvedProxy instanceof Pivotable) {
 			Resource resource = resolvedProxy.eResource();
