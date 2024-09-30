@@ -238,12 +238,14 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<@Nullable Boolean,
 
 	@Override
 	public Boolean visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		if (Orphanage.isTypeOrphanage(object.getOwningPackage())) {
+		if (Orphanage.isOrphanage(object.getOwningPackage())) {
 			return false;
 		}
 		String name = object.getName();
 		if (PivotConstantsInternal.WILDCARD_NAME.equals(name)) {
-			if (Orphanage.isTypeOrphanage(PivotUtil.getContainingPackage(object))) {
+			org.eclipse.ocl.pivot.Package containingPackage = PivotUtil.getContainingPackage(object);
+			assert containingPackage != null;
+			if (Orphanage.isOrphanage(containingPackage)) {
 				return false;
 			}
 		}
@@ -463,7 +465,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<@Nullable Boolean,
 	@Override
 	public @Nullable Boolean visitTemplateParameter(@NonNull TemplateParameter object) {
 		NamedElement template = (NamedElement) object.getOwningSignature().getOwningElement();
-		if ((template instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isTypeOrphanage(((org.eclipse.ocl.pivot.Class)template).getOwningPackage())) {
+		if ((template instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphanage(((org.eclipse.ocl.pivot.Class)template).getOwningPackage())) {
 			return false;
 		}
 		s.append(TEMPLATE_PARAMETER_PREFIX);

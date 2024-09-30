@@ -124,7 +124,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		assert domainPackage != null;
 		org.eclipse.ocl.pivot.Package parentPackage = domainPackage.getOwningPackage();
 		assert parentPackage == null;
-		assert Orphanage.isTypeOrphanage(domainPackage);
+		assert Orphanage.isOrphanage(domainPackage);
 	}
 
 	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {

@@ -209,7 +209,7 @@ public class ASSaver extends AbstractASSaver
 					}
 					if (localOrphanage2 == null) {
 						for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
-							if (Orphanage.isTypeOrphanage(asPackage)) {
+							if (Orphanage.isOrphanage(asPackage)) {
 								localOrphanage = localOrphanage2 = asPackage;
 								for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 									if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
@@ -224,7 +224,7 @@ public class ASSaver extends AbstractASSaver
 						}
 					}
 				}
-				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
+				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
 					localOrphanage = localOrphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
 					for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 						if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {

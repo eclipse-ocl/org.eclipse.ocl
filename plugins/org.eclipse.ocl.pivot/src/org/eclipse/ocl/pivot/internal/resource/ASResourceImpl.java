@@ -390,7 +390,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected void doUnload() {
-		System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
+	// XXX	System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
 		isUnloading = true;
 		try {
 			/*	if (!isSkipPreUnload && isSaveable) { */
@@ -557,8 +557,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {	assert resourceSet != null: "ResourceSet required";			// XXX
-		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
+	public void preUnload() {
+		assert resourceSet != null: "ResourceSet required";			// XXX
+//		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
 		if (!isASonly && (asElement2reloadableURI == null)) {
 			Map<@NonNull ElementImpl, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
 			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {

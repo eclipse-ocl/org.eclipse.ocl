@@ -253,7 +253,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public void activate() {
-		ThreadLocalExecutor.reset();
+		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+		System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
+		}
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
@@ -722,7 +727,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		//	attachCount = -1;
 		for (@NonNull Resource asResource : asResourceSet.getResources()) {
-			if (asResource instanceof ASResource) {
+			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
 				((ASResource)asResource).preUnload();
 			}
 		}

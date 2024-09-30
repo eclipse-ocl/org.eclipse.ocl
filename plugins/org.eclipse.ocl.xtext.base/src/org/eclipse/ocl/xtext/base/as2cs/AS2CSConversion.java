@@ -338,7 +338,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (eContainer instanceof Model) {
 				break;				// Skip root Model
 			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
 				break;				// Skip orphan package
 			}
 			if (eContainer instanceof TemplateSignature) {
