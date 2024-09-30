@@ -411,14 +411,14 @@ public class AbstractPivotTestCase extends TestCase
 	} */
 
 	/**
-	 * Assert that no test is currently setup() anf not yet tearDown().
+	 * Assert that no test is currently setup() and not yet tearDown().
 	 */
 	public static boolean assertTestIsNotSetup() {
 		try {
-			assert !IS_SETUP;
+			assert SETUP_TEST_NAME == null : "Test '" + SETUP_TEST_NAME + "' failed to tearDown";
 		}
 		finally {
-			IS_SETUP = false;		// Avoid gratuitous failures of subsequent tests
+			SETUP_TEST_NAME = null;		// Avoid gratuitous failures of subsequent tests
 		}
 		return true;
 	}
@@ -672,7 +672,7 @@ public class AbstractPivotTestCase extends TestCase
 		return ClassUtil.nonNullState(super.getName());
 	} */
 
-	private static boolean IS_SETUP = false;		// Debug flag to enable enforcement of init before memento
+	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento
 
 	/**
 	 * Dispose of an OCL making sure it uses the current Thread's EnvironmentFactory.
@@ -685,7 +685,7 @@ public class AbstractPivotTestCase extends TestCase
 
 	@Override
 	protected void setUp() throws Exception {
-		IS_SETUP = true;
+		SETUP_TEST_NAME = getTestName();
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
@@ -750,7 +750,7 @@ public class AbstractPivotTestCase extends TestCase
 					}
 				}
 			}
-			IS_SETUP = false;
+			SETUP_TEST_NAME = null;
 			TestCaseAppender.INSTANCE.assertNotInstalled();
 			super.tearDown();
 		}
