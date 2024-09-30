@@ -648,6 +648,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
+		if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {		// XXX
+			System.out.println("[" + Thread.currentThread().getName() + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
+			System.out.println("[" + Thread.currentThread().getName() + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(ThreadLocalExecutor.basicGetEnvironmentFactory()));
+		}
 		assert environmentFactory == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Can only dispose() the current EnvironmentFactory";
 	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
 	//		System.err.println("Correcting current EnvironmentFactory to facilitate dispose()");
@@ -1867,6 +1871,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
+		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);

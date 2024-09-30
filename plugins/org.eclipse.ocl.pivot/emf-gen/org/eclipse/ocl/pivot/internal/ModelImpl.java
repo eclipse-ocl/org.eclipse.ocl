@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -36,7 +35,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -223,7 +221,6 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 */
 	public void setExternalURIGen(String newExternalURI)
 	{
-		System.out.println("setExternalURIGen " + NameUtil.debugSimpleName(this) + " : " + newExternalURI);
 		String oldExternalURI = externalURI;
 		externalURI = newExternalURI;
 		if (eNotificationRequired())
@@ -519,23 +516,5 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " : " + externalURI + " : " + NameUtil.debugSimpleName(newContainer));
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
-	}
-
-	@Override
-	protected void eSetDirectResource(Internal arg0) {
-		System.out.println("eSetDirectResource " + NameUtil.debugSimpleName(this) + " : " + externalURI + " : " + NameUtil.debugSimpleName(arg0));
-		super.eSetDirectResource(arg0);
-	}
-
-	@Override
-	public void eSetProxyURI(URI uri) {
-		System.out.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " : " + externalURI + " : " + uri);
-		super.eSetProxyURI(uri);
 	}
 } //RootImpl
