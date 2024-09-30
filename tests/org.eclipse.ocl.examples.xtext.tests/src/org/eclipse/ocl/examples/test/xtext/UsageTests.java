@@ -362,7 +362,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	/**
-	 * Create a seed *.ecore from the *.uml profile with correct genPackage declarations s that a
+	 * Create a seed *.ecore from the *.uml profile with correct genPackage declarations so that a
 	 * reload / reconcile corrects the genClasses etc.
 	 */
 	public @NonNull String createUMLEcoreModelContent(@NonNull Resource umlProfileResource) throws Exception {
@@ -389,24 +389,16 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	private void appendEcorePackage(@NonNull StringBuilder s, org.eclipse.uml2.uml.@NonNull Package umlPackage) {
 		Stereotype ecoreStereotype = umlPackage.getAppliedStereotype("Ecore::EPackage");
-		String basePackage = (String)umlPackage.getValue(ecoreStereotype, "basePackage");
 		String nsPrefix = (String)umlPackage.getValue(ecoreStereotype, "nsPrefix");
 		String nsURI = (String)umlPackage.getValue(ecoreStereotype, "nsURI");
 		String packageName = (String)umlPackage.getValue(ecoreStereotype, "packageName");
-		String prefix = (String)umlPackage.getValue(ecoreStereotype, "prefix");
 		s.append("  <ecore:EPackage");
 		s.append(" name=\"" + (packageName != null ? packageName : umlPackage.getName()) + "\"");
-		if (basePackage != null) {
-			s.append(" basePackage=\"" + basePackage + "\"");
-		}
 		if (nsPrefix != null) {
 			s.append(" nsPrefix=\"" + nsPrefix + "\"");
 		}
 		if (nsURI != null) {
 			s.append(" nsURI=\"" + nsURI + "\"");
-		}
-		if (prefix != null) {
-			s.append(" prefix=\"" + prefix + "\"");
 		}
 		s.append(">\n");
 		s.append("    <eClassifiers xsi:type=\"ecore:EClass\" name=\"Dummy\"/>\n");
