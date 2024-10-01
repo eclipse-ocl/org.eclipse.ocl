@@ -76,11 +76,11 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			}
 			if (!pivotModel2.eIsProxy()) {		// XXX already unloaded/unloading
 				Resource asResource = pivotModel2.eResource();
-				if (asResource != null) {
+				if ((asResource != null) && (asResource.getResourceSet() != null)) {
 					asResource.unload();
+					environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);		// XXX
+					metamodelManager.getASResourceSet().getResources().remove(asResource);
 				}
-				environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);
-				metamodelManager.getASResourceSet().getResources().remove(asResource);
 			}
 		}
 		metamodelManager.removeExternalResource(this);
