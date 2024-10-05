@@ -230,6 +230,10 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	public void notifyChanged(Notification notification) {}
 
 	/**
+	 * Register eValidator as the validator for ePackage in the global validation registry, but only for use
+	 * with the ResourceSet that this ValidationRegistryAdapter adapts. For other ResourceSets delegation
+	 * redirects to any displaced eValiadtor.
+	 *
 	 * @since 1.23
 	 */
 	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {

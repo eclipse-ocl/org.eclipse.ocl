@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -96,6 +97,7 @@ import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -232,10 +234,42 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
 		if (!externalResourceSetWasNull) {
-			EList<@NonNull Resource> externalResources = externalResourceSet.getResources();
+			if (externalResourceSet instanceof ResourceSetImpl) {
+				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
+				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
+				if (uriResourceMap == null) {
+					uriResourceMap = new HashMap<>();
+					resourceSetImpl.setURIResourceMap(uriResourceMap);
+				}
+				StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+				List<@NonNull EPackage> allEPackages = new UniqueList<>();
+				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
+				for (int i = 0; i < transitiveExternalResources.size(); i++) {
+					Resource esResource = transitiveExternalResources.get(i);
+					for (@NonNull EObject eObject : new TreeIterable(esResource)) {
+						EClass eClass = eObject.eClass();
+						EPackage ePackage = eClass.getEPackage();
+						assert ePackage != null;
+						if (allEPackages.add(ePackage)) {		// EPackage.nsURI schizophrenia is ok (e.g http:/... vs platform:/.../*.ecore)
+							Resource resource = ePackage.eResource();
+							assert resource != null;
+							if (!transitiveExternalResources.contains(resource)) {
+								transitiveExternalResources.add(resource);
+								URI uri = resource.getURI();
+								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
+								if ((old != null) && (old != resource)) {
+									uriResourceMap.put(uri, old);						// Stick with the first
+									logger.error(StringUtil.bind(PivotMessages.ConflictingResources, uri));
+								}
+							}
+						}
+					}
+				}
+			}
+			List<@NonNull Resource> externalResources = externalResourceSet.getResources();
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
-				if (esResource instanceof CSResource) {
+				if (esResource instanceof CSResource) {		// XXX load metas first
 					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
 					// XXX Need to deep copy if non-null/non-proxy AS references
 				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
@@ -879,6 +913,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
+	@Override
 	public @NonNull ResourceSet getASResourceSet() {
 		return asResourceSet;
 	}
@@ -1040,60 +1075,40 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return traceEvaluation;
 	}
 
-	/**
-	 * @since 1.22
-	 */
 	@Override
-	public @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) {
+	public @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
 		Resource ecoreResource = ePackage.eResource();
 		if (ecoreResource == null) {
 			return null;
 		}
-	//	Ecore2AS ecore2as = Ecore2AS.basicGetAdapter(ecoreResource, this);									// XXX hits bad cast
 		External2AS ecore2as = External2AS.findAdapter(ecoreResource, this);
 		if (ecore2as != null) {
-			Model asModel;
-			try {
-				asModel = ecore2as.getASModel();
-				return (ASResource)asModel.eResource();
-			} catch (ParserException e) {
-				// XXX TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new IllegalStateException(e);
+			if (ecore2as.getResource() != ecoreResource) {
+				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResourceSet, ecoreResource.getURI()));
 			}
+			Model asModel = ecore2as.getASModel();
+			return (ASResource)asModel.eResource();
 		}
 		ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
 		List<Diagnostic> errors = ecoreResource.getErrors();
 		assert errors != null;
 		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			logger.error("Failed to load Ecore '" + ecoreResource.getURI() + message);
-			return null;
+			throw new ParserException("Failed to load Ecore '" + ecoreResource.getURI() + message);
 		}
-		Model asModel2;
-		try {
-			asModel2 = ecore2as.getASModel();				// XXX only need ASResource
-		} catch (ParserException e) {
-			//assert false; // XXX never happens for ES2AS
-			//e.printStackTrace();
-			throw new IllegalStateException(e);
-		}
-		assert asModel2 != null;
-		Model pivotModel = asModel2;
+		Model pivotModel = ecore2as.getASModel();				// XXX only need ASResource
 		errors = pivotModel.eResource().getErrors();
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			logger.error("Failed to load Pivot from '" + ecoreResource.getURI() + message);
-			return null;
+			throw new ParserException("Failed to load Pivot from '" + ecoreResource.getURI() + message);
 		}
 		CSResource xtextResource = (CSResource)externalResourceSet.getResource(oclURI, true);
 		errors = xtextResource.getErrors();
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			logger.error("Failed to load '" + oclURI + message);
-			return null;
+			throw new ParserException("Failed to load '" + oclURI + message);
 		}
 		ICS2AS cs2as = xtextResource.getCS2AS(this);
 		ASResource asResource = cs2as.getASResource();
@@ -1101,8 +1116,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		assert errors != null;
 		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
-			logger.error("Failed to load Pivot from '" + oclURI + message);
-			return null;
+			throw new ParserException("Failed to load Pivot from '" + oclURI + message);
 		}
 		return asResource;
 	}
