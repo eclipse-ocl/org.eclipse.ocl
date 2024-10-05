@@ -24,14 +24,14 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
- * External2AS defines the common behaviour of an external (e.g. Ecore or UML) system to AS con version.
+ * External2AS defines the common behaviour of an external (e.g. Ecore or UML) system to AS conversion.
  */
 public interface External2AS
 {
 	/**
 	 * @since 1.23
 	 */
-	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {		// XXX not an Adapter
 		return environmentFactory.getMetamodelManager().getES2AS(resource);
 	}
 

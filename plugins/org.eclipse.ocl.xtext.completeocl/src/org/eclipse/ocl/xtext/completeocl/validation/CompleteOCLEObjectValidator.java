@@ -12,6 +12,8 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
@@ -25,6 +27,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
 
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
@@ -76,7 +80,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
 	 * overheads up front.
 	 */
-	public boolean initialize(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public boolean initialize(@NonNull EnvironmentFactoryInternal environmentFactory) throws ParserException {
 		Resource asResource = environmentFactory.loadCompleteOCLResource(ePackage, oclURI);
 		return asResource != null;
 	}
@@ -85,7 +89,15 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
-		initialize(environmentFactory);
+		try {
+			initialize(environmentFactory);
+		} catch (ParserException e) {
+			if (diagnostics != null) {
+				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, CompleteOCLPlugin.PLUGIN_ID, 0, e.getLocalizedMessage(),
+					new Object[] {ePackage, e}));
+			}
+			return false;
+		}
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
 			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);

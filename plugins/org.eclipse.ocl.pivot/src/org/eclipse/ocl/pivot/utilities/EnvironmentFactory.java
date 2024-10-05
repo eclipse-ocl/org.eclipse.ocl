@@ -184,6 +184,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull OCL createOCL();
 
 	/**
+	 * @since 1.23
+	 */
+	@NonNull ResourceSet getASResourceSet();
+
+	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
 	 */
 	@NonNull CompleteEnvironment getCompleteEnvironment();

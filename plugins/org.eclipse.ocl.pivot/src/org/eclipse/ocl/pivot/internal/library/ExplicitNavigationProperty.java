@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -22,7 +25,9 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * An instance of ExplicitNavigationProperty supports evaluation of
@@ -46,7 +51,8 @@ public class ExplicitNavigationProperty extends AbstractProperty
 		EObject eObject = asNavigableObject(sourceValue, propertyId, executor);
 		EStructuralFeature eFeature2 = eFeature;
 		if (eFeature2 == null) {			// This fall-back is only used for two UMLValidateTests where we need the Ecore rather than the UML ES object
-			CompleteClass completeClass = executor.getEnvironmentFactory().getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(property));
+			EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
+			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(property));
 			// For UML, the OMG and UML2 models complement and the UML2 one has an EStructuralFeature
 			Iterable<@NonNull Property> properties = completeClass.getProperties(property);
 			if (properties instanceof PartialProperties) {
@@ -74,9 +80,21 @@ public class ExplicitNavigationProperty extends AbstractProperty
 				eObject = rawType;
 			}
 		}
-		Object eValue = eObject.eGet(eFeature2, true);
-		if (eValue != null) {
-			return executor.getIdResolver().boxedValueOf(eValue, eFeature2, returnTypeId);
+		try {
+			Object eValue = eObject.eGet(eFeature2, true);				// IAE for metamodel schizophrenia
+			if (eValue != null) {
+				return executor.getIdResolver().boxedValueOf(eValue, eFeature2, returnTypeId);
+			}
+		}
+		catch (IllegalArgumentException e) {
+			EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
+			ResourceSet resourceSet0 = environmentFactory.getResourceSet();
+			EClass eClass1 = eObject.eClass();
+			Resource eResource1 = eClass1.eResource();
+			Resource eResource2 = eFeature2.eResource();
+			ResourceSet resourceSet1 = eResource1.getResourceSet();
+			ResourceSet resourceSet2 = eResource2.getResourceSet();
+			throw new InvalidValueException(e, e.getMessage());
 		}
 		return null;
 	}
