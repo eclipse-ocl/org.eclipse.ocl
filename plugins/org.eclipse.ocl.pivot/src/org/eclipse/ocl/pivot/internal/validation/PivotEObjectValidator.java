@@ -393,7 +393,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EObject to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EObject to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -405,7 +405,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {

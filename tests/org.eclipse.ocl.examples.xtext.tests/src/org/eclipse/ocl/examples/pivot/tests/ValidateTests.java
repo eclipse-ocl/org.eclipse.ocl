@@ -730,8 +730,9 @@ public class ValidateTests extends AbstractValidateTests
 			assertLoggerText(conflictingResourcesMessage);
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			assertLoggerText("");
-
-
+			//
+			testResource.getContents().move(1, 0);					// Restore order
+			testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
 
 		//	ThreadLocalExecutor.resetEnvironmentFactory();
 		//	dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
@@ -742,17 +743,18 @@ public class ValidateTests extends AbstractValidateTests
 		//	checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, message1);
 			ocl0.activate();	// OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, conflictingResourceSetMessage);
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
 			ocl1.activate();	// OCL's EPackage is inconsistent for testInstance2 and statically parsed Complete OCL
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING, conflictingResourceSetMessage);
+			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR, conflictingResourceSetMessage);
 			ocl2.activate();	// OCL's EPackage is inconsistent for testInstance1 and statically parsed Complete OCL
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING, conflictingResourceSetMessage);
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
 			//	CompleteOCL errors all round
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
+		//	ocl0.activate();	// Private ecore mismatch
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
 			eSet(testInstance1, "l2a", "xxx");
@@ -763,12 +765,20 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yyy");
 			eSet(testInstance2, "l2b", "yyy");
 			eSet(testInstance2, "l3", "yyy");
+			objectLabel1 = LabelUtil.getLabel(testInstance1);
+			objectLabel2 = LabelUtil.getLabel(testInstance2);
+			ocl1.activate();	// XXX OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1_size", objectLabel1),
 				StringUtil.bind(template, "Level2a::L2a_size", objectLabel1),
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			ocl2.activate();	// XXX OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
+			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING,
+				StringUtil.bind(template, "Level1::L1_size", objectLabel2),
+				StringUtil.bind(template, "Level2a::L2a_size", objectLabel2),
+				StringUtil.bind(template, "Level2b::L2b_size", objectLabel2),
+				StringUtil.bind(template, "Level3::L3_size", objectLabel2));
 			//
 			//	One CompleteOCl and one OCLinEcore
 			//
