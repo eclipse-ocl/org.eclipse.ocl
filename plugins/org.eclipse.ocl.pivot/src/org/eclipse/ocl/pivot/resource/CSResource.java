@@ -75,6 +75,7 @@ public interface CSResource extends Resource
 	/**
 	 * @since 1.15
 	 */
+	@Deprecated /* @deprecated use PivotUtilInternal.getEnvironmentFactory */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
 		throw new UnsupportedOperationException();
 	}

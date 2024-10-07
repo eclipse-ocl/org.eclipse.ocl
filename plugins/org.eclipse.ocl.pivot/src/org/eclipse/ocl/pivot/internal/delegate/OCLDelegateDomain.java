@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -319,6 +320,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {		// cf PivotUtilInternal.getEnvironmentFactory
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
@@ -357,6 +359,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		return envFactory;
 	} */
 
+	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public final @NonNull MetamodelManager getMetamodelManager() {
 		return getEnvironmentFactory().getMetamodelManager();
 	}
@@ -382,7 +385,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	}
 
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension)getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(eObject);
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {

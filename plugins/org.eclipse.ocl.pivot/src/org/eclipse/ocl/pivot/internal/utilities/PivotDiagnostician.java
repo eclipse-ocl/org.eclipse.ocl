@@ -137,7 +137,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
 	 *
 	 * If no OCL context is cached a new one is created first by creating an OCL for an EnvironmentFactory adapting
-	 * a non-null eObject's Rsource or ResourceSet. Otherwise by creating a new global OCL.
+	 * a non-null eObject's Resource or ResourceSet. Otherwise by creating a new global OCL.
 	 *
 	 * @since 1.4
 	 */
@@ -149,7 +149,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 		}
 		if (ocl == null) {
 			if (eObject != null) {
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(eObject);
 				if (environmentFactory != null) {
 					ocl = environmentFactory.createOCL();
 				}
@@ -157,7 +157,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 			if (ocl == null) {
 				ocl = OCL.newInstance();
 			}
-			ThreadLocalExecutor.setUsesFinalizer();
+			ThreadLocalExecutor.setUsesFinalizer();			// XXX not on a worker thread
 			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 		}
 		return ocl;

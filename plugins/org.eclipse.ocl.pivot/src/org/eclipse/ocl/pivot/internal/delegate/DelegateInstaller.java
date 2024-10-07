@@ -286,11 +286,21 @@ public class DelegateInstaller
 
 		public static void installFor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-			if (eValidator instanceof EcoreValidator) {
+			if (eValidator instanceof DynamicEcoreValidator) {
+				DynamicEcoreValidator instance = getInstance();
+				assert instance == eValidator;
+				instance.setOfEnvironmentFactory.put(environmentFactory, instance);
+			}
+			else if (eValidator instanceof EcoreValidator) {
 				DynamicEcoreValidator instance = getInstance();
 				instance.setOfEnvironmentFactory.put(environmentFactory, instance);
 				EValidator.Registry.INSTANCE.put(ePackage, instance);
 			}
+			else {
+			//	DynamicEcoreValidator instance = eValidator;
+			//	instance.setOfEnvironmentFactory.put(environmentFactory, instance);
+			//	EValidator.Registry.INSTANCE.put(ePackage, instance);
+			}		// XXX else / else
 		}
 
 		public static void uninstallFor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
@@ -703,15 +713,17 @@ public class DelegateInstaller
 			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 			for (@NonNull Constraint asConstraint : asConstraints) {
 				String constraintName = getConstraintName(asConstraint);
-				constraintNames.add(constraintName);
-				if (completeOCLbodiesAnnotation == null) {
-					completeOCLbodiesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					completeOCLbodiesAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-					eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
+				if (!constraintNames.contains(constraintName)) {
+					constraintNames.add(constraintName);
+					if (completeOCLbodiesAnnotation == null) {
+						completeOCLbodiesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+						completeOCLbodiesAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+						eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
+					}
+					@SuppressWarnings("unused")
+					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
+					((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 				}
-				@SuppressWarnings("unused")
-				String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
-				((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 			}
 			setConstraintNames(eClass, constraintNames);
 		}

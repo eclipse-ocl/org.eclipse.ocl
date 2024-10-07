@@ -278,7 +278,7 @@ public class OCLstdlibTests extends XtextTestCase
 		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(libraryURI);
 		xtextResource.load(inputStream, null);
 		CS2AS cs2as = ClassUtil.nonNullState(xtextResource.findCS2AS());

@@ -336,7 +336,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-		environmentFactory.adapt(xtextResource);
+	// XXX	environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
 		Resource asResource = cs2as(environmentFactory, xtextResource, null);
@@ -350,7 +350,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-		environmentFactory.adapt(xtextResource);
+	// XXX	environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
 		Resource asResource = cs2as(environmentFactory, xtextResource, null);

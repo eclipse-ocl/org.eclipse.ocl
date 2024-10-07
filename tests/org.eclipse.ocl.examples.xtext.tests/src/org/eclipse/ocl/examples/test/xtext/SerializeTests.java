@@ -177,7 +177,7 @@ public class SerializeTests extends XtextTestCase
 		try {
 			xtextResource2 = (BaseCSResource) resourceSet2.createResource(outputURI);
 			assert xtextResource2 != null;
-			ocl2.getEnvironmentFactory().adapt(xtextResource2);
+		// XXX	ocl2.getEnvironmentFactory().adapt(xtextResource2);
 			xtextResource2.load(null);
 			Object cs2asErrors = testHelper.cs2asErrorMessages();
 			if (cs2asErrors != null) {
@@ -216,7 +216,7 @@ public class SerializeTests extends XtextTestCase
 		}
 		finally {
 			if (xtextResource2 != null) {
-				xtextResource2.eAdapters().remove(ocl2.getEnvironmentFactory().adapt(xtextResource2));
+			// XXX	xtextResource2.eAdapters().remove(ocl2.getEnvironmentFactory().adapt(xtextResource2));
 			}
 			ocl2.dispose();
 			ocl2 = null;

@@ -189,7 +189,7 @@ public class PivotTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(inputURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(null);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
 		assertNoResourceErrors("Load failed", xtextResource);

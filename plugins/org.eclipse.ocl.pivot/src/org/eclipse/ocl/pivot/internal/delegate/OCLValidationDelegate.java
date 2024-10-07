@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.delegate;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +34,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -40,7 +42,6 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -196,7 +197,8 @@ public class OCLValidationDelegate implements ValidationDelegate
 		if (eObject == null) {
 			throw new NullPointerException("Null EObject");
 		}
-		MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);			// XXX context lookup first
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
@@ -222,7 +224,9 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
-		MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+	//	MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
@@ -312,7 +316,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);		// XXX use context
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, modelManager);
@@ -321,16 +325,17 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-		MetamodelManager metamodelManager = null;
-		if ((context != null) && (value instanceof EObject)) {
-			Executor executor = PivotUtil.basicGetExecutor((EObject) value, context);
-			if (executor != null) {
-				metamodelManager = executor.getMetamodelManager();
-			}
-		}
-		if (metamodelManager == null) {
-			metamodelManager = delegateDomain.getMetamodelManager();				// XXX why ignore ResourceSet
-		}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(value instanceof Notifier ? (Notifier)value : null);
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+	//	if ((context != null) && (value instanceof EObject)) {
+	//		Executor executor = PivotUtil.basicGetExecutor((EObject) value, context);
+	//		if (executor != null) {
+	//			metamodelManager = executor.getMetamodelManager();
+	//		}
+	//	}
+	//	if (metamodelManager == null) {
+	//		metamodelManager = delegateDomain.getMetamodelManager();				// XXX why ignore ResourceSet
+	//	}
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);
 		if (constraint == null) {

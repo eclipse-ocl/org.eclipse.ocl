@@ -479,7 +479,7 @@ public class LoadTests extends XtextTestCase
 					ResourceSet resourceSet2 = ocl2.getResourceSet();
 					initializeExtraURIMappings(resourceSet2);
 					BaseCSResource reloadCS = (BaseCSResource) resourceSet2.createResource(oclURI);
-					ocl2.getEnvironmentFactory().adapt(reloadCS);
+				// XXX	ocl2.getEnvironmentFactory().adapt(reloadCS);
 					loadCallBacks.validateCompleteOCL(ocl2, reloadCS);
 					ocl2.dispose();
 					unloadResourceSet(resourceSet2);
@@ -555,7 +555,7 @@ public class LoadTests extends XtextTestCase
 	protected BaseCSResource doLoad_Concrete1(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);

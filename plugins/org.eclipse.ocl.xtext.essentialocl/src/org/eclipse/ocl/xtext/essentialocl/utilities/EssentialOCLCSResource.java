@@ -45,12 +45,12 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -689,7 +689,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
 			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
@@ -698,7 +699,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 			environmentFactory = getASResourceFactory().createEnvironmentFactory(projectManager);
 		}
-		return environmentFactory;
+		return environmentFactory; */
 	}
 
 	@Override
@@ -716,7 +717,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		else {
 			environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
 		ParserContext parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
 		environmentFactory2parserContext2.put(environmentFactory, parserContext);
 		return parserContext;
@@ -801,10 +802,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		CS2AS cs2as = getCS2AS(environmentFactory);
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		cs2as.update(consumer);
+		ASResource asResource = cs2as.getASResource();
+		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)environmentFactory, null);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
-		return cs2as.getASResource();
+		return asResource;
 	}
 
 	@Override

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.debug.delegate;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
@@ -34,6 +35,8 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -48,7 +51,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * of compiled constraints and invariants.
  */
 public class OCLValidationDelegate implements ValidationDelegate
-{	
+{
 	protected static class CheckingConstraintEvaluator extends AbstractConstraintEvaluator<Boolean>
 	{
 		protected final @NonNull EClassifier eClassifier;
@@ -109,10 +112,10 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected final @NonNull OCLDelegateDomain delegateDomain;
 	protected final @NonNull EClassifier eClassifier;
-	  
+
 	/**
 	 * Initializes me with the classifier whose DelegateEClassifierAdapter delegates to me.
-	 * 
+	 *
 	 * @param classifier
 	 *            my classifier
 	 */
@@ -139,6 +142,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		return "<" + delegateDomain.getURI() + ":validate> " + eClassifier.getEPackage().getName() + "::" + eClassifier.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, EOperation invariant, String expression) {
 		if (eClass == null) {
@@ -147,7 +151,8 @@ public class OCLValidationDelegate implements ValidationDelegate
 		if (eObject == null) {
 			throw new NullPointerException("Null EObject");
 		}
-		MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
@@ -170,9 +175,11 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 	}
 
+	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
-		MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
@@ -195,6 +202,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, String constraintName, String expression) {
 		if (eClass == null) {
@@ -209,11 +217,13 @@ public class OCLValidationDelegate implements ValidationDelegate
 		return validatePivot(eClass, eObject, null, context, constraintName, null, 0);
 	}
 
+	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics, Map<Object, Object> context,
 			@NonNull String constraintName, String expression, int severity, String source, int code) {
 		return validatePivot(eClass, eObject, diagnostics, context, constraintName, source, code);
 	}
 
+	@Override
 	public boolean validate(EDataType eDataType, Object value,
 			Map<Object, Object> context, String constraintName, String expression) {
 		if (eDataType == null) {
@@ -228,6 +238,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		return validatePivot(eDataType, value, null, context, constraintName, null, 0);
 	}
 
+	@Override
 	public boolean validate(@NonNull EDataType eDataType, @NonNull Object value, @Nullable DiagnosticChain diagnostics, Map<Object, Object> context,
 			@NonNull String constraintName, String expression, int severity, String source, int code) {
 		return validatePivot(eDataType, value, diagnostics, context, constraintName, source, code);
@@ -264,7 +275,8 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-		MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(value instanceof Notifier ? (Notifier)value : null);
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);
 		if (constraint == null) {

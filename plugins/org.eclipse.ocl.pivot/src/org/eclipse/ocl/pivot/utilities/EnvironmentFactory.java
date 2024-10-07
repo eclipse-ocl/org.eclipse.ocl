@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
@@ -114,7 +115,12 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 */
 	default void activate() {}
 
+	@Deprecated /* @deprecated only ResourceSet adpaters are used */
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
+	/**
+	 * @since 1.23
+	 */
+	@NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet);
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in

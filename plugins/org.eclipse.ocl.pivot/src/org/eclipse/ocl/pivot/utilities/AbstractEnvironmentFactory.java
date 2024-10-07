@@ -241,7 +241,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					uriResourceMap = new HashMap<>();
 					resourceSetImpl.setURIResourceMap(uriResourceMap);
 				}
-				StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
 				List<@NonNull EPackage> allEPackages = new UniqueList<>();
 				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
 				for (int i = 0; i < transitiveExternalResources.size(); i++) {
@@ -269,7 +269,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			List<@NonNull Resource> externalResources = externalResourceSet.getResources();
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
-				if (esResource instanceof CSResource) {		// XXX load metas first
+				if (esResource instanceof CSResource) {
 					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
 					// XXX Need to deep copy if non-null/non-proxy AS references
 				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
@@ -288,8 +288,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void activate() {
 		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
-		System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
 		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
 			ThreadLocalExecutor.resetEnvironmentFactory();
 		}
@@ -298,16 +298,36 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
+		assert false; //(notifier instanceof ResourceSet); // || (notifier instanceof Resource);		// XXX do we need Resource ???
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
-			if (adapter.getEnvironmentFactory() != this) {
-				adapter = null;
-			}
+			assert adapter.getEnvironmentFactory() == this;
+//			if (adapter.getEnvironmentFactory() != this) {
+//				adapter = null;
+//			}
+			return adapter;
 		}
 		if (adapter == null) {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
+		}
+		return adapter;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
+		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
+		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
+		if (adapter == null) {
+			adapter = new EnvironmentFactoryAdapter(this, resourceSet);
+			eAdapters.add(adapter);
+		}
+		else {
+			assert adapter.getEnvironmentFactory() == this;
 		}
 		return adapter;
 	}
