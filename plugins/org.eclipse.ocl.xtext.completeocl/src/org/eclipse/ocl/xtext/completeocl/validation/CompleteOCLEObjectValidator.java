@@ -39,6 +39,8 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
  */
 public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 {
+	private static final @NonNull String COMPLETE_OCL_LOAD_SUCCESSFUL = "Complete OCL lolad successful";
+
 	protected final @NonNull EPackage ePackage;
 	protected final @NonNull URI oclURI;
 
@@ -87,22 +89,23 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)validationContext.get(EnvironmentFactory.class);
-		if (environmentFactory == null) {
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
-			try {
-				initialize(environmentFactory);
-			} catch (ParserException e) {
-				if (diagnostics != null) {
-					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, CompleteOCLPlugin.PLUGIN_ID, 0, e.getLocalizedMessage(),
-						new Object[] {ePackage, e}));
-				}
-				return false;
-			}
-			validationContext.put(EnvironmentFactory.class, environmentFactory);	// Only cache if no errors, else regenerate errors next time
-		}
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+			Object cachedCompleteOCLEObjectValidator = validationContext.get(COMPLETE_OCL_LOAD_SUCCESSFUL);
+			if (cachedCompleteOCLEObjectValidator == null) {
+				try {
+					initialize(environmentFactory);
+				} catch (ParserException e) {
+					if (diagnostics != null) {
+						String localizedMessage = e.getLocalizedMessage();
+						Object[] data = new Object[] {ePackage, e};
+						diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, CompleteOCLPlugin.PLUGIN_ID, 0, localizedMessage, data));
+					}
+					return false;
+				}
+				validationContext.put(COMPLETE_OCL_LOAD_SUCCESSFUL, this);	// Only cache if no errors, else regenerate errors next time
+			}
 			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 			return allOk || (diagnostics != null);
 		}

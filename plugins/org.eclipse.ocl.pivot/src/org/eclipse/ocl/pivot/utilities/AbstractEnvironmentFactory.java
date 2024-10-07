@@ -241,7 +241,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					uriResourceMap = new HashMap<>();
 					resourceSetImpl.setURIResourceMap(uriResourceMap);
 				}
-				StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
 				List<@NonNull EPackage> allEPackages = new UniqueList<>();
 				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
 				for (int i = 0; i < transitiveExternalResources.size(); i++) {
@@ -269,7 +269,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			List<@NonNull Resource> externalResources = externalResourceSet.getResources();
 			for (int i = 0; i < externalResources.size(); i++) {
 				Resource esResource = externalResources.get(i);
-				if (esResource instanceof CSResource) {		// XXX load metas first
+				if (esResource instanceof CSResource) {
 					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
 					// XXX Need to deep copy if non-null/non-proxy AS references
 				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();

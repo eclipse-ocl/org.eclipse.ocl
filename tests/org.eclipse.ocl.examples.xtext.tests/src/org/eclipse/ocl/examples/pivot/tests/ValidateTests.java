@@ -82,8 +82,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.junit.After;
 import org.junit.Before;
 
-import junit.framework.TestCase;
-
 /**
  * Tests that OCL for model validation works.
  */
@@ -825,13 +823,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3")));
 			//
-			CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
-				@Override
-				protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-					TestCase.fail(primaryMessage + "\n\t" + detailMessage);
-					return false;
-				}
-			};
+			CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl.getEnvironmentFactory());
 			URI oclURI = testFile.getFileURI();
 			String problems = helper.installDocuments(oclURI);
 			assertNull("Failed to load " + oclURI, problems);
@@ -914,13 +906,7 @@ public class ValidateTests extends AbstractValidateTests
 		assert uNamed != null;
 		assertValidationDiagnostics("Without Complete OCL", resource, NO_MESSAGES);
 		//
-		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
-			@Override
-			protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-				TestCase.fail(primaryMessage + "\n\t" + detailMessage);
-				return false;
-			}
-		};
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl.getEnvironmentFactory());
 		URI oclURI = testFile.getFileURI();
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
