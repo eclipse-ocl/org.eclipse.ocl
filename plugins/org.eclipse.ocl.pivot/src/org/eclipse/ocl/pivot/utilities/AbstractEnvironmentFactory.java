@@ -1086,20 +1086,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			if (ecore2as.getResource() != ecoreResource) {
 				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResourceSet, ecoreResource.getURI()));
 			}
-			Model asModel = ecore2as.getASModel();
-			return (ASResource)asModel.eResource();
 		}
-		ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
-		List<Diagnostic> errors = ecoreResource.getErrors();
-		assert errors != null;
-		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
-		if (message != null) {
-			throw new ParserException("Failed to load Ecore '" + ecoreResource.getURI() + message);
+		else {
+			ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+			List<Diagnostic> errors = ecoreResource.getErrors();
+			assert errors != null;
+			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+			if (message != null) {
+				throw new ParserException("Failed to load Ecore '" + ecoreResource.getURI() + message);
+			}
 		}
 		Model pivotModel = ecore2as.getASModel();				// XXX only need ASResource
-		errors = pivotModel.eResource().getErrors();
+		List<Diagnostic> errors = pivotModel.eResource().getErrors();
 		assert errors != null;
-		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {
 			throw new ParserException("Failed to load Pivot from '" + ecoreResource.getURI() + message);
 		}
