@@ -96,6 +96,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
@@ -344,13 +345,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public void addExternal2AS(@NonNull External2AS es2as) {
 		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
-		if (uri2es2as2 == null){
+		if (uri2es2as2 == null) {
 			uri2es2as = uri2es2as2 = new HashMap<>();
 		}
 	//	Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
 		External2AS oldES2AS = uri2es2as2.put(uri, es2as);
-		assert oldES2AS == null;
+		assert (oldES2AS == null) || (es2as instanceof InverseConversion);// && !(oldES2AS instanceof InverseConversion));
 		oldES2AS = external2asMap.put(uri, es2as);
 		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
 	}

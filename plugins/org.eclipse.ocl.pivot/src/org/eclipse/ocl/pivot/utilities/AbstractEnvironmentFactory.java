@@ -288,8 +288,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void activate() {
 		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
-		System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
 		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
 			ThreadLocalExecutor.resetEnvironmentFactory();
 		}
