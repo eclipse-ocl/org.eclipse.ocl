@@ -298,12 +298,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
+		assert (notifier instanceof ResourceSet) || (notifier instanceof Resource);		// XXX do we need Resource ???
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
-			if (adapter.getEnvironmentFactory() != this) {
-				adapter = null;
-			}
+			assert adapter.getEnvironmentFactory() == this;
+//			if (adapter.getEnvironmentFactory() != this) {
+//				adapter = null;
+//			}
+			return adapter;
 		}
 		if (adapter == null) {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);

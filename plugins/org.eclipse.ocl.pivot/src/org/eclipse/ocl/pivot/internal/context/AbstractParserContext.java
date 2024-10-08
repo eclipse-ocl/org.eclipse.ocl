@@ -91,7 +91,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				throw new ParserException("Failed to create Xtext resource for '" + uri + "'" + getDoSetupMessage());
 			}
 			CSResource baseResource = (CSResource)resource;
-			getEnvironmentFactory().adapt(resource);
+		// XXX	getEnvironmentFactory().adapt(resource);
 			baseResource.setParserContext(this);
 			if (inputStream != null) {
 				baseResource.load(inputStream, null);

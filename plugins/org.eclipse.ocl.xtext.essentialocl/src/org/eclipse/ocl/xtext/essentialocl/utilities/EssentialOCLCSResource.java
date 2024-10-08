@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -801,10 +802,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		CS2AS cs2as = getCS2AS(environmentFactory);
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		cs2as.update(consumer);
+		ASResource asResource = cs2as.getASResource();
+		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)environmentFactory, null);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
-		return cs2as.getASResource();
+		return asResource;
 	}
 
 	@Override

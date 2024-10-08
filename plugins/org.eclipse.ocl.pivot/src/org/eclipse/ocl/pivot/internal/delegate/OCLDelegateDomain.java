@@ -319,6 +319,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprected call should PivotUtilInternal.getEnvironmentFactory(eObject) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {		// cf PivotUtilInternal.getEnvironmentFactory
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {

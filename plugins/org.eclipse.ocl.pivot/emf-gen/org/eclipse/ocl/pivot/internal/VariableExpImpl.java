@@ -20,6 +20,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
@@ -172,6 +174,13 @@ implements VariableExp {
 	 */
 	@Override
 	public void setReferredVariable(VariableDeclaration newReferredVariable) {
+		if ((newReferredVariable != null) && "verdict".equals(newReferredVariable.getName())) {
+			Resource resource1 = eResource();
+			Resource resource2 = newReferredVariable.eResource();
+			ResourceSet resourceSet1 = resource1 != null ? resource1.getResourceSet() : null;
+			ResourceSet resourceSet2 = resource2 != null ? resource2.getResourceSet() : null;
+			getClass();				// XXX
+		}
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
