@@ -273,7 +273,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
 					// XXX Need to deep copy if non-null/non-proxy AS references
 				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
-					ASResource asResource = ((CSResource)esResource).reloadIn(this);
+			// XXX		ASResource asResource = ((CSResource)esResource).reloadIn(this);
 				}
 				else {
 					// XXX Ecore

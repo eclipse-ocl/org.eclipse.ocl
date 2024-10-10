@@ -276,7 +276,7 @@ public class PivotUtilInternal //extends PivotUtil
 				if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
 					environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
 				}
-				assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
+				// assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;	// may differ when testValidate_Validate_completeocl deliberately uses multiple EnvironmentFactory
 			}
 			return environmentFactory;
 		}
@@ -307,7 +307,8 @@ public class PivotUtilInternal //extends PivotUtil
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+	//	return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+		return getEnvironmentFactory((Notifier)object);
 	}
 
 	@Deprecated /* @deprecated use Notifier argument */

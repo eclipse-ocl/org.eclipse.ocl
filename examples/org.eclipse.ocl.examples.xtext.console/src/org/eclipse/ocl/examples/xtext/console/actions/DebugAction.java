@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -162,6 +163,7 @@ public final class DebugAction extends Action
 		@Override
 		public void run(IProgressMonitor monitor) {
 			monitor.beginTask(NLS.bind(ConsoleMessages.Debug_Starter, expression), 3);
+			ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 			try {
 				monitor.subTask(ConsoleMessages.Debug_ProgressCreate);
 				URI documentURI;
@@ -212,6 +214,7 @@ public final class DebugAction extends Action
 				monitor.worked(1);
 			}
 			finally {
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				monitor.done();
 			}
 		}

@@ -120,5 +120,6 @@ public interface CSResource extends Resource
 	/**
 	 * @since 1.23
 	 */
+	@Deprecated
 	@NonNull ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory);			// XXX
 }
