@@ -128,7 +128,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		URI inputURI = getTestFileURI(inputName);
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		assert xtextResource != null;
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);

@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EMap;
@@ -76,7 +77,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testOCLinEcoreTutorialUsingLPGForPivot() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		PivotUtilInternal.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		PivotUtilInternal.getEnvironmentFactory((Notifier)null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
@@ -98,7 +99,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testOCLinEcoreTutorialUsingLPGForDefault() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 	//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		PivotUtilInternal.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		PivotUtilInternal.getEnvironmentFactory((Notifier)null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();

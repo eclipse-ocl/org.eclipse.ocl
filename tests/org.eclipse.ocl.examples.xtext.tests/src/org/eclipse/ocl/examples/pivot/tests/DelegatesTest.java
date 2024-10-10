@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
@@ -155,14 +156,14 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 	public boolean usedLocalRegistry;
 
-	protected @NonNull OCLInternal configureMetamodelManagerForDelegate(@NonNull EPackage ePackage) {
+	protected @NonNull OCLInternal configureMetamodelManagerForDelegate(@NonNull EPackage ePackage, @NonNull ResourceSet resourceSet) {
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
 		DelegateDomain delegateDomain = adapter.getDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (delegateDomain == null) {
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
-		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getEnvironmentFactory();
-		return OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		return OCLInternal.newInstance(environmentFactory);
 	}
 
 	protected @NonNull ResourceSet createResourceSet() {
@@ -278,7 +279,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
-		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		environmentFactory.adapt(resourceSet);
@@ -504,7 +505,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	public void doTest_queryExecution(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
 		initModel(resourceSet, modelName);
-		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -560,7 +561,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	public void doTest_queryExecutionWithExceptions(@NonNull ResourceSet resourceSet, @NonNull String modelName) throws InvocationTargetException {
 		initModel(resourceSet, modelName);
-		OCL ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCL ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 
@@ -1633,7 +1634,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			doTestRunnable(new TestRunnable() {
 				@Override
 				public void runWithThrowable() {
-					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(null); //GlobalEnvironmentFactory.getInstance();
+					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null); //GlobalEnvironmentFactory.getInstance();
 					OCL ocl = environmentFactory.createOCL();
 					//
 					//	Projects on classpath should be accessible as platform:/plugin or platform:/project

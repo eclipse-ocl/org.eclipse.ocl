@@ -163,7 +163,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource.getResourceSet());
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
 		if (ecoreResource == null) {

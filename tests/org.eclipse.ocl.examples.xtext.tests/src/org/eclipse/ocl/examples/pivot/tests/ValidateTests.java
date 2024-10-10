@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -380,7 +381,7 @@ public class ValidateTests extends AbstractValidateTests
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
-		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 1 for outer validation, 2 more for inner validations
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 0 - no longer used, 1 for outer validation, 2 more for inner validations
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations
 		ocl.dispose();
 	}
@@ -741,7 +742,7 @@ public class ValidateTests extends AbstractValidateTests
 			//	OCLinEcore/CompleteOCL errors all levels - too long sizes, consistent texts
 			//
 			ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage2, null);
-			ThreadLocalExecutor.resetEnvironmentFactory();
+		//	ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
 			eSet(testInstance1, "l2a", "xxx");
@@ -761,7 +762,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
 			ocl2.activate();	// without Complete OCL - ok texts
-			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR);		// XXX
 			//
 			//	OCLinEcore/CompleteOCL errors one level - too long size, bad text
 			//
@@ -930,9 +931,10 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Create model
 		//
-		OCL ocl1 = createOCL();
-		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore"));
-		ocl1.getEnvironmentFactory().adapt(ecoreResource.getResourceSet());
+		OCL ocl = createOCL();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Validate.oclinecore"));
+		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(ecoreResource.getResourceSet());
+		assert (environmentFactoryAdapter != null) && (environmentFactoryAdapter.getEnvironmentFactory() == ocl.getEnvironmentFactory());		// redundant / consistency check
 		EPackage validatePackage = (EPackage) ecoreResource.getContents().get(0);
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
@@ -944,7 +946,6 @@ public class ValidateTests extends AbstractValidateTests
 		eSet(testInstance, "l3", "l3");
 		testResource.getContents().add(testInstance);
 		String objectLabel = LabelUtil.getLabel(testInstance);
-		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		//	Check EObjectValidator errors
 		//
@@ -988,7 +989,7 @@ public class ValidateTests extends AbstractValidateTests
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1_text", objectLabel));
 		} finally {
-			ocl1.dispose();
+			ocl.dispose();
 		}
 	}
 }

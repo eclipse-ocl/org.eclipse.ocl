@@ -15,6 +15,7 @@ package org.eclipse.ocl.pivot.internal.validation;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -93,7 +94,7 @@ public class PivotEObjectValidator implements EValidator
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
 		public ValidationAdapter(@Nullable EnvironmentFactoryInternal environmentFactory) {
-			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory(null);
+			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory((Notifier)null);
 		}
 
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
@@ -376,7 +377,7 @@ public class PivotEObjectValidator implements EValidator
 	 * @since 1.14
 	 */
 	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> context) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);		// XXX use context
 		return validate(environmentFactory, constraint, object,  context);
 	}
 
@@ -385,7 +386,7 @@ public class PivotEObjectValidator implements EValidator
 	 */
 	protected boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();		// XXX use context
 		if (environmentFactory == null) {
 			return true;
 		}

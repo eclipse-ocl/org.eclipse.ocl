@@ -464,7 +464,7 @@ public class OCL
 			}
 		}
 		CSResource csResource = (CSResource) resource;
-		getEnvironmentFactory().adapt(csResource);
+	// XXX	getEnvironmentFactory().adapt(csResource);
 		csResource.load(null);
 		return csResource;
 	}
@@ -481,7 +481,7 @@ public class OCL
 			}
 		}
 		CSResource csResource = (CSResource) resource;
-		getEnvironmentFactory().adapt(csResource);
+	// XXX	getEnvironmentFactory().adapt(csResource);
 		csResource.load(inputStream, null);
 		return csResource;
 	}

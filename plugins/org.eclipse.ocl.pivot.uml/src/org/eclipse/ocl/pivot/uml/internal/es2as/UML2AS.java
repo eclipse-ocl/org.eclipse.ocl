@@ -283,7 +283,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static UML2AS loadFromUML(@NonNull ASResource umlASResource, @NonNull URI umlURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource.getResourceSet());
 		Resource umlResource = environmentFactory.getResourceSet().getResource(umlURI, true);
 		if (umlResource == null) {
 			return null;

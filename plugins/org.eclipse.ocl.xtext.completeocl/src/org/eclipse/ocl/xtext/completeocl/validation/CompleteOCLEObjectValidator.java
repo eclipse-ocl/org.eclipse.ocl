@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -74,7 +75,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 
 	@Deprecated
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
-		return PivotUtilInternal.getEnvironmentFactory(null).getMetamodelManager();	// Better than nothing compatibility
+		return PivotUtilInternal.getEnvironmentFactory((Notifier)null).getMetamodelManager();	// Better than nothing compatibility
 	}
 
 	/**
@@ -91,7 +92,8 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		//	assert resourceSet == PivotUtil.basicGetResourceSet(object);
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);			// XXX use context
 			Object cachedCompleteOCLEObjectValidator = validationContext.get(COMPLETE_OCL_LOAD_SUCCESSFUL);
 			if (cachedCompleteOCLEObjectValidator == null) {
 				try {

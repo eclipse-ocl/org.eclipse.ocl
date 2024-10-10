@@ -122,7 +122,7 @@ public class LabelUtil
 		context.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
 		context.put(EValidator.class, eValidator);
 	//	context.put(EValidator.ValidationDelegate.Registry.class, diagnostician.get);
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
 		context.put(EnvironmentFactory.class, environmentFactory);
 		return context;
 	}

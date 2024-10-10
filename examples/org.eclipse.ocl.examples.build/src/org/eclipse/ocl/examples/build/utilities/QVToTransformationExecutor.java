@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -331,7 +332,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		Diagnostician diagnostician = validationContext.getDiagnostician();
 		for (EObject eObject : resource.getContents()) {
-			PivotUtilInternal.getEnvironmentFactory(resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
+			PivotUtilInternal.getEnvironmentFactory((Notifier)resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 			Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
 			List<Diagnostic> children = diagnostic.getChildren();
 			if (children.size() <= 0) {

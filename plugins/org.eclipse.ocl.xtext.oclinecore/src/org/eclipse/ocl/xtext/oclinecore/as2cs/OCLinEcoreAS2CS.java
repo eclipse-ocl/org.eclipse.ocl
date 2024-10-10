@@ -60,7 +60,7 @@ public class OCLinEcoreAS2CS extends EssentialOCLAS2CS
 		addFactory(Factory.INSTANCE);
 		for (Resource csResource : cs2asResourceMap.keySet()) {
 			assert csResource != null;
-			environmentFactory.adapt(csResource);
+		// XXX	environmentFactory.adapt(csResource);
 		}
 	}
 
