@@ -446,7 +446,7 @@ public class AbstractPivotTestCase extends TestCase
 		ResourceSet resourceSet = resource.getResourceSet();
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(resourceSet));
+		ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
 		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
 		ThreadLocalExecutor.reset();
 		if (savedEnvironmentFactory != null) {

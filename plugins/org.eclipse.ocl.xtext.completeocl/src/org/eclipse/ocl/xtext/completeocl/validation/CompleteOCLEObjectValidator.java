@@ -19,7 +19,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
 
 /**
@@ -90,27 +90,22 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
-		if (resourceSet != null) {
-		//	assert resourceSet == PivotUtil.basicGetResourceSet(object);
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);			// XXX use context
-			Object cachedCompleteOCLEObjectValidator = validationContext.get(COMPLETE_OCL_LOAD_SUCCESSFUL);
-			if (cachedCompleteOCLEObjectValidator == null) {
-				try {
-					initialize(environmentFactory);
-				} catch (ParserException e) {
-					if (diagnostics != null) {
-						String localizedMessage = e.getLocalizedMessage();
-						Object[] data = new Object[] {ePackage, e};
-						diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, CompleteOCLPlugin.PLUGIN_ID, 0, localizedMessage, data));
-					}
-					return false;
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
+		Object cachedCompleteOCLEObjectValidator = validationContext.get(COMPLETE_OCL_LOAD_SUCCESSFUL);
+		if (cachedCompleteOCLEObjectValidator == null) {
+			try {
+				initialize(environmentFactory);
+			} catch (ParserException e) {
+				if (diagnostics != null) {
+					String localizedMessage = e.getLocalizedMessage();
+					Object[] data = new Object[] {ePackage, e};
+					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, CompleteOCLPlugin.PLUGIN_ID, 0, localizedMessage, data));
 				}
-				validationContext.put(COMPLETE_OCL_LOAD_SUCCESSFUL, this);	// Only cache if no errors, else regenerate errors next time
+				return false;
 			}
-			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
-			return allOk || (diagnostics != null);
+			validationContext.put(COMPLETE_OCL_LOAD_SUCCESSFUL, this);	// Only cache if no errors, else regenerate errors next time
 		}
-		return true;
+		boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
+		return allOk || (diagnostics != null);
 	}
 }

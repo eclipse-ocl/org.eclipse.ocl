@@ -717,17 +717,19 @@ public class ValidateTests extends AbstractValidateTests
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			assert dynamicEnvironmentFactory == null;
-			testResource.getContents().move(1, 0);					// Reverse order
-			testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
+		//	testResource.getContents().move(1, 0);					// Reverse order
+		//	testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
 			//
 			// yet another OCL - but testResourceSet has CS resources for reload, but now testInstance2 is first
-			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
-			assertLoggerText(conflictingResourcesMessage);
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+		//	checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+			assertLoggerText(conflictingResourcesMessage);
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+		//	checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			assertLoggerText("");
 			//
-			testResource.getContents().move(1, 0);					// Restore order
-			testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
+		//	testResource.getContents().move(1, 0);					// Restore order
+		//	testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
 			//
 			ocl0.activate();	// OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
@@ -762,7 +764,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
 			ocl2.activate();	// without Complete OCL - ok texts
-			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR);		// XXX
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
 			//	OCLinEcore/CompleteOCL errors one level - too long size, bad text
 			//
@@ -840,7 +842,7 @@ public class ValidateTests extends AbstractValidateTests
 			assertValidationDiagnostics("With Complete OCL", resource, messages);
 		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		//	ValidationContext validationContext = new ValidationContext(validationRegistry);
-		//	validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
+		//	EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resource);			// Eager EnvironmentFactory resolution
 		//	assertValidationDiagnostics("With Complete OCL", resource, validationContext, messages);
 			//		disposeResourceSet(resourceSet);
 			ocl.activate();

@@ -77,7 +77,6 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(testInstance);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
-		assertEquals("Inconsistent severity", severity, diagnostics.getSeverity());
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {
 			//			assertEquals(severity, diagnostic.getSeverity());
@@ -87,6 +86,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		if (s != null) {
 			fail("Inconsistent validation: (expected/actual) message" + s);
 		}
+		assertEquals("Inconsistent severity", severity, diagnostics.getSeverity());
 	}
 
 	protected @NonNull OCL createOCL() {
