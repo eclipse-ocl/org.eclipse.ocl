@@ -797,7 +797,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected void disposeInternal() {
 		assert !isDisposed() && isDisposing();
-	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
+	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		try {
 			if (metamodelManager != null) {
