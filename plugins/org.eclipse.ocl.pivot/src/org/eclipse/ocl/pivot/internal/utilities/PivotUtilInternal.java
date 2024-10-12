@@ -121,14 +121,14 @@ public class PivotUtilInternal //extends PivotUtil
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Notifier notifier) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
-			ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
-			if (resourceSet != null) {
-				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-				if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
-					environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
-				}
-				assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
-			}
+		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		//	if (resourceSet != null) {
+		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
+		//			environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
+		//		}
+		//		assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
+		//	}
 			return environmentFactory;
 		}
 		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
@@ -150,7 +150,9 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.23
+	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
+	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
+	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
@@ -270,14 +272,14 @@ public class PivotUtilInternal //extends PivotUtil
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
-			ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
-			if (resourceSet != null) {
-				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-				if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
-				//	environmentFactoryAdapter = environmentFactory.adapt(resourceSet);	// XXX
-				}
+		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		//	if (resourceSet != null) {
+		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
+		//		//	environmentFactoryAdapter = environmentFactory.adapt(resourceSet);	// XXX
+		//		}
 				// assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;	// may differ when testValidate_Validate_completeocl deliberately uses multiple EnvironmentFactory
-			}
+		//	}
 			return environmentFactory;
 		}
 		ProjectManager projectManager = null;

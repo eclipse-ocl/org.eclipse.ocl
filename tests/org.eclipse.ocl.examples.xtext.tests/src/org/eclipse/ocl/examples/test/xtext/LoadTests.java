@@ -448,7 +448,6 @@ public class LoadTests extends XtextTestCase
 			if (oclResource != null) {
 				URI xtextURI = oclURI;// != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");
 				ResourceSet csResourceSet = internalOCL.getResourceSet();
-				environmentFactory.adapt(csResourceSet);
 				boolean hasOCLcontent = false;
 				BaseCSResource xtextResource = (BaseCSResource) csResourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 				if (xtextResource != null) {

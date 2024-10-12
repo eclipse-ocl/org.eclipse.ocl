@@ -282,7 +282,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		environmentFactory.adapt(resourceSet);
+	//	environmentFactory.adapt(resourceSet);
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
 		if (message != null)
 			fail(message);
@@ -1673,7 +1673,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
 		try {
-			ocl.getEnvironmentFactory().adapt(resourceSet);
+		//	ocl.getEnvironmentFactory().adapt(resourceSet);
 			URI xmiURI = getTestModelURI("models/documentation/Tutorial.xmi");
 			Resource ecoreResource = resourceSet.getResource(getTestModelURI(ecoreURI), true);
 			EPackage ePackage = (EPackage) ecoreResource.getContents().get(0);

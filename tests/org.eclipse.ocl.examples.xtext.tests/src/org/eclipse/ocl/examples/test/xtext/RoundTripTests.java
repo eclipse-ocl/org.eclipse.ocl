@@ -158,7 +158,7 @@ public class RoundTripTests extends XtextTestCase
 			URI outputURI = inputURI.trimFileExtension().appendFileExtension("regenerated.ocl");
 			OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
 			EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
-			environmentFactory1.adapt(resourceSet);
+		//	environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
 			pivotResource1.save(XMIUtil.createSaveOptions());

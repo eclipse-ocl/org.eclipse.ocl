@@ -470,7 +470,7 @@ public class OCL
 	}
 
 	public @NonNull CSResource getCSResource(@NonNull URI uri, @NonNull InputStream inputStream) throws IOException {
-		Resource resource = new ResourceSetImpl().createResource(uri);
+		Resource resource = getResourceSet().createResource(uri);
 		if (!(resource instanceof CSResource)) {
 			String doSetup = environmentFactory.getDoSetupName(uri);
 			if (doSetup != null) {
