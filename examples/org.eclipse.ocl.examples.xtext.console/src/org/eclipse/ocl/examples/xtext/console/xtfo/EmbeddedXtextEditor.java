@@ -228,7 +228,7 @@ public class EmbeddedXtextEditor
 		ocl = OCLInternal.newInstance(currentEnvironmentFactory);
 		ResourceSet xtextResourceSet = getResourceSet();
 		if (xtextResourceSet != null) {
-			currentEnvironmentFactory.adapt(xtextResourceSet);
+		// XXX	currentEnvironmentFactory.adapt(xtextResourceSet);
 		}
 		createEditor(fControl);
 	}

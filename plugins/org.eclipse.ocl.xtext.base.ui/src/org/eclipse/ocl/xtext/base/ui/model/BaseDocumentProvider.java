@@ -87,7 +87,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 		if (resource != null) {
 			ResourceSet resourceSet = resource.getResourceSet();
 			if (resourceSet != null) {
-				getEnvironmentFactory().adapt(resourceSet);
+// XXX				getEnvironmentFactory().adapt(resourceSet);
 			}
 		}
 		super.loadResource(resource, document, encoding);

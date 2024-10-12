@@ -298,17 +298,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-		assert false; //(notifier instanceof ResourceSet); // || (notifier instanceof Resource);		// XXX do we need Resource ???
+	//	EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(notifier);
+	//	if (environmentFactoryAdapter != null) {
+	//		assert environmentFactoryAdapter.getEnvironmentFactory() == this;			// XXX verifying redundancy
+	//		return environmentFactoryAdapter;
+	//	}
+		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
 			assert adapter.getEnvironmentFactory() == this;
-//			if (adapter.getEnvironmentFactory() != this) {
-//				adapter = null;
-//			}
-			return adapter;
 		}
-		if (adapter == null) {
+		else {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
 		}
@@ -318,7 +319,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.23
 	 */
-	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
