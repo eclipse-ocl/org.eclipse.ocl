@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.delegate;
 
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -325,7 +325,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(value instanceof Notifier ? (Notifier)value : null);
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);// instanceof Notifier ? (Notifier)value : null);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 	//	if ((context != null) && (value instanceof EObject)) {
 	//		Executor executor = PivotUtil.basicGetExecutor((EObject) value, context);

@@ -153,6 +153,8 @@ public class PivotUtilInternal //extends PivotUtil
 	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
 	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
 	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
+	 *
+	 * @since 1.23
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
@@ -287,7 +289,9 @@ public class PivotUtilInternal //extends PivotUtil
 		if (resourceSet != null) {		// null if working with installed resources
 			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
 			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
+				environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				return environmentFactory;
 			}
 			projectManager = ProjectMap.findAdapter(resourceSet);
 		}
