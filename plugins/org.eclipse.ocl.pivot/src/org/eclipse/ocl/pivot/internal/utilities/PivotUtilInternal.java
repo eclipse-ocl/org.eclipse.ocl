@@ -274,7 +274,7 @@ public class PivotUtilInternal //extends PivotUtil
 			if (resourceSet != null) {
 				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
 				if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
-					environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
+				//	environmentFactoryAdapter = environmentFactory.adapt(resourceSet);	// XXX
 				}
 				// assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;	// may differ when testValidate_Validate_completeocl deliberately uses multiple EnvironmentFactory
 			}
