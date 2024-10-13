@@ -24,6 +24,7 @@ import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -31,6 +32,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +80,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 import com.google.common.collect.Lists;
 
@@ -270,6 +273,13 @@ public class DelegateInstaller
 	{
 		private static @Nullable DynamicEcoreValidator INSTANCE = null;
 
+		/**
+		 * null initially.
+		 * false once test for OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EcorePackage.INSTANCE validation delegate fails.
+		 * true once test succeeds and EnvironmentFactory is established.
+		 */
+		private static @NonNull ThreadLocal<@Nullable Boolean> HAS_OCL = new ThreadLocal<>();
+
 		public static @NonNull EValidator get(@NonNull EnvironmentFactory environmentFactory) {
 			DynamicEcoreValidator instance = getInstance();
 			instance.setOfEnvironmentFactory.put(environmentFactory, instance);
@@ -330,6 +340,53 @@ public class DelegateInstaller
 			else {
 				return EcorePackage.eINSTANCE;
 			}
+		}
+
+		protected void initializeOCL(Object value, Map<Object, Object> context) {
+			Boolean hasOCL = HAS_OCL.get();
+			if (hasOCL == null) {
+				List<String> validationDelegates = EcoreUtil.getValidationDelegates(EcorePackage.eINSTANCE);
+				if ((validationDelegates != null) && validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+					EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);
+					setOfEnvironmentFactory.put(environmentFactory, this);
+					HAS_OCL.set(Boolean.TRUE);
+				}
+				else {
+					HAS_OCL.set(Boolean.FALSE);
+				}
+			}
+		}
+
+		@Override
+		protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			// TODO Auto-generated method stub
+			return super.validate(classifierID, value, diagnostics, context);
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context,
+				String validationDelegate, String constraint, String expression, int severity, String source, int code) {
+		//	initializeOCL(eObject, context);
+			return super.validate(eClass, eObject, diagnostics, context, validationDelegate, constraint, expression, severity, source, code);
+		}
+
+		@Override
+		public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context,
+				String validationDelegate, String constraint, String expression, int severity, String source, int code) {
+		//	initializeOCL(value, context);
+			return super.validate(eDataType, value, diagnostics, context, validationDelegate, constraint, expression, severity, source, code);
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			initializeOCL(eObject, context);
+			return super.validate(eClass, eObject, diagnostics, context);
+		}
+
+		@Override
+		public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			initializeOCL(value, context);
+			return super.validate(eDataType, value, diagnostics, context);
 		}
 	}
 

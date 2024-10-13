@@ -274,14 +274,6 @@ public class PivotUtilInternal //extends PivotUtil
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
-		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
-		//	if (resourceSet != null) {
-		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
-		//		//	environmentFactoryAdapter = environmentFactory.adapt(resourceSet);	// XXX
-		//		}
-				// assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;	// may differ when testValidate_Validate_completeocl deliberately uses multiple EnvironmentFactory
-		//	}
 			return environmentFactory;
 		}
 		ProjectManager projectManager = null;
@@ -298,7 +290,7 @@ public class PivotUtilInternal //extends PivotUtil
 		if (projectManager == null) {
 			projectManager = ProjectManager.CLASS_PATH;
 		}
-		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactoryIgnoringEnvironmentFactoryAdapter(projectManager, resourceSet, null);		// XXX
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
 		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 	//	environmentFactory.adapt(resourceSet);
 		return environmentFactory;
