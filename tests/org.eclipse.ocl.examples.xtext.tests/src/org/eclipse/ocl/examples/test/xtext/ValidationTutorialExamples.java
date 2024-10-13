@@ -62,6 +62,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 
 	public void testValidationTutorial() throws Throwable {
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 		ResourceSet resourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
@@ -107,23 +108,17 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 	//	String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
 		helper.dispose();												// Does ocl0.dispose()
 		//
-		//	Validate the XMI - emulate live validation or manual validate
+		//	Validate the XMI - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-//				GlobalEnvironmentFactory.disposeInstance();
-			//	OCL ocl1 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
-			//	EValidator eValidator = DelegateInstaller.init(ocl1.getEnvironmentFactory());		// XXX move to EF ctor
-				//
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
 					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
-
-			//	ocl1.dispose();
 			}
 		});
 
@@ -131,11 +126,11 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			@Override
 			public void runWithThrowable() {
 //				GlobalEnvironmentFactory.disposeInstance();
-				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+//				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
 					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
 
-				ocl2.dispose();
+//				ocl2.dispose();
 			}
 		});
 	}

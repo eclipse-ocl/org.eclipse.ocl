@@ -421,7 +421,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	//	String indentedKey2 = "ES {\n\tat \"{\"";
 	//	String reformattedKey2 = "\t at \"{\"";
 		int i2 = -indentedWindow-1;
-		System.out.println(i2 + " " + (indentedOffset+i2));
+	//	System.out.println(i2 + " " + (indentedOffset+i2));
 		doReformatText(declarativeFormatter, rootNode, indentedOffset+i2, indentedWindow, replacedText);//.replace(indentedKey2, reformattedKey2));
 
 		ocl.dispose();
@@ -465,7 +465,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		int keyOffset = referenceText.indexOf(key);
 		assert (100 < keyOffset) && ((keyOffset + 100) < referenceText.length());
 		int i = -2;
-			System.out.println(i);
+//			System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, keyOffset + i, 100, referenceText);
 
 		ocl.dispose();
