@@ -41,6 +41,28 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
 
+	public static final @NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
+	public static final @NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
+	public static final @NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
+	public static final @NonNull URI ocl4xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXMIValidation.ocl", true);
+
+	protected @NonNull ResourceSet createExternalResourceSet() {
+		//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+		//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+		//	ASResourceImpl.SET_PROXY.setState(true);
+		ResourceSet resourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
+		GlobalEnvironmentFactory.disposeInstance();
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		// XXX Additional registration PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, true);
+		OCLDelegateDomain.lazyInitializeLocalValidationRegistry(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, null);
+		getProjectMap().initializeResourceSet(resourceSet);
+		return resourceSet;
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		TestUtil.doEssentialOCLSetup();
@@ -50,38 +72,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		OCLstdlib.install();
 	}
 
-//	@Override
-//	protected void tearDown() throws Exception {
-	//	if (resourceSet != null) {
-//			unloadResourceSet(resourceSet);
-//		}
-//		resourceSet = null;
-//		assert EValidator.Registry.INSTANCE.get(PivotPackage.eINSTANCE) == PivotValidator.INSTANCE;	// Verify global integrity - Bug 582494
-//		super.tearDown();
-//	}
-
 	public void testValidationTutorial() throws Throwable {
-	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
-	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
-	//	ASResourceImpl.SET_PROXY.setState(true);
-		ResourceSet resourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
-		GlobalEnvironmentFactory.disposeInstance();
-		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		// XXX Additional registration PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, true);
-		if (resourceSet != null) {
-			OCLDelegateDomain.lazyInitializeLocalValidationRegistry(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, null);
-		}
-		getProjectMap().initializeResourceSet(resourceSet);
+		ResourceSet resourceSet = createExternalResourceSet();
 		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
-
-		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
-		@NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
-		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
-		@NonNull URI ocl4xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXMIValidation.ocl", true);
 		//
 		//	Load the XMI (and its ecore) - emulate Open XMITestFile.xmi with Sample Ecore Model Editor
 		//
@@ -133,5 +126,82 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 //				ocl2.dispose();
 			}
 		});
+	}
+
+	public void testValidationTutorial_EcoreTestFile() throws Throwable {
+		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
+		getProjectMap().initializeResourceSet(independentResourceSet);
+		URI littleURI = getTestModelURI("models/ecore/LittleModel.ecore");
+		Resource independentEcoreResource = independentResourceSet.getResource(littleURI, true);
+		assert independentEcoreResource != null;
+		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("Minute"));
+	//	EObject independentEcoreObject = independentEcoreClass.getEStructuralFeature("uncachedDerived");
+		assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
+		independentEcoreClass.setName("M i n u t e");
+		String badMinuteName = "The name 'M i n u t e' is not well formed";
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteName));
+
+		ResourceSet resourceSet = createExternalResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		//
+		//	Load the ecore - emulate Open EcoreTestFile.ecore with Sample Ecore Model Editor
+		//
+		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
+		assert ecoreResource != null;
+		//
+		EClass ecoreClass = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass"));
+		EObject ecoreObject = ecoreClass.getEStructuralFeature("uncachedDerived");
+		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
+		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
+		//
+		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
+		//
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
+		assert ocl4ecoreResource != null;
+		helper.dispose();												// Does ocl0.dispose()
+		//
+		//	Verify that the Independent Ecore is not affected by the loaded OCL.
+		//
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteName));
+		independentEcoreClass.setName("Minute");
+		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentEcoreResource, null);
+
+
+		//
+		//	Validate the ecore - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
+		//
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
+			}
+		});
+		ecoreClass.setName("M i n u t e");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
+				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
+			}
+		});
+
+	/*	doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+//				GlobalEnvironmentFactory.disposeInstance();
+//				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
+
+//				ocl2.dispose();
+			}
+		}); */
 	}
 }
