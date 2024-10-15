@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2024 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,30 +21,25 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.WeakHashMap;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
@@ -77,316 +71,130 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 import com.google.common.collect.Lists;
 
+/**
+ * A DelegateInstaller supports installation of Ecore delegates to implement functionality defined by OCL expressions emdedded
+ * in AS Constraints, Operations and Properties.
+ */
 public class DelegateInstaller
 {
 	/**
-	 * DelegatingEPackage is an EPackage that delegates everything, except hash() and equals() to another EPackage.
-	 * It is therefore a distinct not-equals object that behaves identically. If therefore breaks the "==" test
-	 * in EObjectValidator. It is used to enable the DynamicEcoreValidator to displace EcoreValidator.
+	 * An ExtendedEObjectValidator instance displaces and wraps the regular EObjectValidator entry in the EValidator.Registry.INSTANCE
+	 * to add support for the additional constraints and invariants supported by validation delegates.
 	 */
-	private static final class DelegatingEPackage implements EPackage
+	public static final class ExtendedEObjectValidator extends EObjectValidator
 	{
-		private final @NonNull EPackage delegate;
-
-		public DelegatingEPackage(@NonNull EPackage delegate) {
-			this.delegate = delegate;
-		}
-
-		@Override
-		public EList<Adapter> eAdapters() {
-			return delegate.eAdapters();
-		}
-
-		@Override
-		public TreeIterator<@NonNull EObject> eAllContents() {
-			return delegate.eAllContents();
-		}
-
-		@Override
-		public EClass eClass() {
-			return delegate.eClass();
-		}
-
-		@Override
-		public EObject eContainer() {
-			return delegate.eContainer();
-		}
-
-		@Override
-		public EStructuralFeature eContainingFeature() {
-			return delegate.eContainingFeature();
-		}
-
-		@Override
-		public EReference eContainmentFeature() {
-			return delegate.eContainmentFeature();
-		}
-
-		@Override
-		public EList<EObject> eContents() {
-			return delegate.eContents();
-		}
-
-		@Override
-		public EList<EObject> eCrossReferences() {
-			return delegate.eCrossReferences();
-		}
-
-		@Override
-		public boolean eDeliver() {
-			return delegate.eDeliver();
-		}
-
-		@Override
-		public Object eGet(EStructuralFeature feature) {
-			return delegate.eGet(feature);
-		}
-
-		@Override
-		public Object eGet(EStructuralFeature feature, boolean resolve) {
-			return delegate.eGet(feature, resolve);
-		}
-
-		@Override
-		public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException {
-			return delegate.eInvoke(operation, arguments);
-		}
-
-		@Override
-		public boolean eIsProxy() {
-			return delegate.eIsProxy();
-		}
-
-		@Override
-		public boolean eIsSet(EStructuralFeature feature) {
-			return delegate.eIsSet(feature);
-		}
-
-		@Override
-		public void eNotify(Notification notification) {
-			delegate.eNotify(notification);
-		}
-
-		@Override
-		public Resource eResource() {
-			return delegate.eResource();
-		}
-
-		@Override
-		public void eSet(EStructuralFeature feature, Object newValue) {
-			delegate.eSet(feature, newValue);
-		}
-
-		@Override
-		public void eSetDeliver(boolean deliver) {
-			delegate.eSetDeliver(deliver);
-		}
-
-		@Override
-		public void eUnset(EStructuralFeature feature) {
-			delegate.eUnset(feature);
-		}
-
-		@Override
-		public EAnnotation getEAnnotation(String source) {
-			return delegate.getEAnnotation(source);
-		}
-
-		@Override
-		public EList<EAnnotation> getEAnnotations() {
-			return delegate.getEAnnotations();
-		}
-
-		@Override
-		public EClassifier getEClassifier(String name) {
-			return delegate.getEClassifier(name);
-		}
-
-		@Override
-		public EList<EClassifier> getEClassifiers() {
-			return delegate.getEClassifiers();
-		}
-
-		@Override
-		public EFactory getEFactoryInstance() {
-			return delegate.getEFactoryInstance();
-		}
-
-		@Override
-		public EList<EPackage> getESubpackages() {
-			return delegate.getESubpackages();
-		}
-
-		@Override
-		public EPackage getESuperPackage() {
-			return delegate.getESuperPackage();
-		}
-
-		@Override
-		public String getName() {
-			return delegate.getName();
-		}
-
-		@Override
-		public String getNsPrefix() {
-			return delegate.getNsPrefix();
-		}
-
-		@Override
-		public String getNsURI() {
-			return delegate.getNsURI();
-		}
-
-		@Override
-		public void setNsURI(String value) {
-			delegate.setNsURI(value);
-		}
-
-		@Override
-		public void setEFactoryInstance(EFactory value) {
-			delegate.setEFactoryInstance(value);
-		}
-
-		@Override
-		public void setName(String value) {
-			delegate.setName(value);
-		}
-
-		@Override
-		public void setNsPrefix(String value) {
-			delegate.setNsPrefix(value);
-		}
-	}
-
-	/**
-	 * The DynamicEcoreValidator.INSTANCE displaces the regular EcoreValidator.INSTANCE to force the EcoreValidator to use
-	 * dynamic validation and so support additional constraints supported by validation delegates.
-	 */
-	private static final class DynamicEcoreValidator extends EcoreValidator
-	{
-		private static @Nullable DynamicEcoreValidator INSTANCE = null;
-
 		/**
-		 * null initially.
-		 * false once test for OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EcorePackage.INSTANCE validation delegate fails.
-		 * true once test succeeds and EnvironmentFactory is established.
+		 * ExtendedDynamicEClassValidator corrects the inherited functionality to perform the regular validation after
+		 * processing any delegated invariants or constraints.
 		 */
-		private static @NonNull ThreadLocal<@Nullable Boolean> HAS_OCL = new ThreadLocal<>();
-
-		public static @NonNull EValidator get(@NonNull EnvironmentFactory environmentFactory) {
-			DynamicEcoreValidator instance = getInstance();
-			instance.setOfEnvironmentFactory.put(environmentFactory, instance);
-			return instance;
-		}
-
-		public static @NonNull  DynamicEcoreValidator getInstance() {
-			DynamicEcoreValidator instance = INSTANCE;
-			if (instance == null) {
-				instance = INSTANCE = new DynamicEcoreValidator();
+		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator {
+			// Ensure that the class loader for this class will be used downstream.
+			@Override
+			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+				assert eClass.getEPackage() == EcorePackage.eINSTANCE;
+				boolean result = validateDelegatedInvariants(eClass, eObject, diagnostics, context);
+				if (result || diagnostics != null) {
+					result &= validateDelegatedConstraints(eClass, eObject, diagnostics, context);
+				}
+				if (result || diagnostics != null) {		// XXX could we use super
+					List<EClass> eSuperTypes = eClass.getESuperTypes();
+					if (eSuperTypes.isEmpty()) {
+						result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
+					} else {
+						for (EClass eSuperType : eSuperTypes) {
+							if (result || diagnostics != null) {
+								result &= validate(eSuperType, eObject, diagnostics, context);
+							}
+						}
+					}
+				}
+				return result;
 			}
-			return instance;
 		}
 
-		public static void installFor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
+		private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
+
+		public static void installFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-			if (eValidator instanceof DynamicEcoreValidator) {
-				DynamicEcoreValidator instance = getInstance();
-				assert instance == eValidator;
-				instance.setOfEnvironmentFactory.put(environmentFactory, instance);
+		// FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
+			if (eValidator instanceof ExtendedEObjectValidator) {
+				((ExtendedEObjectValidator)eValidator).resourceSetsWithComplementedEcore.put(resourceSet, null);
 			}
-			else if (eValidator instanceof EcoreValidator) {
-				DynamicEcoreValidator instance = getInstance();
-				instance.setOfEnvironmentFactory.put(environmentFactory, instance);
-				EValidator.Registry.INSTANCE.put(ePackage, instance);
+			else if (eValidator != null) {
+				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
+				if (extendedEObjectValidator == null) {
+					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
+					ePackage2extendedEObjectValidator.put(ePackage, extendedEObjectValidator);
+				}
+				extendedEObjectValidator.resourceSetsWithComplementedEcore.put(resourceSet, null);
+				EValidator.Registry.INSTANCE.put(ePackage, extendedEObjectValidator);
 			}
 			else {
-			//	DynamicEcoreValidator instance = eValidator;
-			//	instance.setOfEnvironmentFactory.put(environmentFactory, instance);
-			//	EValidator.Registry.INSTANCE.put(ePackage, instance);
-			}		// XXX else / else
-		}
-
-		public static void uninstallFor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
-			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-			if (eValidator instanceof DynamicEcoreValidator) {
-				DynamicEcoreValidator instance = getInstance();
-				instance.setOfEnvironmentFactory.remove(environmentFactory);
-			//	EValidator.Registry.INSTANCE.put(ePackage, instance);		XXX could revert to EcoreValidator.INSTANCE once idle
+				// XXX null - ?? install a CompleteOCLValidator or wrap the default
 			}
 		}
-
-		@SuppressWarnings("null")
-		private final @NonNull EPackage delegate = new DelegatingEPackage(EcorePackage.eINSTANCE);
-		private final @NonNull WeakHashMap<@NonNull EnvironmentFactory, @NonNull DynamicEcoreValidator> setOfEnvironmentFactory = new WeakHashMap<>();			// XXX
 
 		/**
-		 * If the current thread has OCL support and that support requires support for Complete OCL complements to Ecore
-		 * return the delegate EcorePackage so that the EcoreValidator's shortcut is bypassed and dynamic validation using
-		 * validation delegates occurs.
+		 * Revert all EValidator.Registry.INSTANCE entries that were displaced to accommodate an ExtendedEObjectValidator.
+		 * This is typically used at the end of a JUnit test to clean up for another test.
 		 */
-		@Override
-		protected EPackage getEPackage() {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if ((environmentFactory != null) && setOfEnvironmentFactory.containsKey(environmentFactory)) {
-				return delegate;
+		public static void reset() {
+			for (ExtendedEObjectValidator extendedEObjectValidator : ePackage2extendedEObjectValidator.values()) {
+				EPackage ePackage = extendedEObjectValidator.ePackage;
+				EValidator eValidator = extendedEObjectValidator.eValidator;
+				EValidator.Registry.INSTANCE.put(ePackage, eValidator);
 			}
-			else {
-				return EcorePackage.eINSTANCE;
-			}
+			ePackage2extendedEObjectValidator.clear();
 		}
 
-		protected void initializeOCL(Object value, Map<Object, Object> context) {
-			Boolean hasOCL = HAS_OCL.get();
-			if (hasOCL == null) {
-				List<String> validationDelegates = EcoreUtil.getValidationDelegates(EcorePackage.eINSTANCE);
-				if ((validationDelegates != null) && validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
-					EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);
-					setOfEnvironmentFactory.put(environmentFactory, this);
-					HAS_OCL.set(Boolean.TRUE);
-				}
-				else {
-					HAS_OCL.set(Boolean.FALSE);
-				}
+		public static void uninstallFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
+			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+			if (eValidator instanceof ExtendedEObjectValidator) {
+				((ExtendedEObjectValidator)eValidator).resourceSetsWithComplementedEcore.remove(resourceSet);
+			//	EValidator.Registry.INSTANCE.put(ePackage, instance);		--- could revert to eValidator.eValidator once idle
 			}
 		}
 
-		@Override
-		protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
-			// TODO Auto-generated method stub
-			return super.validate(classifierID, value, diagnostics, context);
-		}
+		private final @NonNull EPackage ePackage;			// The validated EPackage
+		private final @NonNull EValidator eValidator;		// The displaced EValidator
 
-		@Override
-		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context,
-				String validationDelegate, String constraint, String expression, int severity, String source, int code) {
-		//	initializeOCL(eObject, context);
-			return super.validate(eClass, eObject, diagnostics, context, validationDelegate, constraint, expression, severity, source, code);
-		}
+		/**
+		 * The ResourceSets for which the use of Complete OCL complements for EcorePackage.INSTANCE has been declared.
+		 */
+		private final @NonNull WeakHashMap<@NonNull ResourceSet, Object> resourceSetsWithComplementedEcore = new WeakHashMap<>();
 
-		@Override
-		public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context,
-				String validationDelegate, String constraint, String expression, int severity, String source, int code) {
-		//	initializeOCL(value, context);
-			return super.validate(eDataType, value, diagnostics, context, validationDelegate, constraint, expression, severity, source, code);
+		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
+			this.ePackage = ePackage;
+			this.eValidator = eValidator;
 		}
 
 		@Override
 		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-			initializeOCL(eObject, context);
-			return super.validate(eClass, eObject, diagnostics, context);
-		}
-
-		@Override
-		public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
-			initializeOCL(value, context);
-			return super.validate(eDataType, value, diagnostics, context);
+			// Minimize overhead on the OCL-not-required control path.
+			DynamicEClassValidator dynamicEClassValidator = null;
+			if (!eObject.eIsProxy()) {
+				Resource eResource = eObject.eResource();
+				if (eResource != null) {
+					ResourceSet resourceSet = eResource.getResourceSet();
+					if ((resourceSet != null) && resourceSetsWithComplementedEcore.containsKey(resourceSet)) {
+						@SuppressWarnings("unused")
+						EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
+						dynamicEClassValidator = new ExtendedDynamicEClassValidator();			// XXX ?? cache in context
+					}
+				}
+			}
+			if (dynamicEClassValidator == null) {
+				return eValidator.validate(eClass, eObject, diagnostics, context);
+			}
+			else {				// Re-implement super.validate to avoid exclusion of delegation for EcorePackage.INSTANCE
+				return dynamicEClassValidator.validate(eClass, eObject, diagnostics, context);
+			}
 		}
 	}
 
@@ -537,13 +345,6 @@ public class DelegateInstaller
 		return exportDelegateURI != null ? exportDelegateURI : OCLinEcoreOptions.EXPORT_DELEGATION_URI.getPreferredValue();
 	}
 
-	/**
-	 * @since 1.23
-	 */
-	public static @NonNull EValidator init(@NonNull EnvironmentFactory environmentFactory) {
-		return DynamicEcoreValidator.get(environmentFactory);
-	}
-
 	public static boolean isBooleanInvariants(@NonNull Map<String,Object> options) {
 		return Boolean.valueOf(String.valueOf(options.get(OPTION_BOOLEAN_INVARIANTS)));
 	}
@@ -587,7 +388,7 @@ public class DelegateInstaller
 		EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(ePackage);
 		if (adapter != null) {
-			adapter.getDelegateDomains(true);			// Force recomputation with additional delegateURI
+			adapter.getDelegateDomains(true);					// Force recomputation with additional delegateURI
 		}
 	}
 
@@ -796,7 +597,7 @@ public class DelegateInstaller
 				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 				refreshValidationDelegates(ePackage, validationDelegates);
 			}
-			DynamicEcoreValidator.installFor(environmentFactory, ePackage);
+			ExtendedEObjectValidator.installFor(environmentFactory.getResourceSet(), ePackage);
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.
 	}
@@ -1066,7 +867,7 @@ public class DelegateInstaller
 					assert validationDelegates != null;
 					refreshValidationDelegates(ePackage, validationDelegates);
 				}
-				DynamicEcoreValidator.uninstallFor(environmentFactory, ePackage);
+				ExtendedEObjectValidator.uninstallFor(environmentFactory.getResourceSet(), ePackage);
 			}
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.

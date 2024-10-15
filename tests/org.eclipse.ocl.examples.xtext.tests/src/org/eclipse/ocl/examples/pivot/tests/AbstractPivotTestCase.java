@@ -48,6 +48,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -440,6 +441,20 @@ public class AbstractPivotTestCase extends TestCase
 		return true;
 	}
 
+	public static @NonNull List<Diagnostic> assertLazyValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ResourceSet resourceSet = resource.getResourceSet();
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+	//	ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
+		ThreadLocalExecutor.reset();
+		if (savedEnvironmentFactory != null) {
+			ThreadLocalExecutor.attachEnvironmentFactory(savedEnvironmentFactory);
+		}
+		return diagnostics;
+	}
+
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
 		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		ResourceSet resourceSet = resource.getResourceSet();
@@ -743,6 +758,7 @@ public class AbstractPivotTestCase extends TestCase
 			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
 			//		}
 			ThreadLocalExecutor.reset();
+			DelegateInstaller.ExtendedEObjectValidator.reset();
 			if (DEBUG_GC) {
 				testHelper.doTearDown();
 				makeCopyOfGlobalState.restoreGlobalState();
