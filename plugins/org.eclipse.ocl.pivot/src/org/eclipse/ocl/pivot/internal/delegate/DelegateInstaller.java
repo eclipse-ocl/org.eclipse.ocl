@@ -97,7 +97,7 @@ public class DelegateInstaller
 			// Ensure that the class loader for this class will be used downstream.
 			@Override
 			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-				assert eClass.getEPackage() == EcorePackage.eINSTANCE;
+			//	assert eClass.getEPackage() == ePackage;	// XXX used as super-eValidator
 				boolean result = validateDelegatedInvariants(eClass, eObject, diagnostics, context);
 				if (result || diagnostics != null) {
 					result &= validateDelegatedConstraints(eClass, eObject, diagnostics, context);
@@ -109,7 +109,7 @@ public class DelegateInstaller
 					} else {
 						for (EClass eSuperType : eSuperTypes) {
 							if (result || diagnostics != null) {
-								result &= validate(eSuperType, eObject, diagnostics, context);
+								result &= validate(eSuperType, eObject, diagnostics, context);		// XXX super-eValidator
 							}
 						}
 					}
@@ -579,7 +579,7 @@ public class DelegateInstaller
 						eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
 					}
 					@SuppressWarnings("unused")
-					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
+					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, PivotConstants.DUMMY_COMPLETE_OCL_BODY);			// XXX toString
 					((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 				}
 			}

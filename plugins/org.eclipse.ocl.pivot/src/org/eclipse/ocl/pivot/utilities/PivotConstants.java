@@ -211,4 +211,12 @@ public interface PivotConstants
 	 * @since 1.23
 	 */
 	static final @NonNull String OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL = OCLConstants.OCL_DELEGATE_URI_PIVOT + "/CompleteOCL";
+
+	/**
+	 * The dummy text for a OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotation detail indicating that the true body is
+	 * provided by a complementing AS Class.
+	 *
+	 * @since 1.23
+	 */
+	static final String DUMMY_COMPLETE_OCL_BODY = "$$complete-ocl$$";
 }

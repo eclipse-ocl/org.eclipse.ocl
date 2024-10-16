@@ -221,7 +221,7 @@ public abstract class CompleteOCLLoader
 				ASResource asResource = (ASResource)asPackage.eResource();
 				Technology technology = asResource.getASResourceFactory().getTechnology();
 				if (technology.needsPivotValidator()) {			// XXX and has constraints
-					needsValidator = true;
+			// XXX		needsValidator = true;
 				}
 			}
 			if (needsValidator) {
