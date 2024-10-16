@@ -67,7 +67,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	 * The map from delegateURI to known DelegateDomain. Mappings are established
 	 * lazily by {@link #getDelegateDomain}.
 	 */
-	protected /*@LazyNonNull*/ Map<String, DelegateDomain> delegateDomainMap = null;
+	protected /*@LazyNonNull*/ Map<@NonNull String, @NonNull DelegateDomain> delegateDomainMap = null;
 
 	protected @NonNull DelegateDomain createDelegateDomain(@NonNull String delegateURI) {
 		EPackage ePackage = ClassUtil.nonNullState(getTarget());
@@ -83,7 +83,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	/**
 	 * Return all registered delegate domains.
 	 */
-	public @NonNull Collection<DelegateDomain> getAllDelegateDomains() {
+	public @NonNull Collection<@NonNull DelegateDomain> getAllDelegateDomains() {
 		if (delegateDomainMap == null) {
 			getDelegateDomains();
 		}
@@ -100,15 +100,15 @@ public class DelegateEPackageAdapter extends AdapterImpl
 		return delegateDomainMap.get(delegateURI);
 	}
 
-	public @NonNull Map<String, DelegateDomain>  getDelegateDomains() {
+	public @NonNull Map<@NonNull String, @NonNull DelegateDomain>  getDelegateDomains() {
 		return getDelegateDomains(false);
 	}
 
 	/**
 	 * @since 1.23
 	 */
-	public synchronized @NonNull Map<String, DelegateDomain> getDelegateDomains(boolean force) {
-		Map<String, DelegateDomain> delegateDomainMap2 = delegateDomainMap;
+	public synchronized @NonNull Map<@NonNull String, @NonNull DelegateDomain> getDelegateDomains(boolean force) {
+		Map<@NonNull String, @NonNull DelegateDomain> delegateDomainMap2 = delegateDomainMap;
 		if (force || (delegateDomainMap2 == null)) {
 			if (delegateDomainMap2 == null) {
 				delegateDomainMap = delegateDomainMap2 = new HashMap<>();
@@ -118,7 +118,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 			if (eAnnotation != null) {
 				VirtualDelegateMapping registry = VirtualDelegateMapping.getRegistry(ePackage);
 				EMap<String, String> details = eAnnotation.getDetails();
-				for (DelegatedBehavior<?, ?, ?> delegatedBehavior : AbstractDelegatedBehavior.getDelegatedBehaviors()) {
+				for (@NonNull DelegatedBehavior<?, ?, ?> delegatedBehavior : AbstractDelegatedBehavior.getDelegatedBehaviors()) {
 					String behaviorName = delegatedBehavior.getName();
 					String delegateURIs = details.get(behaviorName);
 					if (delegateURIs != null) {
@@ -172,12 +172,12 @@ public class DelegateEPackageAdapter extends AdapterImpl
 
 	public void unloadDelegates() {
 		if (delegateDomainMap != null) {
-			List<DelegateDomain> delegateDomains;
+			List<@NonNull DelegateDomain> delegateDomains;
 			synchronized (delegateDomainMap) {
 				delegateDomains = new ArrayList<>(delegateDomainMap.values());
 //				delegateDomainMap.clear(); -- don't clear else tests fail since registrations do not occur
 			}
-			for (DelegateDomain delegateDomain : delegateDomains) {
+			for (@NonNull DelegateDomain delegateDomain : delegateDomains) {
 				delegateDomain.reset();
 			}
 		}

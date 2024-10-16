@@ -39,12 +39,12 @@ import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 public abstract class AbstractDelegatedBehavior<E extends EModelElement, R, F>
 implements DelegatedBehavior<E, R, F> {
 
-	private static List<DelegatedBehavior<?, ?, ?>> delegatedBehaviors = null;
+	private static List<@NonNull DelegatedBehavior<?, ?, ?>> delegatedBehaviors = null;
 
-	public static @NonNull List<DelegatedBehavior<?, ?, ?>> getDelegatedBehaviors() {
+	public static @NonNull List<@NonNull DelegatedBehavior<?, ?, ?>> getDelegatedBehaviors() {
 		// FIXME Maybe use an extension point here (but need a common
 		//  Factory, Registry supertype for a user-defined fourth behavior)
-		List<DelegatedBehavior<?, ?, ?>> delegatedBehaviors2 = delegatedBehaviors;
+		List<@NonNull DelegatedBehavior<?, ?, ?>> delegatedBehaviors2 = delegatedBehaviors;
 		if (delegatedBehaviors2 == null) {
 			delegatedBehaviors2 = delegatedBehaviors = new ArrayList<>();
 			delegatedBehaviors2.add(InvocationBehavior.INSTANCE);
@@ -78,11 +78,11 @@ implements DelegatedBehavior<E, R, F> {
 	}
 
 	@Override
-	public @NonNull List<F> getFactories(@NonNull E eObject) {
+	public @NonNull List<@NonNull F> getFactories(@NonNull E eObject) {
 		EPackage ePackage = getEPackage(eObject);
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
-		List<F> factories = new ArrayList<>();
-		for (DelegateDomain delegateDomain : adapter.getAllDelegateDomains()) {
+		List<@NonNull F> factories = new ArrayList<>();
+		for (@NonNull DelegateDomain delegateDomain : adapter.getAllDelegateDomains()) {
 			String uri = delegateDomain.getURI();
 			if (hasDelegateAnnotation(eObject, ePackage, uri)) {
 				@Nullable F factory = getFactory(delegateDomain, eObject);
