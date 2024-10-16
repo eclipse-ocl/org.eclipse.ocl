@@ -91,29 +91,29 @@ public class DelegateInstaller
 	{
 		/**
 		 * ExtendedDynamicEClassValidator corrects the inherited functionality to perform the regular validation after
-		 * processing any delegated invariants or constraints.
+		 * processing any delegated invariants or constraints for all super types.
 		 */
 		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator {
 			// Ensure that the class loader for this class will be used downstream.
 			@Override
 			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-				assert eClass.getEPackage() == EcorePackage.eINSTANCE;
+				assert eClass.getEPackage() == ePackage;
 				boolean result = validateDelegatedInvariants(eClass, eObject, diagnostics, context);
 				if (result || diagnostics != null) {
 					result &= validateDelegatedConstraints(eClass, eObject, diagnostics, context);
 				}
-				if (result || diagnostics != null) {		// XXX could we use super
-					List<EClass> eSuperTypes = eClass.getESuperTypes();
-					if (eSuperTypes.isEmpty()) {
-						result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
-					} else {
-						for (EClass eSuperType : eSuperTypes) {
-							if (result || diagnostics != null) {
-								result &= validate(eSuperType, eObject, diagnostics, context);
-							}
+				if (result || diagnostics != null) {
+					List<EClass> eAllSuperTypes = eClass.getEAllSuperTypes();
+					for (EClass eSuperType : eAllSuperTypes) {			// Must avoid multiple validation of multiply inherited super types
+						if (result || diagnostics != null) {
+							result &= validateDelegatedInvariants(eSuperType, eObject, diagnostics, context);
+						}
+						if (result || diagnostics != null) {
+							result &= validateDelegatedConstraints(eSuperType, eObject, diagnostics, context);
 						}
 					}
-				}
+					result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
+			}
 				return result;
 			}
 		}
@@ -579,7 +579,7 @@ public class DelegateInstaller
 						eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
 					}
 					@SuppressWarnings("unused")
-					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, "$$complete-ocl$$");			// XXX toString
+					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, PivotConstants.DUMMY_COMPLETE_OCL_BODY);			// XXX toString
 					((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 				}
 			}

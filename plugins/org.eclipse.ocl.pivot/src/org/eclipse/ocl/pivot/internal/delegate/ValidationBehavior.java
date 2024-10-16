@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -36,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -52,7 +52,6 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
-			VirtualDelegateMapping registry = VirtualDelegateMapping.getRegistry(eClassifier);
 			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
 			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
@@ -70,8 +69,15 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 				LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
 				if (asSpecification instanceof ExpressionInOCL) {
 					ExpressionInOCL asExpression = (ExpressionInOCL)asSpecification;
-					if ((asExpression.getOwnedBody() != null) || (asExpression.getBody() != null)) {
+					if (asExpression.getOwnedBody() != null) {
 						return asConstraint;
+					}
+					String body = asExpression.getBody();
+					if (body != null) {
+						if (!PivotConstants.DUMMY_COMPLETE_OCL_BODY.equals(body)) {
+							return asConstraint;
+						}
+						getClass();		// XXX
 					}
 				}
 			}

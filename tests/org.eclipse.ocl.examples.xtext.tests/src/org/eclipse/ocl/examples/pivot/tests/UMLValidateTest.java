@@ -220,7 +220,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		Diagnostic diagnostic = validationContext.getDiagnostician().validate(umlClass1, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
 		assertDiagnostics("Loading", umlResource, diagnostics,
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
+			StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 		//
 		disposeResourceSet(resourceSet);
 		helper.dispose();
