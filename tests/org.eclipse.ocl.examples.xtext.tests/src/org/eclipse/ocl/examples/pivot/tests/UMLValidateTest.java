@@ -223,6 +223,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 			StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 		//
+		helper.unloadDocument(oclURI);
 		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
