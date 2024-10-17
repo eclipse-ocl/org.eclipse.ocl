@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
@@ -53,7 +54,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
 		Registry validationRegistry = EValidator.Registry.INSTANCE;
 		for (@NonNull Resource resource : resources) {
-			ValidationRegistryAdapter validationRegistryAdapter = ValidationRegistryAdapter.getAdapter(resource);
+			ValidationRegistryAdapter validationRegistryAdapter = ValidationRegistryAdapter.getAdapter(resource);		// XXX Use ResourceSet directly
 			validationRegistry = validationRegistryAdapter;
 			break;
 		}
@@ -90,11 +91,14 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 
 	protected @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map,
 			@NonNull ValidityModel validityModel, @NonNull EPackage ePackage, @NonNull EValidator eValidator, @NonNull Monitor monitor) {
-		if (eValidator instanceof ComposedEValidator) {
+		if (eValidator instanceof ComposedEValidator) {			// XXX ComposedEValidator deprecated
 			for (@SuppressWarnings("null")@NonNull EValidator child : ((ComposedEValidator) eValidator).getChildren()) {
 				map = getConstraints(map, validityModel, ePackage, child, monitor);
 			}
 			return map;
+		}
+		if (eValidator instanceof ExtendedEObjectValidator) {
+			eValidator = ((ExtendedEObjectValidator)eValidator).getEValidator();
 		}
 //		Map<String, EClassifier> name2eClassifier = new HashMap<>();
 		Map<@NonNull Class<?>, @NonNull List<@NonNull EClassifier>> javaClass2eClassifiers = new HashMap<>();
