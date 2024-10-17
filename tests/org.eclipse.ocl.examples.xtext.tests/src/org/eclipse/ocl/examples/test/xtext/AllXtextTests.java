@@ -18,6 +18,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -75,6 +76,7 @@ extends TestCase {
 		if (testLogFile != null) {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
+		XMLTypePackage.eINSTANCE.getName();					// Ensure XMLTypePackage is global state before save/restore global state
 		TestSuite result = new TestSuite(testSuiteName);
 		result.addTestSuite(FirstTest.class);
 		result.addTestSuite(MonikerTests.class);
