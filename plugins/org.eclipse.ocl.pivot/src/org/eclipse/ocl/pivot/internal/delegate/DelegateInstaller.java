@@ -162,6 +162,7 @@ public class DelegateInstaller
 		}
 
 		private final @NonNull EPackage ePackage;			// The validated EPackage
+
 		private final @NonNull EValidator eValidator;		// The displaced EValidator
 
 		/**
@@ -172,6 +173,15 @@ public class DelegateInstaller
 		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 			this.ePackage = ePackage;
 			this.eValidator = eValidator;
+		}
+
+		@Override
+		public @NonNull EPackage getEPackage() {
+			return ePackage;
+		}
+
+		public @NonNull EValidator getEValidator() {
+			return eValidator;
 		}
 
 		@Override
