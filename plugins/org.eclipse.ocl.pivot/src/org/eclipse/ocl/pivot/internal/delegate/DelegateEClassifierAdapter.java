@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * DelegateEClassifierAdapter extends an EClassifier to cache its ValidationDelegate.
@@ -100,10 +99,10 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 					}
 				}
 			}
-			System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " => " + validationDelegateMap.size());
+		//	System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " => " + validationDelegateMap.size());
 		}
 		else {
-			System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " = " + validationDelegateMap.size());
+		//	System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " = " + validationDelegateMap.size());
 		}
 		return validationDelegateMap2;
 	}
