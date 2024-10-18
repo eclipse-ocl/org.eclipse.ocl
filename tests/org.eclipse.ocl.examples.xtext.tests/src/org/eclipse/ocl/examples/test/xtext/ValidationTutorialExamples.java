@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -150,9 +151,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert ecoreResource != null;
 		//
 		EClass ecoreClass = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass"));
-		EObject ecoreObject = ecoreClass.getEStructuralFeature("uncachedDerived");
+		EStructuralFeature ecoreFeature = ecoreClass.getEStructuralFeature("uncachedDerived");
 		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
-		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
+		String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
@@ -166,42 +167,33 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteName));
 		independentEcoreClass.setName("Minute");
 		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentEcoreResource, null);
-
-
 		//
 		//	Validate the ecore - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
+				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
+				assertLazyValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
 			}
 		});
+		//
+		//	Revalidate the ecore after changing some errors.
+		//
 		ecoreClass.setName("M i n u t e");
+		ecoreFeature.setTransient(true);
+		ecoreFeature.setVolatile(true);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
+				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
+					badMinuteName,
+					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
 			}
 		});
-
-	/*	doTestRunnable(new TestRunnable() {
-			@Override
-			public void runWithThrowable() {
-//				GlobalEnvironmentFactory.disposeInstance();
-//				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
-				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
-
-//				ocl2.dispose();
-			}
-		}); */
 	}
 }
