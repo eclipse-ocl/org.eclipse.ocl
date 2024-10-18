@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -278,17 +277,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 			errors2.add(diagnostic);
 		}
-	}
-
-	@Override
-	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-		//		if (resourceSet != null) {
-		//			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-		//FIXME This assertion is broken. It perhaps once tested for OCL-in-ResourceSet, but now is flaky depending on
-		// the lazy construction time of the metamodelManager
-		//			assert metamodelManager == null;
-		//		}
-		return super.basicSetResourceSet(resourceSet, notifications);
 	}
 
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
