@@ -57,7 +57,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 	/**
 	 * @since 1.4
 	 */
-	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistyAdapter */
+	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistryAdapter */
 	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
 			EValidator.@Nullable Registry globalEValidatorRegistry, AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		EValidatorRegistryImpl localEValidatorRegistry = new EValidatorRegistryImpl();

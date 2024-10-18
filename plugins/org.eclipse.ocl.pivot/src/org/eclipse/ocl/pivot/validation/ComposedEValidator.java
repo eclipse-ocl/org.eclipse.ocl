@@ -35,6 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * validation to be sensitive to the ResourceSet for which it is installed. With the advent of ValidatorRegistryAdapter
  * a ComposedEValidator should only be in use within a relevant ResourceSEt.
  */
+@Deprecated /* @deprecated use DelegateInstaller.ExtendedEObjectValidator to extend a complemented EValidator */
 public class ComposedEValidator implements EValidator
 {
 	private static @Nullable Object getEValidator(EValidator.@NonNull Registry eValidatorRegistry, @NonNull EClass eClass) {
