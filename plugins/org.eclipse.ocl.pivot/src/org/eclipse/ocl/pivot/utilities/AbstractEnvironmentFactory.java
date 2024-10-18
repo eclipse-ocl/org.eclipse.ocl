@@ -170,7 +170,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Debug lust of the System.identityHashCode of each active owners of an attach
 	 *
-	 * System.identityHashCode avoids problmes with finalized attachOwners.
+	 * System.identityHashCode avoids problems with finalized attachOwners.
 	 */
 	private List<@NonNull Integer> attachOwners = new ArrayList<>();
 
