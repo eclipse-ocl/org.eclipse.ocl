@@ -280,7 +280,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 				settingRegistry.put(oclDelegateURI, settingDelegateFactory);
 			//	System.out.println("global SettingDelegateRegistry " + NameUtil.debugSimpleName(settingRegistry) + " [" + oclDelegateURI + "] = " + NameUtil.debugSimpleName(settingDelegateFactory));
 			}
-			lazyInitializeGlobalValidationRegistry(oclDelegateURI, forceInitialization, false);
+			lazyInitializeGlobalValidationRegistry(oclDelegateURI, forceInitialization);
 			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
 			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {
 				OCLQueryDelegateFactory queryDelegateFactory = new OCLQueryDelegateFactory(oclDelegateURI, true);
@@ -293,7 +293,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.23
 	 */
-	public static void lazyInitializeGlobalValidationRegistry(@NonNull String oclDelegateURI, boolean forceInitialization, boolean isCompleteOCL) {
+	public static void lazyInitializeGlobalValidationRegistry(@NonNull String oclDelegateURI, boolean forceInitialization) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
 			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
