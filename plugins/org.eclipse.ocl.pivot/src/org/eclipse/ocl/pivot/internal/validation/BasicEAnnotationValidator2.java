@@ -71,15 +71,9 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 			//	Construct a pseudo Resource-EPackage-EClass to host the dynamically created EStructuralFeatures
 			//	for the prevailing details.
 			//
-			Resource dynamicAnnotationResource = new XMIResourceImpl(URI.createURI(PivotAnnotationsPackage.eINSTANCE.getNsURI()));
-			EPackage dynamicAnnotationPackage = EcoreFactory.eINSTANCE.createEPackage();
-			dynamicAnnotationPackage.setName(PivotAnnotationsPackage.eINSTANCE.getName());
-			dynamicAnnotationPackage.setNsPrefix(PivotAnnotationsPackage.eINSTANCE.getNsPrefix());
-			dynamicAnnotationPackage.setNsURI(PivotAnnotationsPackage.eINSTANCE.getNsURI());
-			dynamicAnnotationResource.getContents().add(dynamicAnnotationPackage);
 			dynamicAnnotationClass = EcoreFactory.eINSTANCE.createEClass();
 			dynamicAnnotationClass.setName(className);
-			dynamicAnnotationPackage.getEClassifiers().add(dynamicAnnotationClass);
+			((BasicEAnnotationValidator2)eAnnotationValidator).addDynamicAnnotationClass(dynamicAnnotationClass);
 			dynamicAnnotationFeatures = dynamicAnnotationClass.getEStructuralFeatures();
 		}
 
@@ -157,6 +151,8 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 	 */
 	private final Map<EClass, Map<String, EStructuralFeature>> annotationClass2name2annotationProperty = new HashMap<EClass, Map<String, EStructuralFeature>>();
 
+	private static EPackage dynamicAnnotationPackage = null;
+
 	protected BasicEAnnotationValidator2(String annotationSource, String annotationName, String diagnosticSource, EClass... eAnnotationMetaClasses)
 	{
 		super(annotationSource, annotationName, diagnosticSource);
@@ -174,6 +170,21 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 				}
 			}
 		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public void addDynamicAnnotationClass(EClass dynamicAnnotationClass) {
+		if (dynamicAnnotationPackage == null) {
+			Resource dynamicAnnotationResource = new XMIResourceImpl(URI.createURI(PivotAnnotationsPackage.eINSTANCE.getNsURI()));
+			this.dynamicAnnotationPackage = EcoreFactory.eINSTANCE.createEPackage();
+			dynamicAnnotationPackage.setName(PivotAnnotationsPackage.eINSTANCE.getName());
+			dynamicAnnotationPackage.setNsPrefix(PivotAnnotationsPackage.eINSTANCE.getNsPrefix());
+			dynamicAnnotationPackage.setNsURI(PivotAnnotationsPackage.eINSTANCE.getNsURI());
+			dynamicAnnotationResource.getContents().add(dynamicAnnotationPackage);
+		}
+		dynamicAnnotationPackage.getEClassifiers().add(dynamicAnnotationClass);
 	}
 
 	/**
