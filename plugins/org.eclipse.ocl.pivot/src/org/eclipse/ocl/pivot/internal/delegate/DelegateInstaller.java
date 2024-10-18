@@ -112,7 +112,7 @@ public class DelegateInstaller
 							result &= validateDelegatedConstraints(eSuperType, eObject, diagnostics, context);
 						}
 					}
-					result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
+					result &= eValidator.validate(eClass, eObject, diagnostics, context);
 			}
 				return result;
 			}
