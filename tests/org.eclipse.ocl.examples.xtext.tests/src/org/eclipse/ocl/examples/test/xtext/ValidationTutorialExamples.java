@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -42,11 +43,6 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
 
-	public static final @NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
-	public static final @NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
-	public static final @NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
-	public static final @NonNull URI ocl4xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXMIValidation.ocl", true);
-
 	protected @NonNull ResourceSet createExternalResourceSet() {
 		//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
@@ -57,8 +53,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		// XXX Additional registration PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
-		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, true);
+		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true);
 		OCLDelegateDomain.lazyInitializeLocalValidationRegistry(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, null);
 		getProjectMap().initializeResourceSet(resourceSet);
 		return resourceSet;
@@ -74,6 +69,10 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void testValidationTutorial() throws Throwable {
+		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
+		@NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
+		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
+		@NonNull URI ocl4xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXMIValidation.ocl", true);
 		ResourceSet resourceSet = createExternalResourceSet();
 		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
 		//
@@ -130,6 +129,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void testValidationTutorial_EcoreTestFile() throws Throwable {
+		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
+		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
 		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
 		getProjectMap().initializeResourceSet(independentResourceSet);
 		URI littleURI = getTestModelURI("models/ecore/LittleModel.ecore");
@@ -193,6 +194,117 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
 					badMinuteName,
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
+			}
+		});
+	}
+
+	public void testValidationTutorial_PapyrusTestFile() throws Throwable {
+		UMLStandaloneSetup.init();
+		@NonNull URI umlURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/PapyrusTestFile.uml", true);
+		@NonNull URI ocl4umlURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraUMLValidation.ocl", true);
+		String NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE = "Named element ''{0}'' is not distinguishable from all other members of namespace ''{1}''.";
+		String MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE = "Not all the members of namespace ''{0}'' are distinguishable within it.";
+		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
+		getProjectMap().initializeResourceSet(independentResourceSet);
+		Resource independentUMLResource = independentResourceSet.getResource(umlURI, true);
+		assert independentUMLResource != null;
+		org.eclipse.uml2.uml.Model independentUMLModel = (org.eclipse.uml2.uml.Model)independentUMLResource.getContents().get(0);
+		org.eclipse.uml2.uml.Package independentUMLPackage = (org.eclipse.uml2.uml.Model)independentUMLResource.getContents().get(0);
+		org.eclipse.uml2.uml.Class independentUML_UPPERCASE_Class = (org.eclipse.uml2.uml.Class)independentUMLPackage.getOwnedTypes().get(0);
+		org.eclipse.uml2.uml.Class independentUML_lowercase_Class = (org.eclipse.uml2.uml.Class)independentUMLPackage.getOwnedTypes().get(1);
+		assertNoValidationErrors("Independent UML validation without extra OCL", independentUMLResource);
+		independentUML_UPPERCASE_Class.setName("lowercase");
+		String independentUML_UPPERCASE_Label = LabelUtil.getLabel(independentUML_UPPERCASE_Class);
+		String independentUML_lowercase_Label = LabelUtil.getLabel(independentUML_lowercase_Class);
+		String independentUMLModelLabel = LabelUtil.getLabel(independentUMLModel);
+		assertLazyValidationDiagnostics("Corrupted Independent UML validation without OCL support", independentUMLResource, getMessages(
+				StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, independentUML_UPPERCASE_Label, independentUMLModelLabel),
+				StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, independentUML_lowercase_Label, independentUMLModelLabel),
+				StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, independentUMLModelLabel)));
+
+		ResourceSet resourceSet = createExternalResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		//
+		//	Load the uml - emulate Open PapyrusTestFile.uml with Sample UML Model Editor
+		//
+		Resource umlResource = resourceSet.getResource(umlURI, true);
+		assert umlResource != null;
+		//
+		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+		org.eclipse.uml2.uml.Package umlPackage = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+		org.eclipse.uml2.uml.Class uml_UPPERCASE_Class = (org.eclipse.uml2.uml.Class)umlPackage.getOwnedTypes().get(0);
+		org.eclipse.uml2.uml.Class uml_lowercase_Class = (org.eclipse.uml2.uml.Class)umlPackage.getOwnedTypes().get(1);
+		assertNoValidationErrors("UML validation without extra OCL", umlResource);
+		//
+		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
+		//
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		ASResource ocl4umlResource = (ASResource)helper.loadResource(ocl4umlURI);
+		assert ocl4umlResource != null;
+		helper.dispose();												// Does ocl0.dispose()
+		//
+		//	Verify that the Independent UML is not affected by the loaded OCL.
+		//
+		assertLazyValidationDiagnostics("Corrupted Independent UML validation with OCL support", independentUMLResource, getMessages(
+			StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, independentUML_UPPERCASE_Label, independentUMLModelLabel),
+			StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, independentUML_lowercase_Label, independentUMLModelLabel),
+			StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, independentUMLModelLabel)));
+		independentUML_UPPERCASE_Class.setName("UPPERCASE");
+		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentUMLResource, null);
+		//
+		//	Validate the UML - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
+		//
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String uml_lowercase_ClassLabel = LabelUtil.getLabel(uml_lowercase_Class);
+				assertLazyValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_lowercase_ClassLabel)));
+			}
+		});
+		//
+		//	Revalidate the UML after removing errors.
+		//
+		uml_lowercase_Class.setName("LowerCase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				assertValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages());
+			}
+		});
+		//
+		//	Revalidate the UML with a UML 'error'.
+		//
+		uml_UPPERCASE_Class.setName("LowerCase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String uml_UPPERCASE_Label = LabelUtil.getLabel(uml_UPPERCASE_Class);
+				String uml_lowercase_Label = LabelUtil.getLabel(uml_lowercase_Class);
+				String umlModelLabel = LabelUtil.getLabel(umlModel);
+				assertValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages(
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_UPPERCASE_Label, umlModelLabel),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_lowercase_Label, umlModelLabel),
+					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, umlModelLabel)));
+			}
+		});
+		//
+		//	Revalidate the UML with UML and OCL errors.
+		//
+		uml_UPPERCASE_Class.setName("uppercase");
+		uml_lowercase_Class.setName("uppercase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String uml_UPPERCASE_Label = LabelUtil.getLabel(uml_UPPERCASE_Class);
+				String uml_lowercase_Label = LabelUtil.getLabel(uml_lowercase_Class);
+				String umlModelLabel = LabelUtil.getLabel(umlModel);
+				assertValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_UPPERCASE_Label),
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_lowercase_Label),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_UPPERCASE_Label, umlModelLabel),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_lowercase_Label, umlModelLabel),
+					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, umlModelLabel)));
 			}
 		});
 	}
