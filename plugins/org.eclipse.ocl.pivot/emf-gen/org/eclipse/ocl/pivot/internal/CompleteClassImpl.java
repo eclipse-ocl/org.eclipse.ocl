@@ -470,7 +470,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 */
 	@Override
 	public @Nullable EObject getESObject() {
-		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
+		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes' esObject");
 	/*	assert super.getESObject() == null;
 		for (org.eclipse.ocl.pivot.Class asClass : partialClasses) {
 			EObject esObject = asClass.getESObject();
