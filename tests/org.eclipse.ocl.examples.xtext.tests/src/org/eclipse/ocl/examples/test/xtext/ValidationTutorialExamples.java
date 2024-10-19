@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 
 /**
@@ -133,15 +134,16 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
 		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
 		getProjectMap().initializeResourceSet(independentResourceSet);
-		URI littleURI = getTestModelURI("models/ecore/LittleModel.ecore");
-		Resource independentEcoreResource = independentResourceSet.getResource(littleURI, true);
+	//	URI littleURI = getTestModelURI("models/ecore/LittleModel.ecore");
+		Resource independentEcoreResource = independentResourceSet.getResource(ecoreURI, true);
 		assert independentEcoreResource != null;
-		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("Minute"));
+		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("BadClass"));
 	//	EObject independentEcoreObject = independentEcoreClass.getEStructuralFeature("uncachedDerived");
 		assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
 		independentEcoreClass.setName("M i n u t e");
 		String badMinuteName = "The name 'M i n u t e' is not well formed";
 		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteName));
+		ThreadLocalExecutor.resetEnvironmentFactory();
 
 		ResourceSet resourceSet = createExternalResourceSet();
 		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
@@ -161,7 +163,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
 		assert ocl4ecoreResource != null;
-		helper.dispose();												// Does ocl0.dispose()
+		//	helper.dispose();												// Does ocl0.dispose()
+		ocl0.dispose();
 		//
 		//	Verify that the Independent Ecore is not affected by the loaded OCL.
 		//
@@ -196,6 +199,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
 			}
 		});
+		helper.unloadDocument(ocl4ecoreURI);
+		helper.dispose();												// Does ocl0.dispose()
 	}
 
 	public void testValidationTutorial_PapyrusTestFile() throws Throwable {
@@ -204,7 +209,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		@NonNull URI ocl4umlURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraUMLValidation.ocl", true);
 		String NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE = "Named element ''{0}'' is not distinguishable from all other members of namespace ''{1}''.";
 		String MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE = "Not all the members of namespace ''{0}'' are distinguishable within it.";
-		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
+		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample UML Model Editor ResourceSet
 		getProjectMap().initializeResourceSet(independentResourceSet);
 		Resource independentUMLResource = independentResourceSet.getResource(umlURI, true);
 		assert independentUMLResource != null;
@@ -231,7 +236,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert umlResource != null;
 		//
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
-		org.eclipse.uml2.uml.Package umlPackage = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+		org.eclipse.uml2.uml.Package umlPackage = (org.eclipse.uml2.uml.Package)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class uml_UPPERCASE_Class = (org.eclipse.uml2.uml.Class)umlPackage.getOwnedTypes().get(0);
 		org.eclipse.uml2.uml.Class uml_lowercase_Class = (org.eclipse.uml2.uml.Class)umlPackage.getOwnedTypes().get(1);
 		assertNoValidationErrors("UML validation without extra OCL", umlResource);
@@ -241,7 +246,6 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
 		ASResource ocl4umlResource = (ASResource)helper.loadResource(ocl4umlURI);
 		assert ocl4umlResource != null;
-		helper.dispose();												// Does ocl0.dispose()
 		//
 		//	Verify that the Independent UML is not affected by the loaded OCL.
 		//
@@ -307,5 +311,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, umlModelLabel)));
 			}
 		});
+		helper.unloadDocument(ocl4umlURI);
+		helper.dispose();												// Does ocl0.dispose()
 	}
 }
