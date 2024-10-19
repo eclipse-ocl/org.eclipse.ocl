@@ -87,12 +87,21 @@ import com.google.common.collect.Lists;
  */
 public class DelegateInstaller
 {
+	/**
+	 * ExtendedEObjectValidatorAdapter adapts a ResourceSet to enable the ExtendedEObjectValidator functionality for
+	 * elements of the ResourceSet.
+	 */
 	public static class ExtendedEObjectValidatorAdapter implements Adapter
 	{
 		private @Nullable ResourceSet resourceSet;
+		private @NonNull UniqueList<@NonNull String> uris = new UniqueList<>();
 
 		public ExtendedEObjectValidatorAdapter(@NonNull ResourceSet resourceSet) {
 			this.resourceSet = resourceSet;
+		}
+
+		public void addURI(@NonNull String uri) {
+			uris.add(uri);
 		}
 
 		@Override
@@ -106,12 +115,20 @@ public class DelegateInstaller
 			return false;
 		}
 
+		public boolean isApplicableFor(@NonNull String uri) {
+			return uris.contains(uri);
+		}
+
 		@Override
 		public void notifyChanged(Notification notification) {}
 
+		public boolean removeURI(@NonNull String uri) {
+			return uris.remove(uri);
+		}
+
 		@Override
 		public void setTarget(Notifier newTarget) {
-			this.resourceSet = resourceSet;
+			this.resourceSet = (ResourceSet)newTarget;
 		}
 	}
 
@@ -125,7 +142,14 @@ public class DelegateInstaller
 		 * ExtendedDynamicEClassValidator corrects the inherited functionality to perform the regular validation after
 		 * processing any delegated invariants or constraints for all super types.
 		 */
-		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator {
+		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator
+		{
+			protected final @NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter;
+
+			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter) {
+				this.extendedEObjectValidatorAdapter = extendedEObjectValidatorAdapter;
+			}
+
 			// Ensure that the class loader for this class will be used downstream.
 			@Override
 			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -152,11 +176,11 @@ public class DelegateInstaller
 
 		private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
 
-		public static void installFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
+		public static void installFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage, @NonNull String oclURI) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 		// FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
 			if (eValidator instanceof ExtendedEObjectValidator) {
-				((ExtendedEObjectValidator)eValidator).installFor(resourceSet);
+				((ExtendedEObjectValidator)eValidator).installFor(resourceSet, oclURI);
 			}
 			else if (eValidator != null) {
 				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
@@ -164,7 +188,7 @@ public class DelegateInstaller
 					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
 					ePackage2extendedEObjectValidator.put(ePackage, extendedEObjectValidator);
 				}
-				extendedEObjectValidator.installFor(resourceSet);
+				extendedEObjectValidator.installFor(resourceSet, oclURI);
 				EValidator.Registry.INSTANCE.put(ePackage, extendedEObjectValidator);
 			}
 			else {
@@ -185,10 +209,10 @@ public class DelegateInstaller
 			ePackage2extendedEObjectValidator.clear();
 		}
 
-		public static void uninstallFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
+		public static void uninstallFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage, @NonNull String oclURI) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 			if (eValidator instanceof ExtendedEObjectValidator) {
-				((ExtendedEObjectValidator)eValidator).uninstallFor(resourceSet);
+				((ExtendedEObjectValidator)eValidator).uninstallFor(resourceSet, oclURI);
 			//	EValidator.Registry.INSTANCE.put(ePackage, instance);		--- could revert to eValidator.eValidator once idle
 			}
 		}
@@ -210,7 +234,7 @@ public class DelegateInstaller
 			return eValidator;
 		}
 
-		private void installFor(@NonNull ResourceSet resourceSet) {
+		private void installFor(@NonNull ResourceSet resourceSet, @NonNull String oclURI) {
 			ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = null;
 			EList<Adapter> eAdapters = resourceSet.eAdapters();
 			for (Adapter eAdapter : eAdapters) {
@@ -230,26 +254,26 @@ public class DelegateInstaller
 					eAdapters.add(extendedEObjectValidatorAdapter);
 				}
 			}
-		// XXX	extendedEObjectValidatorAdapter.add(oclId);
+			extendedEObjectValidatorAdapter.addURI(oclURI);
 		}
 
-		private boolean isApplicableFor(@NonNull ResourceSet resourceSet) {
+		private @Nullable ExtendedEObjectValidatorAdapter isApplicableFor(@NonNull ResourceSet resourceSet) {
 			for (Adapter eAdapter : resourceSet.eAdapters()) {
 				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-					ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
-					// has oclID
-					return true;
+					return (ExtendedEObjectValidatorAdapter)eAdapter;
 				}
 			}
-			return false;
+			return null;
 		}
 
-		private void uninstallFor(@NonNull ResourceSet resourceSet) {
+		private void uninstallFor(@NonNull ResourceSet resourceSet, @NonNull String uri) {
 			EList<Adapter> eAdapters = resourceSet.eAdapters();
 			synchronized (eAdapters) {
 				for (Adapter eAdapter : eAdapters) {
 					if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-						eAdapters.remove(eAdapter);
+						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
+						eAdapters.remove(extendedEObjectValidatorAdapter);
+						extendedEObjectValidatorAdapter.removeURI(uri);
 						break;
 					}
 				}
@@ -264,10 +288,13 @@ public class DelegateInstaller
 				Resource eResource = eObject.eResource();
 				if (eResource != null) {
 					ResourceSet resourceSet = eResource.getResourceSet();
-					if ((resourceSet != null) && isApplicableFor(resourceSet)) {		// XXX
-						@SuppressWarnings("unused")
-						EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
-						dynamicEClassValidator = new ExtendedDynamicEClassValidator();			// XXX ?? cache in context
+					if (resourceSet != null) {
+						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = isApplicableFor(resourceSet);
+						if (extendedEObjectValidatorAdapter != null) {		// XXX
+							@SuppressWarnings("unused")
+							EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
+							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter);			// XXX ?? cache in context
+						}
 					}
 				}
 			}
@@ -679,7 +706,7 @@ public class DelegateInstaller
 				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 				refreshValidationDelegates(ePackage, validationDelegates);
 			}
-			ExtendedEObjectValidator.installFor(environmentFactory.getResourceSet(), ePackage);
+			ExtendedEObjectValidator.installFor(environmentFactory.getResourceSet(), ePackage, PivotUtil.getModel(asResource).getExternalURI());
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.
 	}
@@ -949,7 +976,7 @@ public class DelegateInstaller
 					assert validationDelegates != null;
 					refreshValidationDelegates(ePackage, validationDelegates);
 				}
-				ExtendedEObjectValidator.uninstallFor(environmentFactory.getResourceSet(), ePackage);
+				ExtendedEObjectValidator.uninstallFor(environmentFactory.getResourceSet(), ePackage, PivotUtil.getModel(asResource).getExternalURI());
 			}
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.
