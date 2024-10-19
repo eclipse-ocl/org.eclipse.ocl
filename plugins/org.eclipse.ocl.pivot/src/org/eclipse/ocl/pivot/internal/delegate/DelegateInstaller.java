@@ -21,7 +21,11 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -83,11 +87,39 @@ import com.google.common.collect.Lists;
  */
 public class DelegateInstaller
 {
+	public static class ExtendedEObjectValidatorAdapter implements Adapter
+	{
+		private @Nullable ResourceSet resourceSet;
+
+		public ExtendedEObjectValidatorAdapter(@NonNull ResourceSet resourceSet) {
+			this.resourceSet = resourceSet;
+		}
+
+		@Override
+		public @NonNull ResourceSet getTarget() {
+			assert resourceSet != null;
+			return resourceSet;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return false;
+		}
+
+		@Override
+		public void notifyChanged(Notification notification) {}
+
+		@Override
+		public void setTarget(Notifier newTarget) {
+			this.resourceSet = resourceSet;
+		}
+	}
+
 	/**
 	 * An ExtendedEObjectValidator instance displaces and wraps the regular EObjectValidator entry in the EValidator.Registry.INSTANCE
 	 * to add support for the additional constraints and invariants supported by validation delegates.
 	 */
-	public static final class ExtendedEObjectValidator extends EObjectValidator
+	public static class ExtendedEObjectValidator extends EObjectValidator
 	{
 		/**
 		 * ExtendedDynamicEClassValidator corrects the inherited functionality to perform the regular validation after
@@ -113,7 +145,7 @@ public class DelegateInstaller
 						}
 					}
 					result &= eValidator.validate(eClass, eObject, diagnostics, context);
-			}
+				}
 				return result;
 			}
 		}
@@ -124,7 +156,7 @@ public class DelegateInstaller
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 		// FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
 			if (eValidator instanceof ExtendedEObjectValidator) {
-				((ExtendedEObjectValidator)eValidator).resourceSetsWithComplementedEcore.put(resourceSet, null);
+				((ExtendedEObjectValidator)eValidator).installFor(resourceSet);
 			}
 			else if (eValidator != null) {
 				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
@@ -132,7 +164,7 @@ public class DelegateInstaller
 					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
 					ePackage2extendedEObjectValidator.put(ePackage, extendedEObjectValidator);
 				}
-				extendedEObjectValidator.resourceSetsWithComplementedEcore.put(resourceSet, null);
+				extendedEObjectValidator.installFor(resourceSet);
 				EValidator.Registry.INSTANCE.put(ePackage, extendedEObjectValidator);
 			}
 			else {
@@ -156,19 +188,13 @@ public class DelegateInstaller
 		public static void uninstallFor(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 			if (eValidator instanceof ExtendedEObjectValidator) {
-				((ExtendedEObjectValidator)eValidator).resourceSetsWithComplementedEcore.remove(resourceSet);
+				((ExtendedEObjectValidator)eValidator).uninstallFor(resourceSet);
 			//	EValidator.Registry.INSTANCE.put(ePackage, instance);		--- could revert to eValidator.eValidator once idle
 			}
 		}
 
-		private final @NonNull EPackage ePackage;			// The validated EPackage
-
-		private final @NonNull EValidator eValidator;		// The displaced EValidator
-
-		/**
-		 * The ResourceSets for which the use of Complete OCL complements for EcorePackage.INSTANCE has been declared.
-		 */
-		private final @NonNull WeakHashMap<@NonNull ResourceSet, Object> resourceSetsWithComplementedEcore = new WeakHashMap<>();
+		protected final @NonNull EPackage ePackage;			// The validated EPackage
+		protected final @NonNull EValidator eValidator;		// The displaced EValidator
 
 		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 			this.ePackage = ePackage;
@@ -184,6 +210,52 @@ public class DelegateInstaller
 			return eValidator;
 		}
 
+		private void installFor(@NonNull ResourceSet resourceSet) {
+			ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = null;
+			EList<Adapter> eAdapters = resourceSet.eAdapters();
+			for (Adapter eAdapter : eAdapters) {
+				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+					return;
+				}
+			}
+			synchronized (eAdapters) {
+				for (Adapter eAdapter : eAdapters) {
+					if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+						extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
+						return;
+					}
+				}
+				if (extendedEObjectValidatorAdapter == null) {
+					extendedEObjectValidatorAdapter = new ExtendedEObjectValidatorAdapter(resourceSet);
+					eAdapters.add(extendedEObjectValidatorAdapter);
+				}
+			}
+		// XXX	extendedEObjectValidatorAdapter.add(oclId);
+		}
+
+		private boolean isApplicableFor(@NonNull ResourceSet resourceSet) {
+			for (Adapter eAdapter : resourceSet.eAdapters()) {
+				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+					ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
+					// has oclID
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private void uninstallFor(@NonNull ResourceSet resourceSet) {
+			EList<Adapter> eAdapters = resourceSet.eAdapters();
+			synchronized (eAdapters) {
+				for (Adapter eAdapter : eAdapters) {
+					if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+						eAdapters.remove(eAdapter);
+						break;
+					}
+				}
+			}
+		}
+
 		@Override
 		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 			// Minimize overhead on the OCL-not-required control path.
@@ -192,7 +264,7 @@ public class DelegateInstaller
 				Resource eResource = eObject.eResource();
 				if (eResource != null) {
 					ResourceSet resourceSet = eResource.getResourceSet();
-					if ((resourceSet != null) && resourceSetsWithComplementedEcore.containsKey(resourceSet)) {
+					if ((resourceSet != null) && isApplicableFor(resourceSet)) {		// XXX
 						@SuppressWarnings("unused")
 						EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
 						dynamicEClassValidator = new ExtendedDynamicEClassValidator();			// XXX ?? cache in context
