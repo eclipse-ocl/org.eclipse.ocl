@@ -167,9 +167,17 @@ public class DelegateInstaller
 		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator
 		{
 			protected final @NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter;
+			protected final @Nullable ValidationDelegate [] validationDelegates;
 
-			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter) {
+			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter, EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
 				this.extendedEObjectValidatorAdapter = extendedEObjectValidatorAdapter;
+			//	ResourceSet resourceSet = extendedEObjectValidatorAdapter.getTarget();
+				List<String> validationDelegateURIs = EcoreUtil.getValidationDelegates(ePackage);
+				validationDelegates = new @Nullable ValidationDelegate @NonNull [validationDelegateURIs.size()];
+				int index = 0;
+				for (String validationDelegateURI : validationDelegateURIs) {
+					validationDelegates[index++] = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
+				}
 			}
 
 			// Ensure that the class loader for this class will be used downstream.
@@ -385,9 +393,10 @@ public class DelegateInstaller
 					if (resourceSet != null) {
 						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = isApplicableFor(resourceSet);
 						if (extendedEObjectValidatorAdapter != null) {		// XXX
+							EValidator.ValidationDelegate.Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
 							@SuppressWarnings("unused")
 							EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
-							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter);			// XXX ?? cache in context
+							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, validationDelegateRegistry);			// XXX ?? cache in context
 						}
 					}
 				}
