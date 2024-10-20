@@ -166,10 +166,12 @@ public class DelegateInstaller
 		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator
 		{
 			protected final @NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter;
+			protected final EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry;
 			protected final @Nullable ValidationDelegate [] validationDelegates;
 
 			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter, EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
 				this.extendedEObjectValidatorAdapter = extendedEObjectValidatorAdapter;
+				this.validationDelegateRegistry = validationDelegateRegistry;
 			//	ResourceSet resourceSet = extendedEObjectValidatorAdapter.getTarget();
 				List<String> validationDelegateURIs = EcoreUtil.getValidationDelegates(ePackage);
 				validationDelegates = new @Nullable ValidationDelegate @NonNull [validationDelegateURIs.size()];
@@ -202,60 +204,66 @@ public class DelegateInstaller
 				return result;
 			}
 
+			private boolean validateDelegatedConstraint(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics, Map<Object, Object> context, @NonNull Constraint asConstraint, @NonNull OCLValidationDelegateFactory validationDelegateFactory) {
+				EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
+				assert eAnnotation != null;
+				String constraintName = asConstraint.getName();
+				String expression = eAnnotation.getDetails().get(constraintName);
+				if (expression != null) {
+					String validationDelegateURI = eAnnotation.getSource();
+				//	ValidationDelegate delegate = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
+
+				//	assert delegate != null;
+					int severity = Diagnostic.ERROR;
+					String source = DIAGNOSTIC_SOURCE;
+					int code = 0;
+					try {
+					//	if (!delegate.validate(eClass, eObject, context, constraintName, expression)) {
+						ValidationDelegate validationDelegate = validationDelegateFactory.getValidationDelegate(eClass);
+						if (validationDelegate == null) {
+							validationDelegate = validationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
+							throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
+						}
+						if (!validationDelegate.validate(eClass, eObject, context, constraintName, expression)) {
+							if (diagnostics != null)
+								reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, severity, source, code);
+							return false;
+						}
+					} catch (Throwable throwable) {
+						if (diagnostics != null)
+							reportConstraintDelegateException(eClass, eObject, diagnostics, context, constraintName, severity, source, code, throwable);
+					}
+				}
+				else {
+					assert false;		// XXX
+				}
+				return true;
+			}
+
 			@Override
 			protected boolean validateDelegatedConstraints(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+				assert eClass != null;
+				assert eObject != null;
 				Collection<@NonNull Constraint> asConstraints = extendedEObjectValidatorAdapter.eClass2constraints.get(eClass);
 				boolean result = true;
 				if (asConstraints != null) {
-					org.eclipse.emf.ecore.EValidator.ValidationDelegate.Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
-				//	List<String> validationDelegates = EcoreUtil.getValidationDelegates(eClass.getEPackage());
-					CONSTRAINTS : 	for (@NonNull Constraint asConstraint : asConstraints) {
-						String constraintName = asConstraint.getName();
-						EAnnotation eAnnotation2 = (EAnnotation)asConstraint.getESObject();
-						assert eAnnotation2 != null;
-						String validationDelegate = eAnnotation2.getSource();
+					for (@NonNull Constraint asConstraint : asConstraints) {
+						EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
+						assert eAnnotation != null;
+						String validationDelegate = eAnnotation.getSource();
 						ValidationDelegate delegate = validationDelegateRegistry.getValidationDelegate(validationDelegate);
-						String expression = null;
-						EAnnotation eAnnotation = eClass.getEAnnotation(validationDelegate);
-						if (eAnnotation != null) {
-							expression = eAnnotation.getDetails().get(constraintName);
-						}
-						if (expression != null) {
-						//	result &= ExtendedEObjectValidator.this.validate(eClass, eObject, diagnostics, context, validationDelegate, constraintName, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
-						//	  public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context, String validationDelegate, String constraint, String expression, int severity, String source, int code)
-							  {
-								  int severity = Diagnostic.ERROR;
-								  String source = DIAGNOSTIC_SOURCE;
-								  int code = 0;
-								    if (delegate != null)
-								    {
-								      try
-								      {
-								        if (!delegate.validate(eClass, eObject, context, constraintName, expression))
-								        {
-								          if (diagnostics != null)
-								            reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, severity, source, code);
-								          result = false;
-								        }
-								      }
-								      catch (Throwable throwable)
-								      {
-								        if (diagnostics != null)
-								          reportConstraintDelegateException(eClass, eObject, diagnostics, context, constraintName, severity, source, code, throwable);
-								      }
-								    }
-								    else
-								    {
-								      if (diagnostics != null)
-								        reportConstraintDelegateNotFound(eClass, eObject, diagnostics, context, constraintName, severity, source, code, validationDelegate);
-								    }
-								 //   return true;
-								  }
-							if (!result && diagnostics == null)
-								break CONSTRAINTS;
+						if (delegate instanceof OCLValidationDelegateFactory) {
+							result &= validateDelegatedConstraint(eClass, eObject, diagnostics, context, asConstraint, (OCLValidationDelegateFactory)delegate);
 						}
 						else {
-							assert false;		// XXX
+							String constraintName = asConstraint.getName();
+							String expression = eAnnotation.getDetails().get(constraintName);
+							if (expression != null) {
+								result &= ExtendedEObjectValidator.this.validate(eClass, eObject, diagnostics, context, validationDelegate, constraintName, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+							}
+							else {
+								assert false;		// XXX
+							}
 						}
 					}
 				}
