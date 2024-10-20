@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -166,11 +167,13 @@ public class DelegateInstaller
 		public class ExtendedDynamicEClassValidator extends DynamicEClassValidator
 		{
 			protected final @NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter;
+			protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 			protected final EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry;
 			protected final @Nullable ValidationDelegate [] validationDelegates;
 
-			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter, EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
+			public ExtendedDynamicEClassValidator(@NonNull ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter, @NonNull EnvironmentFactoryInternal environmentFactory, EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
 				this.extendedEObjectValidatorAdapter = extendedEObjectValidatorAdapter;
+				this.environmentFactory = environmentFactory;
 				this.validationDelegateRegistry = validationDelegateRegistry;
 			//	ResourceSet resourceSet = extendedEObjectValidatorAdapter.getTarget();
 				List<String> validationDelegateURIs = EcoreUtil.getValidationDelegates(ePackage);
@@ -204,70 +207,59 @@ public class DelegateInstaller
 				return result;
 			}
 
-			private boolean validateDelegatedConstraint(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics, Map<Object, Object> context, @NonNull Constraint asConstraint, @NonNull OCLValidationDelegateFactory validationDelegateFactory) {
-				EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
-				assert eAnnotation != null;
-				String constraintName = asConstraint.getName();
-				String expression = eAnnotation.getDetails().get(constraintName);
-				if (expression != null) {
-					String validationDelegateURI = eAnnotation.getSource();
-				//	ValidationDelegate delegate = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
-
-				//	assert delegate != null;
-					int severity = Diagnostic.ERROR;
-					String source = DIAGNOSTIC_SOURCE;
-					int code = 0;
-					try {
-					//	if (!delegate.validate(eClass, eObject, context, constraintName, expression)) {
-						ValidationDelegate validationDelegate = validationDelegateFactory.getValidationDelegate(eClass);
-						if (validationDelegate == null) {
-							validationDelegate = validationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
-							throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
-						}
-						if (!validationDelegate.validate(eClass, eObject, context, constraintName, expression)) {
-							if (diagnostics != null)
-								reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, severity, source, code);
-							return false;
-						}
-					} catch (Throwable throwable) {
-						if (diagnostics != null)
-							reportConstraintDelegateException(eClass, eObject, diagnostics, context, constraintName, severity, source, code, throwable);
-					}
-				}
-				else {
-					assert false;		// XXX
-				}
-				return true;
-			}
-
 			@Override
 			protected boolean validateDelegatedConstraints(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 				assert eClass != null;
 				assert eObject != null;
-				Collection<@NonNull Constraint> asConstraints = extendedEObjectValidatorAdapter.eClass2constraints.get(eClass);
-				boolean result = true;
+				Iterable<@NonNull Constraint> asConstraints = extendedEObjectValidatorAdapter.eClass2constraints.get(eClass);
+				boolean allOk = true;
 				if (asConstraints != null) {
 					for (@NonNull Constraint asConstraint : asConstraints) {
-						EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
-						assert eAnnotation != null;
-						String validationDelegate = eAnnotation.getSource();
-						ValidationDelegate delegate = validationDelegateRegistry.getValidationDelegate(validationDelegate);
-						if (delegate instanceof OCLValidationDelegateFactory) {
-							result &= validateDelegatedConstraint(eClass, eObject, diagnostics, context, asConstraint, (OCLValidationDelegateFactory)delegate);
-						}
-						else {
-							String constraintName = asConstraint.getName();
-							String expression = eAnnotation.getDetails().get(constraintName);
-							if (expression != null) {
-								result &= ExtendedEObjectValidator.this.validate(eClass, eObject, diagnostics, context, validationDelegate, constraintName, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+						String constraintName = asConstraint.getName();
+						try {
+							boolean result = true;
+							EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
+							assert eAnnotation != null;
+							String validationDelegateURI = eAnnotation.getSource();
+							ValidationDelegate validationDelegateFactory = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
+							if (validationDelegateFactory instanceof OCLValidationDelegateFactory) {
+								OCLValidationDelegateFactory oclValidationDelegateFactory = (OCLValidationDelegateFactory)validationDelegateFactory;
+								OCLValidationDelegate validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);
+								if (validationDelegate == null) {
+									validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
+									throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
+								}
+								MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+								ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+								result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
+							}
+							else if (validationDelegateFactory != null) {
+								String expression = eAnnotation.getDetails().get(constraintName);
+								if (expression != null) {
+									result = validationDelegateFactory.validate(eClass, eObject, context, constraintName, expression);
+								}
+								else {
+									assert false;		// XXX MISSING SPECIFICATION BODY
+								}
 							}
 							else {
-								assert false;		// XXX
+								if (diagnostics != null) {
+									reportConstraintDelegateNotFound(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, validationDelegateURI);
+								}
+							}
+							if (!result) {
+								if (diagnostics != null) {
+									reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+								}
+							}
+						} catch (Throwable throwable) {
+							if (diagnostics != null) {
+								reportConstraintDelegateException(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, throwable);
 							}
 						}
 					}
 				}
-				return result;
+				return allOk;
 			}
 		}
 
@@ -426,7 +418,7 @@ public class DelegateInstaller
 							EValidator.ValidationDelegate.Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
 							@SuppressWarnings("unused")
 							EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
-							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, validationDelegateRegistry);			// XXX ?? cache in context
+							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, environmentFactory, validationDelegateRegistry);			// XXX ?? cache in context
 						}
 					}
 				}
