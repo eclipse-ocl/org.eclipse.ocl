@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.WeakHashMap;
@@ -90,6 +89,27 @@ import com.google.common.collect.Lists;
  */
 public class DelegateInstaller
 {
+	public static class ConstraintSelection
+	{
+		protected final @NonNull Constraint asConstraint;
+
+		public ConstraintSelection(@NonNull Constraint asConstraint) {
+			this.asConstraint = asConstraint;
+		}
+
+		public boolean matches(@NonNull String constraintName, @NonNull String validationDelegate) {
+			if (!constraintName.equals(asConstraint.getName())) {
+				return false;
+			}
+			EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
+			assert eAnnotation != null;
+			if (!eAnnotation.getSource().equals(validationDelegate)) {
+				return false;
+			}
+			return eAnnotation.getDetails().containsKey(constraintName);
+		}
+	}
+
 	/**
 	 * ExtendedEObjectValidatorAdapter adapts a ResourceSet to enable the ExtendedEObjectValidator functionality for
 	 * elements of the ResourceSet.
@@ -97,22 +117,22 @@ public class DelegateInstaller
 	public static class ExtendedEObjectValidatorAdapter implements Adapter
 	{
 		private @Nullable ResourceSet resourceSet;
-		private @NonNull Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> eClass2eDetails = new HashMap<>();
+		private @NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> eClass2constraintSelections = new HashMap<>();
 
 		public ExtendedEObjectValidatorAdapter(@NonNull ResourceSet resourceSet) {
 			this.resourceSet = resourceSet;
 		}
 
-		public void addEDetails(@NonNull Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> addEClass2eDetails) {
-			for (Map.@NonNull Entry<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> entry : addEClass2eDetails.entrySet()) {
+		public void addConstraintSelections(@NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> addEClass2constraintSelections) {
+			for (Map.@NonNull Entry<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> entry : addEClass2constraintSelections.entrySet()) {
 				EClass eClass = entry.getKey();
-				Collection<Map.@NonNull Entry<String,String>> newDetails = entry.getValue();
-				Collection<@NonNull Entry<String, String>> allDetails = eClass2eDetails.get(eClass);
-				if (allDetails == null) {
-					allDetails = new ArrayList<>();
-					eClass2eDetails.put(eClass, allDetails);
+				Collection<@NonNull ConstraintSelection> newConstraintSelections = entry.getValue();
+				Collection<@NonNull ConstraintSelection> allConstraintSelections = eClass2constraintSelections.get(eClass);
+				if (allConstraintSelections == null) {
+					allConstraintSelections = new ArrayList<>();
+					eClass2constraintSelections.put(eClass, allConstraintSelections);
 				}
-				allDetails.addAll(newDetails);
+				allConstraintSelections.addAll(newConstraintSelections);
 			}
 		}
 
@@ -134,15 +154,15 @@ public class DelegateInstaller
 		@Override
 		public void notifyChanged(Notification notification) {}
 
-		public void removeEDetails(@NonNull Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> removeEClass2eDetails) {
-			for (Map.@NonNull Entry<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> entry : removeEClass2eDetails.entrySet()) {
+		public void removeConstraintSelections(@NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> removeEClass2ConstraintSelections) {
+			for (Map.@NonNull Entry<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> entry : removeEClass2ConstraintSelections.entrySet()) {
 				EClass eClass = entry.getKey();
-				Collection<Map.@NonNull Entry<String,String>> removeDetails = entry.getValue();
-				Collection<@NonNull Entry<String, String>> allDetails = eClass2eDetails.get(eClass);
-				if (allDetails != null) {
-					allDetails.removeAll(removeDetails);
-					if (allDetails.size() <= 0) {
-						eClass2eDetails.remove(eClass);
+				Collection<@NonNull ConstraintSelection> removeConstraintSelections = entry.getValue();
+				Collection<@NonNull ConstraintSelection> allConstraintSelections = eClass2constraintSelections.get(eClass);
+				if (allConstraintSelections != null) {
+					allConstraintSelections.removeAll(removeConstraintSelections);
+					if (allConstraintSelections.size() <= 0) {
+						eClass2constraintSelections.remove(eClass);
 					}
 				}
 			}
@@ -208,18 +228,21 @@ public class DelegateInstaller
 				// TODO Auto-generated method stub
 				// return super.validateDelegatedConstraints(eClass, eObject,
 				// diagnostics, context);
+				Collection<@NonNull ConstraintSelection> constraintSelections = extendedEObjectValidatorAdapter.eClass2constraintSelections.get(eClass);
+				Set<@NonNull ConstraintSelection> constraintSelectionsSet = constraintSelections != null ? new HashSet<>(constraintSelections) : Collections.emptySet();
+				Set<@NonNull ConstraintSelection> actualSelections = new HashSet<>();
 				boolean result = true;
 				List<String> validationDelegates = EcoreUtil.getValidationDelegates(eClass.getEPackage());
 
 				if (!validationDelegates.isEmpty()) {
-					CONSTRAINTS : for (String constraint : EcoreUtil.getConstraints(eClass)) {
+					CONSTRAINTS : for (String constraintName : EcoreUtil.getConstraints(eClass)) {
 						for (String validationDelegate : validationDelegates) {
-							String expression1 = EcoreUtil.getAnnotation(eClass, validationDelegate, constraint);
+							String expression1 = EcoreUtil.getAnnotation(eClass, validationDelegate, constraintName);
 							String expression2 = null;
 							EAnnotation eAnnotation = eClass.getEAnnotation(validationDelegate);
 							if (eAnnotation != null) {
 								for (Map.Entry<String, String> entry : eAnnotation.getDetails().entrySet()) {
-									if (entry.getKey().equals(constraint)) {
+									if (entry.getKey().equals(constraintName)) {
 										expression2 = entry.getValue();
 										break;
 									}
@@ -228,7 +251,12 @@ public class DelegateInstaller
 							//	String expression = EcoreUtil.getAnnotation(eClass, validationDelegate, constraint);
 							if (expression1 != null) {
 								assert expression1.equals(expression2);
-								result &= ExtendedEObjectValidator.this.validate(eClass, eObject, diagnostics, context, validationDelegate, constraint, expression1, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+
+
+								ConstraintSelection actual = findConstraintSelection(constraintSelections, constraintName, validationDelegate);
+								actualSelections.add(actual);
+
+								result &= ExtendedEObjectValidator.this.validate(eClass, eObject, diagnostics, context, validationDelegate, constraintName, expression1, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
 								if (!result && diagnostics == null)
 									break CONSTRAINTS;
 							}
@@ -239,15 +267,25 @@ public class DelegateInstaller
 						}
 					}
 				}
-
+				assert actualSelections.equals(constraintSelectionsSet);
 				return result;
+			}
+
+			private ConstraintSelection findConstraintSelection(Collection<@NonNull ConstraintSelection> constraintSelections,
+					String constraintName, String validationDelegate) {
+				for (ConstraintSelection constraintSelection : constraintSelections) {
+					if (constraintSelection.matches(constraintName, validationDelegate)) {
+						return constraintSelection;
+					}
+				}
+				return null;
 			}
 		}
 
 		private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
 
-		private static @NonNull Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> getEClass2EDetails(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
-			Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> eClass2eDetails = new HashMap<>();
+		private static @NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> getEClass2ConstraintSelections(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
+			Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> eClass2constraintSelections = new HashMap<>();
 			for (@NonNull TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				if (eObject instanceof org.eclipse.ocl.pivot.Class) {
@@ -258,16 +296,19 @@ public class DelegateInstaller
 						EObject esObject = completeClass.getPrimaryClass().getESObject();
 						if (esObject instanceof EClass) {
 							EClass eClass = (EClass)esObject;
-							Collection<@NonNull Entry<String, String>> eDetails = eClass2eDetails.get(eClass);
-							if (eDetails == null) {
-								eDetails = new ArrayList<>();
-								eClass2eDetails.put(eClass, eDetails);
+							Collection<@NonNull ConstraintSelection> constraintSelections = eClass2constraintSelections.get(eClass);
+							if (constraintSelections == null) {
+								constraintSelections = new ArrayList<>();
+								eClass2constraintSelections.put(eClass, constraintSelections);
 							}
 							for (Constraint asConstraint : asInvariants) {
 								esObject = asConstraint.getESObject();
 								if (esObject instanceof EAnnotation) {
-									EAnnotation eAnnotation = (EAnnotation)esObject;
-									eDetails.addAll(eAnnotation.getDetails().entrySet());
+								//	EAnnotation eAnnotation = (EAnnotation)esObject;
+								//	EMap<String, String> details = eAnnotation.getDetails();
+								//	assert details.size() == 1;
+								// XXX	constraintSelections.addAll(details.entrySet());
+									constraintSelections.add(new ConstraintSelection(asConstraint));
 								}
 							}
 						}
@@ -275,14 +316,14 @@ public class DelegateInstaller
 					tit.prune();
 				}
 			}
-			return eClass2eDetails;
+			return eClass2constraintSelections;
 		}
 
 		public static void installFor(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage ePackage, @NonNull ASResource asResource) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 		// FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
 			if (eValidator instanceof ExtendedEObjectValidator) {
-				((ExtendedEObjectValidator)eValidator).installFor(environmentFactory.getResourceSet(), getEClass2EDetails(environmentFactory, asResource));
+				((ExtendedEObjectValidator)eValidator).installFor(environmentFactory.getResourceSet(), getEClass2ConstraintSelections(environmentFactory, asResource));
 			}
 			else if (eValidator != null) {
 				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
@@ -290,7 +331,7 @@ public class DelegateInstaller
 					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
 					ePackage2extendedEObjectValidator.put(ePackage, extendedEObjectValidator);
 				}
-				extendedEObjectValidator.installFor(environmentFactory.getResourceSet(), getEClass2EDetails(environmentFactory, asResource));
+				extendedEObjectValidator.installFor(environmentFactory.getResourceSet(), getEClass2ConstraintSelections(environmentFactory, asResource));
 				EValidator.Registry.INSTANCE.put(ePackage, extendedEObjectValidator);
 			}
 			else {
@@ -336,7 +377,7 @@ public class DelegateInstaller
 			return eValidator;
 		}
 
-		private void installFor(@NonNull ResourceSet resourceSet, @NonNull Map<@NonNull EClass, @NonNull Collection<Map.@NonNull Entry<String,String>>> eClass2eDetails) {
+		private void installFor(@NonNull ResourceSet resourceSet, @NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull ConstraintSelection>> eClass2constraintSelections) {
 			ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = null;
 			EList<Adapter> eAdapters = resourceSet.eAdapters();
 			for (Adapter eAdapter : eAdapters) {
@@ -356,7 +397,7 @@ public class DelegateInstaller
 					eAdapters.add(extendedEObjectValidatorAdapter);
 				}
 			}
-			extendedEObjectValidatorAdapter.addEDetails(eClass2eDetails);
+			extendedEObjectValidatorAdapter.addConstraintSelections(eClass2constraintSelections);
 		}
 
 		private @Nullable ExtendedEObjectValidatorAdapter isApplicableFor(@NonNull ResourceSet resourceSet) {
@@ -375,7 +416,7 @@ public class DelegateInstaller
 					if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
 						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
 						eAdapters.remove(extendedEObjectValidatorAdapter);
-						extendedEObjectValidatorAdapter.removeEDetails(getEClass2EDetails(environmentFactory, asResource));
+						extendedEObjectValidatorAdapter.removeConstraintSelections(getEClass2ConstraintSelections(environmentFactory, asResource));
 						break;
 					}
 				}
@@ -792,6 +833,9 @@ public class DelegateInstaller
 					}
 					@SuppressWarnings("unused")
 					String old = completeOCLbodiesAnnotation.getDetails().put(constraintName, PivotConstants.DUMMY_COMPLETE_OCL_BODY);			// XXX toString
+					((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
+				}
+				else if (completeOCLbodiesAnnotation != null) {
 					((ConstraintImpl)asConstraint).setESObject(completeOCLbodiesAnnotation);
 				}
 			}
