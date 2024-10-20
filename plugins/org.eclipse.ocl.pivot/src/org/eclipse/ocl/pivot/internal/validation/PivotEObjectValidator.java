@@ -218,31 +218,33 @@ public class PivotEObjectValidator implements EValidator
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
 			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
-			for (@NonNull Object invariantOrInvariants : /*all(*/allInvariantOrInvariants/*)*/) {
-				Constraint constraint;
-				if (invariantOrInvariants instanceof Constraint) {
-					constraint = (Constraint)invariantOrInvariants;
-				}
-				else {
-					@SuppressWarnings("unchecked")
-					List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
-					constraint = invariants.get(0);
-				}
-				if (constraint != null) {
-					if (complementingModels != null) {
-						Model containingModel = PivotUtil.getContainingModel(constraint);
-						if (!complementingModels.contains(containingModel)) {
-							continue;
-						}
+			if (allInvariantOrInvariants != null) {
+				for (@NonNull Object invariantOrInvariants : /*all(*/allInvariantOrInvariants/*)*/) {
+					Constraint constraint;
+					if (invariantOrInvariants instanceof Constraint) {
+						constraint = (Constraint)invariantOrInvariants;
 					}
-					Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
-					if (diagnostic != null) {
-						if (diagnostics != null) {
-							diagnostics.add(diagnostic);
+					else {
+						@SuppressWarnings("unchecked")
+						List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
+						constraint = invariants.get(0);
+					}
+					if (constraint != null) {
+						if (complementingModels != null) {
+							Model containingModel = PivotUtil.getContainingModel(constraint);
+							if (!complementingModels.contains(containingModel)) {
+								continue;
+							}
 						}
-						allOk = false;
-						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-							return allOk;		// Generate many warnings but only one error
+						Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
+						if (diagnostic != null) {
+							if (diagnostics != null) {
+								diagnostics.add(diagnostic);
+							}
+							allOk = false;
+							if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+								return allOk;		// Generate many warnings but only one error
+							}
 						}
 					}
 				}
