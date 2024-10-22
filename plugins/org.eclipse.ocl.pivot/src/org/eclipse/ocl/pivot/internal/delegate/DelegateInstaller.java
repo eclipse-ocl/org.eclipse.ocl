@@ -66,18 +66,20 @@ import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -185,7 +187,6 @@ public class DelegateInstaller
 				}
 			}
 
-			// Ensure that the class loader for this class will be used downstream.
 			@Override
 			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 				assert eClass.getEPackage() == ePackage;
@@ -203,7 +204,7 @@ public class DelegateInstaller
 							result &= validateDelegatedConstraints(eSuperType, eObject, diagnostics, context);
 						}
 					}
-					result &= eValidator.validate(eClass, eObject, diagnostics, context);
+				//	result &= eValidator.validate(eClass, eObject, diagnostics, context);
 				}
 				return result;
 			}
@@ -231,8 +232,9 @@ public class DelegateInstaller
 										validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
 										throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 									}
-									MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-									ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+								//	MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+								//	ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+									ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();
 									result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
 								}
 								else if (validationDelegateFactory != null) {
@@ -241,7 +243,9 @@ public class DelegateInstaller
 										result = validationDelegateFactory.validate(eClass, eObject, context, constraintName, expression);
 									}
 									else {
-										assert false;		// XXX MISSING SPECIFICATION BODY
+										Namespace namespace = asConstraint.getContext();
+										SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, namespace, PivotConstantsInternal.CONSTRAINT_ROLE);
+										throw new OCLDelegateException(cause);
 									}
 								}
 								else {
@@ -264,6 +268,68 @@ public class DelegateInstaller
 				}
 				return allOk;
 			}
+
+			@Override
+			protected boolean validateDelegatedInvariants(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+				assert eClass != null;
+				assert eObject != null;
+				Iterable<@NonNull Constraint> asConstraints = extendedEObjectValidatorAdapter.eClass2constraints.get(eClass);
+				boolean allOk = true;
+				if (asConstraints != null) {
+					for (@NonNull Constraint asConstraint : asConstraints) {
+					//	String constraintName = asConstraint.getName();
+					//	EOperation invariant = null;			// XXX
+						boolean result = true;
+						EObject esObject = asConstraint.getESObject();
+						if (esObject instanceof EOperation) {
+							EOperation eOperation = (EOperation)esObject;
+							try {
+								EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eOperation);
+								String validationDelegateURI = eAnnotation.getSource();
+								ValidationDelegate validationDelegateFactory = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
+								if (validationDelegateFactory instanceof OCLValidationDelegateFactory) {
+									OCLValidationDelegateFactory oclValidationDelegateFactory = (OCLValidationDelegateFactory)validationDelegateFactory;
+									OCLValidationDelegate validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);
+									if (validationDelegate == null) {
+										validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
+										throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
+									}
+								//	MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+								//	ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+									ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();
+									result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
+								}
+								else if (validationDelegateFactory != null) {
+									String expression = eAnnotation.getDetails().get("body");
+									if (expression != null) {
+										result = validationDelegateFactory.validate(eClass, eObject, context, eOperation, expression);
+									}
+									else {
+										Namespace namespace = asConstraint.getContext();
+										SemanticException cause = new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, namespace, PivotConstantsInternal.CONSTRAINT_ROLE);
+										throw new OCLDelegateException(cause);
+									}
+								}
+								else {
+									if (diagnostics != null) {
+										reportInvariantDelegateNotFound(eClass, eObject, diagnostics, context, eOperation, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, validationDelegateURI);
+									}
+								}
+								if (!result) {
+									if (diagnostics != null) {
+										reportInvariantDelegateViolation(eClass, eObject, diagnostics, context, eOperation, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+									}
+								}
+							} catch (Throwable throwable) {
+								if (diagnostics != null) {
+									reportInvariantDelegateException(eClass, eObject, diagnostics, context, eOperation, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, throwable);
+								}
+							}
+						}
+					}
+				}
+				return allOk;
+			}
 		}
 
 		private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
@@ -271,16 +337,23 @@ public class DelegateInstaller
 		private static void addConstraint(@NonNull Collection<@NonNull Constraint> asConstraints, @NonNull Constraint asConstraint) {
 			EObject esObject = asConstraint.getESObject();
 			if (esObject instanceof EAnnotation) {								// EMF constraint
-			//	EAnnotation eAnnotation = (EAnnotation)esObject;
-			//	EMap<String, String> details = eAnnotation.getDetails();
-			//	assert details.size() == 1;
-			// XXX	constraints.addAll(details.entrySet());
-				asConstraints.add(asConstraint);
-				// XXX has constraint-name key
+				String constraintName = asConstraint.getName();
+				String constraintNameText = OCLCommon.getDelegateAnnotation((EModelElement)((EAnnotation)esObject).eContainer(), constraintName);
+				if (constraintNameText != null) {
+					asConstraints.add(asConstraint);
+				}
+				else {
+					System.err.println("Missing " + constraintName + " detail");		// XXX
+				}
 			}
 			else if (esObject instanceof EOperation) {							// EMF invariant
-				asConstraints.add(asConstraint);
-				// XXX has body key
+				String bodyText = OCLCommon.getDelegateAnnotation((EOperation)esObject, "body");
+				if (bodyText != null) {
+					asConstraints.add(asConstraint);
+				}
+				else {
+					System.err.println("Misssing body detail");		// XXX
+				}
 			}
 			else if (esObject != null) {				// Null for Java implementations
 				assert false;
@@ -400,10 +473,8 @@ public class DelegateInstaller
 						return;
 					}
 				}
-				if (extendedEObjectValidatorAdapter == null) {
-					extendedEObjectValidatorAdapter = new ExtendedEObjectValidatorAdapter(resourceSet);
-					eAdapters.add(extendedEObjectValidatorAdapter);
-				}
+				extendedEObjectValidatorAdapter = new ExtendedEObjectValidatorAdapter(resourceSet);
+				eAdapters.add(extendedEObjectValidatorAdapter);
 			}
 			extendedEObjectValidatorAdapter.addConstraints(eClass2constraints);
 		}
@@ -442,9 +513,10 @@ public class DelegateInstaller
 					if (resourceSet != null) {
 						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = isApplicableFor(resourceSet);
 						if (extendedEObjectValidatorAdapter != null) {		// XXX
-							EValidator.ValidationDelegate.Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
-							@SuppressWarnings("unused")
+							@SuppressWarnings("null")
+							EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
 							EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
+							// Ensure that the class loader for this class will be used downstream.
 							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, environmentFactory, validationDelegateRegistry);			// XXX ?? cache in context
 						}
 					}
@@ -1077,9 +1149,18 @@ public class DelegateInstaller
 				eAnnotations.remove(annotation3);
 			}
 		}
-		EAnnotation annotation4 = eModelElement.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
+		EAnnotation annotation4 = eModelElement.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 		if (annotation4 != null) {
-			eAnnotations.remove(annotation4);
+			if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(exportDelegateURI)) {
+				oclAnnotation = annotation4;
+			}
+			else {
+				eAnnotations.remove(annotation4);
+			}
+		}
+		EAnnotation annotation5 = eModelElement.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
+		if (annotation5 != null) {
+			eAnnotations.remove(annotation5);
 		}
 		return oclAnnotation;
 	}
