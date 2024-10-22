@@ -565,11 +565,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constriant> rather than just a Constraint.
-	 * The multiples are most-executable first.
+	 * The multiples are most-executable first. Returns null for none.
 	 */
 	@Override
-	public @NonNull Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) {
-		List<@NonNull Object> knownInvariantOrInvariants = new ArrayList<>();
+	public @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) {
+		List<@NonNull Object> knownInvariantOrInvariants = null;
 		Iterable<@NonNull CompleteClass> allSuperCompleteClasses = environmentFactory.getMetamodelManager().getAllSuperCompleteClasses(asType);
 		for (CompleteClass superType : allSuperCompleteClasses) {
 			Map<@NonNull String, @NonNull Object> name2invariantOrInvariants = null;
@@ -599,6 +599,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				}
 			}
 			if (name2invariantOrInvariants != null) {
+				if (knownInvariantOrInvariants == null) {
+					knownInvariantOrInvariants = new ArrayList<>();
+				}
 				List<@NonNull String> names = new ArrayList<>(name2invariantOrInvariants.keySet());
 				if (names.size() > 1) {
 					Collections.sort(names);

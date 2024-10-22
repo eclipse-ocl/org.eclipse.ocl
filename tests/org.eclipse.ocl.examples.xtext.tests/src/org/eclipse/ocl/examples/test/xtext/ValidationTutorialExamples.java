@@ -42,7 +42,8 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
  */
 public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
-	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
+	public static final @NonNull String VIOLATED_CONSTRAINT_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
+	public static final @NonNull String VIOLATED_INVARIANT_TEMPLATE = "The ''{0}'' invariant is violated on ''{1}''";
 
 	protected @NonNull ResourceSet createExternalResourceSet() {
 		//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
@@ -86,10 +87,12 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		EObject xmiObject = xmiResource.getContents().get(0);
 		EObject ecoreObject = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass")).getEStructuralFeature("uncachedDerived");
-		assertNoValidationErrors("XMI validation without extra OCL", xmiResource);
-		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
 		String xmiObjectLabel = LabelUtil.getLabel(xmiObject);			// Beware: uses settingDelegate and so the prevailing OCL
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
+	//	assertNoValidationErrors("XMI validation without extra OCL", xmiResource);
+		assertValidationDiagnostics("XMI validation without extra OCL", xmiResource, getMessages(
+			StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel)));
+		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
 		//
 		//	Load the two Complete OCL documents - emulate OCL -> Load Document for the two *.ocls
 		//
@@ -108,11 +111,12 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			@Override
 			public void runWithThrowable() {
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
+					StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
 			}
 		});
 
@@ -122,7 +126,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 //				GlobalEnvironmentFactory.disposeInstance();
 //				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
+					StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
 
 //				ocl2.dispose();
 			}
@@ -179,9 +184,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 				assertLazyValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsTransient", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
 			}
 		});
 		//
@@ -196,7 +201,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
 					badMinuteName,
-					StringUtil.bind(VIOLATED_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
 			}
 		});
 		helper.unloadDocument(ocl4ecoreURI);
@@ -263,7 +268,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 				String uml_lowercase_ClassLabel = LabelUtil.getLabel(uml_lowercase_Class);
 				assertLazyValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_lowercase_ClassLabel)));
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "CamelCaseName", uml_lowercase_ClassLabel)));
 			}
 		});
 		//
@@ -304,8 +309,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 				String uml_lowercase_Label = LabelUtil.getLabel(uml_lowercase_Class);
 				String umlModelLabel = LabelUtil.getLabel(umlModel);
 				assertValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_UPPERCASE_Label),
-					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", uml_lowercase_Label),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "CamelCaseName", uml_UPPERCASE_Label),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "CamelCaseName", uml_lowercase_Label),
 					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_UPPERCASE_Label, umlModelLabel),
 					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, uml_lowercase_Label, umlModelLabel),
 					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, umlModelLabel)));

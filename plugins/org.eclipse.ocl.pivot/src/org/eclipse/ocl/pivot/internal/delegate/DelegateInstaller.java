@@ -51,6 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -218,38 +219,40 @@ public class DelegateInstaller
 						String constraintName = asConstraint.getName();
 						try {
 							boolean result = true;
-							EAnnotation eAnnotation = (EAnnotation)asConstraint.getESObject();
-							assert eAnnotation != null;
-							String validationDelegateURI = eAnnotation.getSource();
-							ValidationDelegate validationDelegateFactory = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
-							if (validationDelegateFactory instanceof OCLValidationDelegateFactory) {
-								OCLValidationDelegateFactory oclValidationDelegateFactory = (OCLValidationDelegateFactory)validationDelegateFactory;
-								OCLValidationDelegate validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);
-								if (validationDelegate == null) {
-									validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
-									throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
+							EObject esObject = asConstraint.getESObject();
+							if (esObject instanceof EAnnotation) {
+								EAnnotation eAnnotation = (EAnnotation)esObject;
+								String validationDelegateURI = eAnnotation.getSource();
+								ValidationDelegate validationDelegateFactory = validationDelegateRegistry.getValidationDelegate(validationDelegateURI);
+								if (validationDelegateFactory instanceof OCLValidationDelegateFactory) {
+									OCLValidationDelegateFactory oclValidationDelegateFactory = (OCLValidationDelegateFactory)validationDelegateFactory;
+									OCLValidationDelegate validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);
+									if (validationDelegate == null) {
+										validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
+										throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
+									}
+									MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+									ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+									result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
 								}
-								MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-								ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
-								result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
-							}
-							else if (validationDelegateFactory != null) {
-								String expression = eAnnotation.getDetails().get(constraintName);
-								if (expression != null) {
-									result = validationDelegateFactory.validate(eClass, eObject, context, constraintName, expression);
+								else if (validationDelegateFactory != null) {
+									String expression = eAnnotation.getDetails().get(constraintName);
+									if (expression != null) {
+										result = validationDelegateFactory.validate(eClass, eObject, context, constraintName, expression);
+									}
+									else {
+										assert false;		// XXX MISSING SPECIFICATION BODY
+									}
 								}
 								else {
-									assert false;		// XXX MISSING SPECIFICATION BODY
+									if (diagnostics != null) {
+										reportConstraintDelegateNotFound(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, validationDelegateURI);
+									}
 								}
-							}
-							else {
-								if (diagnostics != null) {
-									reportConstraintDelegateNotFound(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, validationDelegateURI);
-								}
-							}
-							if (!result) {
-								if (diagnostics != null) {
-									reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+								if (!result) {
+									if (diagnostics != null) {
+										reportConstraintDelegateViolation(eClass, eObject, diagnostics, context, constraintName, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
+									}
 								}
 							}
 						} catch (Throwable throwable) {
@@ -265,15 +268,36 @@ public class DelegateInstaller
 
 		private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
 
+		private static void addConstraint(@NonNull Collection<@NonNull Constraint> asConstraints, @NonNull Constraint asConstraint) {
+			EObject esObject = asConstraint.getESObject();
+			if (esObject instanceof EAnnotation) {								// EMF constraint
+			//	EAnnotation eAnnotation = (EAnnotation)esObject;
+			//	EMap<String, String> details = eAnnotation.getDetails();
+			//	assert details.size() == 1;
+			// XXX	constraints.addAll(details.entrySet());
+				asConstraints.add(asConstraint);
+				// XXX has constraint-name key
+			}
+			else if (esObject instanceof EOperation) {							// EMF invariant
+				asConstraints.add(asConstraint);
+				// XXX has body key
+			}
+			else if (esObject != null) {				// Null for Java implementations
+				assert false;
+			}
+		}
+
 		private static @NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull Constraint>> getEClass2Constraints(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
 			Map<@NonNull EClass, @NonNull Collection<@NonNull Constraint>> eClass2constraints = new HashMap<>();
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			for (@NonNull TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject;
-					List<Constraint> asInvariants = asClass.getOwnedInvariants();
-					if (asInvariants.size() > 0) {
-						CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asClass);
+					CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+					Iterable<@NonNull Object> allInvariantOrInvariants = completeModel.getAllCompleteInvariants(asClass);
+				//	List<Constraint> asInvariants = asClass.getOwnedInvariants();
+					if (allInvariantOrInvariants != null) {
 						EObject esObject = completeClass.getPrimaryClass().getESObject();
 						if (esObject instanceof EClass) {
 							EClass eClass = (EClass)esObject;
@@ -282,14 +306,17 @@ public class DelegateInstaller
 								constraints = new ArrayList<>();
 								eClass2constraints.put(eClass, constraints);
 							}
-							for (Constraint asConstraint : asInvariants) {
-								esObject = asConstraint.getESObject();
-								if (esObject instanceof EAnnotation) {
-								//	EAnnotation eAnnotation = (EAnnotation)esObject;
-								//	EMap<String, String> details = eAnnotation.getDetails();
-								//	assert details.size() == 1;
-								// XXX	constraints.addAll(details.entrySet());
-									constraints.add(asConstraint);
+							for (Object invariantOrInvariants : allInvariantOrInvariants) {
+								if (invariantOrInvariants instanceof Constraint) {
+									Constraint asConstraint = (Constraint)invariantOrInvariants;
+									addConstraint(constraints, asConstraint);
+								}
+								else {
+									@SuppressWarnings("unchecked")
+									List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
+									for (Constraint asConstraint : invariants) {
+										addConstraint(constraints, asConstraint);
+									}
 								}
 							}
 						}
@@ -306,7 +333,10 @@ public class DelegateInstaller
 			if (eValidator instanceof ExtendedEObjectValidator) {
 				((ExtendedEObjectValidator)eValidator).installFor(environmentFactory.getResourceSet(), getEClass2Constraints(environmentFactory, asResource));
 			}
-			else if (eValidator != null) {
+			else {
+				if (eValidator == null) {
+					eValidator = EObjectValidator.INSTANCE;
+				}
 				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
 				if (extendedEObjectValidator == null) {
 					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
@@ -314,9 +344,6 @@ public class DelegateInstaller
 				}
 				extendedEObjectValidator.installFor(environmentFactory.getResourceSet(), getEClass2Constraints(environmentFactory, asResource));
 				EValidator.Registry.INSTANCE.put(ePackage, extendedEObjectValidator);
-			}
-			else {
-				// XXX null - ?? install a CompleteOCLValidator or wrap the default
 			}
 		}
 
@@ -745,28 +772,30 @@ public class DelegateInstaller
 	/**
 	 * Analyze asResource and return a map of all Class invariant Constraints to eClass2constraints.
 	 */
-	private @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> getConstraints(@NonNull ASResource asResource) {
+	private @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> getConstraints(@NonNull Iterable<@NonNull Resource> asResources) {
 		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
-		for (EObject eObject : new TreeIterable(asResource)) {
-			if (eObject instanceof Constraint) {
-				Constraint asConstraint = (Constraint)eObject;
-				EStructuralFeature eContainingFeature = eObject.eContainingFeature();
-				if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
-					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject.eContainer();
-					assert asClass != null;
-					CompleteClass completeClass = completeModel.getCompleteClass(asClass);
-					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
-						EObject esObject = partialClass.getESObject();
-						if (esObject instanceof EClass) {			// XXX ignores UML's Class
-							EClass eClass = (EClass)esObject;
-							UniqueList<@NonNull Constraint> constraints = eClass2constraints.get(eClass);
-							if (constraints == null) {
-								constraints = new UniqueList<>();
-								eClass2constraints.put(eClass, constraints);
+		for (Resource asResource : asResources) {
+			for (EObject eObject : new TreeIterable(asResource)) {
+				if (eObject instanceof Constraint) {
+					Constraint asConstraint = (Constraint)eObject;
+					EStructuralFeature eContainingFeature = eObject.eContainingFeature();
+					if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+						org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject.eContainer();
+						assert asClass != null;
+						CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+						for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+							EObject esObject = partialClass.getESObject();
+							if (esObject instanceof EClass) {			// XXX ignores UML's Class
+								EClass eClass = (EClass)esObject;
+								UniqueList<@NonNull Constraint> constraints = eClass2constraints.get(eClass);
+								if (constraints == null) {
+									constraints = new UniqueList<>();
+									eClass2constraints.put(eClass, constraints);
+								}
+								constraints.add(asConstraint);
+								break;
 							}
-							constraints.add(asConstraint);
-							break;
 						}
 					}
 				}
@@ -793,7 +822,7 @@ public class DelegateInstaller
 		//
 		//	Determine AS Constraints per EClass and the containing EPackages.
 		//
-		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = getConstraints(asResource);
+		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = getConstraints(Collections.singletonList(asResource));
 		//
 		//	Install EClass EAnnotations for AS Constraints.
 		//
@@ -1060,11 +1089,11 @@ public class DelegateInstaller
 	 *
 	 * @since 1.23
 	 */
-	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) {
+	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) { // XXX asymmetric wrt install
 		//
 		//	Uninstall EClass EAnnotations for AS Constraints.
 		//
-		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = getConstraints(asResource);
+		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = getConstraints(Collections.singletonList(asResource));
 		for (Map.Entry<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> entry : eClass2constraints.entrySet()) {
 			EClass eClass = entry.getKey();
 			List<@NonNull Constraint> asConstraints = entry.getValue();

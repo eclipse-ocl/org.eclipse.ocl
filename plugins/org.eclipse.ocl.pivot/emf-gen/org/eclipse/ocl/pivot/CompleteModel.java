@@ -10,7 +10,6 @@
  */
 package org.eclipse.ocl.pivot;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -138,7 +137,7 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 1.23
 	 */
-	default @NonNull Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return Collections.emptyList(); }
+	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 	//	@NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
