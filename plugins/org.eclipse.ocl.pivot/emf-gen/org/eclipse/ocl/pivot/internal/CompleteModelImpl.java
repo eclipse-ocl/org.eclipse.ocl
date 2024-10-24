@@ -118,7 +118,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			if ((e1 == null) && (e2 != null)) {
 				return 1;
 			}
-			return 0;
+			return 0;		// XXX $$complete-ocl$$ comparison
 		}
 	}
 

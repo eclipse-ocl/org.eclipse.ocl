@@ -456,9 +456,9 @@ public class DelegateInstaller
 			}
 		}
 
-		protected final @NonNull EPackage ePackage;			// The validated EPackage
-		protected final @NonNull EValidator eValidator;		// The displaced EValidator
-		protected DerivedEObjectValidator derivedEValidator;		// The displaced EValidator
+		protected final @NonNull EPackage ePackage;						// The validated EPackage
+		protected final @NonNull EValidator eValidator;					// The displaced EValidator
+		protected @Nullable DerivedEObjectValidator derivedEValidator;	// The displaced EValidator with a public validate(int... methiod
 
 		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 			this.ePackage = ePackage;
@@ -468,7 +468,7 @@ public class DelegateInstaller
 					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorClassLoader.getInstance().findDerivedEObjectValidator(((EObjectValidator)eValidator).getClass());
 					derivedEValidator = derivedEObjectValidatorClass.getDeclaredConstructor().newInstance();
 				} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-					// TODO Auto-generated catch block
+					// XXX Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -1201,6 +1201,7 @@ public class DelegateInstaller
 	 * @since 1.23
 	 */
 	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) { // XXX asymmetric wrt install
+		List<@NonNull EAnnotation> eAnnotationsToRemove = new ArrayList<>();
 		//
 		//	Uninstall EClass EAnnotations for AS Constraints.
 		//
@@ -1220,7 +1221,8 @@ public class DelegateInstaller
 				}
 				setConstraintNames(eClass, constraintNames);
 				if (constraintNames.isEmpty() && completeOCLbodiesAnnotation.getDetails().isEmpty()) {
-					eClass.getEAnnotations().remove(completeOCLbodiesAnnotation);
+					eAnnotationsToRemove.add(completeOCLbodiesAnnotation);
+				//	eClass.getEAnnotations().remove(completeOCLbodiesAnnotation);
 				}
 			}
 		}
@@ -1246,6 +1248,9 @@ public class DelegateInstaller
 				}
 				ExtendedEObjectValidator.uninstallFor(environmentFactory, ePackage, asResource);
 			}
+		}
+		for (@NonNull EAnnotation eAnnotation : eAnnotationsToRemove) {
+			((EModelElement)eAnnotation.eContainer()).getEAnnotations().remove(eAnnotation);
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.
 	}
