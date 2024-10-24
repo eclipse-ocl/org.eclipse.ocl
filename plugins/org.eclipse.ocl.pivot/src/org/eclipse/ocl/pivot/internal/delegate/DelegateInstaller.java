@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -76,6 +77,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -205,6 +207,19 @@ public class DelegateInstaller
 						}
 					}
 				//	result &= eValidator.validate(eClass, eObject, diagnostics, context);
+					if (derivedEValidator != null) {
+						//	assert eClass.getEPackage() == ((EObjectValidator)eValidator).getEPackage();
+							result &= derivedEValidator.validate(eClass.getClassifierID(), eObject, diagnostics, context);		// Normal EMF validator (duplication of delegated constraints/invariants for matched EPackage)
+						}
+					else if (eValidator instanceof EObjectValidator) {
+						//	assert eClass.getEPackage() == ((EObjectValidator)eValidator).getEPackage();
+						result &= ((EObjectValidator)eValidator).validate(eClass, eObject, diagnostics, context);		// Normal EMF validator (duplication of delegated constraints/invariants for matched EPackage)
+					}
+					else {		// A few validators inherit directly
+						result &= eValidator.validate(eClass, eObject, diagnostics, context);		// Normal EMF validator with duplication of delegated constraints/invariants
+					}
+						//	result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
+					//	result &= ExtendedEObjectValidator.this.validate(eClass.getClassifierID(), eObject, diagnostics, context);
 				}
 				return result;
 			}
@@ -294,9 +309,9 @@ public class DelegateInstaller
 										validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
 										throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 									}
-								//	MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-								//	ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
-									ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();
+									MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+									ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+								//	ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();		// XXX trimmed testValidationTutorial is not pre-parsed
 									result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
 								}
 								else if (validationDelegateFactory != null) {
@@ -402,7 +417,7 @@ public class DelegateInstaller
 
 		public static void installFor(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage ePackage, @NonNull ASResource asResource) {
 			EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-		// FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
+		// XXX FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
 			if (eValidator instanceof ExtendedEObjectValidator) {
 				((ExtendedEObjectValidator)eValidator).installFor(environmentFactory.getResourceSet(), getEClass2Constraints(environmentFactory, asResource));
 			}
@@ -443,10 +458,20 @@ public class DelegateInstaller
 
 		protected final @NonNull EPackage ePackage;			// The validated EPackage
 		protected final @NonNull EValidator eValidator;		// The displaced EValidator
+		protected DerivedEObjectValidator derivedEValidator;		// The displaced EValidator
 
 		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 			this.ePackage = ePackage;
 			this.eValidator = eValidator;
+			if (eValidator instanceof EObjectValidator) {
+				try {
+					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorClassLoader.getInstance().findDerivedEObjectValidator(((EObjectValidator)eValidator).getClass());
+					derivedEValidator = derivedEObjectValidatorClass.getDeclaredConstructor().newInstance();
+				} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
 		@Override
@@ -463,18 +488,23 @@ public class DelegateInstaller
 			List<Adapter> eAdapters = resourceSet.eAdapters();
 			for (Adapter eAdapter : eAdapters) {
 				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-					return;
+					extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
+					break;
 				}
 			}
-			synchronized (eAdapters) {
-				for (Adapter eAdapter : eAdapters) {
-					if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-						extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
-						return;
+			if (extendedEObjectValidatorAdapter == null) {
+				synchronized (eAdapters) {
+					for (Adapter eAdapter : eAdapters) {
+						if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+							extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
+							break;
+						}
+					}
+					if (extendedEObjectValidatorAdapter == null) {
+						extendedEObjectValidatorAdapter = new ExtendedEObjectValidatorAdapter(resourceSet);
+						eAdapters.add(extendedEObjectValidatorAdapter);
 					}
 				}
-				extendedEObjectValidatorAdapter = new ExtendedEObjectValidatorAdapter(resourceSet);
-				eAdapters.add(extendedEObjectValidatorAdapter);
 			}
 			extendedEObjectValidatorAdapter.addConstraints(eClass2constraints);
 		}

@@ -247,7 +247,7 @@ public class AbstractPivotTestCase extends TestCase
 			if ((expectedCount == null) || (expectedCount <= 0)) {
 				if (s1 == null) {
 					s1 = new StringBuilder();
-					s1.append("\nUnexpected errors");
+					s1.append("\nExtra errors");
 					if (resource != null) {
 						s1.append(" in '");
 						s1.append(resource.getURI());
