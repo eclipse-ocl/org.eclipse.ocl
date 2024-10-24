@@ -131,14 +131,16 @@ public final class DerivedEObjectValidatorClassLoader extends ClassLoader
 	private @NonNull String createSource(@NonNull String packageName, @NonNull String className, @NonNull Class<? extends EObjectValidator> eValidator) {
 		StringBuilder s = new StringBuilder();
 		s.append("package " + packageName + ";\n\n");
-		s.append("public class " + className + " extends " + eValidator.getName() + " implements " + DerivedEObjectValidator.class.getName() + "\n");
+		s.append("public class " + className + "\n");
+		s.append("\textends " + eValidator.getName() + "\n");
+		s.append("\timplements " + DerivedEObjectValidator.class.getName() + "\n");
 		s.append("{\n");
 		s.append("\t@Override\n");
 		s.append("\tpublic boolean validate(int classifierID, Object object, org.eclipse.emf.common.util.DiagnosticChain diagnostics, java.util.Map<Object, Object> context) {\n");
 		s.append("\t\treturn super.validate(classifierID, object, diagnostics, context);\n");
 		s.append("\t}\n");
 		s.append("}\n");
-		System.out.println("\n" + s.toString());
+	//	System.out.println("\n" + s.toString());
 		return s.toString();
 	}
 

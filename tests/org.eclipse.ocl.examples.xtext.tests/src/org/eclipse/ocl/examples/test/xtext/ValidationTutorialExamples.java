@@ -90,9 +90,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		String xmiObjectLabel = LabelUtil.getLabel(xmiObject);			// Beware: uses settingDelegate and so the prevailing OCL
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
 	//	assertNoValidationErrors("XMI validation without extra OCL", xmiResource);
-	//	assertValidationDiagnostics("XMI validation without extra OCL", xmiResource, getMessages(
-	//		StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel)));
-	//	assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
+		assertValidationDiagnostics("XMI validation without extra OCL", xmiResource, getMessages(
+			StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel)));
+		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
 		//
 		//	Load the two Complete OCL documents - emulate OCL -> Load Document for the two *.ocls
 		//
