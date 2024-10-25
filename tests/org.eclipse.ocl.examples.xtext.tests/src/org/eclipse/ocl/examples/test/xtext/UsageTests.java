@@ -521,7 +521,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			}
 		}
 		String objectPath = getTestProject().getOutputFile(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFileString();
-		classpath.addClass(getClass());
+		classpath.addBundleForClass(getClass());
 		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, sources.toString(), objectPath, classpath);
 		if (problemMessage != null) {
 			fail(problemMessage);
@@ -624,8 +624,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
 		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
-		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
-		classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
+		classpath.addBundleForClass(org.eclipse.uml2.types.TypesPackage.class);
+		classpath.addBundleForClass(org.eclipse.uml2.uml.UMLPackage.class);
 		doCompile(ocl, classpath, testProjectName);
 	}
 

@@ -858,6 +858,7 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the maven-surefire-plugin..
+	 * @since 1.23
 	 */
 	public static boolean isMavenSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
@@ -896,6 +897,7 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the tycho-surefire-plugin..
+	 * @since 1.23
 	 */
 	public static boolean isTychoSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");

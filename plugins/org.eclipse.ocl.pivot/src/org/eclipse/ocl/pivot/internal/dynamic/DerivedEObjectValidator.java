@@ -8,13 +8,16 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.delegate;
+package org.eclipse.ocl.pivot.internal.dynamic;
 
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EValidator;
 
+/**
+ * @since 1.23
+ */
 public interface DerivedEObjectValidator extends EValidator
 {
 	boolean validate(int classifierID, Object object, DiagnosticChain diagnostics, Map<Object, Object> context);

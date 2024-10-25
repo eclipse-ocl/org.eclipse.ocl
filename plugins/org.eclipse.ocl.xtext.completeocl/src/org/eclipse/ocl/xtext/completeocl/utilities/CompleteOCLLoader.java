@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -188,6 +189,7 @@ public abstract class CompleteOCLLoader
 	 * Install each of the oclURIs documents, then loadMetamodels and finally installPackages.
 	 *
 	 * Returns a non-null String describing any problems.
+	 * @throws SemanticException
 	 */
 	public @Nullable String installDocuments(@NonNull URI... oclURIs) {
 		StringBuilder s = new StringBuilder();
@@ -233,7 +235,7 @@ public abstract class CompleteOCLLoader
 		}
 	}
 
-	public boolean loadDocument(@NonNull URI oclURI) {
+	public boolean loadDocument(@NonNull URI oclURI) throws SemanticException {
 		return loadDocument(oclURI, null);
 	}
 
@@ -271,8 +273,9 @@ public abstract class CompleteOCLLoader
 	/**
 	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
 	 * Return null after invoking error() to display any errors in a pop-up.
+	 * @throws SemanticException
 	 */
-	public Resource loadResource(@NonNull URI oclURI) {
+	public Resource loadResource(@NonNull URI oclURI) throws SemanticException {
 		return loadResource(oclURI, null);
 	}
 
@@ -280,6 +283,7 @@ public abstract class CompleteOCLLoader
 	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
 	 * If sErrors is null, return null after invoking error() to display any errors in a pop-up.
 	 * Else returns error messages to sErrors.
+	 * @throws SemanticException
 	 */
 	public Resource loadResource(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
 		CompleteOCLStandaloneSetup.init();
@@ -337,8 +341,14 @@ public abstract class CompleteOCLLoader
 				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 				if (message2 == null) {
 					DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
-					delegateInstaller.installCompleteOCLDelegates(asResource);
-					return asResource;
+					try {
+						delegateInstaller.installCompleteOCLDelegates(asResource);
+						return asResource;
+					} catch (SemanticException e) {
+						// XXX Auto-generated catch block
+						e.printStackTrace();
+						message2 = e.getMessage();
+					}
 				}
 			}
 		}

@@ -203,7 +203,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
-		System.out.println("Test class helper " + helper.getClass().getName() + " " + helper.getClass().getClassLoader().toString());		// XXX
 		CompleteOCLLoader helper2 = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
 
 			@Override
@@ -212,7 +211,6 @@ public class UMLValidateTest extends AbstractValidateTests
 				// TODO Auto-generated method stub
 				return false;
 			} };
-		System.out.println("Test class helper2 " + helper2.getClass().getName() + " " + helper2.getClass().getClassLoader().toString());		// XXX
 		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
 	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		ProjectManager projectMap = environmentFactory.getProjectManager();
@@ -220,7 +218,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		System.out.println("Test class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);

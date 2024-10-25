@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -561,7 +562,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		 * Return the top level resource contents delegating to the Xtext-friendly CSResource.
 		 */
 		@Override
-		public @NonNull EList<@NonNull EObject> getContents() {
+		public @NonNull EList<@NonNull EObject> getContents() {		// JDT editor has a confusing benign error on a @NonNull */
 			return csResource.getContents();
 		}
 
@@ -784,7 +785,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public @NonNull ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+	public @NonNull ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
 		CS2AS cs2as = getCS2AS(environmentFactory);

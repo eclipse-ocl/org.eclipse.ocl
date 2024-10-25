@@ -31,6 +31,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/AbstractOCLDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.AbstractOCLDelegateFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.AbstractOCLDelegateFactory"/>
+                <message_argument value="isGlobal"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/DelegateInstaller.java" type="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
+                <message_argument value="SUPPRESS_OCL_DELEGATES"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/OCLValidationDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory.Global"/>
+                <message_argument value="INSTANCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
         <filter id="576725006">
             <message_arguments>
@@ -176,6 +200,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"/>
                 <message_argument value="NO_UNLOAD_PROXY_URI"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/PivotUtilInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal"/>
+                <message_argument value="DEBUG_DEPRECATIONS"/>
             </message_arguments>
         </filter>
     </resource>

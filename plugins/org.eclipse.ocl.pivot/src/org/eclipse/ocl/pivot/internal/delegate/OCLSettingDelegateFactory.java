@@ -19,10 +19,19 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL derived-attribute setting delegates.
+ * @since 1.23
  */
 public class OCLSettingDelegateFactory extends AbstractOCLDelegateFactory
 		implements EStructuralFeature.Internal.SettingDelegate.Factory
 {
+	@Deprecated
+	public OCLSettingDelegateFactory(@NonNull String delegateURI) {
+		super(delegateURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
 	public OCLSettingDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);
 	}

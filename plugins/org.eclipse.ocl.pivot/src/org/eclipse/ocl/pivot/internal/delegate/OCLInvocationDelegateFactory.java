@@ -19,10 +19,19 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL operation-invocation delegates.
+ * @since 1.23
  */
 public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		implements EOperation.Internal.InvocationDelegate.Factory
 {
+	@Deprecated
+	public OCLInvocationDelegateFactory(@NonNull String delegateURI) {
+		super(delegateURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
 	public OCLInvocationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);
 	}

@@ -27,10 +27,19 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL derived-classifier validation delegates.
+ * @since 1.23
  */
 public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		implements ValidationDelegate.Factory, ValidationDelegate
 {
+	@Deprecated
+	public OCLValidationDelegateFactory(@NonNull String delegateURI) {
+		super(delegateURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
 	public OCLValidationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);
 	}
@@ -138,6 +147,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	 * The Global variant of the Factory delegates OCL_DELEGATE_URI_PIVOT to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
 	 * by the DelegateResourceSetAdapter.
+	 * @since 1.23
 	 */
 	public static class Global extends OCLValidationDelegateFactory
 	{

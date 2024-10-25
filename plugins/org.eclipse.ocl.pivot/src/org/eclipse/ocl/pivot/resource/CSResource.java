@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
@@ -106,7 +107,7 @@ public interface CSResource extends Resource
 	/**
 	 * @since 1.23
 	 */
-	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {			// XXX
 		throw new UnsupportedOperationException();
 	}
 }

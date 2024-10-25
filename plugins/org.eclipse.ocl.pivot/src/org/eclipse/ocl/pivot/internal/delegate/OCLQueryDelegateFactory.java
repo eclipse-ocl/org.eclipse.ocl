@@ -41,10 +41,18 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * 		target,                     // the context instance
  * 		map-of-name-to-object);     // the external variable bindings
  * </pre>
+ * @since 1.23
  */
 public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 		implements QueryDelegate.Factory
 {
+	@Deprecated
+	public OCLQueryDelegateFactory(@NonNull String delegateURI) {
+		super(delegateURI);
+	}
+	/**
+	 * @since 1.23
+	 */
 	public OCLQueryDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);
 	}

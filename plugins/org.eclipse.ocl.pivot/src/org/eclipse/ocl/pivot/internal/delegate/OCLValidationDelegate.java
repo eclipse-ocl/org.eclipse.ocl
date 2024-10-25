@@ -234,6 +234,9 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, String constraintName, String expression) {
+		if ((context != null) && Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_OCL_DELEGATES))) {
+			return true;
+		}
 		if (eClass == null) {
 			throw new NullPointerException("Null EClass");
 		}
@@ -280,6 +283,9 @@ public class OCLValidationDelegate implements ValidationDelegate
 		return validateExpressionInOCL(environmentFactory, eClassifier, value, diagnostics, context, source, code, query);
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	protected boolean validateExpressionInOCL(final @NonNull EnvironmentFactory environmentFactory, final @NonNull EClassifier eClassifier, final @NonNull Object value, final @Nullable DiagnosticChain diagnostics,
 			final Map<Object, Object> context, final String source, final int code, @NonNull ExpressionInOCL query) {
 		AbstractConstraintEvaluator<Boolean> constraintEvaluator = new CheckingConstraintEvaluator(eClassifier, query)
@@ -314,6 +320,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
 		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);// instanceof Notifier ? (Notifier)value : null);
+		// XXX ??? must confirm that value is in the externalResourceSet
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);
