@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.dynamic;
+package org.eclipse.ocl.pivot.internal.dynamic;
 
 import java.io.File;
 import java.io.FileReader;

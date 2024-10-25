@@ -36,6 +36,11 @@ org.eclipse.ocl.pivot/completePackages=false
 # Turn on assertion failures fore debugged deprecations.
 org.eclipse.ocl.pivot/debug/deprecation=false
 
+# Turn on tracing of the classpath synthesis 
+org.eclipse.ocl.pivot/dynamic/classPath=false
+# Turn on tracing of the explicit compilations 
+org.eclipse.ocl.pivot/dynamic/compiles=false
+
 # Trace conversion of not-optional primitive types such as EBoolean
 org.eclipse.ocl.pivot/ecore2as/notOptional=false
 

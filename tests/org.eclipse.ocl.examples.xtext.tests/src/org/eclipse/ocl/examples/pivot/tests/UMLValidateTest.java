@@ -31,6 +31,7 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
+import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -52,11 +53,13 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.util.UMLValidator;
 import org.junit.After;
 import org.junit.Before;
 
@@ -187,6 +190,8 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_tutorial_umlValidation_436903() {
+		JavaFileUtil.COMPILES.setState(true);
+		JavaFileUtil.CLASS_PATH.setState(true);
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -202,12 +207,24 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
-		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
+		System.out.println("Test class helper " + helper.getClass().getName() + " " + helper.getClass().getClassLoader().toString());		// XXX
+		CompleteOCLLoader helper2 = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
+
+			@Override
+			protected boolean error(@NonNull String primaryMessage,
+					@Nullable String detailMessage) {
+				// TODO Auto-generated method stub
+				return false;
+			} };
+		System.out.println("Test class helper2 " + helper2.getClass().getName() + " " + helper2.getClass().getClassLoader().toString());		// XXX
+		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
+		environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		//
 		//	Load all the documents
 		//
+		System.out.println("Test class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);

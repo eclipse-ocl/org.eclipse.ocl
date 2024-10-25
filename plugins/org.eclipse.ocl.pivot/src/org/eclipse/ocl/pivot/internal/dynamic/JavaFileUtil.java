@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.dynamic;
+package org.eclipse.ocl.pivot.internal.dynamic;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import javax.tools.DiagnosticCollector;
 import javax.tools.FileObject;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
@@ -48,16 +49,16 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.CodeGenConstants;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.osgi.framework.Bundle;
 
 public abstract class JavaFileUtil
 {
-	public static final @NonNull TracingOption CLASS_PATH = new TracingOption(CodeGenConstants.PLUGIN_ID, "classPath");
-	public static final @NonNull TracingOption COMPILES = new TracingOption(CodeGenConstants.PLUGIN_ID, "compiles");
+	public static final @NonNull TracingOption CLASS_PATH = new TracingOption(PivotPlugin.PLUGIN_ID, "dynamic/classPath");
+	public static final @NonNull TracingOption COMPILES = new TracingOption(PivotPlugin.PLUGIN_ID, "dynamic/compiles");
 
 	/**
 	 * When running maven/tycho tests locally a bin folder may leave helpful content hiding what will fail
@@ -115,17 +116,32 @@ public abstract class JavaFileUtil
 		if (compiler2 == null) {
 			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
 		}
-		StandardJavaFileManager stdFileManager2 = compiler2.getStandardFileManager(null, Locale.getDefault(), null);
-		if (stdFileManager2 == null) {
+		StandardJavaFileManager stdFileManager = compiler2.getStandardFileManager(null, Locale.getDefault(), null);
+		if (stdFileManager == null) {
 			throw new IllegalStateException("No StandardJavaFileManager provided by the Java platform");
+		}
+		return compileClasses(stdFileManager, compilationUnits, sourcePath, objectPath, classpath);
+	}
+
+	/**
+	 * Returns a non-null string describing any problems, null if all ok.
+	 */
+	public static @Nullable String compileClasses(@NonNull JavaFileManager fileManager, @NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
+			@Nullable String objectPath, @Nullable JavaClasspath classpath)  {
+		System.out.println("JavaFileUtil.compileClasses class loader " + JavaFileUtil.class.getName() + " " + JavaFileUtil.class.getClassLoader().toString());		// XXX
+		JavaCompiler compiler2 = compiler;
+		if (compiler2 == null) {
+			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
 		}
 		try {
 			//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
 			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 			List<@NonNull String> compilationOptions = new ArrayList<>();
-			compilationOptions.add("-d");
-			compilationOptions.add(objectPath);
-			compilationOptions.add("-g");
+			if (objectPath != null) {
+				compilationOptions.add("-d");
+				compilationOptions.add(objectPath);
+				compilationOptions.add("-g");
+			}
 			//			if (true/*useNullAnnotations*/) {			// This was a good idea to prevent Java 7 / Java 8 annotation confusion
 			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
 			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
@@ -161,12 +177,16 @@ public abstract class JavaFileUtil
 				for (JavaFileObject compilationUnit : compilationUnits) {
 					s.append("\n\t");
 					s.append(compilationUnit.toUri().toString());
+					System.out.println("JavaFileUtil.compileClasses class loader " + compilationUnit.getClass().getName() + " " + compilationUnit.getClass().getClassLoader().toString());		// XXX
 				}
 				COMPILES.println(s.toString());
 			}
+			System.out.println("JavaFileUtil.compileClasses class loader " + compiler2.getClass().getName() + " " + compiler2.getClass().getClassLoader().toString());		// XXX
 			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
-			CompilationTask compilerTask = compiler2.getTask(null, stdFileManager2, diagnostics, compilationOptions, null, compilationUnits);
+			CompilationTask compilerTask = compiler2.getTask(null, fileManager, diagnostics, compilationOptions, null, compilationUnits);
 			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
+			System.out.println("JavaFileUtil.compileClasses class loader " + fileManager.getClass().getName() + " " + fileManager.getClass().getClassLoader().toString());		// XXX
+			System.out.println("JavaFileUtil.compileClasses class loader " + compilerTask.getClass().getName() + " " + compilerTask.getClass().getClassLoader().toString());		// XXX
 			if (compilerTask.call()) {
 				return null;
 			}
@@ -216,7 +236,7 @@ public abstract class JavaFileUtil
 		finally {
 			//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
 			try {
-				stdFileManager2.close();
+				fileManager.close();			// XXX share in callers
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -466,21 +486,6 @@ public abstract class JavaFileUtil
 		return compilationUnits;
 	}
 
-	@Deprecated /* @deprecated Use gatherCompilationUnits */
-	protected void getCompilationUnits(@NonNull List<JavaFileObject> compilationUnits, @NonNull IContainer container) throws CoreException {
-		for (IResource member : container.members()) {
-			if (member instanceof IContainer) {
-				getCompilationUnits(compilationUnits, (IContainer) member);
-			} else if ((member instanceof IFile)
-					&& member.getFileExtension().equals("java")) {
-				java.net.URI locationURI = member.getLocationURI();
-				assert locationURI != null;
-				//				System.out.println("Compiling " + locationURI);
-				compilationUnits.add(new JavaSourceFileObject(locationURI));
-			}
-		}
-	}
-
 	private static @Nullable JavaCompiler getJavaCompiler() {
 		//
 		//	First try to find the EclipseCompiler
@@ -541,7 +546,7 @@ public abstract class JavaFileUtil
 					path = path + TEST_BIN_FOLDER_NAME;
 				}
 				else {
-					String binDir = CGUtil.isMavenSurefire() || CGUtil.isTychoSurefire() ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
+					String binDir = PivotUtilInternal.isMavenSurefire() || PivotUtilInternal.isTychoSurefire() ? MAVEN_TYCHO_BIN_FOLDER_NAME : REGULAR_BIN_FOLDER_NAME;  // FIXME determine "bin" from JDT
 					path = path + binDir;
 				}
 			}
@@ -613,5 +618,147 @@ public abstract class JavaFileUtil
 			}
 		}
 		return null;
+	}
+
+	public JavaFileUtil() {
+		super();
+		System.out.println("JavaFileUtil.init class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
+	}
+
+	/**
+	 * Returns a non-null string describing any problems, null if all ok.
+	 */
+	public @Nullable String compileClasses2(@NonNull JavaFileManager fileManager, @NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
+			@Nullable String objectPath, @Nullable JavaClasspath classpath)  {
+		System.out.println("JavaFileUtil.compileClasses2 class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
+		JavaCompiler compiler2 = compiler;
+		if (compiler2 == null) {
+			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
+		}
+		try {
+			//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
+			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+			List<@NonNull String> compilationOptions = new ArrayList<>();
+			if (objectPath != null) {
+				compilationOptions.add("-d");
+				compilationOptions.add(objectPath);
+				compilationOptions.add("-g");
+			}
+			//			if (true/*useNullAnnotations*/) {			// This was a good idea to prevent Java 7 / Java 8 annotation confusion
+			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
+			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
+			//			}
+			if ((classpath != null) && (classpath.size() > 0)) {
+				compilationOptions.add("-cp");
+				compilationOptions.add(classpath.getClasspath());
+			}
+			if (COMPILES.isActive()) {
+				StringBuilder s = new StringBuilder();
+				s.append("java");
+				boolean isCP = false;
+				for (String compilationOption : compilationOptions) {
+					if (compilationOption.startsWith("-")) {
+						s.append("\n\t");
+					}
+					if (isCP) {
+						boolean isFirst = true;
+						for (String entry : compilationOption.split(System.getProperty("path.separator"))) {
+							if (!isFirst) {
+								s.append("\n\t\t");
+							}
+							s.append(entry);
+							isFirst = false;
+						}
+					}
+					else {
+						s.append(compilationOption);
+					}
+					s.append(" ");
+					isCP = "-cp".equals(compilationOption);
+				}
+				for (JavaFileObject compilationUnit : compilationUnits) {
+					s.append("\n\t");
+					s.append(compilationUnit.toUri().toString());
+					System.out.println("JavaFileUtil.compileClasses2 class loader " + compilationUnit.getClass().getName() + " " + compilationUnit.getClass().getClassLoader().toString());		// XXX
+				}
+				COMPILES.println(s.toString());
+			}
+			System.out.println("JavaFileUtil.compileClasses2 class loader " + compiler2.getClass().getName() + " " + compiler2.getClass().getClassLoader().toString());		// XXX
+			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
+			CompilationTask compilerTask = compiler2.getTask(null, fileManager, diagnostics, compilationOptions, null, compilationUnits);
+			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
+			System.out.println("JavaFileUtil.compileClasses2 class loader " + fileManager.getClass().getName() + " " + fileManager.getClass().getClassLoader().toString());		// XXX
+			System.out.println("JavaFileUtil.compileClasses2 class loader " + compilerTask.getClass().getName() + " " + compilerTask.getClass().getClassLoader().toString());		// XXX
+			if (compilerTask.call()) {
+				return null;
+			}
+			StringBuilder s = new StringBuilder();
+			for (String compilationOption : compilationOptions) {
+				if (compilationOption.startsWith("-")) {
+					s.append("\n");
+				}
+				s.append(compilationOption);
+				s.append(" ");
+			}
+			Object currentSource = null;
+			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
+				s.append("\n");
+				Object source = diagnostic.getSource();
+				if (source != currentSource) {
+					currentSource = source;
+					if (currentSource instanceof FileObject) {
+						s.append(((FileObject)currentSource).toUri());
+					}
+					else if (currentSource != null) {
+						s.append(currentSource);
+					}
+					s.append("\n");
+				}
+				if (currentSource != null) {
+					s.append("\t");
+				}
+				s.append(diagnostic.getLineNumber());
+				s.append(":");
+				s.append(diagnostic.getColumnNumber());
+				s.append(" ");
+				s.append(diagnostic.getMessage(null));
+			}
+			String message;
+			if (s.length() > 0) {
+				//					throw new IOException("Failed to compile " + sourcePath + s.toString());
+				// If a previous generation was bad we may get many irrelevant errors.
+				message = "Failed to compile " + sourcePath + s.toString();
+			}
+			else {
+				message = "Compilation of " + sourcePath + " returned false but no diagnostics";
+			}
+			// System.out.println(message);
+			return message;
+		}
+		finally {
+			//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
+			try {
+				fileManager.close();			// XXX share in callers
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		// Close the file manager which re-opens automatically
+			//			System.out.printf("%6.3f forName\n", 0.001 * (System.currentTimeMillis()-base));
+		}
+	}
+
+	@Deprecated /* @deprecated Use gatherCompilationUnits */
+	protected void getCompilationUnits(@NonNull List<JavaFileObject> compilationUnits, @NonNull IContainer container) throws CoreException {
+		for (IResource member : container.members()) {
+			if (member instanceof IContainer) {
+				getCompilationUnits(compilationUnits, (IContainer) member);
+			} else if ((member instanceof IFile)
+					&& member.getFileExtension().equals("java")) {
+				java.net.URI locationURI = member.getLocationURI();
+				assert locationURI != null;
+				//				System.out.println("Compiling " + locationURI);
+				compilationUnits.add(new JavaSourceFileObject(locationURI));
+			}
+		}
 	}
 }

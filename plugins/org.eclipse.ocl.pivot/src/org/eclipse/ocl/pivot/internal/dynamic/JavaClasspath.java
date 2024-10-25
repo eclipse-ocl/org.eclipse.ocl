@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.dynamic;
+package org.eclipse.ocl.pivot.internal.dynamic;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class JavaClasspath
 			URL projectURL = loadedClass.getResource(modifiedName);
 			if (projectURL != null) {
 				if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-						projectURL = FileLocator.resolve(projectURL);
+					projectURL = FileLocator.resolve(projectURL);
 				}
 				String classpathString = projectURL.toString();
 				classpathString = classpathString.substring(0, classpathString.length() - modifiedName.length());
@@ -128,7 +128,9 @@ public class JavaClasspath
 	 * Add the URL to the list of classpath elememnts.
 	 */
 	public void addURL(@NonNull URL classpathURL) {
-		urls.add(classpathURL);
+		if (!urls.contains(classpathURL)) {
+			urls.add(classpathURL);
+		}
 	}
 
 	public @NonNull String getClasspath() {
@@ -165,7 +167,7 @@ public class JavaClasspath
 		return classpathURI.isFile() ? classpathURI.toFileString() : classpathURI.toString();
 	}
 
-	public @NonNull Iterable<@NonNull URL> getClasspathURLs() {
+	public @NonNull List<@NonNull URL> getClasspathURLs() {
 		return urls;
 	}
 
