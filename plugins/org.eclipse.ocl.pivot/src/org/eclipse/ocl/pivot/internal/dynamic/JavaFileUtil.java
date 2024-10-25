@@ -128,7 +128,6 @@ public abstract class JavaFileUtil
 	 */
 	public static @Nullable String compileClasses(@NonNull JavaFileManager fileManager, @NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
 			@Nullable String objectPath, @Nullable JavaClasspath classpath)  {
-		System.out.println("JavaFileUtil.compileClasses class loader " + JavaFileUtil.class.getName() + " " + JavaFileUtil.class.getClassLoader().toString());		// XXX
 		JavaCompiler compiler2 = compiler;
 		if (compiler2 == null) {
 			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
@@ -177,16 +176,129 @@ public abstract class JavaFileUtil
 				for (JavaFileObject compilationUnit : compilationUnits) {
 					s.append("\n\t");
 					s.append(compilationUnit.toUri().toString());
-					System.out.println("JavaFileUtil.compileClasses class loader " + compilationUnit.getClass().getName() + " " + compilationUnit.getClass().getClassLoader().toString());		// XXX
 				}
 				COMPILES.println(s.toString());
 			}
-			System.out.println("JavaFileUtil.compileClasses class loader " + compiler2.getClass().getName() + " " + compiler2.getClass().getClassLoader().toString());		// XXX
 			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
 			CompilationTask compilerTask = compiler2.getTask(null, fileManager, diagnostics, compilationOptions, null, compilationUnits);
 			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
-			System.out.println("JavaFileUtil.compileClasses class loader " + fileManager.getClass().getName() + " " + fileManager.getClass().getClassLoader().toString());		// XXX
-			System.out.println("JavaFileUtil.compileClasses class loader " + compilerTask.getClass().getName() + " " + compilerTask.getClass().getClassLoader().toString());		// XXX
+			if (compilerTask.call()) {
+				return null;
+			}
+			StringBuilder s = new StringBuilder();
+			for (String compilationOption : compilationOptions) {
+				if (compilationOption.startsWith("-")) {
+					s.append("\n");
+				}
+				s.append(compilationOption);
+				s.append(" ");
+			}
+			Object currentSource = null;
+			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
+				s.append("\n");
+				Object source = diagnostic.getSource();
+				if (source != currentSource) {
+					currentSource = source;
+					if (currentSource instanceof FileObject) {
+						s.append(((FileObject)currentSource).toUri());
+					}
+					else if (currentSource != null) {
+						s.append(currentSource);
+					}
+					s.append("\n");
+				}
+				if (currentSource != null) {
+					s.append("\t");
+				}
+				s.append(diagnostic.getLineNumber());
+				s.append(":");
+				s.append(diagnostic.getColumnNumber());
+				s.append(" ");
+				s.append(diagnostic.getMessage(null));
+			}
+			String message;
+			if (s.length() > 0) {
+				//					throw new IOException("Failed to compile " + sourcePath + s.toString());
+				// If a previous generation was bad we may get many irrelevant errors.
+				message = "Failed to compile " + sourcePath + s.toString();
+			}
+			else {
+				message = "Compilation of " + sourcePath + " returned false but no diagnostics";
+			}
+			// System.out.println(message);
+			return message;
+		}
+		finally {
+			//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
+			try {
+				fileManager.close();			// XXX share in callers
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		// Close the file manager which re-opens automatically
+			//			System.out.printf("%6.3f forName\n", 0.001 * (System.currentTimeMillis()-base));
+		}
+	}
+
+	/**
+	 * Returns a non-null string describing any problems, null if all ok.
+	 */
+	public static @Nullable String compileClasses2(@NonNull JavaFileManager fileManager, @NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
+			@Nullable String objectPath, @Nullable JavaClasspath classpath)  {
+		JavaCompiler compiler2 = compiler;
+		if (compiler2 == null) {
+			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
+		}
+		try {
+			//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
+			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+			List<@NonNull String> compilationOptions = new ArrayList<>();
+			if (objectPath != null) {
+				compilationOptions.add("-d");
+				compilationOptions.add(objectPath);
+				compilationOptions.add("-g");
+			}
+			//			if (true/*useNullAnnotations*/) {			// This was a good idea to prevent Java 7 / Java 8 annotation confusion
+			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
+			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
+			//			}
+			if ((classpath != null) && (classpath.size() > 0)) {
+				compilationOptions.add("-cp");
+				compilationOptions.add(classpath.getClasspath());
+			}
+			if (COMPILES.isActive()) {
+				StringBuilder s = new StringBuilder();
+				s.append("java");
+				boolean isCP = false;
+				for (String compilationOption : compilationOptions) {
+					if (compilationOption.startsWith("-")) {
+						s.append("\n\t");
+					}
+					if (isCP) {
+						boolean isFirst = true;
+						for (String entry : compilationOption.split(System.getProperty("path.separator"))) {
+							if (!isFirst) {
+								s.append("\n\t\t");
+							}
+							s.append(entry);
+							isFirst = false;
+						}
+					}
+					else {
+						s.append(compilationOption);
+					}
+					s.append(" ");
+					isCP = "-cp".equals(compilationOption);
+				}
+				for (JavaFileObject compilationUnit : compilationUnits) {
+					s.append("\n\t");
+					s.append(compilationUnit.toUri().toString());
+				}
+				COMPILES.println(s.toString());
+			}
+			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
+			CompilationTask compilerTask = compiler2.getTask(null, fileManager, diagnostics, compilationOptions, null, compilationUnits);
+			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
 			if (compilerTask.call()) {
 				return null;
 			}
@@ -618,133 +730,6 @@ public abstract class JavaFileUtil
 			}
 		}
 		return null;
-	}
-
-	public JavaFileUtil() {
-		super();
-		System.out.println("JavaFileUtil.init class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
-	}
-
-	/**
-	 * Returns a non-null string describing any problems, null if all ok.
-	 */
-	public @Nullable String compileClasses2(@NonNull JavaFileManager fileManager, @NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
-			@Nullable String objectPath, @Nullable JavaClasspath classpath)  {
-		System.out.println("JavaFileUtil.compileClasses2 class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
-		JavaCompiler compiler2 = compiler;
-		if (compiler2 == null) {
-			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
-		}
-		try {
-			//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
-			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-			List<@NonNull String> compilationOptions = new ArrayList<>();
-			if (objectPath != null) {
-				compilationOptions.add("-d");
-				compilationOptions.add(objectPath);
-				compilationOptions.add("-g");
-			}
-			//			if (true/*useNullAnnotations*/) {			// This was a good idea to prevent Java 7 / Java 8 annotation confusion
-			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
-			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
-			//			}
-			if ((classpath != null) && (classpath.size() > 0)) {
-				compilationOptions.add("-cp");
-				compilationOptions.add(classpath.getClasspath());
-			}
-			if (COMPILES.isActive()) {
-				StringBuilder s = new StringBuilder();
-				s.append("java");
-				boolean isCP = false;
-				for (String compilationOption : compilationOptions) {
-					if (compilationOption.startsWith("-")) {
-						s.append("\n\t");
-					}
-					if (isCP) {
-						boolean isFirst = true;
-						for (String entry : compilationOption.split(System.getProperty("path.separator"))) {
-							if (!isFirst) {
-								s.append("\n\t\t");
-							}
-							s.append(entry);
-							isFirst = false;
-						}
-					}
-					else {
-						s.append(compilationOption);
-					}
-					s.append(" ");
-					isCP = "-cp".equals(compilationOption);
-				}
-				for (JavaFileObject compilationUnit : compilationUnits) {
-					s.append("\n\t");
-					s.append(compilationUnit.toUri().toString());
-					System.out.println("JavaFileUtil.compileClasses2 class loader " + compilationUnit.getClass().getName() + " " + compilationUnit.getClass().getClassLoader().toString());		// XXX
-				}
-				COMPILES.println(s.toString());
-			}
-			System.out.println("JavaFileUtil.compileClasses2 class loader " + compiler2.getClass().getName() + " " + compiler2.getClass().getClassLoader().toString());		// XXX
-			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
-			CompilationTask compilerTask = compiler2.getTask(null, fileManager, diagnostics, compilationOptions, null, compilationUnits);
-			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
-			System.out.println("JavaFileUtil.compileClasses2 class loader " + fileManager.getClass().getName() + " " + fileManager.getClass().getClassLoader().toString());		// XXX
-			System.out.println("JavaFileUtil.compileClasses2 class loader " + compilerTask.getClass().getName() + " " + compilerTask.getClass().getClassLoader().toString());		// XXX
-			if (compilerTask.call()) {
-				return null;
-			}
-			StringBuilder s = new StringBuilder();
-			for (String compilationOption : compilationOptions) {
-				if (compilationOption.startsWith("-")) {
-					s.append("\n");
-				}
-				s.append(compilationOption);
-				s.append(" ");
-			}
-			Object currentSource = null;
-			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
-				s.append("\n");
-				Object source = diagnostic.getSource();
-				if (source != currentSource) {
-					currentSource = source;
-					if (currentSource instanceof FileObject) {
-						s.append(((FileObject)currentSource).toUri());
-					}
-					else if (currentSource != null) {
-						s.append(currentSource);
-					}
-					s.append("\n");
-				}
-				if (currentSource != null) {
-					s.append("\t");
-				}
-				s.append(diagnostic.getLineNumber());
-				s.append(":");
-				s.append(diagnostic.getColumnNumber());
-				s.append(" ");
-				s.append(diagnostic.getMessage(null));
-			}
-			String message;
-			if (s.length() > 0) {
-				//					throw new IOException("Failed to compile " + sourcePath + s.toString());
-				// If a previous generation was bad we may get many irrelevant errors.
-				message = "Failed to compile " + sourcePath + s.toString();
-			}
-			else {
-				message = "Compilation of " + sourcePath + " returned false but no diagnostics";
-			}
-			// System.out.println(message);
-			return message;
-		}
-		finally {
-			//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
-			try {
-				fileManager.close();			// XXX share in callers
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		// Close the file manager which re-opens automatically
-			//			System.out.printf("%6.3f forName\n", 0.001 * (System.currentTimeMillis()-base));
-		}
 	}
 
 	@Deprecated /* @deprecated Use gatherCompilationUnits */

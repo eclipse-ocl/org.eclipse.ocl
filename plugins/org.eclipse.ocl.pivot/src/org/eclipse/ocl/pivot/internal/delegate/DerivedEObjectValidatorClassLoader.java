@@ -100,11 +100,6 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 		return instance;
 	}
 
-	public DerivedEObjectValidatorClassLoader() {
-	//	super(DerivedEObjectValidator.class.getClassLoader());
-		System.out.println("DerivedEObjectValidatorClassLoader.init class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
-	}
-
 	protected final @NonNull JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 	protected final @NonNull StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(null, null, null);
 
@@ -182,21 +177,17 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 		return aClass;
 	} */
 
-	private @NonNull Class<? extends DerivedEObjectValidator> compileSource2(@NonNull List<@NonNull ClassLoader> classLoaders, @NonNull String packageName, @NonNull String className, @NonNull String source, @NonNull JavaClasspath classPath) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SemanticException {
+	private @NonNull Class<? extends DerivedEObjectValidator> compileSource2(@NonNull String packageName, @NonNull String className, @NonNull String source, @NonNull JavaClasspath classPath) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SemanticException {
 		String fileName = packageName.replace('.', '/') + "/" + className + ".java";
 		String fullClassName = packageName + "." + className;
 		DerivedEObjectValidatorClassLoader.InternalJavaFileObject internalJavaFileObject = new InternalJavaFileObject(fileName, source) {};
 		JavaFileManager javaFileManager = new InternalJavaFileManager(standardFileManager, internalJavaFileObject);
-		System.out.println("DerivedEObjectValidatorClassLoader.init internalJavaFileObject class loader " + internalJavaFileObject.getClass().getName() + " " + internalJavaFileObject.getClass().getClassLoader().toString());		// XXX
 
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 		List<JavaFileObject> compilationUnits = Collections.singletonList(internalJavaFileObject);
 
-
-		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-		System.out.println("JavaFileUtil.compileSource2 contextClassLoader class loader " + contextClassLoader.getClass().getName() + " " + contextClassLoader.toString());		// XXX
 	//	JavaFileUtil.class.getDeclaredConstructor().
-		String diags = new JavaFileUtil(){}.compileClasses2(javaFileManager, compilationUnits, fullClassName, null, classPath);
+		String diags = JavaFileUtil.compileClasses2(javaFileManager, compilationUnits, fullClassName, null, classPath);
 		System.out.println(diags);
 	//	CompilationTask task = javaCompiler.getTask(null, javaFileManager, diagnostics, compilationOptions, null, compilationUnits);
 	//	Boolean status = task.call();
@@ -213,7 +204,7 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 	//		}
 	//	}.doIt();
 	//	@SuppressWarnings("unchecked")
-		Class<? extends DerivedEObjectValidator> aClass = new ClassLoader()
+		Class<? extends DerivedEObjectValidator> aClass = new ClassLoader()			// XXX
 		{
 			Class<? extends DerivedEObjectValidator> doIt() {
 				return (Class<? extends DerivedEObjectValidator>)defineClass(fullClassName, bytes, 0, bytes.length);
@@ -221,7 +212,7 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 
 			@Override
 			protected Class<?> findClass(String name) throws ClassNotFoundException {
-				for (ClassLoader classLoader : classLoaders) {
+				for (ClassLoader classLoader : classPath.getClassLoaders()) {
 					try {
 						Class<?> theClass = classLoader.loadClass(name);
 						if (theClass != null) {
@@ -261,7 +252,7 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 */
-	public @NonNull Class<? extends DerivedEObjectValidator> findDerivedEObjectValidator(@NonNull List<@NonNull ClassLoader> classLoaders, @NonNull Class<? extends EObjectValidator> eValidatorClass)
+	public @NonNull Class<? extends DerivedEObjectValidator> findDerivedEObjectValidator(@NonNull Class<? extends EObjectValidator> eValidatorClass)
 			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, IllegalArgumentException, SecurityException, SemanticException {
 		Class<? extends DerivedEObjectValidator> derivedEValidatorClass = eValidator2derivedEValidator.get(eValidatorClass);
 		if (derivedEValidatorClass == null) {
@@ -309,7 +300,7 @@ public final class DerivedEObjectValidatorClassLoader //extends ClassLoader
 			classPath.addClass(EObjectValidator.class);		// XXX all supers
 			classPath.addClass(Diagnostician.class);
 			classPath.addClass(Diagnostic.class);
-			derivedEValidatorClass = compileSource2(classLoaders, packageName, className, source, classPath);
+			derivedEValidatorClass = compileSource2(packageName, className, source, classPath);
 			eValidator2derivedEValidator.put(eValidatorClass, derivedEValidatorClass);
 		}
 		return derivedEValidatorClass;

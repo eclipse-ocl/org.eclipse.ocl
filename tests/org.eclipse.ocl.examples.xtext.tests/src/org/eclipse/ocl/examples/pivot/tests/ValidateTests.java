@@ -257,8 +257,9 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		ValidationRegistryAdapter.getAdapter(testResourceSet).put(overloadsPackage, EObjectValidator.INSTANCE);
 		checkValidationDiagnostics(testInstance, Diagnostic.OK);
-		ocl1.dispose();
 		ocl2.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testValidate_Bug418551_ecore() throws IOException, InterruptedException {

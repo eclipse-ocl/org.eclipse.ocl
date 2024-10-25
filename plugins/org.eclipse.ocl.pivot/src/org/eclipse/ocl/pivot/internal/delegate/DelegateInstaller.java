@@ -500,8 +500,7 @@ public class DelegateInstaller
 				}
 				ExtendedEObjectValidator extendedEObjectValidator = ePackage2extendedEObjectValidator.get(ePackage);
 				if (extendedEObjectValidator == null) {
-					List<@NonNull ClassLoader> classLoaders = environmentFactory.getMetamodelManager().getImplementationManager().getClassLoaders();
-					extendedEObjectValidator = new ExtendedEObjectValidator(classLoaders, ePackage, eValidator);
+					extendedEObjectValidator = new ExtendedEObjectValidator(ePackage, eValidator);
 					ePackage2extendedEObjectValidator.put(ePackage, extendedEObjectValidator);
 				}
 				extendedEObjectValidator.installFor(environmentFactory.getResourceSet(), getEClass2Constraints(environmentFactory, asResource));
@@ -530,19 +529,16 @@ public class DelegateInstaller
 			}
 		}
 
-	//	protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @NonNull EPackage ePackage;						// The validated EPackage
 		protected final @NonNull EValidator eValidator;					// The displaced EValidator
 		protected @Nullable DerivedEObjectValidator derivedEValidator;	// The displaced EValidator with a public validate(int... methiod
 
-		public ExtendedEObjectValidator(@NonNull List<@NonNull ClassLoader> classLoaders, @NonNull EPackage ePackage, @NonNull EValidator eValidator) {
-		//	this.environmentFactory = environmentFactory;
+		public ExtendedEObjectValidator(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 			this.ePackage = ePackage;
 			this.eValidator = eValidator;
-			System.out.println("ExtendedEObjectValidator.init class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
 			if (eValidator instanceof EObjectValidator) {
 				try {
-					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorClassLoader.getInstance().findDerivedEObjectValidator(classLoaders, ((EObjectValidator)eValidator).getClass());
+					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorClassLoader.getInstance().findDerivedEObjectValidator(((EObjectValidator)eValidator).getClass());
 					derivedEValidator = derivedEObjectValidatorClass.getDeclaredConstructor().newInstance();
 				} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IllegalArgumentException | SecurityException | SemanticException e) {
 					// XXX Auto-generated catch block
@@ -877,13 +873,8 @@ public class DelegateInstaller
 
 	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<String, Object> options) {
 		this.environmentFactory = environmentFactory;
-		//		this.metamodelManager = metamodelManager;
 		this.options = options != null ? options : new HashMap<String,Object>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);
-		System.out.println("DelegateInstaller.init class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
-		System.out.println("DelegateInstaller.init environmentFactory class loader " + environmentFactory.getClass().getName() + " " + environmentFactory.getClass().getClassLoader().toString());		// XXX
-		Object test = new Object() { public void test() { return; } };
-		System.out.println("DelegateInstaller.init test class loader " + test.getClass().getName() + " " + test.getClass().getClassLoader().toString());		// XXX
 	}
 
 	protected @NonNull EAnnotation createAnnotation(@NonNull EModelElement eModelElement) {
@@ -1046,7 +1037,6 @@ public class DelegateInstaller
 				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
 				refreshValidationDelegates(ePackage, validationDelegates);
 			}
-			System.out.println("DelegateInstaller.installCompleteOCLDelegates class loader " + getClass().getName() + " " + getClass().getClassLoader().toString());		// XXX
 			ExtendedEObjectValidator.installFor(environmentFactory, ePackage, asResource);
 		}
 		refreshValidationDelegates(eClasses);			//	Force DelegateEClassifierAdapter recomputation.

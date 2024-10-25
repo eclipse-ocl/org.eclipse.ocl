@@ -31,7 +31,6 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -59,7 +58,6 @@ import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
-import org.eclipse.uml2.uml.util.UMLValidator;
 import org.junit.After;
 import org.junit.Before;
 
@@ -190,8 +188,6 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_tutorial_umlValidation_436903() {
-		JavaFileUtil.COMPILES.setState(true);
-		JavaFileUtil.CLASS_PATH.setState(true);
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -218,7 +214,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			} };
 		System.out.println("Test class helper2 " + helper2.getClass().getName() + " " + helper2.getClass().getClassLoader().toString());		// XXX
 		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
-		environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
+	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		//

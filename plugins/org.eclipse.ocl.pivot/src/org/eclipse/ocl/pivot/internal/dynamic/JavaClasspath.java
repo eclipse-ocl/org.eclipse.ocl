@@ -22,6 +22,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * JavaClasspath maintains a list of classpath entries providing some flexibility in the way in
@@ -34,13 +35,20 @@ public class JavaClasspath
 	 * URLs in the format returned by Class.getResource, save that jar:...! wrapping is removed.
 	 * The entries are therefore fully-protocoled paths terminating typically in either *.jar or /bin.
 	 */
-	private final @NonNull List<@NonNull URL> urls = new ArrayList<>();
+	private final @NonNull List<@NonNull URL> urls = new UniqueList<>();
+
+	/**
+	 * The ClassLoaders that can load the example classpath elements.
+	 */
+	private final @NonNull List<@NonNull ClassLoader> classLoaders = new UniqueList<>();
 
 	/**
 	 * Add the classpath by which loadedClass was loaded to the list of classpath elememnts.
 	 */
 	public void addClass(@NonNull Class<?> loadedClass) {
 		try {
+			ClassLoader classLoader = loadedClass.getClassLoader();
+			classLoaders.add(classLoader);
 			String modifiedName = "/" + loadedClass.getName().replace('.', '/') + ".class";
 			URL projectURL = loadedClass.getResource(modifiedName);
 			if (projectURL != null) {
@@ -128,9 +136,11 @@ public class JavaClasspath
 	 * Add the URL to the list of classpath elememnts.
 	 */
 	public void addURL(@NonNull URL classpathURL) {
-		if (!urls.contains(classpathURL)) {
-			urls.add(classpathURL);
-		}
+		urls.add(classpathURL);
+	}
+
+	public @NonNull List<@NonNull ClassLoader> getClassLoaders() {
+		return classLoaders;
 	}
 
 	public @NonNull String getClasspath() {
