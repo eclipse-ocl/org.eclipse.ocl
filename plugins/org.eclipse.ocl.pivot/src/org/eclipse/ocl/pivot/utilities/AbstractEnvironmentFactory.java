@@ -148,6 +148,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
 	protected final @NonNull ResourceSet externalResourceSet;
+	private @Nullable List<@NonNull ResourceSet> extraResourceSets = null;
 	private final @NonNull ResourceSet asResourceSet;
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
@@ -370,6 +371,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {
+		List<@NonNull ResourceSet> extraResourceSets2 = extraResourceSets;
+		if (extraResourceSets2 == null) {
+			extraResourceSets = extraResourceSets2 = new UniqueList<>();
+		}
+		extraResourceSets2.add(extraResourceSet);
+	}
+
+	@Override
 	public void analyzeExpressions(@NonNull EObject eRootObject,
 			@NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {
 		@SuppressWarnings("unused") Type oclElementType = standardLibrary.getOclElementType();
@@ -428,6 +438,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
+	}
+
+	@Override
+	public boolean canValidate(@NonNull ResourceSet resourceSet) {
+		return (extraResourceSets != null) && extraResourceSets.contains(resourceSet);
 	}
 
 	@Override

@@ -77,6 +77,22 @@ public class ValidationContext extends HashMap<Object,Object>
 		put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
 	}
 
+	/**
+	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.basicGetEnvironmentFactory(Notifier).
+	 * Returns null if no EnvironmentFactory available.
+	 *
+	 * @since 1.23
+	 */
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Notifier notifier) {
+		if (validationContext != null) {
+			Object environmentFactory = validationContext.get(EnvironmentFactory.class);
+			if (environmentFactory != null) {
+				return (EnvironmentFactoryInternal)environmentFactory;
+			}
+		}
+		return PivotUtilInternal.basicGetEnvironmentFactory(notifier);
+	}
+
 	protected Diagnostician createDiagnostician(EValidator.@NonNull Registry validationRegistry) {
 		return new Diagnostician(validationRegistry);
 	}

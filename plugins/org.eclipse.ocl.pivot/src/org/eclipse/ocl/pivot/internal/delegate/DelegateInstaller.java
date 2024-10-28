@@ -610,14 +610,14 @@ public class DelegateInstaller
 							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, environmentFactory, validationDelegateRegistry);			// XXX ?? cache in context
 						}
 						else {
-							if (context != null) {
-								context.put(SUPPRESS_OCL_DELEGATES, Boolean.TRUE);
-							}
+							EnvironmentFactoryInternal environmentFactory = ValidationContext.basicGetEnvironmentFactory(context, eObject);
+							if ((context != null) && ((environmentFactory == null) || !environmentFactory.canValidate(resourceSet))) {
+								context.put(SUPPRESS_OCL_DELEGATES, Boolean.TRUE);	// Avoid the inherited DynamicEClassValidator handling the delegates
+							}		// XXX would an ExtendedDynamicEClassValidator be better?
 						}
 					}
 				}
 			}
-			// XXX must confirm that value is in the externalResourceSet and suppress Complete OCL delegate downstream
 			if (dynamicEClassValidator == null) {
 				return eValidator.validate(eClass, eObject, diagnostics, context);
 			}

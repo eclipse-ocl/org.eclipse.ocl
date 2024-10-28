@@ -189,7 +189,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Load Simple.ocl using the already loaded Simple.oclinecore.
 		//
 		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
-		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(environmentFactory);
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(environmentFactory, testResourceSet);
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
 		//

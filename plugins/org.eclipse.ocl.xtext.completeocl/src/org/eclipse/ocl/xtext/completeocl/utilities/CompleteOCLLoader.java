@@ -64,8 +64,8 @@ public abstract class CompleteOCLLoader
 	{
 		StringBuilder s = new StringBuilder();
 
-		public CompleteOCLLoaderWithLog(@NonNull EnvironmentFactory environmentFactory) {
-			super(environmentFactory);
+		public CompleteOCLLoaderWithLog(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
+			super(environmentFactory, extraResourceSets);
 		}
 
 		@Override
@@ -93,8 +93,13 @@ public abstract class CompleteOCLLoader
 	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
 	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage = new HashMap<>();
 
-	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
+	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
+		if (extraResourceSets != null) {
+			for (ResourceSet extraResourceSet : extraResourceSets) {
+				environmentFactory.addExtraResourceSet(extraResourceSet);
+			}
+		}
 	}
 
 	public void dispose() {

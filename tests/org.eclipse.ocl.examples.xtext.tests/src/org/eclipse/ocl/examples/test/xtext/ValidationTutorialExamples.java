@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -33,7 +34,12 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.XtextStandaloneSetup;
+import org.eclipse.xtext.resource.XtextResourceSet;
 
 /**
  * Tests for the OCLinEcore tutorial using LPG or Pivot delegate URIs on LPG or Pivot evaluator.
@@ -61,6 +67,13 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		return resourceSet;
 	}
 
+	protected @NonNull XtextResourceSet createXtextResourceSet() {
+		XtextResourceSet xtextResourceSet = new XtextResourceSet();
+		getProjectMap().initializeResourceSet(xtextResourceSet);
+		xtextResourceSet.getURIConverter().getURIHandlers().add(0, new ClasspathURIHandler());
+		return xtextResourceSet;
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		TestUtil.doEssentialOCLSetup();
@@ -70,7 +83,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		OCLstdlib.install();
 	}
 
-	public void testValidationTutorial() throws Throwable {
+	public void testValidationTutorial_EcoreAndXMI() throws Throwable {
 		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
 		@NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
 		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
@@ -89,7 +102,6 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		EObject ecoreObject = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass")).getEStructuralFeature("uncachedDerived");
 		String xmiObjectLabel = LabelUtil.getLabel(xmiObject);			// Beware: uses settingDelegate and so the prevailing OCL
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
-	//	assertNoValidationErrors("XMI validation without extra OCL", xmiResource);
 		assertValidationDiagnostics("XMI validation without extra OCL", xmiResource, getMessages(
 			StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel)));
 		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
@@ -101,8 +113,6 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert ocl4xmiResource != null;
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
 		assert ocl4ecoreResource != null;
-	//	String xmiObjectLabel = LabelUtil.getLabel(xmiObject);			// Beware: uses settingDelegate and so the prevailing OCL
-	//	String ecoreObjectLabel = LabelUtil.getLabel(ecoreObject);
 		helper.dispose();												// Does ocl0.dispose()
 		//
 		//	Validate the XMI - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
@@ -123,13 +133,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-//				GlobalEnvironmentFactory.disposeInstance();
-//				OCL ocl2 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
 					StringUtil.bind(VIOLATED_INVARIANT_TEMPLATE, "mustBeTrue", xmiObjectLabel),
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "UncachedDerivedIsNull", xmiObjectLabel)));
-
-//				ocl2.dispose();
 			}
 		});
 	}
@@ -144,10 +150,10 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert independentEcoreResource != null;
 		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("BadClass"));
 	//	EObject independentEcoreObject = independentEcoreClass.getEStructuralFeature("uncachedDerived");
-	//	assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
+		assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
 		independentEcoreClass.setName("M i n u t e");
 		String badMinuteName = "The name 'M i n u t e' is not well formed";
-	//	assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteName));
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteName));
 		ThreadLocalExecutor.resetEnvironmentFactory();
 
 		ResourceSet resourceSet = createExternalResourceSet();
@@ -160,7 +166,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		EClass ecoreClass = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass"));
 		EStructuralFeature ecoreFeature = ecoreClass.getEStructuralFeature("uncachedDerived");
-	//	assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
+		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
@@ -173,13 +179,13 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Verify that the Independent Ecore is not affected by the loaded OCL.
 		//
-	//	assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteName));
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteName));
 		independentEcoreClass.setName("Minute");
-	//	assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentEcoreResource, null);
+		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentEcoreResource, null);
 		//
 		//	Validate the ecore - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-	/*	doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
@@ -188,7 +194,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel),
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsVolatile", ecoreObjectLabel)));
 			}
-		}); */
+		});
 		//
 		//	Revalidate the ecore after changing some errors.
 		//
@@ -317,6 +323,109 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			}
 		});
 		helper.unloadDocument(ocl4umlURI);
+		helper.dispose();												// Does ocl0.dispose()
+	}
+
+	public void testValidationTutorial_XtextTestFile() throws Throwable {
+		XtextStandaloneSetup.doSetup();
+		@NonNull URI xtextURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XtextTestFile.xtext", true);
+		@NonNull URI ocl4xtextURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXtextValidation.ocl", true);
+		ResourceSet independentResourceSet = createXtextResourceSet();
+		Resource independentXtextResource = independentResourceSet.getResource(xtextURI, true);
+		assert independentXtextResource != null;
+		Grammar independentXtextGrammar = (Grammar)independentXtextResource.getContents().get(0);
+		EList<AbstractRule> independentRules = independentXtextGrammar.getRules();
+		assertNoValidationErrors("Independent Xtext validation without extra OCL", independentXtextResource);
+		independentRules.move(0, independentRules.size()-1);
+		assertLazyValidationDiagnostics("Corrupted Independent Xtext validation without OCL support", independentXtextResource, getMessages(
+				"The first rule must be a parser rule."));
+
+		ResourceSet resourceSet = createXtextResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		//
+		//	Load the xtext - emulate Open XtextTestFile.xtext with Xtext Editor
+		//
+		Resource xtextResource = resourceSet.getResource(xtextURI, true);
+		assert xtextResource != null;
+		//
+		Grammar xtextGrammar = (Grammar)xtextResource.getContents().get(0);
+		EList<AbstractRule> xtextRules = xtextGrammar.getRules();
+	//	org.eclipse.xtext2.xtext.Model xtextModel = (org.eclipse.xtext2.xtext.Model)xtextResource.getContents().get(0);
+	//	org.eclipse.xtext2.xtext.Package xtextPackage = (org.eclipse.xtext2.xtext.Model)xtextResource.getContents().get(0);
+	//	org.eclipse.xtext2.xtext.Class xtext_UPPERCASE_Class = (org.eclipse.xtext2.xtext.Class)xtextPackage.getOwnedTypes().get(0);
+	//	org.eclipse.xtext2.xtext.Class xtext_lowercase_Class = (org.eclipse.xtext2.xtext.Class)xtextPackage.getOwnedTypes().get(1);
+		assertNoValidationErrors("Xtext validation without extra OCL", xtextResource);
+		//
+		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
+		//
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		ASResource ocl4xtextResource = (ASResource)helper.loadResource(ocl4xtextURI);
+		assert ocl4xtextResource != null;
+	//	helper.dispose();												// Does ocl0.dispose()
+		//
+		//	Verify that the Independent Xtext is not affected by the loaded OCL.
+		//
+		assertLazyValidationDiagnostics("Corrupted Independent Xtext validation with OCL support", independentXtextResource, getMessages(
+				"The first rule must be a parser rule."));
+		independentRules.move(independentRules.size()-1, 0);
+		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentXtextResource, null);
+		//
+		//	Validate the Xtext - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
+		//
+	/*	doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String xtext_lowercase_ClassLabel = LabelUtil.getLabel(xtext_lowercase_Class);
+				assertLazyValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", xtext_lowercase_ClassLabel)));
+			}
+		});
+		//
+		//	Revalidate the Xtext after removing errors.
+		//
+		xtext_lowercase_Class.setName("LowerCase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				assertValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages());
+			}
+		});
+		//
+		//	Revalidate the Xtext with a Xtext 'error'.
+		//
+		xtext_UPPERCASE_Class.setName("LowerCase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String xtext_UPPERCASE_Label = LabelUtil.getLabel(xtext_UPPERCASE_Class);
+				String xtext_lowercase_Label = LabelUtil.getLabel(xtext_lowercase_Class);
+				String xtextModelLabel = LabelUtil.getLabel(xtextModel);
+				assertValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages(
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, xtext_UPPERCASE_Label, xtextModelLabel),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, xtext_lowercase_Label, xtextModelLabel),
+					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, xtextModelLabel)));
+			}
+		});
+		//
+		//	Revalidate the Xtext with Xtext and OCL errors.
+		//
+		xtext_UPPERCASE_Class.setName("uppercase");
+		xtext_lowercase_Class.setName("uppercase");
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				String xtext_UPPERCASE_Label = LabelUtil.getLabel(xtext_UPPERCASE_Class);
+				String xtext_lowercase_Label = LabelUtil.getLabel(xtext_lowercase_Class);
+				String xtextModelLabel = LabelUtil.getLabel(xtextModel);
+				assertValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages(
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", xtext_UPPERCASE_Label),
+					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", xtext_lowercase_Label),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, xtext_UPPERCASE_Label, xtextModelLabel),
+					StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, xtext_lowercase_Label, xtextModelLabel),
+					StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, xtextModelLabel)));
+			}
+		}); */
+		helper.unloadDocument(ocl4xtextURI);
 		helper.dispose();												// Does ocl0.dispose()
 	}
 }

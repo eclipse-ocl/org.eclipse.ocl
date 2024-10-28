@@ -119,6 +119,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
 	/**
+	 * Register extraResourceSet as an additional external ResourceSet for which OCL validation may be applied.
+	 */
+	default void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {}
+
+	/**
 	 * Creates a new evaluation environment to track the values of variables in
 	 * an OCL expression as it is evaluated.
 	 *
