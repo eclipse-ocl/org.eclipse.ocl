@@ -43,7 +43,7 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
-                <message_argument value="SUPPRESS_OCL_DELEGATES"/>
+                <message_argument value="SUPPRESS_DYNAMIC_OCL_DELEGATES"/>
             </message_arguments>
         </filter>
     </resource>

@@ -162,7 +162,7 @@ public class ValidateTests extends AbstractValidateTests
 	public void testValidate_Simple_oclinecore_and_ocl() throws IOException, InterruptedException {
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		assert EValidator.ValidationDelegate.Registry.INSTANCE.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 		//
 		//	Load the model from OCLinEcore and Save as Ecore.
 		//
@@ -808,6 +808,7 @@ public class ValidateTests extends AbstractValidateTests
 			ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 			org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 			OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+			OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 			//
 			URI ecoreURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.ecore");
 			URI xmiURI = getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi");

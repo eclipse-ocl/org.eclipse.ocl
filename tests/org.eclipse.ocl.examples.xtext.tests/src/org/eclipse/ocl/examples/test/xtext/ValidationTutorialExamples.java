@@ -61,8 +61,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true);
-		OCLDelegateDomain.lazyInitializeLocalValidationRegistry(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true, null);
+		OCLDelegateDomain.lazyInitializeGlobalValidationRegistry(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, true);
+		OCLDelegateDomain.lazyInitializeLocalValidationRegistry(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, true, null);
 		getProjectMap().initializeResourceSet(resourceSet);
 		return resourceSet;
 	}
@@ -145,11 +145,9 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
 		ResourceSet independentResourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
 		getProjectMap().initializeResourceSet(independentResourceSet);
-	//	URI littleURI = getTestModelURI("models/ecore/LittleModel.ecore");
 		Resource independentEcoreResource = independentResourceSet.getResource(ecoreURI, true);
 		assert independentEcoreResource != null;
 		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("BadClass"));
-	//	EObject independentEcoreObject = independentEcoreClass.getEStructuralFeature("uncachedDerived");
 		assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
 		independentEcoreClass.setName("M i n u t e");
 		String badMinuteName = "The name 'M i n u t e' is not well formed";
@@ -372,18 +370,23 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Validate the Xtext - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-	/*	doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				String xtext_lowercase_ClassLabel = LabelUtil.getLabel(xtext_lowercase_Class);
+		//		String xtext_lowercase_ClassLabel = "xyzzy"; //LabelUtil.getLabel(xtext_lowercase_Class);
 				assertLazyValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages(
-					StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", xtext_lowercase_ClassLabel)));
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Alternatives::Group::Action"),
+					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Alternatives::Group::Action")));
 			}
 		});
 		//
 		//	Revalidate the Xtext after removing errors.
 		//
-		xtext_lowercase_Class.setName("LowerCase");
+/*		xtext_lowercase_Class.setName("LowerCase");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {

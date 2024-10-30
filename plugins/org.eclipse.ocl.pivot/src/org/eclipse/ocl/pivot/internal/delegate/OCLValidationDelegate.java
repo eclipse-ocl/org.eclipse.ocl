@@ -234,9 +234,11 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, String constraintName, String expression) {
-		if ((context != null) && Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_OCL_DELEGATES))) {
-			return true;
-		}
+		assert context != null;
+	//	if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+	//		assert false : "XXX experimenting with dynamic OCL detection";
+	//		return true;			// XXX This suppresses non-dynamic too
+	//	}
 		if (eClass == null) {
 			throw new NullPointerException("Null EClass");
 		}

@@ -138,7 +138,7 @@ public interface ASResource extends XMIResource
 	boolean isSaveable();
 
 	/**
-	 * Populate the UnloadedProxyAdapter with proxy URIs for all referencable elements.
+	 * Populate an AS element to proxy URI mapping with proxy URIs for all referencable elements.
 	 * This should be invoked before unload to ensure that the full AS context is available.
 	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
 	 *

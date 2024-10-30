@@ -222,15 +222,17 @@ public class DelegateInstaller
 			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 				assert eClass.getEPackage() == ePackage;
 				DerivedEObjectValidator derivedEValidator2 = derivedEValidator;
-				if (derivedEValidator2 == null) {
-					return eValidator.validate(eClass, eObject, diagnostics, context);		// Normal EMF validator
+				if (derivedEValidator2 != null) {
+					boolean result = validateDelegates(eClass, eObject, diagnostics, context);
+					if (result || diagnostics != null) {
+						//	assert eClass.getEPackage() == derivedEValidator.getEPackage();
+						result &= derivedEValidator2.validate(eClass.getClassifierID(), eObject, diagnostics, context);		// Normal EMF validator without duplication of delegates
+					}
+					return result;
 				}
-				boolean result = validateDelegates(eClass, eObject, diagnostics, context);
-				if (result || diagnostics != null) {
-					//	assert eClass.getEPackage() == derivedEValidator.getEPackage();
-					result &= derivedEValidator2.validate(eClass.getClassifierID(), eObject, diagnostics, context);		// Normal EMF validator without duplication of delegates
+				else {
+					return eValidator.validate(eClass, eObject, diagnostics, context);		// Normal EMF validator without duplication of delegates
 				}
-				return result;
 			}
 
 			protected boolean validateDelegatedConstraint(@NonNull EClass eClass, @NonNull EObject eObject, DiagnosticChain diagnostics,
@@ -396,14 +398,8 @@ public class DelegateInstaller
 			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
-		//	for (@NonNull TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-		//		EObject eObject = tit.next();
-		//		if (eObject instanceof org.eclipse.ocl.pivot.Class) {
-		//			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject;
-		//			CompleteClass completeClass = completeModel.getCompleteClass(asClass);
 					org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
 					Iterable<@NonNull Object> allInvariantOrInvariants = completeModel.getAllCompleteInvariants(asClass);
-				//	List<Constraint> asInvariants = asClass.getOwnedInvariants();
 					if (allInvariantOrInvariants != null) {
 						EObject esObject = completeClass.getPrimaryClass().getESObject();
 						if (esObject instanceof EClass) {
@@ -428,7 +424,6 @@ public class DelegateInstaller
 							}
 						}
 					}
-			//		tit.prune();
 				}
 			}
 			return eClass2constraints;
@@ -444,7 +439,6 @@ public class DelegateInstaller
 					org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject;
 					CompleteClass completeClass = completeModel.getCompleteClass(asClass);
 					Iterable<@NonNull Object> allInvariantOrInvariants = completeModel.getAllCompleteInvariants(asClass);
-				//	List<Constraint> asInvariants = asClass.getOwnedInvariants();
 					if (allInvariantOrInvariants != null) {
 						EObject esObject = completeClass.getPrimaryClass().getESObject();
 						if (esObject instanceof EClass) {
@@ -570,15 +564,6 @@ public class DelegateInstaller
 			extendedEObjectValidatorAdapter.addConstraints(eClass2constraints);
 		}
 
-		private @Nullable ExtendedEObjectValidatorAdapter isApplicableFor(@NonNull ResourceSet resourceSet) {		// XXX rename
-			for (Adapter eAdapter : resourceSet.eAdapters()) {
-				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-					return (ExtendedEObjectValidatorAdapter)eAdapter;
-				}
-			}
-			return null;
-		}
-
 		private void uninstallFor(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
 			EList<Adapter> eAdapters = environmentFactory.getResourceSet().eAdapters();
 			synchronized (eAdapters) {
@@ -595,35 +580,46 @@ public class DelegateInstaller
 
 		@Override
 		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-			// Minimize overhead on the OCL-not-required control path.
-			DynamicEClassValidator dynamicEClassValidator = null;
-			if (!eObject.eIsProxy() && ((context == null) || !context.containsKey(SUPPRESS_OCL_DELEGATES))) {
-				Resource eResource = eObject.eResource();
-				if (eResource != null) {
-					ResourceSet resourceSet = eResource.getResourceSet();
-					if (resourceSet != null) {
-						ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = isApplicableFor(resourceSet);
-						if (extendedEObjectValidatorAdapter != null) {		// XXX
+			assert context != null;
+			if (eObject.eIsProxy()) {													// If proxy
+				return eValidator.validate(eClass, eObject, diagnostics, context);		//  regular EMF validation
+			}
+			if (context.containsKey(SUPPRESS_DYNAMIC_OCL_DELEGATES)) {						// If OCL suppressed because wrong ResourceSet
+				return eValidator.validate(eClass, eObject, diagnostics, context);	//  regular EMF validation
+			}
+			DynamicEClassValidator dynamicEClassValidator = (DynamicEClassValidator)context.get(ExtendedDynamicEClassValidator.class);
+			if (dynamicEClassValidator != null) {									// If OCL support already available
+				return dynamicEClassValidator.validate(eClass, eObject, diagnostics, context);		// OCL enabled validation
+			}
+			Resource eResource = eObject.eResource();
+			if (eResource != null) {
+				ResourceSet resourceSet = eResource.getResourceSet();
+				if (resourceSet != null) {
+					ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = null;
+					for (Adapter eAdapter : resourceSet.eAdapters()) {
+						if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {		// If ResourceSet enables OCL validation
+							extendedEObjectValidatorAdapter = (ExtendedEObjectValidatorAdapter)eAdapter;
 							@SuppressWarnings("null")
 							EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry = getValidationDelegateRegistry(context);
 							EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
 							dynamicEClassValidator = new ExtendedDynamicEClassValidator(extendedEObjectValidatorAdapter, environmentFactory, validationDelegateRegistry);			// XXX ?? cache in context
+							context.put(ExtendedDynamicEClassValidator.class, dynamicEClassValidator);		// cache for other element validations
+							return dynamicEClassValidator.validate(eClass, eObject, diagnostics, context);		// OCL enabled validation
 						}
-						else {
-							EnvironmentFactoryInternal environmentFactory = ValidationContext.basicGetEnvironmentFactory(context, eObject);
-							if ((context != null) && ((environmentFactory == null) || !environmentFactory.canValidate(resourceSet))) {
-								context.put(SUPPRESS_OCL_DELEGATES, Boolean.TRUE);	// Avoid the inherited DynamicEClassValidator handling the delegates
-							}		// XXX would an ExtendedDynamicEClassValidator be better?
-						}
+					}
+					//
+					//	Installing a variant of ExtendedDynamicEClassValidator that suppresses just OCL_DELEGATE_URI_PIVOT_DYNAMIC
+					//	would allow regular validation to benefit from the one-off meta-analysis of all applicable constraints but would
+					//	require OCL-free metamodels to incur the one-off overhead of an Ecore-to-Pivot conversion. So for safety/compatibility
+					//	we just cache the don't need dynamic OCL delegates knowledge.
+					//
+					EnvironmentFactoryInternal environmentFactory = ValidationContext.basicGetEnvironmentFactory(context, eObject);
+					if ((environmentFactory == null) || !environmentFactory.canValidate(resourceSet)) {
+						context.put(SUPPRESS_DYNAMIC_OCL_DELEGATES, Boolean.TRUE);					// cache the 'wrong' ResourceSet for other element validations
 					}
 				}
 			}
-			if (dynamicEClassValidator == null) {
-				return eValidator.validate(eClass, eObject, diagnostics, context);
-			}
-			else {				// Re-implement super.validate to avoid exclusion of delegation for matching Package
-				return dynamicEClassValidator.validate(eClass, eObject, diagnostics, context);
-			}
+			return eValidator.validate(eClass, eObject, diagnostics, context);
 		}
 	}
 
@@ -641,10 +637,10 @@ public class DelegateInstaller
 
 	/**
 	 * ValidationContext entry that may be set true when validating an EObject whose ResourceSet lacks an ExtendedEObjectValidatorAdapter.
-	 * This prevents leakage of additional OCL constraints applied to an Xtext grammar leaking beyond the intended applications.
+	 * This prevents leakage of additional dynamic OCL constraints applied to an Xtext grammar leaking beyond the intended applications.
 	 * @since 1.23
 	 */
-	public static final String SUPPRESS_OCL_DELEGATES = "suppressOCLdelegates";
+	public static final String SUPPRESS_DYNAMIC_OCL_DELEGATES = "suppressDynamicOCLdelegates";
 
 	public static @NonNull String getAnnotationKey(@NonNull Constraint pivotConstraint) {
 		String name = pivotConstraint.getName();
@@ -1006,14 +1002,14 @@ public class DelegateInstaller
 			UniqueList<@NonNull Constraint> asConstraints = entry.getValue();
 			Collections.sort(asConstraints, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull String> constraintNames = getConstraintNames(eClass);
-			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 			for (@NonNull Constraint asConstraint : asConstraints) {
 				String constraintName = getConstraintName(asConstraint);
 				if (!constraintNames.contains(constraintName)) {
 					constraintNames.add(constraintName);
 					if (completeOCLbodiesAnnotation == null) {
 						completeOCLbodiesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-						completeOCLbodiesAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+						completeOCLbodiesAnnotation.setSource(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 						eClass.getEAnnotations().add(completeOCLbodiesAnnotation);
 					}
 					@SuppressWarnings("unused")
@@ -1033,9 +1029,9 @@ public class DelegateInstaller
 		List<@NonNull EPackage> ePackages = getEPackages(eClasses);
 		for (EPackage ePackage : ePackages) {
 			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
-			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
 				validationDelegates = Lists.newArrayList(validationDelegates);
-				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 				refreshValidationDelegates(ePackage, validationDelegates);
 			}
 			ExtendedEObjectValidator.installFor(environmentFactory, ePackage, asResource);
@@ -1252,9 +1248,9 @@ public class DelegateInstaller
 				eAnnotations.remove(annotation3);
 			}
 		}
-		EAnnotation annotation4 = eModelElement.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+		EAnnotation annotation4 = eModelElement.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 		if (annotation4 != null) {
-			if (PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(exportDelegateURI)) {
+			if (PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(exportDelegateURI)) {
 				oclAnnotation = annotation4;
 			}
 			else {
@@ -1284,7 +1280,7 @@ public class DelegateInstaller
 			List<@NonNull Constraint> asConstraints = entry.getValue();
 			Collections.sort(asConstraints, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull String> constraintNames = getConstraintNames(eClass);
-			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+			EAnnotation completeOCLbodiesAnnotation = eClass.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 			if (completeOCLbodiesAnnotation != null) {
 				for (@NonNull Constraint asConstraint : asConstraints) {
 					String constraintName = getConstraintName(asConstraint);
@@ -1307,14 +1303,14 @@ public class DelegateInstaller
 		for (EPackage ePackage : ePackages) {
 			boolean usesCompleteOCL = false;
 			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-				EAnnotation completeOCLbodiesAnnotation = eClassifier.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				EAnnotation completeOCLbodiesAnnotation = eClassifier.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 				if (completeOCLbodiesAnnotation != null) {
 					usesCompleteOCL = true;
 				}
 			}
 			if (!usesCompleteOCL) {
 				List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
-				if (validationDelegates.remove(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+				if (validationDelegates.remove(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
 					validationDelegates = Lists.newArrayList(validationDelegates);
 					assert validationDelegates != null;
 					refreshValidationDelegates(ePackage, validationDelegates);

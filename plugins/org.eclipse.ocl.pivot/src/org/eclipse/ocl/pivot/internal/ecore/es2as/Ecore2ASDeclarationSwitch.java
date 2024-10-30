@@ -907,7 +907,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 * Create explicit constraints.
 		 */
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
-		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(oclAnnotation.getSource())) {
+		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclAnnotation.getSource())) {
 			if (excludedAnnotations == null) {
 				excludedAnnotations = new ArrayList<>();
 			}

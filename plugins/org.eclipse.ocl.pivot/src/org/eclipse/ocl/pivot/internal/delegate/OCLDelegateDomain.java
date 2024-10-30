@@ -86,7 +86,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 		@Override
 		public ValidationDelegate getValidationDelegate(String uri) {
-			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(uri);				// XXX
+			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(uri);				// XXX
 			return OCLValidationDelegateFactory_INSTANCE;
 		}
 	}
@@ -297,7 +297,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
 			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				Object validationDelegateFactory = new OCLValidationDelegateFactory(oclDelegateURI, true);
+				Object validationDelegateFactory = PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclDelegateURI) ? new OCLValidationDelegateFactory.Dynamic(oclDelegateURI, true) : new OCLValidationDelegateFactory(oclDelegateURI, true);
 				validationRegistry.put(oclDelegateURI, validationDelegateFactory);
 			//	System.out.println("global ValidationDelegateRegistry " + NameUtil.debugSimpleName(validationRegistry) + " [" + oclDelegateURI + "] = " + NameUtil.debugSimpleName(validationDelegateFactory));
 			}

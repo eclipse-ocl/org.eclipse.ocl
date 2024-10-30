@@ -550,7 +550,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
-	 * Populate the UnloadedProxyAdapter with proxy URIs for all referencable elements.
+	 * Populate asElement2reloadableURI with proxy URIs for all referencable elements.
 	 * This should be invoked before unload to ensure that the full AS context is available.
 	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
 	 *
