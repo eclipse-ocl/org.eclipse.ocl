@@ -391,7 +391,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -427,7 +427,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -450,7 +450,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
