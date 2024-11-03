@@ -109,7 +109,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static void diagnoseLiveEnvironmentFactories() {
 		if ((liveEnvironmentFactories != null) && !liveEnvironmentFactories.isEmpty()) {

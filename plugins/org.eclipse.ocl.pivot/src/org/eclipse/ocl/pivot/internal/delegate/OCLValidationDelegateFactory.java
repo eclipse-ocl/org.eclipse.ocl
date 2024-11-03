@@ -152,7 +152,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static class CompleteOCL extends OCLValidationDelegateFactory
 	{

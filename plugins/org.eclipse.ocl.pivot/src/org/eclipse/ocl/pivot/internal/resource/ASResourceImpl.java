@@ -71,7 +71,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * If PROXIES is set active, the proxification and deproxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final TracingOption PROXIES = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/proxies"); //$NON-NLS-1$
 

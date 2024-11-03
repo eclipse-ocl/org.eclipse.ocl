@@ -128,7 +128,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * preUnload() is invoked to support the depth-first traversal of an ASResource contents from ASResourceImpl.doUnload().
 	 * The traversal assigns proxies from the esObject that is then set to null. Other pivot artefacts are also reset.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void preUnload() {
 	    assert eResource() != null;
@@ -144,7 +144,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * resetESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
 	 * and optionally to diagnose non-proxies.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected void resetESObject() {
 	    InternalEObject eInternalContainer = eInternalContainer();
@@ -191,7 +191,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void resetStaleESObject() {
 		if ((esObject != null) && eIsProxy()) {
@@ -204,7 +204,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
 	 * bypass bloated AS such as Import.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
 		return null;
