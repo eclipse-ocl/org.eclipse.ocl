@@ -14,14 +14,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -54,8 +55,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
 {
-	private static final Logger logger = Logger.getLogger(AbstractParserContext.class);
-
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
@@ -82,8 +81,14 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
 		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
 		try {
-			ResourceSet resourceSet = environmentFactory.getResourceSet();
-			Resource resource = resourceSet.createResource(uri);
+			ResourceSet parsingResourceSet = new ResourceSetImpl()
+			{
+				@Override
+				public Registry getResourceFactoryRegistry() {
+					return environmentFactory.getResourceSet().getResourceFactoryRegistry();
+				}
+			};
+			Resource resource = parsingResourceSet.createResource(uri);
 			if (resource == null) {
 				throw new ParserException("Failed to load '" + uri + "'" + getDoSetupMessage());
 			}
@@ -91,7 +96,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				throw new ParserException("Failed to create Xtext resource for '" + uri + "'" + getDoSetupMessage());
 			}
 			CSResource baseResource = (CSResource)resource;
-			getEnvironmentFactory().adapt(resource);
+		// XXX	getEnvironmentFactory().adapt(resource);
 			baseResource.setParserContext(this);
 			if (inputStream != null) {
 				baseResource.load(inputStream, null);

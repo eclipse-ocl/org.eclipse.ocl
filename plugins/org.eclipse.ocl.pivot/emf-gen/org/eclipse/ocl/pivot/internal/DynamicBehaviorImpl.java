@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -577,5 +578,10 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitDynamicBehavior(this);
+	}
+
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;
 	}
 } //DynamicBehaviorImpl

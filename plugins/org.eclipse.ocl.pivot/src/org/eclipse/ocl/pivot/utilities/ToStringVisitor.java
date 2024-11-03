@@ -21,8 +21,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -159,7 +157,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			assert !environmentFactory.isDisposed() : "Use of ToStringVisitor while disposed";
-			assert !environmentFactory.isDisposing() : "Use of ToStringVisitor while disposing";	// See Bug 583347
+			assert !environmentFactory.isDisposing() || (environmentFactory.getMetamodelManager() != null) : "Use of ToStringVisitor while disposing";	// See Bug 583347
 		}
 		Resource resource = asElement.eResource();
 		if (resource instanceof ASResource) {

@@ -58,4 +58,10 @@ public interface Technology
 	boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass);
 
 	boolean isValidatable(@NonNull EClass eClass);
+
+	/**
+	 * Whether validation needs a Composed PivotEObjectValidator or the standard EcoreValidator will validate via EMF Validation Delegates.
+	 * @since 1.23
+	 */
+	boolean needsPivotValidator();
 }

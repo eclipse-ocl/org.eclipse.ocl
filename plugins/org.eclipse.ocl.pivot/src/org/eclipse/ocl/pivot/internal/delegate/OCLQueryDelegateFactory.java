@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   Kenn Hussey - Initial API and implementation
  *   E.D.Willink - Bug 353171
@@ -28,24 +28,33 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
  *		.getFactory(OCLDelegateDomain.OCL_DELEGATE_URI);
  * </pre>
- * from which a query delegate may be created by: 
+ * from which a query delegate may be created by:
  * <pre>
  * QueryDelegate delegate = factory.createQueryDelegate(
  * 		classifier,                 // the context type
  * 		map-of-name-to-classifier,  // the external variable names and types
  * 		string);                    // the OCL expression text
  * </pre>
- * and (repeatedly) invoked by: 
+ * and (repeatedly) invoked by:
  * <pre>
  * Object result = delegate.execute(
  * 		target,                     // the context instance
  * 		map-of-name-to-object);     // the external variable bindings
  * </pre>
+ * @since 1.23
  */
 public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
-		implements QueryDelegate.Factory {
+		implements QueryDelegate.Factory
+{
+	@Deprecated
 	public OCLQueryDelegateFactory(@NonNull String delegateURI) {
 		super(delegateURI);
+	}
+	/**
+	 * @since 1.23
+	 */
+	public OCLQueryDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
 	@Override
@@ -53,30 +62,7 @@ public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 		if ((context == null) || (expression == null)) {
 			return null;
 		}
-		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.nonNullEMF(context.getEPackage()));
-		if (delegateDomain == null) {
-			return null;
-		}
-		return new OCLQueryDelegate(delegateDomain, context, parameters, expression);
-	}
-	
-	/**
-	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
-	 * can be located at the QueryDelegate.Factory.Registry
-	 * by the DelegateResourceSetAdapter.
-	 */
-	public static class Global extends OCLQueryDelegateFactory
-	{
-		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		}
-
-		@Override
-		public QueryDelegate createQueryDelegate(EClassifier context,
-				Map<String, EClassifier> parameters, String expression) {
-			if ((context == null) || (expression == null)) {
-				return null;
-			}
+		if (isGlobal) {
 			Class<QueryDelegate.Factory.@NonNull Registry> castClass = QueryDelegate.Factory.Registry.class;
 			QueryDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(context, castClass, null);
 			if (localRegistry != null) {
@@ -85,7 +71,23 @@ public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 					return factory.createQueryDelegate(context, parameters, expression);
 				}
 			}
-			return super.createQueryDelegate(context, parameters, expression);
-		}	
+		}
+		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.nonNullEMF(context.getEPackage()));
+		if (delegateDomain == null) {
+			return null;
+		}
+		return new OCLQueryDelegate(delegateDomain, context, parameters, expression);
+	}
+
+	/**
+	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
+	 * can be located at the QueryDelegate.Factory.Registry
+	 * by the DelegateResourceSetAdapter.
+	 */
+	public static class Global extends OCLQueryDelegateFactory
+	{
+		public Global() {
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
+		}
 	}
 }

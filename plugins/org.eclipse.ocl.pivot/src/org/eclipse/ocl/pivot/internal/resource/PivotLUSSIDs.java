@@ -77,7 +77,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		for (EObject eRoot : asResource.getContents()) {
 			if (eRoot instanceof Model) {
 				for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
-					if (Orphanage.isTypeOrphanage(asPackage)) {
+					if (Orphanage.isOrphanage(asPackage)) {
 						typeOrphanage = asPackage;
 						featureOrphanage = NameUtil.getNameable(asPackage.getOwnedClasses(), PivotConstants.ORPHANAGE_NAME);
 						break;

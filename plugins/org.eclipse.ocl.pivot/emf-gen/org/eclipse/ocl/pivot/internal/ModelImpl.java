@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * <!-- begin-user-doc -->
@@ -464,6 +466,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public void setExternalURI(String newExternalURI)
 	{
+		assert (newExternalURI == null) || !newExternalURI.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad externalURI " + newExternalURI;			// XXX
 		setExternalURIGen(newExternalURI);
 		String newName;
 		if (externalURI != null) {
@@ -498,13 +501,15 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
-	protected void resetESObject() {}
+	public @NonNull URI getReloadableEObjectOrURI() {
+		return URI.createURI(externalURI);
+	}
 
 	@Override
-	public void setName(String newName) {		// FIXME BUG 421716 remove Namedspace/NamedElement inheritance
+	public void setName(String newName) {		// FIXME BUG 421716 remove Namespace/NamedElement inheritance
 		// name is a cached optimization of externalURI
 	}
 

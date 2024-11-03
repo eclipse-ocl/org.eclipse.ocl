@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -139,7 +140,7 @@ public class PivotUtil
 	/**
 	 * Prefix to be emitted by errPrintln. Initially null, set non-null at the start of some context such as a test. Set
 	 * null again once emitted as a prefix.
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static @Nullable String contextLine = null;
 
@@ -271,6 +272,22 @@ public class PivotUtil
 			templateParameter = (TemplateParameter) pivotType;
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @Nullable ResourceSet basicGetResourceSet(@Nullable Notifier notifier) {
+		if (notifier instanceof EObject) {
+			Resource resource = ((EObject)notifier).eResource();
+			return resource != null ? resource.getResourceSet() : null;
+		}
+		else if (notifier instanceof Resource) {
+			return ((Resource)notifier).getResourceSet();
+		}
+		else {
+			return (ResourceSet)notifier;
+		}
 	}
 
 	/**
@@ -526,6 +543,15 @@ public class PivotUtil
 		T pivotModel = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
 		pivotModel.setExternalURI(externalURI);
 		return pivotModel;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static <T extends NamedElement> @NonNull T createNamedElement(@NonNull T asNamedElement) {
+		@SuppressWarnings("unchecked") T asClone = (T)PivotFactory.eINSTANCE.create(asNamedElement.eClass());
+		asClone.setName(asNamedElement.getName());
+		return asClone;
 	}
 
 	/**
@@ -885,7 +911,15 @@ public class PivotUtil
 		System.out.println(s.toString());
 	}
 
+	@Deprecated
 	public static boolean debugWellContainedness(Type type) {
+		return debugWellContainedness((Element)type);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static boolean debugWellContainedness(Element type) {
 		if (type.eResource() == null) {
 			debugObjectUsage("Badly contained ", type);
 			return false;
@@ -901,7 +935,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static void errPrintln(@Nullable String string) {
 		if (contextLine != null) {

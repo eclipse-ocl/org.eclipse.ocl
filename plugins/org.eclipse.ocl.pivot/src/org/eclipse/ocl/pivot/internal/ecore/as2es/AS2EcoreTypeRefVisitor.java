@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -247,7 +248,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			URI proxyURI = URI.createURI(uri + pivotType.getName());
 			eClassifier = EcoreFactory.eINSTANCE.createEDataType();
 			((InternalEObject) eClassifier).eSetProxyURI(proxyURI);
-			context.putCreated(pivotType, eClassifier);
+			context.putCreated(pivotType, (Notifier)eClassifier);
 			return eClassifier;
 		}
 		CompleteClass completeClass = metamodelManager.getCompleteClass(pivotType);

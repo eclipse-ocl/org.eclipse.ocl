@@ -34,15 +34,19 @@ public final class TestCaseLogger extends ConsoleAppender
 
 		private boolean installed = false;
 		private @NonNull StringBuilder s = new StringBuilder();
-		
+
 		private TestCaseLogger() {
-			super(new SimpleLayout(), SYSTEM_OUT); 
+			super(new SimpleLayout(), SYSTEM_OUT);
 			setName("TestCaseLogger");
 		}
-		
+
 		@Override
 		public void append(LoggingEvent event) {
 			if (event.getLevel().isGreaterOrEqual(Level.INFO)) {
+				int length = s.length();
+				if ((length > 0) && (s.charAt(length-1) != '\n')) {
+					s.append("\n");
+				}
 				String renderedMessage = event.getRenderedMessage();
 				s.append(renderedMessage);
 			}
@@ -56,7 +60,7 @@ public final class TestCaseLogger extends ConsoleAppender
 		public String get() {
 			return s.toString();
 		}
-		
+
 		public @Nullable Iterable<Appender> install() {
 			List<Appender> removedAppenders = null;
 			if (!installed) {
@@ -82,7 +86,7 @@ public final class TestCaseLogger extends ConsoleAppender
 			clear();
 			return removedAppenders;
 		}
-		
+
 		public void uninstall(@Nullable Iterable<Appender> removedAppenders) {
 			rootLogger.removeAppender(this);
 			if (removedAppenders != null) {

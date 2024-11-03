@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.delegate;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicSettingDelegate;
@@ -129,7 +130,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject);
 			Executor executor = PivotUtil.getExecutor(ecoreObject);
 			ModelManager modelManager = executor.getModelManager();
-			ExpressionInOCL query = getQuery();
+			ExpressionInOCL query = getQuery(environmentFactory);
 			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 			try {
 				if (savedExecutor != null) {
@@ -161,7 +162,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 
 	public @NonNull Property getProperty() {
 		Property property2 = property;
-		if (property2 == null) {
+		if ((property2 == null) || property2.eIsProxy()) {
 			property2 = property = delegateDomain.getPivot(Property.class, ClassUtil.nonNullEMF(eStructuralFeature));
 			if (property2 == null) {
 				throw new OCLDelegateException(new SemanticException("No pivot property for " + eStructuralFeature)) ;
@@ -173,12 +174,26 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated pass EnvironmentFactory */
 	protected @NonNull ExpressionInOCL getQuery() {
 		ExpressionInOCL query2 = query;
-		if (query2 == null) {
+		if ((query2 == null) || query2.eIsProxy()) {
 		//	OCL ocl = delegateDomain.getOCL();
 		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+			Property property2 = getProperty();
+			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
+			SettingBehavior.INSTANCE.validate(property2);
+		}
+		return query2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	protected @NonNull ExpressionInOCL getQuery(@NonNull EnvironmentFactory environmentFactory) {
+		ExpressionInOCL query2 = query;
+		if ((query2 == null) || query2.eIsProxy()) {
 			Property property2 = getProperty();
 			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
 			SettingBehavior.INSTANCE.validate(property2);

@@ -122,6 +122,10 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		this.helper = context.getHelper();
 	}
 
+	protected @NonNull CS2AS getConverter() {
+		return context.getConverter();
+	}
+
 	protected PackageId getPackageId(@NonNull PackageCS csElement) {
 		return null;
 	}

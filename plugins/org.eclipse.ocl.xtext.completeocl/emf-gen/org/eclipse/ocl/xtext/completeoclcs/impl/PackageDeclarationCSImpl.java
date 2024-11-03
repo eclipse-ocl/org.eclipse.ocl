@@ -246,8 +246,7 @@ public class PackageDeclarationCSImpl
 		if (ownedPathName2 == null) {
 			return null;
 		}
-		CS2AS.setElementType(ownedPathName2, PivotPackage.Literals.PACKAGE, this,
-			null);
+		CS2AS.setElementType(ownedPathName2, PivotPackage.Literals.PACKAGE, this, null);
 		return (org.eclipse.ocl.pivot.Package) ownedPathName2.getReferredElement();
 	}
 } //PackageDeclarationCSImpl

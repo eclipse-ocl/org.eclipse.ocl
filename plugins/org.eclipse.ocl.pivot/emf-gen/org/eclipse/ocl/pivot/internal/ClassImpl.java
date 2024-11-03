@@ -60,7 +60,11 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -70,7 +74,9 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -1356,6 +1362,48 @@ implements org.eclipse.ocl.pivot.Class {
 		return normalizedTypeId2;
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		if (Orphanage.isOrphan(this)) {
+			return null;
+		}
+		// Look for a specific ES
+		EObject esObject = getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		// Look for a specific CS
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {		// If a CS Element references that AS Element
+				return csElement;
+			}
+		}
+		// Look for any ES
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
+		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+			esObject = asClass.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		if (csi2asMapping == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		return null;
+	}
+
 	@Override
 	public @NonNull TypeId getTypeId() {
 		TypeId typeId2 = typeId;
@@ -1432,10 +1480,11 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
-	@Override
+	@Override @Deprecated
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		assert false;		// XXX
 		CompleteClass completeClass = completeModel.getCompleteClass(this);
 		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
 			EObject esObject = asClass.getESObject();
@@ -1446,6 +1495,9 @@ implements org.eclipse.ocl.pivot.Class {
 		return null;
 	}
 
+	/**
+	 * @since 1.22
+	 */
 	@Override
 	public void setName(String newName) {
 		String oldName = name;

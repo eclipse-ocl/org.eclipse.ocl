@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
@@ -39,14 +40,16 @@ public interface CSResource extends Resource
 
 	/**
 	 * Create the CS2AS converter for the asResource conversions using environmentFactory.
-	 * @since 1.22
+	 * @since 1.23
 	 */
-	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+		throw new UnsupportedOperationException();		// XXX
+	}
 
 	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default void dispose() {}
 
@@ -64,15 +67,16 @@ public interface CSResource extends Resource
 	/**
 	 * Return the CS to AS conversion manager for use with environmentFactory.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	/**
 	 * @since 1.15
 	 */
+	@Deprecated /* @deprecated use PivotUtilInternal.getEnvironmentFactory */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
 		throw new UnsupportedOperationException();
 	}
@@ -85,22 +89,6 @@ public interface CSResource extends Resource
 	 */
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
 	@NonNull ProjectManager getProjectManager();
-
-	/**
-	 * Return true if this CSResource is derived from an ASResource.
-	 * @since 1.22
-	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default boolean isDerived() {
-		return false;
-	}
-
-	/**
-	 * Set whether this CSResource is derived from an ASResource.
-	 * @since 1.22
-	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default void setDerived(boolean isDerived) {}
 
 	@Deprecated /* @deprecated only for BaseCSResource */
 	void setParserContext(@Nullable ParserContext parserContext);
@@ -115,4 +103,11 @@ public interface CSResource extends Resource
 	void update(int index, int length, String newString);
 
 	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
+
+	/**
+	 * @since 1.23
+	 */
+	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {			// XXX
+		throw new UnsupportedOperationException();
+	}
 }

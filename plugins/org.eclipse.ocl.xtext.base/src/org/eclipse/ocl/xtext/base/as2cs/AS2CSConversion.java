@@ -338,7 +338,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (eContainer instanceof Model) {
 				break;				// Skip root Model
 			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
 				break;				// Skip orphan package
 			}
 			if (eContainer instanceof TemplateSignature) {
@@ -450,7 +450,15 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public <@NonNull T extends NamedElementCS> T refreshNamedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull NamedElement object) {
-		return refreshNamedElement(csClass, csEClass, object, "«null»");
+		String nameForNull = object.getName();
+		if ((nameForNull == null) || nameForNull.isEmpty()) {
+			nameForNull = "$null$";
+			Object eContainingElement = object.eContainer().eGet(object.eContainingFeature());
+			if (eContainingElement instanceof List<?>) {
+				nameForNull += ((List<?>)eContainingElement).indexOf(object);
+			}
+		}
+		return refreshNamedElement(csClass, csEClass, object, nameForNull);
 	}
 
 	public <@NonNull T extends NamedElementCS> T refreshNamedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull NamedElement object, @Nullable String replacementNameForNull) {

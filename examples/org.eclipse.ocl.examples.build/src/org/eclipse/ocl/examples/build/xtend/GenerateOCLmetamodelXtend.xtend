@@ -306,6 +306,12 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					}
 			
 					/**
+					 * Overridden to avoid computing proxies for the shared instance.
+					 */
+					@Override
+					public void preUnload() {}
+			
+					/**
 					 * Overridden to inhibit unloading of the shared instance.
 					 */
 					@Override

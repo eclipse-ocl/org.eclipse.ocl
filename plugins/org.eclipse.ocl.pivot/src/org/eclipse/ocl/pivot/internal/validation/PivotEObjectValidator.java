@@ -15,6 +15,7 @@ package org.eclipse.ocl.pivot.internal.validation;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -43,19 +44,16 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -93,7 +91,7 @@ public class PivotEObjectValidator implements EValidator
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
 		public ValidationAdapter(@Nullable EnvironmentFactoryInternal environmentFactory) {
-			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory(null);
+			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory((Notifier)null);
 		}
 
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
@@ -162,6 +160,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Return the user's ResourceSet, preferably as a data element of the diagnostics, corresponding to
 	 * the original validation context, else from the object else from the eClassifier.
 	 */
+	@Deprecated /*( @deprecated no longer used - use ValidationContext.getEnvironmentFactory(Object) */
 	public static @Nullable ResourceSet getResourceSet(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics) {
 		ResourceSet resourceSet = null;
 		if (diagnostics instanceof BasicDiagnostic) {
@@ -218,22 +217,34 @@ public class PivotEObjectValidator implements EValidator
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
-			for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
-				if (constraint !=  null) {
-					if (complementingModels != null) {
-						Model containingModel = PivotUtil.getContainingModel(constraint);
-						if (!complementingModels.contains(containingModel)) {
-							continue;
-						}
+			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
+			if (allInvariantOrInvariants != null) {
+				for (@NonNull Object invariantOrInvariants : /*all(*/allInvariantOrInvariants/*)*/) {
+					Constraint constraint;
+					if (invariantOrInvariants instanceof Constraint) {
+						constraint = (Constraint)invariantOrInvariants;
 					}
-					Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
-					if (diagnostic != null) {
-						if (diagnostics != null) {
-							diagnostics.add(diagnostic);
+					else {
+						@SuppressWarnings("unchecked")
+						List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
+						constraint = invariants.get(0);
+					}
+					if (constraint != null) {
+						if (complementingModels != null) {
+							Model containingModel = PivotUtil.getContainingModel(constraint);
+							if (!complementingModels.contains(containingModel)) {
+								continue;
+							}
 						}
-						allOk = false;
-						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-							return allOk;		// Generate many warnings but only one error
+						Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
+						if (diagnostic != null) {
+							if (diagnostics != null) {
+								diagnostics.add(diagnostic);
+							}
+							allOk = false;
+							if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+								return allOk;		// Generate many warnings but only one error
+							}
 						}
 					}
 				}
@@ -241,6 +252,20 @@ public class PivotEObjectValidator implements EValidator
 		}
 		return allOk;
 	}
+
+	/*@Deprecated // XXX experimenting
+	private @NonNull Iterable<@NonNull Object> zall(Iterable<@NonNull Object> onesOrSomes) {
+		List<@NonNull Object> all = new ArrayList<>();
+		for (@NonNull Object oneOrSome : onesOrSomes) {
+			if (oneOrSome instanceof Iterable<?>) {
+				Iterables.addAll(all, (Iterable<?>)oneOrSome);
+			}
+			else {
+				all.add(oneOrSome);
+			}
+		}
+		return all;
+	}*/
 
 	/**
 	 * Validate constraint for object using context to elaborate the validation context.
@@ -352,7 +377,7 @@ public class PivotEObjectValidator implements EValidator
 	 * @since 1.14
 	 */
 	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> context) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);		// XXX use context
 		return validate(environmentFactory, constraint, object,  context);
 	}
 
@@ -361,7 +386,7 @@ public class PivotEObjectValidator implements EValidator
 	 */
 	protected boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();		// XXX use context
 		if (environmentFactory == null) {
 			return true;
 		}
@@ -369,7 +394,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EObject to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EObject to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -381,7 +406,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -407,18 +432,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Perform the additional Pivot-defined validation.
 	 */
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
-			if (resourceSet == null) {
-				return true;
-			}
-			ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
-			if (projectManager == null) {
-				projectManager = OCL.CLASS_PATH;
-			}
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
-		}
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
 		boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 		return allOk || (diagnostics != null);
 	}

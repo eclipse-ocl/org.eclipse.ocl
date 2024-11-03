@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.eclipse.core.expressions.Expression;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -222,12 +223,12 @@ public class EmbeddedXtextEditor
 
 		injector.injectMembers(this);
 		if (currentEnvironmentFactory == null) {
-			currentEnvironmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+			currentEnvironmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
 		}
 		ocl = OCLInternal.newInstance(currentEnvironmentFactory);
 		ResourceSet xtextResourceSet = getResourceSet();
 		if (xtextResourceSet != null) {
-			currentEnvironmentFactory.adapt(xtextResourceSet);
+		// XXX	currentEnvironmentFactory.adapt(xtextResourceSet);
 		}
 		createEditor(fControl);
 	}

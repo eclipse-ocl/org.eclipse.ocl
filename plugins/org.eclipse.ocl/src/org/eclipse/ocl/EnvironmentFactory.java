@@ -235,14 +235,14 @@ public interface EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E
 	/**
 	 * Create an appropriately derived new instance of OCL.
 	 *
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL();
 
 	/**
 	 * Create an appropriately derived new instance of OCL using resource.
 	 *
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL(Resource resource);
 

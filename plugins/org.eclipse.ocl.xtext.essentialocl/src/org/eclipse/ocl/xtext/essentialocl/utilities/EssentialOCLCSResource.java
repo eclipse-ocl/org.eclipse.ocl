@@ -18,15 +18,19 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -40,29 +44,33 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
@@ -78,6 +86,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
 import org.eclipse.xtext.diagnostics.AbstractDiagnostic;
 import org.eclipse.xtext.diagnostics.DiagnosticMessage;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
+import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.linking.impl.XtextLinkingDiagnostic;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.nodemodel.INode;
@@ -85,6 +94,7 @@ import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.Triple;
 
@@ -199,10 +209,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	/**
 	 * The ParserContext provides the prevailing EnvironmentFactory, and may be configured explicitly by an
-	 * OCL-aware application. For OCL-blind aplication a prevailing EnvironmentFactory is lazily created and
+	 * OCL-aware application. For OCL-blind application a prevailing EnvironmentFactory is lazily created and
 	 * shared by the ThreadLocalExecutor.
 	 */
-	private @Nullable ParserContext parserContext = null;
+//	private @Nullable ParserContext parserContext = null;
+	private @Nullable WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext = null;
 	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
 
 	public EssentialOCLCSResource() {
@@ -269,17 +280,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 	}
 
-	@Override
-	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-		//		if (resourceSet != null) {
-		//			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-		//FIXME This assertion is broken. It perhaps once tested for OCL-in-ResourceSet, but now is flaky depending on
-		// the lazy construction time of the metamodelManager
-		//			assert metamodelManager == null;
-		//		}
-		return super.basicSetResourceSet(resourceSet, notifications);
-	}
-
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
 		URI uri = ClassUtil.nonNullState(getURI());
 		URI asURI = getASURI(uri);
@@ -325,6 +325,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
 		}
 		else {
+		//	System.out.println("createDiagnostic " + NameUtil.debugSimpleName(this) + " " + message.getMessage());
 			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
 			{
 				@Override
@@ -346,6 +347,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
+	}
 
 	@Override
 	public void dispose() {
@@ -360,7 +364,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (cs2as != null) {
 			cs2as.dispose();
 		}
-		parserContext = null;
+		environmentFactory2parserContext = null;
 		//		unload();
 	}
 
@@ -417,6 +421,154 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 		catch (Exception e) {
 			throw new Resource.IOWrappedException(e);
+		}
+	}
+
+	@Override
+	protected void doUnload() {
+	/*	Map<EObject, Collection<Setting>> map = new EcoreUtil.ExternalCrossReferencer(this)
+		{
+			@Override
+			protected Map<EObject, Collection<EStructuralFeature.Setting>> findExternalCrossReferences() {
+				return super.findExternalCrossReferences();
+			}
+
+			@Override
+			protected boolean resolve() {
+				return false;
+			}
+		}.findExternalCrossReferences(); */
+	//	EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
+	//	@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
+	/*	for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+			boolean hasReference = false;
+			for (Setting setting : entry.getValue()) {
+				EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+				if (!eStructuralFeature.isTransient() && !eStructuralFeature.isVolatile()) {
+					hasReference = true;
+				}
+			}
+			if (hasReference) {
+				EObject eTarget = entry.getKey();
+				EObject eProxy = target2proxy.get(eTarget);
+			//	assert eProxy != null;
+			/*	Notifier reloadableNotifier = eTarget;
+				if (eTarget instanceof ElementImpl) {
+					Notifier reloadableNotifier2 = ((ElementImpl)eTarget).getReloadableNotifier();
+					if (reloadableNotifier2 != null) {
+						reloadableNotifier = reloadableNotifier2;
+					}
+				}
+				EClass eClass = eTarget.eClass();
+				URI reloadableURI;
+				if (reloadableNotifier instanceof EObject) {
+					EObject eObject = (EObject)reloadableNotifier;
+					reloadableURI = EcoreUtil.getURI(eObject);
+				}
+				else {
+					Resource eResource = (Resource)reloadableNotifier;
+					assert eResource != null;
+					reloadableURI = eResource.getURI();
+				} * /
+			//	EObject proxyObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
+			//	((InternalEObject)proxyObject).eSetProxyURI(reloadableURI);
+			//	System.out.println("\t" + NameUtil.debugSimpleName(eTarget) + " " + eTarget + NameUtil.debugSimpleName(reloadableNotifier) + " " + reloadableURI);
+				for (Setting setting : entry.getValue()) {
+					EObject eSource = setting.getEObject();
+					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+					if (!eStructuralFeature.isTransient() && !eStructuralFeature.isVolatile()) {
+						Object object = setting.get(false);
+						if (object != eProxy) {
+							System.err.println("Did not proxify " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " " + NameUtil.debugSimpleName(eSource));
+						}
+					}
+				}
+			}
+		} */
+		super.doUnload();
+	}
+
+	/**
+	 * OCLCSResourceLoad supports loading the contents of a CS Resource using regular XMI serialization.
+	 * References to CS/ES elements are resolved to equivalent AS references.
+	 * This is typically used to load directly from a persisted XMI Resource as XMI rather than parsing text.
+	 */
+	public static class OCLCSResourceLoad extends BaseCSXMIResource
+	{
+		public OCLCSResourceLoad(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+			super(uri, asResourceFactory);
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)asResourceFactory.createCS2AS(environmentFactory, this, asResource);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this);
+			return new CSXMISave(xmlHelper);
+		}
+	}
+
+	/**
+	 * An OCLCSResourceLoadFactory supports creation of an OCLCSResourceLoad that supports persistence of the CS model directly as XMI
+	 * rather than exploiting Xtext to serialize to / parse from a text file.
+	 */
+	public static class OCLCSResourceLoadFactory extends ResourceFactoryImpl
+	{
+		protected final @NonNull ASResourceFactory asResourceFactory;
+
+		/**
+		 * Creates an instance of the resource factory.
+		 */
+		public OCLCSResourceLoadFactory(@NonNull ASResourceFactory asResourceFactory) {
+			this.asResourceFactory = asResourceFactory;
+		}
+
+		@Override
+		public final @NonNull Resource createResource(URI uri) {
+			assert uri != null;
+			return new OCLCSResourceLoad(uri, asResourceFactory);
+		}
+	}
+
+	/**
+	 * OCLCSResourceSave supports saving the contents of a CS Resource using regular XMI serialization.
+	 * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
+	 * It ensures that references to AS elements within the XMI are serialized as equivalent CS/AS references.
+	 */
+	protected static class OCLCSResourceSave extends BaseCSXMIResource
+	{
+		protected final @NonNull CSResource csResource;
+
+		public OCLCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+			super(uri, asResourceFactory);
+			this.csResource = csResource;
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this.csResource);
+			return new CSXMISave(xmlHelper);
+		}
+
+		/**
+		 * Return the top level resource contents delegating to the Xtext-friendly CSResource.
+		 */
+		@Override
+		public @NonNull EList<@NonNull EObject> getContents() {		// JDT editor has a confusing benign error on a @NonNull */
+			return csResource.getContents();
+		}
+
+		@Override
+		public @NonNull EnvironmentFactory getEnvironmentFactory() {
+			return csResource.getEnvironmentFactory();
 		}
 	}
 
@@ -486,6 +638,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
 		CS2AS cs2as = null;
+		ParserContext parserContext = getParserContext();				// XXX
 		if (parserContext instanceof ExtendedParserContext) {			// Creates a UMLXCS2AS
 			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
 		}
@@ -525,7 +678,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
 			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
@@ -534,17 +688,28 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 			environmentFactory = getASResourceFactory().createEnvironmentFactory(projectManager);
 		}
-		return environmentFactory;
+		return environmentFactory; */
 	}
 
 	@Override
 	public final @NonNull ParserContext getParserContext() {		// FIXME only non-null for API compatibility
-		ParserContext parserContext2 = parserContext;
-		if (parserContext2 == null) {
-			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
-			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
+		WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext2 = environmentFactory2parserContext;
+		if (environmentFactory2parserContext2 != null) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				ParserContext parserContext = environmentFactory2parserContext2.get(environmentFactory);
+				if (parserContext != null) {
+					return parserContext;
+				}
+			}
 		}
-		return parserContext2;
+		else {
+			environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
+		}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		ParserContext parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
+		environmentFactory2parserContext2.put(environmentFactory, parserContext);
+		return parserContext;
 	}
 
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory()/getProjectManager() */
@@ -617,6 +782,22 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		catch (IllegalArgumentException e) {
 			logger.error("Failed to reparse", e);
 		}
+	}
+
+	@Override
+	public @NonNull ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {
+	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
+		CS2AS cs2as = getCS2AS(environmentFactory);
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		cs2as.update(consumer);
+		ASResource asResource = cs2as.getASResource();
+		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)environmentFactory, null);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
+		getErrors().addAll(consumer.getResult(Severity.ERROR));
+		getWarnings().addAll(consumer.getResult(Severity.WARNING));
+
+		return asResource;
 	}
 
 	@Override
@@ -740,6 +921,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
+	public @NonNull CSResource saveAsXMI(@NonNull URI uri) throws IOException {
+		OCLCSResourceSave xmiResource = createCSResourceSave(uri);
+		xmiResource.save(null);
+		return xmiResource;
+	}
+
+	@Override
 	public void setDerived(boolean isDerived) {
 		this.isDerived = isDerived;
 	}
@@ -758,16 +946,50 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public final void setParserContext(@Nullable ParserContext parserContext) {
-		ParserContext parserContext2 = this.parserContext;
-		assert (parserContext == null) || (parserContext2 == null) || (parserContext2.getEnvironmentFactory() == parserContext.getEnvironmentFactory());
-		this.parserContext = parserContext;
+	public final void setParserContext(@Nullable ParserContext newParserContext) {
+		ParserContext oldParserContext = null;
+		WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext2 = environmentFactory2parserContext;
+		if (environmentFactory2parserContext2 != null) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				oldParserContext = environmentFactory2parserContext2.get(environmentFactory);
+			}
+		}
+		if (newParserContext != null) {
+			EnvironmentFactory newEnvironmentFactory = newParserContext.getEnvironmentFactory();
+			if (oldParserContext != null) {
+				assert environmentFactory2parserContext2 != null;
+				assert (oldParserContext.getEnvironmentFactory() == newEnvironmentFactory);
+			}
+			else {
+				if (environmentFactory2parserContext2 == null) {
+					environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
+				}
+			}
+			environmentFactory2parserContext2.put(newEnvironmentFactory, newParserContext);
+		}
+		else {
+			if (oldParserContext != null) {
+				assert environmentFactory2parserContext2 != null;
+				if (newParserContext == null) {
+					environmentFactory2parserContext2.remove(oldParserContext.getEnvironmentFactory());
+				}
+			}
+			else {
+				return;
+			}
+		}
 	}
 
 	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
 	@Override
 	public void setProjectManager(@Nullable ProjectManager projectMap) {
 		assert projectMap == getEnvironmentFactory().getProjectManager();
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
 	}
 
 	@Override

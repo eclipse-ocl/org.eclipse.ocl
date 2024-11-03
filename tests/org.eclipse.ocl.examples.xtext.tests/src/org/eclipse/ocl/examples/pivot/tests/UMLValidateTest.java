@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -51,9 +50,9 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
@@ -204,19 +203,23 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
-		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
+		CompleteOCLLoader helper2 = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
+
+			@Override
+			protected boolean error(@NonNull String primaryMessage,
+					@Nullable String detailMessage) {
+				// TODO Auto-generated method stub
+				return false;
+			} };
+		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
+	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		ProjectManager projectMap = environmentFactory.getProjectManager();
 		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels");
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("lowercase");
 		//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
@@ -227,8 +230,10 @@ public class UMLValidateTest extends AbstractValidateTests
 		Diagnostic diagnostic = validationContext.getDiagnostician().validate(umlClass1, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
 		assertDiagnostics("Loading", umlResource, diagnostics,
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
+			StringUtil.bind(VIOLATED_TEMPLATE, "CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 		//
+		helper.unloadDocument(oclURI);
 		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
@@ -255,13 +260,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
 		disposeResourceSet(resourceSet);
@@ -290,13 +290,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
 		disposeResourceSet(resourceSet);
@@ -319,8 +314,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
-		validationContext.put(EnvironmentFactory.class, environmentFactory);
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -404,7 +398,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		org.eclipse.uml2.uml.Stereotype umlStereotype1 = (org.eclipse.uml2.uml.Stereotype)umlProfile.getOwnedType("ParentRealization");
 		assert (umlRealization1 != null) && (umlStereotype1 != null);
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlRealization1, umlStereotype1));
-		ThreadLocalExecutor.resetEnvironmentFactory();;
+	//	ThreadLocalExecutor.resetEnvironmentFactory();;
 	//	PivotUtilInternal.getEnvironmentFactory(null).setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, getMessages(
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label)));
@@ -466,13 +460,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		//	Load all the documents
 		//
-		if (!helper.loadDocument(oclURI)) {
-			fail(helper.toString());
-		}
-		if (!helper.loadMetamodels()) {
-			fail("Failed to loadMetamodels :\n" + helper.toString());
-		}
-		helper.installPackages();
+		String problems = helper.installDocuments(oclURI);
+		assertNull("Failed to load " + oclURI, problems);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
 		Stereotype appliedStereotype = umlClass1.getAppliedStereotype("Profile1::St1");

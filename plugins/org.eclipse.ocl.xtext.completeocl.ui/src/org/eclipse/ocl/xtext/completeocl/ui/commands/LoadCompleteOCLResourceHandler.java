@@ -42,11 +42,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.resource.BasicProjectManager;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.utilities.PDEUtils;
@@ -198,7 +195,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 							StringBuilder s = new StringBuilder();
 							if (!helper.loadDocument(oclURI, s)) {
 								return false;
-							};
+							}
 						}
 						catch (Throwable e) {
 							IStatus status = new Status(IStatus.ERROR, CompleteOCLUiModule.PLUGIN_ID, e.getLocalizedMessage(), e);
@@ -238,7 +235,8 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			this.resourceSet = resourceSet;
 			// Ensure EnvironmentFactory created on main part-thread (Bug 574041) so that load resources remain loaded
 			//  until invoking EMF application terminates.
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
 				if (projectManager == null) {
@@ -247,7 +245,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					projectManager.initializeResourceSet(resourceSet);
 				}
 				environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
-			}
+			} */
 			this.environmentFactory = environmentFactory;
 			int shellStyle = getShellStyle();
 			int newShellStyle = shellStyle & ~(SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL | SWT.SYSTEM_MODAL);
