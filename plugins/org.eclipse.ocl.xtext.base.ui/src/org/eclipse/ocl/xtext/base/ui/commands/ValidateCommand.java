@@ -26,6 +26,7 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
@@ -45,6 +46,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ui.IWorkbenchPart;
@@ -62,8 +64,13 @@ public class ValidateCommand extends ValidateAction
 	protected Diagnostician createDiagnostician(AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
 		ResourceSet resourceSet = ClassUtil.nonNullEMF(domain.getResourceSet());
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
-		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		return validationContext.getDiagnostician(); //.createDiagnostician(resourceSet, adapterFactory, progressMonitor);
+	//	ValidationContext validationContext = new ValidationContext(validationRegistry);
+		ValidationContext validationContext = new ValidationContext();
+		Diagnostician diagnostician = super.createDiagnostician(adapterFactory, progressMonitor);
+		validationContext.put(EValidator.class, diagnostician);
+		validationContext.put(EValidator.Registry.class, validationRegistry);
+		validationContext.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
+		return diagnostician;
 	}
 
 	/**

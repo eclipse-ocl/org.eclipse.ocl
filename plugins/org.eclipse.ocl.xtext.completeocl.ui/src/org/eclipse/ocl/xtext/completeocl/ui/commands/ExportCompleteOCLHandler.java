@@ -98,6 +98,10 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 		return null;
 	}
 
+	public ExportCompleteOCLHandler() {
+		super();
+	}
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell shell = HandlerUtil.getActiveShell(event);
