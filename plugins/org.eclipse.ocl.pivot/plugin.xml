@@ -120,8 +120,8 @@
   <extension point = "org.eclipse.emf.ecore.validation_delegate">
     <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
        class = "org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global" />
-    <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot/CompleteOCL"
-       class = "org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$CompleteOCL" />
+    <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot/Dynamic"
+       class = "org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Dynamic" />
   </extension>
 
   <extension point="org.eclipse.ocl.pivot.as_resource_factory">

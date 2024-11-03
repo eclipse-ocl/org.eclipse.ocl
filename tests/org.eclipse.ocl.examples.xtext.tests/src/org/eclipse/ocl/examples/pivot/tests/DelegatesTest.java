@@ -178,7 +178,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		{
 			@Override
 			public @NonNull OCLInvocationDelegateFactory createInvocationDelegateFactory(@NonNull String oclDelegateURI) {
-				return new OCLInvocationDelegateFactory(oclDelegateURI)
+				return new OCLInvocationDelegateFactory(oclDelegateURI, false)
 				{
 					@Override
 					public EOperation.Internal.InvocationDelegate createInvocationDelegate(EOperation operation) {
@@ -190,7 +190,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 			@Override
 			public @NonNull OCLQueryDelegateFactory createQueryDelegateFactory(@NonNull String oclDelegateURI) {
-				return new OCLQueryDelegateFactory(oclDelegateURI)
+				return new OCLQueryDelegateFactory(oclDelegateURI, false)
 				{
 					@Override
 					public QueryDelegate createQueryDelegate(EClassifier context, Map<String, EClassifier> parameters, String expression) {
@@ -202,7 +202,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 			@Override
 			public @NonNull OCLSettingDelegateFactory createSettingDelegateFactory(@NonNull String oclDelegateURI) {
-				return new OCLSettingDelegateFactory(oclDelegateURI)
+				return new OCLSettingDelegateFactory(oclDelegateURI, false)
 				{
 					@Override
 					public EStructuralFeature.Internal.SettingDelegate createSettingDelegate(EStructuralFeature structuralFeature) {
@@ -214,7 +214,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 			@Override
 			public @NonNull OCLValidationDelegateFactory createValidationDelegateFactory(@NonNull String oclDelegateURI) {
-				return new OCLValidationDelegateFactory(oclDelegateURI)
+				return new OCLValidationDelegateFactory(oclDelegateURI, false)
 				{
 					@Override
 					public ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {

@@ -200,7 +200,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 									eClassAnnotation.getDetails().put("constraints", constraints + " " + constraintName);
 								}
 							}
-							EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, constraintName, "$$complete-ocl$$");		// XXX toString
+							EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, constraintName, "$$complete-ocl$$");		// XXX toString
 						}
 					}
 				}
@@ -208,9 +208,9 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 		}
 		if (needsDelegate) {
 			List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
-			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
+			if (!validationDelegates.contains(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
 				validationDelegates = Lists.newArrayList(validationDelegates);
-				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+				validationDelegates.add(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
 			}
 		}
