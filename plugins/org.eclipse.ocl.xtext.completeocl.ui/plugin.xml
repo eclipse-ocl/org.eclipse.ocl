@@ -227,7 +227,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
-			<command commandId="org.eclipse.ocl.xtext.completeocl.loadresource"
+		<command commandId="org.eclipse.ocl.xtext.completeocl.loadresource"
 				style="push"
         	    icon="$nl$/icons/OCLModelFile.gif"
 				tooltip="%MF_LoadOCLResource">
@@ -263,7 +263,7 @@
 	<extension point="org.eclipse.ui.menus">
 	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
 	    <command commandId="org.eclipse.ocl.xtext.completeocl.ui.ExportCompleteOCLCommand"
-	      label="%MF_ExportCompleteOCL_label">
+	      label="%MF_ExportCompleteOCL_label"
 				style="push"
         	    icon="$nl$/icons/OCLModelFile.gif"
 				tooltip="%MF_ExportCompleteOCL">

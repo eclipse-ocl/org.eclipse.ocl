@@ -26,21 +26,23 @@
    	
 	<!-- Show Validity View -->
 	<extension point="org.eclipse.ui.handlers">
-		<handler commandId="org.eclipse.emf.validation.ShowValidityViewAction"
+		<handler commandId="org.eclipse.ocl.examples.emf.validation.validity.ui.ShowValidityViewAction"
 			class="org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ShowValidityViewHandler"/>
 	</extension>
 	<extension point="org.eclipse.ui.commands">
-		<command id="org.eclipse.emf.validation.ShowValidityViewAction"
-			description="%MF_ShowValidityView"
-			name="%MF_ShowValidityView">
+		<command id="org.eclipse.ocl.examples.emf.validation.validity.ui.ShowValidityViewAction"
+			description="%MF_ShowValidityView_tooltip"
+			name="%MF_ShowValidityView_label">
 		</command>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=show">
-			<command commandId="org.eclipse.emf.validation.ShowValidityViewAction"
+		<!-- Platform Issue 2483 raised for inability to use after show -->
+		<menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
+			<command commandId="org.eclipse.ocl.examples.emf.validation.validity.ui.ShowValidityViewAction"
+         label="%MF_ShowValidityView_label"
          icon="icons/validation.gif"
          style="push"
-         tooltip="%MF_ShowValidityView">
+         tooltip="%MF_ShowValidityView_tooltip">
 				<visibleWhen checkEnabled="false">
 					<test property="org.eclipse.ocl.examples.ui.resourceSetAvailable" forcePluginActivation="true"/>
 				</visibleWhen>

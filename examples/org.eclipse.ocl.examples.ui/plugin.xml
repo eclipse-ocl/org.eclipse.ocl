@@ -31,7 +31,7 @@
 
    <extension point="org.eclipse.ui.menus">
 		<menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu id="org.eclipse.ocl.examples.ui.Menu" label="%MF_OCL">
+         <menu id="org.eclipse.ocl.examples.ui.Menu" label="%MF_OCL" icon="icons/ocl16.gif">
             <separator name="load" visible="true"/>
             <separator name="save" visible="true"/>
             <separator name="set" visible="true"/>
