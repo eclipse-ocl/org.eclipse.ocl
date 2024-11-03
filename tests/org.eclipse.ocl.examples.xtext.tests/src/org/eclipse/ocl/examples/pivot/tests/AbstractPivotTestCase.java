@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
@@ -735,6 +736,7 @@ public class AbstractPivotTestCase extends TestCase
 				}
 			}
 			IS_SETUP = false;
+			TestCaseAppender.INSTANCE.assertNotInstalled();
 			super.tearDown();
 		}
 		finally {
