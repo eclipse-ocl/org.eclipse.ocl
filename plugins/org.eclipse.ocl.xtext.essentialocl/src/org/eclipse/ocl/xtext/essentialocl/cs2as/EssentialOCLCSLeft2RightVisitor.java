@@ -2133,9 +2133,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
 		//		csNameExp.getPathName().get
-		if ("verdict".equals(csNameExp.toString())) {
-			getClass();		// XXX
-		}
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);
 		if ((element == null) || element.eIsProxy()) {
 			Element pivot = csNameExp.getPivot();
