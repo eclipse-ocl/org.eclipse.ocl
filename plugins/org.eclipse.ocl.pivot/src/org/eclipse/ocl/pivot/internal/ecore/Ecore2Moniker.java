@@ -11,8 +11,12 @@
 package org.eclipse.ocl.pivot.internal.ecore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
@@ -25,9 +29,10 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -37,6 +42,54 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class Ecore2Moniker extends EcoreSwitch<Object> implements PivotConstantsInternal
 {
+	/**
+	 * A MonikerAliasAdapter extends a Resource to provide a set of aliases for elements,
+	 * typically packages, contained within that Resource. Use of an alias as the moniker
+	 * for a package simplifies the moniker and avoids prefix variation for monikers
+	 * computed for alternate domains.
+	 *
+	 * @since 1.23
+	 */
+	public static class MonikerAliasAdapter extends AdapterImpl
+	{
+		public static @Nullable MonikerAliasAdapter findAdapter(@Nullable Resource resource) {
+			if (resource == null) {
+				return null;
+			}
+			return ClassUtil.getAdapter(MonikerAliasAdapter.class, resource);
+		}
+
+		public static @NonNull MonikerAliasAdapter getAdapter(@NonNull Resource resource) {
+			List<Adapter> eAdapters = ClassUtil.nonNullEMF(resource.eAdapters());
+			MonikerAliasAdapter adapter = ClassUtil.getAdapter(MonikerAliasAdapter.class, eAdapters);
+			if (adapter == null) {
+				adapter = new MonikerAliasAdapter();
+				eAdapters.add(adapter);
+			}
+			return adapter;
+		}
+
+		public static String getAlias(EObject eElement) {
+			String alias = null;
+			MonikerAliasAdapter adapter = MonikerAliasAdapter.findAdapter(eElement.eResource());
+			if (adapter != null) {
+				alias = adapter.getAliasMap().get(eElement);
+			}
+			return alias;
+		}
+
+		private @NonNull Map<@NonNull EObject, @Nullable String> aliasMap = new HashMap<>();
+
+		public @NonNull Map<@NonNull EObject, @Nullable String> getAliasMap() {
+			return aliasMap;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == MonikerAliasAdapter.class;
+		}
+	}
+
 	public static String toString(EModelElement eElement) {
 		Ecore2Moniker moniker = new Ecore2Moniker(false);
 		moniker.appendElement(eElement);
@@ -292,7 +345,7 @@ public class Ecore2Moniker extends EcoreSwitch<Object> implements PivotConstants
 
 	@Override
 	public Object caseEPackage(EPackage eElement) {
-		String alias = AliasAdapter.getAlias(eElement);
+		String alias = MonikerAliasAdapter.getAlias(eElement);
 		if (alias != null) {
 			append(alias);
 			return true;
