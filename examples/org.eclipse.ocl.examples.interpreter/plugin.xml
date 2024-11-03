@@ -32,9 +32,13 @@
 	</extension>
 
 	<extension point="org.eclipse.ui.menus">
-		<menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=show">
+		<!-- Platform Issue 2483 raised for inability to use after show -->
+		<menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
 			<command commandId="org.eclipse.ocl.examples.interpreter.ShowEcoreConsoleAction"
-              	icon="icons/elcl16/oclconsole_co.gif"/>
+				label="%_UI_ShowOCLConsole_label"
+				style="push"
+              	icon="icons/elcl16/oclconsole_co.gif"
+				tooltip="%_UI_ShowOCLConsole_tooltip"/>
 		</menuContribution>
 	</extension>
    
