@@ -129,7 +129,6 @@ public class OCLDelegateValidator extends EObjectValidator
 		if (!validationDelegates.isEmpty()) {
 			CONSTRAINTS : for (String constraint : EcoreUtil.getConstraints(eClass)) {
 				if (constraint != null) {
-				//	assert false;
 					for (String validationDelegate : validationDelegates) {
 						if (validationDelegate != null) {
 							String expression = EcoreUtil.getAnnotation(eClass, validationDelegate, constraint);
