@@ -254,6 +254,7 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 		disposeResourceSet();
 		//		unloadResourceSet(resourceSet);
 		//		resourceSet = null;
+		TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	}
 }

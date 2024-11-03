@@ -381,6 +381,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//	gc("GC-ed3");
 		autoTearDown();
 	//	gc("GC-ed4");
+		TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	//	gc("GC-ed9");
 	//	System.gc();

@@ -53,6 +53,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	@Override
 	protected void tearDown() throws Exception {
     	StandaloneProjectMap.TEST_MAY_INITIALIZE_GLOBAL_FACILITIES = !EMFPlugin.IS_ECLIPSE_RUNNING;
+    	TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	}
 
