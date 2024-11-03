@@ -29,6 +29,11 @@ public class ValidationContext extends HashMap<Object,Object>
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @since 1.23
+	 */
+	public ValidationContext() {}
+
 	public ValidationContext(EValidator.@NonNull Registry validationRegistry) {
 		Diagnostician diagnostician = createDiagnostician(validationRegistry);
 	    put(EValidator.class, diagnostician);
