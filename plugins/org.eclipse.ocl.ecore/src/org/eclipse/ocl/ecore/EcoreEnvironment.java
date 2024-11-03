@@ -1193,7 +1193,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	/**
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	@Override
 	public OCL createOCL() {
@@ -1201,7 +1201,7 @@ implements EnvironmentWithHiddenOpposites {
 	}
 
 	/**
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	@Override
 	public ToStringVisitor createToStringVisitor(Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> environment) {

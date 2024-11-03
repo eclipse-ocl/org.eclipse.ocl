@@ -586,7 +586,7 @@ public interface Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	/**
 	 * Create an appropriately derived new instance of OCL.
 	 *
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	default OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> createOCL() {
 		throw new UnsupportedOperationException();
@@ -595,7 +595,7 @@ public interface Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	/**
 	 * Create an appropriately derived new instance of ToStringVisitor.
 	 *
-	 * @since 3.22
+	 * @since 3.23
 	 */
     default ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> createToStringVisitor(Environment<?, C, O, P, EL, PM, S, COA, SSA, CT, ?, ?> environment) {
 		throw new UnsupportedOperationException();

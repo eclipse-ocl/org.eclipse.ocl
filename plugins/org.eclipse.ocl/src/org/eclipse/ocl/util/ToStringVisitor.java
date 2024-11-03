@@ -114,7 +114,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 	 * @param element an OCL expression or other typed element such as a variable
 	 *
 	 * @return the corresponding instance
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	public static <C, O, P, EL, PM, S, COA, SSA, CT>
 	ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT> getInstanceAbstract(

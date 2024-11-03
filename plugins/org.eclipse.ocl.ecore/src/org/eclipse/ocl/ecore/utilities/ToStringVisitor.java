@@ -35,7 +35,7 @@ public class ToStringVisitor
 		CallOperationAction, SendSignalAction, Constraint>
 		implements VisitorExtension<String> {
     /**
-	 * @since 3.22
+	 * @since 3.23
 	 */
     public ToStringVisitor(
 			Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env) {
@@ -75,6 +75,7 @@ public class ToStringVisitor
 		return result.toString();
     }
 
+	@Override
 	public String visitOppositePropertyCallExp(
 			OppositePropertyCallExp callExp) {
         String sourceResult = safeVisit(callExp.getSource());
