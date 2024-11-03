@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -55,9 +56,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -282,7 +283,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static UML2AS loadFromUML(@NonNull ASResource umlASResource, @NonNull URI umlURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource.getResourceSet());
 		Resource umlResource = environmentFactory.getResourceSet().getResource(umlURI, true);
 		if (umlResource == null) {
 			return null;
@@ -402,7 +403,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+		public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
 			return root.getCreatedMap();
 		}
 
@@ -441,7 +442,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		/**
 		 * Mapping of source UML objects to their resulting pivot element.
 		 */
-		private @NonNull Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
+		private @NonNull Map<@NonNull Notifier, @NonNull Element> createMap = new HashMap<>();
 
 		/**
 		 * Set of all UML objects requiring further work during the reference pass.
@@ -478,12 +479,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		@Override
 		public void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-			//			if ((eObject instanceof ENamedElement) && "EnglishClass".equals(((ENamedElement)eObject).getName())) {
-			//				System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
-			//			}
-			//			else if ((eObject instanceof org.eclipse.uml2.uml.NamedElement) && "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
-			//				System.out.println("Define " + ClassUtil.debugSimpleName(eObject) + " => " + ClassUtil.debugSimpleName(pivotElement));
-			//			}
+			//	if (eObject instanceof ENamedElement) {//&& "EnglishClass".equals(((ENamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
+			//	}
+			//	else if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {//&& "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement));
+			//	}
 			@SuppressWarnings("unused")
 			Element oldElement = createMap.put(eObject, pivotElement);
 			/*			if ((oldElement != null) && (oldElement != pivotElement)) {
@@ -730,7 +731,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+		public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
 			return createMap;
 		}
 
@@ -768,10 +769,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		protected void installAliases(@NonNull Resource asResource) {
-			AliasAdapter umlAdapter = AliasAdapter.findAdapter(umlResource);
+			MonikerAliasAdapter umlAdapter = MonikerAliasAdapter.findAdapter(umlResource);
 			if (umlAdapter != null) {
 				Map<EObject, String> umlAliasMap = umlAdapter.getAliasMap();
-				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+				MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
 				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 				for (EObject eObject : umlAliasMap.keySet()) {
 					String alias = umlAliasMap.get(eObject);
@@ -797,7 +798,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 							metamodelManager.installResource(asResource);
 						}
 						else {
-							Map<@NonNull EObject, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
+							Map<@NonNull Notifier, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
 							if (importedCreatedMap != null) {
 								createMap.putAll(importedCreatedMap);
 								//								for (@NonNull EObject key : importedCreatedMap.keySet()) {
@@ -1263,7 +1264,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
 		URI pivotURI = asResource.getURI();
-		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.toString());
+		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.trimFileExtension().toString());
 		asResource.getContents().add(pivotModel2);
 		UML2ASDeclarationSwitch declarationPass = getDeclarationPass();
 		List<org.eclipse.ocl.pivot.Package> rootPackages = new ArrayList<>();
@@ -1552,6 +1553,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 	protected void setOriginalMapping(@NonNull Element pivotElement, @NonNull EObject umlElement) {
 		((PivotObjectImpl)pivotElement).setESObject(umlElement);
 		addCreated(umlElement, pivotElement);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void setEcoreURI(@NonNull URI ecoreURI) {
+		throw new IllegalStateException();			// XXX
 	}
 
 	public void setUMLURI(URI umlURI) {

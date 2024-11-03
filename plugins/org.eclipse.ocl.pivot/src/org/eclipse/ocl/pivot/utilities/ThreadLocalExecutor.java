@@ -189,7 +189,7 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Register execution of a finalizer that may release some resource that may also need finalization.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static int incrementFinalizerReleases() {
 		int count = finalizerReleases.incrementAndGet();
@@ -251,7 +251,7 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Restart the finalizer-has-released count. Returns the pre-rest value.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static synchronized int resetFinalizerReleases() {
 		int count = finalizerReleases.get();
@@ -581,8 +581,9 @@ public class ThreadLocalExecutor implements Nameable
 		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
-				this.environmentFactory = null;
+			//	this.environmentFactory = null;
 				oldEnvironmentFactory.detach(this);
+				this.environmentFactory = null;
 				if (usesFinalizer) {
 				//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
 					this.executor = null;

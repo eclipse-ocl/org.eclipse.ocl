@@ -30,7 +30,7 @@ public class OCLinEcoreASResourceImpl extends ASResourceImpl
 	@Override
 	public void load(Map<?, ?> options) throws IOException {
 		@NonNull URI oclURI = uri.trimFileExtension();
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(getResourceSet());
 		BaseCSResource csResource = (BaseCSResource) environmentFactory.getResourceSet().createResource(oclURI);
 		assert csResource != null;
 		csResource.getCS2AS(environmentFactory, this);

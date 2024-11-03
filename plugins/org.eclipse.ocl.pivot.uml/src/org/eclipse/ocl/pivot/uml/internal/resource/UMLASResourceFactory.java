@@ -113,6 +113,12 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 					eObject = umlStereotype;
 				}
 			}
+			else if (eObject instanceof EPackage) {
+				org.eclipse.uml2.uml.Profile umlProfile= getProfileForEPackage(environmentFactory, (EPackage)eObject);
+				if (umlProfile != null) {
+					eObject = umlProfile;
+				}
+			}
 		}
 		return uml2as.getCreated(pivotClass, eObject);
 	}
@@ -274,6 +280,25 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public @Nullable Integer getPriority() {
 		return 200;
+	}
+
+	protected org.eclipse.uml2.uml.Profile getProfileForEPackage(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
+		EObject eAnnotationParent = null;
+		for (EObject eObject = ePackage; true; eObject = eObject.eContainer()) {
+			if (eObject == null) {
+				return null;
+			}
+			if (eObject instanceof EAnnotation) {
+				eAnnotationParent = eObject.eContainer();
+				break;
+			}
+		}
+		if (!(eAnnotationParent instanceof org.eclipse.uml2.uml.Profile)) {
+			return null;
+		}
+		org.eclipse.uml2.uml.Profile umlProfile = (org.eclipse.uml2.uml.Profile)eAnnotationParent;		// FIXME could there be hierarchy ?
+	//	org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(NameUtil.getOriginalName(eClass));
+		return umlProfile;
 	}
 
 	@Override

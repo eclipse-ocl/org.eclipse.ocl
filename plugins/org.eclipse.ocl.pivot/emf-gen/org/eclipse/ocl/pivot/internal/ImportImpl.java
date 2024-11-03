@@ -13,8 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -22,19 +20,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -338,36 +335,34 @@ public class ImportImpl extends NamedElementImpl implements Import
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
-	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
+	public @Nullable Object getReloadableEObjectOrURI() {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
 		Namespace namespace = basicGetImportedNamespace();
-		if ((namespace != null) && !namespace.eIsProxy()) {
-			if (namespace instanceof Model) {
-				EnvironmentFactoryInternal environmentFactory = ((CompleteModelInternal)completeModel).getEnvironmentFactory();
-				URI externalURI = URI.createURI(((Model)namespace).getExternalURI());
-				return environmentFactory.getResourceSet().getResource(externalURI, false);
+		if (namespace != null) {
+			if (namespace.eIsProxy()) {
+				return namespace;
 			}
-			else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
-				CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
-				for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-					EObject esObject = asPackage.getESObject();
-					if (esObject != null) {
-						return esObject;
-					}
-				}
-			}
-			else if (namespace instanceof org.eclipse.ocl.pivot.Class) {
-				CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)namespace);
-				for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-					EObject esObject = asClass.getESObject();
-					if (esObject != null) {
-						return esObject;
-					}
-				}
+			else {
+				return ((ElementImpl)namespace).getReloadableEObjectOrURI();
 			}
 		}
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {
+				return csElement;
+			}
+			csElement = csi2asMapping.getCSElement(this);			// XXX happens for UML2Ecore2AS, and for the dummy ConsistentTransient in Ecore
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
 		return null;
 	}
 } //ImportImpl

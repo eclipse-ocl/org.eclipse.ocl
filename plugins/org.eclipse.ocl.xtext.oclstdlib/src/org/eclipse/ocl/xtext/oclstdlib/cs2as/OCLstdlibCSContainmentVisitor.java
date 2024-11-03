@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,12 +35,12 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
@@ -79,7 +80,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	@Override
 	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csClass) {
 		//
-		//	Resolve explicit insstanceClass
+		//	Resolve explicit instanceClass
 		//
 		String instanceClassName = null;
 		JavaClassCS implementation = csClass.getImplementation();
@@ -97,19 +98,55 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		//
 		//	Resolve explicit metaType name object
 		//
-		MetaclassNameCS csMetaclassName = null;
+		MetaclassNameCS csMetaclassName;
 		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csClass, OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME);
-		if ((featureNodes != null) && (featureNodes.size() > 0)) {
+		if ((featureNodes != null) && (featureNodes.size() > 0)) {				// If Xtext has parsed a reference
 			INode metaclassNameNode = featureNodes.get(0);
 			String metaTypeNameText = NodeModelUtils.getTokenText(metaclassNameNode);
-			if (metaTypeNameText != null) {
-				csMetaclassName = ((OCLstdlibCS2AS)context.getConverter()).getMetaclassName(metaTypeNameText);
-			}
+			assert metaTypeNameText != null;
+			csMetaclassName = getConverter().getMetaclassNameCS(metaTypeNameText);
 			if (csMetaclassName == null) {
 				context.addError(csClass, metaclassNameNode, "Unresolved metatype for ''{0}''", csClass);
 			}
+			csClass.setMetaclassName(csMetaclassName);
 		}
-		csClass.setMetaclassName(csMetaclassName);
+		else {
+			csMetaclassName = (MetaclassNameCS)csClass.eGet(OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME, false);
+			if (csMetaclassName != null) {
+				if (csMetaclassName.eIsProxy()) {								// If CS XMI load has loaded an ocl:#xyzzy reference
+					String metaTypeNameText = ((InternalEObject)csMetaclassName).eProxyURI().fragment();
+					assert metaTypeNameText != null;
+					csMetaclassName = getConverter().getMetaclassNameCS(metaTypeNameText);
+					if (csMetaclassName == null) {
+						context.addError(csClass, "Unresolved metatype for ''{0}''", csClass);
+					}
+					csClass.setMetaclassName(csMetaclassName);
+				}
+				else {															// If redundantly reloading
+					String metaTypeNameText = csMetaclassName.getName();
+					assert metaTypeNameText != null;
+					csMetaclassName = getConverter().getMetaclassNameCS(metaTypeNameText);
+					if (csMetaclassName == null) {
+						context.addError(csClass, "Unresolved metatype for ''{0}''", csClass);
+					}
+					csClass.setMetaclassName(csMetaclassName);
+				}
+			}
+		}
+	/*	else {
+			csMetaclassName = csClass.getMetaclassName();
+			if (csMetaclassName != null) {							// If CS XMI load has loaded a reference
+				String metaTypeNameText = csMetaclassName.getName();
+				assert metaTypeNameText != null;
+				csMetaclassName = getConverter().getMetaclassName(metaTypeNameText);
+				if (csMetaclassName == null) {
+					context.addError(csClass, "Unresolved metatype for ''{0}''", csClass);
+				}
+				csClass.setMetaclassName(csMetaclassName);
+			}
+		} */
+		assert (csMetaclassName == null) || !csMetaclassName.eIsProxy();		// XXX
+		assert (csMetaclassName == null) || "internal_list;;//of_meta-type_names".equals(String.valueOf(csMetaclassName.eResource().getURI()));		// XXX
 		//
 		//	Resolve metaType EClass and provide a default implicit instanceClass
 		//
@@ -190,6 +227,11 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	}
 
 	@Override
+	protected @NonNull OCLstdlibCS2AS getConverter() {
+		return (OCLstdlibCS2AS)context.getConverter();
+	}
+
+	@Override
 	public Continuation<?> visitLibIterationCS(@NonNull LibIterationCS csElement) {
 		@NonNull Iteration pivotElement = refreshNamedElement(Iteration.class, PivotPackage.Literals.ITERATION, csElement);
 		pivotElement.setIsInvalidating(csElement.isIsInvalidating());
@@ -220,17 +262,20 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	@Override
 	public Continuation<?> visitLibPackageCS(@NonNull LibPackageCS csElement) {
 		Library pivotElement = refreshPackage(Library.class, PivotPackage.Literals.LIBRARY, csElement);
-		context.refreshPivotList(Precedence.class, pivotElement.getOwnedPrecedences(), csElement.getOwnedPrecedences());
+		List<Precedence> asPrecedences = pivotElement.getOwnedPrecedences();
+		assert asPrecedences != null;
+		context.refreshPivotList(Precedence.class, asPrecedences, csElement.getOwnedPrecedences());
+		getConverter().setPrecedences(asPrecedences);
 		return null;
 	}
 
 	@Override
 	public Continuation<?> visitLibRootPackageCS(@NonNull LibRootPackageCS csElement) {
 		Resource eResource = csElement.eResource();
-		if (eResource instanceof BaseCSResource) {
+		if (eResource instanceof CSResource) {
 			@NonNull Model pivotElement = refreshRootPackage(Model.class, PivotPackage.Literals.MODEL, csElement);
 			context.refreshPivotList(Import.class, pivotElement.getOwnedImports(), csElement.getOwnedImports());
-			context.installRootElement((BaseCSResource) eResource, pivotElement);		// Ensure containment viable for imported library type references
+			context.installRootElement((CSResource) eResource, pivotElement);		// Ensure containment viable for imported library type references
 			importPackages(csElement);			// FIXME This has to be after refreshPackage which is irregular and prevents local realization of ImportCS etc
 		}
 		return null;

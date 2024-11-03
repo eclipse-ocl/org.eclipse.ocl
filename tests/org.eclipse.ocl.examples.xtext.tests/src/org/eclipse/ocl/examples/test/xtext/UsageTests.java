@@ -61,9 +61,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
-import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
-import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -73,6 +70,9 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.internal.dynamic.ExplicitClassLoader;
+import org.eclipse.ocl.pivot.internal.dynamic.JavaClasspath;
+import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -521,7 +521,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			}
 		}
 		String objectPath = getTestProject().getOutputFile(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFileString();
-		classpath.addClass(getClass());
+		classpath.addBundleForClass(getClass());
 		String problemMessage = JavaFileUtil.compileClasses(compilationUnits, sources.toString(), objectPath, classpath);
 		if (problemMessage != null) {
 			fail(problemMessage);
@@ -624,8 +624,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
 		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
-		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
-		classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
+		classpath.addBundleForClass(org.eclipse.uml2.types.TypesPackage.class);
+		classpath.addBundleForClass(org.eclipse.uml2.uml.UMLPackage.class);
 		doCompile(ocl, classpath, testProjectName);
 	}
 

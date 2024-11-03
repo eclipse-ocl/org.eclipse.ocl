@@ -36,6 +36,11 @@ org.eclipse.ocl.pivot/completePackages=false
 # Turn on assertion failures fore debugged deprecations.
 org.eclipse.ocl.pivot/debug/deprecation=false
 
+# Turn on tracing of the classpath synthesis 
+org.eclipse.ocl.pivot/dynamic/classPath=false
+# Turn on tracing of the explicit compilations 
+org.eclipse.ocl.pivot/dynamic/compiles=false
+
 # Trace conversion of not-optional primitive types such as EBoolean
 org.eclipse.ocl.pivot/ecore2as/notOptional=false
 
@@ -78,8 +83,11 @@ org.eclipse.ocl.pivot/partialPackages=false
 # Throw an IllegalStateException if an immutable resource is modified. 
 org.eclipse.ocl.pivot/resource/checkImmutability=false
 
-# Trace asssignment of proxies
-org.eclipse.ocl.pivot/resource/proxies=false
+# Trace resolution of proxies
+org.eclipse.ocl.pivot/resource/resolve-proxy=false
+
+# Trace assignment of proxies
+org.eclipse.ocl.pivot/resource/set-proxy=false
 
 # Trace updates of the StandardLibraryContribution.REGISTRY
 org.eclipse.ocl.pivot/standardLibraryContribution=false

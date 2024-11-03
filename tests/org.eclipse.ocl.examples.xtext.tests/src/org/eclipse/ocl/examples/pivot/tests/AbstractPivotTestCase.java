@@ -48,6 +48,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -72,6 +73,7 @@ import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
@@ -99,10 +101,10 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-//		PivotUtilInternal.noDebug = false;
-//		DEBUG_GC = true;
-//		DEBUG_ID = true;
-//		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+	//	PivotUtilInternal.noDebug = false;
+	//	DEBUG_GC = true;
+	//	DEBUG_ID = true;
+	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	}
 
 	static long startTime;
@@ -177,6 +179,22 @@ public class AbstractPivotTestCase extends TestCase
 		}
 	}
 
+	/**
+	 * Refine the standard CompleteOCLLoader to redirect the error callback to a TestCase.fail().
+	 */
+	public static final class TestCompleteOCLLoader extends CompleteOCLLoader
+	{
+		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
+			super(environmentFactory);
+		}
+
+		@Override
+		protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
+			TestCase.fail(primaryMessage + "\n\t" + detailMessage);
+			return false;
+		}
+	}
+
 	public static class TestHelper
 	{
 		public static final @NonNull TestHelper INSTANCE = new TestHelper();
@@ -229,7 +247,7 @@ public class AbstractPivotTestCase extends TestCase
 			if ((expectedCount == null) || (expectedCount <= 0)) {
 				if (s1 == null) {
 					s1 = new StringBuilder();
-					s1.append("\nUnexpected errors");
+					s1.append("\nExtra errors");
 					if (resource != null) {
 						s1.append(" in '");
 						s1.append(resource.getURI());
@@ -411,23 +429,44 @@ public class AbstractPivotTestCase extends TestCase
 	} */
 
 	/**
-	 * Assert that no test is currently setup() anf not yet tearDown().
+	 * Assert that no test is currently setup() and not yet tearDown().
 	 */
 	public static boolean assertTestIsNotSetup() {
 		try {
-			assert !IS_SETUP;
+			assert SETUP_TEST_NAME == null : "Test '" + SETUP_TEST_NAME + "' failed to tearDown";
 		}
 		finally {
-			IS_SETUP = false;		// Avoid gratuiytpus failures of subsequent tests
+			SETUP_TEST_NAME = null;		// Avoid gratuitous failures of subsequent tests
 		}
 		return true;
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+	public static @NonNull List<Diagnostic> assertLazyValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ResourceSet resourceSet = resource.getResourceSet();
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
-		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
+	//	ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
+		ThreadLocalExecutor.reset();
+		if (savedEnvironmentFactory != null) {
+			ThreadLocalExecutor.attachEnvironmentFactory(savedEnvironmentFactory);
+		}
+		return diagnostics;
+	}
+
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ResourceSet resourceSet = resource.getResourceSet();
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
+		ThreadLocalExecutor.reset();
+		if (savedEnvironmentFactory != null) {
+			ThreadLocalExecutor.attachEnvironmentFactory(savedEnvironmentFactory);
+		}
+		return diagnostics;
 	}
 
 	/* qvtd variant
@@ -666,11 +705,20 @@ public class AbstractPivotTestCase extends TestCase
 		return ClassUtil.nonNullState(super.getName());
 	} */
 
-	private static boolean IS_SETUP = false;		// Debug flag to enable enforcement of init before memento
+	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento
+
+	/**
+	 * Dispose of an OCL making sure it uses the current Thread's EnvironmentFactory.
+	 *
+	protected void oclDispose(@NonNull OCL ocl) {
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		ThreadLocalExecutor.attachEnvironmentFactory((EnvironmentFactoryInternal)ocl.getEnvironmentFactory());
+		ocl.dispose();
+	} */
 
 	@Override
 	protected void setUp() throws Exception {
-		IS_SETUP = true;
+		SETUP_TEST_NAME = getTestName();
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
@@ -710,6 +758,7 @@ public class AbstractPivotTestCase extends TestCase
 			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
 			//		}
 			ThreadLocalExecutor.reset();
+			DelegateInstaller.ExtendedEObjectValidator.reset();
 			if (DEBUG_GC) {
 				testHelper.doTearDown();
 				makeCopyOfGlobalState.restoreGlobalState();
@@ -731,11 +780,11 @@ public class AbstractPivotTestCase extends TestCase
 					EObject eObject = tit.next();
 					if (eObject instanceof PivotObjectImpl) {
 						PivotObjectImpl asObject = (PivotObjectImpl)eObject;
-						asObject.resetStaleESObject();
+						asObject.tearDownESObject();
 					}
 				}
 			}
-			IS_SETUP = false;
+			SETUP_TEST_NAME = null;
 			TestCaseAppender.INSTANCE.assertNotInstalled();
 			super.tearDown();
 		}

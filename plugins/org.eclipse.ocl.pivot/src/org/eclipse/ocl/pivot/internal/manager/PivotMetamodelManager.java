@@ -96,6 +96,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
@@ -129,11 +130,11 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -309,7 +310,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
-	private @Nullable Map<Resource,External2AS> es2ases = null;
+//	private @Nullable Map<Resource,External2AS> es2ases = null;
+	private @Nullable Map<@NonNull URI, @NonNull External2AS> uri2es2as = null;
 
 	/**
 	 * Construct a MetamodelManager that will use environmentFactory to create its artefacts
@@ -342,14 +344,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public void addExternal2AS(@NonNull External2AS es2as) {
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 == null){
-			es2ases = es2ases2 = new HashMap<>();
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			uri2es2as = uri2es2as2 = new HashMap<>();
 		}
-		Resource resource = es2as.getResource();
+	//	Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
-		External2AS oldES2AS = es2ases2.put(resource, es2as);
-		assert oldES2AS == null;
+		External2AS oldES2AS = uri2es2as2.put(uri, es2as);
+		assert (oldES2AS == null) || (es2as instanceof InverseConversion);// && !(oldES2AS instanceof InverseConversion));
 		oldES2AS = external2asMap.put(uri, es2as);
 		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
 	}
@@ -538,7 +540,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
-		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
+		if (!upper.equals(ValueUtil.ONE_VALUE)) {
 			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
@@ -648,11 +650,52 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
+		EnvironmentFactoryInternal threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if ((threadEnvironmentFactory != environmentFactory) && (threadEnvironmentFactory != null)) {		// XXX
+			System.out.println("[" + Thread.currentThread().getName() + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
+			System.out.println("[" + Thread.currentThread().getName() + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(threadEnvironmentFactory));
+		}
+		assert (threadEnvironmentFactory == null) || (threadEnvironmentFactory == environmentFactory) : "Cannot dispose() a foreign EnvironmentFactory";
+	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
+	//		System.err.println("Correcting current EnvironmentFactory to facilitate dispose()");
+	//		environmentFactory.activate();
+	//	}
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
-		for (@NonNull Resource asResource : new ArrayList<>(asResources)) {
+	/*	for (@NonNull Resource asResource : new ArrayList<>(environmentFactory.getResourceSet().getResources())) {		-- XXX tidy
+			System.out.println("Unloading " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
+			Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(asResource);
+			for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
+				boolean hasReference = false;
+				for (Setting setting : entry.getValue()) {
+					EStructuralFeature ef = setting.getEStructuralFeature();
+					if (!ef.isTransient() && !ef.isVolatile()) {
+						hasReference = true;
+					}
+				}
+				if (hasReference) {
+					EObject e1 = entry.getKey();
+					EObject reloadableNotifier = e1;
+					if (e1 instanceof ElementImpl) {
+						reloadableNotifier = (EObject) ((ElementImpl)e1).getReloadableNotifier();
+					}
+					System.out.println("\t" + NameUtil.debugSimpleName(e1) + " " + e1 + NameUtil.debugSimpleName(reloadableNotifier) + " " + EcoreUtil.getURI(reloadableNotifier));
+					for (Setting setting : entry.getValue()) {
+						EObject e2 = setting.getEObject();
+						EStructuralFeature ef = setting.getEStructuralFeature();
+						if (!ef.isTransient() && !ef.isVolatile()) {
+							System.out.println("\t\t" + ef.getName() + " " + NameUtil.debugSimpleName(e2) + " " + e2.toString().replace("\n", "\\n"));
+						}
+					}
+				}
+			}
+		} */
+		List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
+		}
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.eAdapters().clear();
 		}
 		asResources.clear();
@@ -691,12 +734,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		globalNamespaces.clear();
 		globalTypes.clear();
 		external2asMap.clear();
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 != null) {
-			for (External2AS es2as : es2ases2.values()) {
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 != null) {
+			for (External2AS es2as : uri2es2as2.values()) {
 				es2as.dispose();
 			}
-			es2ases = null;
+			uri2es2as = null;
 		}
 		lockingAnnotation = null;
 		completeModel.dispose();
@@ -810,10 +853,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Return all constraints applicable to a type and its superclasses.
+	 *
+	 * @deprecated use CompleteModel.getAllCompleteInvariants()
 	 */
-	@Override
+	@Override @Deprecated
 	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
-		Set<Constraint> knownInvariants = new HashSet<>();
+		List<Constraint> knownInvariants = new ArrayList<>();
 		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
@@ -822,6 +867,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 		}
+		assert new HashSet<>(knownInvariants).size() == knownInvariants.size();
 		return knownInvariants;
 	}
 
@@ -1102,7 +1148,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
@@ -1113,7 +1159,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		String className = PivotUtil.getName(thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
 		if (thisClass == null) {
-			thisClass = PivotUtil.createClass(className);
+			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
 		}
 		return thisClass;
@@ -1150,7 +1197,19 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
-		return es2ases != null ? es2ases.get(esResource) : null;
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			return null;
+		}
+		External2AS external2as = uri2es2as2.get(esResource.getURI());
+		if (external2as == null) {
+			return null;
+		}
+		Resource resource = external2as.getResource();
+		if (resource != esResource) {
+			getClass();			// XXX caller checks
+		}
+		return external2as;
 	}
 
 	@Override
@@ -1828,6 +1887,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
+		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);
@@ -2084,7 +2144,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
 				if (eResource instanceof XMLResource) {
-					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
+					EObject eObject = eResource.getEObject(fragment);
 					if (eObject != null) {
 						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
 						if (asElement != null) {
@@ -2140,29 +2200,36 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 								External2AS external2as2 = external2asMap.get(packageURI);
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {
+									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
 										for (EObject eContent : resource.getContents()) {
 											if (eContent instanceof Pivotable) {
 												Element pivot = ((Pivotable)firstContent).getPivot();
-												if (pivot instanceof Model) {
+												if (pivot instanceof Model) {				// XXX straight to get(0)
 													Model root = (Model)pivot;
-													completeModel.getPartialModels().remove(root);
+													return root;
+												/*	completeModel.getPartialModels().remove(root);
 													ASResource asResource = (ASResource) root.eResource();
 													if (asResource != null) {
+														assert false;				// XXX
 														boolean wasUpdating = asResource.setUpdating(true);
 														asResourceSet.getResources().remove(asResource);
 														asResource.unload();
 														asResource.setUpdating(wasUpdating);
-													}
+														break;	// XXX No point iterating the proxies
+													} */
 												}
 											}
 										}
-										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {
+										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
 											logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
 										}
+										return PivotUtil.getModel(resource);
+									//	if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
+									//		logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
+									//	}
 										//											resource.unload();
-										resource.getResourceSet().getResources().remove(resource);
-										resource = knownResource;
+									//	resource.getResourceSet().getResources().remove(resource);
+									//	resource = knownResource;
 									}
 								}
 								break;
@@ -2203,8 +2270,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void removeExternalResource(@NonNull Resource esResource) {
-		if (es2ases != null) {
-			External2AS es2as = es2ases.remove(esResource);
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 != null) {
+			External2AS es2as = uri2es2as2.remove(esResource.getURI());
 			if (es2as != null) {
 				es2as.dispose();
 			}

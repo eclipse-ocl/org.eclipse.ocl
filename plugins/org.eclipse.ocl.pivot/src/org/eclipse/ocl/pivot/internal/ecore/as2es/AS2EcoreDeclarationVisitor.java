@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -252,7 +253,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	protected void copyModelElement(@NonNull EModelElement eModelElement, @NonNull Element pivotModelElement) {
-		context.putCreated(pivotModelElement, eModelElement);
+		context.putCreated(pivotModelElement, (Notifier)eModelElement);
 		safeVisitAll(ClassUtil.nonNullState(eModelElement.getEAnnotations()), pivotModelElement.getOwnedAnnotations());
 		AS2Ecore.copyCommentsAndDocumentation(eModelElement, pivotModelElement);
 	}
@@ -379,7 +380,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				}
 				EOperation eOperation = AS2Ecore.createConstraintEOperation(pivotInvariant, name, options);
 				eOperations.add(eOperation);
-				context.putCreated(pivotInvariant, eOperation);
+				context.putCreated(pivotInvariant, (Notifier)eOperation);
 				copyConstraint(eOperation, pivotInvariant);
 			}
 		}
@@ -394,7 +395,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				if (asConstraint.isIsCallable()) {
 					EOperation eOperation = AS2Ecore.createConstraintEOperation(asConstraint, PivotUtil.getName(asConstraint), options);
 					eOperations.add(eOperation);
-					context.putCreated(asConstraint, eOperation);
+					context.putCreated(asConstraint, (Notifier)eOperation);
 					copyConstraint(eOperation, asConstraint);
 					eDuplicates.add(eOperation);
 					context.defer(asConstraint);		// Defer references
@@ -557,7 +558,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		EModelElement firstElement = null;
 		List<EObject> outputObjects = new ArrayList<EObject>();
 		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pivotObject : pivotModel.getOwnedPackages()) {
-			if (!Orphanage.isTypeOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
+			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
 				Object ecoreObject = safeVisit(pivotObject);
 				if (ecoreObject instanceof EObject) {
 					outputObjects.add((EObject) ecoreObject);
@@ -838,7 +839,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public EObject visitTemplateParameter(@NonNull TemplateParameter pivotTemplateParameter) {
 		ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eTypeParameter.setName(pivotTemplateParameter.getName());
-		context.putCreated(pivotTemplateParameter, eTypeParameter);
+		context.putCreated(pivotTemplateParameter, (Notifier)eTypeParameter);
 		if (!pivotTemplateParameter.getConstrainingClasses().isEmpty()) {
 			context.defer(pivotTemplateParameter);
 		}

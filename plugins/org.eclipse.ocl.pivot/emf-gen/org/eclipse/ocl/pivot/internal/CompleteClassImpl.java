@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -464,6 +465,29 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return getOwningCompletePackage().getCompleteModel();
 	}
 
+	/**
+	 * Return the ES object from a partial class.
+	 */
+	@Override
+	public @Nullable EObject getESObject() {
+		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes' esObject");
+	/*	assert super.getESObject() == null;
+		for (org.eclipse.ocl.pivot.Class asClass : partialClasses) {
+			EObject esObject = asClass.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+			TemplateableElement asTemplateableElement = asClass.getUnspecializedElement();
+			if (asTemplateableElement != null) {
+				esObject = asTemplateableElement.getESObject();
+				if (esObject != null) {
+					return esObject;
+				}
+			}
+		}
+		return null; */
+	}
+
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteModel().getEnvironmentFactory();
@@ -599,6 +623,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		return partialClasses.getSuperCompleteClasses();
+	}
+
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
 	}
 
 	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {

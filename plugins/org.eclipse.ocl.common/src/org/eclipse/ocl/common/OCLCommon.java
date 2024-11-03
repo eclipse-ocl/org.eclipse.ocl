@@ -148,8 +148,26 @@ public class OCLCommon implements OCLConstants
 	 * whose URI starts with {@link #OCL_DELEGATE_URI} and a / character/
 	 */
 	public static String getDelegateAnnotation(EModelElement eModelElement, String key) {
-	    EAnnotation eAnnotation = getDelegateAnnotation(eModelElement);
-	    return eAnnotation == null ? null : (String)eAnnotation.getDetails().get(key);
+		List<EAnnotation> eAnnotations = eModelElement.getEAnnotations();
+		for (EAnnotation eAnnotation : eAnnotations) {
+			String source = eAnnotation.getSource();
+			if ((source != null) && source.equals(OCL_DELEGATE_URI)) {
+			    String body = eAnnotation.getDetails().get(key);
+				if (body != null) {
+					return body;
+				}
+			}
+		}
+		for (EAnnotation eAnnotation : eAnnotations) {
+			String source = eAnnotation.getSource();
+			if ((source != null) && source.startsWith(OCL_DELEGATE_URI_SLASH)) {
+			    String body = eAnnotation.getDetails().get(key);
+				if (body != null) {
+					return body;
+				}
+			}
+		}
+	    return null;
 	}
 
 	/**

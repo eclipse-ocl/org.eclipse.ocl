@@ -26,6 +26,17 @@
       </content-type>
   </extension>
 
+   <extension point="org.eclipse.emf.ecore.content_parser">
+      <parser
+            contentTypeIdentifier="org.eclipse.ocl.oclstdlibcs"
+            class="org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource$OCLstdlibCSResourceLoadFactory"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser type="oclstdlibcs"
+            class="org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource$OCLstdlibCSResourceLoadFactory"/>
+   </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated OCLstdlibCS -->
       <package

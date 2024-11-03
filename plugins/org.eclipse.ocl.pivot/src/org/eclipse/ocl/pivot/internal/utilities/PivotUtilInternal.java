@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
@@ -74,10 +75,10 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -98,7 +99,7 @@ public class PivotUtilInternal //extends PivotUtil
 	 * If DEBUG_DEPRECATIONS is set active debugDeprecation() returns false causing debugged deprecations
 	 * to fail their assertions.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
 
@@ -115,6 +116,32 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		//	if (resourceSet != null) {
+		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
+		//			environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
+		//		}
+		//		assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
+		//	}
+			return environmentFactory;
+		}
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				return environmentFactoryAdapter.getEnvironmentFactory();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	@Deprecated /* @deprecated FIXME BUG 509309 move to EnvironmentFactory.createHelper() */
@@ -123,7 +150,11 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
+	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
+	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
+	 *
+	 * @since 1.23
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
@@ -231,32 +262,56 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return environmentFactory;
+		}
+		ProjectManager projectManager = null;
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				return environmentFactory;
+			}
+			projectManager = ProjectMap.findAdapter(resourceSet);
+		}
+		if (projectManager == null) {
+			projectManager = ProjectManager.CLASS_PATH;
+		}
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
+		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
+	//	environmentFactory.adapt(resourceSet);
+		return environmentFactory;
+	}
+
+	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated use Notifier argument */		// XXX
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+	//	return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+		return getEnvironmentFactory((Notifier)object);
 	}
 
+	@Deprecated /* @deprecated use Notifier argument */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ProjectManager projectManager = null;
-			ResourceSet asResourceSet = null;
-			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
-				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
-				projectManager = ProjectMap.findAdapter(asResourceSet);
-			}
-			if (projectManager == null) {
-				projectManager = ProjectManager.CLASS_PATH;
-			}
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
-			ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-		}
-		return environmentFactory;
+		return getEnvironmentFactory((Notifier)resource);
 	}
 
 	/** @deprecated use getExecutor() */
@@ -801,6 +856,16 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the maven-surefire-plugin..
+	 * @since 1.23
+	 */
+	public static boolean isMavenSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("maven");
+	}
+
+	/**
 	 * Return  true if this is a synthetic property whose definition is provided by the Orphanage.
 	 * @since 1.3
 	 */
@@ -828,6 +893,15 @@ public class PivotUtilInternal //extends PivotUtil
 		else {
 			return false;
 		}
+	}
+	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the tycho-surefire-plugin..
+	 * @since 1.23
+	 */
+	public static boolean isTychoSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("tycho");
 	}
 
 	public static boolean isValidIdentifier(@Nullable String value) {

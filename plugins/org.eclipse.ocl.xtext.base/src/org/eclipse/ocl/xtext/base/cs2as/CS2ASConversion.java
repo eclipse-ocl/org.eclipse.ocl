@@ -175,7 +175,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.postOrderVisitor = converter.createPostOrderVisitor(this);
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
 		this.optionalDefaultMultiplicity = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
-
 	}
 
 	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
@@ -1347,6 +1346,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * Sequence the update passes to make the pivot match the CS.
 	 */
 	public boolean update(@NonNull CSResource csResource) {
+	//	System.out.println("update " + NameUtil.debugSimpleName(csResource) + " " + csResource.getURI());
 		resetPivotMappings(csResource);
 		oldPackagesByName = new HashMap<>();
 		oldPackagesByQualifiedName = new HashMap<>();

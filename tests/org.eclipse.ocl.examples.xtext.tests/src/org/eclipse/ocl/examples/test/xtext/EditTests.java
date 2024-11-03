@@ -659,9 +659,11 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource3 = as2ecore(environmentFactory, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_class, ecoreResource3);
 		}
-		ocl_class.dispose();
-		ocl_datatype.dispose();
 		ocl.dispose();
+		ocl_class.activate();
+		ocl_class.dispose();
+		ocl_datatype.activate();
+		ocl_datatype.dispose();
 	}
 
 	public void testEdit_Comments() throws Exception {
@@ -740,10 +742,13 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource4 = as2ecore(environmentFactory, asResource, ecoreURI4, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_uncommented, ecoreResource4);
 		}
-		ocl_uncommented.dispose();
-		ocl_commented.dispose();
-		ocl_recommented.dispose();
 		ocl.dispose();
+		ocl_uncommented.activate();
+		ocl_uncommented.dispose();
+		ocl_commented.activate();
+		ocl_commented.dispose();
+		ocl_recommented.activate();
+		ocl_recommented.dispose();
 	}
 
 	public void testEdit_Refresh_ecore_382230() throws Exception {
@@ -895,8 +900,9 @@ public class EditTests extends XtextTestCase
 			((EPackage)ecoreResource0.getContents().get(0)).setName("pkg");
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource4);
 		}
-		ocl1.dispose();
 		ocl.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testEdit_Rename_Restore_ecore() throws Exception {
@@ -984,8 +990,9 @@ public class EditTests extends XtextTestCase
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "testOperation(s : String)", "testOperation(i : Integer)", NO_MESSAGES, NO_MESSAGES));
 		//
-		ocl1.dispose();
 		ocl.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testEdit_StaleReference_ecore() throws Exception {
@@ -1053,8 +1060,9 @@ public class EditTests extends XtextTestCase
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
 		pivotTestClass1 = metamodelManager.getPrimaryType("TestPackage", "TestClass1");
 		//
-		ocl1.dispose();
 		ocl.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testEdit_StaleSpecialization() throws Exception {

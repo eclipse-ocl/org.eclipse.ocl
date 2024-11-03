@@ -18,15 +18,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.base.utilities.OCLCSResourceSaveImpl;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -107,8 +105,8 @@ public class SaveCSHandler extends AbstractHandler
 				@Override
 				public Object exec(@Nullable XtextResource resource) throws Exception {
 					if (resource != null) {
-						XMIResource xmiResource = new OCLCSResourceSaveImpl(newURI, OCLASResourceFactory.getInstance(), (BaseCSResource)resource);
-						xmiResource.save(null);
+						@SuppressWarnings("unused")
+						CSResource xmiResource = ((BaseCSResource)resource).saveAsXMI(newURI);
 					}
 					return null;
 				}

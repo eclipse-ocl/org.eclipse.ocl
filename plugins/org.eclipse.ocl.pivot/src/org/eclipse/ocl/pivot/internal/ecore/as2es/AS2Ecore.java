@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EGenericType;
@@ -46,6 +47,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
@@ -57,7 +59,6 @@ import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -74,29 +75,40 @@ public class AS2Ecore extends AbstractConversion
 	 */
 	public class InverseConversion extends AbstractConversion implements External2AS
 	{
+		/**
+		 * The synthesized Ecore Resource.
+		 */
 		protected final @NonNull Resource ecoreResource;
 
 		/**
-		 * Mapping of E elements to the originating AS elements.
+		 * The AS Model from which the ecoreResource was synthesized.
+		 *
+		 * @since 1.23
 		 */
-		private final @NonNull Map<@NonNull EObject, @NonNull Element> inverseCreateMap = new HashMap<>();
+		protected final @NonNull Model asModel;
+
+		/**
+		 * Mapping of synthesized ES elements from their originating AS elements.
+		 */
+		private final @NonNull Map<@NonNull Notifier, @NonNull Element> inverseCreateMap = new HashMap<>();
 
 		protected InverseConversion(@NonNull Resource ecoreResource) {
 			super(AS2Ecore.this.environmentFactory);
 			this.ecoreResource = ecoreResource;
 			for (@NonNull Element asElement : createMap.keySet()) {
-				EModelElement eObject = createMap.get(asElement);
-				assert eObject != null;
-				inverseCreateMap.put(eObject, asElement);
+				Notifier eNotifier = createMap.get(asElement);
+				assert eNotifier != null;
+				inverseCreateMap.put(eNotifier, asElement);
 			}
+			this.asModel = (Model)ClassUtil.nonNullState(inverseCreateMap.get(ecoreResource));
 		}
 
 		@Override
 		public void dispose() {}
 
 		@Override
-		public @NonNull Model getASModel() throws ParserException {
-			throw new UnsupportedOperationException(); // This is never used by Ecore. We could tunnel through the ecoreResource contents looking for a conversion ti Model.
+		public @NonNull Model getASModel() {
+			return asModel;				// XXX if proxy reconvert
 		}
 
 		@Override
@@ -116,12 +128,12 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		@Override
-		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+		public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
 			return inverseCreateMap;
 		}
 
 		@Override
-		public @Nullable Resource getResource() {
+		public @NonNull Resource getResource() {
 			return ecoreResource;
 		}
 
@@ -130,9 +142,22 @@ public class AS2Ecore extends AbstractConversion
 			return ClassUtil.nonNullState(ecoreResource.getURI());
 		}
 
-		public void putCreated(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
-			Element oldPivot = inverseCreateMap.put(eModelElement, pivotElement);
+		/**
+		 * @since 1.23
+		 */
+		public void putCreated(@NonNull Notifier eNotifier, @NonNull Element pivotElement) {
+			Element oldPivot = inverseCreateMap.put(eNotifier, pivotElement);
 			assert oldPivot == null;
+		}
+
+		@Deprecated /* @deprecated use Notifier argument */
+		public void putCreated(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
+			putCreated((Notifier)eModelElement, pivotElement);
+		}
+
+		@Override
+		public void setEcoreURI(@NonNull URI uri) {
+			assert uri.toString().equals(asModel.getExternalURI());
 		}
 	}
 
@@ -230,7 +255,7 @@ public class AS2Ecore extends AbstractConversion
 			}
 		}
 		if (newComments != null) {
-			List<EAnnotation> allEAnnotations = ClassUtil.nullFree(eModelElement.getEAnnotations());
+			List<@NonNull EAnnotation> allEAnnotations = ClassUtil.nullFree(eModelElement.getEAnnotations());
 			EAnnotation eAnnotation = eModelElement.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 			if (eAnnotation == null) {
 				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -363,7 +388,7 @@ public class AS2Ecore extends AbstractConversion
 	/**
 	 * Mapping of pivot elements to the resulting E elements.
 	 */
-	private final @NonNull Map<@NonNull Element, @NonNull EModelElement> createMap = new HashMap<>();
+	private final @NonNull Map<@NonNull Element, @NonNull Notifier> createMap = new HashMap<>();
 
 	/**
 	 * Mapping of all E elements created during pass 1 that require further work
@@ -410,6 +435,7 @@ public class AS2Ecore extends AbstractConversion
 			//			contents.clear();						// FIXME workaround for BUG 465326
 			for (EObject eContent : asResource.getContents()) {
 				if (eContent instanceof Model) {
+					putCreated((Model)eContent, ecoreResource);
 					Object results = pass1.safeVisit((Model)eContent);
 					if (results instanceof List<?>) {
 						@SuppressWarnings("unchecked")
@@ -422,10 +448,18 @@ public class AS2Ecore extends AbstractConversion
 				pass2.safeVisit(eKey);
 			}
 			for (@NonNull Element pivotElement : createMap.keySet()) {
-				EObject eObject = createMap.get(pivotElement);
-				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl) pivotElement;
-				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
-					pivotObjectImpl.setESObject(eObject);
+				Notifier eNotifier = createMap.get(pivotElement);
+				if (eNotifier instanceof EObject) {
+					PivotObjectImpl pivotObjectImpl = (PivotObjectImpl)pivotElement;
+					if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
+						pivotObjectImpl.setESObject((EObject)eNotifier);
+					}
+				}
+				else if (eNotifier instanceof Resource){
+					ModelImpl asModel = (ModelImpl)pivotElement;
+					if (asModel.getExternalURI() == null) {
+						asModel.setExternalURI(String.valueOf(((Resource)eNotifier).getURI()));
+					}
 				}
 			}
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
@@ -452,24 +486,27 @@ public class AS2Ecore extends AbstractConversion
 		errors2.add(new XMIException(message));
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	public <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
-		EModelElement eModelElement = createMap.get(pivotElement);
+		Notifier eNotifier = createMap.get(pivotElement);
 		//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
-		if (eModelElement == null) {
+		if (eNotifier == null) {
 			Element primaryElement = metamodelManager.getPrimaryElement(pivotElement);
 			if (pivotElement != primaryElement) {
-				eModelElement = createMap.get(primaryElement);
+				eNotifier = createMap.get(primaryElement);
 			}
 		}
-		if (eModelElement == null) {
+		if (eNotifier == null) {
 			return null;
 		}
-		if (!requiredClass.isAssignableFrom(eModelElement.getClass())) {
-			logger.error("Ecore " + eModelElement.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
+		if (!requiredClass.isAssignableFrom(eNotifier.getClass())) {
+			logger.error("Ecore " + eNotifier.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
 			return null;
 		}
 		@SuppressWarnings("unchecked")
-		T castElement = (T) eModelElement;
+		T castElement = (T) eNotifier;
 		return castElement;
 	}
 
@@ -526,21 +563,29 @@ public class AS2Ecore extends AbstractConversion
 		return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
 	}
 
-	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
+	/**
+	 * @since 1.23
+	 */
+	public void putCreated(@NonNull Element pivotElement, @NonNull Notifier eNotifier) {
 		Element primaryElement = metamodelManager.getPrimaryElement(pivotElement);
 		//		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
-		EModelElement oldPivot = createMap.put(pivotElement, eModelElement);
-		assert oldPivot == null;
+		Notifier oldNotifier = createMap.put(pivotElement, eNotifier);
+		assert oldNotifier == null;
 		if (ecore2as != null) {
-			ecore2as.putCreated(eModelElement, pivotElement);
+			ecore2as.putCreated(eNotifier, pivotElement);
 		}
 		if ((pivotElement != primaryElement) && !createMap.containsKey(primaryElement)) {
 			//			System.out.println("Put2 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
-			createMap.put(primaryElement, eModelElement);
+			createMap.put(primaryElement, eNotifier);
 			if (ecore2as != null) {
-				ecore2as.putCreated(eModelElement, primaryElement);
+				ecore2as.putCreated(eNotifier, primaryElement);
 			}
 		}
+	}
+
+	@Deprecated /* @deprecated use Notifier argument */
+	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
+		putCreated(pivotElement, (Notifier)eModelElement);
 	}
 
 	protected void setGenerationInProgress(@NonNull Resource asResource, boolean isLoading) {

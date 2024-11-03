@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -407,7 +408,7 @@ public class ParameterImpl
 	 */
 	@Override
 	public String toString() {
-		return super.toString();
+		return NameUtil.debugSimpleName(this) + ":" + super.toString();
 	}
 
 	@Override
@@ -415,4 +416,17 @@ public class ParameterImpl
 		return visitor.visitParameter(this);
 	}
 
+	/**
+	 * @since 1.22
+	 *
+	@Override
+	protected boolean setReloadableProxy() {
+		Operation asOperation = getOwningOperation();
+		if ((asOperation instanceof OperationImpl) && ((OperationImpl)asOperation).isIsImplicit()) {
+			return setReloadableProxy(null);
+		}
+		else {
+			return super.setReloadableProxy();
+		}
+	} */
 } //ParameterImpl

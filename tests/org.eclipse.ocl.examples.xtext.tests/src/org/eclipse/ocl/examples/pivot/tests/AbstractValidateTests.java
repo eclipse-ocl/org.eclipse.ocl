@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -52,6 +51,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDown
 {
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
+	public static final @NonNull String VALIDATION_EXCEPTION = "Validation failed with an exception for ''{0}''";	// _UI_ValidationFailed_diagnostic = Validation failed with an exception for ''{0}''
 
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
 		EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
@@ -76,15 +76,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		}
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(testInstance);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-/*	//	Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
-		Diagnostician diagnostician = Diagnostician.INSTANCE;
-		Map<Object, Object> defaultContext = diagnostician.createDefaultContext();
-	//    put(EValidator.class, diagnostician);
-	//    put(EValidator.Registry.class, validationRegistry);
-	//	put(EValidator.SubstitutionLabelProvider.class, diagnostician);
-	//	put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
-		Diagnostic diagnostics = diagnostician.validate(testInstance, defaultContext);
-*/		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
+		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {
 			//			assertEquals(severity, diagnostic.getSeverity());
@@ -94,6 +86,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		if (s != null) {
 			fail("Inconsistent validation: (expected/actual) message" + s);
 		}
+		assertEquals("Inconsistent severity", severity, diagnostics.getSeverity());
 	}
 
 	protected @NonNull OCL createOCL() {
@@ -135,7 +128,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		URI inputURI = getTestFileURI(inputName);
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		assert xtextResource != null;
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);

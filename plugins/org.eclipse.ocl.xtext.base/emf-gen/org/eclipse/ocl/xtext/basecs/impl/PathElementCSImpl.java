@@ -21,6 +21,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -30,8 +33,10 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
@@ -156,7 +161,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setReferredElement(Element newReferredElement)
 	{
-		ASResourceImpl.PROXIES.println("setReferredElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newReferredElement));
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
@@ -361,29 +365,92 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
-			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + proxy.eProxyURI());
 		}
-		EObject resolvedProxy = super.eResolveProxy(proxy);
-		if (resolvedProxy instanceof Pivotable) {
-			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
+		EObject esResolvedProxy = super.eResolveProxy(proxy);
+		EObject asResolvedProxy = null;
+		if (esResolvedProxy instanceof Pivotable) {
+			asResolvedProxy = ((Pivotable)esResolvedProxy).getPivot();
+			if ((asResolvedProxy != null) && asResolvedProxy.eIsProxy()) {
+			//	proxy = (InternalEObject)eResolveProxy(proxy);			// XXX need to displace stale AS
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ThreadLocalExecutor.getEnvironmentFactory();
+				try {
+					asResolvedProxy = environmentFactory.getASOf(Element.class, esResolvedProxy);
+				} catch (ParserException e) {
+					// XXX Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (proxy instanceof Parameter) {
+				ExpressionInOCL asExpression = null;
+				for (EObject eObject = this; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof PivotableElementCS) {
+						Element asElement = ((PivotableElementCS)eObject).getPivot();
+						if (asElement instanceof ExpressionInOCL) {
+							asExpression = (ExpressionInOCL)asElement;
+							break;
+						}
+					}
+				}
+				if (asExpression != null) {
+					Parameter asParameter = (Parameter)proxy;
+					if ("text".equals(((ParameterCS)esResolvedProxy).getName())) {
+						getClass();
+					}
+					ParameterVariable asParameterVariable = (ParameterVariable)NameUtil.getNameable(asExpression.getOwnedParameters(), ((ParameterCS)esResolvedProxy).getName());
+					assert asParameterVariable != null;
+					/*	if (asParameterVariable == null) {
+						asParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
+					//	if (resolvedProxy instanceof Parameter) {
+							asParameterVariable.setRepresentedParameter(asParameter);
+							asParameterVariable.setName(asParameter.getName());
+							asParameterVariable.setType(asParameter.getType());
+							asParameterVariable.setIsRequired(asParameter.isIsRequired());
+							asExpression.getOwnedParameters().add(asParameterVariable);
+					//	}
+					} */
+					asResolvedProxy = asParameterVariable;
+				/*	ParameterVariable proxyParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
+					if (resolvedProxy instanceof Parameter) {
+						Parameter asParameter = (Parameter)resolvedProxy;
+						if ("text".equals(asParameter.getName())) {
+							getClass();
+						}
+						proxyParameterVariable.setRepresentedParameter(asParameter);
+						proxyParameterVariable.setName(asParameter.getName());
+						proxyParameterVariable.setType(asParameter.getType());
+						proxyParameterVariable.setIsRequired(asParameter.isIsRequired());
+						resolvedProxy = proxyParameterVariable;
+					}
+					else if (resolvedProxy instanceof Type) {
+						assert proxy.eContainingFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+						proxyParameterVariable.setRepresentedParameter(null);
+					//	((ParameterVariableImpl)proxy).eSetProxyURI(null);
+						resolvedProxy = asExpression.getOwnedContext();
+					}
+					else {
+						throw new IllegalStateException();
+					} */
+				}
+			}
 		}
-		else if (resolvedProxy instanceof EModelElement) {
+		else if (esResolvedProxy instanceof EModelElement) {
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();			// CS2AS
 			if (environmentFactory != null) {
 				try {
-					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+					asResolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, esResolvedProxy);
 				} catch (ParserException e) {
 					e.printStackTrace();		// Never happens proxies do not parse
 				}
 			}
 		}
 		if (s != null) {
-			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
-			ASResourceImpl.PROXIES.println(s.toString());
+			s.append(" => " + NameUtil.debugSimpleName(asResolvedProxy));
+			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
-		return resolvedProxy;
+		return asResolvedProxy != null ? asResolvedProxy : esResolvedProxy;
 	}
 
 	/**

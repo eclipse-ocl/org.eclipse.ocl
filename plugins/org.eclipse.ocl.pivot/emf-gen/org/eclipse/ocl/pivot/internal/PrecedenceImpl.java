@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -337,4 +338,12 @@ public class PrecedenceImpl
 		return visitor.visitPrecedence(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull URI getReloadableEObjectOrURI() {			// XXX enums are missing from oclstdlib.ecore
+		URI platformResourceURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/oclstdlib.ecore", true);
+		return platformResourceURI.appendFragment("//Precedence/"+ getName());	// XXX missing
+	}
 } //PrecedenceImpl

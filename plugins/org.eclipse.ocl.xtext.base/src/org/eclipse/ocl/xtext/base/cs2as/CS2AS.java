@@ -448,11 +448,12 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	public @Nullable Element getPivotElement(@NonNull ModelElementCS csElement) {
-		return csi2asMapping.get(csElement);
+		Element asElement = csi2asMapping.get(csElement);
+		return (asElement != null) && !asElement.eIsProxy() ? asElement : null;		// null for proxies
 	}
 
 	public @Nullable <T extends Element> T getPivotElement(@NonNull Class<T> pivotClass, @NonNull ModelElementCS csElement) {
-		Element pivotElement = csi2asMapping.get(csElement);
+		Element pivotElement = getPivotElement(csElement);
 		if (pivotElement == null) {
 			return null;
 		}
@@ -646,6 +647,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 	public @NonNull <T extends Element> T refreshModelElement(@NonNull Class<T> pivotClass, @NonNull EClass pivotEClass, @Nullable ModelElementCS csElement) {
 		Element pivotElement = csElement != null ? getPivotElement(csElement) : null;
+		assert (pivotElement == null) || !pivotElement.eIsProxy();
 		@NonNull Element pivotElement2;
 		if ((pivotElement != null)
 				&& pivotClass.isAssignableFrom(pivotElement.getClass())					// Avoid resetting container of incidental reference
