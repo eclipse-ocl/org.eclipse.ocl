@@ -8,14 +8,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.Element"/>
-                <message_argument value="getESNotifier()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLstdlib.java" type="org.eclipse.ocl.pivot.model.OCLstdlib">
         <filter id="1143996420">
             <message_arguments>
@@ -60,14 +52,6 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="Ecore2Moniker"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore"/>
-                <message_argument value="getCreated(Class&lt;T&gt;, Element)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -146,12 +130,6 @@
                 <message_argument value="REGISTRY"/>
             </message_arguments>
         </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.Attribution"/>
-                <message_argument value="ATTRIBUTION_REGISTRY"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AliasAdapter.java" type="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter">
         <filter id="338792546">
@@ -177,6 +155,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="canValidate(ResourceSet)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="isDisposing()"/>
             </message_arguments>
         </filter>
@@ -192,14 +176,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.External2AS"/>
                 <message_argument value="setEcoreURI(URI)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/PivotObjectImpl.java" type="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"/>
-                <message_argument value="NO_UNLOAD_PROXY_URI"/>
             </message_arguments>
         </filter>
     </resource>
@@ -269,12 +245,6 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
-                <message_argument value="adapt(ResourceSet)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="getASResourceSet()"/>
             </message_arguments>
         </filter>
@@ -282,6 +252,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="activate()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="addExtraResourceSet(ResourceSet)"/>
             </message_arguments>
         </filter>
     </resource>

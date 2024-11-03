@@ -95,6 +95,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 
 	/**
 	 * Return true if resourceSet has been declared as an extraRsourceSet that this EnvironmentFactory can validate.
+	 * @since 1.23
 	 */
 	default boolean canValidate(@NonNull ResourceSet resourceSet) { return false; }
 
