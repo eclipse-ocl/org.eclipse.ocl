@@ -882,6 +882,16 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the maven-surefire-plugin..
+	 * @since 1.23
+	 */
+	public static boolean isMavenSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("maven");
+	}
+
+	/**
 	 * Return  true if this is a synthetic property whose definition is provided by the Orphanage.
 	 * @since 1.3
 	 */
@@ -909,6 +919,16 @@ public class PivotUtilInternal //extends PivotUtil
 		else {
 			return false;
 		}
+	}
+
+	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the tycho-surefire-plugin..
+	 * @since 1.23
+	 */
+	public static boolean isTychoSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("tycho");
 	}
 
 	public static boolean isValidIdentifier(@Nullable String value) {
