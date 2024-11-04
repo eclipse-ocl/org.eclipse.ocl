@@ -452,7 +452,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	public <@NonNull T extends NamedElementCS> T refreshNamedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull NamedElement object) {
 		String nameForNull = object.getName();
 		if ((nameForNull == null) || nameForNull.isEmpty()) {
-			nameForNull = "$null$";
+			nameForNull = PivotConstantsInternal.NULL_ROOT;
 			Object eContainingElement = object.eContainer().eGet(object.eContainingFeature());
 			if (eContainingElement instanceof List<?>) {
 				nameForNull += ((List<?>)eContainingElement).indexOf(object);
