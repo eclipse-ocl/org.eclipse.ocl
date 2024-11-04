@@ -477,7 +477,7 @@ public class PivotUtilInternal //extends PivotUtil
 				name = ((EPackage)element).getName();
 			}
 			if (name == null) {
-				name = "$null$";
+				name = PivotConstantsInternal.NULL_ROOT;
 			}
 			s.append(name);
 			return;
