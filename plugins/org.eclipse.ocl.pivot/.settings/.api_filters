@@ -16,6 +16,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/OCLValidationDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory.Global"/>
+                <message_argument value="INSTANCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
         <filter id="576725006">
             <message_arguments>

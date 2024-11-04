@@ -151,7 +151,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	 */
 	public static class Global extends OCLValidationDelegateFactory
 	{
-		public static final @NonNull Global INSTANCE = new Global();
+	//	public static final @NonNull Global INSTANCE = new Global();
 
 		public Global() {
 			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
