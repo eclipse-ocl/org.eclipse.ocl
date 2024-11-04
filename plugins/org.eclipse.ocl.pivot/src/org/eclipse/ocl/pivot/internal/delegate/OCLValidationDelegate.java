@@ -300,11 +300,6 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 			@Override
 			protected Boolean handleFailureResult(@Nullable Object result) {
-			//	if (result == null) {
-			//		String message = getConstraintResultMessage(result);
-			//		EvaluationException cause = new EvaluationException(message);
-			//		throw new OCLDelegateException(cause);
-			//	}
 				if (diagnostics != null) {
 					String message = getConstraintResultMessage(result);
 					int severity = getConstraintResultSeverity(result);
