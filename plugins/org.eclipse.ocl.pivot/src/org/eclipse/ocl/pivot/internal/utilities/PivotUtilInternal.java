@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
@@ -74,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -115,6 +117,32 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		//	if (resourceSet != null) {
+		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
+		//			environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
+		//		}
+		//		assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
+		//	}
+			return environmentFactory;
+		}
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				return environmentFactoryAdapter.getEnvironmentFactory();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	@Deprecated /* @deprecated FIXME BUG 509309 move to EnvironmentFactory.createHelper() */
@@ -123,6 +151,10 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
+	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
+	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
+	 *
 	 * @since 1.23
 	 */
 	public static boolean debugDeprecation(String string) {
@@ -231,31 +263,80 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return environmentFactory;
+		}
+		ProjectManager projectManager = null;
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				return environmentFactory;
+			}
+			projectManager = ProjectMap.findAdapter(resourceSet);
+		}
+		if (projectManager == null) {
+			projectManager = ProjectManager.CLASS_PATH;
+		}
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
+		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
+	//	environmentFactory.adapt(resourceSet);
+		return environmentFactory;
+	}
+
+	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated use Notifier argument */		// XXX
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+		return object instanceof EObject ? getEnvironmentFactory(((EObject)object).eResource()) : getEnvironmentFactory(null);
+	// XXX	return getEnvironmentFactory((Notifier)object);
 	}
 
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ProjectManager projectManager = null;
-			ResourceSet asResourceSet = null;
-			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
-				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+		if (environmentFactory != null) {
+			return environmentFactory;
+		}
+		ProjectManager projectManager = null;
+		ResourceSet asResourceSet = null;
+		if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
+			asResourceSet = PivotUtil.basicGetResourceSet(resource);
+			if (asResourceSet != null) {		// null if working with installed resources
+				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(asResourceSet);
+				if (environmentFactoryAdapter != null) {
+					environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
+					ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+					return environmentFactory;
+				}
 				projectManager = ProjectMap.findAdapter(asResourceSet);
 			}
-			if (projectManager == null) {
-				projectManager = ProjectManager.CLASS_PATH;
-			}
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
-			ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 		}
+		else {
+		// XXX	assert false;
+		}
+		if (projectManager == null) {
+			projectManager = ProjectManager.CLASS_PATH;
+		}
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
+		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 		return environmentFactory;
 	}
 
