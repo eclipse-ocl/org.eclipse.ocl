@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -64,7 +64,7 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
 	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions);
 	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings);	
+			@Nullable TemplateParameterSubstitutions bindings);
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void dispose();
