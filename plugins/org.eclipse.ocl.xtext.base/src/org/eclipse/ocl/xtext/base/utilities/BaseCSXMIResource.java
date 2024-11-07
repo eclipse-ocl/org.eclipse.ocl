@@ -62,13 +62,18 @@ import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 /**
  * The BaseCSXMIResource implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
+ * <br>
+ * Derived implementations provide the appropriate CS2AS mapping.
+ * <br>
+ * While this implementation supports saving as XMI rather than Xtext serialization, it is not intended to be used as a regular
+ * Resource. It is not expected to be added to a ResourceSet or to be unloaded then reloaded. (A reload should be a load from XMI.)
  */
 public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSResource
 {
 	/**
-	 * CSXMISaveHelper overloads getHREF to persist references to the internal AS elements to their persistable CS/ES equivalents.
+	 * CSXMISaveHelper overloads getHREF to persist references to internal AS elements as their persistable CS/ES equivalents.
 	 */
-	protected static final class CSXMISaveHelper extends XMIHelperImpl
+	protected static class CSXMISaveHelper extends XMIHelperImpl
 	{
 		protected final @NonNull CSResource csResource;
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
@@ -213,7 +218,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 	}
-
 
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
 		URI uri = ClassUtil.nonNullState(getURI());
