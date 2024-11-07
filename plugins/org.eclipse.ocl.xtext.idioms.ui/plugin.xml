@@ -221,7 +221,7 @@
 			base-type="org.eclipse.core.runtime.text"
 			file-extensions="idioms"
 			id="org.eclipse.ocl.xtext.idioms.Idioms"
-			name="Idioms File"
+			name="%IdiomsName"
 			priority="normal">
 		</content-type>
 	</extension>
