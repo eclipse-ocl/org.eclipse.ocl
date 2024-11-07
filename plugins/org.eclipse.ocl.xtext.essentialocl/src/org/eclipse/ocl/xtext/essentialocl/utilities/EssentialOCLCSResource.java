@@ -21,12 +21,16 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -51,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -63,6 +68,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
@@ -346,6 +352,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
+	}
 
 	@Override
 	public void dispose() {
@@ -417,6 +426,90 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 		catch (Exception e) {
 			throw new Resource.IOWrappedException(e);
+		}
+	}
+
+	/**
+	 * OCLCSResourceLoad supports loading the contents of a CS Resource using regular XMI serialization.
+	 * References to CS/ES elements are resolved to equivalent AS references.
+	 * This is typically used to load directly from a persisted XMI Resource as XMI rather than parsing text.
+	 */
+	public static class OCLCSResourceLoad extends BaseCSXMIResource
+	{
+		public OCLCSResourceLoad(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+			super(uri, asResourceFactory);
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)asResourceFactory.createCS2AS(environmentFactory, this, asResource);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this);
+			return new CSXMISave(xmlHelper);
+		}
+	}
+
+	/**
+	 * An OCLCSResourceLoadFactory supports creation of an OCLCSResourceLoad that supports persistence of the CS model directly as XMI
+	 * rather than exploiting Xtext to serialize to / parse from a text file.
+	 */
+	public static class OCLCSResourceLoadFactory extends ResourceFactoryImpl
+	{
+		protected final @NonNull ASResourceFactory asResourceFactory;
+
+		/**
+		 * Creates an instance of the resource factory.
+		 */
+		public OCLCSResourceLoadFactory(@NonNull ASResourceFactory asResourceFactory) {
+			this.asResourceFactory = asResourceFactory;
+		}
+
+		@Override
+		public final @NonNull Resource createResource(URI uri) {
+			assert uri != null;
+			return new OCLCSResourceLoad(uri, asResourceFactory);
+		}
+	}
+
+	/**
+	 * OCLCSResourceSave supports saving the contents of a CS Resource using regular XMI serialization.
+	 * This is typically used to save an Xtext Resource as XMI rather than serializing to text.
+	 * It ensures that references to AS elements within the XMI are serialized as equivalent CS/AS references.
+	 */
+	protected static class OCLCSResourceSave extends BaseCSXMIResource
+	{
+		protected final @NonNull CSResource csResource;
+
+		public OCLCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+			super(uri, asResourceFactory);
+			this.csResource = csResource;
+		}
+
+		@Override
+		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+			return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
+		}
+
+		@Override
+		protected @NonNull XMLSave createXMLSave() {
+			XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, this.csResource);
+			return new CSXMISave(xmlHelper);
+		}
+
+		/**
+		 * Return the top level resource contents delegating to the Xtext-friendly CSResource.
+		 */
+		@Override
+		public @NonNull EList<@NonNull EObject> getContents() {		// JDT editor has a confusing benign error on a @NonNull */
+			return csResource.getContents();
+		}
+
+		@Override
+		public @NonNull EnvironmentFactory getEnvironmentFactory() {
+			return csResource.getEnvironmentFactory();
 		}
 	}
 
@@ -737,6 +830,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 		}
 		super.resolveLazyCrossReferences(mon);
+	}
+
+	@Override
+	public @NonNull CSResource saveAsXMI(@NonNull URI uri) throws IOException {
+		OCLCSResourceSave xmiResource = createCSResourceSave(uri);
+		xmiResource.save(null);
+		return xmiResource;
 	}
 
 	@Override

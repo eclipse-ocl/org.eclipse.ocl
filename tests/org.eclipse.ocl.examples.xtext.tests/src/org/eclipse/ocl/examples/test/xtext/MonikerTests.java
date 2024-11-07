@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -170,7 +171,9 @@ public class MonikerTests extends XtextTestCase
 		//	Load the CS resource and check for load failures
 		//
 		String pivotName = inputURI.trimFileExtension().lastSegment() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+		String xmiName = inputURI.trimFileExtension().lastSegment() + "." + PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION;
 		URI pivotURI = getTestFileURI(pivotName);
+		URI xmiOutputURI = getTestFileURI(xmiName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
 		csResource.load(null);;
@@ -230,6 +233,12 @@ public class MonikerTests extends XtextTestCase
 			}
 		} */
 		//		assertEquals(csMonikerMap.size(), pivotMonikerMap.size());
+		CSResource xmiResource = csResource.saveAsXMI(xmiOutputURI);
+	//	OCLstdlibCSResourceSaveImpl xmiResource = new OCLstdlibCSResourceSaveImpl(xmiOutputURI, OCLASResourceFactory.getInstance(), csResource);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		csResource.setURI(xmiOutputURI);
+		xmiResource.save(null);
+		assertNoResourceErrors("Saving CS as XMI", xmiResource);
 		ocl.dispose();
 	}
 

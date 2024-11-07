@@ -60,20 +60,22 @@ import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 /**
- * The BaseCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
+ * The BaseCSXMIResource implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
  */
-public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements CSResource
+public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSResource
 {
 	/**
 	 * CSXMISaveHelper overloads getHREF to persist references to the internal AS elements to their persistable CS/ES equivalents.
 	 */
 	protected static final class CSXMISaveHelper extends XMIHelperImpl
 	{
+		protected final @NonNull CSResource csResource;
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
-		protected CSXMISaveHelper(XMLResource resource) {
-			super(resource);
+		public CSXMISaveHelper(@NonNull XMLResource xmiResource, @NonNull CSResource csResource) {
+			super(xmiResource);
+			this.csResource = csResource;
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			assert environmentFactory != null : "No EnvironmentFactory when CS-saving " + NameUtil.debugSimpleName(this);
 			this.environmentFactory = environmentFactory;
@@ -207,7 +209,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	/**
 	 * Creates an instance of the resource.
 	 */
-	protected BaseCSXMIResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+	protected BaseCSXMIResource(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 	}
@@ -234,10 +236,11 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	@Override
-	protected @NonNull XMLSave createXMLSave() {
-		XMIHelperImpl xmlHelper = new BaseCSXMIResourceImpl.CSXMISaveHelper(this);
-		return new BaseCSXMIResourceImpl.CSXMISave(xmlHelper);
-	}
+	protected abstract @NonNull XMLSave createXMLSave();// {
+	//	XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, ((OCLCSResourceSaveImpl)this).csResource);
+	//	return new CSXMISave(xmlHelper);
+//		throw new UnsupportedOperationException();			// XXX move save classes down a level
+//	}
 
 	public @NonNull String getASContentType() {
 		return asResourceFactory.getContentType();
