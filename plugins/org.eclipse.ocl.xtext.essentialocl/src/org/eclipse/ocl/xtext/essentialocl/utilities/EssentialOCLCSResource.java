@@ -18,9 +18,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -60,6 +59,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -100,332 +100,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	{
 		protected DefaultParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
 			super(environmentFactory, uri);
-		}
-	}
-
-	protected static final class UnixOutputStream extends OutputStream // FIXME Workaround for Bug 439440
-	{
-		protected final @NonNull OutputStream outputStream;
-
-		protected UnixOutputStream(@NonNull OutputStream outputStream) {
-			this.outputStream = outputStream;
-		}
-
-		@Override
-		public void write(int b) throws IOException {
-			if (b != '\r') {
-				outputStream.write(b);
-			}
-		}
-	}
-
-	protected static class RenamedDiagnostic extends AbstractDiagnostic
-	{
-		private final SyntaxErrorMessage syntaxErrorMessage;
-		private final INode error;
-		private final String newMessage;
-
-		protected RenamedDiagnostic(SyntaxErrorMessage syntaxErrorMessage, INode error, String newMessage) {
-			this.syntaxErrorMessage = syntaxErrorMessage;
-			this.error = error;
-			this.newMessage = newMessage;
-		}
-
-		@Override
-		public String getCode() {
-			return syntaxErrorMessage.getIssueCode();
-		}
-
-		@Override
-		public int getColumn() {
-			try {
-				return super.getColumn();
-			}
-			catch (Throwable e) {			// Xtext used tio throw an NPE
-				return -1;
-			}
-		}
-
-		@Override
-		public String[] getData() {
-			return syntaxErrorMessage.getIssueData();
-		}
-
-		@Override
-		public String getMessage() {
-			return newMessage;
-		}
-
-		@Override
-		protected INode getNode() {
-			return error;
-		}
-	}
-
-	public static class TransientASResourceFactory extends AbstractASResourceFactory
-	{
-		public static @NonNull TransientASResourceFactory INSTANCE = new TransientASResourceFactory();
-
-		public TransientASResourceFactory() {
-			super("transient", null);
-		}
-
-		@Override
-		public @NonNull ASResourceFactory getASResourceFactory() {
-			return INSTANCE;
-		}
-	}
-
-	/**
-	 * A TransientASResource acts as the ASResource while parsing the body of an ExpressionInOCL. It enables
-	 * the parsing to behave as if it has a Resource within a ResourceSet without disturbing the ResourceSet
-	 * which may provoke Bug 451268.
-	 */
-	public static class TransientASResource extends ASResourceImpl
-	{
-		protected final @NonNull ResourceSet asResourceSet;
-
-		public TransientASResource(@NonNull ResourceSet asResourceSet, @NonNull URI asURI) {
-			super(asURI, TransientASResourceFactory.INSTANCE);
-			this.asResourceSet = asResourceSet;
-		}
-
-		@Override
-		public @NonNull ResourceSet getResourceSet() {
-			return asResourceSet;
-		}
-	}
-
-	private static final String NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF = "no viable alternative at input '<EOF>'";
-	private static final String NO_VIABLE_ALTERNATIVE_FOLLOWING = "no viable alternative following input ";
-	//	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
-	//	private static final String MISSING_EOF_AT = "missing EOF at ";
-
-	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
-
-	/**
-	 * The ParserContext provides the prevailing EnvironmentFactory, and may be configured explicitly by an
-	 * OCL-aware application. For OCL-blind aplication a prevailing EnvironmentFactory is lazily created and
-	 * shared by the ThreadLocalExecutor.
-	 */
-	private @Nullable ParserContext parserContext = null;
-	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
-
-	public EssentialOCLCSResource() {
-		super();
-		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
-	}
-
-	protected void addLibraryError(List<Diagnostic> errors, IllegalLibraryException e) {
-		String message = e.getMessage();
-		for (Resource.Diagnostic diagnostic : errors) {
-			if (diagnostic instanceof LibraryDiagnostic) {
-				Exception exception = ((LibraryDiagnostic)diagnostic).getException();
-				if (exception instanceof IllegalLibraryException) {
-					if (message.equals(exception.getMessage())) {
-						return;
-					}
-				}
-			}
-		}
-		errors.add(new LibraryDiagnostic(e));
-	}
-
-	@Override		// FIXME This workaround should be eliminated by a BUG 404438 fix
-	protected void addSyntaxErrors() {
-		if (isValidationDisabled()) {
-			return;
-		}
-		IParseResult parseResult = getParseResult();
-		if (parseResult == null) {
-			return;
-		}
-		List<Diagnostic> errors2 = getErrors();
-		for (final INode error : parseResult.getSyntaxErrors()) {
-			AbstractDiagnostic diagnostic = null;
-			final SyntaxErrorMessage syntaxErrorMessage = error.getSyntaxErrorMessage();
-			if (syntaxErrorMessage != null) {
-				String message = syntaxErrorMessage.getMessage();
-				// BUG 404438 "no viable alternative at input '<EOF>'" message is unhelpful.
-				if ((message != null) && message.contains(NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF)){
-					int index = message.indexOf(NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF);
-					if (index >= 0) {
-						String tokenText = NodeModelUtils.getTokenText(error);
-						if (tokenText != null) {
-							final String newMessage = message.substring(0, index) + NO_VIABLE_ALTERNATIVE_FOLLOWING + "'" + tokenText + "'" + message.substring(index+NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF.length());
-							diagnostic = new RenamedDiagnostic(syntaxErrorMessage, error, newMessage);
-						}
-					}
-				}
-				/*	else if ((message != null) && message.contains(MISSING_EOF_AT)){
-					int index = message.indexOf(MISSING_EOF_AT);
-					if (index >= 0) {
-						String tokenText = NodeModelUtils.getTokenText(error);
-						if (tokenText != null) {
-							final String newMessage = message.substring(0, index) + NO_VIABLE_ALTERNATIVE_AT + message.substring(index+MISSING_EOF_AT.length());
-							diagnostic = new RenamedDiagnostic(syntaxErrorMessage, error, newMessage);
-						}
-					}
-				} */
-			}
-			if (diagnostic == null) {
-				diagnostic = new XtextSyntaxDiagnostic(error);
-			}
-			errors2.add(diagnostic);
-		}
-	}
-
-	@Override
-	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-		//		if (resourceSet != null) {
-		//			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-		//FIXME This assertion is broken. It perhaps once tested for OCL-in-ResourceSet, but now is flaky depending on
-		// the lazy construction time of the metamodelManager
-		//			assert metamodelManager == null;
-		//		}
-		return super.basicSetResourceSet(resourceSet, notifications);
-	}
-
-	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
-		URI uri = ClassUtil.nonNullState(getURI());
-		URI asURI = getASURI(uri);
-		if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
-			return new TransientASResource(asResourceSet, asURI);
-		}
-		ASResource asResource = (ASResource) asResourceSet.getResource(asURI, false);
-		if (asResource != null) {		// This happens for a *.ecore load for an OCLinEcore edit - see Bug 560196
-			return asResource;
-		}
-		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
-		if (asResource2 instanceof ASResource) {
-			((ASResource)asResource2).setSaveable(false);		// Revert AS Resources to not saveable
-		}
-		return (ASResource) asResource2;
-	}
-
-	@Override
-	public void createAndAddDiagnostic(Triple<EObject, EReference, INode> triple) {
-		if (isValidationDisabled())
-			return;
-		EObject context = triple.getFirst();
-		if (context instanceof ElementCS) {
-			if (!hasError((ElementCS)context)) {
-				super.createAndAddDiagnostic(triple);
-				setHasError((ElementCS)context);
-			}
-		}
-		else {
-			super.createAndAddDiagnostic(triple);
-		}
-	}
-
-	@Override
-	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		return new EssentialOCLCS2AS(environmentFactory, this, asResource);
-	}
-
-	@Override			// FIXME Bug 380232 workaround
-	protected Diagnostic createDiagnostic(Triple<EObject, EReference, INode> triple, DiagnosticMessage message) {
-		EObject first = triple.getFirst();
-		if (first instanceof PathElementWithURICS) {
-			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
-		}
-		else {
-			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
-			{
-				@Override
-				public int getColumn() {
-					try {
-						return super.getColumn();
-					}
-					catch (Throwable e) {			// Older versions of Xtext give an NPE
-						return -1;
-					}
-				}
-			};
-		}
-	}
-
-	@Override
-	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
-			@NonNull EnvironmentFactoryInternal environmentFactory) {
-		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
-	}
-
-	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
-		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
-	}
-
-	@Override
-	public void dispose() {
-		try {
-			Method method = getClass().getMethod("clearLazyProxyInformation");		// Xtext 2.7 method
-			if (method != null) {
-				method.invoke(this);
-			}
-		}
-		catch (Exception e) {}
-		CS2AS cs2as = findCS2AS();
-		if (cs2as != null) {
-			cs2as.dispose();
-		}
-		parserContext = null;
-		//		unload();
-	}
-
-	@Override
-	protected void doLinking() {
-		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking start", false, +1);
-		List<Diagnostic> errors = getErrors();
-		if (errors.size() > 0) {
-			for (int i = errors.size(); --i >= 0; ) {
-				Diagnostic error = errors.get(i);
-				if (error instanceof LibraryDiagnostic) {
-					errors.remove(i);
-				}
-			}
-		}
-		try {
-			super.doLinking();
-		}
-		catch (Exception e) {
-			getErrors().add(new EnvironmentView.DiagnosticWrappedException(e));
-		}
-		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking end", false, -1);
-	}
-
-	@Override
-	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
-		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad start", false, +1);
-		try {
-			super.doLoad(inputStream, options);
-		}
-		catch (IOException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new Resource.IOWrappedException(e);
-		}
-		finally {
-			//			CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad end", true, -1);
-		}
-	}
-
-	@Override
-	public void doSave(final OutputStream outputStream, Map<?, ?> options) throws IOException {	// FIXME Workaround Bug 439440
-		try {
-			if ((options != null) && "\n".equals(options.get(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER)) && (outputStream != null)) {
-				super.doSave(new UnixOutputStream(outputStream), options);
-			}
-			else {
-				super.doSave(outputStream, options);
-			}
-		}
-		catch (IOException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new Resource.IOWrappedException(e);
 		}
 	}
 
@@ -513,6 +187,321 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 	}
 
+	protected static class RenamedDiagnostic extends AbstractDiagnostic
+	{
+		private final SyntaxErrorMessage syntaxErrorMessage;
+		private final INode error;
+		private final String newMessage;
+
+		protected RenamedDiagnostic(SyntaxErrorMessage syntaxErrorMessage, INode error, String newMessage) {
+			this.syntaxErrorMessage = syntaxErrorMessage;
+			this.error = error;
+			this.newMessage = newMessage;
+		}
+
+		@Override
+		public String getCode() {
+			return syntaxErrorMessage.getIssueCode();
+		}
+
+		@Override
+		public int getColumn() {
+			try {
+				return super.getColumn();
+			}
+			catch (Throwable e) {			// Xtext used tio throw an NPE
+				return -1;
+			}
+		}
+
+		@Override
+		public String[] getData() {
+			return syntaxErrorMessage.getIssueData();
+		}
+
+		@Override
+		public String getMessage() {
+			return newMessage;
+		}
+
+		@Override
+		protected INode getNode() {
+			return error;
+		}
+	}
+
+	public static class TransientASResourceFactory extends AbstractASResourceFactory
+	{
+		public static @NonNull TransientASResourceFactory INSTANCE = new TransientASResourceFactory();
+
+		public TransientASResourceFactory() {
+			super("transient", null);
+		}
+
+		@Override
+		public @NonNull ASResourceFactory getASResourceFactory() {
+			return INSTANCE;
+		}
+	}
+
+	/**
+	 * A TransientASResource acts as the ASResource while parsing the body of an ExpressionInOCL. It enables
+	 * the parsing to behave as if it has a Resource within a ResourceSet without disturbing the ResourceSet
+	 * which may provoke Bug 451268.
+	 */
+	public static class TransientASResource extends ASResourceImpl
+	{
+		protected final @NonNull ResourceSet asResourceSet;
+
+		public TransientASResource(@NonNull ResourceSet asResourceSet, @NonNull URI asURI) {
+			super(asURI, TransientASResourceFactory.INSTANCE);
+			this.asResourceSet = asResourceSet;
+		}
+
+		@Override
+		public @NonNull ResourceSet getResourceSet() {
+			return asResourceSet;
+		}
+	}
+
+	protected static final class UnixOutputStream extends OutputStream // FIXME Workaround for Bug 439440
+	{
+		protected final @NonNull OutputStream outputStream;
+
+		protected UnixOutputStream(@NonNull OutputStream outputStream) {
+			this.outputStream = outputStream;
+		}
+
+		@Override
+		public void write(int b) throws IOException {
+			if (b != '\r') {
+				outputStream.write(b);
+			}
+		}
+	}
+
+	private static final String NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF = "no viable alternative at input '<EOF>'";
+	private static final String NO_VIABLE_ALTERNATIVE_FOLLOWING = "no viable alternative following input ";
+	//	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
+	//	private static final String MISSING_EOF_AT = "missing EOF at ";
+
+	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
+
+	/**
+	 * The ParserContext provides the prevailing EnvironmentFactory, and may be configured explicitly by an
+	 * OCL-aware application. For OCL-blind application a prevailing EnvironmentFactory is lazily created and
+	 * shared by the ThreadLocalExecutor.
+	 */
+	private @Nullable WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext = null;
+	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
+
+	public EssentialOCLCSResource() {
+		super();
+		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
+	}
+
+	protected void addLibraryError(List<Diagnostic> errors, IllegalLibraryException e) {
+		String message = e.getMessage();
+		for (Resource.Diagnostic diagnostic : errors) {
+			if (diagnostic instanceof LibraryDiagnostic) {
+				Exception exception = ((LibraryDiagnostic)diagnostic).getException();
+				if (exception instanceof IllegalLibraryException) {
+					if (message.equals(exception.getMessage())) {
+						return;
+					}
+				}
+			}
+		}
+		errors.add(new LibraryDiagnostic(e));
+	}
+
+	@Override		// FIXME This workaround should be eliminated by a BUG 404438 fix
+	protected void addSyntaxErrors() {
+		if (isValidationDisabled()) {
+			return;
+		}
+		IParseResult parseResult = getParseResult();
+		if (parseResult == null) {
+			return;
+		}
+		List<Diagnostic> errors2 = getErrors();
+		for (final INode error : parseResult.getSyntaxErrors()) {
+			AbstractDiagnostic diagnostic = null;
+			final SyntaxErrorMessage syntaxErrorMessage = error.getSyntaxErrorMessage();
+			if (syntaxErrorMessage != null) {
+				String message = syntaxErrorMessage.getMessage();
+				// BUG 404438 "no viable alternative at input '<EOF>'" message is unhelpful.
+				if ((message != null) && message.contains(NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF)){
+					int index = message.indexOf(NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF);
+					if (index >= 0) {
+						String tokenText = NodeModelUtils.getTokenText(error);
+						if (tokenText != null) {
+							final String newMessage = message.substring(0, index) + NO_VIABLE_ALTERNATIVE_FOLLOWING + "'" + tokenText + "'" + message.substring(index+NO_VIABLE_ALTERNATIVE_AT_INPUT_EOF.length());
+							diagnostic = new RenamedDiagnostic(syntaxErrorMessage, error, newMessage);
+						}
+					}
+				}
+				/*	else if ((message != null) && message.contains(MISSING_EOF_AT)){
+					int index = message.indexOf(MISSING_EOF_AT);
+					if (index >= 0) {
+						String tokenText = NodeModelUtils.getTokenText(error);
+						if (tokenText != null) {
+							final String newMessage = message.substring(0, index) + NO_VIABLE_ALTERNATIVE_AT + message.substring(index+MISSING_EOF_AT.length());
+							diagnostic = new RenamedDiagnostic(syntaxErrorMessage, error, newMessage);
+						}
+					}
+				} */
+			}
+			if (diagnostic == null) {
+				diagnostic = new XtextSyntaxDiagnostic(error);
+			}
+			errors2.add(diagnostic);
+		}
+	}
+
+	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
+		URI uri = ClassUtil.nonNullState(getURI());
+		URI asURI = getASURI(uri);
+		if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
+			return new TransientASResource(asResourceSet, asURI);
+		}
+		ASResource asResource = (ASResource) asResourceSet.getResource(asURI, false);
+		if (asResource != null) {		// This happens for a *.ecore load for an OCLinEcore edit - see Bug 560196
+			return asResource;
+		}
+		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
+		if (asResource2 instanceof ASResource) {
+			((ASResource)asResource2).setSaveable(false);		// Revert AS Resources to not saveable
+		}
+		return (ASResource) asResource2;
+	}
+
+	@Override
+	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
+			@NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
+	}
+
+	@Override
+	public void createAndAddDiagnostic(Triple<EObject, EReference, INode> triple) {
+		if (isValidationDisabled())
+			return;
+		EObject context = triple.getFirst();
+		if (context instanceof ElementCS) {
+			if (!hasError((ElementCS)context)) {
+				super.createAndAddDiagnostic(triple);
+				setHasError((ElementCS)context);
+			}
+		}
+		else {
+			super.createAndAddDiagnostic(triple);
+		}
+	}
+
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
+	}
+
+	@Override
+	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+		return new EssentialOCLCS2AS(environmentFactory, this, asResource);
+	}
+
+	@Override			// FIXME Bug 380232 workaround
+	protected Diagnostic createDiagnostic(Triple<EObject, EReference, INode> triple, DiagnosticMessage message) {
+		EObject first = triple.getFirst();
+		if (first instanceof PathElementWithURICS) {
+			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
+		}
+		else {
+			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
+			{
+				@Override
+				public int getColumn() {
+					try {
+						return super.getColumn();
+					}
+					catch (Throwable e) {			// Older versions of Xtext give an NPE
+						return -1;
+					}
+				}
+			};
+		}
+	}
+
+	@Override
+	public void dispose() {
+		try {
+			Method method = getClass().getMethod("clearLazyProxyInformation");		// Xtext 2.7 method
+			if (method != null) {
+				method.invoke(this);
+			}
+		}
+		catch (Exception e) {}
+		CS2AS cs2as = findCS2AS();
+		if (cs2as != null) {
+			cs2as.dispose();
+		}
+		environmentFactory2parserContext = null;
+		//		unload();
+	}
+
+	@Override
+	protected void doLinking() {
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking start", false, +1);
+		List<Diagnostic> errors = getErrors();
+		if (errors.size() > 0) {
+			for (int i = errors.size(); --i >= 0; ) {
+				Diagnostic error = errors.get(i);
+				if (error instanceof LibraryDiagnostic) {
+					errors.remove(i);
+				}
+			}
+		}
+		try {
+			super.doLinking();
+		}
+		catch (Exception e) {
+			getErrors().add(new EnvironmentView.DiagnosticWrappedException(e));
+		}
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking end", false, -1);
+	}
+
+	@Override
+	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad start", false, +1);
+		try {
+			super.doLoad(inputStream, options);
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new Resource.IOWrappedException(e);
+		}
+		finally {
+			//			CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad end", true, -1);
+		}
+	}
+
+	@Override
+	public void doSave(final OutputStream outputStream, Map<?, ?> options) throws IOException {	// FIXME Workaround Bug 439440
+		try {
+			if ((options != null) && "\n".equals(options.get(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER)) && (outputStream != null)) {
+				super.doSave(new UnixOutputStream(outputStream), options);
+			}
+			else {
+				super.doSave(outputStream, options);
+			}
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new Resource.IOWrappedException(e);
+		}
+	}
+
 	@Override
 	public final @Nullable CS2AS findCS2AS() {
 		if (getResourceSet() == null) {			// e.g. when disposing
@@ -579,6 +568,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
 		CS2AS cs2as = null;
+		ParserContext parserContext = getParserContext();				// XXX
 		if (parserContext instanceof ExtendedParserContext) {			// Creates a UMLXCS2AS
 			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
 		}
@@ -618,7 +608,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
 			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
@@ -627,17 +618,28 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 			environmentFactory = getASResourceFactory().createEnvironmentFactory(projectManager);
 		}
-		return environmentFactory;
+		return environmentFactory; */
 	}
 
 	@Override
 	public final @NonNull ParserContext getParserContext() {		// FIXME only non-null for API compatibility
-		ParserContext parserContext2 = parserContext;
-		if (parserContext2 == null) {
-			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
-			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
+		WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext2 = environmentFactory2parserContext;
+		if (environmentFactory2parserContext2 != null) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				ParserContext parserContext = environmentFactory2parserContext2.get(environmentFactory);
+				if (parserContext != null) {
+					return parserContext;
+				}
+			}
 		}
-		return parserContext2;
+		else {
+			environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
+		}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		ParserContext parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
+		environmentFactory2parserContext2.put(environmentFactory, parserContext);
+		return parserContext;
 	}
 
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory()/getProjectManager() */
@@ -858,16 +860,50 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public final void setParserContext(@Nullable ParserContext parserContext) {
-		ParserContext parserContext2 = this.parserContext;
-		assert (parserContext == null) || (parserContext2 == null) || (parserContext2.getEnvironmentFactory() == parserContext.getEnvironmentFactory());
-		this.parserContext = parserContext;
+	public final void setParserContext(@Nullable ParserContext newParserContext) {
+		ParserContext oldParserContext = null;
+		WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext2 = environmentFactory2parserContext;
+		if (environmentFactory2parserContext2 != null) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				oldParserContext = environmentFactory2parserContext2.get(environmentFactory);
+			}
+		}
+		if (newParserContext != null) {
+			EnvironmentFactory newEnvironmentFactory = newParserContext.getEnvironmentFactory();
+			if (oldParserContext != null) {
+				assert environmentFactory2parserContext2 != null;
+				assert (oldParserContext.getEnvironmentFactory() == newEnvironmentFactory);
+			}
+			else {
+				if (environmentFactory2parserContext2 == null) {
+					environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
+				}
+			}
+			environmentFactory2parserContext2.put(newEnvironmentFactory, newParserContext);
+		}
+		else {
+			if (oldParserContext != null) {
+				assert environmentFactory2parserContext2 != null;
+				if (newParserContext == null) {
+					environmentFactory2parserContext2.remove(oldParserContext.getEnvironmentFactory());
+				}
+			}
+			else {
+				return;
+			}
+		}
 	}
 
 	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
 	@Override
 	public void setProjectManager(@Nullable ProjectManager projectMap) {
 		assert projectMap == getEnvironmentFactory().getProjectManager();
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
 	}
 
 	@Override
