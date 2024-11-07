@@ -156,7 +156,6 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		this.isQualified = isQualified;
 	}
 
-	@SuppressWarnings("deprecation")
 	protected @NonNull EnvironmentView createEnvironmentView(@Nullable String name) {
 		return new EnvironmentView(environmentFactory, targetReference, name);
 	}
@@ -259,8 +258,9 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 
 	@Override
 	public /*@NonNull*/ Iterable<IEObjectDescription> getElements(QualifiedName name) {
-		if (name == null)
+		if (name == null) {
 			throw new NullPointerException("name"); //$NON-NLS-1$
+		}
 		EnvironmentView environmentView = createEnvironmentView(name.toString());
 		int size = environmentView.computeLookups(this);
 		if (size <= 0) {

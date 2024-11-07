@@ -243,6 +243,7 @@ public class MonikerTests extends XtextTestCase
 		csResource.setURI(xmiOutputURI);
 		xmiResource.save(null);
 		assertNoResourceErrors("Saving CS as XMI", xmiResource);
+		ocl.dispose();
 
 		doCheckCSXMIReload(xmiOutputURI);
 	}

@@ -393,5 +393,4 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitResultVariable(this);
 	}
-
 } //ResultVariableImpl

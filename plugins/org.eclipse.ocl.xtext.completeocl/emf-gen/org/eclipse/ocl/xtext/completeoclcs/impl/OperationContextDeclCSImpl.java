@@ -219,8 +219,7 @@ public class OperationContextDeclCSImpl
 	@Override
 	public VariableCS getOwnedResult() {
 		if (ownedResult == null) {
-			VariableCS resultVariable = EssentialOCLCSFactory.eINSTANCE
-				.createVariableCS();
+			VariableCS resultVariable = EssentialOCLCSFactory.eINSTANCE.createVariableCS();
 			resultVariable.setName(PivotConstants.RESULT_NAME);
 			// FIXME			resultVariable.setType(getType());
 			setOwnedResult(resultVariable);

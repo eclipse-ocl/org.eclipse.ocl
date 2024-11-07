@@ -175,7 +175,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.postOrderVisitor = converter.createPostOrderVisitor(this);
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
 		this.optionalDefaultMultiplicity = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
-
 	}
 
 	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {

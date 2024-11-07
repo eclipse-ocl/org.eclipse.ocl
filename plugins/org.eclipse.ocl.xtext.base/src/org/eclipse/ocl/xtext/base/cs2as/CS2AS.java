@@ -699,10 +699,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);
-	//	AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
-	//	if (javaClassScope != null) {
-	//		javaClassScope.installContents(csResource);
-	//	}
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
