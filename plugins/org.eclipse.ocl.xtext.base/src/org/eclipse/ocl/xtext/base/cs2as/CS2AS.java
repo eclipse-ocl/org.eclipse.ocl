@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
@@ -588,7 +587,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		}
 		assert PivotUtilInternal.debugDeprecation("CS2AS.lookupSelf");			// never happens
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();				// The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
+		ParserContext parserContext = csResource.getParserContext();				// The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
 		EnvironmentView environmentView = new EnvironmentView((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
@@ -700,10 +699,10 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);
-		AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
-		if (javaClassScope != null) {
-			javaClassScope.installContents(csResource);
-		}
+	//	AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
+	//	if (javaClassScope != null) {
+	//		javaClassScope.installContents(csResource);
+	//	}
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);

@@ -26,6 +26,7 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
  */
 public abstract class AbstractJavaClassScope extends AbstractScope implements Adapter
 {
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
 	public static @Nullable AbstractJavaClassScope findAdapter(@NonNull CSResource csResource) {
 		return ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 	}
@@ -38,6 +39,7 @@ public abstract class AbstractJavaClassScope extends AbstractScope implements Ad
 
 	public abstract void addClassLoaders(@NonNull Iterable<@NonNull ClassLoader> classLoaders);
 
+	@Deprecated /* @deprecated not used */
 	public abstract void getAdapter(@NonNull CSResource importedResource);
 
 	@Override
@@ -45,6 +47,7 @@ public abstract class AbstractJavaClassScope extends AbstractScope implements Ad
 		return target;
 	}
 
+	@Deprecated /* @deprecated not used */
 	public abstract void installContents(@NonNull CSResource csResource);
 
 	@Override

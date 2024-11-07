@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
 import com.google.common.collect.Iterables;
 
@@ -276,8 +275,6 @@ public class OCLstdlibTests extends XtextTestCase
 		ResourceSet resourceSet = ocl.getResourceSet();
 		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
-		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
-		ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(libraryURI);
 		xtextResource.load(inputStream, null);
 		CS2AS cs2as = ClassUtil.nonNullState(xtextResource.findCS2AS());

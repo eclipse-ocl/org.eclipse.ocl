@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource.OCLCSResourceLoad;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource.OCLstdlibCSResourceLoadFactory;
 
 /**
@@ -181,7 +180,6 @@ public class MonikerTests extends XtextTestCase
 		URI pivotURI = getTestFileURI(pivotName);
 		URI xmiOutputURI = getTestFileURI(xmiName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
 		csResource.load(null);;
 		assertNoResourceErrors("Load failed", csResource);
 		assertNoUnresolvedProxies("Unresolved proxies", csResource);
