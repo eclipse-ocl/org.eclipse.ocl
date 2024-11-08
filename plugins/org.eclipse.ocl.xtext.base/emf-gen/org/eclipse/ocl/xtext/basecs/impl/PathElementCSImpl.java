@@ -156,7 +156,6 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public void setReferredElement(Element newReferredElement)
 	{
-		ASResourceImpl.PROXIES.println("setReferredElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newReferredElement));
 		Element oldReferredElement = referredElement;
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
@@ -361,7 +360,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
 			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
 		}
@@ -381,7 +380,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		}
 		if (s != null) {
 			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
-			ASResourceImpl.PROXIES.println(s.toString());
+			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
 		return resolvedProxy;
 	}

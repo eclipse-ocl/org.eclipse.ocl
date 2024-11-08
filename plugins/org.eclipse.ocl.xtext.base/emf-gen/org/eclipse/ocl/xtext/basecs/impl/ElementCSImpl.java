@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -225,7 +226,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	@Override
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
-		ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
 		super.eSetProxyURI(uri);
 	}
 
@@ -233,10 +234,10 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	public EObject eResolveProxy(InternalEObject proxy) {
 		URI eProxyURI = proxy.eProxyURI();
 		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
 			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + eProxyURI);
-			ASResourceImpl.PROXIES.println(s.toString());
+			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
 		if ((eProxyURI != null) && !eProxyURI.hasFragment()) {
 		    Resource resource = eResource().getResourceSet().getResource(eProxyURI, true);
