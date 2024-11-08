@@ -50,6 +50,7 @@ import org.osgi.framework.BundleReference;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * A JavaClassScope supports lookup of Java class names from the OCLstdlib editor. Names are resolved against
@@ -62,7 +63,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 {
 	public static boolean SUPPRESS_WORK_THREAD = false;		// Set true to avoid WorkerThread delay when testing
 
-	@Deprecated // XXX
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull ClassLoader classLoader) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -72,7 +73,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	@Deprecated // XXX
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -82,7 +83,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	@Deprecated // XXX
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull IProject project) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -98,16 +99,16 @@ public class JavaClassScope extends AbstractJavaClassScope
 	private final @NonNull List<@NonNull ClassLoader> classLoaders = new ArrayList<@NonNull ClassLoader>();
 
 	/**
-	 * IProject to help resolve references in an Eclipse context.
+	 * IProjects to help resolve references in an Eclipse context.
 	 */
-	private final @Nullable IProject project;
+	private @Nullable List<@NonNull IProject> projects;
 
 	/**
 	 * Map from known class names to their allocated EObjects.
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull JavaClassCS> name2class = new HashMap<@NonNull String, @NonNull JavaClassCS>();
 
-	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("xxx"));
+	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("JavaClassCS-instances"));
 
 	private boolean doneFullScan = false;
 
@@ -115,16 +116,16 @@ public class JavaClassScope extends AbstractJavaClassScope
 	@Deprecated
 	public JavaClassScope(@NonNull ClassLoader classLoader) {
 		this.classLoaders.add(classLoader);
-		this.project = null;
+		this.projects = null;
 	}
 
 	public JavaClassScope(@NonNull Iterable<@NonNull ClassLoader> classLoaders) {
-		this.project = null;
+		this.projects = null;
 		addClassLoaders(classLoaders);
 	}
 
 	public JavaClassScope(@NonNull IProject project) {
-		this.project = project;
+		this.projects = Lists.newArrayList(project);
 	}
 
 	@Override
@@ -133,6 +134,16 @@ public class JavaClassScope extends AbstractJavaClassScope
 			if (!this.classLoaders.contains(classLoader)) {
 				this.classLoaders.add(classLoader);
 			}
+		}
+	}
+
+	public void addProject(@NonNull IProject project) {
+		List<@NonNull IProject> projects2 = projects;
+		if (projects2 == null) {
+			projects = projects2 = new ArrayList<>();
+		}
+		if (!projects2.contains(project)) {
+			projects2.add(project);
 		}
 	}
 
@@ -150,12 +161,14 @@ public class JavaClassScope extends AbstractJavaClassScope
 				}
 			}
 		}
-		if (project != null) {
-			IJavaProject javaProject = JavaCore.create(project);
-			try {
-				IPackageFragmentRoot[] packageFragmentRoots = javaProject.getAllPackageFragmentRoots();
-				scanJavaElements(packageFragmentRoots, classNames);
-			} catch (JavaModelException e) {
+		if (projects != null) {
+			for (IProject project : projects) {
+				IJavaProject javaProject = JavaCore.create(project);
+				try {
+					IPackageFragmentRoot[] packageFragmentRoots = javaProject.getAllPackageFragmentRoots();
+					scanJavaElements(packageFragmentRoots, classNames);
+				} catch (JavaModelException e) {
+				}
 			}
 		}
 		//		else {
@@ -168,12 +181,15 @@ public class JavaClassScope extends AbstractJavaClassScope
 	}
 
 	@Override
+	@Deprecated /* @deprecated not used */
 	public void getAdapter(@NonNull CSResource importedResource) {
 		if (classLoaders.size() > 0) {
 			getAdapter(importedResource, classLoaders);
 		}
-		else if (project != null) {
-			getAdapter(importedResource, project);
+		else if (projects != null) {
+			for (IProject project : projects) {
+				getAdapter(importedResource, project);
+			}
 		}
 	}
 
@@ -283,13 +299,15 @@ public class JavaClassScope extends AbstractJavaClassScope
 					}
 				} catch (ClassNotFoundException e) {}
 			}
-			IProject project2 = project;
-			if (project2 != null) {
-				IJavaProject javaProject = JavaCore.create(project2);
-				try {
-					type = javaProject.findType(name);
-				} catch (JavaModelException e) {
-					return null;
+			if (projects != null) {
+				for (IProject project : projects) {
+					IJavaProject javaProject = JavaCore.create(project);
+					try {
+						type = javaProject.findType(name);
+						if (type != null) {
+							break;
+						}
+					} catch (JavaModelException e) {}
 				}
 			}
 			if ((loadClass == null) && (type == null)) {
@@ -300,6 +318,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	}
 
 	@Override
+	@Deprecated /* @deprecated not used */
 	public void installContents(@NonNull CSResource csResource) {}
 
 	protected @Nullable String resolveClassName(@NonNull String name) {
@@ -315,197 +334,6 @@ public class JavaClassScope extends AbstractJavaClassScope
 			return null;
 		}
 	}
-
-	/*	private void scanJar(@NonNull File file, @NonNull Set<String> classNames) {
-//		System.out.println("registerBundle " + file);
-		JarFile jarFile = null;
-		try {
-			jarFile = new JarFile(file);
-			for (Enumeration<JarEntry> jarEntries = jarFile.entries(); jarEntries.hasMoreElements(); ) {
-				JarEntry jarEntry = jarEntries.nextElement();
-				if (!jarEntry.isDirectory()) {
-					String name = jarEntry.getName();
-					if (name != null) {
-	//					System.out.println("     entry " + name);
-						String className = resolveClassName(name);
-						if (className != null) {
-							classNames.add(className);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-		} finally{
-			if (jarFile != null) {
-				try {
-					jarFile.close();
-				} catch (IOException e) {}
-			}
-		}
-
-	} */
-
-	/*	protected @Nullable IProjectDescriptor registerProject(@NonNull File file) {
-		System.out.println("registerProject " + file);
-		FileInputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(file);
-			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
-			String project = document.getDocumentElement().getElementsByTagName("name").item(0).getTextContent();
-			if (project != null) {
-				@SuppressWarnings("null")@NonNull URI locationURI = URI.createFileURI(file.getParentFile().getCanonicalPath() + File.separator);
-//				IProjectDescriptor projectDescriptor = createProjectDescriptor(project, locationURI);
-//				project2descriptor.put(project, projectDescriptor);
-				return null;
-			}
-		} catch (Exception e) {
-			logException("Couldn't read '" + file + "'", e);
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-				}
-			}
-		}
-		return null;
-	} */
-
-	/*	private void scanBundles(@NonNull Set<String> classNames) {
-		for (IBundleGroupProvider bundleGroupProvider : Platform.getBundleGroupProviders()) {
-			for (IBundleGroup bundleGroup : bundleGroupProvider.getBundleGroups()) {
-				for (Bundle bundle : bundleGroup.getBundles()) {
-					try {
-						String bundleName = bundle.getSymbolicName();
-						if (bundleName != null) {
-							String location = bundle.getLocation();
-	//						System.out.println(bundleName + " => " + location);
-							if (location.startsWith("reference:")) {
-								location = location.substring(10);
-							}
-							else {
-								logger.warn("Unknown bundle location " + location);
-							}
-						    java.net.URI locationURI = new java.net.URI(location);
-						    File file = URIUtil.toFile(locationURI);
-						    if (file != null) {
-								if (location.endsWith(".jar")) {
-									scanJar(file, classNames);
-								}
-								else {
-									scanFolder(file, classNames, "", bundleName);
-								}
-						    }
-						}
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	} */
-
-	/*	private void scanClassPath(@NonNull IClasspathEntry @NonNull [] resolvedClasspath, @NonNull Set<String> classNames) {
-//		String property = System.getProperty("java.class.path");
-//		String separator = System.getProperty("path.separator");
-//		if (property != null) {
-//			String[] entries = property.split(separator);
-//			for (String entry : entries) {
-		for (IClasspathEntry classpathEntry : resolvedClasspath) {
-			int entryKind = classpathEntry.getEntryKind();
-			if (entryKind == IClasspathEntry.CPE_SOURCE) {
-				IPath path = classpathEntry.getPath();
-				File fileEntry = path.toFile();
-				try {
-					File f = fileEntry.getCanonicalFile();
-					if (f.getPath().endsWith(".jar")) {
-						scanJar(f, classNames);
-					} else {
-						scanFolder(f, classNames, "", path.toString());
-//					}
-						// eclipse bin folder?
-/*						File parentFile = f.getParentFile();
-						File dotProject = new File(parentFile, ".project");
-						if (dotProject.exists()) {
-							IProjectDescriptor projectDescriptor = registerProject(dotProject);
-							if (projectDescriptor != null) {
-								File plugIn = new File(parentFile, "plugin.xml");
-								if (plugIn.exists()) {
-									PluginReader pluginReader = new PluginReader(projectDescriptor);
-									saxParser.parse(plugIn, pluginReader);
-									pluginReader.scanContents(saxParser);
-								}
-							}
-						} * /
-					}
-				} catch (Exception e) {}
-			}
-		}
-	} */
-
-	/*	protected boolean scanFolder(@NonNull File f, @NonNull Set<String> alreadyVisited, int depth) {
-		try {
-			if (!alreadyVisited.add(f.getCanonicalPath()))
-				return true;
-		} catch (Exception e) {
-			logException("Failed to scan '" + f + "'", e);
-			return true;
-		}
-		File[] files = f.listFiles();
-		boolean containsProject = false;
-		File dotProject = null;
-		if (files != null) {
-			for (File file : files) {
-				if (file.exists() && file.isDirectory() && (depth < 2) && !file.getName().startsWith(".")) {
-					containsProject |= scanFolder(file, alreadyVisited, depth + 1);
-				} else if (".project".equals(file.getName())) {
-					dotProject = file;
-				} else if (file.getName().endsWith(".jar")) {
-					scanJar(file);
-				}
-			}
-		}
-		if (!containsProject && dotProject != null)
-			registerProject(dotProject);
-		return containsProject || dotProject != null;
-	} */
-
-	/*	private void scanFolder(@NonNull File folder, @NonNull Set<String> classNames, @NonNull String prefix, @NonNull String bundle) {
-//		System.out.println("scanFolder " + folder);
-		File[] files = folder.listFiles();
-		if (files != null) {
-			for (File file : files) {
-				if (file.exists()) {
-					String name = file.getName();
-					if (name != null) {
-						int prefixLength = prefix.length();
-						if (file.isDirectory()) {
-							if ((prefixLength < 10000) && !file.getName().startsWith(".")) {
-								if (prefixLength > 0) {
-									scanFolder(file, classNames, prefix + "." + name, bundle);
-								}
-								else if (bundle.startsWith(name)) {
-									scanFolder(file, classNames, name, bundle);
-								}
-								else {		// Skip over output path
-									scanFolder(file, classNames, prefix, bundle);
-								}
-							}
-						}
-						else {
-//							System.out.println("     entry " + name);
-							String className = resolveClassName(name);
-							if (className != null) {
-								System.out.println("     entry " + prefix + "." + className);
-								classNames.add(prefix + "." + className);
-							}
-						}
-					}
-				}
-			}
-		}
-	} */
 
 	private void scanJavaElements(IJavaElement[] elements, Set<String> classNames) {
 		for (IJavaElement element : elements) {

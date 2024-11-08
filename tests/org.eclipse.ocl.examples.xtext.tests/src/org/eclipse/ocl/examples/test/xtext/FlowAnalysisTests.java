@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
 /**
  * Tests the isNull/isNotNull/isNotKnown results of the FlowAnalysis.
@@ -109,8 +108,6 @@ public class FlowAnalysisTests extends XtextTestCase
 			URI inputURI = getTestFileURI(inputName);
 			URI pivotURI = getTestFileURI(pivotName);
 			BaseCSResource xtextResource = (BaseCSResource) getResourceSet().createResource(inputURI);
-			JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
-		// XXX	getEnvironmentFactory().adapt(xtextResource);
 			xtextResource.load(null);
 			assertNoResourceErrors("Load failed", xtextResource);
 		//	CS2AS cs2as = xtextResource.findCS2AS();

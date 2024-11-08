@@ -13,19 +13,16 @@
  */
 package org.eclipse.ocl.xtext.oclstdlib.scoping;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
-import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
+import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.xtext.scoping.IScope;
 
@@ -50,25 +47,11 @@ public class OCLstdlibScopeProvider extends EssentialOCLScopeProvider
 		EClass eReferenceType = reference.getEReferenceType();
 		if (eReferenceType == OCLstdlibCSPackage.Literals.JAVA_CLASS_CS) {
 			if (csResource instanceof BaseCSResource) {
-				AbstractJavaClassScope adapter = JavaClassScope.findAdapter((BaseCSResource)csResource);
-				if (adapter == null) {
-					EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResource);
-					if (environmentFactoryAdapter == null) {
-						ResourceSet csResourceSet = csResource.getResourceSet();
-						if (csResourceSet != null) {
-							environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
-						}
-					}
-					List<@NonNull ClassLoader> classLoaders;
-					if (environmentFactoryAdapter != null) {
-						classLoaders = environmentFactoryAdapter.getMetamodelManager().getImplementationManager().getClassLoaders();
-					}
-					else {
-						classLoaders = Collections.emptyList();
-					}
-					adapter = JavaClassScope.getAdapter((BaseCSResource)csResource, classLoaders);
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context);
+				CS2AS cs2as = ((BaseCSResource)csResource).getCS2AS(environmentFactory);
+				if (cs2as instanceof OCLstdlibCS2AS) {
+					return ((OCLstdlibCS2AS)cs2as).getJavaClassScope();
 				}
-				return adapter;
 			}
 			return IScope.NULLSCOPE;
 		}

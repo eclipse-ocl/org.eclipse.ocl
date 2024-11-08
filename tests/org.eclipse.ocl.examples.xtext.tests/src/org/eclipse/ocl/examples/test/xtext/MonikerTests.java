@@ -180,8 +180,7 @@ public class MonikerTests extends XtextTestCase
 		URI pivotURI = getTestFileURI(pivotName);
 		URI xmiOutputURI = getTestFileURI(xmiName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-	//	JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
-		csResource.load(null);
+		csResource.load(null);;
 		assertNoResourceErrors("Load failed", csResource);
 		assertNoUnresolvedProxies("Unresolved proxies", csResource);
 		assertNoValidationErrors("CS validation problems", csResource);
