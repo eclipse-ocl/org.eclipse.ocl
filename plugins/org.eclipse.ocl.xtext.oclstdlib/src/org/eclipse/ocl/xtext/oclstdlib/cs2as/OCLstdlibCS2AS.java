@@ -98,6 +98,10 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 		return javaClassScope.getJavaClassCS(name);
 	}
 
+	public @NonNull JavaClassScope getJavaClassScope() {
+		return javaClassScope;
+	}
+
 	public @Nullable MetaclassNameCS getMetaclassNameCS(@NonNull String metaclassName) {
 		return metaTypeNames.get(metaclassName);
 	}
