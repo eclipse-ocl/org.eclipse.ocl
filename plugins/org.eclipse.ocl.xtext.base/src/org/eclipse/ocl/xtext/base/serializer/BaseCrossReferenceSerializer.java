@@ -75,6 +75,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			}
 		}
 
+		@Deprecated // not used
 		protected @Nullable String convert(List<String> segments, String ruleName) {
 			int iMax = segments.size();
 			String[] converted = new String[iMax];
@@ -184,7 +185,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 						Resource elementResource = namedElement.eResource();
 						if ((elementResource != csResource) && (elementResource != asResource)) {
 							AliasAnalysis adapter = AliasAnalysis.getAdapter(csResource);
-							String alias = adapter.getAlias(namedElement, null);
+							String alias = adapter.getKnownAlias(namedElement);
 							if (alias != null) {
 								name = alias;
 							}
