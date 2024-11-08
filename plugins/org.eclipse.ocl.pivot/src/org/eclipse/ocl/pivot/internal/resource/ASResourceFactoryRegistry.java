@@ -150,13 +150,6 @@ public class ASResourceFactoryRegistry
 	 * @since 1.10
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
-	//	assert PivotUtilInternal.debugDeprecation("ASResourceFactoryRegistry.createEnvironmentFactory");
-	//	if (csResourceSet != null) {
-	//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
-	//		if (environmentFactoryAdapter != null) {
-	//			return environmentFactoryAdapter.getEnvironmentFactory();
-	//		}
-	//	}
 		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
 	}
 
