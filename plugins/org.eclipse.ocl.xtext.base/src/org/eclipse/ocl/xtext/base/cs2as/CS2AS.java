@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
@@ -702,10 +701,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);
-		AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
-		if (javaClassScope != null) {
-			javaClassScope.installContents(csResource);
-		}
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
