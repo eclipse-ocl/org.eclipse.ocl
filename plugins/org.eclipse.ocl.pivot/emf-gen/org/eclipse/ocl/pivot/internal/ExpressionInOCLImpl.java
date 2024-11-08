@@ -539,9 +539,4 @@ public class ExpressionInOCLImpl
 	public String getLanguage() {
 		return PivotConstants.OCL_LANGUAGE;
 	}
-
-//	@Override
-//	public @Nullable Object getReloadableEObjectOrURI() {
-//		return null;
-//	}
 } //ExpressionInOCLImpl

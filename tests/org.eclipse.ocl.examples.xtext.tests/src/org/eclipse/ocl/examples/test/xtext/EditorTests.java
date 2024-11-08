@@ -312,8 +312,6 @@ public class EditorTests extends XtextTestCase
 
 	@Override
 	protected void setUp() throws Exception {
-	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
-	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUIUtil.suppressGitPrefixPopUp();
 		TestUIUtil.closeIntro();
 		super.setUp();
