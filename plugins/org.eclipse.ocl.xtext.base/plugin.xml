@@ -26,7 +26,6 @@
    </extension>
 
    <extension point="org.eclipse.core.contenttype.contentTypes">
-      <!-- @generated Pivot.merged -->
       <content-type
             base-type="org.eclipse.emf.ecore.xmi"
             file-extensions="oclcs"
