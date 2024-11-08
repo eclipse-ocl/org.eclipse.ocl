@@ -39,7 +39,6 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.as2cs.OCLinEcoreAS2CS;
 import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 /**
@@ -188,8 +187,6 @@ public class PivotTests extends XtextTestCase
 		URI output2URI = getTestFileURI(output2Name);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(inputURI);
-		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(null);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
 		assertNoResourceErrors("Load failed", xtextResource);

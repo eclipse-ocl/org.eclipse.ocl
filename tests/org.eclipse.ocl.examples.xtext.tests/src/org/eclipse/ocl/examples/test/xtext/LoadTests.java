@@ -96,7 +96,6 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.Complet
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
@@ -553,8 +552,6 @@ public class LoadTests extends XtextTestCase
 	}
 	protected BaseCSResource doLoad_Concrete1(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);

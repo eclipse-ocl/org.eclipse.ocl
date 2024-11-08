@@ -87,7 +87,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.PrefixExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.SquareBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
 public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 {
@@ -318,7 +317,6 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		URI libraryURI = getTestFileURI(fileName, inputStream);
 		@SuppressWarnings("null")@NonNull BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(libraryURI);
 		@SuppressWarnings("null")@NonNull ClassLoader classLoader = getClass().getClassLoader();
-		JavaClassScope.getAdapter(xtextResource, classLoader);
 		xtextResource.load(null);
 		Bag<String> actualErrorMessages = new BagImpl<String>();
 		for (Resource.Diagnostic actualError : xtextResource.getErrors()) {
