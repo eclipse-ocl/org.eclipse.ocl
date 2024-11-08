@@ -100,6 +100,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 		@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 	}
 
+	/**
+	 * Configure this as the EnvironmentFactory for the current thread.
+	 *
+	 * @since 1.23
+	 */
+	default void activate() {}
+
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
 	/**

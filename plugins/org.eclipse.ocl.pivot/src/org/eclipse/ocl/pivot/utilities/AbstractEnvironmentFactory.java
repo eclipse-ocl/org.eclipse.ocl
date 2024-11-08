@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -108,6 +109,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
 
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
+
 	/**
 	 * @since 1.23
 	 */
@@ -121,6 +124,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			System.out.println(s.toString());
 		}
 	}
+
+	/**
+	 * Leak debugging aid. Set non-null by AbstractPivotTestCase to diagnose EnvironmentFactory construction and finalization.
+	 *
+	 * @since 1.14
+	 */
+	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
+
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
@@ -147,7 +162,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Debug lust of the System.identityHashCode of each active owners of an attach
 	 *
-	 * System.identityHashCode avoids problmes with finalized attachOwners.
+	 * System.identityHashCode avoids problems with finalized attachOwners.
 	 */
 	private List<@NonNull Integer> attachOwners = new ArrayList<>();
 
@@ -162,20 +177,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * True once dispose() has started.
 	 */
 	private boolean isDisposing = false;
-
-	/**
-	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
-	 * Beware, stale EnvironmentFactory instances may live on beyond a test until GC catches up. To ensure
-	 * timely GC, set DEBUG_GC (and probably DEBUG_ID) true in the PivotTestCase static initialization.
-	 *
-	 * @since 1.14
-	 */
-	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
-
-	/**
-	 * @since 1.7
-	 */
-	public static int CONSTRUCTION_COUNT = 0;
 
 	@Deprecated /* @deprecated supply null asResourceSet argument */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
@@ -222,6 +223,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
+		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void activate() {
+		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
+		}
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
