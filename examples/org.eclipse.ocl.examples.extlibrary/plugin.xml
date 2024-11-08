@@ -25,7 +25,7 @@
 
    <extension point="org.eclipse.emf.ecore.content_parser">
       <parser
-            contentTypeIdentifier="extendedLibrary"
+            contentTypeIdentifier="org.eclipse.ocl.examples.extlibrary.extendedLibrary"
             class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
    </extension>
 
@@ -34,7 +34,7 @@
       <content-type
             base-type="org.eclipse.emf.ecore.xmi"
             file-extensions="extlibrary"
-            id="extendedLibrary"
+            id="org.eclipse.ocl.examples.extlibrary.extendedLibrary"
             name="%_UI_EXTLibrary_content_type"
             priority="normal">
          <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
@@ -43,4 +43,8 @@
          </describer>
       </content-type>
    </extension>
+
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes extension="extlibrary" type="text" />
+  </extension>
 </plugin>
