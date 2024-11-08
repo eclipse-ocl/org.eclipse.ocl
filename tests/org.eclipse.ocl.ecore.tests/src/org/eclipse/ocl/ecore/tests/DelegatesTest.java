@@ -79,9 +79,9 @@ import org.eclipse.ocl.ecore.delegate.ValidationBehavior;
 import org.eclipse.ocl.ecore.delegate.ValidationDelegate;
 import org.eclipse.ocl.ecore.opposites.DefaultOppositeEndFinder;
 import org.eclipse.ocl.ecore.opposites.EcoreEnvironmentFactoryWithHiddenOpposites;
-import org.eclipse.ocl.ecore.tests.extlibrary.EXTLibraryFactory;
-import org.eclipse.ocl.ecore.tests.extlibrary.EXTLibraryPackage;
-import org.eclipse.ocl.ecore.tests.extlibrary.Library;
+import org.eclipse.ocl.examples.extlibrary.EXTLibraryFactory;
+import org.eclipse.ocl.examples.extlibrary.EXTLibraryPackage;
+import org.eclipse.ocl.examples.extlibrary.Library;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.osgi.util.NLS;
 
