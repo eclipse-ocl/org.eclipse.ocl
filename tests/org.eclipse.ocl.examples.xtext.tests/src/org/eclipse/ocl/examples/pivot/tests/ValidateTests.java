@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -44,6 +46,8 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -95,6 +99,11 @@ public class ValidateTests extends AbstractValidateTests
 		return assertDiagnostics(prefix, resource, diagnostics, messages);
 	}
 
+	public static void assertLoggerText(@NonNull String expectedConsoleText) {
+		assertEquals(expectedConsoleText, TestCaseLogger.INSTANCE.get());
+		TestCaseLogger.INSTANCE.clear();
+	}
+
 	//	@Override
 	protected @NonNull TestOCL createTestOCL() {
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getTestName(), OCL.NO_PROJECTS, null);
@@ -135,9 +144,10 @@ public class ValidateTests extends AbstractValidateTests
 		//	Check EObjectValidator errors
 		//
 		ValidationRegistryAdapter.getAdapter(testResourceSet).put(overloadsPackage, EObjectValidator.INSTANCE);
-		checkValidationDiagnostics(testInstance, Diagnostic.ERROR);
-		ocl1.dispose();
+		checkValidationDiagnostics(testInstance, Diagnostic.OK);
 		ocl2.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	public void testValidate_Bug418551_ecore() throws IOException, InterruptedException {
@@ -260,7 +270,7 @@ public class ValidateTests extends AbstractValidateTests
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
-// XXX		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 1 for outer validation, 2 more for inner validations
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 0 - no longer used, 1 for outer validation, 2 more for inner validations
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations
 		ocl.dispose();
 	}
@@ -299,7 +309,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI oclURI = oclTestFile.getFileURI();
 		ocl.getResourceSet().getResource(oclURI, true);
 		try {
-			checkValidationDiagnostics(testPackage, Diagnostic.WARNING);
+			checkValidationDiagnostics(testPackage, Diagnostic.OK);
 			ocl.assertQueryFalse(testPackage, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testPackage, "isPrimeNumber(1)");
 			ocl.assertQueryTrue(testPackage, "isPrimeNumber(2)");
@@ -427,7 +437,7 @@ public class ValidateTests extends AbstractValidateTests
 			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 			EObject testInstance = eCreate(validatePackage, "MyNumber");
 			testResource.getContents().add(testInstance);
-			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance, Diagnostic.OK);
 			ocl.assertQueryFalse(testInstance, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(1)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(2)");
@@ -499,6 +509,8 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Validate_completeocl() throws IOException, InterruptedException {
+		TestCaseAppender.INSTANCE.uninstall();
+		TestCaseLogger.INSTANCE.install();
 		//
 		//	Create model
 		//
@@ -521,14 +533,17 @@ public class ValidateTests extends AbstractValidateTests
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
+		EObject testInstance1 = eCreate(validatePackage1, "Level3");
+		EObject testInstance2 = eCreate(validatePackage2, "Level3");
+		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
+		testResource.getContents().add(testInstance1);
+		testResource.getContents().add(testInstance2);
+		String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
+		String objectLabel1; // = LabelUtil.getLabel(testInstance1);
+		String objectLabel2; // = LabelUtil.getLabel(testInstance2);
+		String message1;
+		String message2;
 		try {
-			EObject testInstance1 = eCreate(validatePackage1, "Level3");
-			EObject testInstance2 = eCreate(validatePackage2, "Level3");
-			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
-			testResource.getContents().add(testInstance1);
-			testResource.getContents().add(testInstance2);
-			String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-			String objectLabel;
 			//
 			//	No errors
 			//
@@ -543,6 +558,10 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yy");
 			eSet(testInstance2, "l2b", "yy");
 			eSet(testInstance2, "l3", "yy");
+			objectLabel1 = LabelUtil.getLabel(testInstance1);
+			objectLabel2 = LabelUtil.getLabel(testInstance2);
+			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1, "The feature 'l1' is not a valid feature");
+			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2, "The feature 'l1' is not a valid feature");
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
 			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
@@ -559,13 +578,14 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yyy");
 			eSet(testInstance2, "l2b", "yyy");
 			eSet(testInstance2, "l3", "yyy");
-			objectLabel = LabelUtil.getLabel(testInstance1);
+			objectLabel1 = LabelUtil.getLabel(testInstance1);
+			objectLabel2 = LabelUtil.getLabel(testInstance2);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template, "Level1::L1_size", objectLabel),
-				StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
-				StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
-				StringUtil.bind(template, "Level3::L3_size", objectLabel));
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+				StringUtil.bind(template, "Level1::L1_size", objectLabel1),
+				StringUtil.bind(template, "Level2a::L2a_size", objectLabel1),
+				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
+				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
 			//	One CompleteOCl and one OCLinEcore
 			//
@@ -580,17 +600,21 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "bad");
 			eSet(testInstance2, "l2b", "ok");
 			eSet(testInstance2, "l3", "ok");
-			objectLabel = LabelUtil.getLabel(testInstance1);
+			objectLabel1 = LabelUtil.getLabel(testInstance1);
+			objectLabel2 = LabelUtil.getLabel(testInstance2);
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
-				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel),
-				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel));
-			objectLabel = LabelUtil.getLabel(testInstance2);
+				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel1),
+				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel1));
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3::ok", objectLabel));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3::ok", objectLabel2));
 		}
 		finally {
+			testResource.unload();
+			ocl0.activate();
 			ocl0.dispose();
+			ocl1.activate();
 			ocl1.dispose();
+			ocl2.activate();
 			ocl2.dispose();
 		}
 	}
@@ -637,6 +661,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
 				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library::lib::Book::b2")));
 			//		disposeResourceSet(resourceSet);
+			ocl.activate();
 			helper.dispose();
 		}
 		finally {
@@ -728,9 +753,10 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Create model
 		//
-		OCL ocl1 = createOCL();
-		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore"));
-		ocl1.getEnvironmentFactory().adapt(ecoreResource.getResourceSet());
+		OCL ocl = createOCL();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Validate.oclinecore"));
+		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(ecoreResource.getResourceSet());
+		assert (environmentFactoryAdapter != null) && (environmentFactoryAdapter.getEnvironmentFactory() == ocl.getEnvironmentFactory());		// redundant / consistency check
 		EPackage validatePackage = (EPackage) ecoreResource.getContents().get(0);
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
@@ -773,7 +799,7 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance, "l2b", "ok");
 			eSet(testInstance, "l3", "ok");
 			objectLabel = LabelUtil.getLabel(testInstance);
-			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance, Diagnostic.OK);
 			//
 			//	Just one error
 			//
@@ -786,7 +812,7 @@ public class ValidateTests extends AbstractValidateTests
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1_text", objectLabel));
 		} finally {
-			ocl1.dispose();
+			ocl.dispose();
 		}
 	}
 }
