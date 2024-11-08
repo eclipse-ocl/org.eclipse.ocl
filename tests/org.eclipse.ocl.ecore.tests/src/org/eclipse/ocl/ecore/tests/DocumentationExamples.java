@@ -36,11 +36,11 @@ import org.eclipse.ocl.ecore.OCL.Query;
 import org.eclipse.ocl.ecore.opposites.DefaultOppositeEndFinder;
 import org.eclipse.ocl.ecore.opposites.EcoreEnvironmentFactoryWithHiddenOpposites;
 import org.eclipse.ocl.ecore.opposites.OppositeEndFinder;
-import org.eclipse.ocl.ecore.tests.extlibrary.Book;
-import org.eclipse.ocl.ecore.tests.extlibrary.BookCategory;
-import org.eclipse.ocl.ecore.tests.extlibrary.EXTLibraryFactory;
-import org.eclipse.ocl.ecore.tests.extlibrary.EXTLibraryPackage;
-import org.eclipse.ocl.ecore.tests.extlibrary.Library;
+import org.eclipse.ocl.examples.extlibrary.Book;
+import org.eclipse.ocl.examples.extlibrary.BookCategory;
+import org.eclipse.ocl.examples.extlibrary.EXTLibraryFactory;
+import org.eclipse.ocl.examples.extlibrary.EXTLibraryPackage;
+import org.eclipse.ocl.examples.extlibrary.Library;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.helper.OCLHelper;
 
