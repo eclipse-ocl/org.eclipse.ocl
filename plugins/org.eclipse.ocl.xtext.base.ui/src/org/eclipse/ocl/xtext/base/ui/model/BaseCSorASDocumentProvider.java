@@ -321,7 +321,6 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	@Override
 	protected void loadResource(XtextResource resource, String document, String encoding) throws CoreException {
 		assert resource != null;
-		// XXX	getEnvironmentFactory().adapt(resource);
 		super.loadResource(resource, document, encoding);
 	}
 

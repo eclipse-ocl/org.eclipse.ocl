@@ -55,7 +55,6 @@ public class ErrorTests extends XtextTestCase
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
 			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test)", "iterate", "w, h; acc : String = ''| true"));
@@ -80,7 +79,6 @@ public class ErrorTests extends XtextTestCase
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
 			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "test::Test", "allInstances"));
