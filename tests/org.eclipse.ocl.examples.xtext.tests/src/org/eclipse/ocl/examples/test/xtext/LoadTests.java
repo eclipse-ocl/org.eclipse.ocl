@@ -96,7 +96,6 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.Complet
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
@@ -553,8 +552,6 @@ public class LoadTests extends XtextTestCase
 	}
 	protected BaseCSResource doLoad_Concrete1(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);
@@ -1297,12 +1294,9 @@ public class LoadTests extends XtextTestCase
 		URI oclFileURI = getTestFileURI("Bug582958.ocl", oclStream);
 		String testOCLasContents =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<!DOCTYPE pivot:Model [\n"
-				+ "<!ENTITY _0 \"Bug582958.ecore.oclas\">\n"
-				+ "]>\n"
 				+ "<pivot:Model xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:pivot=\"http://www.eclipse.org/ocl/2015/Pivot\"\n"
 				+ "    xsi:schemaLocation=\"http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage\" xmi:id=\"AAAAA\" name=\"Bug582958.ocl\" externalURI=\"platform:/resource/Bug582958/Bug582958.ocl\" xmiidVersion=\"1\">\n"
-				+ "  <ownedImports importedNamespace=\"pivot:Model &_0;#AAAAA\" xmiidVersion=\"1\"/>\n"
+				+ "  <ownedImports importedNamespace=\"pivot:Model Bug582958.ecore#/\" xmiidVersion=\"1\"/>\n"
 				+ "  <ownedPackages xmi:id=\"qHh3I\" name=\"p\" URI=\"p\"/>\n"
 				+ "</pivot:Model>\n";
 		InputStream oclasStream = new URIConverter.ReadableInputStream(testOCLasContents, "UTF-8");
