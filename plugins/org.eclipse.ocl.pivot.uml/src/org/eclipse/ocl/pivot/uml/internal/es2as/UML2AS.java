@@ -109,7 +109,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
-		UML2AS adapter = (UML2AS) findAdapter(resource, environmentFactory);
+		UML2AS adapter = (UML2AS) External2AS.findAdapter(resource, environmentFactory);
 		if (adapter == null) {
 			adapter = new Outer(resource, environmentFactory);
 		}
@@ -788,7 +788,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				for (int i = 0; i < importedResources2.size(); i++) {			// List may grow re-entrantly
 					Resource importedResource = importedResources2.get(i);
 					if (importedResource instanceof UMLResource) {
-						External2AS adapter = UML2AS.findAdapter(importedResource, environmentFactory);
+						External2AS adapter = External2AS.findAdapter(importedResource, environmentFactory);
 						if (adapter == null) {
 							Inner importedAdapter = new Inner(importedResource, this);
 							URI pivotURI = importedAdapter.createPivotURI();
