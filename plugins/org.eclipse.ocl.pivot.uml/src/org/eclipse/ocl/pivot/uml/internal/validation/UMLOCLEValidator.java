@@ -324,7 +324,7 @@ public class UMLOCLEValidator implements EValidator
 							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
 							environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 						}
-						External2AS external2as = UML2AS.findAdapter(umlResource, environmentFactory);
+						External2AS external2as = External2AS.findAdapter(umlResource, environmentFactory);
 						if (external2as == null) {
 							external2as = UML2AS.getAdapter(umlResource, environmentFactory);
 						}
