@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
@@ -75,6 +74,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -1140,7 +1140,7 @@ public class OCLinEcoreTablesUtils
 		if (ecoreResource == null) {
 			return null;
 		}
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+		External2AS ecore2as = External2AS.getAdapter(ecoreResource, environmentFactory);
 		return ecore2as.getCreated(org.eclipse.ocl.pivot.Package.class, ePackage);
 	}
 
