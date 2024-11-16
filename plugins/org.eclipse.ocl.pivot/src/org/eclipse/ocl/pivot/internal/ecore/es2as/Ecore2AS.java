@@ -99,7 +99,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @since 1.14
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		External2AS adapter = findAdapter(resource, environmentFactory);
+		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
 		Ecore2AS castAdapter = (Ecore2AS) adapter;
 		return castAdapter;
 	}
@@ -126,7 +126,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static boolean isEcore(@NonNull Resource resource) {
-		List<EObject> contents = resource.getContents();
+		List<@NonNull EObject> contents = resource.getContents();
 		for (EObject content : contents) {
 			if (content instanceof EPackage) {
 				return true;
@@ -162,7 +162,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource.getResourceSet());
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
 		if (ecoreResource == null) {
@@ -174,18 +174,19 @@ public class Ecore2AS extends AbstractExternal2AS
 		//
 		//		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		conversion.pivotModel = PivotUtil.createModel(ecoreASResource.getURI().toString());
+		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 
 		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
-			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
+			Map<@NonNull EObject, @Nullable String> ecoreAliasMap = ecoreAdapter.getAliasMap();
 			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(ecoreASResource);
-			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+			Map<@NonNull EObject, @Nullable String> pivotAliasMap = pivotAdapter.getAliasMap();
 			for (EObject eObject : ecoreAliasMap.keySet()) {
 				String alias = ecoreAliasMap.get(eObject);
 				Element element = conversion.newCreateMap.get(eObject);
+				assert element != null;
 				pivotAliasMap.put(element, alias);
 			}
 		}
@@ -220,7 +221,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * Mapping of source Ecore objects to their resulting pivot element in a previous conversion.
+	 * Mapping of source Ecore elements to their resulting pivot element in a previous conversion.
 	 */
 	private Map<@NonNull String, @NonNull Element> oldIdMap = null;
 
@@ -472,7 +473,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public @Nullable Resource getResource() {
+	public @NonNull Resource getResource() {
 		return ecoreResource;
 	}
 
@@ -1145,7 +1146,8 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * Define the loadableURI to be used to form the AS URI that is then used as part of the serialized XMI.
 	 */
-	public void setEcoreURI(URI ecoreURI) {
+	@Override
+	public void setEcoreURI(@NonNull URI ecoreURI) {
 		this.ecoreURI = ecoreURI;
 	}
 
@@ -1162,7 +1164,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
 		eDataTypes = new ArrayList<>();
-		boolean wasUpdating = asResource.setUpdating(true);
+		@SuppressWarnings("unused") boolean wasUpdating = asResource.setUpdating(true);
 		/*
 		 * Establish the declarations.
 		 */

@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -50,8 +49,8 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		MetamodelManagerInternal metamodelManagerInternal = (MetamodelManagerInternal)metamodelManager;
 		EnvironmentFactoryInternal environmentFactory = metamodelManagerInternal.getEnvironmentFactory();
 		Resource ecoreMetamodel = ClassUtil.nonNullEMF(eClassifier.eResource());
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, (EnvironmentFactoryInternal) metamodelManager.getEnvironmentFactory());
-		Type type = ecore2as.getCreated(Type.class, eClassifier);
+		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
+		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
 			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
 			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {

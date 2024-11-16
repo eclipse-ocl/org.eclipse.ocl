@@ -32,6 +32,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/es2as/AbstractExternal2AS.java" type="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="AbstractExternal2AS"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
         <filter id="404000815">
             <message_arguments>
@@ -113,6 +121,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="isDisposing()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/External2AS.java" type="org.eclipse.ocl.pivot.internal.utilities.External2AS">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.External2AS"/>
+                <message_argument value="setEcoreURI(URI)"/>
             </message_arguments>
         </filter>
     </resource>

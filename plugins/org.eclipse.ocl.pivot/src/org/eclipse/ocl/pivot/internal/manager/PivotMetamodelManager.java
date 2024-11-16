@@ -96,7 +96,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -771,9 +770,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (metamodel == null) {
 			return null;
 		}
-		External2AS es2as = Ecore2AS.findAdapter(metamodel, environmentFactory);
+		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);
 		if (es2as == null) {
-			es2as = Ecore2AS.getAdapter(metamodel, environmentFactory);
+			es2as = External2AS.getAdapter(metamodel, environmentFactory);
 		}
 		return es2as.getCreated(pivotClass, eObject);
 	}

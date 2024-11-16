@@ -121,7 +121,7 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		@Override
-		public @Nullable Resource getResource() {
+		public @NonNull Resource getResource() {
 			return ecoreResource;
 		}
 
@@ -421,6 +421,7 @@ public class AS2Ecore extends AbstractConversion
 			}
 			for (@NonNull Element pivotElement : createMap.keySet()) {
 				EObject eObject = createMap.get(pivotElement);
+				assert eObject != null;
 				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl) pivotElement;
 				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
 					pivotObjectImpl.setESObject(eObject);

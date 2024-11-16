@@ -19,19 +19,38 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
- * External2AS defines the common behaviour of an external (e.g. Ecore or UML) system to AS con version.
+ * External2AS defines the common behaviour of an external (e.g. Ecore or UML) system to AS conversion.
  */
 public interface External2AS
 {
+	/**
+	 * @since 1.23
+	 */
+	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {		// XXX not an Adapter
+		return environmentFactory.getMetamodelManager().getES2AS(resource);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull External2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		External2AS es2as = External2AS.findAdapter(resource, environmentFactory);
+		if (es2as == null) {
+			es2as = Ecore2AS.getAdapter(resource, environmentFactory);
+		}
+		return es2as;
+	}
+
 	void dispose();
 
 	/**
 	 * Return the AS model that results from this conversion.
 	 *
-	 * FIXME Only the asResource is a tually needed, and only by UML support.
+	 * FIXME Only the asResource is a actually needed, and only by UML support.
 	 */
 	@NonNull Model getASModel() throws ParserException;
 
@@ -48,10 +67,15 @@ public interface External2AS
 	/**
 	 * Return the external resource.
 	 */
-	@Nullable Resource getResource();
+	@NonNull Resource getResource();
 
 	/**
 	 * Return the URI of the external resource.
 	 */
 	@NonNull URI getURI();
+
+	/**
+	 * @since 1.23
+	 */
+	default void setEcoreURI(@NonNull URI uri) {}
 }
