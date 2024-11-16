@@ -99,7 +99,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @since 1.14
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		External2AS adapter = findAdapter(resource, environmentFactory);
+		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
 		Ecore2AS castAdapter = (Ecore2AS) adapter;
 		return castAdapter;
 	}

@@ -773,7 +773,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (metamodel == null) {
 			return null;
 		}
-		External2AS es2as = Ecore2AS.findAdapter(metamodel, environmentFactory);
+		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);
 		if (es2as == null) {
 			es2as = Ecore2AS.getAdapter(metamodel, environmentFactory);
 		}

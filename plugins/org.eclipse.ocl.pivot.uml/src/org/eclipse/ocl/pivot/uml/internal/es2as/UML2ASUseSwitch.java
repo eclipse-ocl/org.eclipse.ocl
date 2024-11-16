@@ -494,7 +494,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				if (pivotElement == null) {
 					Resource eResource = eObject.eResource();
 					if (eResource != null) {
-						External2AS adapter = UML2AS.findAdapter(eResource, environmentFactory);
+						External2AS adapter = External2AS.findAdapter(eResource, environmentFactory);
 						if (adapter != null) {
 							pivotElement = adapter.getCreated(pivotClass, eObject);
 						}
@@ -534,7 +534,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				if (pivotElement == null) {
 					Resource eResource = eObject.eResource();
 					if (eResource != null) {
-						External2AS adapter = UML2AS.findAdapter(eResource, environmentFactory);
+						External2AS adapter = External2AS.findAdapter(eResource, environmentFactory);
 						if (adapter != null) {
 							pivotElement = adapter.getCreated(pivotClass, eObject);
 						}
