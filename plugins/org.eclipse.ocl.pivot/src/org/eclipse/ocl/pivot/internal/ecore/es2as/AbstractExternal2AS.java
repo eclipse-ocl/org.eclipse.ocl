@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
+	@Deprecated /* @deprecated duplicates interface method. */
 	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		return External2AS.findAdapter(resource, environmentFactory);
 	}
