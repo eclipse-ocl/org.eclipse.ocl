@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
@@ -200,7 +199,7 @@ public class PivotUtilInternal //extends PivotUtil
 	public static Type findTypeOf(@NonNull MetamodelManagerInternal metamodelManager, @NonNull EClassifier eClass) {
 		Resource resource = eClass.eResource();
 		if (resource != null) {
-			External2AS adapter = Ecore2AS.findAdapter(resource, metamodelManager.getEnvironmentFactory());
+			External2AS adapter = External2AS.findAdapter(resource, metamodelManager.getEnvironmentFactory());
 			if (adapter != null) {
 				Type type = adapter.getCreated(Type.class, eClass);
 				if (type != null) {
