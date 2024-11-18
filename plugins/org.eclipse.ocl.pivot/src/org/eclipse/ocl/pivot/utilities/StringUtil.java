@@ -308,4 +308,15 @@ public class StringUtil
 		int nibble = value & 0xF;
 		return nibble2uchex[nibble];
 	}
+
+	/**
+	 * Return the whitespace trimmed string if the result is new-line-free, else a
+	 * multi-line string is returned untrimmed.
+	 *
+	 * @since 1.23
+	 */
+	public static @NonNull String trimSingleLineText(@NonNull String string) {
+		String trimmed = string.trim();
+		return trimmed.contains("\n") ? string : trimmed;
+	}
 }
