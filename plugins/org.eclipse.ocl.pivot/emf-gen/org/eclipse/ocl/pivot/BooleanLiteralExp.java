@@ -88,6 +88,9 @@ public interface BooleanLiteralExp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of a boolean Literal expression is the type Boolean.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsBoolean(DiagnosticChain diagnostics, Map<Object, Object> context);

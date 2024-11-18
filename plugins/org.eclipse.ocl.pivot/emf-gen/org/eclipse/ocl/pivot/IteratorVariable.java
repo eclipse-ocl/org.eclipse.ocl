@@ -30,6 +30,9 @@ public interface IteratorVariable extends Variable
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Iterator variable has no initializer.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateHasNoInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);

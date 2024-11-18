@@ -61,6 +61,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of the iterate is the type of the result variable.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsResultType(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -68,6 +71,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateUnsafeSourceCanNotBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -75,6 +81,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of the body expression must conform to the declared type of the result variable.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateBodyTypeConformsToResultType(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -82,6 +91,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A result variable must have an init expression.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateOneInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -89,6 +101,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not necessary when an iterator can be null.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateSafeIteratorIsRequired(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -96,6 +111,9 @@ public interface IterateExp extends LoopExp, ReferringElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not necessary when the source collection is null-free.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	@Override
