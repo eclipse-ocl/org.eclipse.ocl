@@ -60,6 +60,9 @@ public interface IntegerLiteralExp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of an integer Literal expression is the type Integer.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsInteger(DiagnosticChain diagnostics, Map<Object, Object> context);

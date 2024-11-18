@@ -128,6 +128,9 @@ extends CallExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateMatchingOrderedCollectionCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -151,6 +154,9 @@ extends CallExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Obsolete constraint replaced by SourceIsIterable.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateSourceIsCollection(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -166,6 +172,9 @@ extends CallExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The loop variable of an iterator expression has no init expression.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateNoInitializers(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -173,6 +182,9 @@ extends CallExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A not-Ordered Collection must have no co-iterators.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateNoNotOrderedCollectionCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context);
