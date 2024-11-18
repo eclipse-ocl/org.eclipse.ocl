@@ -221,13 +221,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	protected @Nullable EAnnotation copyConstraint(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint) {
+		EStructuralFeature eContainingFeature = pivotConstraint.eContainingFeature();
 		EAnnotation eAnnotation = delegateInstaller.createConstraintDelegate(eModelElement, pivotConstraint, context.getEcoreURI());
 		if (eAnnotation != null) {
-			if (eModelElement instanceof EOperation) {
-			//	AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
-			}
-			else {
+			if (!(eModelElement instanceof EOperation)) {
 				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
+			}
+			else if (eContainingFeature != PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+				AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
 			}
 		}
 		return eAnnotation;
