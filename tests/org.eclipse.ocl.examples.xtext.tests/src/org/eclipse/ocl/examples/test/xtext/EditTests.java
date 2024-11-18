@@ -698,7 +698,7 @@ public class EditTests extends XtextTestCase
 		Resource ecoreResource_recommented = getEcoreFromCS(ocl_recommented, testDocument_recommented, ecoreURI_recommented);
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		assertHasComments(ecoreResource_uncommented, new @NonNull String @NonNull []{});
-		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{" a comment "});
+		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{"a comment"});
 		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"*\nyet\nanother\ncomment\n"});
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();

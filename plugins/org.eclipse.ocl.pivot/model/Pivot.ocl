@@ -10,17 +10,17 @@ inv BooleanValued: ownedSpecification <> null and ownedSpecification.type <> nul
 inv UniqueName: true -- _'context'.ownedRule->excluding(self)->forAll(name <> self.name or stereotype <> self.stereotype)
 
 context DataType
-/**
+/*
  * A behavioral class must be distinctly named to avoid the risk of conformance loops.
  * FIXME relax this once CompleteClasses are eliminated.
  */
 inv BehavioralClassHasDistinctName: behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)
-/**
+/*
  * A behavioral class must be a PrimitiveType, specifically Integer or Real.
  * FIXME relax this once behavioralClass is re-typed to PrimitiveType..
  */
 inv BehavioralClassIsPrimitiveType: behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)
-/**
+/*
  * The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionaality., specifically Integer or Real.
  */
 inv BehavioralClassIsSuperClass: behavioralClass <> null implies superClasses->includes(behavioralClass)
@@ -34,12 +34,12 @@ def: allOwnedElements() : Set(Element) =
 
 --FIXME oclContainer() suspect on DomainElements
 --def: owner : Element = oclContainer()
-	/**
+	/*
 	 * Elements that must be owned must have an owner.
 	 */
 --	inv has_owner:
 --		mustBeOwned() implies owner->notEmpty() 
-	/**
+	/*
 	 * An element may not directly or indirectly own itself.
 	 */
 --	inv not_own_self:
@@ -55,7 +55,7 @@ def: allOwnedElements() : Set(Element) =
 --p.oclIsKindOf(self.oclType())
 
 context Type
-/**
+/*
  * Return the type to be used as the element type when this is flattened. For most types this is self.
  * For a CollectionType, it is the transitive element type.
  */
@@ -95,9 +95,9 @@ inv TypeIsNotInvalid : type <> OclInvalid
 
 context CallExp
 inv TypeIsNotInvalid : type <> OclInvalid
-/** Safe navigation is not necessary when the source collection is null-free. */
+/* Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
-/** Safe navigation is not supported when the source collection is a Map. */
+/* Safe navigation is not supported when the source collection is a Map. */
 inv SafeSourceCannotBeMap: isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)
 
 context IfExp
@@ -125,19 +125,19 @@ def: CompatibleBody(bodySpecification : ValueSpecification[1]) : Boolean[1] =
 ---ExpressionWFRs.ocl-----
 
 --context PropertyCallExp
-/** The type of the call expression is the type of the referred property. */
+/* The type of the call expression is the type of the referred property. */
 --inv TypeIsReferredPropertyType: type = referredProperty.type
 
 context BooleanLiteralExp
-/** The type of a boolean Literal expression is the type Boolean. */
+/* The type of a boolean Literal expression is the type Boolean. */
 inv TypeIsBoolean: self.type = Boolean
 
 context CollectionLiteralExp
-/** 'Collection' is an abstract class on the M1 level and has no M0 instances. */
+/* 'Collection' is an abstract class on the M1 level and has no M0 instances. */
 inv CollectionKindIsConcrete: kind <> CollectionKind::Collection
 
 context CollectionLiteralExp
-/** The type of a collection literal expression is determined by the collection kind selection and the common
+/* The type of a collection literal expression is determined by the collection kind selection and the common
 supertype of all elements. Note that the definition below defines only an upper bound on the elementType. The usage of
 the CollectionLiteralExp defines a lower bound. If the elementType is not explicitly specified, the elementType must be
 chosen to ensure the well-formedness of the elements of the CollectionLiteralExp and the usage of the
@@ -161,19 +161,19 @@ inv BagKindIsBag: kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)
 No additional well-formedness rules. */
 
 context CollectionItem
-/** The type of a CollectionItem is the type of the item expression. */
+/* The type of a CollectionItem is the type of the item expression. */
 inv TypeIsItemType: type = ownedItem.type
 
 --context CollectionRange
-/** The type of a CollectionRange is the common supertype of the expressions taking part in the range. */
+/* The type of a CollectionRange is the common supertype of the expressions taking part in the range. */
 --inv TypeIsCommonType: type = first.type.commonSuperType (last.type)
 
 context EnumLiteralExp
-/** The type of an enum Literal expression is the type of the referred literal. */
+/* The type of an enum Literal expression is the type of the referred literal. */
 inv TypeIsEnumerationType: self.type = referredLiteral?.owningEnumeration
 
 context IfExp
-/** The type of the condition of an if expression must be Boolean. */
+/* The type of the condition of an if expression must be Boolean. */
 inv ConditionTypeIsBoolean: self.ownedCondition.type = Boolean
 
 /* The type of the if expression is the most common supertype of the else and then expressions. */
@@ -181,7 +181,7 @@ inv ConditionTypeIsBoolean: self.ownedCondition.type = Boolean
 --inv TypeIsCommonType: self.type = thenExpression.type.commonSuperType(elseExpression.type)
 
 context IntegerLiteralExp
-/** The type of an integer Literal expression is the type Integer. */
+/* The type of an integer Literal expression is the type Integer. */
 inv TypeIsInteger: self.type = Integer
 
 context IteratorExp
@@ -191,7 +191,7 @@ inv AnyBodyTypeIsBoolean: true -- FIXME obsolete
 inv ClosureHasOneIterator: true -- FIXME obsolete
 
 context IteratorExp
-/** The collection type for an OrderedSet or a Sequence source type is OrderedSet.
+/* The collection type for an OrderedSet or a Sequence source type is OrderedSet.
  * For any other source the collection type is Set. */
 inv ClosureTypeIsUniqueCollection: name = 'closure' implies
 if ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then
@@ -202,16 +202,16 @@ endif
 
 context IteratorExp
 inv ClosureSourceElementTypeIsBodyElementType: true -- FIXME obsolete
-/** The result element type is the same as type of the body elements or element. */
+/* The result element type is the same as type of the body elements or element. */
 inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
 	let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in 
 	let iteratorType = ownedIterators->at(1).type in
 	bodyElementType?.conformsTo(iteratorType)
 
 context IteratorExp
-/** The element type is the same as the source element type. */
+/* The element type is the same as the source element type. */
 inv ClosureElementTypeIsSourceElementType:  true -- FIXME obsolete
-/** Each body element is assignable to the iterator. */
+/* Each body element is assignable to the iterator. */
 inv ClosureResultElementTypeIsIteratorType:
 	name = 'closure' implies
 		let resultElementType = type.oclAsType(CollectionType).elementType in 
@@ -230,12 +230,12 @@ type.oclIsKindOf(BagType)
 endif
 
 context IteratorExp
-/** The element type is the flattened type of the body elements. */
+/* The element type is the flattened type of the body elements. */
 inv CollectElementTypeIsFlattenedBodyType: name = 'collect' implies
 type.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()
 
 context IteratorExp
-/** The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag. */
+/* The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag. */
 inv SortedByIsOrderedIfSourceIsOrdered: name = 'sortedBy' implies
 if ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then
 type.oclIsKindOf(SequenceType)
@@ -244,98 +244,98 @@ type.oclIsKindOf(OrderedSetType)
 endif
 
 context IteratorExp
-/** The element type is the type of the body elements. */
+/* The element type is the type of the body elements. */
 inv SortedByElementTypeIsSourceElementType: name = 'sortedBy' implies
 type.oclAsType(CollectionType).elementType =
 ownedSource?.type.oclAsType(CollectionType).elementType
 
 context IterateExp
-/** The type of the iterate is the type of the result variable. */
+/* The type of the iterate is the type of the result variable. */
 inv TypeIsResultType: true -- FIXME obsolete
-/** The type of the body expression must conform to the declared type of the result variable. */
+/* The type of the body expression must conform to the declared type of the result variable. */
 inv BodyTypeConformsToResultType: true -- FIXME obsolete
-/** A result variable must have an init expression. */
+/* A result variable must have an init expression. */
 inv OneInitializer: true -- FIXME obsolete
 
 context LetExp
-/** The type of a Let expression is the type of the in expression. */
+/* The type of a Let expression is the type of the in expression. */
 inv TypeIsInType: type = ownedIn.type
-/** The nullity of a Let expression is the nullity of the in expression. */
+/* The nullity of a Let expression is the nullity of the in expression. */
 inv CompatibleNullityForIn: isRequired = ownedIn.isRequired
 
 context LetVariable
-/** Let variable has an initializer.*/
+/* Let variable has an initializer.*/
 inv HasInitializer: ownedInit <> null
-/** The type of a Let variable initializer expression conforms to the type of the Let variable. */
+/* The type of a Let variable initializer expression conforms to the type of the Let variable. */
 inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
-/** The nullity of a Let variable initializer expression is the nullity of the Let variable. */
+/* The nullity of a Let variable initializer expression is the nullity of the Let variable. */
 inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
 
-/** LiteralExp
+/* LiteralExp
 No additional well-formedness rules. */
 
 context LoopExp
-/** Obsolete constraint replaced by SourceIsIterable. */
+/* Obsolete constraint replaced by SourceIsIterable. */
 inv SourceIsCollection: true
-/** The type of the source expression must be a collection or map. */
+/* The type of the source expression must be a collection or map. */
 inv SourceIsIterable: ownedSource?.type.oclIsKindOf(IterableType)
-/** The loop variable of an iterator expression has no init expression. */
+/* The loop variable of an iterator expression has no init expression. */
 inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
-/** The loop variable of an iterator expression has no init expression. */
+/* The loop variable of an iterator expression has no init expression. */
 inv NoCoInitializers: self.ownedCoIterators?->forAll(ownedInit->isEmpty())
-/** A Map must have the no co-iterators or the same number of iterators and co-iterators. */
+/* A Map must have the no co-iterators or the same number of iterators and co-iterators. */
 inv MatchingMapCoIterators: ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())
-/** An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators. */
+/* An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators. */
 inv MatchingOrderedCollectionCoIterators: (ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())
-/** A not-Ordered Collection must have no co-iterators. */
+/* A not-Ordered Collection must have no co-iterators. */
 inv NoNotOrderedCollectionCoIterators: (ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()
 
 context IteratorExp
-/** The type of each collection iterator variable must be the type of the elements of the source collection. */
+/* The type of each collection iterator variable must be the type of the elements of the source collection. */
 inv IteratorTypeIsSourceElementType: let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies
     let sourceElementType = sourceType.oclAsType(CollectionType).elementType in
     self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))
-/** The type of each map iterator variable must be the type of the keys of the source map. */
+/* The type of each map iterator variable must be the type of the keys of the source map. */
 inv IteratorTypeIsSourceKeyType: let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies
     let sourceKeyType = sourceType.oclAsType(MapType).keyType in
     self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))
-/** Safe navigation is not necessary when the source collection is null-free. */
+/* Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
-/** Safe navigation is not necessary when an iterator can be null. */
+/* Safe navigation is not necessary when an iterator can be null. */
 inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
-/** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
+/* Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
 inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 
 context IterateExp
-/** Safe navigation is not necessary when the source collection is null-free. */
+/* Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
-/** Safe navigation is not necessary when an iterator can be null. */
+/* Safe navigation is not necessary when an iterator can be null. */
 inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
-/** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
+/* Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
 inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 
 context IteratorVariable
-/** Iterator variable has no initializer.*/
+/* Iterator variable has no initializer.*/
 inv HasNoInitializer: ownedInit = null
 
-/** FeatureCallExp
+/* FeatureCallExp
 No additional well-formedness rules. */
 
-/** NumericLiteralExp
+/* NumericLiteralExp
 No additional well-formedness rules. */
 
-/** OCLExpression
+/* OCLExpression
 No additional well-formedness rules. */
 --context MessageExp
-/** If the message is an operation call action, the arguments must conform to the parameters of the operation. */
+/* If the message is an operation call action, the arguments must conform to the parameters of the operation. */
 --inv: calledOperation->notEmpty() implies
 --argument->forAll (a | a.type.conformsTo
 --(self.calledOperation.operation.ownedParameter->
@@ -343,14 +343,14 @@ No additional well-formedness rules. */
 --->at (argument->indexOf (a)).type))
 
 --context MessageExp
-/** If the message is a send signal action, the arguments must conform to the attributes of the signal. */
+/* If the message is a send signal action, the arguments must conform to the attributes of the signal. */
 --inv: sentSignal->notEmpty() implies
 --argument->forAll (a | a.type.conformsTo
 --(self.sentSignal.signal.ownedAttribute
 --->at (argument->indexOf (a)).type))
 
 --context MessageExp
-/** If the message is a call operation action, the operation must be an operation of the type of the target expression. */
+/* If the message is a call operation action, the operation must be an operation of the type of the target expression. */
 --inv: calledOperation->notEmpty() implies
 --target.type.allOperations()->includes(calledOperation.operation)
 
@@ -359,16 +359,16 @@ No additional well-formedness rules. */
 --inv TypeIsNotInvalid : type <> OclInvalid
 
 context MessageExp
-/** An OCL message has either a called operation or a sent signal. */
+/* An OCL message has either a called operation or a sent signal. */
 inv OneCallOrOneSend: ownedCalledOperation->size() + ownedSentSignal->size() = 1
 
 context MessageExp
-/** The target of an OCL message cannot be a collection. */
+/* The target of an OCL message cannot be a collection. */
 inv TargetIsNotACollection: not ownedTarget.type.oclIsKindOf(CollectionType)
 
 /*------------- spelling: arguments */
 context OperationCallExp
-/** All the arguments must conform to the parameters of the referred operation. */
+/* All the arguments must conform to the parameters of the referred operation. */
 inv ArgumentTypeIsConformant:
 	let operation : Operation = self.referredOperation in
 	let parameters : OrderedSet(Parameter) = operation?.ownedParameters in
@@ -383,11 +383,11 @@ inv ArgumentTypeIsConformant:
 /*------------- spelling: arguments */
 context OperationCallExp
 def: hasOclVoidOverload() : Boolean[1] = false -- extended in Java code
-/** There must be exactly as many arguments as the referred operation has parameters. */
+/* There must be exactly as many arguments as the referred operation has parameters. */
 inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters?->size()
-/** Safe navigation is not necessary when the source cannot be null. */
+/* Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
-/** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
+/* Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
 inv UnsafeSourceCanNotBeNull: (not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())
 
 --inv StaticSourceIsNull: referredOperation.isStatic implies source = null
@@ -397,42 +397,42 @@ inv UnsafeSourceCanNotBeNull: (not hasOclVoidOverload()) implies ((ownedSource <
 
 
 --context OperationCallExp
-/** An additional attribute refParams lists all parameters of the referred operation except the return and out parameter(s). */
+/* An additional attribute refParams lists all parameters of the referred operation except the return and out parameter(s). */
 --def: refParams: Sequence(Parameter) = referredOperation.ownedParameter->select (p |
 --p.kind <> ParameterDirectionKind::return or
 --p.kind <> ParameterDirectionKind::out)
 
 context OppositePropertyCallExp
-/** Safe navigation is not necessary when the source cannot be null. */
+/* Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
-/** Safe navigation is necessary when the source could be null. */
+/* Safe navigation is necessary when the source could be null. */
 inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource.isNonNull()
 
 context ParameterVariable
-/** Parameter variable has no initializer.*/
+/* Parameter variable has no initializer.*/
 inv HasNoInitializer: ownedInit = null
 
 context PropertyCallExp
 def: getSpecializedReferredPropertyOwningType() : Class = referredProperty?.owningClass -- extended in Java code
 def: getSpecializedReferredPropertyType() : Class = referredProperty?.type.oclAsType(Class) -- extended in Java code
-/** The type of the source conforms to the owning type of the property. */
+/* The type of the source conforms to the owning type of the property. */
 inv NonStaticSourceTypeIsConformant: not referredProperty?.isStatic implies 
 	ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())
-/** The type of the call expression is the type of the referred property. */
+/* The type of the call expression is the type of the referred property. */
 inv CompatibleResultType: type = getSpecializedReferredPropertyType()
-/** Safe navigation is not necessary when the source cannot be null. */
+/* Safe navigation is not necessary when the source cannot be null. */
 inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
-/** Safe navigation is necessary when the source could be null. */
+/* Safe navigation is necessary when the source could be null. */
 inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource.isNonNull()
 
 --inv StaticSourceIsNull: referredProperty.isStatic implies source.oclAsType(Type).conformsTo(getSpecializedReferredPropertyOwningType())
 
 context ResultVariable
-/** Result variable has an initializer.*/
+/* Result variable has an initializer.*/
 inv HasInitializer: ownedInit <> null
-/** The type of a Result variable initializer expression conforms to the type of the Result variable. */
+/* The type of a Result variable initializer expression conforms to the type of the Result variable. */
 inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
-/** A nullable expression cannot initialize a not-nullable Result variable. */
+/* A nullable expression cannot initialize a not-nullable Result variable. */
 inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isRequired
 
 --context Class
