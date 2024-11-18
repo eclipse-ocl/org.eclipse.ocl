@@ -224,7 +224,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		EAnnotation eAnnotation = delegateInstaller.createConstraintDelegate(eModelElement, pivotConstraint, context.getEcoreURI());
 		if (eAnnotation != null) {
 			if (eModelElement instanceof EOperation) {
-				AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
+			//	AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
 			}
 			else {
 				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
