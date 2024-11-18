@@ -35,8 +35,10 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 *
 	 * Return the type to be used as the element type when this is flattened. For most types this is self.
 	 * For a CollectionType, it is the transitive element type.
+	 *
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */

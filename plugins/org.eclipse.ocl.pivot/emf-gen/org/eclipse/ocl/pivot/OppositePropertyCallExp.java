@@ -60,6 +60,9 @@ public interface OppositePropertyCallExp extends NavigationCallExp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not necessary when the source cannot be null.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	@Override
@@ -68,6 +71,9 @@ public interface OppositePropertyCallExp extends NavigationCallExp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is necessary when the source could be null.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateUnsafeSourceCanNotBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);

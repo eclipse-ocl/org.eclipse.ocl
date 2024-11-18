@@ -130,7 +130,10 @@
       eSuperTypes="#T-pivot-PrimitiveLiteralExp">
     <eOperations name="validateTypeIsBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.type = Boolean&#xA;&#xA;"/>
+        <details key="body" value="self.type = Boolean"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a boolean Literal expression is the type Boolean."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsBoolean"/>
@@ -152,7 +155,10 @@
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
+        <details key="body" value="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source collection is null-free."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -167,7 +173,10 @@
     </eOperations>
     <eOperations name="validateSafeSourceCannotBeMap" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies let sourceType = ownedSource?.type in sourceType &lt;> null implies not sourceType.oclIsKindOf(MapType)&#xA;&#xA;"/>
+        <details key="body" value="isSafe implies let sourceType = ownedSource?.type in sourceType &lt;> null implies not sourceType.oclIsKindOf(MapType)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not supported when the source collection is a Map."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCannotBeMap"/>
@@ -182,7 +191,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -213,7 +222,7 @@
     </eAnnotations>
     <eOperations name="validateNameIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name &lt;> null&#xA;"/>
+        <details key="body" value="name &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NameIsNotNull"/>
@@ -228,7 +237,7 @@
     </eOperations>
     <eOperations name="validateUniqueInvariantName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInvariants->isUnique(name)&#xA;&#xA;"/>
+        <details key="body" value="ownedInvariants->isUnique(name)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UniqueInvariantName"/>
@@ -293,7 +302,10 @@
       eSuperTypes="#T-pivot-CollectionLiteralPart">
     <eOperations name="validateTypeIsItemType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type = ownedItem.type&#xA;&#xA;"/>
+        <details key="body" value="type = ownedItem.type"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a CollectionItem is the type of the item expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsItemType"/>
@@ -313,7 +325,7 @@
       eSuperTypes="#T-pivot-LiteralExp">
     <eOperations name="validateBagKindIsBag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)&#xA;"/>
+        <details key="body" value="kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BagKindIsBag"/>
@@ -328,7 +340,10 @@
     </eOperations>
     <eOperations name="validateCollectionKindIsConcrete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="kind &lt;> CollectionKind::Collection&#xA;&#xA;"/>
+        <details key="body" value="kind &lt;> CollectionKind::Collection"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="'Collection' is an abstract class on the M1 level and has no M0 instances."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CollectionKindIsConcrete"/>
@@ -343,7 +358,7 @@
     </eOperations>
     <eOperations name="validateOrderedSetKindIsOrderedSet" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)&#xA;"/>
+        <details key="body" value="kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="OrderedSetKindIsOrderedSet"/>
@@ -358,7 +373,7 @@
     </eOperations>
     <eOperations name="validateSequenceKindIsSequence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)&#xA;"/>
+        <details key="body" value="kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SequenceKindIsSequence"/>
@@ -373,7 +388,10 @@
     </eOperations>
     <eOperations name="validateSetKindIsSet" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="kind = CollectionKind::Set implies type.oclIsKindOf(SetType)&#xA;"/>
+        <details key="body" value="kind = CollectionKind::Set implies type.oclIsKindOf(SetType)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a collection literal expression is determined by the collection kind selection and the common&#xA;supertype of all elements. Note that the definition below defines only an upper bound on the elementType. The usage of&#xA;the CollectionLiteralExp defines a lower bound. If the elementType is not explicitly specified, the elementType must be&#xA;chosen to ensure the well-formedness of the elements of the CollectionLiteralExp and the usage of the&#xA;CollectionLiteralExp.&#xA;&#xA;For instance in&#xA;acc : Set(Real) = Set{1}->excluding(-1)&#xA;Set{1} is well formed for any type Set(T) where T ≤ UnlimitedNatural. Well-formedness of the excluding operation call&#xA;requires T ≤ Integer, and well-formedness of the initializer requires Real ≤ T. The overall expression is therefore only&#xA;well-formed if Real ≤ T ≤ Integer. Either Set(Real) or Set(Integer) are well-formed. The most general type, Set(Real), is&#xA;recommended since it minimizes type conversions and can often be easily deduced by considering the result type.&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SetKindIsSet"/>
@@ -395,7 +413,7 @@
       abstract="true" eSuperTypes="#T-pivot-TypedElement">
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -532,7 +550,7 @@
     </eAnnotations>
     <eOperations name="validateBooleanValued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSpecification &lt;> null and ownedSpecification.type &lt;> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid&#xA;"/>
+        <details key="body" value="ownedSpecification &lt;> null and ownedSpecification.type &lt;> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BooleanValued"/>
@@ -547,7 +565,7 @@
     </eOperations>
     <eOperations name="validateUniqueName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UniqueName"/>
@@ -596,7 +614,10 @@
     </eAnnotations>
     <eOperations name="validateBehavioralClassHasDistinctName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="behavioralClass &lt;> null implies superClasses->closure(superClasses)->forAll(b | b.name &lt;> name)&#xA;"/>
+        <details key="body" value="behavioralClass &lt;> null implies superClasses->closure(superClasses)->forAll(b | b.name &lt;> name)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;A behavioral class must be distinctly named to avoid the risk of conformance loops.&#xA;FIXME relax this once CompleteClasses are eliminated.&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BehavioralClassHasDistinctName"/>
@@ -611,7 +632,10 @@
     </eOperations>
     <eOperations name="validateBehavioralClassIsPrimitiveType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="behavioralClass &lt;> null implies behavioralClass.oclIsKindOf(PrimitiveType)&#xA;"/>
+        <details key="body" value="behavioralClass &lt;> null implies behavioralClass.oclIsKindOf(PrimitiveType)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;A behavioral class must be a PrimitiveType, specifically Integer or Real.&#xA;FIXME relax this once behavioralClass is re-typed to PrimitiveType..&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BehavioralClassIsPrimitiveType"/>
@@ -626,7 +650,10 @@
     </eOperations>
     <eOperations name="validateBehavioralClassIsSuperClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="behavioralClass &lt;> null implies superClasses->includes(behavioralClass)&#xA;&#xA;"/>
+        <details key="body" value="behavioralClass &lt;> null implies superClasses->includes(behavioralClass)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionaality., specifically Integer or Real.&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BehavioralClassIsSuperClass"/>
@@ -687,7 +714,7 @@
     </eAnnotations>
     <eOperations name="allOwnedElements" ordered="false" upperBound="-1" eType="#T-pivot-Element">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;"/>
+        <details key="body" value="self->closure(oclContents()->selectByKind(Element))"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element."/>
@@ -695,7 +722,7 @@
     </eOperations>
     <eOperations name="getValue" eType="#T-pivot-Element">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="null&#xA;&#xA;"/>
+        <details key="body" value="null"/>
       </eAnnotations>
       <eParameters name="stereotype" lowerBound="1" eType="#T-pivot-Type"/>
       <eParameters name="propertyName" lowerBound="1" eType="#T-pivot-String"/>
@@ -740,7 +767,10 @@
       eSuperTypes="#T-pivot-LiteralExp">
     <eOperations name="validateTypeIsEnumerationType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.type = referredLiteral?.owningEnumeration&#xA;&#xA;"/>
+        <details key="body" value="self.type = referredLiteral?.owningEnumeration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of an enum Literal expression is the type of the referred literal."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsEnumerationType"/>
@@ -803,7 +833,7 @@
     </eAnnotations>
     <eOperations name="validateNameIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name &lt;> null&#xA;"/>
+        <details key="body" value="name &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NameIsNotNull"/>
@@ -818,7 +848,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -833,7 +863,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> null&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotNull"/>
@@ -871,7 +901,10 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IfExp" name="IfExp" eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateConditionTypeIsBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedCondition.type = Boolean&#xA;&#xA;"/>
+        <details key="body" value="self.ownedCondition.type = Boolean"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the condition of an if expression must be Boolean."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ConditionTypeIsBoolean"/>
@@ -886,7 +919,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -949,7 +982,10 @@
       eSuperTypes="#T-pivot-NumericLiteralExp">
     <eOperations name="validateTypeIsInteger" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.type = Integer&#xA;&#xA;"/>
+        <details key="body" value="self.type = Integer"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of an integer Literal expression is the type Integer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsInteger"/>
@@ -975,7 +1011,10 @@
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateBodyTypeConformsToResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the body expression must conform to the declared type of the result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="BodyTypeConformsToResultType"/>
@@ -990,7 +1029,10 @@
     </eOperations>
     <eOperations name="validateOneInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A result variable must have an init expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="OneInitializer"/>
@@ -1005,7 +1047,10 @@
     </eOperations>
     <eOperations name="validateSafeIteratorIsRequired" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies ownedIterators->forAll(isRequired)&#xA;"/>
+        <details key="body" value="isSafe implies ownedIterators->forAll(isRequired)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when an iterator can be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeIteratorIsRequired"/>
@@ -1022,6 +1067,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="isSafe implies not&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source collection is null-free."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
       </eAnnotations>
@@ -1035,7 +1083,10 @@
     </eOperations>
     <eOperations name="validateTypeIsResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the iterate is the type of the result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsResultType"/>
@@ -1051,6 +1102,9 @@
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -1077,7 +1131,7 @@
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateAnyBodyTypeIsBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyBodyTypeIsBoolean"/>
@@ -1092,7 +1146,7 @@
     </eOperations>
     <eOperations name="validateAnyHasOneIterator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyHasOneIterator"/>
@@ -1107,7 +1161,7 @@
     </eOperations>
     <eOperations name="validateAnyTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyTypeIsSourceElementType"/>
@@ -1124,6 +1178,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType?.conformsTo(iteratorType)&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The result element type is the same as type of the body elements or element."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyElementTypeIsIteratorType"/>
       </eAnnotations>
@@ -1137,7 +1194,7 @@
     </eOperations>
     <eOperations name="validateClosureBodyTypeIsConformanttoIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyTypeIsConformanttoIteratorType"/>
@@ -1152,7 +1209,10 @@
     </eOperations>
     <eOperations name="validateClosureElementTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value=" true "/>
+        <details key="body" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The element type is the same as the source element type."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureElementTypeIsSourceElementType"/>
@@ -1167,7 +1227,7 @@
     </eOperations>
     <eOperations name="validateClosureHasOneIterator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureHasOneIterator"/>
@@ -1184,6 +1244,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType?.conformsTo(resultElementType)&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Each body element is assignable to the iterator."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureResultElementTypeIsIteratorType"/>
       </eAnnotations>
@@ -1197,7 +1260,7 @@
     </eOperations>
     <eOperations name="validateClosureSourceElementTypeIsBodyElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureSourceElementTypeIsBodyElementType"/>
@@ -1214,6 +1277,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'closure' implies&#xA;if ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then&#xA;type.oclIsKindOf(OrderedSetType)&#xA;else&#xA;type.oclIsKindOf(SetType)&#xA;endif&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The collection type for an OrderedSet or a Sequence source type is OrderedSet.&#xA;For any other source the collection type is Set."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureTypeIsUniqueCollection"/>
       </eAnnotations>
@@ -1228,6 +1294,9 @@
     <eOperations name="validateCollectElementTypeIsFlattenedBodyType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'collect' implies&#xA;type.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The element type is the flattened type of the body elements."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CollectElementTypeIsFlattenedBodyType"/>
@@ -1244,6 +1313,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'collect' implies&#xA;if ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then&#xA;type.oclIsKindOf(SequenceType)&#xA;else&#xA;type.oclIsKindOf(BagType)&#xA;endif&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The collection type for an OrderedSet or a Sequence type is a Sequence,&#xA;the result type for any other collection type is a Bag.&#xA;"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CollectTypeIsUnordered"/>
       </eAnnotations>
@@ -1258,6 +1330,9 @@
     <eOperations name="validateIteratorTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies&#xA;    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in&#xA;    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of each collection iterator variable must be the type of the elements of the source collection."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="IteratorTypeIsSourceElementType"/>
@@ -1274,6 +1349,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies&#xA;    let sourceKeyType = sourceType.oclAsType(MapType).keyType in&#xA;    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of each map iterator variable must be the type of the keys of the source map."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="IteratorTypeIsSourceKeyType"/>
       </eAnnotations>
@@ -1287,7 +1365,10 @@
     </eOperations>
     <eOperations name="validateSafeIteratorIsRequired" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isSafe implies ownedIterators->forAll(isRequired)&#xA;"/>
+        <details key="body" value="isSafe implies ownedIterators->forAll(isRequired)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when an iterator can be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeIteratorIsRequired"/>
@@ -1304,6 +1385,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="isSafe implies not&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source collection is null-free."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
       </eAnnotations>
@@ -1318,6 +1402,9 @@
     <eOperations name="validateSortedByElementTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'sortedBy' implies&#xA;type.oclAsType(CollectionType).elementType =&#xA;ownedSource?.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The element type is the type of the body elements."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SortedByElementTypeIsSourceElementType"/>
@@ -1334,6 +1421,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="name = 'sortedBy' implies&#xA;if ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then&#xA;type.oclIsKindOf(SequenceType)&#xA;else&#xA;type.oclIsKindOf(OrderedSetType)&#xA;endif&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SortedByIsOrderedIfSourceIsOrdered"/>
       </eAnnotations>
@@ -1347,7 +1437,7 @@
     </eOperations>
     <eOperations name="validateSortedByIteratorTypeIsComparable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;true&#xA;&#xA;"/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SortedByIteratorTypeIsComparable"/>
@@ -1363,6 +1453,9 @@
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -1380,7 +1473,10 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateHasNoInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit = null&#xA;&#xA;"/>
+        <details key="body" value="ownedInit = null"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Iterator variable has no initializer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="HasNoInitializer"/>
@@ -1416,7 +1512,10 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LetExp" name="LetExp" eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateCompatibleNullityForIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isRequired = ownedIn.isRequired&#xA;&#xA;"/>
+        <details key="body" value="isRequired = ownedIn.isRequired"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The nullity of a Let expression is the nullity of the in expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleNullityForIn"/>
@@ -1431,7 +1530,10 @@
     </eOperations>
     <eOperations name="validateTypeIsInType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type = ownedIn.type&#xA;"/>
+        <details key="body" value="type = ownedIn.type"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a Let expression is the type of the in expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsInType"/>
@@ -1446,7 +1548,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -1468,7 +1570,10 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateCompatibleNullityForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit?.isRequired = isRequired&#xA;&#xA;"/>
+        <details key="body" value="ownedInit?.isRequired = isRequired"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The nullity of a Let variable initializer expression is the nullity of the Let variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleNullityForInitializer"/>
@@ -1483,7 +1588,10 @@
     </eOperations>
     <eOperations name="validateCompatibleTypeForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a Let variable initializer expression conforms to the type of the Let variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleTypeForInitializer"/>
@@ -1498,7 +1606,10 @@
     </eOperations>
     <eOperations name="validateHasInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Let variable has an initializer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="HasInitializer"/>
@@ -1522,7 +1633,10 @@
       eSuperTypes="#T-pivot-CallExp">
     <eOperations name="validateMatchingMapCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
+        <details key="body" value="ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A Map must have the no co-iterators or the same number of iterators and co-iterators."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="MatchingMapCoIterators"/>
@@ -1537,7 +1651,10 @@
     </eOperations>
     <eOperations name="validateMatchingOrderedCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
+        <details key="body" value="(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="MatchingOrderedCollectionCoIterators"/>
@@ -1552,7 +1669,10 @@
     </eOperations>
     <eOperations name="validateNoCoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedCoIterators?->forAll(ownedInit->isEmpty())&#xA;"/>
+        <details key="body" value="self.ownedCoIterators?->forAll(ownedInit->isEmpty())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The loop variable of an iterator expression has no init expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NoCoInitializers"/>
@@ -1567,7 +1687,10 @@
     </eOperations>
     <eOperations name="validateNoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The loop variable of an iterator expression has no init expression."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NoInitializers"/>
@@ -1582,7 +1705,10 @@
     </eOperations>
     <eOperations name="validateNoNotOrderedCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
+        <details key="body" value="(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A not-Ordered Collection must have no co-iterators."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NoNotOrderedCollectionCoIterators"/>
@@ -1597,7 +1723,10 @@
     </eOperations>
     <eOperations name="validateSourceIsCollection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true&#xA;"/>
+        <details key="body" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Obsolete constraint replaced by SourceIsIterable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SourceIsCollection"/>
@@ -1612,7 +1741,10 @@
     </eOperations>
     <eOperations name="validateSourceIsIterable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
+        <details key="body" value="ownedSource?.type.oclIsKindOf(IterableType)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the source expression must be a collection or map."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SourceIsIterable"/>
@@ -1673,7 +1805,10 @@
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateOneCallOrOneSend" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedCalledOperation->size() + ownedSentSignal->size() = 1&#xA;&#xA;"/>
+        <details key="body" value="ownedCalledOperation->size() + ownedSentSignal->size() = 1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An OCL message has either a called operation or a sent signal."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="OneCallOrOneSend"/>
@@ -1688,7 +1823,10 @@
     </eOperations>
     <eOperations name="validateTargetIsNotACollection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="not ownedTarget.type.oclIsKindOf(CollectionType)&#xA;&#xA;"/>
+        <details key="body" value="not ownedTarget.type.oclIsKindOf(CollectionType)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The target of an OCL message cannot be a collection."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TargetIsNotACollection"/>
@@ -1779,7 +1917,7 @@
     <eOperations name="isNull" lowerBound="1" eType="#T-pivot-Boolean"/>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> null&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotNull"/>
@@ -1806,7 +1944,7 @@
     </eAnnotations>
     <eOperations name="validateCompatibleReturn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="bodyExpression &lt;> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(bodyExpression)&#xA;"/>
+        <details key="body" value="bodyExpression &lt;> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(bodyExpression)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleReturn"/>
@@ -1821,7 +1959,7 @@
     </eOperations>
     <eOperations name="validateLoadableImplementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;true&#xA;"/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="LoadableImplementation"/>
@@ -1836,7 +1974,7 @@
     </eOperations>
     <eOperations name="validateUniquePostconditionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedPostconditions->isUnique(name)&#xA;&#xA;"/>
+        <details key="body" value="ownedPostconditions->isUnique(name)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UniquePostconditionName"/>
@@ -1851,7 +1989,7 @@
     </eOperations>
     <eOperations name="validateUniquePreconditionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedPreconditions->isUnique(name)&#xA;"/>
+        <details key="body" value="ownedPreconditions->isUnique(name)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UniquePreconditionName"/>
@@ -1928,12 +2066,15 @@
       eSuperTypes="#T-pivot-FeatureCallExp #T-pivot-ReferringElement">
     <eOperations name="hasOclVoidOverload" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="false "/>
+        <details key="body" value="false"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="validateArgumentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedArguments->size() = referredOperation?.ownedParameters?->size()&#xA;"/>
+        <details key="body" value="ownedArguments->size() = referredOperation?.ownedParameters?->size()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="There must be exactly as many arguments as the referred operation has parameters."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ArgumentCount"/>
@@ -1950,6 +2091,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All the arguments must conform to the parameters of the referred operation."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ArgumentTypeIsConformant"/>
       </eAnnotations>
@@ -1963,7 +2107,10 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source cannot be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -1978,7 +2125,10 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(not hasOclVoidOverload()) implies ((ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull())&#xA;&#xA;"/>
+        <details key="body" value="(not hasOclVoidOverload()) implies ((ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -2002,7 +2152,10 @@
       eSuperTypes="#T-pivot-NavigationCallExp">
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source cannot be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -2017,7 +2170,10 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is necessary when the source could be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -2104,7 +2260,10 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateHasNoInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit = null&#xA;&#xA;"/>
+        <details key="body" value="ownedInit = null"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Parameter variable has no initializer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="HasNoInitializer"/>
@@ -2185,7 +2344,7 @@
     </eOperations>
     <eOperations name="validateCompatibleDefaultExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)&#xA;&#xA;"/>
+        <details key="body" value="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleDefaultExpression"/>
@@ -2269,17 +2428,20 @@
       eSuperTypes="#T-pivot-NavigationCallExp #T-pivot-ReferringElement">
     <eOperations name="getSpecializedReferredPropertyOwningType" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="referredProperty?.owningClass "/>
+        <details key="body" value="referredProperty?.owningClass"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="getSpecializedReferredPropertyType" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="referredProperty?.type.oclAsType(Class) "/>
+        <details key="body" value="referredProperty?.type.oclAsType(Class)"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="validateCompatibleResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type = getSpecializedReferredPropertyType()&#xA;"/>
+        <details key="body" value="type = getSpecializedReferredPropertyType()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the call expression is the type of the referred property."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleResultType"/>
@@ -2296,6 +2458,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="not referredProperty?.isStatic implies &#xA;&#x9;ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the source conforms to the owning type of the property."/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NonStaticSourceTypeIsConformant"/>
       </eAnnotations>
@@ -2309,7 +2474,10 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is not necessary when the source cannot be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -2324,7 +2492,10 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Safe navigation is necessary when the source could be null."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>
@@ -2414,7 +2585,10 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateCompatibleNullityForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="not ownedInit?.isRequired implies not isRequired&#xA;&#xA;"/>
+        <details key="body" value="not ownedInit?.isRequired implies not isRequired"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A nullable expression cannot initialize a not-nullable Result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleNullityForInitializer"/>
@@ -2429,7 +2603,10 @@
     </eOperations>
     <eOperations name="validateCompatibleTypeForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a Result variable initializer expression conforms to the type of the Result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleTypeForInitializer"/>
@@ -2444,7 +2621,10 @@
     </eOperations>
     <eOperations name="validateHasInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Result variable has an initializer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="HasInitializer"/>
@@ -2462,7 +2642,7 @@
       eSuperTypes="#T-pivot-Class">
     <eOperations name="specializeIn" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="selfType&#xA;&#xA;"/>
+        <details key="body" value="selfType"/>
       </eAnnotations>
       <eParameters name="expr" lowerBound="1" eType="#T-pivot-CallExp"/>
       <eParameters name="selfType" lowerBound="1" eType="#T-pivot-Type"/>
@@ -2480,7 +2660,7 @@
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateClassHasNoStringValueInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClassHasNoStringValueInitializer"/>
@@ -2495,7 +2675,7 @@
     </eOperations>
     <eOperations name="validateDataTypeHasNoPartInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="DataTypeHasNoPartInitializers"/>
@@ -2510,7 +2690,7 @@
     </eOperations>
     <eOperations name="validateDataTypeHasOnePartInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type.oclIsKindOf(DataType) implies ownedParts->size() = 1&#xA;"/>
+        <details key="body" value="type.oclIsKindOf(DataType) implies ownedParts->size() = 1"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="DataTypeHasOnePartInitializer"/>
@@ -2525,7 +2705,7 @@
     </eOperations>
     <eOperations name="validateDataTypeHasStringValueInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true "/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="DataTypeHasStringValueInitializer"/>
@@ -2555,7 +2735,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -2577,7 +2757,7 @@
       eSuperTypes="#T-pivot-TypedElement">
     <eOperations name="validateCompatibleInitialiserType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit.type?.conformsTo(type)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleInitialiserType"/>
@@ -2592,7 +2772,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -2607,7 +2787,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> null&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotNull"/>
@@ -2761,7 +2941,7 @@
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -3008,7 +3188,7 @@
       eSuperTypes="#T-pivot-VariableDeclaration">
     <eOperations name="validateCompatibleInitialiserType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null and ownedInit.type &lt;> null implies ownedInit.type.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null and ownedInit.type &lt;> null implies ownedInit.type.conformsTo(type)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleInitialiserType"/>
@@ -3023,7 +3203,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -3048,17 +3228,17 @@
     </eAnnotations>
     <eOperations name="flattenedType" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self&#xA;&#xA;"/>
+        <details key="body" value="self"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type."/>
+        <details key="documentation" value="&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="isClass" eType="#T-pivot-Class"/>
     <eOperations name="isTemplateParameter" eType="#T-pivot-TemplateParameter"/>
     <eOperations name="specializeIn" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self&#xA;&#xA;"/>
+        <details key="body" value="self"/>
       </eAnnotations>
       <eParameters name="expr" lowerBound="1" eType="#T-pivot-CallExp"/>
       <eParameters name="selfType" lowerBound="1" eType="#T-pivot-Type"/>
@@ -3075,7 +3255,7 @@
     </eAnnotations>
     <eOperations name="CompatibleBody" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;&#xA;"/>
+        <details key="body" value="bodySpecification.type?.conformsTo(self.type)"/>
       </eAnnotations>
       <eParameters name="bodySpecification" lowerBound="1" eType="#T-pivot-ValueSpecification"/>
     </eOperations>
@@ -3138,7 +3318,7 @@
       eSuperTypes="#T-pivot-VariableDeclaration">
     <eOperations name="validateCompatibleInitialiserType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true&#xA;&#xA;"/>
+        <details key="body" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleInitialiserType"/>
@@ -3162,7 +3342,7 @@
       abstract="true" eSuperTypes="#T-pivot-TypedElement">
     <eOperations name="validateNameIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name &lt;> null&#xA;"/>
+        <details key="body" value="name &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NameIsNotNull"/>
@@ -3177,7 +3357,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
@@ -3192,7 +3372,7 @@
     </eOperations>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> null&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotNull"/>
@@ -3212,7 +3392,7 @@
       eSuperTypes="#T-pivot-OCLExpression #T-pivot-ReferringElement">
     <eOperations name="validateTypeIsNotInvalid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <details key="body" value="type &lt;> OclInvalid"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="TypeIsNotInvalid"/>
