@@ -76,6 +76,9 @@ public interface CallExp extends OCLExpression {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not necessary when the source collection is null-free.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateSafeSourceCanBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -83,6 +86,9 @@ public interface CallExp extends OCLExpression {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not supported when the source collection is a Map.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateSafeSourceCannotBeMap(DiagnosticChain diagnostics, Map<Object, Object> context);

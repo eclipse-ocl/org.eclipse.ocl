@@ -99,7 +99,7 @@ import com.google.common.collect.Lists;
  *
  * @generated
  */
-public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, CompleteModelInternal
+public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
 {
 	/**
 	 * @since 1.23

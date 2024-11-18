@@ -60,6 +60,9 @@ public interface CollectionItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of a CollectionItem is the type of the item expression.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsItemType(DiagnosticChain diagnostics, Map<Object, Object> context);

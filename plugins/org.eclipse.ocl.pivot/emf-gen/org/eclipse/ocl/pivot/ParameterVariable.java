@@ -30,6 +30,9 @@ public interface ParameterVariable extends Variable
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Parameter variable has no initializer.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateHasNoInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
