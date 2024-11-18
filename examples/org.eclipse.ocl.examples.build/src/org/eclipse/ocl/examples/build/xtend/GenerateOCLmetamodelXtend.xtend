@@ -101,18 +101,22 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.BooleanType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
+			import org.eclipse.ocl.pivot.Constraint;
 			import org.eclipse.ocl.pivot.DataType;
 			import org.eclipse.ocl.pivot.Enumeration;
 			import org.eclipse.ocl.pivot.EnumerationLiteral;
+			import org.eclipse.ocl.pivot.ExpressionInOCL;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
 			import org.eclipse.ocl.pivot.OrderedSetType;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
+			import org.eclipse.ocl.pivot.PivotFactory;
 			import org.eclipse.ocl.pivot.PivotPackage;
 			import org.eclipse.ocl.pivot.Property;
 			import org.eclipse.ocl.pivot.SequenceType;
 			import org.eclipse.ocl.pivot.SetType;
+			import org.eclipse.ocl.pivot.StringLiteralExp;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -121,6 +125,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
+			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
 
@@ -233,20 +238,36 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					OCLASResourceFactory.REGISTRY.remove(PIVOT_AS_URI);
 					INSTANCE = null;
 				}
-			
-				protected «javaClassName»(@NonNull URI uri) {
-					super(uri, OCLASResourceFactory.getInstance());
-				}
-			
+
 				protected static class LibraryContents extends AbstractContents
 				{
 					protected final @NonNull Package standardLibrary;
-			
+					private final @NonNull Class booleanType;
+					private final @NonNull Class stringType;
+
 					protected LibraryContents(@NonNull Package standardLibrary) {
 						this.standardLibrary = standardLibrary;
+						this.booleanType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("Boolean"));
+						this.stringType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("String"));
+					}
+
+					/**
+					 * @since 1.23
+					 */
+					protected @NonNull Constraint createInvariant(@NonNull String name, @NonNull String body) {
+						Constraint constraint = PivotFactory.eINSTANCE.createConstraint();
+						ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+						StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
+						stringLiteral.setStringSymbol(body);
+						stringLiteral.setType(stringType);
+						expressionInOCL.setOwnedBody(stringLiteral);
+						expressionInOCL.setType(booleanType);
+						constraint.setName(name);
+						constraint.setOwnedSpecification(expressionInOCL);
+						return constraint;
 					}
 				}
-			
+
 				/**
 				 * The Loader shares the metamodel instance whenever this default metamodel
 				 * is loaded from the registry of known pivot metamodels.
@@ -350,6 +371,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.installIterations()»
 						«root.installCoercions()»
 						«root.installProperties()»
+						«root.installInvariants()»
 						«root.installTemplateBindings()»
 						«root.installPrecedences()»
 						«root.installComments()»
@@ -376,9 +398,14 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					«root.defineIterations()»
 					«root.defineCoercions()»
 					«root.defineProperties()»
+					«root.defineInvariants()»
 					«root.defineTemplateBindings()»
 					«root.definePrecedences()»
 					«root.defineComments()»
+				}
+
+				protected «javaClassName»(@NonNull URI uri) {
+					super(uri, OCLASResourceFactory.getInstance());
 				}
 			}
 		'''

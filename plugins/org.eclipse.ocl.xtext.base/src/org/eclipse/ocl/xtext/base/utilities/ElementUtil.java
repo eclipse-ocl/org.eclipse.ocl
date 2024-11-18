@@ -175,64 +175,26 @@ public class ElementUtil
 
 	public static @NonNull String getCommentBody(@NonNull ILeafNode documentationNode) {
 		String text = documentationNode.getText().replace("\r", "");
+		String rootText = documentationNode.getRootNode().getText();
 		if (text.startsWith("/*") && text.endsWith("*/")) {
 			StringBuilder s = new StringBuilder();
 			String contentString = text.substring(2, text.length()-2);
-			@NonNull String[] strings = contentString.split("\n", -1);
-			if (contentString.startsWith("*")) {			// /**..\n *..\n */ formatted
+			if (contentString.startsWith("*")) {
+				contentString = contentString.substring(1);
 				s.append("*");
+			}
+			@NonNull String[] strings = contentString.split("\n", -1);
+			if (strings.length == 1) {
+				s.append(contentString.trim());
+			}
+			else {
 				for (int i = 0; i < strings.length; ) {
 					@NonNull String string = strings[i++];
 					String trimmedString = string.trim();
-					if (trimmedString.equals("*")) ;//s.append("\n");
-					else if (trimmedString.startsWith("* ")) s.append(trimmedString.substring(2));
-					else if (trimmedString.startsWith("*\t")) s.append(trimmedString.substring(2));
-					else if (trimmedString.startsWith("*")) s.append(trimmedString.substring(1));
-					else s.append(trimmedString);
-					if (i < strings.length) {
-						s.append("\n");
+					if (trimmedString.startsWith("*")) {
+						trimmedString = trimmedString.substring(1).trim();
 					}
-				}
-			}
-			else {											// raw formatted
-				String rootText = documentationNode.getRootNode().getText();
-				int offset = documentationNode.getOffset();
-				int newLineOffset = rootText.lastIndexOf('\n', offset);
-				int indentColumns = 0;
-				for (int i = newLineOffset+1; i < offset; i++) {
-					char c = rootText.charAt(i);
-					if (c == '\t') {
-						indentColumns = (indentColumns + 4) & ~3;
-					}
-					else if (c == '\r') {
-						//
-					}
-					else {
-						indentColumns++;
-					}
-				}
-				for (int i = 0; i < strings.length; ) {
-					@NonNull String string = strings[i++];
-					if (i <= 1) {
-						s.append(string);
-					}
-					else {
-						int columns = 0;
-						int j = 0;
-						for (; (j < string.length()) && (columns < indentColumns); j++) {
-							char c = string.charAt(j);
-							if (c == '\t') {
-								columns = (columns + 4) & ~3;
-							}
-							else if (c == '\r') {
-								//
-							}
-							else {
-								columns++;
-							}
-						}
-						s.append(string.substring(j));
-					}
+					s.append(trimmedString);
 					if (i < strings.length) {
 						s.append("\n");
 					}
