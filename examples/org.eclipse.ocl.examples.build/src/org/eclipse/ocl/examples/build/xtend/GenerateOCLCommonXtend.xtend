@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.values.Unlimited
 import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
+import org.eclipse.ocl.pivot.Constraint
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -288,6 +289,35 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»
 			«ENDFOR»
+		'''
+	}
+
+	protected def String defineInvariants(/*@NonNull*/ Model root) {
+		var pkge2constraints = root.getSortedInvariants();
+		if (pkge2constraints.isEmpty()) return "";
+		var sortedPackages = root.getSortedPackages(pkge2constraints.keySet());
+		var Class oldType  = null;
+		'''
+
+			«FOR pkge : sortedPackages»
+				«FOR constraint : ClassUtil.nullFree(pkge2constraints.get(pkge))»
+				private final @NonNull Constraint «constraint.getPrefixedSymbolName("iv_" + constraint.partialName())» = createInvariant(«constraint.getNameLiteral()», "«constraint.ownedSpecification.javaString()»");
+				«ENDFOR»
+			«ENDFOR»
+
+			private void installInvariants() {
+				List<Constraint> ownedInvariants;
+				Constraint constraint;
+				«FOR pkge : sortedPackages»
+					«FOR constraint : ClassUtil.nullFree(pkge2constraints.get(pkge))»«var newType = constraint.eContainer() as org.eclipse.ocl.pivot.Class»
+					«IF newType != oldType»
+
+						ownedInvariants = «(oldType = newType).getSymbolName()».getOwnedInvariants();
+					«ENDIF»
+					ownedInvariants.add(constraint = «constraint.getSymbolName()»);
+					«ENDFOR»
+				«ENDFOR»
+			}
 		'''
 	}
 
@@ -769,6 +799,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installEnumerations();'''
 	}
 
+	protected def String installInvariants(/*@NonNull*/ Model root) {
+		var pkge2invariants = root.getSortedInvariants();
+		if (pkge2invariants.isEmpty()) return "";
+		'''installInvariants();'''
+	}
+
 	protected def String installIterations(/*@NonNull*/ Model root) {
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
@@ -837,6 +873,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		switch element {
 			CollectionType case element.elementType === null: return element.javaName()
 			CollectionType: return element.javaName()
+			Constraint: return getPartialName(element)
 			LambdaType case element.contextType === null: return "null"
 			LambdaType: return element.javaName() + "_" + element.contextType.partialName()
 			MapType case element.keyType === null: return element.javaName()
