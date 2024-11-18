@@ -197,6 +197,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull Map<@NonNull Element, @NonNull String> element2moniker = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> package2sortedClasses = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> package2sortedCollectionTypes = new HashMap<>();
+		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Constraint>> package2sortedInvariants = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Enumeration>> package2sortedEnumerations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> package2sortedIterations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull MapType>> package2sortedMapTypes = new HashMap<>();
@@ -256,6 +257,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				List<@NonNull CollectionType> sortedCollectionTypes = package2sortedCollectionTypes.get(asPackage);
 				if (sortedCollectionTypes != null) {
 					Collections.sort(sortedCollectionTypes, collectionTypeComparator);
+				}
+				List<@NonNull Constraint> sortedConstraints = package2sortedInvariants.get(asPackage);
+				if (sortedConstraints != null) {
+					Collections.sort(sortedConstraints, monikerComparator);
 				}
 				List<@NonNull Enumeration> sortedEnumerations = package2sortedEnumerations.get(asPackage);
 				if (sortedEnumerations != null) {
@@ -382,6 +387,17 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitConstraint(@NonNull Constraint asConstraint) {
+			EObject eContainer = asConstraint.eContainer();
+			if (asConstraint.isIsCallable() && (eContainer instanceof org.eclipse.ocl.pivot.Class)) {
+				org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eContainer;
+				org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+				List<@NonNull Constraint> sortedInvariants = package2sortedInvariants.get(asPackage);
+				if (sortedInvariants == null) {
+					sortedInvariants = new ArrayList<>();
+					package2sortedInvariants.put(asPackage, sortedInvariants);
+				}
+				sortedInvariants.add(asConstraint);
+			}
 			return null;
 		}
 
@@ -785,6 +801,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return basicPackageId == IdManager.METAMODEL ? "IdManager.METAMODEL" : "null";
 	}
 
+	protected @NonNull String getNameLiteral(@NonNull Constraint constraint) {
+		return '"' + constraint.getName() + '"';
+	}
 
 	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
 		return '"' + operation.getName() + '"';
@@ -805,6 +824,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	protected @NonNull String getPartialName(@NonNull Constraint constraint) {
+		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)constraint.eContainer();
+		if (owningType == null) {
+			return "null_" + javaName(constraint);
+		}
+		String simpleName = partialName(owningType) + "_" + javaName(constraint);
+		return simpleName;
 	}
 
 	protected @NonNull String getPartialName(@NonNull Property property) {
@@ -962,6 +990,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		}
 		return import2alias;
+	}
+
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Constraint>> getSortedInvariants(@NonNull Model root) {
+		return contentAnalysis.package2sortedInvariants;
 	}
 
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> getSortedIterations(@NonNull Model root) {
