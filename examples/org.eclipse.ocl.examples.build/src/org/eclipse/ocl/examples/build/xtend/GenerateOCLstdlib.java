@@ -152,10 +152,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
 			initModel(pivotModel, saver);
-			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
-			MergeWriter fw = new MergeWriter(fileName);
-			fw.append(metamodel);
-			fw.close();
 			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("oclstdlib", "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
 		//	log.info("Loading '" + saveURI + "'");
@@ -295,6 +291,10 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				log.info("Saving '" + ecoreURI + "'");
 				eResource.save(null);
 			}
+			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
+			MergeWriter fw = new MergeWriter(fileName);
+			fw.append(metamodel);
+			fw.close();
 		} catch (RuntimeException e) {
 			throw e;
 		} catch (Exception e) {

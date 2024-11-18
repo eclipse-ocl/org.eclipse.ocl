@@ -327,7 +327,7 @@ public class ElementUtil
 	 * <br>
 	 * Except that a first space is removed since it originates from the auto-formatter.
 	 * <br>
-	 * The leading whitespace of the next element is included since the folloowing token
+	 * The leading whitespace of the next element is included since the following token
 	 * is expected to be a semicolon.
 	 */
 	public static @NonNull String getExpressionText(@NonNull ElementCS csElement) {
