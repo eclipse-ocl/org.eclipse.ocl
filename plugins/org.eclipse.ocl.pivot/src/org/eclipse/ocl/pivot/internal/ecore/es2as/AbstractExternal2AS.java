@@ -122,7 +122,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		EAnnotation eAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
 			@SuppressWarnings("null")@NonNull EMap<String, String> details = eAnnotation.getDetails();
-			if ((details.size() != 1) ||  details.containsKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY)) {
+			if ((details.size() != 1) || details.containsKey("body")) {
 				return false;
 			}
 		}
