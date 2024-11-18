@@ -254,19 +254,17 @@ public class AS2Ecore extends AbstractConversion
 				}
 			}
 		}
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 		if (newComments != null) {
-			List<@NonNull EAnnotation> allEAnnotations = ClassUtil.nullFree(eModelElement.getEAnnotations());
-			EAnnotation eAnnotation = eModelElement.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 			if (eAnnotation == null) {
 				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
-				allEAnnotations.add(eAnnotation);
+				eModelElement.getEAnnotations().add(eAnnotation);
 			}
 			String value = StringUtil.splice(newComments, "");
 			eAnnotation.getDetails().put(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY, value);
 		}
 		else {
-			EAnnotation eAnnotation = eModelElement.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 			if (eAnnotation != null) {
 				eAnnotation.getDetails().removeKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
 			}
