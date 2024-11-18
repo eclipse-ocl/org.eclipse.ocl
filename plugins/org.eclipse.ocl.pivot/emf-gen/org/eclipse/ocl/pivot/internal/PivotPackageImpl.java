@@ -9723,210 +9723,210 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "self.type = Boolean\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.type = Boolean" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCallExp__ValidateSafeSourceCannotBeMap__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getClass__ValidateNameIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "name <> null\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "name <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getClass__ValidateUniqueInvariantName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInvariants->isUnique(name)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInvariants->isUnique(name)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionItem__ValidateTypeIsItemType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type = ownedItem.type\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type = ownedItem.type" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateBagKindIsBag__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateCollectionKindIsConcrete__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind <> CollectionKind::Collection\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "kind <> CollectionKind::Collection" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateOrderedSetKindIsOrderedSet__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateSequenceKindIsSequence__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateSetKindIsSet__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getConstraint__ValidateBooleanValued__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getConstraint__ValidateUniqueName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "behavioralClass <> null implies superClasses->includes(behavioralClass)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "behavioralClass <> null implies superClasses->includes(behavioralClass)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getElement__AllOwnedElements(),
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tself->closure(oclContents()->selectByKind(Element))\n\t\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self->closure(oclContents()->selectByKind(Element))" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getElement__GetValue__Type_String(),
 		   source,
 		   new String[]
 		   {
-			   "body", "null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getEnumLiteralExp__ValidateTypeIsEnumerationType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self.type = referredLiteral?.owningEnumeration\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.type = referredLiteral?.owningEnumeration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getFeature__ValidateNameIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "name <> null\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "name <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getFeature__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIfExp__ValidateConditionTypeIsBoolean__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self.ownedCondition.type = Boolean\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.ownedCondition.type = Boolean" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIfExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIntegerLiteralExp__ValidateTypeIsInteger__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self.type = Integer\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.type = Integer" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies ownedIterators->forAll(isRequired)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies ownedIterators->forAll(isRequired)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -9940,7 +9940,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
@@ -9954,21 +9954,21 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateAnyHasOneIterator__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
@@ -9982,21 +9982,21 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\ttrue " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureElementTypeIsSourceElementType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", " true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map(),
@@ -10010,7 +10010,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map(),
@@ -10052,7 +10052,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "isSafe implies ownedIterators->forAll(isRequired)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isSafe implies ownedIterators->forAll(isRequired)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -10080,7 +10080,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\ttrue\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
@@ -10094,161 +10094,161 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit = null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit = null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "isRequired = ownedIn.isRequired\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isRequired = ownedIn.isRequired" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetExp__ValidateTypeIsInType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type = ownedIn.type\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type = ownedIn.type" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit?.isRequired = isRequired\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit?.isRequired = isRequired" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null implies ownedInit.type?.conformsTo(type)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit <> null implies ownedInit.type?.conformsTo(type)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetVariable__ValidateHasInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateMatchingMapCoIterators__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateNoCoInitializers__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateNoInitializers__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self.ownedIterators->forAll(ownedInit->isEmpty())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.ownedIterators->forAll(ownedInit->isEmpty())" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateSourceIsCollection__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateSourceIsIterable__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedSource?.type.oclIsKindOf(IterableType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedSource?.type.oclIsKindOf(IterableType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getMessageExp__ValidateOneCallOrOneSend__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedCalledOperation->size() + ownedSentSignal->size() = 1\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedCalledOperation->size() + ownedSentSignal->size() = 1" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getMessageExp__ValidateTargetIsNotACollection__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "not ownedTarget.type.oclIsKindOf(CollectionType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "not ownedTarget.type.oclIsKindOf(CollectionType)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateLoadableImplementation__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\ttrue\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateUniquePostconditionName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedPostconditions->isUnique(name)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedPostconditions->isUnique(name)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateUniquePreconditionName__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedPreconditions->isUnique(name)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedPreconditions->isUnique(name)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__HasOclVoidOverload(),
 		   source,
 		   new String[]
 		   {
-			   "body", "false " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "false" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedArguments->size() = referredOperation?.ownedParameters?->size()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedArguments->size() = referredOperation?.ownedParameters?->size()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map(),
@@ -10262,35 +10262,35 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOppositePropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOppositePropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit = null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit = null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getProperty__IsAttribute__Property(),
@@ -10304,28 +10304,28 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__GetSpecializedReferredPropertyOwningType(),
 		   source,
 		   new String[]
 		   {
-			   "body", "referredProperty?.owningClass " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "referredProperty?.owningClass" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__GetSpecializedReferredPropertyType(),
 		   source,
 		   new String[]
 		   {
-			   "body", "referredProperty?.type.oclAsType(Class) " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "referredProperty?.type.oclAsType(Class)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateCompatibleResultType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type = getSpecializedReferredPropertyType()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type = getSpecializedReferredPropertyType()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateNonStaticSourceTypeIsConformant__DiagnosticChain_Map(),
@@ -10339,70 +10339,70 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "not ownedInit?.isRequired implies not isRequired\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "not ownedInit?.isRequired implies not isRequired" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null implies ownedInit.type?.conformsTo(type)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit <> null implies ownedInit.type?.conformsTo(type)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getResultVariable__ValidateHasInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getSelfType__SpecializeIn__CallExp_Type(),
 		   source,
 		   new String[]
 		   {
-			   "body", "selfType\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "selfType" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map(),
@@ -10416,105 +10416,105 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit.type?.conformsTo(type)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit.type?.conformsTo(type)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getStateExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getType__FlattenedType(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getType__SpecializeIn__CallExp_Type(),
 		   source,
 		   new String[]
 		   {
-			   "body", "self\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getTypedElement__CompatibleBody__ValueSpecification(),
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tbodySpecification.type?.conformsTo(self.type)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "bodySpecification.type?.conformsTo(self.type)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getVariable__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "true\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "name <> null\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "name <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getVariableDeclaration__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getVariableExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "type <> OclInvalid\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

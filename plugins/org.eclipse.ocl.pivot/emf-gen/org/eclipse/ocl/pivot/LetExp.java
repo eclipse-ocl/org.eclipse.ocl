@@ -87,6 +87,9 @@ extends OCLExpression {
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The nullity of a Let expression is the nullity of the in expression.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateCompatibleNullityForIn(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -94,6 +97,9 @@ extends OCLExpression {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of a Let expression is the type of the in expression.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsInType(DiagnosticChain diagnostics, Map<Object, Object> context);

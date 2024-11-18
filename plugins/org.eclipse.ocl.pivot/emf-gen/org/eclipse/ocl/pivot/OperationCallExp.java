@@ -115,6 +115,9 @@ extends FeatureCallExp, ReferringElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * All the arguments must conform to the parameters of the referred operation.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateArgumentTypeIsConformant(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -122,6 +125,9 @@ extends FeatureCallExp, ReferringElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is not necessary when the source cannot be null.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	@Override
@@ -131,6 +137,9 @@ extends FeatureCallExp, ReferringElement {
 	 * <!-- begin-user-doc -->
 	 * @since 1.7
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateUnsafeSourceCanNotBeNull(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -138,6 +147,9 @@ extends FeatureCallExp, ReferringElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * There must be exactly as many arguments as the referred operation has parameters.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateArgumentCount(DiagnosticChain diagnostics, Map<Object, Object> context);

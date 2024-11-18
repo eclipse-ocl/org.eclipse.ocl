@@ -30,6 +30,9 @@ public interface LetVariable extends Variable
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The nullity of a Let variable initializer expression is the nullity of the Let variable.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateCompatibleNullityForInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -37,6 +40,9 @@ public interface LetVariable extends Variable
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of a Let variable initializer expression conforms to the type of the Let variable.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateCompatibleTypeForInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -44,6 +50,9 @@ public interface LetVariable extends Variable
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Let variable has an initializer.
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateHasInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
