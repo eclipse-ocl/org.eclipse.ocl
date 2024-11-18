@@ -70,6 +70,12 @@ extends org.eclipse.ocl.pivot.Class {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *
+	 * A behavioral class must be distinctly named to avoid the risk of conformance loops.
+	 * FIXME relax this once CompleteClasses are eliminated.
+	 *
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateBehavioralClassHasDistinctName(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -77,6 +83,12 @@ extends org.eclipse.ocl.pivot.Class {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *
+	 * A behavioral class must be a PrimitiveType, specifically Integer or Real.
+	 * FIXME relax this once behavioralClass is re-typed to PrimitiveType..
+	 *
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateBehavioralClassIsPrimitiveType(DiagnosticChain diagnostics, Map<Object, Object> context);
@@ -84,6 +96,11 @@ extends org.eclipse.ocl.pivot.Class {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *
+	 * The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionaality., specifically Integer or Real.
+	 *
+	 * <!-- end-model-doc -->
 	 * @generated
 	 */
 	boolean validateBehavioralClassIsSuperClass(DiagnosticChain diagnostics, Map<Object, Object> context);
