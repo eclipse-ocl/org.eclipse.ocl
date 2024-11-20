@@ -324,6 +324,14 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 			
 					/**
+					 * Overridden to avoid computing proxies for the shared instance.
+					 *
+					 * @since 1.23
+					 */
+					@Override
+					public void preUnload() {}
+			
+					/**
 					 * Overridden to inhibit unloading of the shared instance.
 					 */
 					@Override
@@ -337,13 +345,18 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 				}
 			
-				/**
-				 *	Construct a copy of the OCL Standard Library with specified resource URI,
-				 *  and package name, prefix and namespace URI.
-				 */
-				public static @NonNull «javaClassName» create(@NonNull String asURI) {
+				@Deprecated /* Provide externalURI */
+				public static @NonNull OCLstdlib create(@NonNull String asURI) {
 					Contents contents = new Contents(asURI);
-					return new «javaClassName»(asURI, contents.getModel());
+					return new OCLstdlib(asURI, contents.getModel());
+				}
+			
+				/**
+				 * @since 1.23
+				 */
+				public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
+					Contents contents = new Contents(externalURI);
+					return new OCLstdlib(asURI, contents.getModel());
 				}
 			
 				/**
