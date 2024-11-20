@@ -108,7 +108,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull JavaClassCS> name2class = new HashMap<@NonNull String, @NonNull JavaClassCS>();
 
-	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("xxx"));
+	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("JavaClassCS-instances"));
 
 	private boolean doneFullScan = false;
 
