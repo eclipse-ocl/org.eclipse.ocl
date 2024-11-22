@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -497,6 +498,19 @@ public class ModelImpl extends NamespaceImpl implements Model
 			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
 		}
 		return ownedImports;
+	}
+
+	@Override
+	public @NonNull URI getReloadableURI() {
+		return URI.createURI(externalURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull Element getReloadableEObject() {
+		throw new IllegalStateException("Model has a URI but no EObject");
 	}
 
 	/**

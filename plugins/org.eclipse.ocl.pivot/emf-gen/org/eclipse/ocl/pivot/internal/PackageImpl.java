@@ -40,7 +40,9 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -738,6 +740,21 @@ implements org.eclipse.ocl.pivot.Package {
 			packageId = packageId2 = IdManager.getPackageId(this);
 		}
 		return packageId2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(this);
+		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+			EObject esObject = asPackage.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		return null;
 	}
 
 	public boolean isIgnoreInvariants() {

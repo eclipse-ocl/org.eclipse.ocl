@@ -26,6 +26,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -41,7 +43,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -151,7 +152,17 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					}
 				}
 				else if (eventType == Notification.REMOVE) {
-					if (notifier instanceof org.eclipse.ocl.pivot.Class) {
+					if (notifier instanceof Resource) {
+						int featureID = notification.getFeatureID(Resource.class);		// Occurs after unloading has finished
+						if (featureID == RESOURCE__ERRORS) {
+							return;
+						}
+						if (featureID == RESOURCE__WARNINGS) {
+							return;
+						}
+						featureID = notification.getFeatureID(Resource.class);			// missing container case
+					}
+					else if (notifier instanceof org.eclipse.ocl.pivot.Class) {
 						if (feature == PivotPackage.Literals.CLASS__OWNED_PROPERTIES) {
 							Object oldValue = notification.getOldValue();
 							if ((oldValue instanceof Property) && ((Property)oldValue).isIsImplicit()) {	// Late QVTr trace properties
@@ -272,9 +283,17 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private boolean isUpdating = false;
 
 	/**
-	 * True if this AS exists without corresponding CS/ES. Perhaps it is a built-in AS, perhaps it is a tranmsformation intermediate.
+	 * True if this AS exists without corresponding CS/ES. Perehaps it is a built-in AS, perhaps it is a tranmsformation intermediate.
 	 */
 	private boolean isASonly = false;
+
+	/**
+	 * The asElement2reloadableURI map is populated during the preUnload() process to identify the proxies while an EnvironmentFactory
+	 * is still available (not yet disposed). The proxies identify a CS or ES element that can be converted to reload AS ele,emts in
+	 * this resource. Entries are omitted for AS elements that have no need for a CS/ES proxy. Proxies are assigned later during unloaded().
+	 * (Proxies are not set directly since too-early proxies seem to disrupt the content iteration over UML models.)
+	 */
+	private @Nullable Map<@NonNull Element, @NonNull URI> asElement2reloadableURI = null;
 
 	/**
 	 * Creates an instance of the resource.
@@ -371,13 +390,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected void doUnload() {
+	// XXX	System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
 		isUnloading = true;
 		try {
-			for (EObject eObject : getContents()) {
-				if (eObject instanceof PivotObjectImpl) {
-					((PivotObjectImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
-				}
-			}
+			/*	if (!isSkipPreUnload && isSaveable) { */
+	//		preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -385,6 +402,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 		finally {
 			isUnloading = false;
+			asElement2reloadableURI = null;
 		}
 	}
 
@@ -532,6 +550,40 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
+	 * Populate asElement2reloadableURI with proxy URIs for all referencable elements.
+	 * This should be invoked before unload to ensure that the full AS context is available.
+	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public void preUnload() {
+		assert resourceSet != null: "ResourceSet required";			// XXX
+//		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
+		if (!isASonly && (asElement2reloadableURI == null)) {
+			Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
+			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof Element) {
+					Element asElement = (Element)eObject;
+					URI eProxyURI = ((BasicEObjectImpl)asElement).eProxyURI();
+					if (eProxyURI == null) {
+						URI uri = asElement.getReloadableURI();
+						if (uri != null) {
+							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+								asElement.getReloadableURI();		// XXX debugging
+							}
+							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+							asElement2reloadableURI2.put(asElement, uri);
+						}
+					}
+				}
+			}
+			asElement2reloadableURI = asElement2reloadableURI2;
+		}
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	@Override
@@ -624,6 +676,51 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	public @NonNull String toString() {
 		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
+	}
+
+	@Override
+	protected void unloaded(InternalEObject internalEObject) {		assert resourceSet != null: "ResourceSet required";			// XXX
+		URI eProxyURI = internalEObject.eProxyURI();
+	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
+			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
+			URI uri = null;
+			if (reloadableEObjectOrURI instanceof EObject) {
+				uri = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
+			}
+			else if (reloadableEObjectOrURI instanceof URI) {
+				uri = (URI)reloadableEObjectOrURI;
+			}
+			if (uri != null) {
+				if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+					getClass();		// XXX
+				}
+			//	internalEObject.eSetProxyURI(uri);		// XXX disrupts UML unload
+			}
+			else {
+			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
+			}
+		} */
+	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
+	//		internalEObject.eAdapters().clear();
+	//	}
+	//	else {
+
+		if (eProxyURI == null) {
+			URI uri = null;
+			if (asElement2reloadableURI != null) {
+				uri = asElement2reloadableURI.get(internalEObject);
+				if (uri != null) {
+					internalEObject.eSetProxyURI(uri);
+				}
+			}
+		}
+//		super.unloaded(internalEObject);
+//	    if (!internalEObject.eIsProxy())
+//	    {
+//	      internalEObject.eSetProxyURI(uri.appendFragment(getURIFragment(internalEObject)));
+//	    }
+	    internalEObject.eAdapters().clear();
+		// }
 	}
 
 	@Override

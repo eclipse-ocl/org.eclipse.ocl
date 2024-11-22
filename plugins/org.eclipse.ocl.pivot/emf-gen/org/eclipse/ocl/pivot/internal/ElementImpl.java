@@ -16,15 +16,19 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -36,6 +40,9 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration.LibraryIterationExtension;
@@ -44,7 +51,9 @@ import org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -244,7 +253,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
@@ -432,5 +441,162 @@ public abstract class ElementImpl
 	@Override
 	public String toString() {
 		return ToStringVisitor.toString(this);
+	}
+
+	/**
+	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
+	 *
+	 * The default implementation return a non-null esObject directly else attempts to return a CS object via the
+	 * csi2asMapping.
+	 *
+	 * Derived classes whose complete classes/packages may provide alternate ES Object values must overload.
+	 *
+	 * The derivation for a Model (that has no ESObject) should return the externalURI.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable EObject getReloadableEObject() {
+		// Look for the specific ES
+		EObject esObject = getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		// Look for a specific CS
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {		// If a CS Element references that AS Element
+				return csElement;
+			}
+		}
+		// Look for alternate ES
+		esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
+		if (esObject != null) {
+			return esObject;
+		}
+		if (csi2asMapping == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		return null;
+	}
+
+	/**
+	 * Return the EObject whose URI should enable the esObject to be reloaded by searching Comp;letePackage/Class siblings.
+	 * @param environmentFactory
+	 *
+	 * @since 1.23
+	 */
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		return null;
+	}
+
+	/**
+	 * Return the URI of an EObject that can be used to reload the ES object.
+	 *
+	 * Default implementation rreturns the URI of the getReloadableEObject().
+	 *
+	 * EObject-less elements such as Model and Precedence overload.
+	 *
+	 * Transitive EObject elements such as Import redirect.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable URI getReloadableURI() {
+		EObject reloadableEObject = getReloadableEObject();
+		if (reloadableEObject != null) {
+			return EcoreUtil.getURI(reloadableEObject);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * preUnload() is invoked to support the depth-first traversal of an ASResource contents from ASResourceImpl.doUnload().
+	 * The traversal assigns proxies from the esObject that is then set to null. Other pivot artefacts are also reset.
+	 *
+	 * @since 1.23
+	 */
+	public void preUnload() {
+	    assert eResource() != null;
+		for (EObject eObject : eContents()) {
+			if (eObject instanceof ElementImpl) {		// Propagate resetESObject through hierarchy (except for internal ExpressionInOCL)
+				((ElementImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
+			}
+		}
+		resetESObject();
+	}
+
+	/**
+	 * resetESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
+	 * and optionally to diagnose non-proxies.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	protected void resetESObject() {
+	    InternalEObject eInternalContainer = eInternalContainer();
+	    assert eInternalContainer != null;
+	    EObject esProxyTarget = null;
+		EObject esObject = getESObject();
+		if (esObject != null) {						// If there is a known ES
+			esProxyTarget = esObject;				//  use es to create proxy
+		}
+		else {										// else need a CS
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory == null) {
+				ASResourceImpl.SET_PROXY.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+				return;
+			}
+			// Look for a specific CS
+			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+			if (csi2asMapping == null) {
+				ASResourceImpl.SET_PROXY.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
+				return;
+			}
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement == null) {		// If a CS Element references that AS Element
+				ASResourceImpl.SET_PROXY.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+			}
+			esProxyTarget = csElement;
+			if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
+				// Else any old ES
+				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
+				EObject eObject = getReloadableEObject();
+	// XXX			assert eObjectOrURI == esProxyTarget;				// XXX
+			}
+		}
+		if (esProxyTarget != null) {
+			URI uri = EcoreUtil.getURI(esProxyTarget);
+			eSetProxyURI(uri);
+	//	}
+	//	else if (esProxyTarget instanceof Resource) {
+	//		URI uri = ((Resource)esProxyTarget).getURI();
+	//		eSetProxyURI(uri);
+		}
+		else {
+			ASResourceImpl.SET_PROXY.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
+		}
+		super.resetESObject();
+	}
+
+	/**
+	 * resolveESNotifier is called from resetESObject() to locate the ES Object that provides the Proxy URI.
+	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
+	 * bypass bloated AS such as Import.
+	 *
+	 * @since 1.23
+	 */
+	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
+		return null;
 	}
 } //ElementImpl

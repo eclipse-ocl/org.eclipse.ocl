@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -139,4 +140,21 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	 */
 	@Deprecated
 	@Nullable EObject getETarget();
+
+	/**
+	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
+	 *
+	 * @since 1.23
+	 */
+	default @Nullable EObject getReloadableEObject() {
+		return null;
+	}
+	/**
+	 * Return the URI of an EObject that can be used to reload the ES object.
+	 *
+	 * @since 1.23
+	 */
+	default @Nullable URI getReloadableURI() {
+		return null;
+	}
 } // Element

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -225,6 +226,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 
 	@Override
 	public void eSetProxyURI(URI uri) {
+		assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);		// XXX
 		StringBuilder s = null;
 		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
 		super.eSetProxyURI(uri);

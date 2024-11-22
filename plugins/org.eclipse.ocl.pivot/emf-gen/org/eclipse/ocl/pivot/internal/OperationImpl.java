@@ -61,6 +61,8 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -1620,6 +1622,24 @@ implements Operation {
 			}
 		}
 		return operationId2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(this));
+		Iterable<@NonNull Operation> operationOverloads = completeClass.getOperationOverloads(this);
+		if (operationOverloads != null) {
+			for (Operation asOperation : operationOverloads) {
+				EObject esObject = asOperation.getESObject();
+				if (esObject != null) {
+					return esObject;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

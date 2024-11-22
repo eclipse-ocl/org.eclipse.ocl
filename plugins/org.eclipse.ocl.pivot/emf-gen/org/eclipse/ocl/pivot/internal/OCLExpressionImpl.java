@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -348,6 +349,17 @@ implements OCLExpression {
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitOCLExpression(this);
+	}
+
+	/**
+	 * Optimised implementation when there can be no ES and no referenceable CS.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public final @Nullable EObject getReloadableEObject() {
+		assert getESObject() == null : "Unexpected ES Object for " + eClass().getName() + ".getReloadableEObjectOrURI() overload";
+		return null;
 	}
 
 	/**

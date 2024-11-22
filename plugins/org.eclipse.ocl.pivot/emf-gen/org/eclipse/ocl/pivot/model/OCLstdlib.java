@@ -59,11 +59,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -240,14 +238,6 @@ public class OCLstdlib extends ASResourceImpl
 				setLoaded(true);
 			}
 		}
-
-		/**
-		 * Overridden to avoid computing proxies for the shared instance.
-		 *
-		 * @since 1.23
-		 */
-		@Override
-		public void preUnload() {}
 
 		/**
 		 * Overridden to inhibit unloading of the shared instance.

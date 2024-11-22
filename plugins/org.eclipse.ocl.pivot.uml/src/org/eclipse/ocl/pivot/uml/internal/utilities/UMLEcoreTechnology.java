@@ -142,12 +142,12 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			metamodel = IdManager.METAMODEL;
 		}
 		else if (eObject2 instanceof UMLPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = UMLPackage.eNS_URI;
+			@NonNull String nsUri = UMLPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.UML_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
 		}
 		else if (eObject2 instanceof TypesPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = TypesPackage.eNS_URI;
+			@NonNull String nsUri = TypesPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.TYPES_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
 		}

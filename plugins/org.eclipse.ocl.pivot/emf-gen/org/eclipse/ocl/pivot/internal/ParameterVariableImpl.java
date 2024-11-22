@@ -16,9 +16,13 @@ import java.util.Map;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -163,5 +167,26 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
+	}
+
+	/**
+	 * Overriddenb to delegate to the represented parameter/type.
+	 *
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable EObject getReloadableEObject() {
+		EReference eContainmentFeature = eContainmentFeature();
+		Parameter asParameter = getRepresentedParameter();
+		Element asRepresentedParameter;
+		if (asParameter != null) {
+			assert eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS;
+			asRepresentedParameter = getRepresentedParameter();		// XXX else cs
+		}
+		else {
+			assert (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
+			asRepresentedParameter = getType();
+		}
+		return asRepresentedParameter.getReloadableEObject();
 	}
 } //ParameterVariableImpl

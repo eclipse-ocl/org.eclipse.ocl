@@ -97,7 +97,7 @@ public class ComposedEValidator implements EValidator
 		composedEValidator.addChild(additionalEValidator);
 	}
 
-	protected final @NonNull List<EValidator> eValidators = new ArrayList<EValidator>();
+	protected final @NonNull List<EValidator> eValidators = new ArrayList<>();
 
 	public ComposedEValidator(@Nullable EValidator eValidator) {
 		if (eValidator != null) {

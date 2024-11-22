@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -1354,6 +1355,21 @@ implements org.eclipse.ocl.pivot.Class {
 			}
 		}
 		return normalizedTypeId2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
+		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
+			EObject esObject = asClass.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
+		}
+		return null;
 	}
 
 	@Override

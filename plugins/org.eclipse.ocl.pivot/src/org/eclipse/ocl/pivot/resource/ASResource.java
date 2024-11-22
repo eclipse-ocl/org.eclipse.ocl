@@ -147,7 +147,7 @@ public interface ASResource extends XMIResource
 	default void preUnload() {}
 
 	/**
-	 * Reset the Locally Unique Senantically Sensitive IDs that form the basic of xmi:id allocation.
+	 * Reset the Locally Unique Semantically Sensitive IDs that form the basic of xmi:id allocation.
 	 * This may be necessary to re-save a Resource that has been modified after a previous save.
 	 *
 	 * @since 1.5

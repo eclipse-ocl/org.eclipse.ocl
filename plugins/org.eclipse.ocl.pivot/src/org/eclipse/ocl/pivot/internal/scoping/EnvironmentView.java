@@ -339,18 +339,18 @@ public class EnvironmentView
 	}
 
 	public void addAllElements(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull ScopeView scopeView) {
-		Attribution attribution = getAttribution(asClass);
+		Attribution attribution = Attribution.REGISTRY.getAttribution(asClass);
 		attribution.computeLookup(asClass, this, scopeView);
 		org.eclipse.ocl.pivot.Class asUnspecializedClass = PivotUtil.getUnspecializedTemplateableElement(asClass);
 		org.eclipse.ocl.pivot.Package asPackage = asUnspecializedClass.getOwningPackage();
 		if (asPackage != null) {
-			attribution = getAttribution(asPackage);
+			attribution = Attribution.REGISTRY.getAttribution(asPackage);
 			attribution.computeLookup(asPackage, this, scopeView);
 		}
 		{	// FIXME redundant
 			asPackage = asUnspecializedClass.getOwningPackage();
 			if (asPackage != null) {
-				attribution = getAttribution(asPackage);
+				attribution = Attribution.REGISTRY.getAttribution(asPackage);
 				attribution.computeLookup(asPackage, this, scopeView);
 			}
 		}
@@ -758,7 +758,7 @@ public class EnvironmentView
 
 	public void addElementsOfScope(@Nullable Element asElement, @NonNull ScopeView scopeView) {
 		if (asElement != null) {
-			Attribution attribution = getAttribution(asElement);
+			Attribution attribution = Attribution.REGISTRY.getAttribution(asElement);
 			attribution.computeLookup(asElement, this, scopeView);
 		}
 	}
@@ -848,7 +848,6 @@ public class EnvironmentView
 	}
 
 	public int computeLookups(@NonNull Element target, @Nullable Element child) {
-		@SuppressWarnings("deprecation")
 		ScopeView pivotScopeView = new PivotScopeView(environmentFactory, target, child, false);
 		return computeLookups(pivotScopeView);
 	}
@@ -878,7 +877,6 @@ public class EnvironmentView
 	}
 
 	public void computeQualifiedLookups(@NonNull Element target) {
-		@SuppressWarnings("deprecation")
 		ScopeView parentScopeView = new PivotScopeView(environmentFactory, target, null, true);
 		addElementsOfScope(target, parentScopeView);
 	}

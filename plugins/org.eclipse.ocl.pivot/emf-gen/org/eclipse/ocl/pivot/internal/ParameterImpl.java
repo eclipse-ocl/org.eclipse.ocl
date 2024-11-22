@@ -414,5 +414,4 @@ public class ParameterImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameter(this);
 	}
-
 } //ParameterImpl
