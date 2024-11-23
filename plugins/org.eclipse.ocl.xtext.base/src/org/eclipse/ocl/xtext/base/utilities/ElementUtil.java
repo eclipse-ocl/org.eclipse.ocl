@@ -159,6 +159,29 @@ public class ElementUtil
 		}
 	}
 
+	/**
+	 * Return the 0-based column number of node (assuming 4-character tabs).
+	 */
+	public static int getColumnOffset(@NonNull ILeafNode node) {
+		String rootText = node.getRootNode().getText();
+		int offset = node.getOffset();
+		int newLineOffset = rootText.lastIndexOf('\n', offset);
+		int indentColumns = 0;
+		for (int i = newLineOffset+1; i < offset; i++) {
+			char c = rootText.charAt(i);
+			if (c == '\t') {
+				indentColumns = (indentColumns + 4) & ~3;
+			}
+			else if (c == '\r') {
+				//
+			}
+			else {
+				indentColumns++;
+			}
+		}
+		return indentColumns;
+	}
+
 	public static @NonNull List<@Nullable String> getCommentBodies(@NonNull List<@NonNull ILeafNode> documentationNodes) {
 		List<@Nullable String> newBodies = new ArrayList<>();
 		if ((documentationNodes.size() == 1) && "/**/".equals(documentationNodes.get(0).getText())) {
@@ -174,36 +197,83 @@ public class ElementUtil
 	}
 
 	public static @NonNull String getCommentBody(@NonNull ILeafNode documentationNode) {
-		String text = documentationNode.getText().replace("\r", "");
-		String rootText = documentationNode.getRootNode().getText();
-		if (text.startsWith("/*") && text.endsWith("*/")) {
-			StringBuilder s = new StringBuilder();
-			String contentString = text.substring(2, text.length()-2);
+		String commentText = documentationNode.getText().replace("\r", "");
+	//	String rootText = documentationNode.getRootNode().getText();
+		StringBuilder s = new StringBuilder();
+		if (commentText.startsWith("/*") && commentText.endsWith("*/")) {
+			int indentColumns = getColumnOffset(documentationNode);
+			commentText = commentText.substring(2, commentText.length()-2);
+			@NonNull String[] commentLines = commentText.split("\n", -1);
+			int commentLineCount = commentLines.length;
+			for (int i = 0; i < commentLineCount; ) {
+				@NonNull String commentLine = commentLines[i++];
+				if (i <= 1) {
+					s.append(commentLine.trim());
+				}
+				else {
+					int columns = 0;
+					int j = 0;
+					for (; (j < commentLine.length()) && (columns < indentColumns); j++) {
+						char c = commentLine.charAt(j);
+						if (c == '\t') {
+							columns = (columns + 4) & ~3;
+						}
+						else if (c == '\r') {
+							//
+						}
+						else if (c == ' ') {
+							columns++;
+						}
+						else {
+							break;
+						}
+					}
+					String relativeCommentLine = commentLine.substring(j);
+					String trimmedString = relativeCommentLine.trim();
+					if ((i > 1) && trimmedString.startsWith("*")) {
+						trimmedString = trimOne(trimmedString.substring(1));
+					}
+					else {
+						trimmedString = trimOne(trimmedString);
+					}
+					s.append(trimmedString);
+				}
+				if (i < commentLineCount) {
+					s.append("\n");
+				}
+			}
+
+
+
+		/*	String contentString = text.substring(2, text.length()-2);
 			if (contentString.startsWith("*")) {
 				contentString = contentString.substring(1);
 				s.append("*");
 			}
 			@NonNull String[] strings = contentString.split("\n", -1);
 			if (strings.length == 1) {
-				s.append(contentString.trim());
+				s.append(trimOne(contentString));
 			}
 			else {
 				for (int i = 0; i < strings.length; ) {
 					@NonNull String string = strings[i++];
 					String trimmedString = string.trim();
-					if (trimmedString.startsWith("*")) {
-						trimmedString = trimmedString.substring(1).trim();
+					if ((i > 1) && trimmedString.startsWith("*")) {
+				//		trimmedString = trimOne(trimmedString.substring(1));
+					}
+					else {
+						trimmedString = trimOne(string);
 					}
 					s.append(trimmedString);
 					if (i < strings.length) {
 						s.append("\n");
 					}
 				}
-			}
+			} */
 			return s.toString();
 		}
 		else {
-			return text.trim();
+			return commentText.trim();
 		}
 	}
 
@@ -612,5 +682,23 @@ public class ElementUtil
 			PathElementCS pathElementCS = ownedPathElements.get(size-1);
 			pathElementCS.setReferredElement(asElement);
 		}
+	}
+
+	/**
+	 * Trim one optional leading space and any number of trailing whitespace characrters.
+	 */
+	private static @NonNull String trimOne(@NonNull String contentString) {
+		int iLast = contentString.length();
+		for (; iLast > 1; --iLast) {
+			char ch = contentString.charAt(iLast-1);
+			if (ch != ' ') {
+				break;
+			}
+		}
+		if (iLast <= 0) {
+			return "";
+		}
+		char ch = contentString.charAt(0);
+		return contentString.substring(ch != ' ' ? 0 : 1, iLast);
 	}
 }
