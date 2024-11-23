@@ -36,9 +36,9 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 			serializationBuilder.append("/**/");
 		}
 		else if (bodyLineCount == 1) {
-			serializationBuilder.append("/*");
+			serializationBuilder.append("/* ");
 			serializationBuilder.append(bodyLines.get(0));
-			serializationBuilder.append("*/");
+			serializationBuilder.append(" */");
 		}
 		else if (bodyLines.get(0).startsWith("*")) {
 			serializationBuilder.append("/*");
@@ -66,9 +66,10 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 			serializationBuilder.append(SerializationBuilder.POP);
 		}
 		else {
-			serializationBuilder.append("/*");
+			serializationBuilder.append("/* ");
 			serializationBuilder.append(bodyLines.get(0));
-		//	serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+			serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+			serializationBuilder.append(" ");
 			for (int i = 1; i < bodyLineCount-1; i++) {
 				serializationBuilder.append(SerializationBuilder.NEW_LINE);
 				String line = bodyLines.get(i);
@@ -80,9 +81,10 @@ public class BaseCommentSegmentSupport implements CommentSegmentSupport
 			String lastLine = bodyLines.get(bodyLineCount-1);
 			if (lastLine.length() > 0) {
 				serializationBuilder.append(lastLine);
+				serializationBuilder.append(" ");
 			}
 			serializationBuilder.append("*/");
-		//	serializationBuilder.append(SerializationBuilder.POP);
+			serializationBuilder.append(SerializationBuilder.POP);
 		}
 		serializationBuilder.append(SerializationBuilder.NEW_LINE);
 	}
