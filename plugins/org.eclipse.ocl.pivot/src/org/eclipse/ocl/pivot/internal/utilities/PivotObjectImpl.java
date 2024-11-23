@@ -10,21 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -121,59 +116,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return null;
 	}
 
-	/**
-	 * @since 1.23
-	 */
-	public @Nullable Object getReloadableEObjectOrURI() {
-		InternalEObject eInternalContainer = eInternalContainer();
-		assert eInternalContainer != null;
-		Notifier esProxyTarget = null;
-		EObject esObject = getESObject();
-		if (esObject != null) {						// If there is a known ES
-			esProxyTarget = esObject;				//  use es to create proxy
-		}
-		else {										// else need a CS
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory == null) {
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			// Look for a specific CS
-			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-			if (csi2asMapping == null) {
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			EObject csElement = csi2asMapping.getCSElement(this);
-			if ((csElement == null) && !(this instanceof Constraint)) {		// If a CS Element references that AS Element
-				csElement = csi2asMapping.getCSElement(this);			// XXX happens for UML2Ecore2AS, and for the Java-implemented Ecore constraints
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
-			}
-			esProxyTarget = csElement;
-			if (esProxyTarget == null) { // XXX && !environmentFactory.isDisposing()) {
-				// XXX Else any old ES
-				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
-			}
-		}
-		return esProxyTarget;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	public @Nullable URI getReloadableURI() {
-		Object reloadableEObjectOrURI = getReloadableEObjectOrURI();
-		if (reloadableEObjectOrURI instanceof EObject) {
-			return EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
-		}
-		else if (reloadableEObjectOrURI instanceof URI) {
-			return (URI)reloadableEObjectOrURI;
-		}
-		else {
-			return null;
-		}
-	}
-
 	@Deprecated // Use getESObject()
 	public @Nullable EObject getTarget() {
 		return esObject;
@@ -185,14 +127,14 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * resolveESNotifier is called from getReloadableEObjectOrURI() to locate the ES Object that provides the Proxy URI.
-	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
-	 * bypass bloated AS such as Import.
+	 * resetESObject is called at the end of preUnload(). This implementation just nulls the esObject.
+	 * Derived  implementations should null related eObjects and sassign the URI of esObject as the proxy
+	 * and optionally to diagnose non-proxies.
 	 *
 	 * @since 1.23
 	 */
-	protected @Nullable Notifier resolveESNotifier(@NonNull CompleteModel completeModel) {
-		return null;
+	protected void resetESObject() {
+		this.esObject = null;
 	}
 
 	public void setESObject(@NonNull EObject newTarget) {
