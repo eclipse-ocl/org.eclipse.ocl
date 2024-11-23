@@ -667,6 +667,8 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Comments() throws Exception {
+		String originalComment = "/* a comment */";
+		String replacementComment = "/**\n*\tyet\n*\tanother\n *\tcomment\n*\t */";
 		String testDocument_uncommented =
 				"package p1 : p2 = 'p3' {\n" +
 						"    class C : 'java.lang.Object';\n" +
@@ -699,7 +701,7 @@ public class EditTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		assertHasComments(ecoreResource_uncommented, new @NonNull String @NonNull []{});
 		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{"a comment"});
-		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"*\nyet\nanother\ncomment\n"});
+		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"*\n\tyet\n\tanother\n\tcomment\n"});
 		OCL ocl = OCL.newInstance(getProjectMap());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		BaseCSResource xtextResource;
@@ -716,7 +718,7 @@ public class EditTests extends XtextTestCase
 		//	Change "class" to "/* a comment */class".
 		//
 		{
-			replace(xtextResource, "class", "/* a comment */class");
+			replace(xtextResource, "class", originalComment + "class");
 			assertNoResourceErrors("Adding comment", xtextResource);
 			URI ecoreURI2 = getTestFileURI("test2.ecore");
 			Resource ecoreResource2 = as2ecore(environmentFactory, asResource, ecoreURI2, SUPPRESS_VALIDATION);
@@ -726,7 +728,7 @@ public class EditTests extends XtextTestCase
 		//	Change "/* a comment */" to "/**\n* yet\n* another\n * comment\n*/".
 		//
 		{
-			replace(xtextResource, "/* a comment */", "/**\n* yet\n* another\n * comment\n* */");
+			replace(xtextResource, originalComment, replacementComment);
 			assertNoResourceErrors("Changing comment", xtextResource);
 			URI ecoreURI3 = getTestFileURI("test3.ecore");
 			Resource ecoreResource3 = as2ecore(environmentFactory, asResource, ecoreURI3, NO_MESSAGES);
@@ -736,7 +738,7 @@ public class EditTests extends XtextTestCase
 		//	Change "/**\n* yet\n* another\n * comment\n*/ back to nothing.
 		//
 		{
-			replace(xtextResource, "/**\n* yet\n* another\n * comment\n* */", "");
+			replace(xtextResource, replacementComment, "");
 			assertNoResourceErrors("Removing comment", xtextResource);
 			URI ecoreURI4 = getTestFileURI("test4.ecore");
 			Resource ecoreResource4 = as2ecore(environmentFactory, asResource, ecoreURI4, NO_MESSAGES);
