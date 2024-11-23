@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -184,9 +183,9 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		assert esObject == null;
 		Parameter asParameter = getRepresentedParameter();
 		if (asParameter != null) {
-			return ((PivotObjectImpl)asParameter).getReloadableEObjectOrURI();		// XXX else cs
+			return ((ElementImpl)asParameter).getReloadableEObjectOrURI();		// XXX else cs
 		}
 		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
-		return ((PivotObjectImpl)getType()).getReloadableEObjectOrURI();
+		return ((ElementImpl)getType()).getReloadableEObjectOrURI();
 	}
 } //ParameterVariableImpl
