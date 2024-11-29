@@ -52,7 +52,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2024-09"
+      defaultValue="2024-12"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -340,17 +340,17 @@
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
-      id="ocl.git.clone"
-      remoteURI="ocl/org.eclipse.ocl.git">
+      id="ocl.github.clone"
+      remoteURI="eclipse-ocl/org.eclipse.ocl">
     <annotation
         source="http://www.eclipse.org/oomph/setup/InducedChoices">
       <detail
           key="inherit">
-        <value>eclipse.git.gerrit.remoteURIs</value>
+        <value>github.remoteURIs</value>
       </detail>
       <detail
           key="label">
-        <value>OCL Git or Gerrit Repository</value>
+        <value>OCL GitHub Repository</value>
       </detail>
       <detail
           key="target">
@@ -374,7 +374,7 @@
     <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/examples}"
+          rootFolder="${ocl.github.clone.location/examples}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:AndPredicate">
@@ -426,7 +426,7 @@
         </predicate>
       </sourceLocator>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/plugins}"
+          rootFolder="${ocl.github.clone.location/plugins}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:AndPredicate">
@@ -695,7 +695,7 @@
     <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/examples}"
+          rootFolder="${ocl.github.clone.location/examples}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:AndPredicate">
@@ -741,7 +741,7 @@
         </predicate>
       </sourceLocator>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/examples/org.eclipse.ocl.examples.extlibrary}"
+          rootFolder="${ocl.github.clone.location/examples/org.eclipse.ocl.examples.extlibrary}"
           locateNestedProjects="true">
         <annotation
             source="Comment">
@@ -755,7 +755,7 @@
             pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
       </sourceLocator>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/tests}"
+          rootFolder="${ocl.github.clone.location/tests}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:AndPredicate">
@@ -895,18 +895,18 @@
         label="6.12.0 (2020-06)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.22"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.22"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_22_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -918,7 +918,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.22.location/examples}"
+            rootFolder="${emf.github.clone-2.22.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -937,18 +937,18 @@
         label="6.11.0 (2020-03)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.21"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.21"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_21_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -960,7 +960,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.21.location/examples}"
+            rootFolder="${emf.github.clone-2.21.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -979,18 +979,18 @@
         label="6.10.0 (2019-12)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.20"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.20"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_20_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1002,7 +1002,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.20.location/examples}"
+            rootFolder="${emf.github.clone-2.20.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1021,18 +1021,18 @@
         label="6.9.0 (2019-09)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.19"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.19"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_19_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1044,7 +1044,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.19.location/examples}"
+            rootFolder="${emf.github.clone-2.19.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1063,18 +1063,18 @@
         label="6.8.0 (2019-06)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.18"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.18"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_18_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1086,7 +1086,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.18.location/examples}"
+            rootFolder="${emf.github.clone-2.18.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1105,18 +1105,18 @@
         label="6.7.0 (2019-03)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.17"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.17"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_17_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1128,7 +1128,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.17.location/examples}"
+            rootFolder="${emf.github.clone-2.17.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1147,18 +1147,18 @@
         label="6.6.0 (2018-12)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.16"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.16"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_16_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1170,7 +1170,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.16.location/examples}"
+            rootFolder="${emf.github.clone-2.16.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1189,18 +1189,18 @@
         label="6.5.0 (2018-09)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.15"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.15"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_15_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1212,7 +1212,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.15.location/examples}"
+            rootFolder="${emf.github.clone-2.15.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1231,18 +1231,18 @@
         label="6.4.0 (Photon)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.14"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.14"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_14_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1254,7 +1254,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.14.location/examples}"
+            rootFolder="${emf.github.clone-2.14.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1273,18 +1273,18 @@
         label="6.3.0 (Oxygen)">
       <setupTask
           xsi:type="git:GitCloneTask"
-          id="emf.git.clone-2.13"
-          remoteURI="emf/org.eclipse.emf"
+          id="emf.github.clone-2.13"
+          remoteURI="eclipse-emf/org.eclipse.emf"
           checkoutBranch="R2_13_0">
         <annotation
             source="http://www.eclipse.org/oomph/setup/InducedChoices">
           <detail
               key="inherit">
-            <value>eclipse.git.gerrit.remoteURIs</value>
+            <value>github.remoteURIs</value>
           </detail>
           <detail
               key="label">
-            <value>EMF Git or Gerrit Repository</value>
+            <value>EMF GitHub Repository</value>
           </detail>
           <detail
               key="target">
@@ -1296,7 +1296,7 @@
       <setupTask
           xsi:type="projects:ProjectsImportTask">
         <sourceLocator
-            rootFolder="${emf.git.clone-2.13.location/examples}"
+            rootFolder="${emf.github.clone-2.13.location/examples}"
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
@@ -1317,10 +1317,10 @@
     <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/doc}"
+          rootFolder="${ocl.github.clone.location/doc}"
           locateNestedProjects="true"/>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/examples}"
+          rootFolder="${ocl.github.clone.location/examples}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:NamePredicate"
@@ -1330,10 +1330,10 @@
             pattern="org\.eclipse\.ocl\.examples\.unified"/>
       </sourceLocator>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/features}"
+          rootFolder="${ocl.github.clone.location/features}"
           locateNestedProjects="true"/>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/plugins}"
+          rootFolder="${ocl.github.clone.location/plugins}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:NamePredicate"
@@ -1346,7 +1346,7 @@
             pattern="org\.eclipse\.ocl\.master"/>
       </sourceLocator>
       <sourceLocator
-          rootFolder="${ocl.git.clone.location/releng}"
+          rootFolder="${ocl.github.clone.location/releng}"
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:AndPredicate">
