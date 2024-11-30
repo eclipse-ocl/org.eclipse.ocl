@@ -97,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -775,14 +774,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);
 		if (es2as == null) {
-			es2as = Ecore2AS.getAdapter(metamodel, environmentFactory);
+			es2as = External2AS.getAdapter(metamodel, environmentFactory);
 		}
 		return es2as.getCreated(pivotClass, eObject);
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
-		if ((asMetamodel == null) && autoLoadASmetamodel) {
+		if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing()) {
 			org.eclipse.ocl.pivot.Package stdlibPackage = null;
 			AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
 		//	if (!asLibraries.isEmpty()) {
@@ -804,7 +803,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages() {
-		if (!libraryLoadInProgress && (asMetamodel == null))  {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing())  {
 			getASmetamodel();
 		}
 		return completeModel.getAllCompletePackages();
@@ -1014,7 +1013,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if (!libraryLoadInProgress && asMetamodel == null) {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing()) {
 			getASmetamodel();
 		}
 		return completeModel.getCompletePackage(asPackage);
@@ -1041,6 +1040,22 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 		}
 		return defaultExpression;
+	}
+
+	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			return null;
+		}
+		External2AS external2as = uri2es2as2.get(esResource.getURI());
+		if (external2as == null) {
+			return null;
+		}
+		Resource resource = external2as.getResource();
+		if (resource != esResource) {
+			getClass();			// XXX caller checks
+		}
+		return external2as;
 	}
 
 	@Override
@@ -1152,22 +1167,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			thesePackages.add(thisPackage);
 		}
 		return thisPackage;
-	}
-
-	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
-		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
-		if (uri2es2as2 == null) {
-			return null;
-		}
-		External2AS external2as = uri2es2as2.get(esResource.getURI());
-		if (external2as == null) {
-			return null;
-		}
-		Resource resource = external2as.getResource();
-		if (resource != esResource) {
-			getClass();			// XXX caller checks
-		}
-		return external2as;
 	}
 
 	@Override

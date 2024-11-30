@@ -124,6 +124,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -328,10 +329,11 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			
 					/**
 					 * Overridden to avoid computing proxies for the shared instance.
+					 *
 					 * @since 1.23
 					 */
 					@Override
-					public void preUnload() {}
+					public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
 			
 					/**
 					 * Overridden to inhibit unloading of the shared instance.

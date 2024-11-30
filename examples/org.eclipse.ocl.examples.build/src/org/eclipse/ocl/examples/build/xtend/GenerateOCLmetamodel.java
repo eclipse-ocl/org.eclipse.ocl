@@ -184,7 +184,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 			Resource ecoreResource = ClassUtil.nonNullState(asResourceSet.getResource(inputURI, true));
-			// XXX	getEnvironmentFactory().adapt(ecoreResource);
 			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
 			if (ecoreErrorsString != null) {
 				issues.addError(this, ecoreErrorsString, null, null, null);

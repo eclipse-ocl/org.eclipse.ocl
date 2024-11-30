@@ -48,7 +48,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 
 	/**
 	 * Sets the name of the OCL slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */
@@ -62,7 +62,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 
 	/**
 	 * Sets the name of the OCL slot.
-	 * 
+	 *
 	 * @param slot
 	 *            name of slot
 	 */

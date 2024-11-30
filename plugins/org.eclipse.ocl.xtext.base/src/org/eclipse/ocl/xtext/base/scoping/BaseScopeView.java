@@ -156,7 +156,6 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		this.isQualified = isQualified;
 	}
 
-	@SuppressWarnings("deprecation")
 	protected @NonNull EnvironmentView createEnvironmentView(@Nullable String name) {
 		return new EnvironmentView(environmentFactory, targetReference, name);
 	}
