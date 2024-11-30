@@ -1113,8 +1113,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		else {
 			ecoreURI = ClassUtil.nonNullEMF(externalURI.appendFileExtension("ecore"));
 		}
-		AS2Ecore converter = new AS2Ecore(environmentFactory, ecoreURI, null);
-		converter.convertResource(asResource, ecoreURI);
+		AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, null);
+		converter.convert();
 		return converter.getCreated(ecoreClass, element);
 	}
 

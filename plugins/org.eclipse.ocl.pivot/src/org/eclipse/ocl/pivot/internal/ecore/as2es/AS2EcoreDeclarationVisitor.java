@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -254,7 +253,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	protected void copyModelElement(@NonNull EModelElement eModelElement, @NonNull Element pivotModelElement) {
-		context.putCreated(pivotModelElement, (Notifier)eModelElement);
+		context.putCreated(pivotModelElement, eModelElement);
 		safeVisitAll(ClassUtil.nonNullState(eModelElement.getEAnnotations()), pivotModelElement.getOwnedAnnotations());
 		AS2Ecore.copyCommentsAndDocumentation(eModelElement, pivotModelElement);
 	}
@@ -381,7 +380,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				}
 				EOperation eOperation = AS2Ecore.createConstraintEOperation(pivotInvariant, name, options);
 				eOperations.add(eOperation);
-				context.putCreated(pivotInvariant, (Notifier)eOperation);
+				context.putCreated(pivotInvariant, eOperation);
 				copyConstraint(eOperation, pivotInvariant);
 			}
 		}
@@ -396,7 +395,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				if (asConstraint.isIsCallable()) {
 					EOperation eOperation = AS2Ecore.createConstraintEOperation(asConstraint, PivotUtil.getName(asConstraint), options);
 					eOperations.add(eOperation);
-					context.putCreated(asConstraint, (Notifier)eOperation);
+					context.putCreated(asConstraint, eOperation);
 					copyConstraint(eOperation, asConstraint);
 					eDuplicates.add(eOperation);
 					context.defer(asConstraint);		// Defer references
@@ -840,7 +839,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public EObject visitTemplateParameter(@NonNull TemplateParameter pivotTemplateParameter) {
 		ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eTypeParameter.setName(pivotTemplateParameter.getName());
-		context.putCreated(pivotTemplateParameter, (Notifier)eTypeParameter);
+		context.putCreated(pivotTemplateParameter, eTypeParameter);
 		if (!pivotTemplateParameter.getConstrainingClasses().isEmpty()) {
 			context.defer(pivotTemplateParameter);
 		}

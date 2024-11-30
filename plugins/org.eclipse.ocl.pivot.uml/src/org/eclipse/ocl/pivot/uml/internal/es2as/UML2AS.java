@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -403,7 +402,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
+		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
 			return root.getCreatedMap();
 		}
 
@@ -442,7 +441,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		/**
 		 * Mapping of source UML objects to their resulting pivot element.
 		 */
-		private @NonNull Map<@NonNull Notifier, @NonNull Element> createMap = new HashMap<>();
+		private @NonNull Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
 
 		/**
 		 * Set of all UML objects requiring further work during the reference pass.
@@ -731,7 +730,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public @Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap() {
+		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
 			return createMap;
 		}
 
@@ -798,7 +797,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 							metamodelManager.installResource(asResource);
 						}
 						else {
-							Map<@NonNull Notifier, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
+							Map<@NonNull EObject, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
 							if (importedCreatedMap != null) {
 								createMap.putAll(importedCreatedMap);
 								//								for (@NonNull EObject key : importedCreatedMap.keySet()) {
