@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -73,7 +74,6 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -221,6 +221,41 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
+		if (!externalResourceSetWasNull) {
+			if (externalResourceSet instanceof ResourceSetImpl) {
+				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
+				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
+				if (uriResourceMap == null) {
+					uriResourceMap = new HashMap<>();
+					resourceSetImpl.setURIResourceMap(uriResourceMap);
+				}
+			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+				List<@NonNull EPackage> allEPackages = new UniqueList<>();
+				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
+				for (int i = 0; i < transitiveExternalResources.size(); i++) {
+					Resource esResource = transitiveExternalResources.get(i);
+					for (@NonNull EObject eObject : new TreeIterable(esResource)) {
+						EClass eClass = eObject.eClass();
+						EPackage ePackage = eClass.getEPackage();
+						assert ePackage != null;
+						if (allEPackages.add(ePackage)) {		// EPackage.nsURI schizophrenia is ok (e.g http:/... vs platform:/.../*.ecore)
+							Resource resource = ePackage.eResource();
+							assert resource != null;
+							if (!transitiveExternalResources.contains(resource)) {
+								transitiveExternalResources.add(resource);
+								URI uri = resource.getURI();
+								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
+								if ((old != null) && (old != resource)) {
+									uriResourceMap.put(uri, old);						// Stick with the first
+									logger.error(StringUtil.bind(PivotMessages.ConflictingResource, uri));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -780,6 +815,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		isDisposing = true;
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
 		int savedSize = asResources.size();
 		for (int i = 0; i < asResources.size(); i++) {
@@ -788,10 +824,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
 			}
 			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
-				((ASResource)asResource).preUnload();
+				((ASResource)asResource).preUnload(this);
 			}
 		}
-		isDisposing = true;
 		disposeInternal();
 	}
 
@@ -1092,7 +1127,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 		}
 		else {
-			ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+			ecore2as = External2AS.getAdapter(ecoreResource, this);
 			List<Diagnostic> errors = ecoreResource.getErrors();
 			assert errors != null;
 			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");

@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -444,18 +443,23 @@ public abstract class ElementImpl
 	}
 
 	/**
+	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
+	 *
+	 * The default implementation return a non-null esObject directly else attempts to return a CS object via the
+	 * csi2asMapping.
+	 *
+	 * Derived classes whose complete classes/packages may provide alternate ES Object values must overload.
+	 *
+	 * The derivation for a Model (that has no ESObject) should return the externalURI.
+	 *
 	 * @since 1.23
 	 */
-	public @Nullable Object getReloadableEObjectOrURI() {
-		// Look for a specific ES
+	@Override
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		// Look for the specific ES
 		EObject esObject = getESObject();
 		if (esObject != null) {
 			return esObject;
-		}
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-			return null;
 		}
 		// Look for a specific CS
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
@@ -465,14 +469,13 @@ public abstract class ElementImpl
 				return csElement;
 			}
 		}
-	/*	// Look for any ES
-		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
-		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-			esObject = asClass.getESObject();
+		// Look for alternate ES
+		if (!environmentFactory.isDisposing()) {
+			esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
 			if (esObject != null) {
 				return esObject;
 			}
-		} */
+		}
 		if (csi2asMapping == null) {
 			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
 			return null;
@@ -482,135 +485,34 @@ public abstract class ElementImpl
 	}
 
 	/**
-	 * @since 1.23
-	 *
-	public @Nullable Object getReloadableEObjectOrURI() {
-		InternalEObject eInternalContainer = eInternalContainer();
-		assert eInternalContainer != null;
-		Notifier esProxyTarget = null;
-		EObject esObject = getESObject();
-		if (esObject != null) {						// If there is a known ES
-			esProxyTarget = esObject;				//  use es to create proxy
-		}
-		else {										// else need a CS
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory == null) {
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			// Look for a specific CS
-			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-			if (csi2asMapping == null) {
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
-				return null;
-			}
-			EObject csElement = csi2asMapping.getCSElement(this);
-			if ((csElement == null) && !(this instanceof Constraint)) {		// If a CS Element references that AS Element
-				csElement = csi2asMapping.getCSElement(this);			// XXX happens for UML2Ecore2AS, and for the Java-implemented Ecore constraints
-				ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
-			}
-			esProxyTarget = csElement;
-			if (esProxyTarget == null) { // XXX && !environmentFactory.isDisposing()) {
-				// XXX Else any old ES
-				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
-			}
-		}
-		return esProxyTarget;
-	} */
-
-	/**
-	 * @since 1.23
-	 */
-	public @Nullable URI getReloadableURI() {
-		Object reloadableEObjectOrURI = getReloadableEObjectOrURI();
-		if (reloadableEObjectOrURI instanceof EObject) {
-			return EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
-		}
-		else if (reloadableEObjectOrURI instanceof URI) {
-			return (URI)reloadableEObjectOrURI;
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * preUnload() is invoked to support the depth-first traversal of an ASResource contents from ASResourceImpl.doUnload().
-	 * The traversal assigns proxies from the esObject that is then set to null. Other pivot artefacts are also reset.
+	 * Return the EObject whose URI should enable the esObject to be reloaded by searching Comp;letePackage/Class siblings.
+	 * @param environmentFactory
 	 *
 	 * @since 1.23
 	 */
-	public void preUnload() {
-	    assert eResource() != null;
-		for (EObject eObject : eContents()) {
-			if (eObject instanceof ElementImpl) {		// Propagate resetESObject through hierarchy (except for internal ExpressionInOCL)
-				((ElementImpl)eObject).preUnload();		// proxify the esObject before the eContainer() vanishes
-			}
-		}
-		resetESObject();
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		return null;
 	}
 
 	/**
-	 * resetESObject is called at the end of preUnload() to assign the URI of esObject as the proxy
-	 * and optionally to diagnose non-proxies.
+	 * Return the URI of an EObject that can be used to reload the ES object.
+	 *
+	 * Default implementation rreturns the URI of the getReloadableEObject().
+	 *
+	 * EObject-less elements such as Model and Precedence overload.
+	 *
+	 * Transitive EObject elements such as Import redirect.
 	 *
 	 * @since 1.23
 	 */
 	@Override
-	protected void resetESObject() {
-	    InternalEObject eInternalContainer = eInternalContainer();
-	    assert eInternalContainer != null;
-	    EObject esProxyTarget = null;
-		EObject esObject = getESObject();
-		if (esObject != null) {						// If there is a known ES
-			esProxyTarget = esObject;				//  use es to create proxy
-		}
-		else {										// else need a CS
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory == null) {
-				ASResourceImpl.SET_PROXY.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-				return;
-			}
-			// Look for a specific CS
-			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-			if (csi2asMapping == null) {
-				ASResourceImpl.SET_PROXY.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
-				return;
-			}
-			EObject csElement = csi2asMapping.getCSElement(this);
-			if (csElement == null) {		// If a CS Element references that AS Element
-				ASResourceImpl.SET_PROXY.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
-			}
-			esProxyTarget = csElement;
-			if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
-				// Else any old ES
-				esProxyTarget = resolveESNotifier(environmentFactory.getCompleteModel());
-				Object eObjectOrURI = getReloadableEObjectOrURI();
-				assert eObjectOrURI != esProxyTarget;				// XXX
-			}
-		}
-		if (esProxyTarget != null) {
-			URI uri = EcoreUtil.getURI(esProxyTarget);
-			eSetProxyURI(uri);
-	//	}
-	//	else if (esProxyTarget instanceof Resource) {
-	//		URI uri = ((Resource)esProxyTarget).getURI();
-	//		eSetProxyURI(uri);
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		EObject reloadableEObject = getReloadableEObject(environmentFactory);
+		if (reloadableEObject != null) {
+			return EcoreUtil.getURI(reloadableEObject);
 		}
 		else {
-			ASResourceImpl.SET_PROXY.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
 		}
-		super.resetESObject();
-	}
-
-	/**
-	 * resolveESNotifier is called from resetESObject() to locate the ES Object that provides the Proxy URI.
-	 * Derived classes may navigate the complete element to find an ESObject, or access the AS2CS mapping or
-	 * bypass bloated AS such as Import.
-	 *
-	 * @since 1.23
-	 */
-	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
-		return null;
 	}
 } //ElementImpl

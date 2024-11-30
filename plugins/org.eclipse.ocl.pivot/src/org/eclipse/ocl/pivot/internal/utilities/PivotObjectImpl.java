@@ -126,17 +126,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return toString();
 	}
 
-	/**
-	 * resetESObject is called at the end of preUnload(). This implementation just nulls the esObject.
-	 * Derived  implementations should null related eObjects and sassign the URI of esObject as the proxy
-	 * and optionally to diagnose non-proxies.
-	 *
-	 * @since 1.23
-	 */
-	protected void resetESObject() {
-		this.esObject = null;
-	}
-
 	public void setESObject(@NonNull EObject newTarget) {
 		assert !(this instanceof Model) : "no ESObject for Model";
 		esObject = newTarget;
