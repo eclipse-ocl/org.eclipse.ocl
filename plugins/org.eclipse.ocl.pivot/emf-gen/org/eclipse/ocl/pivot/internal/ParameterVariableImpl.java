@@ -17,10 +17,11 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -28,6 +29,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -175,17 +177,22 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	}
 
 	/**
+	 * Overridden to delegate to the represented parameter/type.
+	 *
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable Object getReloadableEObjectOrURI() {
-		EObject esObject = super.getESObject();
-		assert esObject == null;
-		Parameter asParameter = getRepresentedParameter();
-		if (asParameter != null) {
-			return ((ElementImpl)asParameter).getReloadableEObjectOrURI();		// XXX else cs
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		EReference eContainmentFeature = eContainmentFeature();
+		Element asRepresentedElement;
+		if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+			asRepresentedElement = getRepresentedParameter();
 		}
-		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
-		return ((ElementImpl)getType()).getReloadableEObjectOrURI();
+		else {
+			assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT)
+				|| (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
+			asRepresentedElement = getType();
+		}
+		return asRepresentedElement.getReloadableEObject(environmentFactory);
 	}
 } //ParameterVariableImpl

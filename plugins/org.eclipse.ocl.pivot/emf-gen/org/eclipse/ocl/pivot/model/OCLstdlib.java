@@ -58,12 +58,11 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -243,10 +242,11 @@ public class OCLstdlib extends ASResourceImpl
 
 		/**
 		 * Overridden to avoid computing proxies for the shared instance.
+		 *
 		 * @since 1.23
 		 */
 		@Override
-		public void preUnload() {}
+		public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
 
 		/**
 		 * Overridden to inhibit unloading of the shared instance.
@@ -269,8 +269,11 @@ public class OCLstdlib extends ASResourceImpl
 	}
 
 	/**
+<<<<<<< Upstream, based on origin/ewillink/proto-flat-target-best-approx
 	 *	Construct a copy of the OCL Standard Library with specified AS resource URI,
 	 *  and external URI.
+=======
+>>>>>>> bc5aa76 Tidy
 	 * @since 1.23
 	 */
 	public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {

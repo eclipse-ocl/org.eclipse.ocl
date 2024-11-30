@@ -134,6 +134,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -325,10 +326,11 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 					/**
 					 * Overridden to avoid computing proxies for the shared instance.
+					 *
 					 * @since 1.23
 					 */
 					@Override
-					public void preUnload() {}
+					public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
 			
 					/**
 					 * Overridden to inhibit unloading of the shared instance.
@@ -351,11 +353,17 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				}
 			
 				/**
+<<<<<<< Upstream, based on origin/ewillink/proto-flat-target-best-approx
 				 *	Construct a copy of the OCL Standard Library with specified AS resource URI,
 				 *  and external URI.
 				 * @since 1.23
 				 */
 				public static @NonNull «javaClassName» create(@NonNull String asURI, @NonNull String externalURI) {
+=======
+				 * @since 1.23
+				 */
+				public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
+>>>>>>> bc5aa76 Tidy
 					Contents contents = new Contents(externalURI);
 					return new «javaClassName»(asURI, contents.getModel());
 				}
