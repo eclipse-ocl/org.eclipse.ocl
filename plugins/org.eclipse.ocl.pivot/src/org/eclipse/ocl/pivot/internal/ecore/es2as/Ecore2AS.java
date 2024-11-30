@@ -285,6 +285,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		this.environmentFactory.addExternal2AS(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
