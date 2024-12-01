@@ -251,6 +251,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
 		}
+		assert !partialClass.eIsProxy();			// XXX
 		((ClassImpl)partialClass).addClassListener(this);
 		if (partialClass.getUnspecializedElement() == null) {
 			getCompleteModel().didAddClass(partialClass, getCompleteClass());

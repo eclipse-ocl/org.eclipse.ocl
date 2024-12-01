@@ -45,6 +45,9 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 {
 	public static final @NonNull ImportCSAttribution INSTANCE = new ImportCSAttribution();
 
+	/**
+	 * ImportAdapter caches the state of an import lookup to bypass repeated attempts.
+	 */
 	private static class ImportAdapter extends AdapterImpl
 	{
 		private URI uri = null;
@@ -116,6 +119,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 			try {
 				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, null, null);
 				if (importedElement != null) {
+					assert !importedElement.eIsProxy();					// XXX
 					Resource importedResource = importedElement.eResource();
 					if (importedResource != null) {
 						if (importedResource instanceof ASResource) {

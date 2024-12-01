@@ -200,7 +200,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 									eClassAnnotation.getDetails().put("constraints", constraints + " " + constraintName);
 								}
 							}
-							EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, constraintName, "$$complete-ocl$$");		// XXX toString
+							EcoreUtil.setAnnotation(eClass, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, constraintName, PivotConstants.DUMMY_COMPLETE_OCL_BODY);		// XXX toString
 						}
 					}
 				}
