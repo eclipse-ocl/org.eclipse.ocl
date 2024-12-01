@@ -243,6 +243,8 @@ public class OCLstdlib extends ASResourceImpl
 
 		/**
 		 * Overridden to avoid computing proxies for the shared instance.
+		 *
+		 * @since 1.23
 		 */
 		@Override
 		public void preUnload() {}
@@ -267,6 +269,9 @@ public class OCLstdlib extends ASResourceImpl
 		return new OCLstdlib(asURI, contents.getModel());
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
 		Contents contents = new Contents(externalURI);
 		return new OCLstdlib(asURI, contents.getModel());

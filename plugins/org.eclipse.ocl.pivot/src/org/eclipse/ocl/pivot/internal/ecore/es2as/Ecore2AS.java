@@ -126,7 +126,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static boolean isEcore(@NonNull Resource resource) {
-		List<EObject> contents = resource.getContents();
+		List<@NonNull EObject> contents = resource.getContents();
 		for (EObject content : contents) {
 			if (content instanceof EPackage) {
 				return true;
@@ -180,12 +180,13 @@ public class Ecore2AS extends AbstractExternal2AS
 
 		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
-			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
+			Map<@NonNull EObject, @Nullable String> ecoreAliasMap = ecoreAdapter.getAliasMap();
 			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(ecoreASResource);
-			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+			Map<@NonNull EObject, @Nullable String> pivotAliasMap = pivotAdapter.getAliasMap();
 			for (EObject eObject : ecoreAliasMap.keySet()) {
 				String alias = ecoreAliasMap.get(eObject);
 				Element element = conversion.newCreateMap.get(eObject);
+				assert element != null;
 				pivotAliasMap.put(element, alias);
 			}
 		}
@@ -225,7 +226,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	private Map<@NonNull String, @NonNull Element> oldIdMap = null;
 
 	/**
-	 * Mapping of source Ecore elements to their resulting pivot element in the current conversion.
+	 * Mapping of source Ecore objects to their resulting pivot element in the current conversion.
 	 */
 	private Map<@NonNull EObject, @NonNull Element> newCreateMap = null;
 
@@ -300,7 +301,6 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	@Override
 	public void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement) {
-	//	System.out.println("addMapping " + (eObject instanceof ENamedElement ? ((ENamedElement)eObject).getName() : "???") + " " + NameUtil.debugSimpleName(eObject) + " " + NameUtil.debugSimpleName(pivotElement));
 		if (pivotElement instanceof PivotObjectImpl) {
 			((PivotObjectImpl)pivotElement).setESObject(eObject);
 		}
@@ -1167,7 +1167,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
 		eDataTypes = new ArrayList<>();
-		boolean wasUpdating = asResource.setUpdating(true);
+		@SuppressWarnings("unused") boolean wasUpdating = asResource.setUpdating(true);
 		/*
 		 * Establish the declarations.
 		 */

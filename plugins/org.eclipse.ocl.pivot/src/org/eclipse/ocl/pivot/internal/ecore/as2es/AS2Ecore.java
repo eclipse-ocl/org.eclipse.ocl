@@ -513,9 +513,6 @@ public class AS2Ecore extends AbstractConversion
 		errors2.add(new XMIException(message));
 	}
 
-	/**
-	 * @since 1.23
-	 */
 	public <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
 		EModelElement eModelElement = createMap.get(pivotElement);
 		//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));

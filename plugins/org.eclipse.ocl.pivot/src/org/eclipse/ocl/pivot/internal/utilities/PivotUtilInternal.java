@@ -893,6 +893,7 @@ public class PivotUtilInternal //extends PivotUtil
 			return false;
 		}
 	}
+
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the tycho-surefire-plugin..
