@@ -848,7 +848,6 @@ public class EnvironmentView
 	}
 
 	public int computeLookups(@NonNull Element target, @Nullable Element child) {
-		@SuppressWarnings("deprecation")
 		ScopeView pivotScopeView = new PivotScopeView(environmentFactory, target, child, false);
 		return computeLookups(pivotScopeView);
 	}
@@ -878,7 +877,6 @@ public class EnvironmentView
 	}
 
 	public void computeQualifiedLookups(@NonNull Element target) {
-		@SuppressWarnings("deprecation")
 		ScopeView parentScopeView = new PivotScopeView(environmentFactory, target, null, true);
 		addElementsOfScope(target, parentScopeView);
 	}

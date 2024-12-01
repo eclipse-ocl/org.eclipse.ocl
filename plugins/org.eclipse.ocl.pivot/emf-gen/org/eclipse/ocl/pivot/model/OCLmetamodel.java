@@ -244,6 +244,8 @@ public class OCLmetamodel extends ASResourceImpl
 
 		/**
 		 * Overridden to avoid computing proxies for the shared instance.
+		 *
+		 * @since 1.23
 		 */
 		@Override
 		public void preUnload() {}

@@ -1788,45 +1788,4 @@ implements Property {
 		}
 		return null;
 	}
-
-	@Override
-	public void setName(String newName) {
-		if ("bag0".equals(newName)) {
-			getClass();				// XXX
-		}
-		super.setName(newName);
-	}
-
-	/**
-	 * @return
-	 * @since 1.22
-	 *
-	@Override
-	protected boolean setReloadableProxy() {		// XXX getReloadableNotifier
-		if ("ownedContents".equals(name)) {
-			getClass();				// XXX
-		}
-	//	if (isIsDerived() || isIsImplicit() || isIsTransient() || isIsVolatile()) {
-		if (isIsImplicit()) {
-		//	assert getESObject() == null;				Ecore::EAttribute.eAttributeType has esObject
-			eSetProxyURI(NO_UNLOAD_PROXY_URI);
-			return false;
-		}
-		else {
-			boolean isReloadableProxy = super.setReloadableProxy();
-			Property asOpposite = basicGetOpposite();					// XXX ??? redundant
-			if (asOpposite != null) {
-				ASResource asResource = (ASResource)eResource();
-				Resource eResource = asOpposite.eResource();
-				if ((eResource != null) && (eResource != asResource)) {
-					asOpposite.setOwningClass(null);
-				}
-				asOpposite.setType(null);
-				asOpposite.setOpposite(null);
-				setOpposite(null);
-			}
-			setType(null);				// Easier to set them all than just the base_xxx ones
-			return isReloadableProxy;
-		}
-	} */
 } //PropertyImpl

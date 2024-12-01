@@ -325,6 +325,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 					/**
 					 * Overridden to avoid computing proxies for the shared instance.
+					 *
+					 * @since 1.23
 					 */
 					@Override
 					public void preUnload() {}
@@ -349,6 +351,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					return new OCLstdlib(asURI, contents.getModel());
 				}
 			
+				/**
+				 * @since 1.23
+				 */
 				public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
 					Contents contents = new Contents(externalURI);
 					return new OCLstdlib(asURI, contents.getModel());
