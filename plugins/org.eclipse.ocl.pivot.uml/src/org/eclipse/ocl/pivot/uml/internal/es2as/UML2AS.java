@@ -1263,7 +1263,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
 		URI pivotURI = asResource.getURI();
-		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.toString());
+		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.trimFileExtension().toString());
 		asResource.getContents().add(pivotModel2);
 		UML2ASDeclarationSwitch declarationPass = getDeclarationPass();
 		List<org.eclipse.ocl.pivot.Package> rootPackages = new ArrayList<>();
