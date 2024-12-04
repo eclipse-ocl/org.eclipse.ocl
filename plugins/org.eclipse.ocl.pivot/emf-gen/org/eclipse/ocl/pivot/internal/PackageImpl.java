@@ -29,8 +29,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -41,13 +39,9 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -749,41 +743,14 @@ implements org.eclipse.ocl.pivot.Package {
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable Object getReloadableEObjectOrURI() {
-		if (Orphanage.isOrphan(this)) {
-			return null;
-		}
-		// Look for a specific ES
-		EObject esObject = getESObject();
-		if (esObject != null) {
-			return esObject;
-		}
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-			return null;
-		}
-		// Look for a specific CS
-		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
-		if (csi2asMapping != null) {
-			EObject csElement = csi2asMapping.getCSElement(this);
-			if (csElement != null) {		// If a CS Element references that AS Element
-				return csElement;
-			}
-		}
-		// Look for any ES
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(this);
 		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-			esObject = asPackage.getESObject();
+			EObject esObject = asPackage.getESObject();
 			if (esObject != null) {
 				return esObject;
 			}
 		}
-		if (csi2asMapping == null) {
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
-			return null;
-		}
-		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
 		return null;
 	}
 
@@ -796,22 +763,6 @@ implements org.eclipse.ocl.pivot.Package {
 		if ((packageListeners2 != null) && packageListeners2.removeListener(packageListener)) {
 			packageListeners = null;
 		}
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override @Deprecated
-	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
-		assert false;		// XXX
-		CompletePackage completePackage = completeModel.getCompletePackage(this);
-		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-			EObject esObject = asPackage.getESObject();
-			if (esObject != null) {
-				return esObject;
-			}
-		}
-		return null;
 	}
 
 	public void setIgnoreInvariants(boolean ignoreInvariants) {

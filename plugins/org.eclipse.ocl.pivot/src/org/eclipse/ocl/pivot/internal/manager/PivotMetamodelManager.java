@@ -823,7 +823,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
-		if ((asMetamodel == null) && autoLoadASmetamodel) {
+		if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing()) {
 			org.eclipse.ocl.pivot.Package stdlibPackage = null;
 			AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
 		//	if (!asLibraries.isEmpty()) {
@@ -1055,7 +1055,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if (!libraryLoadInProgress && asMetamodel == null) {
+		if (!libraryLoadInProgress && asMetamodel == null && !environmentFactory.isDisposing()) {
 			getASmetamodel();
 		}
 		return completeModel.getCompletePackage(asPackage);

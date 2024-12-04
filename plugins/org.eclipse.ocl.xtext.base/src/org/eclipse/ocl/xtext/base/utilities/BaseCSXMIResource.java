@@ -27,8 +27,9 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ParameterVariable;
-import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -85,10 +86,15 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		}
 
 		public String getHREF2(EObject obj) {
-			if (obj instanceof ElementImpl) {										// AS is not persisted and so not referenceable
-				Object reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
-				if (reloadableEObjectOrURI instanceof EObject) {
-					EObject reloadableEObject = (EObject)reloadableEObjectOrURI;
+			if (obj instanceof Model) {
+				URI reloadableURI = ((Model)obj).getReloadableURI(environmentFactory);
+				if (reloadableURI != null) {
+					return reloadableURI.toString();
+				}
+			}
+			else if (obj instanceof Element) {										// AS is not persisted and so not referenceable
+				EObject reloadableEObject = ((Element)obj).getReloadableEObject(environmentFactory);
+				if (reloadableEObject != null) {
 					String href2 = super.getHREF(reloadableEObject);
 					if (reloadableEObject.eResource() == csResource) {				// Internal reference within original 'Xtext' CS
 						int index = href2.indexOf("#");
@@ -98,85 +104,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 					}
 					return href2;
 				}
-				else if (reloadableEObjectOrURI instanceof URI) {					// Model returns externalURI in place of an 'EResource' EObject
-					return reloadableEObjectOrURI.toString();
-				}
-				else if (reloadableEObjectOrURI != null) {
-					throw new IllegalStateException("getHREF of " + obj.getClass().getName());
-				}
-				else {																// No replacement available
-				//	throw new NullPointerException("getHREF");
-				}
-			/*	XXX //	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
-				if (obj instanceof Model) {
-					return ((Model)obj).getExternalURI();
-				}
-				EObject esObject = ((ElementImpl)obj).getESObject();
-				if (esObject != null) {
-					return super.getHREF(esObject);
-				}
-				//	Look for complete ES (referenceable metamodel entries)
-				CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
-				if (obj instanceof org.eclipse.ocl.pivot.Package) {
-					CompletePackageInternal completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)obj);
-					for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-						esObject = asPackage.getESObject();
-						if (esObject != null) {
-							return super.getHREF(esObject);
-						}
-					}
-				}
-				else if (obj instanceof org.eclipse.ocl.pivot.Class) {
-					CompleteClassInternal completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)obj);
-					for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-						esObject = asClass.getESObject();
-						if (esObject != null) {
-							return super.getHREF(esObject);
-						}
-					}
-				}
-				else if (obj instanceof Operation) {
-					Operation asOperation = (Operation)obj;
-					CompleteClassInternal completeClass = completeModel.getCompleteClass(asOperation.getOwningClass());
-					List<org.eclipse.ocl.pivot.Class> partialClasses = completeClass.getPartialClasses();
-					Iterable<@NonNull Operation> asOverloads = completeClass.getOperationOverloads(asOperation);
-					if (asOverloads != null) {
-						for (Operation asOverload : asOverloads) {
-							if (partialClasses.contains(asOverload.getOwningClass())) {
-								esObject = asOverload.getESObject();
-								if (esObject != null) {
-									return super.getHREF(esObject);
-								}
-							}
-						}
-					}
-				}
-				else if (obj instanceof Property) {
-					CompleteClassInternal completeClass = completeModel.getCompleteClass(((Property)obj).getOwningClass());
-					Iterable<@NonNull Property> asProperties = completeClass.getProperties((Property)obj);
-					if (asProperties != null) {
-						for (Property asProperty : asProperties) {
-							esObject = asProperty.getESObject();
-							if (esObject != null) {
-								return super.getHREF(esObject);
-							}
-						}
-					}
-				}
-				// Else an internal CS-defined element such as an IteratorVariable
-				ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
-				if (csi2asMapping == null) {
-				//	ASResourceImpl.PROXIES.println("No CSI2ASMappings when CS-saving  " + NameUtil.debugSimpleName(this));
-				}
-				else {
-					EObject csElement = csi2asMapping.getCSElement((ElementImpl)obj);
-					if (csElement == null) {
-					//	ASResourceImpl.PROXIES.println("No CSI2ASMapping for " + NameUtil.debugSimpleName(obj) + " when CS-saving  " + NameUtil.debugSimpleName(this));
-					}
-					else {
-						return super.getHREF(csElement);
-					}
-				} */
 			}
 			else {
 				String eClassName = obj.eClass().getName();

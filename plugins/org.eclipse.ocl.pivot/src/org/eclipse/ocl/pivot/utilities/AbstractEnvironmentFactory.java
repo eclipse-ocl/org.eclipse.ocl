@@ -795,6 +795,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		isDisposing = true;
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
 		int savedSize = asResources.size();
 		for (int i = 0; i < asResources.size(); i++) {
@@ -803,10 +804,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
 			}
 			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
-				((ASResource)asResource).preUnload();
+				((ASResource)asResource).preUnload(this);
 			}
 		}
-		isDisposing = true;
 		disposeInternal();
 	}
 
