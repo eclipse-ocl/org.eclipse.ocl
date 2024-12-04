@@ -8,10 +8,17 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLstdlib.java" type="org.eclipse.ocl.pivot.model.OCLstdlib">
-        <filter id="1143996420">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
+        <filter id="404000815">
             <message_arguments>
-                <message_argument value="create(String, String)"/>
+                <message_argument value="org.eclipse.ocl.pivot.Element"/>
+                <message_argument value="getReloadableEObject(EnvironmentFactoryInternal)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Element"/>
+                <message_argument value="getReloadableURI(EnvironmentFactoryInternal)"/>
             </message_arguments>
         </filter>
     </resource>

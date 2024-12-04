@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -41,8 +42,8 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -293,7 +294,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * this resource. Entries are omitted for AS elements that have no need for a CS/ES proxy. Proxies are assigned later during unloaded().
 	 * (Proxies are not set directly since too-early proxies seem to disrupt the content iteration over UML models.)
 	 */
-	private @Nullable Map<@NonNull ElementImpl, @NonNull URI> asElement2reloadableURI = null;
+	private @Nullable Map<@NonNull Element, @NonNull URI> asElement2reloadableURI = null;
 
 	/**
 	 * Creates an instance of the resource.
@@ -393,8 +394,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	// XXX	System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
 		isUnloading = true;
 		try {
-			/*	if (!isSkipPreUnload && isSaveable) { */
-	//		preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -557,21 +556,21 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {
+	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
 //		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
 		if (!isASonly && (asElement2reloadableURI == null)) {
-			Map<@NonNull ElementImpl, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
+			Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
 			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-				if (eObject instanceof ElementImpl) {
-					ElementImpl asElement = (ElementImpl)eObject;
-					URI eProxyURI = asElement.eProxyURI();
+				if (eObject instanceof Element) {
+					Element asElement = (Element)eObject;
+					URI eProxyURI = ((BasicEObjectImpl)asElement).eProxyURI();
 					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI();
+						URI uri = asElement.getReloadableURI(environmentFactory);
 						if (uri != null) {
 							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-								asElement.getReloadableURI();		// XXX
+								asElement.getReloadableURI(environmentFactory);		// XXX
 							}
 							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
 							asElement2reloadableURI2.put(asElement, uri);

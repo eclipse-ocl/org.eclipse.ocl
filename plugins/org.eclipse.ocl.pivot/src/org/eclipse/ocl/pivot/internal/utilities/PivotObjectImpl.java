@@ -10,20 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -128,17 +124,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public String getText() {
 		return toString();
-	}
-
-	/**
-	 * resetESObject is called at the end of preUnload(). This implementation just nulls the esObject.
-	 * Derived  implementations should null related eObjects and sassign the URI of esObject as the proxy
-	 * and optionally to diagnose non-proxies.
-	 *
-	 * @since 1.23
-	 */
-	protected void resetESObject() {
-		this.esObject = null;
 	}
 
 	public void setESObject(@NonNull EObject newTarget) {

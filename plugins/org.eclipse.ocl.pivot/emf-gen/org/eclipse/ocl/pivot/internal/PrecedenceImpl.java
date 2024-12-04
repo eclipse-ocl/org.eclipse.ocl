@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -342,7 +343,7 @@ public class PrecedenceImpl
 	 * @since 1.23
 	 */
 	@Override
-	public @NonNull URI getReloadableEObjectOrURI() {			// XXX enums are missing from oclstdlib.ecore
+	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {			// XXX enums are missing from oclstdlib.ecore
 		URI platformResourceURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/oclstdlib.ecore", true);
 		return platformResourceURI.appendFragment("//Precedence/"+ getName());	// XXX missing
 	}
