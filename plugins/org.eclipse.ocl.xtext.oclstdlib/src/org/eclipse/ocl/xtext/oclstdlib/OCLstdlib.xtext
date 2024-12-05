@@ -99,7 +99,7 @@ LibClassCS returns LibClassCS:
 	(ownedSignature=TemplateSignatureCS)?
 	(':' metaclassName=[MetaclassNameCS|AnyName])?
 	('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
-	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	'{' (ownedOperations+=OperationCS
 	   | ownedProperties+=LibPropertyCS
 	   | ownedConstraints+=InvCS
@@ -129,7 +129,7 @@ InvCS returns LibConstraintCS:
 
 LibCoercionCS returns LibCoercionCS:
 	'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
-	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	(('{' (ownedAnnotations+=AnnotationElementCS
 	     | ownedPreconditions+=PostCS
 	     | ownedPostconditions+=PreCS)* '}')
@@ -147,7 +147,7 @@ LibIterationCS returns LibIterationCS:
 	':' ownedType=TypedMultiplicityRefCS
 	(isInvalidating?='invalidating')?
 	(isValidating?='validating')?
-	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	(('{' (ownedAnnotations+=AnnotationElementCS
 	     | ownedPreconditions+=PostCS
 	     | ownedPostconditions+=PreCS)* '}')
@@ -181,7 +181,7 @@ LibOperationCS returns LibOperationCS:
 	(isValidating?='validating')?
 	(isInvalidating?='invalidating')?
 	('precedence' '=' precedence=[pivot::Precedence|Name])?
-	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	(('{' (ownedAnnotations+=AnnotationElementCS
 	     | ('body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';')
 	     | ownedPostconditions+=PostCS
@@ -222,7 +222,7 @@ LibPropertyCS returns LibPropertyCS:
 	(isStatic?='static')? 'property' name=Name
 	':' ownedType=TypedMultiplicityRefCS
 	ownedOpposite=LibOppositeCS?
-	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	(	('{' (ownedAnnotations+=AnnotationElementCS)* '}')
 	|	';'
 	)
