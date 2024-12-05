@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -537,6 +536,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
+		assert ((NumberValue)upper).equals(ValueUtil.ONE_VALUE) == upper.equals(ValueUtil.ONE_VALUE);		// XXX debugging
 		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
 			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
 			oppositeProperty.setIsRequired(true);
@@ -650,8 +650,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
-		for (@NonNull Resource asResource : new ArrayList<>(asResources)) {
+		List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
+		}
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.eAdapters().clear();
 		}
 		asResources.clear();
@@ -801,7 +804,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages() {
-		if (!libraryLoadInProgress && (asMetamodel == null))  {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing())  {
 			getASmetamodel();
 		}
 		return completeModel.getAllCompletePackages();
@@ -1008,7 +1011,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if (!libraryLoadInProgress && asMetamodel == null) {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing()) {
 			getASmetamodel();
 		}
 		return completeModel.getCompletePackage(asPackage);
@@ -1125,7 +1128,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
-		completeModel.getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
+		completeModel.getCompletePackage(thatPackage);					// XXX Ensure thatPackage has a complete representation
 		Model thatModel = PivotUtil.getContainingModel(thatPackage);
 		if (thisModel == thatModel) {
 			return thatPackage;
@@ -2083,15 +2086,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
-				if (eResource instanceof XMLResource) {
-					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
+			//	if (eResource instanceof XMLResource) {
+					EObject eObject = eResource.getEObject(fragment);
 					if (eObject != null) {
 						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
 						if (asElement != null) {
 							return asElement;
 						}
 					}
-				}
+			//	}
 			}
 		}
 		if (resource == null) {
