@@ -1101,7 +1101,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
@@ -1112,7 +1112,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		String className = PivotUtil.getName(thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
 		if (thisClass == null) {
-			thisClass = PivotUtil.createClass(className);
+			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
 		}
 		return thisClass;
