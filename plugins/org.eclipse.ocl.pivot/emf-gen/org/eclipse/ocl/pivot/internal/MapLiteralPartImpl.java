@@ -357,5 +357,4 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitMapLiteralPart(this);
 	}
-
 } //MapLiteralPartImpl

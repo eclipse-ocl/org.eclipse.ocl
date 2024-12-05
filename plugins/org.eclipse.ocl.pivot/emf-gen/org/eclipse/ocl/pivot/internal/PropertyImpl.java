@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,9 +32,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -54,6 +51,8 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -614,6 +612,8 @@ implements Property {
 	 */
 	@Override
 	public void setOpposite(Property newOpposite) {
+		assert (eResource() == null) || (eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
+		assert (newOpposite == null) || (newOpposite.eResource() == null) || (newOpposite.eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
@@ -1755,6 +1755,24 @@ implements Property {
 		return propertyId2;
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(this));
+		Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
+		if (asProperties != null) {
+			for (Property asProperty : asProperties) {
+				EObject esObject = asProperty.getESObject();
+				if (esObject != null) {
+					return esObject;
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void initValue(@NonNull Object objectValue, @Nullable Object ecoreValue) {
 		assert ValueUtil.isEcore(ecoreValue);
@@ -1766,46 +1784,5 @@ implements Property {
 			return;
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected void resetESObject() {
-		ASResource asResource = (ASResource)eResource();
-		super.resetESObject();
-		Property asOpposite = basicGetOpposite();
-		if (asOpposite != null) {
-			Resource eResource = asOpposite.eResource();
-			if ((eResource != null) && (eResource != asResource)) {
-				asOpposite.setOwningClass(null);
-			}
-			asOpposite.setType(null);
-			asOpposite.setOpposite(null);
-			setOpposite(null);
-		}
-		setType(null);				// Easier to set them all than just the base_xxx ones
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
-		org.eclipse.ocl.pivot.Class asOwningClass = getOwningClass();
-		if (asOwningClass != null) {
-			CompleteClass completeClass = completeModel.getCompleteClass(asOwningClass);
-			Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
-			if (asProperties != null) {
-				for (Property asPartialProperty : asProperties) {
-					EObject esObject = asPartialProperty.getESObject();
-					if (esObject != null) {
-						return esObject;
-					}
-				}
-			}
-		}
-		return null;
 	}
 } //PropertyImpl

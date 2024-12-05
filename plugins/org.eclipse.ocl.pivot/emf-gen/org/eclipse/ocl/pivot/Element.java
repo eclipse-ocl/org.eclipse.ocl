@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -146,7 +147,7 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	 *
 	 * @since 1.23
 	 */
-	default @Nullable EObject getReloadableEObject() {
+	default @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return null;
 	}
 	/**
@@ -154,7 +155,7 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	 *
 	 * @since 1.23
 	 */
-	default @Nullable URI getReloadableURI() {
+	default @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return null;
 	}
 } // Element

@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -393,8 +394,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	// XXX	System.out.println("doUnload " + NameUtil.debugSimpleName(this) + " : " + uri);
 		isUnloading = true;
 		try {
-			/*	if (!isSkipPreUnload && isSaveable) { */
-	//		preUnload();
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -557,7 +556,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.23
 	 */
 	@Override
-	public void preUnload() {
+	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
 //		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
 		if (!isASonly && (asElement2reloadableURI == null)) {
@@ -568,10 +567,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 					Element asElement = (Element)eObject;
 					URI eProxyURI = ((BasicEObjectImpl)asElement).eProxyURI();
 					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI();
+						URI uri = asElement.getReloadableURI(environmentFactory);
 						if (uri != null) {
 							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-								asElement.getReloadableURI();		// XXX debugging
+								asElement.getReloadableURI(environmentFactory);		// XXX debugging
 							}
 							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
 							asElement2reloadableURI2.put(asElement, uri);

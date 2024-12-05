@@ -891,8 +891,7 @@ implements Constraint {
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
 	}
 } //ConstraintImpl

@@ -35,9 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -1448,20 +1446,8 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.22
 	 */
-	@Override
-	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
-		CompleteClass completeClass = completeModel.getCompleteClass(this);
-		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
-			EObject esObject = asClass.getESObject();
-			if (esObject != null) {
-				return esObject;
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public void setName(String newName) {
 		String oldName = name;

@@ -32,9 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -1634,25 +1632,6 @@ implements Operation {
 		if (operationOverloads != null) {
 			for (Operation asOperation : operationOverloads) {
 				EObject esObject = asOperation.getESObject();
-				if (esObject != null) {
-					return esObject;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
-		org.eclipse.ocl.pivot.Class asOwningClass = getOwningClass();
-		CompleteClass completeClass = completeModel.getCompleteClass(asOwningClass);
-		Iterable<@NonNull Operation> asOperations = completeClass.getOperationOverloads(this);
-		if (asOperations != null) {
-			for (Operation asPartialOperation : asOperations) {
-				EObject esObject = asPartialOperation.getESObject();
 				if (esObject != null) {
 					return esObject;
 				}

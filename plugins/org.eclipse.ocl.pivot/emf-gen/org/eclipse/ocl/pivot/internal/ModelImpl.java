@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -500,8 +501,11 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return ownedImports;
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
-	public @NonNull URI getReloadableURI() {
+	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return URI.createURI(externalURI);
 	}
 
@@ -509,18 +513,12 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @since 1.23
 	 */
 	@Override
-	public @NonNull Element getReloadableEObject() {
+	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		throw new IllegalStateException("Model has a URI but no EObject");
 	}
 
-	/**
-	 * @since 1.22
-	 */
 	@Override
-	protected void resetESObject() {}
-
-	@Override
-	public void setName(String newName) {		// FIXME BUG 421716 remove Namedspace/NamedElement inheritance
+	public void setName(String newName) {		// FIXME BUG 421716 remove Namespace/NamedElement inheritance
 		// name is a cached optimization of externalURI
 	}
 

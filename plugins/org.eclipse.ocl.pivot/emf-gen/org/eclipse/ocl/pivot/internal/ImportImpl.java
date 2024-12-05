@@ -340,7 +340,7 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable EObject getReloadableEObject() {
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		throw new IllegalStateException("Import's reloadable may be a URI");
 	}
 
@@ -348,19 +348,14 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable URI getReloadableURI() {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
-			return null;
-		}
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		Namespace namespace = basicGetImportedNamespace();
 		if (namespace != null) {
 			if (namespace.eIsProxy()) {
 				return EcoreUtil.getURI(namespace);
 			}
 			else {
-				return namespace.getReloadableURI();
+				return namespace.getReloadableURI(environmentFactory);
 			}
 		}
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement

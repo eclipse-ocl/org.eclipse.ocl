@@ -134,6 +134,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -329,7 +330,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					 * @since 1.23
 					 */
 					@Override
-					public void preUnload() {}
+					public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
 			
 					/**
 					 * Overridden to inhibit unloading of the shared instance.
