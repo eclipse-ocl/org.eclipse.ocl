@@ -72,6 +72,11 @@ public abstract class AbstractCompleteOCLCSLeft2RightVisitor
 	}
 
 	@Override
+	public @Nullable Element visitDummyCompleteOCLConstraintClass(org.eclipse.ocl.xtext.completeoclcs.@NonNull DummyCompleteOCLConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Element visitFeatureContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull FeatureContextDeclCS csElement) {
 		return visitContextDeclCS(csElement);
 	}

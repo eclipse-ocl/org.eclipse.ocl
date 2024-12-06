@@ -82,7 +82,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getExpCS()
 	 * @generated
 	 */
-	int EXP_CS = 10;
+	int EXP_CS = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CollectionTypeCSImpl <em>Collection Type CS</em>}' class.
@@ -102,7 +102,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getLiteralExpCS()
 	 * @generated
 	 */
-	int LITERAL_EXP_CS = 21;
+	int LITERAL_EXP_CS = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CollectionLiteralExpCSImpl <em>Collection Literal Exp CS</em>}' class.
@@ -132,7 +132,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getPrimitiveLiteralExpCS()
 	 * @generated
 	 */
-	int PRIMITIVE_LITERAL_EXP_CS = 34;
+	int PRIMITIVE_LITERAL_EXP_CS = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.TupleLiteralExpCSImpl <em>Tuple Literal Exp CS</em>}' class.
@@ -142,7 +142,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getTupleLiteralExpCS()
 	 * @generated
 	 */
-	int TUPLE_LITERAL_EXP_CS = 42;
+	int TUPLE_LITERAL_EXP_CS = 43;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.StringLiteralExpCSImpl <em>String Literal Exp CS</em>}' class.
@@ -152,7 +152,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getStringLiteralExpCS()
 	 * @generated
 	 */
-	int STRING_LITERAL_EXP_CS = 41;
+	int STRING_LITERAL_EXP_CS = 42;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.BooleanLiteralExpCSImpl <em>Boolean Literal Exp CS</em>}' class.
@@ -172,7 +172,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getInvalidLiteralExpCS()
 	 * @generated
 	 */
-	int INVALID_LITERAL_EXP_CS = 15;
+	int INVALID_LITERAL_EXP_CS = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NullLiteralExpCSImpl <em>Null Literal Exp CS</em>}' class.
@@ -182,7 +182,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNullLiteralExpCS()
 	 * @generated
 	 */
-	int NULL_LITERAL_EXP_CS = 28;
+	int NULL_LITERAL_EXP_CS = 29;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IfExpCSImpl <em>If Exp CS</em>}' class.
@@ -192,7 +192,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getIfExpCS()
 	 * @generated
 	 */
-	int IF_EXP_CS = 12;
+	int IF_EXP_CS = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.LetExpCSImpl <em>Let Exp CS</em>}' class.
@@ -202,7 +202,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getLetExpCS()
 	 * @generated
 	 */
-	int LET_EXP_CS = 19;
+	int LET_EXP_CS = 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.InfixExpCSImpl <em>Infix Exp CS</em>}' class.
@@ -212,7 +212,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getInfixExpCS()
 	 * @generated
 	 */
-	int INFIX_EXP_CS = 14;
+	int INFIX_EXP_CS = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NameExpCSImpl <em>Name Exp CS</em>}' class.
@@ -222,7 +222,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNameExpCS()
 	 * @generated
 	 */
-	int NAME_EXP_CS = 25;
+	int NAME_EXP_CS = 26;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.TypeNameExpCSImpl <em>Type Name Exp CS</em>}' class.
@@ -232,7 +232,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getTypeNameExpCS()
 	 * @generated
 	 */
-	int TYPE_NAME_EXP_CS = 45;
+	int TYPE_NAME_EXP_CS = 46;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NavigatingArgCSImpl <em>Navigating Arg CS</em>}' class.
@@ -242,7 +242,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNavigatingArgCS()
 	 * @generated
 	 */
-	int NAVIGATING_ARG_CS = 26;
+	int NAVIGATING_ARG_CS = 27;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NestedExpCSImpl <em>Nested Exp CS</em>}' class.
@@ -252,7 +252,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNestedExpCS()
 	 * @generated
 	 */
-	int NESTED_EXP_CS = 27;
+	int NESTED_EXP_CS = 28;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.NumberLiteralExpCSImpl <em>Number Literal Exp CS</em>}' class.
@@ -262,7 +262,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNumberLiteralExpCS()
 	 * @generated
 	 */
-	int NUMBER_LITERAL_EXP_CS = 29;
+	int NUMBER_LITERAL_EXP_CS = 30;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.AbstractNameExpCSImpl <em>Abstract Name Exp CS</em>}' class.
@@ -322,7 +322,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getExpSpecificationCS()
 	 * @generated
 	 */
-	int EXP_SPECIFICATION_CS = 11;
+	int EXP_SPECIFICATION_CS = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.VariableCSImpl <em>Variable CS</em>}' class.
@@ -332,7 +332,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getVariableCS()
 	 * @generated
 	 */
-	int VARIABLE_CS = 47;
+	int VARIABLE_CS = 48;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.LetVariableCSImpl <em>Let Variable CS</em>}' class.
@@ -342,7 +342,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getLetVariableCS()
 	 * @generated
 	 */
-	int LET_VARIABLE_CS = 20;
+	int LET_VARIABLE_CS = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CurlyBracketedClauseCSImpl <em>Curly Bracketed Clause CS</em>}' class.
@@ -355,6 +355,16 @@ extends EPackage {
 	int CURLY_BRACKETED_CLAUSE_CS = 9;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.DummyEssentialOCLConstraintClassImpl <em>Dummy Essential OCL Constraint Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.DummyEssentialOCLConstraintClassImpl
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getDummyEssentialOCLConstraintClass()
+	 * @generated
+	 */
+	int DUMMY_ESSENTIAL_OCL_CONSTRAINT_CLASS = 10;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IfThenExpCSImpl <em>If Then Exp CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -362,7 +372,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getIfThenExpCS()
 	 * @generated
 	 */
-	int IF_THEN_EXP_CS = 13;
+	int IF_THEN_EXP_CS = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.OperatorExpCSImpl <em>Operator Exp CS</em>}' class.
@@ -372,7 +382,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getOperatorExpCS()
 	 * @generated
 	 */
-	int OPERATOR_EXP_CS = 31;
+	int OPERATOR_EXP_CS = 32;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterationCallExpCSImpl <em>Iteration Call Exp CS</em>}' class.
@@ -382,7 +392,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getIterationCallExpCS()
 	 * @generated
 	 */
-	int ITERATION_CALL_EXP_CS = 17;
+	int ITERATION_CALL_EXP_CS = 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.IterateCallExpCSImpl <em>Iterate Call Exp CS</em>}' class.
@@ -392,7 +402,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getIterateCallExpCS()
 	 * @generated
 	 */
-	int ITERATE_CALL_EXP_CS = 16;
+	int ITERATE_CALL_EXP_CS = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.LambdaLiteralExpCSImpl <em>Lambda Literal Exp CS</em>}' class.
@@ -402,7 +412,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getLambdaLiteralExpCS()
 	 * @generated
 	 */
-	int LAMBDA_LITERAL_EXP_CS = 18;
+	int LAMBDA_LITERAL_EXP_CS = 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.MapLiteralExpCSImpl <em>Map Literal Exp CS</em>}' class.
@@ -412,7 +422,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getMapLiteralExpCS()
 	 * @generated
 	 */
-	int MAP_LITERAL_EXP_CS = 22;
+	int MAP_LITERAL_EXP_CS = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.MapLiteralPartCSImpl <em>Map Literal Part CS</em>}' class.
@@ -422,7 +432,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getMapLiteralPartCS()
 	 * @generated
 	 */
-	int MAP_LITERAL_PART_CS = 23;
+	int MAP_LITERAL_PART_CS = 24;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.MapTypeCSImpl <em>Map Type CS</em>}' class.
@@ -432,7 +442,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getMapTypeCS()
 	 * @generated
 	 */
-	int MAP_TYPE_CS = 24;
+	int MAP_TYPE_CS = 25;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.OperationCallExpCSImpl <em>Operation Call Exp CS</em>}' class.
@@ -442,7 +452,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getOperationCallExpCS()
 	 * @generated
 	 */
-	int OPERATION_CALL_EXP_CS = 30;
+	int OPERATION_CALL_EXP_CS = 31;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.PatternExpCSImpl <em>Pattern Exp CS</em>}' class.
@@ -452,7 +462,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getPatternExpCS()
 	 * @generated
 	 */
-	int PATTERN_EXP_CS = 32;
+	int PATTERN_EXP_CS = 33;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.PrefixExpCSImpl <em>Prefix Exp CS</em>}' class.
@@ -462,7 +472,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getPrefixExpCS()
 	 * @generated
 	 */
-	int PREFIX_EXP_CS = 33;
+	int PREFIX_EXP_CS = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.PropertyCallExpCSImpl <em>Property Call Exp CS</em>}' class.
@@ -472,7 +482,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getPropertyCallExpCS()
 	 * @generated
 	 */
-	int PROPERTY_CALL_EXP_CS = 35;
+	int PROPERTY_CALL_EXP_CS = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.RoundBracketedClauseCSImpl <em>Round Bracketed Clause CS</em>}' class.
@@ -482,7 +492,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getRoundBracketedClauseCS()
 	 * @generated
 	 */
-	int ROUND_BRACKETED_CLAUSE_CS = 36;
+	int ROUND_BRACKETED_CLAUSE_CS = 37;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.SelfExpCSImpl <em>Self Exp CS</em>}' class.
@@ -492,7 +502,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getSelfExpCS()
 	 * @generated
 	 */
-	int SELF_EXP_CS = 37;
+	int SELF_EXP_CS = 38;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.SquareBracketedClauseCSImpl <em>Square Bracketed Clause CS</em>}' class.
@@ -502,7 +512,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getSquareBracketedClauseCS()
 	 * @generated
 	 */
-	int SQUARE_BRACKETED_CLAUSE_CS = 40;
+	int SQUARE_BRACKETED_CLAUSE_CS = 41;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.TupleLiteralPartCSImpl <em>Tuple Literal Part CS</em>}' class.
@@ -512,7 +522,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getTupleLiteralPartCS()
 	 * @generated
 	 */
-	int TUPLE_LITERAL_PART_CS = 43;
+	int TUPLE_LITERAL_PART_CS = 44;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.TypeLiteralExpCSImpl <em>Type Literal Exp CS</em>}' class.
@@ -522,7 +532,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getTypeLiteralExpCS()
 	 * @generated
 	 */
-	int TYPE_LITERAL_EXP_CS = 44;
+	int TYPE_LITERAL_EXP_CS = 45;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ShadowExpCSImpl <em>Shadow Exp CS</em>}' class.
@@ -532,7 +542,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getShadowExpCS()
 	 * @generated
 	 */
-	int SHADOW_EXP_CS = 38;
+	int SHADOW_EXP_CS = 39;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ShadowPartCSImpl <em>Shadow Part CS</em>}' class.
@@ -542,7 +552,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getShadowPartCS()
 	 * @generated
 	 */
-	int SHADOW_PART_CS = 39;
+	int SHADOW_PART_CS = 40;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.UnlimitedNaturalLiteralExpCSImpl <em>Unlimited Natural Literal Exp CS</em>}' class.
@@ -552,7 +562,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getUnlimitedNaturalLiteralExpCS()
 	 * @generated
 	 */
-	int UNLIMITED_NATURAL_LITERAL_EXP_CS = 46;
+	int UNLIMITED_NATURAL_LITERAL_EXP_CS = 47;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.VariableExpCSImpl <em>Variable Exp CS</em>}' class.
@@ -562,7 +572,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getVariableExpCS()
 	 * @generated
 	 */
-	int VARIABLE_EXP_CS = 48;
+	int VARIABLE_EXP_CS = 49;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.NavigationRole <em>Navigation Role</em>}' enum.
@@ -572,7 +582,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getNavigationRole()
 	 * @generated
 	 */
-	int NAVIGATION_ROLE = 49;
+	int NAVIGATION_ROLE = 50;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS <em>Abstract Name Exp CS</em>}'.
@@ -798,6 +808,16 @@ extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCurlyBracketedClauseCS_Value();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.essentialoclcs.DummyEssentialOCLConstraintClass <em>Dummy Essential OCL Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dummy Essential OCL Constraint Class</em>'.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.DummyEssentialOCLConstraintClass
+	 * @generated
+	 */
+	EClass getDummyEssentialOCLConstraintClass();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.essentialoclcs.ExpCS <em>Exp CS</em>}'.
@@ -2356,6 +2376,16 @@ extends EPackage {
 		 * @generated
 		 */
 		EAttribute CURLY_BRACKETED_CLAUSE_CS__VALUE = eINSTANCE.getCurlyBracketedClauseCS_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.DummyEssentialOCLConstraintClassImpl <em>Dummy Essential OCL Constraint Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.DummyEssentialOCLConstraintClassImpl
+		 * @see org.eclipse.ocl.xtext.essentialoclcs.impl.EssentialOCLCSPackageImpl#getDummyEssentialOCLConstraintClass()
+		 * @generated
+		 */
+		EClass DUMMY_ESSENTIAL_OCL_CONSTRAINT_CLASS = eINSTANCE.getDummyEssentialOCLConstraintClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ExpCSImpl <em>Exp CS</em>}' class.

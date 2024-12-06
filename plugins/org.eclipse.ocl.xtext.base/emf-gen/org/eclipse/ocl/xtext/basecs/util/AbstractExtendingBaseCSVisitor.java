@@ -83,6 +83,11 @@ public abstract class AbstractExtendingBaseCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitDummyBaseConstraintClass(org.eclipse.ocl.xtext.basecs.@NonNull DummyBaseConstraintClass object) {
+		return visitElementCS(object);
+	}
+
+	@Override
 	public R visitElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ElementCS object) {
 		return visiting(object);
 	}
@@ -115,6 +120,16 @@ public abstract class AbstractExtendingBaseCSVisitor<R, C>
 	@Override
 	public R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object) {
 		return visitNamespaceCS(object);
+	}
+
+	@Override
+	public R visitJavaClassCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaClassCS object) {
+		return visitNamedElementCS(object);
+	}
+
+	@Override
+	public R visitJavaImplementationCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaImplementationCS object) {
+		return visitElementCS(object);
 	}
 
 	@Override

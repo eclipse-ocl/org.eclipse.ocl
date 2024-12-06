@@ -42,6 +42,11 @@ public abstract class AbstractOCLinEcoreCSLeft2RightVisitor
 	}
 
 	@Override
+	public @Nullable Element visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Element visitOCLinEcoreConstraintCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull OCLinEcoreConstraintCS csElement) {
 		return visitConstraintCS(csElement);
 	}

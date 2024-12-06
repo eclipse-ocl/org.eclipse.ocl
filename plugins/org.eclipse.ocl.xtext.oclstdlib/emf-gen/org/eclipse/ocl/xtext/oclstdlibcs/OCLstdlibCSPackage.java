@@ -75,14 +75,14 @@ public interface OCLstdlibCSPackage
 	OCLstdlibCSPackage eINSTANCE = org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaClassCSImpl <em>Java Class CS</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.DummyOCLstdlibConstraintClassImpl <em>Dummy OC Lstdlib Constraint Class</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaClassCSImpl
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getJavaClassCS()
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.DummyOCLstdlibConstraintClassImpl
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getDummyOCLstdlibConstraintClass()
 	 * @generated
 	 */
-	int JAVA_CLASS_CS = 0;
+	int DUMMY_OC_LSTDLIB_CONSTRAINT_CLASS = 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibConstraintCSImpl <em>Lib Constraint CS</em>}' class.
@@ -92,7 +92,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibConstraintCS()
 	 * @generated
 	 */
-	int LIB_CONSTRAINT_CS = 4;
+	int LIB_CONSTRAINT_CS = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl <em>Lib Iteration CS</em>}' class.
@@ -102,7 +102,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibIterationCS()
 	 * @generated
 	 */
-	int LIB_ITERATION_CS = 5;
+	int LIB_ITERATION_CS = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl <em>Lib Operation CS</em>}' class.
@@ -112,7 +112,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibOperationCS()
 	 * @generated
 	 */
-	int LIB_OPERATION_CS = 6;
+	int LIB_OPERATION_CS = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOppositeCSImpl <em>Lib Opposite CS</em>}' class.
@@ -122,7 +122,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibOppositeCS()
 	 * @generated
 	 */
-	int LIB_OPPOSITE_CS = 7;
+	int LIB_OPPOSITE_CS = 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPropertyCSImpl <em>Lib Property CS</em>}' class.
@@ -132,17 +132,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibPropertyCS()
 	 * @generated
 	 */
-	int LIB_PROPERTY_CS = 9;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaImplementationCSImpl <em>Java Implementation CS</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaImplementationCSImpl
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getJavaImplementationCS()
-	 * @generated
-	 */
-	int JAVA_IMPLEMENTATION_CS = 1;
+	int LIB_PROPERTY_CS = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibClassCSImpl <em>Lib Class CS</em>}' class.
@@ -152,7 +142,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibClassCS()
 	 * @generated
 	 */
-	int LIB_CLASS_CS = 2;
+	int LIB_CLASS_CS = 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibCoercionCSImpl <em>Lib Coercion CS</em>}' class.
@@ -162,7 +152,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibCoercionCS()
 	 * @generated
 	 */
-	int LIB_COERCION_CS = 3;
+	int LIB_COERCION_CS = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibPackageCSImpl <em>Lib Package CS</em>}' class.
@@ -172,7 +162,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibPackageCS()
 	 * @generated
 	 */
-	int LIB_PACKAGE_CS = 8;
+	int LIB_PACKAGE_CS = 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibRootPackageCSImpl <em>Lib Root Package CS</em>}' class.
@@ -182,7 +172,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getLibRootPackageCS()
 	 * @generated
 	 */
-	int LIB_ROOT_PACKAGE_CS = 10;
+	int LIB_ROOT_PACKAGE_CS = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.MetaclassNameCSImpl <em>Metaclass Name CS</em>}' class.
@@ -192,7 +182,7 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getMetaclassNameCS()
 	 * @generated
 	 */
-	int METACLASS_NAME_CS = 11;
+	int METACLASS_NAME_CS = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.PrecedenceCSImpl <em>Precedence CS</em>}' class.
@@ -202,17 +192,17 @@ public interface OCLstdlibCSPackage
 	 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getPrecedenceCS()
 	 * @generated
 	 */
-	int PRECEDENCE_CS = 12;
+	int PRECEDENCE_CS = 11;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS <em>Java Class CS</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass <em>Dummy OC Lstdlib Constraint Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Java Class CS</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS
+	 * @return the meta object for class '<em>Dummy OC Lstdlib Constraint Class</em>'.
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass
 	 * @generated
 	 */
-	EClass getJavaClassCS();
+	EClass getDummyOCLstdlibConstraintClass();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS <em>Lib Class CS</em>}'.
@@ -458,27 +448,6 @@ public interface OCLstdlibCSPackage
 	EAttribute getMetaclassNameCS_Name();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS <em>Java Implementation CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Java Implementation CS</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS
-	 * @generated
-	 */
-	EClass getJavaImplementationCS();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS#getImplementation <em>Implementation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Implementation</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS#getImplementation()
-	 * @see #getJavaImplementationCS()
-	 * @generated
-	 */
-	EReference getJavaImplementationCS_Implementation();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS <em>Precedence CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -523,14 +492,14 @@ public interface OCLstdlibCSPackage
 	interface Literals {
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaClassCSImpl <em>Java Class CS</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.DummyOCLstdlibConstraintClassImpl <em>Dummy OC Lstdlib Constraint Class</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaClassCSImpl
-		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getJavaClassCS()
+		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.DummyOCLstdlibConstraintClassImpl
+		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getDummyOCLstdlibConstraintClass()
 		 * @generated
 		 */
-		EClass JAVA_CLASS_CS = eINSTANCE.getJavaClassCS();
+		EClass DUMMY_OC_LSTDLIB_CONSTRAINT_CLASS = eINSTANCE.getDummyOCLstdlibConstraintClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibClassCSImpl <em>Lib Class CS</em>}' class.
@@ -735,24 +704,6 @@ public interface OCLstdlibCSPackage
 		 * @generated
 		 */
 		EAttribute METACLASS_NAME_CS__NAME = eINSTANCE.getMetaclassNameCS_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaImplementationCSImpl <em>Java Implementation CS</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.JavaImplementationCSImpl
-		 * @see org.eclipse.ocl.xtext.oclstdlibcs.impl.OCLstdlibCSPackageImpl#getJavaImplementationCS()
-		 * @generated
-		 */
-		EClass JAVA_IMPLEMENTATION_CS = eINSTANCE.getJavaImplementationCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Implementation</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference JAVA_IMPLEMENTATION_CS__IMPLEMENTATION = eINSTANCE.getJavaImplementationCS_Implementation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.PrecedenceCSImpl <em>Precedence CS</em>}' class.

@@ -88,6 +88,11 @@ public abstract class AbstractNullEssentialOCLCSVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitDummyEssentialOCLConstraintClass(org.eclipse.ocl.xtext.essentialoclcs.@NonNull DummyEssentialOCLConstraintClass object) {
+		return null;
+	}
+
+	@Override
 	public R visitExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ExpCS object) {
 		return null;
 	}
