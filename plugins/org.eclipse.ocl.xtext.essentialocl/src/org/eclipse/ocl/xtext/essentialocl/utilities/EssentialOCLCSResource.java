@@ -786,7 +786,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		delegateInstaller.installCompleteOCLDelegates(asResource);
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
-	
+
 		return asResource;
 	}
 
