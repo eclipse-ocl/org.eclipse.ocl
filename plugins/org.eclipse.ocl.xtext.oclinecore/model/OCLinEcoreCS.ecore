@@ -2,6 +2,15 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="oclinecorecs" nsURI="http://www.eclipse.org/ocl/2015/OCLinEcoreCS"
     nsPrefix="oclinecorecs">
+  <eClassifiers xsi:type="ecore:EClass" name="DummyOCLinEcoreConstraintClass" abstract="true"
+      eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ElementCS">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="DummyConstraint"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Dummy Constraint class ensures Validator is generated"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OCLinEcoreConstraintCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ConstraintCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCallable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>

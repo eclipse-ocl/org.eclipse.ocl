@@ -23,6 +23,7 @@
   <foreignModel>OCLinEcoreCS.ecore</foreignModel>
   <genPackages prefix="OCLinEcoreCS" basePackage="org.eclipse.ocl.xtext" disposableProviderFactory="true"
       ecorePackage="OCLinEcoreCS.ecore#/">
+    <genClasses image="false" ecoreClass="OCLinEcoreCS.ecore#//DummyOCLinEcoreConstraintClass"/>
     <genClasses ecoreClass="OCLinEcoreCS.ecore#//OCLinEcoreConstraintCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLinEcoreCS.ecore#//OCLinEcoreConstraintCS/isCallable"/>
     </genClasses>

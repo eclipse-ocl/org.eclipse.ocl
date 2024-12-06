@@ -59,6 +59,11 @@
     <genClasses ecoreClass="BaseCS.ecore#//DocumentationCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//DocumentationCS/value"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//DummyBaseConstraintClass">
+      <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="true"/>
+      </genAnnotations>
+    </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//ElementCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ElementCS/csi"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ElementCS/parent"/>
@@ -79,6 +84,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//ImportCS/isAll"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ImportCS/ownedPathName"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ImportCS/referredNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//JavaClassCS"/>
+    <genClasses image="false" ecoreClass="BaseCS.ecore#//JavaImplementationCS">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//JavaImplementationCS/implementation"/>
     </genClasses>
     <genClasses ecoreClass="BaseCS.ecore#//LambdaTypeCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//LambdaTypeCS/name"/>
