@@ -72,6 +72,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//CurlyBracketedClauseCS/owningNameExp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EssentialOCLCS.ecore#//CurlyBracketedClauseCS/value"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="EssentialOCLCS.ecore#//DummyEssentialOCLConstraintClass"/>
     <genClasses ecoreClass="EssentialOCLCS.ecore#//ExpCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EssentialOCLCS.ecore#//ExpCS/hasError"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference EssentialOCLCS.ecore#//ExpCS/localLeft"/>
