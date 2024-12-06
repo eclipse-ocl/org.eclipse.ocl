@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.basecs.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
@@ -51,7 +52,7 @@ public class JavaClassCSImpl extends NamedElementCSImpl implements JavaClassCS
 	@Override
 	protected EClass eStaticClass()
 	{
-		return null;
+		return BaseCSPackage.Literals.JAVA_CLASS_CS;
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class JavaClassCSImpl extends NamedElementCSImpl implements JavaClassCS
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
-		return null;
+		return visitor.visitJavaClassCS(this);
 	}
 
 	@Override

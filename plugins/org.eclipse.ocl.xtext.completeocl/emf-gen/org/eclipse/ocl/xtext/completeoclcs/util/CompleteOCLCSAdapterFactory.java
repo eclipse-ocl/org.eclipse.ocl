@@ -118,6 +118,11 @@ public class CompleteOCLCSAdapterFactory
 				return createDefPropertyCSAdapter();
 			}
 			@Override
+			public Adapter caseDummyCompleteOCLConstraintClass(DummyCompleteOCLConstraintClass object)
+			{
+				return createDummyCompleteOCLConstraintClassAdapter();
+			}
+			@Override
 			public Adapter caseFeatureContextDeclCS(FeatureContextDeclCS object)
 			{
 				return createFeatureContextDeclCSAdapter();
@@ -308,6 +313,21 @@ public class CompleteOCLCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createDefPropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.completeoclcs.DummyCompleteOCLConstraintClass <em>Dummy Complete OCL Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.completeoclcs.DummyCompleteOCLConstraintClass
+	 * @generated
+	 */
+	public Adapter createDummyCompleteOCLConstraintClassAdapter()
+	{
 		return null;
 	}
 

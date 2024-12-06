@@ -82,10 +82,10 @@ implements CompleteOCLCSFactory {
 			case 1: return createCompleteOCLDocumentCS();
 			case 4: return createDefOperationCS();
 			case 5: return createDefPropertyCS();
-			case 7: return createOCLMessageArgCS();
-			case 8: return createOperationContextDeclCS();
-			case 9: return createPackageDeclarationCS();
-			case 11: return createPropertyContextDeclCS();
+			case 8: return createOCLMessageArgCS();
+			case 9: return createOperationContextDeclCS();
+			case 10: return createPackageDeclarationCS();
+			case 12: return createPropertyContextDeclCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

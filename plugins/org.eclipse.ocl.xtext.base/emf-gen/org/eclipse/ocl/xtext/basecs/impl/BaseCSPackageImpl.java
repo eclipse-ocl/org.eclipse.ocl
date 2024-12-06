@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
@@ -30,6 +31,7 @@ import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.DataTypeCS;
 import org.eclipse.ocl.xtext.basecs.DetailCS;
 import org.eclipse.ocl.xtext.basecs.DocumentationCS;
+import org.eclipse.ocl.xtext.basecs.DummyBaseConstraintClass;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
@@ -37,6 +39,8 @@ import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
 import org.eclipse.ocl.xtext.basecs.FeatureCS;
 import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
@@ -74,6 +78,7 @@ import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
+import org.eclipse.ocl.xtext.basecs.util.BaseCSValidator;
 import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 /**
@@ -151,6 +156,13 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass dummyBaseConstraintClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass elementCSEClass = null;
 
 	/**
@@ -194,6 +206,20 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	private EClass importCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass javaClassCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass javaImplementationCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -538,6 +564,18 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		// Initialize created meta-data
 		theBaseCSPackage.initializePackageContents();
 
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theBaseCSPackage,
+			 new EValidator.Descriptor()
+			 {
+				 @Override
+				 public EValidator getEValidator()
+				 {
+					 return BaseCSValidator.INSTANCE;
+				 }
+			 });
+
 		// Mark meta-data to indicate it can't be changed
 		theBaseCSPackage.freeze();
 
@@ -791,6 +829,17 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getDummyBaseConstraintClass()
+	{
+		return dummyBaseConstraintClassEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getElementCS() {
 		return elementCSEClass;
 	}
@@ -945,6 +994,39 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	public EReference getImportCS_ReferredNamespace()
 	{
 		return (EReference)importCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getJavaClassCS()
+	{
+		return javaClassCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getJavaImplementationCS()
+	{
+		return javaImplementationCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getJavaImplementationCS_Implementation()
+	{
+		return (EReference)javaImplementationCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2214,59 +2296,66 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		documentationCSEClass = createEClass(8);
 		createEAttribute(documentationCSEClass, 7);
 
-		elementCSEClass = createEClass(9);
+		dummyBaseConstraintClassEClass = createEClass(9);
+
+		elementCSEClass = createEClass(10);
 		createEAttribute(elementCSEClass, 0);
 		createEReference(elementCSEClass, 1);
 
-		elementRefCSEClass = createEClass(10);
+		elementRefCSEClass = createEClass(11);
 
-		enumerationCSEClass = createEClass(11);
+		enumerationCSEClass = createEClass(12);
 		createEAttribute(enumerationCSEClass, 10);
 		createEReference(enumerationCSEClass, 11);
 
-		enumerationLiteralCSEClass = createEClass(12);
+		enumerationLiteralCSEClass = createEClass(13);
 		createEAttribute(enumerationLiteralCSEClass, 6);
 		createEAttribute(enumerationLiteralCSEClass, 7);
 
-		featureCSEClass = createEClass(13);
+		featureCSEClass = createEClass(14);
 
-		implicitOppositeCSEClass = createEClass(14);
+		implicitOppositeCSEClass = createEClass(15);
 
-		importCSEClass = createEClass(15);
+		importCSEClass = createEClass(16);
 		createEAttribute(importCSEClass, 6);
 		createEReference(importCSEClass, 7);
 		createEReference(importCSEClass, 8);
 
-		lambdaTypeCSEClass = createEClass(16);
+		javaClassCSEClass = createEClass(17);
+
+		javaImplementationCSEClass = createEClass(18);
+		createEReference(javaImplementationCSEClass, 2);
+
+		lambdaTypeCSEClass = createEClass(19);
 		createEAttribute(lambdaTypeCSEClass, 5);
 		createEReference(lambdaTypeCSEClass, 6);
 		createEReference(lambdaTypeCSEClass, 7);
 		createEReference(lambdaTypeCSEClass, 8);
 
-		modelElementCSEClass = createEClass(17);
+		modelElementCSEClass = createEClass(20);
 		createEAttribute(modelElementCSEClass, 3);
 		createEReference(modelElementCSEClass, 4);
 
-		modelElementRefCSEClass = createEClass(18);
+		modelElementRefCSEClass = createEClass(21);
 		createEReference(modelElementRefCSEClass, 3);
 		createEReference(modelElementRefCSEClass, 4);
 
-		multiplicityBoundsCSEClass = createEClass(19);
+		multiplicityBoundsCSEClass = createEClass(22);
 		createEAttribute(multiplicityBoundsCSEClass, 3);
 		createEAttribute(multiplicityBoundsCSEClass, 4);
 
-		multiplicityCSEClass = createEClass(20);
+		multiplicityCSEClass = createEClass(23);
 		createEAttribute(multiplicityCSEClass, 2);
 
-		multiplicityStringCSEClass = createEClass(21);
+		multiplicityStringCSEClass = createEClass(24);
 		createEAttribute(multiplicityStringCSEClass, 3);
 
-		namedElementCSEClass = createEClass(22);
+		namedElementCSEClass = createEClass(25);
 		createEAttribute(namedElementCSEClass, 5);
 
-		namespaceCSEClass = createEClass(23);
+		namespaceCSEClass = createEClass(26);
 
-		operationCSEClass = createEClass(24);
+		operationCSEClass = createEClass(27);
 		createEReference(operationCSEClass, 10);
 		createEReference(operationCSEClass, 11);
 		createEReference(operationCSEClass, 12);
@@ -2274,56 +2363,56 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(operationCSEClass, 14);
 		createEReference(operationCSEClass, 15);
 
-		packageCSEClass = createEClass(25);
+		packageCSEClass = createEClass(28);
 		createEAttribute(packageCSEClass, 7);
 		createEAttribute(packageCSEClass, 8);
 		createEReference(packageCSEClass, 9);
 
-		packageOwnerCSEClass = createEClass(26);
+		packageOwnerCSEClass = createEClass(29);
 		createEReference(packageOwnerCSEClass, 5);
 
-		parameterCSEClass = createEClass(27);
+		parameterCSEClass = createEClass(30);
 		createEReference(parameterCSEClass, 9);
 
-		pathElementCSEClass = createEClass(28);
+		pathElementCSEClass = createEClass(31);
 		createEReference(pathElementCSEClass, 2);
 		createEReference(pathElementCSEClass, 3);
 		createEReference(pathElementCSEClass, 4);
 
-		pathElementWithURICSEClass = createEClass(29);
+		pathElementWithURICSEClass = createEClass(32);
 		createEAttribute(pathElementWithURICSEClass, 5);
 
-		pathNameCSEClass = createEClass(30);
+		pathNameCSEClass = createEClass(33);
 		createEReference(pathNameCSEClass, 2);
 		createEReference(pathNameCSEClass, 3);
 		createEReference(pathNameCSEClass, 4);
 		createEAttribute(pathNameCSEClass, 5);
 
-		pivotableElementCSEClass = createEClass(31);
+		pivotableElementCSEClass = createEClass(34);
 		createEReference(pivotableElementCSEClass, 2);
 
-		primitiveTypeRefCSEClass = createEClass(32);
+		primitiveTypeRefCSEClass = createEClass(35);
 		createEAttribute(primitiveTypeRefCSEClass, 4);
 
-		referenceCSEClass = createEClass(33);
+		referenceCSEClass = createEClass(36);
 		createEReference(referenceCSEClass, 12);
 		createEReference(referenceCSEClass, 13);
 		createEReference(referenceCSEClass, 14);
 
-		rootCSEClass = createEClass(34);
+		rootCSEClass = createEClass(37);
 		createEReference(rootCSEClass, 5);
 
-		rootPackageCSEClass = createEClass(35);
+		rootPackageCSEClass = createEClass(38);
 
-		specificationCSEClass = createEClass(36);
+		specificationCSEClass = createEClass(39);
 		createEAttribute(specificationCSEClass, 5);
 
-		structuralFeatureCSEClass = createEClass(37);
+		structuralFeatureCSEClass = createEClass(40);
 		createEAttribute(structuralFeatureCSEClass, 9);
 		createEReference(structuralFeatureCSEClass, 10);
 		createEReference(structuralFeatureCSEClass, 11);
 
-		structuredClassCSEClass = createEClass(38);
+		structuredClassCSEClass = createEClass(41);
 		createEAttribute(structuredClassCSEClass, 10);
 		createEAttribute(structuredClassCSEClass, 11);
 		createEReference(structuredClassCSEClass, 12);
@@ -2331,62 +2420,62 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(structuredClassCSEClass, 14);
 		createEReference(structuredClassCSEClass, 15);
 
-		templateBindingCSEClass = createEClass(39);
+		templateBindingCSEClass = createEClass(42);
 		createEReference(templateBindingCSEClass, 3);
 		createEReference(templateBindingCSEClass, 4);
 		createEReference(templateBindingCSEClass, 5);
 
-		templateParameterCSEClass = createEClass(40);
+		templateParameterCSEClass = createEClass(43);
 		createEReference(templateParameterCSEClass, 6);
 
-		templateParameterSubstitutionCSEClass = createEClass(41);
+		templateParameterSubstitutionCSEClass = createEClass(44);
 		createEReference(templateParameterSubstitutionCSEClass, 5);
 		createEReference(templateParameterSubstitutionCSEClass, 6);
 
-		templateSignatureCSEClass = createEClass(42);
+		templateSignatureCSEClass = createEClass(45);
 		createEReference(templateSignatureCSEClass, 5);
 		createEReference(templateSignatureCSEClass, 6);
 
-		templateableElementCSEClass = createEClass(43);
+		templateableElementCSEClass = createEClass(46);
 		createEReference(templateableElementCSEClass, 2);
 
-		tuplePartCSEClass = createEClass(44);
+		tuplePartCSEClass = createEClass(47);
 
-		tupleTypeCSEClass = createEClass(45);
+		tupleTypeCSEClass = createEClass(48);
 		createEAttribute(tupleTypeCSEClass, 4);
 		createEReference(tupleTypeCSEClass, 5);
 
-		typeCSEClass = createEClass(46);
+		typeCSEClass = createEClass(49);
 
-		typeParameterCSEClass = createEClass(47);
+		typeParameterCSEClass = createEClass(50);
 		createEReference(typeParameterCSEClass, 7);
 
-		typeRefCSEClass = createEClass(48);
+		typeRefCSEClass = createEClass(51);
 
-		typedElementCSEClass = createEClass(49);
+		typedElementCSEClass = createEClass(52);
 		createEAttribute(typedElementCSEClass, 6);
 		createEReference(typedElementCSEClass, 7);
 		createEAttribute(typedElementCSEClass, 8);
 
-		typedRefCSEClass = createEClass(50);
+		typedRefCSEClass = createEClass(53);
 		createEReference(typedRefCSEClass, 3);
 
-		typedTypeRefCSEClass = createEClass(51);
+		typedTypeRefCSEClass = createEClass(54);
 		createEAttribute(typedTypeRefCSEClass, 4);
 		createEReference(typedTypeRefCSEClass, 5);
 		createEReference(typedTypeRefCSEClass, 6);
 		createEReference(typedTypeRefCSEClass, 7);
 
-		visitableCSEClass = createEClass(52);
+		visitableCSEClass = createEClass(55);
 
-		wildcardTypeRefCSEClass = createEClass(53);
+		wildcardTypeRefCSEClass = createEClass(56);
 		createEReference(wildcardTypeRefCSEClass, 3);
 		createEReference(wildcardTypeRefCSEClass, 4);
 
 		// Create data types
-		bigNumberEDataType = createEDataType(54);
-		csiEDataType = createEDataType(55);
-		scopeFilterEDataType = createEDataType(56);
+		bigNumberEDataType = createEDataType(57);
+		csiEDataType = createEDataType(58);
+		scopeFilterEDataType = createEDataType(59);
 	}
 
 	/**
@@ -2432,6 +2521,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		dataTypeCSEClass.getESuperTypes().add(this.getNamespaceCS());
 		detailCSEClass.getESuperTypes().add(this.getNamedElementCS());
 		documentationCSEClass.getESuperTypes().add(this.getAnnotationElementCS());
+		dummyBaseConstraintClassEClass.getESuperTypes().add(this.getElementCS());
 		elementRefCSEClass.getESuperTypes().add(this.getPivotableElementCS());
 		enumerationCSEClass.getESuperTypes().add(this.getClassCS());
 		enumerationCSEClass.getESuperTypes().add(this.getNamespaceCS());
@@ -2439,6 +2529,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		featureCSEClass.getESuperTypes().add(this.getTypedElementCS());
 		implicitOppositeCSEClass.getESuperTypes().add(this.getFeatureCS());
 		importCSEClass.getESuperTypes().add(this.getNamespaceCS());
+		javaClassCSEClass.getESuperTypes().add(this.getNamedElementCS());
+		javaImplementationCSEClass.getESuperTypes().add(this.getElementCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTypedRefCS());
 		lambdaTypeCSEClass.getESuperTypes().add(this.getTemplateableElementCS());
 		modelElementCSEClass.getESuperTypes().add(this.getPivotableElementCS());
@@ -2515,6 +2607,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEClass(documentationCSEClass, DocumentationCS.class, "DocumentationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDocumentationCS_Value(), thePivotPackage.getString(), "value", null, 0, 1, DocumentationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(dummyBaseConstraintClassEClass, DummyBaseConstraintClass.class, "DummyBaseConstraintClass", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(elementCSEClass, ElementCS.class, "ElementCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getElementCS_Csi(), this.getCSI(), "csi", null, 0, 1, ElementCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getElementCS_Parent(), this.getElementCS(), null, "parent", null, 0, 1, ElementCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2539,6 +2633,11 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEAttribute(getImportCS_IsAll(), thePivotPackage.getBoolean(), "isAll", "false", 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getImportCS_OwnedPathName(), this.getPathNameCS(), null, "ownedPathName", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getImportCS_ReferredNamespace(), thePivotPackage.getNamespace(), null, "referredNamespace", null, 0, 1, ImportCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(javaClassCSEClass, JavaClassCS.class, "JavaClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(javaImplementationCSEClass, JavaImplementationCS.class, "JavaImplementationCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getJavaImplementationCS_Implementation(), this.getJavaClassCS(), null, "implementation", null, 0, 1, JavaImplementationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(lambdaTypeCSEClass, LambdaTypeCS.class, "LambdaTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getLambdaTypeCS_Name(), thePivotPackage.getString(), "name", null, 0, 1, LambdaTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2697,6 +2796,28 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		addAnnotation
+		  (dummyBaseConstraintClassEClass,
+		   source,
+		   new String[]
+		   {
+			   "constraints", "DummyConstraint" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 	}
 
 } //BaseCSPackageImpl

@@ -21,6 +21,7 @@ import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.FeatureCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.NamespaceCS;
@@ -99,14 +100,9 @@ public class OCLstdlibCSAdapterFactory
 	protected OCLstdlibCSSwitch<@Nullable Adapter> modelSwitch = new OCLstdlibCSSwitch<@Nullable Adapter>()
 		{
 			@Override
-			public Adapter caseJavaClassCS(JavaClassCS object)
+			public Adapter caseDummyOCLstdlibConstraintClass(DummyOCLstdlibConstraintClass object)
 			{
-				return createJavaClassCSAdapter();
-			}
-			@Override
-			public Adapter caseJavaImplementationCS(JavaImplementationCS object)
-			{
-				return createJavaImplementationCSAdapter();
+				return createDummyOCLstdlibConstraintClassAdapter();
 			}
 			@Override
 			public Adapter caseLibClassCS(LibClassCS object)
@@ -209,6 +205,11 @@ public class OCLstdlibCSAdapterFactory
 				return createStructuredClassCSAdapter();
 			}
 			@Override
+			public Adapter caseJavaImplementationCS(JavaImplementationCS object)
+			{
+				return createJavaImplementationCSAdapter();
+			}
+			@Override
 			public Adapter caseTypedElementCS(TypedElementCS object)
 			{
 				return createTypedElementCSAdapter();
@@ -279,16 +280,16 @@ public class OCLstdlibCSAdapterFactory
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS <em>Java Class CS</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass <em>Dummy OC Lstdlib Constraint Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass
 	 * @generated
 	 */
-	public Adapter createJavaClassCSAdapter()
+	public Adapter createDummyOCLstdlibConstraintClassAdapter()
 	{
 		return null;
 	}
@@ -439,13 +440,13 @@ public class OCLstdlibCSAdapterFactory
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS <em>Java Implementation CS</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.JavaImplementationCS <em>Java Implementation CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS
+	 * @see org.eclipse.ocl.xtext.basecs.JavaImplementationCS
 	 * @generated
 	 */
 	public Adapter createJavaImplementationCSAdapter() {

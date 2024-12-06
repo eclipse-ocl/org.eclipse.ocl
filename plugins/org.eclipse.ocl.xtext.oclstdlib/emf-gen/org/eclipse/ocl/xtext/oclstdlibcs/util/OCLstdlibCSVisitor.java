@@ -22,8 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public interface OCLstdlibCSVisitor<R> extends org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor<R>
 {
-	R visitJavaClassCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaClassCS object);
-	R visitJavaImplementationCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaImplementationCS object);
+	R visitDummyOCLstdlibConstraintClass(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull DummyOCLstdlibConstraintClass object);
 	R visitLibClassCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibClassCS object);
 	R visitLibCoercionCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibCoercionCS object);
 	R visitLibConstraintCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull LibConstraintCS object);

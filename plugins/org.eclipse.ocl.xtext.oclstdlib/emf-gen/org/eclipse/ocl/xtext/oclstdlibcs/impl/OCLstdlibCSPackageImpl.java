@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -24,8 +25,7 @@ import org.eclipse.ocl.xtext.basecs.impl.NamedElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.OperationCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.PackageCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.StructuredClassCSImpl;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
@@ -39,6 +39,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -55,7 +56,7 @@ implements OCLstdlibCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass javaClassCSEClass = null;
+	private EClass dummyOCLstdlibConstraintClassEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,13 +133,6 @@ implements OCLstdlibCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass javaImplementationCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass precedenceCSEClass = null;
 
 	/**
@@ -198,6 +192,18 @@ implements OCLstdlibCSPackage {
 		// Initialize created meta-data
 		theOCLstdlibCSPackage.initializePackageContents();
 
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theOCLstdlibCSPackage,
+			 new EValidator.Descriptor()
+			 {
+				 @Override
+				 public EValidator getEValidator()
+				 {
+					 return OCLstdlibCSValidator.INSTANCE;
+				 }
+			 });
+
 		// Mark meta-data to indicate it can't be changed
 		theOCLstdlibCSPackage.freeze();
 
@@ -212,9 +218,9 @@ implements OCLstdlibCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getJavaClassCS()
+	public EClass getDummyOCLstdlibConstraintClass()
 	{
-		return javaClassCSEClass;
+		return dummyOCLstdlibConstraintClassEClass;
 	}
 
 	/**
@@ -470,26 +476,6 @@ implements OCLstdlibCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getJavaImplementationCS() {
-		return javaImplementationCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getJavaImplementationCS_Implementation() {
-		return (EReference)javaImplementationCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getPrecedenceCS() {
 		return precedenceCSEClass;
 	}
@@ -535,45 +521,42 @@ implements OCLstdlibCSPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		javaClassCSEClass = createEClass(0);
+		dummyOCLstdlibConstraintClassEClass = createEClass(0);
 
-		javaImplementationCSEClass = createEClass(1);
-		createEReference(javaImplementationCSEClass, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0);
-
-		libClassCSEClass = createEClass(2);
+		libClassCSEClass = createEClass(1);
 		createEReference(libClassCSEClass, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1);
 
-		libCoercionCSEClass = createEClass(3);
+		libCoercionCSEClass = createEClass(2);
 
-		libConstraintCSEClass = createEClass(4);
+		libConstraintCSEClass = createEClass(3);
 
-		libIterationCSEClass = createEClass(5);
+		libIterationCSEClass = createEClass(4);
 		createEAttribute(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1);
 		createEAttribute(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2);
 		createEReference(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
 		createEReference(libIterationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
 
-		libOperationCSEClass = createEClass(6);
+		libOperationCSEClass = createEClass(5);
 		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1);
 		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2);
 		createEAttribute(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
 		createEReference(libOperationCSEClass, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
 
-		libOppositeCSEClass = createEClass(7);
+		libOppositeCSEClass = createEClass(6);
 
-		libPackageCSEClass = createEClass(8);
+		libPackageCSEClass = createEClass(7);
 		createEReference(libPackageCSEClass, PackageCSImpl.PACKAGE_CS_FEATURE_COUNT + 0);
 
-		libPropertyCSEClass = createEClass(9);
+		libPropertyCSEClass = createEClass(8);
 		createEAttribute(libPropertyCSEClass, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 1);
 		createEReference(libPropertyCSEClass, AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 2);
 
-		libRootPackageCSEClass = createEClass(10);
+		libRootPackageCSEClass = createEClass(9);
 
-		metaclassNameCSEClass = createEClass(11);
+		metaclassNameCSEClass = createEClass(10);
 		createEAttribute(metaclassNameCSEClass, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0);
 
-		precedenceCSEClass = createEClass(12);
+		precedenceCSEClass = createEClass(11);
 		createEAttribute(precedenceCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
 	}
 
@@ -609,30 +592,26 @@ implements OCLstdlibCSPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		javaClassCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
-		javaImplementationCSEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
+		dummyOCLstdlibConstraintClassEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		libClassCSEClass.getESuperTypes().add(theBaseCSPackage.getStructuredClassCS());
-		libClassCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
+		libClassCSEClass.getESuperTypes().add(theBaseCSPackage.getJavaImplementationCS());
 		libCoercionCSEClass.getESuperTypes().add(theBaseCSPackage.getOperationCS());
-		libCoercionCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
+		libCoercionCSEClass.getESuperTypes().add(theBaseCSPackage.getJavaImplementationCS());
 		libConstraintCSEClass.getESuperTypes().add(theBaseCSPackage.getConstraintCS());
 		libIterationCSEClass.getESuperTypes().add(theBaseCSPackage.getOperationCS());
-		libIterationCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
+		libIterationCSEClass.getESuperTypes().add(theBaseCSPackage.getJavaImplementationCS());
 		libOperationCSEClass.getESuperTypes().add(theBaseCSPackage.getOperationCS());
-		libOperationCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
+		libOperationCSEClass.getESuperTypes().add(theBaseCSPackage.getJavaImplementationCS());
 		libOppositeCSEClass.getESuperTypes().add(theBaseCSPackage.getFeatureCS());
 		libPackageCSEClass.getESuperTypes().add(theBaseCSPackage.getPackageCS());
 		libPropertyCSEClass.getESuperTypes().add(theBaseCSPackage.getAttributeCS());
-		libPropertyCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
+		libPropertyCSEClass.getESuperTypes().add(theBaseCSPackage.getJavaImplementationCS());
 		libRootPackageCSEClass.getESuperTypes().add(theBaseCSPackage.getRootPackageCS());
 		metaclassNameCSEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		precedenceCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(javaClassCSEClass, JavaClassCS.class, "JavaClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(javaImplementationCSEClass, JavaImplementationCS.class, "JavaImplementationCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJavaImplementationCS_Implementation(), this.getJavaClassCS(), null, "implementation", null, 0, 1, JavaImplementationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(dummyOCLstdlibConstraintClassEClass, DummyOCLstdlibConstraintClass.class, "DummyOCLstdlibConstraintClass", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(libClassCSEClass, LibClassCS.class, "LibClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLibClassCS_MetaclassName(), this.getMetaclassNameCS(), null, "metaclassName", null, 0, 1, LibClassCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -672,6 +651,28 @@ implements OCLstdlibCSPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore";
+		addAnnotation
+		  (dummyOCLstdlibConstraintClassEClass,
+		   source,
+		   new String[]
+		   {
+			   "constraints", "DummyConstraint"
+		   });
 	}
 
 } //OCLstdlibCSPackageImpl

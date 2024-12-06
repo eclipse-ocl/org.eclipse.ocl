@@ -573,7 +573,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//    (ownedSignature=TemplateSignatureCS)?
 		//    (':' metaclassName=[MetaclassNameCS|AnyName])?
 		//    ('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
-		//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//    '{' (ownedOperations+=OperationCS
 		//       | ownedProperties+=LibPropertyCS
 		//       | ownedConstraints+=InvCS
@@ -585,7 +585,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//(ownedSignature=TemplateSignatureCS)?
 		//(':' metaclassName=[MetaclassNameCS|AnyName])?
 		//('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//'{' (ownedOperations+=OperationCS
 		//   | ownedProperties+=LibPropertyCS
 		//   | ownedConstraints+=InvCS
@@ -652,16 +652,16 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//TypedRefCS
 		public RuleCall getOwnedSuperTypesTypedRefCSParserRuleCall_5_2_1_0() { return cOwnedSuperTypesTypedRefCSParserRuleCall_5_2_1_0; }
 
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_6_0() { return cEqualsSignGreaterThanSignKeyword_6_0; }
 
-		//implementation=[JavaClassCS|SINGLE_QUOTED_STRING]
+		//implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public Assignment getImplementationAssignment_6_1() { return cImplementationAssignment_6_1; }
 
-		//[JavaClassCS|SINGLE_QUOTED_STRING]
+		//[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public CrossReference getImplementationJavaClassCSCrossReference_6_1_0() { return cImplementationJavaClassCSCrossReference_6_1_0; }
 
 		//SINGLE_QUOTED_STRING
@@ -981,7 +981,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 
 		//LibCoercionCS returns LibCoercionCS:
 		//    'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
-		//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//    (('{' (ownedAnnotations+=AnnotationElementCS
 		//         | ownedPreconditions+=PostCS
 		//         | ownedPostconditions+=PreCS)* '}')
@@ -991,7 +991,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		@Override public ParserRule getRule() { return rule; }
 
 		//'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//(('{' (ownedAnnotations+=AnnotationElementCS
 		//     | ownedPreconditions+=PostCS
 		//     | ownedPostconditions+=PreCS)* '}')
@@ -1023,16 +1023,16 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//TypedMultiplicityRefCS
 		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_5_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_5_0; }
 
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_6_0() { return cEqualsSignGreaterThanSignKeyword_6_0; }
 
-		//implementation=[JavaClassCS|SINGLE_QUOTED_STRING]
+		//implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public Assignment getImplementationAssignment_6_1() { return cImplementationAssignment_6_1; }
 
-		//[JavaClassCS|SINGLE_QUOTED_STRING]
+		//[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public CrossReference getImplementationJavaClassCSCrossReference_6_1_0() { return cImplementationJavaClassCSCrossReference_6_1_0; }
 
 		//SINGLE_QUOTED_STRING
@@ -1149,7 +1149,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//    ':' ownedType=TypedMultiplicityRefCS
 		//    (isInvalidating?='invalidating')?
 		//    (isValidating?='validating')?
-		//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//    (('{' (ownedAnnotations+=AnnotationElementCS
 		//         | ownedPreconditions+=PostCS
 		//         | ownedPostconditions+=PreCS)* '}')
@@ -1167,7 +1167,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//':' ownedType=TypedMultiplicityRefCS
 		//(isInvalidating?='invalidating')?
 		//(isValidating?='validating')?
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//(('{' (ownedAnnotations+=AnnotationElementCS
 		//     | ownedPreconditions+=PostCS
 		//     | ownedPostconditions+=PreCS)* '}')
@@ -1283,16 +1283,16 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//'validating'
 		public Keyword getIsValidatingValidatingKeyword_12_0() { return cIsValidatingValidatingKeyword_12_0; }
 
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		public Group getGroup_13() { return cGroup_13; }
 
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_13_0() { return cEqualsSignGreaterThanSignKeyword_13_0; }
 
-		//implementation=[JavaClassCS|SINGLE_QUOTED_STRING]
+		//implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public Assignment getImplementationAssignment_13_1() { return cImplementationAssignment_13_1; }
 
-		//[JavaClassCS|SINGLE_QUOTED_STRING]
+		//[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public CrossReference getImplementationJavaClassCSCrossReference_13_1_0() { return cImplementationJavaClassCSCrossReference_13_1_0; }
 
 		//SINGLE_QUOTED_STRING
@@ -1567,7 +1567,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//    (isValidating?='validating')?
 		//    (isInvalidating?='invalidating')?
 		//    ('precedence' '=' precedence=[pivot::Precedence|Name])?
-		//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//    (('{' (ownedAnnotations+=AnnotationElementCS
 		//         | ('body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';')
 		//         | ownedPostconditions+=PostCS
@@ -1584,7 +1584,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//(isValidating?='validating')?
 		//(isInvalidating?='invalidating')?
 		//('precedence' '=' precedence=[pivot::Precedence|Name])?
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//(('{' (ownedAnnotations+=AnnotationElementCS
 		//     | ('body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';')
 		//     | ownedPostconditions+=PostCS
@@ -1680,16 +1680,16 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//Name
 		public RuleCall getPrecedencePrecedenceNameParserRuleCall_11_2_0_1() { return cPrecedencePrecedenceNameParserRuleCall_11_2_0_1; }
 
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		public Group getGroup_12() { return cGroup_12; }
 
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_12_0() { return cEqualsSignGreaterThanSignKeyword_12_0; }
 
-		//implementation=[JavaClassCS|SINGLE_QUOTED_STRING]
+		//implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public Assignment getImplementationAssignment_12_1() { return cImplementationAssignment_12_1; }
 
-		//[JavaClassCS|SINGLE_QUOTED_STRING]
+		//[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public CrossReference getImplementationJavaClassCSCrossReference_12_1_0() { return cImplementationJavaClassCSCrossReference_12_1_0; }
 
 		//SINGLE_QUOTED_STRING
@@ -2086,7 +2086,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//    (isStatic?='static')? 'property' name=Name
 		//    ':' ownedType=TypedMultiplicityRefCS
 		//    ownedOpposite=LibOppositeCS?
-		//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//    (    ('{' (ownedAnnotations+=AnnotationElementCS)* '}')
 		//    |    ';'
 		//    )
@@ -2096,7 +2096,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//(isStatic?='static')? 'property' name=Name
 		//':' ownedType=TypedMultiplicityRefCS
 		//ownedOpposite=LibOppositeCS?
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		//(    ('{' (ownedAnnotations+=AnnotationElementCS)* '}')
 		//|    ';'
 		//)
@@ -2132,16 +2132,16 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//LibOppositeCS
 		public RuleCall getOwnedOppositeLibOppositeCSParserRuleCall_5_0() { return cOwnedOppositeLibOppositeCSParserRuleCall_5_0; }
 
-		//('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+		//('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_6_0() { return cEqualsSignGreaterThanSignKeyword_6_0; }
 
-		//implementation=[JavaClassCS|SINGLE_QUOTED_STRING]
+		//implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public Assignment getImplementationAssignment_6_1() { return cImplementationAssignment_6_1; }
 
-		//[JavaClassCS|SINGLE_QUOTED_STRING]
+		//[base::JavaClassCS|SINGLE_QUOTED_STRING]
 		public CrossReference getImplementationJavaClassCSCrossReference_6_1_0() { return cImplementationJavaClassCSCrossReference_6_1_0; }
 
 		//SINGLE_QUOTED_STRING
@@ -2817,7 +2817,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 	//    (ownedSignature=TemplateSignatureCS)?
 	//    (':' metaclassName=[MetaclassNameCS|AnyName])?
 	//    ('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
-	//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	//    '{' (ownedOperations+=OperationCS
 	//       | ownedProperties+=LibPropertyCS
 	//       | ownedConstraints+=InvCS
@@ -2889,7 +2889,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 
 	//LibCoercionCS returns LibCoercionCS:
 	//    'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
-	//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	//    (('{' (ownedAnnotations+=AnnotationElementCS
 	//         | ownedPreconditions+=PostCS
 	//         | ownedPostconditions+=PreCS)* '}')
@@ -2914,7 +2914,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 	//    ':' ownedType=TypedMultiplicityRefCS
 	//    (isInvalidating?='invalidating')?
 	//    (isValidating?='validating')?
-	//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	//    (('{' (ownedAnnotations+=AnnotationElementCS
 	//         | ownedPreconditions+=PostCS
 	//         | ownedPostconditions+=PreCS)* '}')
@@ -2983,7 +2983,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 	//    (isValidating?='validating')?
 	//    (isInvalidating?='invalidating')?
 	//    ('precedence' '=' precedence=[pivot::Precedence|Name])?
-	//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	//    (('{' (ownedAnnotations+=AnnotationElementCS
 	//         | ('body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';')
 	//         | ownedPostconditions+=PostCS
@@ -3059,7 +3059,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 	//    (isStatic?='static')? 'property' name=Name
 	//    ':' ownedType=TypedMultiplicityRefCS
 	//    ownedOpposite=LibOppositeCS?
-	//    ('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
+	//    ('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	//    (    ('{' (ownedAnnotations+=AnnotationElementCS)* '}')
 	//    |    ';'
 	//    )
