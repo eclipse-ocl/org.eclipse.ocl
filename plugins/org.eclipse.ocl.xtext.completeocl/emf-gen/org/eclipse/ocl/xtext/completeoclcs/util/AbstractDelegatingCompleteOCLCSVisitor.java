@@ -64,6 +64,11 @@ public abstract class AbstractDelegatingCompleteOCLCSVisitor<R, C, @NonNull D ex
 	}
 
 	@Override
+	public R visitDummyCompleteOCLConstraintClass(org.eclipse.ocl.xtext.completeoclcs.@NonNull DummyCompleteOCLConstraintClass object) {
+		return delegate.visitDummyCompleteOCLConstraintClass(object);
+	}
+
+	@Override
 	public R visitFeatureContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull FeatureContextDeclCS object) {
 		return delegate.visitFeatureContextDeclCS(object);
 	}

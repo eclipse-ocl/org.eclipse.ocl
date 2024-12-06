@@ -100,6 +100,11 @@ public abstract class AbstractDelegatingBaseCSVisitor<R, C, @NonNull D extends B
 	}
 
 	@Override
+	public R visitDummyBaseConstraintClass(org.eclipse.ocl.xtext.basecs.@NonNull DummyBaseConstraintClass object) {
+		return delegate.visitDummyBaseConstraintClass(object);
+	}
+
+	@Override
 	public R visitElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ElementCS object) {
 		return delegate.visitElementCS(object);
 	}
@@ -132,6 +137,16 @@ public abstract class AbstractDelegatingBaseCSVisitor<R, C, @NonNull D extends B
 	@Override
 	public R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object) {
 		return delegate.visitImportCS(object);
+	}
+
+	@Override
+	public R visitJavaClassCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaClassCS object) {
+		return delegate.visitJavaClassCS(object);
+	}
+
+	@Override
+	public R visitJavaImplementationCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaImplementationCS object) {
+		return delegate.visitJavaImplementationCS(object);
 	}
 
 	@Override

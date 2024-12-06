@@ -15,11 +15,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.impl.StructuredClassCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
@@ -262,7 +261,7 @@ public class LibClassCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0: return 2;
 				default: return -1;
 			}
 		}
@@ -281,7 +280,7 @@ public class LibClassCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0;
+				case 2: return StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

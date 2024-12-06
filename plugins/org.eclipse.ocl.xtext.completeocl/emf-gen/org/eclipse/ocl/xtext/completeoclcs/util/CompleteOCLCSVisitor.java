@@ -28,6 +28,7 @@ public interface CompleteOCLCSVisitor<R> extends org.eclipse.ocl.xtext.essential
 	R visitDefCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull DefCS object);
 	R visitDefOperationCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull DefOperationCS object);
 	R visitDefPropertyCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull DefPropertyCS object);
+	R visitDummyCompleteOCLConstraintClass(org.eclipse.ocl.xtext.completeoclcs.@NonNull DummyCompleteOCLConstraintClass object);
 	R visitFeatureContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull FeatureContextDeclCS object);
 	R visitOCLMessageArgCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull OCLMessageArgCS object);
 	R visitOperationContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull OperationContextDeclCS object);

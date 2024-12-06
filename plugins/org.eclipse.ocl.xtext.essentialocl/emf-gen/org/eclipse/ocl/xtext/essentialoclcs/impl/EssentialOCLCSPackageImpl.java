@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.CollectionPatternCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CurlyBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.DummyEssentialOCLConstraintClass;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSFactory;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
@@ -76,6 +78,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -128,6 +131,13 @@ implements EssentialOCLCSPackage {
 	 * @generated
 	 */
 	private EClass curlyBracketedClauseCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dummyEssentialOCLConstraintClassEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -494,6 +504,18 @@ implements EssentialOCLCSPackage {
 		// Initialize created meta-data
 		theEssentialOCLCSPackage.initializePackageContents();
 
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theEssentialOCLCSPackage,
+			 new EValidator.Descriptor()
+			 {
+				 @Override
+				 public EValidator getEValidator()
+				 {
+					 return EssentialOCLCSValidator.INSTANCE;
+				 }
+			 });
+
 		// Mark meta-data to indicate it can't be changed
 		theEssentialOCLCSPackage.freeze();
 
@@ -725,6 +747,17 @@ implements EssentialOCLCSPackage {
 	public EAttribute getCurlyBracketedClauseCS_Value()
 	{
 		return (EAttribute)curlyBracketedClauseCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getDummyEssentialOCLConstraintClass()
+	{
+		return dummyEssentialOCLConstraintClassEClass;
 	}
 
 	/**
@@ -2162,7 +2195,9 @@ implements EssentialOCLCSPackage {
 		createEReference(curlyBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 		createEAttribute(curlyBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 2);
 
-		expCSEClass = createEClass(10);
+		dummyEssentialOCLConstraintClassEClass = createEClass(10);
+
+		expCSEClass = createEClass(11);
 		createEAttribute(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
@@ -2172,64 +2207,64 @@ implements EssentialOCLCSPackage {
 		createEReference(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6);
 		createEAttribute(expCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7);
 
-		expSpecificationCSEClass = createEClass(11);
+		expSpecificationCSEClass = createEClass(12);
 		createEReference(expSpecificationCSEClass, SpecificationCSImpl.SPECIFICATION_CS_FEATURE_COUNT + 0);
 
-		ifExpCSEClass = createEClass(12);
+		ifExpCSEClass = createEClass(13);
 		createEAttribute(ifExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEReference(ifExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 		createEReference(ifExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10);
 		createEReference(ifExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11);
 		createEReference(ifExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12);
 
-		ifThenExpCSEClass = createEClass(13);
+		ifThenExpCSEClass = createEClass(14);
 		createEReference(ifThenExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEReference(ifThenExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 
-		infixExpCSEClass = createEClass(14);
+		infixExpCSEClass = createEClass(15);
 		createEReference(infixExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11);
 		createEReference(infixExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12);
 
-		invalidLiteralExpCSEClass = createEClass(15);
+		invalidLiteralExpCSEClass = createEClass(16);
 
-		iterateCallExpCSEClass = createEClass(16);
+		iterateCallExpCSEClass = createEClass(17);
 		createEReference(iterateCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 20);
 
-		iterationCallExpCSEClass = createEClass(17);
+		iterationCallExpCSEClass = createEClass(18);
 		createEReference(iterationCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17);
 		createEReference(iterationCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 18);
 		createEReference(iterationCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 19);
 
-		lambdaLiteralExpCSEClass = createEClass(18);
+		lambdaLiteralExpCSEClass = createEClass(19);
 		createEReference(lambdaLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		letExpCSEClass = createEClass(19);
+		letExpCSEClass = createEClass(20);
 		createEAttribute(letExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEReference(letExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 		createEReference(letExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10);
 
-		letVariableCSEClass = createEClass(20);
+		letVariableCSEClass = createEClass(21);
 		createEReference(letVariableCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 11);
 		createEReference(letVariableCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 12);
 
-		literalExpCSEClass = createEClass(21);
+		literalExpCSEClass = createEClass(22);
 
-		mapLiteralExpCSEClass = createEClass(22);
+		mapLiteralExpCSEClass = createEClass(23);
 		createEReference(mapLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEReference(mapLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 
-		mapLiteralPartCSEClass = createEClass(23);
+		mapLiteralPartCSEClass = createEClass(24);
 		createEReference(mapLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(mapLiteralPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		mapTypeCSEClass = createEClass(24);
+		mapTypeCSEClass = createEClass(25);
 		createEAttribute(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
 		createEReference(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
 		createEReference(mapTypeCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
 
-		nameExpCSEClass = createEClass(25);
+		nameExpCSEClass = createEClass(26);
 
-		navigatingArgCSEClass = createEClass(26);
+		navigatingArgCSEClass = createEClass(27);
 		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
@@ -2238,82 +2273,82 @@ implements EssentialOCLCSPackage {
 		createEAttribute(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
 		createEReference(navigatingArgCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 6);
 
-		nestedExpCSEClass = createEClass(27);
+		nestedExpCSEClass = createEClass(28);
 		createEReference(nestedExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		nullLiteralExpCSEClass = createEClass(28);
+		nullLiteralExpCSEClass = createEClass(29);
 
-		numberLiteralExpCSEClass = createEClass(29);
+		numberLiteralExpCSEClass = createEClass(30);
 		createEAttribute(numberLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		operationCallExpCSEClass = createEClass(30);
+		operationCallExpCSEClass = createEClass(31);
 		createEReference(operationCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17);
 
-		operatorExpCSEClass = createEClass(31);
+		operatorExpCSEClass = createEClass(32);
 		createEReference(operatorExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 		createEReference(operatorExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 10);
 
-		patternExpCSEClass = createEClass(32);
+		patternExpCSEClass = createEClass(33);
 		createEReference(patternExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEAttribute(patternExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 
-		prefixExpCSEClass = createEClass(33);
+		prefixExpCSEClass = createEClass(34);
 
-		primitiveLiteralExpCSEClass = createEClass(34);
+		primitiveLiteralExpCSEClass = createEClass(35);
 
-		propertyCallExpCSEClass = createEClass(35);
+		propertyCallExpCSEClass = createEClass(36);
 		createEReference(propertyCallExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17);
 
-		roundBracketedClauseCSEClass = createEClass(36);
+		roundBracketedClauseCSEClass = createEClass(37);
 		createEReference(roundBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(roundBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		selfExpCSEClass = createEClass(37);
+		selfExpCSEClass = createEClass(38);
 		createEAttribute(selfExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		shadowExpCSEClass = createEClass(38);
+		shadowExpCSEClass = createEClass(39);
 		createEReference(shadowExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15);
 		createEReference(shadowExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 16);
 		createEAttribute(shadowExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 17);
 
-		shadowPartCSEClass = createEClass(39);
+		shadowPartCSEClass = createEClass(40);
 		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		createEReference(shadowPartCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 
-		squareBracketedClauseCSEClass = createEClass(40);
+		squareBracketedClauseCSEClass = createEClass(41);
 		createEReference(squareBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(squareBracketedClauseCSEClass, ContextLessElementCSImpl.CONTEXT_LESS_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		stringLiteralExpCSEClass = createEClass(41);
+		stringLiteralExpCSEClass = createEClass(42);
 		createEAttribute(stringLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		tupleLiteralExpCSEClass = createEClass(42);
+		tupleLiteralExpCSEClass = createEClass(43);
 		createEReference(tupleLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		tupleLiteralPartCSEClass = createEClass(43);
+		tupleLiteralPartCSEClass = createEClass(44);
 
-		typeLiteralExpCSEClass = createEClass(44);
+		typeLiteralExpCSEClass = createEClass(45);
 		createEReference(typeLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 		createEReference(typeLiteralExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 9);
 
-		typeNameExpCSEClass = createEClass(45);
+		typeNameExpCSEClass = createEClass(46);
 		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 0);
 		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 1);
 		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 2);
 		createEReference(typeNameExpCSEClass, TypedRefCSImpl.TYPED_REF_CS_FEATURE_COUNT + 3);
 
-		unlimitedNaturalLiteralExpCSEClass = createEClass(46);
+		unlimitedNaturalLiteralExpCSEClass = createEClass(47);
 
-		variableCSEClass = createEClass(47);
+		variableCSEClass = createEClass(48);
 		createEReference(variableCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(variableCSEClass, NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		variableExpCSEClass = createEClass(48);
+		variableExpCSEClass = createEClass(49);
 		createEReference(variableExpCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 15);
 
 		// Create enums
-		navigationRoleEEnum = createEEnum(49);
+		navigationRoleEEnum = createEEnum(50);
 	}
 
 	/**
@@ -2359,6 +2394,7 @@ implements EssentialOCLCSPackage {
 		contextCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
 		contextCSEClass.getESuperTypes().add(theBaseCSPackage.getRootCS());
 		curlyBracketedClauseCSEClass.getESuperTypes().add(theBaseCSPackage.getContextLessElementCS());
+		dummyEssentialOCLConstraintClassEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		expCSEClass.getESuperTypes().add(theBaseCSPackage.getModelElementCS());
 		expSpecificationCSEClass.getESuperTypes().add(theBaseCSPackage.getSpecificationCS());
 		ifExpCSEClass.getESuperTypes().add(this.getExpCS());
@@ -2453,6 +2489,8 @@ implements EssentialOCLCSPackage {
 		initEReference(getCurlyBracketedClauseCS_OwnedParts(), this.getShadowPartCS(), this.getShadowPartCS_OwningCurlyBracketClause(), "ownedParts", null, 0, -1, CurlyBracketedClauseCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getCurlyBracketedClauseCS_OwningNameExp(), this.getAbstractNameExpCS(), this.getAbstractNameExpCS_OwnedCurlyBracketedClause(), "owningNameExp", null, 0, 1, CurlyBracketedClauseCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getCurlyBracketedClauseCS_Value(), ecorePackage.getEString(), "value", null, 0, 1, CurlyBracketedClauseCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(dummyEssentialOCLConstraintClassEClass, DummyEssentialOCLConstraintClass.class, "DummyEssentialOCLConstraintClass", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(expCSEClass, ExpCS.class, "ExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getExpCS_HasError(), ecorePackage.getEBoolean(), "hasError", "false", 0, 1, ExpCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2618,6 +2656,28 @@ implements EssentialOCLCSPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		addAnnotation
+		  (dummyEssentialOCLConstraintClassEClass,
+		   source,
+		   new String[]
+		   {
+			   "constraints", "DummyConstraint" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 	}
 
 } //EssentialOCLCSPackageImpl

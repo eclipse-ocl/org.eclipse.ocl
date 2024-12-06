@@ -90,6 +90,14 @@ protected T doSwitch(int classifierID, EObject theEObject)
 		{
 			case 0:
 			{
+				DummyOCLinEcoreConstraintClass dummyOCLinEcoreConstraintClass = (DummyOCLinEcoreConstraintClass)theEObject;
+				T result = caseDummyOCLinEcoreConstraintClass(dummyOCLinEcoreConstraintClass);
+				if (result == null) result = caseElementCS(dummyOCLinEcoreConstraintClass);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 1:
+			{
 				OCLinEcoreConstraintCS ocLinEcoreConstraintCS = (OCLinEcoreConstraintCS)theEObject;
 				T result = caseOCLinEcoreConstraintCS(ocLinEcoreConstraintCS);
 				if (result == null) result = caseConstraintCS(ocLinEcoreConstraintCS);
@@ -100,7 +108,7 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 1:
+			case 2:
 			{
 				SysMLCS sysMLCS = (SysMLCS)theEObject;
 				T result = caseSysMLCS(sysMLCS);
@@ -112,7 +120,7 @@ protected T doSwitch(int classifierID, EObject theEObject)
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 2:
+			case 3:
 			{
 				TopLevelCS topLevelCS = (TopLevelCS)theEObject;
 				T result = caseTopLevelCS(topLevelCS);
@@ -130,6 +138,22 @@ protected T doSwitch(int classifierID, EObject theEObject)
 	}
 
   /**
+	 * Returns the result of interpreting the object as an instance of '<em>Dummy OC Lin Ecore Constraint Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dummy OC Lin Ecore Constraint Class</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDummyOCLinEcoreConstraintClass(DummyOCLinEcoreConstraintClass object)
+	{
+		return null;
+	}
+
+/**
 	 * Returns the result of interpreting the object as an instance of '<em>OC Lin Ecore Constraint CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;

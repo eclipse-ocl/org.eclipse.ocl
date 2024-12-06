@@ -164,6 +164,14 @@ public class CompleteOCLCSSwitch<@Nullable T>
 			}
 			case 6:
 			{
+				DummyCompleteOCLConstraintClass dummyCompleteOCLConstraintClass = (DummyCompleteOCLConstraintClass)theEObject;
+				T result = caseDummyCompleteOCLConstraintClass(dummyCompleteOCLConstraintClass);
+				if (result == null) result = caseElementCS(dummyCompleteOCLConstraintClass);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 7:
+			{
 				FeatureContextDeclCS featureContextDeclCS = (FeatureContextDeclCS)theEObject;
 				T result = caseFeatureContextDeclCS(featureContextDeclCS);
 				if (result == null) result = caseContextDeclCS(featureContextDeclCS);
@@ -174,7 +182,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 7:
+			case 8:
 			{
 				OCLMessageArgCS oclMessageArgCS = (OCLMessageArgCS)theEObject;
 				T result = caseOCLMessageArgCS(oclMessageArgCS);
@@ -185,7 +193,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 8:
+			case 9:
 			{
 				OperationContextDeclCS operationContextDeclCS = (OperationContextDeclCS)theEObject;
 				T result = caseOperationContextDeclCS(operationContextDeclCS);
@@ -199,7 +207,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 9:
+			case 10:
 			{
 				PackageDeclarationCS packageDeclarationCS = (PackageDeclarationCS)theEObject;
 				T result = casePackageDeclarationCS(packageDeclarationCS);
@@ -210,7 +218,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 10:
+			case 11:
 			{
 				PathNameDeclCS pathNameDeclCS = (PathNameDeclCS)theEObject;
 				T result = casePathNameDeclCS(pathNameDeclCS);
@@ -220,7 +228,7 @@ public class CompleteOCLCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 11:
+			case 12:
 			{
 				PropertyContextDeclCS propertyContextDeclCS = (PropertyContextDeclCS)theEObject;
 				T result = casePropertyContextDeclCS(propertyContextDeclCS);
@@ -340,6 +348,22 @@ public class CompleteOCLCSSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseDefPropertyCS(DefPropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dummy Complete OCL Constraint Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dummy Complete OCL Constraint Class</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDummyCompleteOCLConstraintClass(DummyCompleteOCLConstraintClass object)
+	{
 		return null;
 	}
 
