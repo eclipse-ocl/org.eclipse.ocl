@@ -43,6 +43,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//DefOperationCS/ownedParameters"/>
     </genClasses>
     <genClasses ecoreClass="CompleteOCLCS.ecore#//DefPropertyCS"/>
+    <genClasses image="false" ecoreClass="CompleteOCLCS.ecore#//DummyCompleteOCLConstraintClass"/>
     <genClasses image="false" ecoreClass="CompleteOCLCS.ecore#//FeatureContextDeclCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//FeatureContextDeclCS/ownedType"/>
     </genClasses>
