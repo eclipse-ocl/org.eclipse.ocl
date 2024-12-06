@@ -240,6 +240,26 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource$CSResourceExtension2">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2"/>
+                <message_argument value="isDerived()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="reloadIn(EnvironmentFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="setDerived(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
         <filter id="403804204">
             <message_arguments>

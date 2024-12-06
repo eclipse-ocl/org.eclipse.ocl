@@ -13,18 +13,7 @@
  */
 package org.eclipse.ocl.xtext.oclstdlib.scoping;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
-import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
-import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
-import org.eclipse.xtext.scoping.IScope;
 
 /**
  * This class contains custom scoping description.
@@ -35,26 +24,4 @@ import org.eclipse.xtext.scoping.IScope;
  */
 public class OCLstdlibScopeProvider extends EssentialOCLScopeProvider
 {
-	@Override
-	public IScope getScope(EObject context, EReference reference) {
-		if (context == null) {
-			return IScope.NULLSCOPE;
-		}
-		Resource csResource = context.eResource();
-		if (csResource == null) {
-			return IScope.NULLSCOPE;
-		}
-		EClass eReferenceType = reference.getEReferenceType();
-		if (eReferenceType == OCLstdlibCSPackage.Literals.JAVA_CLASS_CS) {
-			if (csResource instanceof BaseCSResource) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context);
-				CS2AS cs2as = ((BaseCSResource)csResource).getCS2AS(environmentFactory);
-				if (cs2as instanceof OCLstdlibCS2AS) {
-					return ((OCLstdlibCS2AS)cs2as).getJavaClassScope();
-				}
-			}
-			return IScope.NULLSCOPE;
-		}
-		return super.getScope(context, reference);
-	}
 }

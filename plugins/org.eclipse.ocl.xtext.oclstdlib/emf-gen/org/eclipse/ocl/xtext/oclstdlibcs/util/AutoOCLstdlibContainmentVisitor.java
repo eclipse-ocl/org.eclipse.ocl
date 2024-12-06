@@ -15,9 +15,10 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSContainmentVisitor;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
@@ -48,6 +49,11 @@ public class AutoOCLstdlibContainmentVisitor
         this.converter = context.getConverter();
         this.idResolver = converter.getEnvironmentFactory().getIdResolver();
     }
+
+	@Override
+	public Continuation<?> visitDummyOCLstdlibConstraintClass(@NonNull DummyOCLstdlibConstraintClass object) {
+        throw new UnsupportedOperationException();
+	}
 
     @Override
 	public @Nullable Continuation<?> visitJavaClassCS(@NonNull JavaClassCS self) {
