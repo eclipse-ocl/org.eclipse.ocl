@@ -32,8 +32,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
-import org.eclipse.ocl.xtext.base.scoping.JavaClassScope;
-import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
@@ -45,7 +43,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 {
 	private @NonNull Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames = new HashMap<>();
-	private @NonNull JavaClassScope javaClassScope;
 	private @NonNull Map<@NonNull String, @NonNull Precedence> name2precedence = new HashMap<>();
 
 	public OCLstdlibCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
@@ -64,14 +61,11 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 				}
 			}
 		}
-		Iterable<@NonNull ClassLoader> classLoaders = environmentFactory.getMetamodelManager().getImplementationManager().getClassLoaders();
-		javaClassScope = new JavaClassScope(classLoaders);
 	}
 
 	public OCLstdlibCS2AS(@NonNull OCLstdlibCS2AS cs2as) {
 		super(cs2as);
 		metaTypeNames = cs2as.metaTypeNames;
-		javaClassScope = cs2as.javaClassScope;
 	}
 
 	@Override
@@ -92,14 +86,6 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 	@Override
 	protected @NonNull OCLstdlibCSVisitor<Continuation<?>> createPreOrderVisitor(@NonNull CS2ASConversion converter) {
 		return new OCLstdlibCSPreOrderVisitor(converter);
-	}
-
-	public @NonNull JavaClassCS getJavaClassCS(@NonNull String name) {
-		return javaClassScope.getJavaClassCS(name);
-	}
-
-	public @NonNull JavaClassScope getJavaClassScope() {
-		return javaClassScope;
 	}
 
 	public @Nullable MetaclassNameCS getMetaclassNameCS(@NonNull String metaclassName) {

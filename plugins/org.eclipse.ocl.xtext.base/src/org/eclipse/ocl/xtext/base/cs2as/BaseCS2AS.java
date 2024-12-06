@@ -16,6 +16,8 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.xtext.base.scoping.JavaClassScope;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
@@ -23,12 +25,17 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  */
 public class BaseCS2AS extends CS2AS
 {
+	private @NonNull JavaClassScope javaClassScope;
+
 	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
+		Iterable<@NonNull ClassLoader> classLoaders = environmentFactory.getMetamodelManager().getImplementationManager().getClassLoaders();
+		javaClassScope = new JavaClassScope(classLoaders);
 	}
 
 	public BaseCS2AS(@NonNull BaseCS2AS cs2as) {
 		super(cs2as);
+		javaClassScope = cs2as.javaClassScope;
 	}
 
 	@Override
@@ -49,5 +56,13 @@ public class BaseCS2AS extends CS2AS
 	@Override
 	protected @NonNull BaseCSVisitor<Continuation<?>> createPreOrderVisitor(@NonNull CS2ASConversion converter) {
 		return new BaseCSPreOrderVisitor(converter);
+	}
+
+	public @NonNull JavaClassCS getJavaClassCS(@NonNull String name) {
+		return javaClassScope.getJavaClassCS(name);
+	}
+
+	public @NonNull JavaClassScope getJavaClassScope() {
+		return javaClassScope;
 	}
 }

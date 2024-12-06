@@ -14,5 +14,6 @@ package org.eclipse.ocl.xtext.essentialocl.scoping;
 
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
 
+@Deprecated /* @deprecated not used */
 public abstract class AbstractEssentialOCLScopeProvider extends BaseScopeProvider {
 }
