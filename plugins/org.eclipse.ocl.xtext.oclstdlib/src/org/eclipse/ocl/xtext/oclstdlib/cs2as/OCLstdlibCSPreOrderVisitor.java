@@ -22,8 +22,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
@@ -48,13 +49,13 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 	protected @Nullable String resolveJavaClassCS(@NonNull JavaImplementationCS csJavaImplementation) {
 		JavaClassCS csJavaClass;
 		String text = null;
-		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csJavaImplementation, OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
+		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csJavaImplementation, BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
 		if ((featureNodes != null) && (featureNodes.size() > 0)) {			// If Xtext has parsed a reference
 			INode node = featureNodes.get(0);
 			text = NodeModelUtils.getTokenText(node).replace("'", "");
 		}
 		else {
-			csJavaClass = (JavaClassCS)csJavaImplementation.eGet(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, false);
+			csJavaClass = (JavaClassCS)csJavaImplementation.eGet(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, false);
 			if (csJavaClass != null) {
 				if (csJavaClass.eIsProxy()) {								// If CS XMI load has loaded an ocl:#xyzzy reference
 					text = ((InternalEObject)csJavaClass).eProxyURI().fragment();
