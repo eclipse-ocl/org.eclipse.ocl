@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
@@ -83,33 +82,20 @@ implements OCLstdlibCSFactory {
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case 0: return createJavaClassCS();
-			case 2: return createLibClassCS();
-			case 3: return createLibCoercionCS();
-			case 4: return createLibConstraintCS();
-			case 5: return createLibIterationCS();
-			case 6: return createLibOperationCS();
-			case 7: return createLibOppositeCS();
-			case 8: return createLibPackageCS();
-			case 9: return createLibPropertyCS();
-			case 10: return createLibRootPackageCS();
-			case 11: return createMetaclassNameCS();
-			case 12: return createPrecedenceCS();
+			case 1: return createLibClassCS();
+			case 2: return createLibCoercionCS();
+			case 3: return createLibConstraintCS();
+			case 4: return createLibIterationCS();
+			case 5: return createLibOperationCS();
+			case 6: return createLibOppositeCS();
+			case 7: return createLibPackageCS();
+			case 8: return createLibPropertyCS();
+			case 9: return createLibRootPackageCS();
+			case 10: return createMetaclassNameCS();
+			case 11: return createPrecedenceCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull JavaClassCS createJavaClassCS()
-	{
-		JavaClassCSImpl javaClassCS = new JavaClassCSImpl();
-		return javaClassCS;
 	}
 
 	/**

@@ -38,6 +38,11 @@ public abstract class AbstractExtendingOCLinEcoreCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass object) {
+		return visitElementCS(object);
+	}
+
+	@Override
 	public R visitOCLinEcoreConstraintCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull OCLinEcoreConstraintCS object) {
 		return visitConstraintCS(object);
 	}

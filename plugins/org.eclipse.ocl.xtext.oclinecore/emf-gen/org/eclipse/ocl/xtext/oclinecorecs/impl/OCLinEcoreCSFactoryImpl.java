@@ -70,9 +70,9 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
-			case 0: return createOCLinEcoreConstraintCS();
-			case 1: return createSysMLCS();
-			case 2: return createTopLevelCS();
+			case 1: return createOCLinEcoreConstraintCS();
+			case 2: return createSysMLCS();
+			case 3: return createTopLevelCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

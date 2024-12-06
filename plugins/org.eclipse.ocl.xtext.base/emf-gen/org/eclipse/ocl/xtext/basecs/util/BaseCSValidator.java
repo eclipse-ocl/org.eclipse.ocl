@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
+import org.eclipse.ocl.xtext.base.utilities.CSI;
+import org.eclipse.ocl.xtext.basecs.*;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
@@ -150,115 +152,125 @@ public class BaseCSValidator extends EObjectValidator
 	{
 		switch (classifierID)
 		{
-			case BaseCSPackage.ANNOTATION_CS:
+			case 0:
 				return validateAnnotationCS((AnnotationCS)value, diagnostics, context);
-			case BaseCSPackage.ANNOTATION_ELEMENT_CS:
+			case 1:
 				return validateAnnotationElementCS((AnnotationElementCS)value, diagnostics, context);
-			case BaseCSPackage.ATTRIBUTE_CS:
+			case 2:
 				return validateAttributeCS((AttributeCS)value, diagnostics, context);
-			case BaseCSPackage.CLASS_CS:
+			case 3:
 				return validateClassCS((ClassCS)value, diagnostics, context);
-			case BaseCSPackage.CONSTRAINT_CS:
+			case 4:
 				return validateConstraintCS((ConstraintCS)value, diagnostics, context);
-			case BaseCSPackage.CONTEXT_LESS_ELEMENT_CS:
+			case 5:
 				return validateContextLessElementCS((ContextLessElementCS)value, diagnostics, context);
-			case BaseCSPackage.DATA_TYPE_CS:
+			case 6:
 				return validateDataTypeCS((DataTypeCS)value, diagnostics, context);
-			case BaseCSPackage.DETAIL_CS:
+			case 7:
 				return validateDetailCS((DetailCS)value, diagnostics, context);
-			case BaseCSPackage.DOCUMENTATION_CS:
+			case 8:
 				return validateDocumentationCS((DocumentationCS)value, diagnostics, context);
-			case BaseCSPackage.ELEMENT_CS:
+			case 9:
+				return validateDummyBaseConstraintClass((DummyBaseConstraintClass)value, diagnostics, context);
+			case 10:
 				return validateElementCS((ElementCS)value, diagnostics, context);
-			case BaseCSPackage.ELEMENT_REF_CS:
+			case 11:
 				return validateElementRefCS((ElementRefCS)value, diagnostics, context);
-			case BaseCSPackage.ENUMERATION_CS:
+			case 12:
 				return validateEnumerationCS((EnumerationCS)value, diagnostics, context);
-			case BaseCSPackage.ENUMERATION_LITERAL_CS:
+			case 13:
 				return validateEnumerationLiteralCS((EnumerationLiteralCS)value, diagnostics, context);
-			case BaseCSPackage.FEATURE_CS:
+			case 14:
 				return validateFeatureCS((FeatureCS)value, diagnostics, context);
-			case BaseCSPackage.IMPORT_CS:
+			case 15:
+				return validateImplicitOppositeCS((ImplicitOppositeCS)value, diagnostics, context);
+			case 16:
 				return validateImportCS((ImportCS)value, diagnostics, context);
-			case BaseCSPackage.LAMBDA_TYPE_CS:
+			case 17:
+				return validateJavaClassCS((JavaClassCS)value, diagnostics, context);
+			case 18:
+				return validateJavaImplementationCS((JavaImplementationCS)value, diagnostics, context);
+			case 19:
 				return validateLambdaTypeCS((LambdaTypeCS)value, diagnostics, context);
-			case BaseCSPackage.MODEL_ELEMENT_CS:
+			case 20:
 				return validateModelElementCS((ModelElementCS)value, diagnostics, context);
-			case BaseCSPackage.MODEL_ELEMENT_REF_CS:
+			case 21:
 				return validateModelElementRefCS((ModelElementRefCS)value, diagnostics, context);
-			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS:
+			case 22:
 				return validateMultiplicityBoundsCS((MultiplicityBoundsCS)value, diagnostics, context);
-			case BaseCSPackage.MULTIPLICITY_CS:
+			case 23:
 				return validateMultiplicityCS((MultiplicityCS)value, diagnostics, context);
-			case BaseCSPackage.MULTIPLICITY_STRING_CS:
+			case 24:
 				return validateMultiplicityStringCS((MultiplicityStringCS)value, diagnostics, context);
-			case BaseCSPackage.NAMED_ELEMENT_CS:
+			case 25:
 				return validateNamedElementCS((NamedElementCS)value, diagnostics, context);
-			case BaseCSPackage.NAMESPACE_CS:
+			case 26:
 				return validateNamespaceCS((NamespaceCS)value, diagnostics, context);
-			case BaseCSPackage.OPERATION_CS:
+			case 27:
 				return validateOperationCS((OperationCS)value, diagnostics, context);
-			case BaseCSPackage.PACKAGE_CS:
+			case 28:
 				return validatePackageCS((PackageCS)value, diagnostics, context);
-			case BaseCSPackage.PACKAGE_OWNER_CS:
+			case 29:
 				return validatePackageOwnerCS((PackageOwnerCS)value, diagnostics, context);
-			case BaseCSPackage.PARAMETER_CS:
+			case 30:
 				return validateParameterCS((ParameterCS)value, diagnostics, context);
-			case BaseCSPackage.PATH_ELEMENT_CS:
+			case 31:
 				return validatePathElementCS((PathElementCS)value, diagnostics, context);
-			case BaseCSPackage.PATH_ELEMENT_WITH_URICS:
+			case 32:
 				return validatePathElementWithURICS((PathElementWithURICS)value, diagnostics, context);
-			case BaseCSPackage.PATH_NAME_CS:
+			case 33:
 				return validatePathNameCS((PathNameCS)value, diagnostics, context);
-			case BaseCSPackage.PIVOTABLE_ELEMENT_CS:
+			case 34:
 				return validatePivotableElementCS((PivotableElementCS)value, diagnostics, context);
-			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
+			case 35:
 				return validatePrimitiveTypeRefCS((PrimitiveTypeRefCS)value, diagnostics, context);
-			case BaseCSPackage.REFERENCE_CS:
+			case 36:
 				return validateReferenceCS((ReferenceCS)value, diagnostics, context);
-			case BaseCSPackage.ROOT_CS:
+			case 37:
 				return validateRootCS((RootCS)value, diagnostics, context);
-			case BaseCSPackage.ROOT_PACKAGE_CS:
+			case 38:
 				return validateRootPackageCS((RootPackageCS)value, diagnostics, context);
-			case BaseCSPackage.SPECIFICATION_CS:
+			case 39:
 				return validateSpecificationCS((SpecificationCS)value, diagnostics, context);
-			case BaseCSPackage.STRUCTURAL_FEATURE_CS:
+			case 40:
 				return validateStructuralFeatureCS((StructuralFeatureCS)value, diagnostics, context);
-			case BaseCSPackage.STRUCTURED_CLASS_CS:
+			case 41:
 				return validateStructuredClassCS((StructuredClassCS)value, diagnostics, context);
-			case BaseCSPackage.TEMPLATE_BINDING_CS:
+			case 42:
 				return validateTemplateBindingCS((TemplateBindingCS)value, diagnostics, context);
-			case BaseCSPackage.TEMPLATE_PARAMETER_CS:
+			case 43:
 				return validateTemplateParameterCS((TemplateParameterCS)value, diagnostics, context);
-			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS:
+			case 44:
 				return validateTemplateParameterSubstitutionCS((TemplateParameterSubstitutionCS)value, diagnostics, context);
-			case BaseCSPackage.TEMPLATE_SIGNATURE_CS:
+			case 45:
 				return validateTemplateSignatureCS((TemplateSignatureCS)value, diagnostics, context);
-			case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS:
+			case 46:
 				return validateTemplateableElementCS((TemplateableElementCS)value, diagnostics, context);
-			case BaseCSPackage.TUPLE_PART_CS:
+			case 47:
 				return validateTuplePartCS((TuplePartCS)value, diagnostics, context);
-			case BaseCSPackage.TUPLE_TYPE_CS:
+			case 48:
 				return validateTupleTypeCS((TupleTypeCS)value, diagnostics, context);
-			case BaseCSPackage.TYPE_CS:
+			case 49:
 				return validateTypeCS((TypeCS)value, diagnostics, context);
-			case BaseCSPackage.TYPE_PARAMETER_CS:
+			case 50:
 				return validateTypeParameterCS((TypeParameterCS)value, diagnostics, context);
-			case BaseCSPackage.TYPE_REF_CS:
+			case 51:
 				return validateTypeRefCS((TypeRefCS)value, diagnostics, context);
-			case BaseCSPackage.TYPED_ELEMENT_CS:
+			case 52:
 				return validateTypedElementCS((TypedElementCS)value, diagnostics, context);
-			case BaseCSPackage.TYPED_REF_CS:
+			case 53:
 				return validateTypedRefCS((TypedRefCS)value, diagnostics, context);
-			case BaseCSPackage.TYPED_TYPE_REF_CS:
+			case 54:
 				return validateTypedTypeRefCS((TypedTypeRefCS)value, diagnostics, context);
-			case BaseCSPackage.VISITABLE_CS:
+			case 55:
 				return validateVisitableCS((VisitableCS)value, diagnostics, context);
-			case BaseCSPackage.WILDCARD_TYPE_REF_CS:
+			case 56:
 				return validateWildcardTypeRefCS((WildcardTypeRefCS)value, diagnostics, context);
-			case BaseCSPackage.BIG_NUMBER:
+			case 57:
 				return validateBigNumber((Number)value, diagnostics, context);
-			case BaseCSPackage.SCOPE_FILTER:
+			case 58:
+				return validateCSI((CSI)value, diagnostics, context);
+			case 59:
 				return validateScopeFilter((ScopeFilter)value, diagnostics, context);
 			default:
 				return true;
@@ -360,6 +372,57 @@ public class BaseCSValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateDummyBaseConstraintClass(DummyBaseConstraintClass dummyBaseConstraintClass, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(dummyBaseConstraintClass, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(dummyBaseConstraintClass, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDummyBaseConstraintClass_DummyConstraint(dummyBaseConstraintClass, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the DummyConstraint constraint of '<em>Dummy Base Constraint Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDummyBaseConstraintClass_DummyConstraint(DummyBaseConstraintClass dummyBaseConstraintClass, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		// TODO implement the constraint
+		// -> specify the condition that violates the constraint
+		// -> verify the diagnostic details, including severity, code, and message
+		// Ensure that you remove @generated or mark it @generated NOT
+		if (false)
+		{
+			if (diagnostics != null)
+			{
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_GenericConstraint_diagnostic", //$NON-NLS-1$
+						 new Object[] { "DummyConstraint", getObjectLabel(dummyBaseConstraintClass, context) }, //$NON-NLS-1$
+						 new Object[] { dummyBaseConstraintClass },
+						 context));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateElementCS(ElementCS elementCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(elementCS, diagnostics, context);
@@ -410,9 +473,39 @@ public class BaseCSValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateImplicitOppositeCS(ImplicitOppositeCS implicitOppositeCS, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(implicitOppositeCS, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateImportCS(ImportCS importCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(importCS, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateJavaClassCS(JavaClassCS javaClassCS, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(javaClassCS, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateJavaImplementationCS(JavaImplementationCS javaImplementationCS, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(javaImplementationCS, diagnostics, context);
 	}
 
 	/**
@@ -602,47 +695,7 @@ public class BaseCSValidator extends EObjectValidator
 	 */
 	public boolean validateRootCS(RootCS rootCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		if (!validate_NoCircularContainment(rootCS, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(rootCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validateRootCS_TestConstraint(rootCS, diagnostics, context);
-		return result;
-	}
-
-	/**
-	 * The cached validation expression for the TestConstraint constraint of '<em>Root CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected static final String ROOT_CS__TEST_CONSTRAINT__EEXPRESSION = "true"; //$NON-NLS-1$
-
-	/**
-	 * Validates the TestConstraint constraint of '<em>Root CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateRootCS_TestConstraint(RootCS rootCS, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		return
-			validate
-				(BaseCSPackage.Literals.ROOT_CS,
-				 rootCS,
-				 diagnostics,
-				 context,
-				 "http://www.eclipse.org/emf/2002/Ecore/OCL", //$NON-NLS-1$
-				 "TestConstraint", //$NON-NLS-1$
-				 ROOT_CS__TEST_CONSTRAINT__EEXPRESSION,
-				 Diagnostic.ERROR,
-				 DIAGNOSTIC_SOURCE,
-				 0);
+		return validate_EveryDefaultConstraint(rootCS, diagnostics, context);
 	}
 
 	/**
@@ -652,17 +705,7 @@ public class BaseCSValidator extends EObjectValidator
 	 */
 	public boolean validateRootPackageCS(RootPackageCS rootPackageCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		if (!validate_NoCircularContainment(rootPackageCS, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(rootPackageCS, diagnostics, context);
-		if (result || diagnostics != null) result &= validateRootCS_TestConstraint(rootPackageCS, diagnostics, context);
-		return result;
+		return validate_EveryDefaultConstraint(rootPackageCS, diagnostics, context);
 	}
 
 	/**
@@ -851,6 +894,16 @@ public class BaseCSValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateBigNumber(Number bigNumber, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateCSI(CSI csi, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return true;
 	}

@@ -12,6 +12,7 @@
 package org.eclipse.ocl.xtext.oclstdlibcs;
 
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 
 /**
  * <!-- begin-user-doc -->
