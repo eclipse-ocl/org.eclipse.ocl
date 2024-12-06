@@ -81,7 +81,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getPackageDeclarationCS()
 	 * @generated
 	 */
-	int PACKAGE_DECLARATION_CS = 9;
+	int PACKAGE_DECLARATION_CS = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.ContextDeclCSImpl <em>Context Decl CS</em>}' class.
@@ -101,7 +101,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getPropertyContextDeclCS()
 	 * @generated
 	 */
-	int PROPERTY_CONTEXT_DECL_CS = 11;
+	int PROPERTY_CONTEXT_DECL_CS = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.ClassifierContextDeclCSImpl <em>Classifier Context Decl CS</em>}' class.
@@ -131,7 +131,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getOperationContextDeclCS()
 	 * @generated
 	 */
-	int OPERATION_CONTEXT_DECL_CS = 8;
+	int OPERATION_CONTEXT_DECL_CS = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.PathNameDeclCSImpl <em>Path Name Decl CS</em>}' class.
@@ -141,7 +141,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getPathNameDeclCS()
 	 * @generated
 	 */
-	int PATH_NAME_DECL_CS = 10;
+	int PATH_NAME_DECL_CS = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLDocumentCSImpl <em>Complete OCL Document CS</em>}' class.
@@ -174,6 +174,16 @@ extends EPackage {
 	int DEF_PROPERTY_CS = 5;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.DummyCompleteOCLConstraintClassImpl <em>Dummy Complete OCL Constraint Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.DummyCompleteOCLConstraintClassImpl
+	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getDummyCompleteOCLConstraintClass()
+	 * @generated
+	 */
+	int DUMMY_COMPLETE_OCL_CONSTRAINT_CLASS = 6;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.FeatureContextDeclCSImpl <em>Feature Context Decl CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,7 +191,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getFeatureContextDeclCS()
 	 * @generated
 	 */
-	int FEATURE_CONTEXT_DECL_CS = 6;
+	int FEATURE_CONTEXT_DECL_CS = 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.OCLMessageArgCSImpl <em>OCL Message Arg CS</em>}' class.
@@ -191,7 +201,7 @@ extends EPackage {
 	 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getOCLMessageArgCS()
 	 * @generated
 	 */
-	int OCL_MESSAGE_ARG_CS = 7;
+	int OCL_MESSAGE_ARG_CS = 8;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.completeoclcs.FeatureContextDeclCS <em>Feature Context Decl CS</em>}'.
@@ -509,6 +519,16 @@ extends EPackage {
 	 * @generated
 	 */
 	EClass getDefPropertyCS();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.completeoclcs.DummyCompleteOCLConstraintClass <em>Dummy Complete OCL Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dummy Complete OCL Constraint Class</em>'.
+	 * @see org.eclipse.ocl.xtext.completeoclcs.DummyCompleteOCLConstraintClass
+	 * @generated
+	 */
+	EClass getDummyCompleteOCLConstraintClass();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.completeoclcs.OperationContextDeclCS <em>Operation Context Decl CS</em>}'.
@@ -843,6 +863,16 @@ extends EPackage {
 		 * @generated
 		 */
 		EClass DEF_PROPERTY_CS = eINSTANCE.getDefPropertyCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.DummyCompleteOCLConstraintClassImpl <em>Dummy Complete OCL Constraint Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.completeoclcs.impl.DummyCompleteOCLConstraintClassImpl
+		 * @see org.eclipse.ocl.xtext.completeoclcs.impl.CompleteOCLCSPackageImpl#getDummyCompleteOCLConstraintClass()
+		 * @generated
+		 */
+		EClass DUMMY_COMPLETE_OCL_CONSTRAINT_CLASS = eINSTANCE.getDummyCompleteOCLConstraintClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.OperationContextDeclCSImpl <em>Operation Context Decl CS</em>}' class.

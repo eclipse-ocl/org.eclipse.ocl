@@ -90,6 +90,11 @@ public class OCLinEcoreCSAdapterFactory extends AdapterFactoryImpl
     new OCLinEcoreCSSwitch<@Nullable Adapter>()
 		{
 			@Override
+			public Adapter caseDummyOCLinEcoreConstraintClass(DummyOCLinEcoreConstraintClass object)
+			{
+				return createDummyOCLinEcoreConstraintClassAdapter();
+			}
+			@Override
 			public Adapter caseOCLinEcoreConstraintCS(OCLinEcoreConstraintCS object)
 			{
 				return createOCLinEcoreConstraintCSAdapter();
@@ -172,6 +177,21 @@ public class OCLinEcoreCSAdapterFactory extends AdapterFactoryImpl
 
 
   /**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclinecorecs.DummyOCLinEcoreConstraintClass <em>Dummy OC Lin Ecore Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.oclinecorecs.DummyOCLinEcoreConstraintClass
+	 * @generated
+	 */
+	public Adapter createDummyOCLinEcoreConstraintClassAdapter()
+	{
+		return null;
+	}
+
+/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS <em>OC Lin Ecore Constraint CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

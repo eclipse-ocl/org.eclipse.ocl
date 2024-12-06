@@ -124,6 +124,11 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 				return createDocumentationCSAdapter();
 			}
 			@Override
+			public Adapter caseDummyBaseConstraintClass(DummyBaseConstraintClass object)
+			{
+				return createDummyBaseConstraintClassAdapter();
+			}
+			@Override
 			public Adapter caseElementCS(ElementCS object)
 			{
 				return createElementCSAdapter();
@@ -157,6 +162,16 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 			public Adapter caseImportCS(ImportCS object)
 			{
 				return createImportCSAdapter();
+			}
+			@Override
+			public Adapter caseJavaClassCS(JavaClassCS object)
+			{
+				return createJavaClassCSAdapter();
+			}
+			@Override
+			public Adapter caseJavaImplementationCS(JavaImplementationCS object)
+			{
+				return createJavaImplementationCSAdapter();
 			}
 			@Override
 			public Adapter caseLambdaTypeCS(LambdaTypeCS object)
@@ -502,6 +517,21 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.DummyBaseConstraintClass <em>Dummy Base Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.DummyBaseConstraintClass
+	 * @generated
+	 */
+	public Adapter createDummyBaseConstraintClassAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.ElementCS <em>Element CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -600,6 +630,36 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createImportCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.JavaClassCS <em>Java Class CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.JavaClassCS
+	 * @generated
+	 */
+	public Adapter createJavaClassCSAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.JavaImplementationCS <em>Java Implementation CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.JavaImplementationCS
+	 * @generated
+	 */
+	public Adapter createJavaImplementationCSAdapter()
+	{
 		return null;
 	}
 

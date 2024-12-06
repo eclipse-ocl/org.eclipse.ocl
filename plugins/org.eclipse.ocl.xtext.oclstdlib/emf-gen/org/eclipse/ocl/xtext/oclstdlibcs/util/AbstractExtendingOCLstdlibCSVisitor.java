@@ -38,12 +38,7 @@ public abstract class AbstractExtendingOCLstdlibCSVisitor<R, C>
 	}
 
 	@Override
-	public R visitJavaClassCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaClassCS object) {
-		return visitNamedElementCS(object);
-	}
-
-	@Override
-	public R visitJavaImplementationCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaImplementationCS object) {
+	public R visitDummyOCLstdlibConstraintClass(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull DummyOCLstdlibConstraintClass object) {
 		return visitElementCS(object);
 	}
 

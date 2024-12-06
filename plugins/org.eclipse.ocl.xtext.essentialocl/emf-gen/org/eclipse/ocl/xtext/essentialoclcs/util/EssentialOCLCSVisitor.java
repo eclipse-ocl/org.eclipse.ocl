@@ -32,6 +32,7 @@ public interface EssentialOCLCSVisitor<R> extends org.eclipse.ocl.xtext.basecs.u
 	R visitCollectionTypeCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull CollectionTypeCS object);
 	R visitContextCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ContextCS object);
 	R visitCurlyBracketedClauseCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull CurlyBracketedClauseCS object);
+	R visitDummyEssentialOCLConstraintClass(org.eclipse.ocl.xtext.essentialoclcs.@NonNull DummyEssentialOCLConstraintClass object);
 	R visitExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ExpCS object);
 	R visitExpSpecificationCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ExpSpecificationCS object);
 	R visitIfExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull IfExpCS object);

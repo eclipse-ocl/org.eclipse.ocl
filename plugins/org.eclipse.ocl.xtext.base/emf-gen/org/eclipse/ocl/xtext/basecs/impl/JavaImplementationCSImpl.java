@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 
@@ -68,7 +69,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	@Override
 	protected EClass eStaticClass()
 	{
-		return null;
+		return BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS;
 	}
 
 	/**
@@ -86,7 +87,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 			if (implementation != oldImplementation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldImplementation, implementation));
 			}
 		}
 		return implementation;
@@ -113,7 +114,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 		JavaClassCS oldImplementation = implementation;
 		implementation = newImplementation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldImplementation, implementation));
 	}
 
 	/**
@@ -126,7 +127,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				if (resolve) return getImplementation();
 				return basicGetImplementation();
 		}
@@ -143,7 +144,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setImplementation((JavaClassCS)newValue);
 				return;
 		}
@@ -160,7 +161,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				setImplementation((JavaClassCS)null);
 				return;
 		}
@@ -177,7 +178,7 @@ public abstract class JavaImplementationCSImpl extends ElementCSImpl implements 
 	{
 		switch (featureID)
 		{
-			case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0:
+			case 2:
 				return implementation != null;
 		}
 		return super.eIsSet(featureID);
