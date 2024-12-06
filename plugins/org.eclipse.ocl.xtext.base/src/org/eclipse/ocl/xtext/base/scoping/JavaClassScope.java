@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.oclstdlib.scoping;
+package org.eclipse.ocl.xtext.base.scoping;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
@@ -39,9 +39,8 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
+import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -63,7 +62,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 {
 	public static boolean SUPPRESS_WORK_THREAD = false;		// Set true to avoid WorkerThread delay when testing
 
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
+	@Deprecated /* @deprecated No longer used - JavaClassScope is a BaseCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull ClassLoader classLoader) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -73,7 +72,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an BaseCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -83,7 +82,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return (JavaClassScope) adapter;
 	}
 
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
+	@Deprecated /* @deprecated No longer used - JavaClassScope is an BaseCS2AS field rather than CSResource adapter */
 	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull IProject project) {
 		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 		if (adapter == null) {
@@ -217,7 +216,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 			};
 			thread.start();
 			String name = "Try again once worker thread class path scan has completed.";
-			JavaClassCS csJavaClass = OCLstdlibCSFactory.eINSTANCE.createJavaClassCS();
+			JavaClassCS csJavaClass = BaseCSFactory.eINSTANCE.createJavaClassCS();
 			csJavaClass.setName(name);
 			results.add(EObjectDescription.create(name, csJavaClass));
 		}
@@ -248,7 +247,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		synchronized (name2class) {
 			JavaClassCS csJavaClass = name2class.get(name);
 			if (csJavaClass == null) {
-				csJavaClass = OCLstdlibCSFactory.eINSTANCE.createJavaClassCS();
+				csJavaClass = BaseCSFactory.eINSTANCE.createJavaClassCS();
 				csJavaClass.setName(name);
 				name2class.put(name, csJavaClass);
 				javaResource.getContents().add(csJavaClass);
