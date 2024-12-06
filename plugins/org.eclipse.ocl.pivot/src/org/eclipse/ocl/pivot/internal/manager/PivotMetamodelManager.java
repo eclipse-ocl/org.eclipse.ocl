@@ -813,9 +813,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * Return all constraints applicable to a type and its superclasses.
 	 */
-	@Override
+
+	/**
+	 * Return all constraints applicable to a type and its superclasses.
+	 *
+	 * @deprecated use CompleteModel.getAllCompleteInvariants()
+	 */
+	@Override @Deprecated
 	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
-		Set<Constraint> knownInvariants = new HashSet<>();
+		List<Constraint> knownInvariants = new ArrayList<>();
 		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
@@ -824,6 +830,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 		}
+		assert new HashSet<>(knownInvariants).size() == knownInvariants.size();
 		return knownInvariants;
 	}
 
