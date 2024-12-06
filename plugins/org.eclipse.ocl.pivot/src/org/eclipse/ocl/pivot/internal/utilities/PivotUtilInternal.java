@@ -78,7 +78,6 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -292,7 +291,6 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
 		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-	//	environmentFactory.adapt(resourceSet);
 		return environmentFactory;
 	}
 
@@ -305,38 +303,11 @@ public class PivotUtilInternal //extends PivotUtil
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-		return object instanceof EObject ? getEnvironmentFactory(((EObject)object).eResource()) : getEnvironmentFactory(null);
-	// XXX	return getEnvironmentFactory((Notifier)object);
+		return getEnvironmentFactory((Notifier)object);
 	}
 
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			return environmentFactory;
-		}
-		ProjectManager projectManager = null;
-		ResourceSet asResourceSet = null;
-		if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
-			asResourceSet = PivotUtil.basicGetResourceSet(resource);
-			if (asResourceSet != null) {		// null if working with installed resources
-				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(asResourceSet);
-				if (environmentFactoryAdapter != null) {
-					environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
-					ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
-					return environmentFactory;
-				}
-				projectManager = ProjectMap.findAdapter(asResourceSet);
-			}
-		}
-		else {
-		// XXX	assert false;
-		}
-		if (projectManager == null) {
-			projectManager = ProjectManager.CLASS_PATH;
-		}
-		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
-		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-		return environmentFactory;
+		return getEnvironmentFactory((Notifier)resource);
 	}
 
 	/** @deprecated use getExecutor() */
