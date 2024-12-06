@@ -92,6 +92,11 @@ public abstract class AbstractEssentialOCLCSLeft2RightVisitor
 	}
 
 	@Override
+	public @Nullable Element visitDummyEssentialOCLConstraintClass(org.eclipse.ocl.xtext.essentialoclcs.@NonNull DummyEssentialOCLConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Element visitExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ExpCS csElement) {
 		return visitModelElementCS(csElement);
 	}

@@ -42,12 +42,7 @@ public abstract class AbstractOCLstdlibCSLeft2RightVisitor
 	}
 
 	@Override
-	public @Nullable Element visitJavaClassCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaClassCS csElement) {
-		return visitNamedElementCS(csElement);
-	}
-
-	@Override
-	public @Nullable Element visitJavaImplementationCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaImplementationCS csElement) {
+	public @Nullable Element visitDummyOCLstdlibConstraintClass(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull DummyOCLstdlibConstraintClass csElement) {
 		return visitElementCS(csElement);
 	}
 

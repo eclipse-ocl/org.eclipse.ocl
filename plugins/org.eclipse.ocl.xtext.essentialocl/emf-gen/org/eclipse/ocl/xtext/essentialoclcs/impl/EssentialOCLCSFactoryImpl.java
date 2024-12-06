@@ -118,38 +118,38 @@ implements EssentialOCLCSFactory {
 			case 7: return createCollectionTypeCS();
 			case 8: return createContextCS();
 			case 9: return createCurlyBracketedClauseCS();
-			case 10: return createExpCS();
-			case 11: return createExpSpecificationCS();
-			case 12: return createIfExpCS();
-			case 13: return createIfThenExpCS();
-			case 14: return createInfixExpCS();
-			case 15: return createInvalidLiteralExpCS();
-			case 18: return createLambdaLiteralExpCS();
-			case 19: return createLetExpCS();
-			case 20: return createLetVariableCS();
-			case 21: return createLiteralExpCS();
-			case 22: return createMapLiteralExpCS();
-			case 23: return createMapLiteralPartCS();
-			case 24: return createMapTypeCS();
-			case 25: return createNameExpCS();
-			case 26: return createNavigatingArgCS();
-			case 27: return createNestedExpCS();
-			case 28: return createNullLiteralExpCS();
-			case 29: return createNumberLiteralExpCS();
-			case 32: return createPatternExpCS();
-			case 33: return createPrefixExpCS();
-			case 34: return createPrimitiveLiteralExpCS();
-			case 36: return createRoundBracketedClauseCS();
-			case 37: return createSelfExpCS();
-			case 39: return createShadowPartCS();
-			case 40: return createSquareBracketedClauseCS();
-			case 41: return createStringLiteralExpCS();
-			case 42: return createTupleLiteralExpCS();
-			case 43: return createTupleLiteralPartCS();
-			case 44: return createTypeLiteralExpCS();
-			case 45: return createTypeNameExpCS();
-			case 46: return createUnlimitedNaturalLiteralExpCS();
-			case 47: return createVariableCS();
+			case 11: return createExpCS();
+			case 12: return createExpSpecificationCS();
+			case 13: return createIfExpCS();
+			case 14: return createIfThenExpCS();
+			case 15: return createInfixExpCS();
+			case 16: return createInvalidLiteralExpCS();
+			case 19: return createLambdaLiteralExpCS();
+			case 20: return createLetExpCS();
+			case 21: return createLetVariableCS();
+			case 22: return createLiteralExpCS();
+			case 23: return createMapLiteralExpCS();
+			case 24: return createMapLiteralPartCS();
+			case 25: return createMapTypeCS();
+			case 26: return createNameExpCS();
+			case 27: return createNavigatingArgCS();
+			case 28: return createNestedExpCS();
+			case 29: return createNullLiteralExpCS();
+			case 30: return createNumberLiteralExpCS();
+			case 33: return createPatternExpCS();
+			case 34: return createPrefixExpCS();
+			case 35: return createPrimitiveLiteralExpCS();
+			case 37: return createRoundBracketedClauseCS();
+			case 38: return createSelfExpCS();
+			case 40: return createShadowPartCS();
+			case 41: return createSquareBracketedClauseCS();
+			case 42: return createStringLiteralExpCS();
+			case 43: return createTupleLiteralExpCS();
+			case 44: return createTupleLiteralPartCS();
+			case 45: return createTypeLiteralExpCS();
+			case 46: return createTypeNameExpCS();
+			case 47: return createUnlimitedNaturalLiteralExpCS();
+			case 48: return createVariableCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -164,7 +164,7 @@ implements EssentialOCLCSFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 49:
+			case 50:
 				return createNavigationRoleFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -180,7 +180,7 @@ implements EssentialOCLCSFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 49:
+			case 50:
 				return convertNavigationRoleToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

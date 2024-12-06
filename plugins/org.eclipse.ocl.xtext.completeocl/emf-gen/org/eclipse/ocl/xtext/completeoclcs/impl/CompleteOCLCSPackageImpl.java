@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -28,12 +29,14 @@ import org.eclipse.ocl.xtext.completeoclcs.ContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.DefCS;
 import org.eclipse.ocl.xtext.completeoclcs.DefOperationCS;
 import org.eclipse.ocl.xtext.completeoclcs.DefPropertyCS;
+import org.eclipse.ocl.xtext.completeoclcs.DummyCompleteOCLConstraintClass;
 import org.eclipse.ocl.xtext.completeoclcs.FeatureContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.OCLMessageArgCS;
 import org.eclipse.ocl.xtext.completeoclcs.OperationContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.PackageDeclarationCS;
 import org.eclipse.ocl.xtext.completeoclcs.PathNameDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS;
+import org.eclipse.ocl.xtext.completeoclcs.util.CompleteOCLCSValidator;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 
 /**
@@ -121,6 +124,13 @@ implements CompleteOCLCSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass dummyCompleteOCLConstraintClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass operationContextDeclCSEClass = null;
 
 	/**
@@ -187,6 +197,18 @@ implements CompleteOCLCSPackage {
 
 		// Initialize created meta-data
 		theCompleteOCLCSPackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theCompleteOCLCSPackage,
+			 new EValidator.Descriptor()
+			 {
+				 @Override
+				 public EValidator getEValidator()
+				 {
+					 return CompleteOCLCSValidator.INSTANCE;
+				 }
+			 });
 
 		// Mark meta-data to indicate it can't be changed
 		theCompleteOCLCSPackage.freeze();
@@ -518,6 +540,17 @@ implements CompleteOCLCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getDummyCompleteOCLConstraintClass()
+	{
+		return dummyCompleteOCLConstraintClassEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getOperationContextDeclCS() {
 		return operationContextDeclCSEClass;
 	}
@@ -629,12 +662,14 @@ implements CompleteOCLCSPackage {
 
 		defPropertyCSEClass = createEClass(5);
 
-		featureContextDeclCSEClass = createEClass(6);
+		dummyCompleteOCLConstraintClassEClass = createEClass(6);
+
+		featureContextDeclCSEClass = createEClass(7);
 		createEReference(featureContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 
-		oclMessageArgCSEClass = createEClass(7);
+		oclMessageArgCSEClass = createEClass(8);
 
-		operationContextDeclCSEClass = createEClass(8);
+		operationContextDeclCSEClass = createEClass(9);
 		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
 		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 5);
@@ -642,15 +677,15 @@ implements CompleteOCLCSPackage {
 		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 7);
 		createEReference(operationContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 8);
 
-		packageDeclarationCSEClass = createEClass(9);
+		packageDeclarationCSEClass = createEClass(10);
 		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 1);
 		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 		createEReference(packageDeclarationCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 
-		pathNameDeclCSEClass = createEClass(10);
+		pathNameDeclCSEClass = createEClass(11);
 		createEReference(pathNameDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 0);
 
-		propertyContextDeclCSEClass = createEClass(11);
+		propertyContextDeclCSEClass = createEClass(12);
 		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
 		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
@@ -698,6 +733,7 @@ implements CompleteOCLCSPackage {
 		defOperationCSEClass.getESuperTypes().add(this.getDefCS());
 		defOperationCSEClass.getESuperTypes().add(theBaseCSPackage.getTemplateableElementCS());
 		defPropertyCSEClass.getESuperTypes().add(this.getDefCS());
+		dummyCompleteOCLConstraintClassEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		featureContextDeclCSEClass.getESuperTypes().add(this.getContextDeclCS());
 		oclMessageArgCSEClass.getESuperTypes().add(theEssentialOCLCSPackage.getExpCS());
 		operationContextDeclCSEClass.getESuperTypes().add(this.getFeatureContextDeclCS());
@@ -729,6 +765,8 @@ implements CompleteOCLCSPackage {
 
 		initEClass(defPropertyCSEClass, DefPropertyCS.class, "DefPropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(dummyCompleteOCLConstraintClassEClass, DummyCompleteOCLConstraintClass.class, "DummyCompleteOCLConstraintClass", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(featureContextDeclCSEClass, FeatureContextDeclCS.class, "FeatureContextDeclCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFeatureContextDeclCS_OwnedType(), theBaseCSPackage.getTypedRefCS(), null, "ownedType", null, 0, 1, FeatureContextDeclCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -757,6 +795,28 @@ implements CompleteOCLCSPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore";
+		addAnnotation
+		  (dummyCompleteOCLConstraintClassEClass,
+		   source,
+		   new String[]
+		   {
+			   "constraints", "DummyConstraint"
+		   });
 	}
 
 } //CompleteOCLCSPackageImpl

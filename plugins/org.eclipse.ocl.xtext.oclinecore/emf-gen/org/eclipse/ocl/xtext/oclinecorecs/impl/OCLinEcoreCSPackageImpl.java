@@ -13,16 +13,19 @@ package org.eclipse.ocl.xtext.oclinecorecs.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.impl.AnnotationElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.ConstraintCSImpl;
+import org.eclipse.ocl.xtext.oclinecorecs.DummyOCLinEcoreConstraintClass;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS;
 import org.eclipse.ocl.xtext.oclinecorecs.SysMLCS;
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS;
+import org.eclipse.ocl.xtext.oclinecorecs.util.OCLinEcoreCSValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,6 +34,13 @@ import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS;
  * @generated
  */
 public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreCSPackage {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dummyOCLinEcoreConstraintClassEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -109,12 +119,35 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		// Initialize created meta-data
 		theOCLinEcoreCSPackage.initializePackageContents();
 
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theOCLinEcoreCSPackage,
+			 new EValidator.Descriptor()
+			 {
+				 @Override
+				 public EValidator getEValidator()
+				 {
+					 return OCLinEcoreCSValidator.INSTANCE;
+				 }
+			 });
+
 		// Mark meta-data to indicate it can't be changed
 		theOCLinEcoreCSPackage.freeze();
 
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLinEcoreCSPackage.eNS_URI, theOCLinEcoreCSPackage);
 		return theOCLinEcoreCSPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getDummyOCLinEcoreConstraintClass()
+	{
+		return dummyOCLinEcoreConstraintClassEClass;
 	}
 
 	/**
@@ -202,13 +235,15 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		isCreated = true;
 
 		// Create classes and their features
-		ocLinEcoreConstraintCSEClass = createEClass(0);
+		dummyOCLinEcoreConstraintClassEClass = createEClass(0);
+
+		ocLinEcoreConstraintCSEClass = createEClass(1);
 		createEAttribute(ocLinEcoreConstraintCSEClass, ConstraintCSImpl.CONSTRAINT_CS_FEATURE_COUNT + 0);
 
-		sysMLCSEClass = createEClass(1);
+		sysMLCSEClass = createEClass(2);
 		createEAttribute(sysMLCSEClass, AnnotationElementCSImpl.ANNOTATION_ELEMENT_CS_FEATURE_COUNT + 0);
 
-		topLevelCSEClass = createEClass(2);
+		topLevelCSEClass = createEClass(3);
 	}
 
 	/**
@@ -242,11 +277,14 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		dummyOCLinEcoreConstraintClassEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		ocLinEcoreConstraintCSEClass.getESuperTypes().add(theBaseCSPackage.getConstraintCS());
 		sysMLCSEClass.getESuperTypes().add(theBaseCSPackage.getAnnotationElementCS());
 		topLevelCSEClass.getESuperTypes().add(theBaseCSPackage.getRootPackageCS());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(dummyOCLinEcoreConstraintClassEClass, DummyOCLinEcoreConstraintClass.class, "DummyOCLinEcoreConstraintClass", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(ocLinEcoreConstraintCSEClass, OCLinEcoreConstraintCS.class, "OCLinEcoreConstraintCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getOCLinEcoreConstraintCS_IsCallable(), ecorePackage.getEBoolean(), "isCallable", null, 0, 1, OCLinEcoreConstraintCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -257,6 +295,28 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore";
+		addAnnotation
+		  (dummyOCLinEcoreConstraintClassEClass,
+		   source,
+		   new String[]
+		   {
+			   "constraints", "DummyConstraint"
+		   });
 	}
 
 } //OCLinEcoreCSPackageImpl

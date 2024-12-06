@@ -255,7 +255,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createGroup(
 						createKeyword("=>"),
 						createAssignment("implementation", "=", createCrossReference(
-							createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
+							createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
 					createKeyword("{"),
 					setCardinality("*", createAlternatives(
 						createAssignment("ownedOperations", "+=", createRuleCall(PR_OperationCS)),
@@ -274,7 +274,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createGroup(
 						createKeyword("=>"),
 						createAssignment("implementation", "=", createCrossReference(
-							createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
+							createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
 					createAlternatives(
 						createGroup(
 							createKeyword("{"),
@@ -314,7 +314,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createGroup(
 						createKeyword("=>"),
 						createAssignment("implementation", "=", createCrossReference(
-							createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
+							createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
 					createAlternatives(
 						createGroup(
 							createKeyword("{"),
@@ -349,7 +349,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createGroup(
 						createKeyword("=>"),
 						createAssignment("implementation", "=", createCrossReference(
-							createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
+							createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
 					createAlternatives(
 						createGroup(
 							createKeyword("{"),
@@ -410,7 +410,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createGroup(
 						createKeyword("=>"),
 						createAssignment("implementation", "=", createCrossReference(
-							createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
+							createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.JAVA_CLASS_CS), createRuleCall(_Base.TR_SINGLE_QUOTED_STRING))))),
 					createAlternatives(
 						createGroup(
 							createKeyword("{"),

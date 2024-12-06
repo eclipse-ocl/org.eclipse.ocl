@@ -50,6 +50,7 @@ public interface BaseCSVisitor<R>
 	R visitDataTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull DataTypeCS object);
 	R visitDetailCS(org.eclipse.ocl.xtext.basecs.@NonNull DetailCS object);
 	R visitDocumentationCS(org.eclipse.ocl.xtext.basecs.@NonNull DocumentationCS object);
+	R visitDummyBaseConstraintClass(org.eclipse.ocl.xtext.basecs.@NonNull DummyBaseConstraintClass object);
 	R visitElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ElementCS object);
 	R visitElementRefCS(org.eclipse.ocl.xtext.basecs.@NonNull ElementRefCS object);
 	R visitEnumerationCS(org.eclipse.ocl.xtext.basecs.@NonNull EnumerationCS object);
@@ -57,6 +58,8 @@ public interface BaseCSVisitor<R>
 	R visitFeatureCS(org.eclipse.ocl.xtext.basecs.@NonNull FeatureCS object);
 	R visitImplicitOppositeCS(org.eclipse.ocl.xtext.basecs.@NonNull ImplicitOppositeCS object);
 	R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object);
+	R visitJavaClassCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaClassCS object);
+	R visitJavaImplementationCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaImplementationCS object);
 	R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object);
 	R visitModelElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ModelElementCS object);
 	R visitModelElementRefCS(org.eclipse.ocl.xtext.basecs.@NonNull ModelElementRefCS object);

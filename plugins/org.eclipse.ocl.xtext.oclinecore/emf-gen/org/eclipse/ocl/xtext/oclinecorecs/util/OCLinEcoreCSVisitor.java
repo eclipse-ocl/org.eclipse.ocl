@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public interface OCLinEcoreCSVisitor<R> extends org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor<R>
 {
+	R visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass object);
 	R visitOCLinEcoreConstraintCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull OCLinEcoreConstraintCS object);
 	R visitSysMLCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull SysMLCS object);
 	R visitTopLevelCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull TopLevelCS object);

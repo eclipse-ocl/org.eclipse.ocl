@@ -12,6 +12,7 @@
 package org.eclipse.ocl.xtext.oclstdlibcs;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
 

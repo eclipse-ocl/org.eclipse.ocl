@@ -220,8 +220,8 @@
 		<content-type
 			base-type="org.eclipse.core.runtime.text"
 			file-extensions="idioms"
-			id="org.eclipse.ocl.xtext.idioms.Idioms.contenttype"
-			name="Idioms File"
+			id="org.eclipse.ocl.xtext.idioms.Idioms"
+			name="%IdiomsName"
 			priority="normal">
 		</content-type>
 	</extension>
@@ -362,7 +362,7 @@
 			extensions="idioms">
 		</viewer>
 		<contentTypeBinding
-			contentTypeId="org.eclipse.ocl.xtext.idioms.Idioms.contenttype"
+			contentTypeId="org.eclipse.ocl.xtext.idioms.Idioms"
 			contentViewerId="org.eclipse.ocl.xtext.idioms.Idioms.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
@@ -371,7 +371,7 @@
 			extensions="idioms" label="Idioms Compare">
 		</viewer>
 		<contentTypeBinding
-			contentTypeId="org.eclipse.ocl.xtext.idioms.Idioms.contenttype"
+			contentTypeId="org.eclipse.ocl.xtext.idioms.Idioms"
 			contentMergeViewerId="org.eclipse.ocl.xtext.idioms.Idioms.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">

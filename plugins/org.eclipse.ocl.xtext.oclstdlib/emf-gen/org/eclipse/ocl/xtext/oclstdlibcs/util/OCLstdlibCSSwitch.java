@@ -20,6 +20,7 @@ import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.FeatureCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.NamespaceCS;
@@ -99,24 +100,13 @@ public class OCLstdlibCSSwitch<@Nullable T>
 		{
 			case 0:
 			{
-				JavaClassCS javaClassCS = (JavaClassCS)theEObject;
-				T result = caseJavaClassCS(javaClassCS);
-				if (result == null) result = caseNamedElementCS(javaClassCS);
-				if (result == null) result = caseModelElementCS(javaClassCS);
-				if (result == null) result = casePivotableElementCS(javaClassCS);
-				if (result == null) result = caseElementCS(javaClassCS);
+				DummyOCLstdlibConstraintClass dummyOCLstdlibConstraintClass = (DummyOCLstdlibConstraintClass)theEObject;
+				T result = caseDummyOCLstdlibConstraintClass(dummyOCLstdlibConstraintClass);
+				if (result == null) result = caseElementCS(dummyOCLstdlibConstraintClass);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 1:
-			{
-				JavaImplementationCS javaImplementationCS = (JavaImplementationCS)theEObject;
-				T result = caseJavaImplementationCS(javaImplementationCS);
-				if (result == null) result = caseElementCS(javaImplementationCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 2:
 			{
 				LibClassCS libClassCS = (LibClassCS)theEObject;
 				T result = caseLibClassCS(libClassCS);
@@ -133,7 +123,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 3:
+			case 2:
 			{
 				LibCoercionCS libCoercionCS = (LibCoercionCS)theEObject;
 				T result = caseLibCoercionCS(libCoercionCS);
@@ -149,7 +139,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 4:
+			case 3:
 			{
 				LibConstraintCS libConstraintCS = (LibConstraintCS)theEObject;
 				T result = caseLibConstraintCS(libConstraintCS);
@@ -161,7 +151,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 5:
+			case 4:
 			{
 				LibIterationCS libIterationCS = (LibIterationCS)theEObject;
 				T result = caseLibIterationCS(libIterationCS);
@@ -177,7 +167,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 6:
+			case 5:
 			{
 				LibOperationCS libOperationCS = (LibOperationCS)theEObject;
 				T result = caseLibOperationCS(libOperationCS);
@@ -193,7 +183,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 7:
+			case 6:
 			{
 				LibOppositeCS libOppositeCS = (LibOppositeCS)theEObject;
 				T result = caseLibOppositeCS(libOppositeCS);
@@ -206,7 +196,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 8:
+			case 7:
 			{
 				LibPackageCS libPackageCS = (LibPackageCS)theEObject;
 				T result = caseLibPackageCS(libPackageCS);
@@ -220,7 +210,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 9:
+			case 8:
 			{
 				LibPropertyCS libPropertyCS = (LibPropertyCS)theEObject;
 				T result = caseLibPropertyCS(libPropertyCS);
@@ -236,7 +226,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 10:
+			case 9:
 			{
 				LibRootPackageCS libRootPackageCS = (LibRootPackageCS)theEObject;
 				T result = caseLibRootPackageCS(libRootPackageCS);
@@ -249,7 +239,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 11:
+			case 10:
 			{
 				MetaclassNameCS metaclassNameCS = (MetaclassNameCS)theEObject;
 				T result = caseMetaclassNameCS(metaclassNameCS);
@@ -257,7 +247,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 12:
+			case 11:
 			{
 				PrecedenceCS precedenceCS = (PrecedenceCS)theEObject;
 				T result = casePrecedenceCS(precedenceCS);
@@ -273,17 +263,17 @@ public class OCLstdlibCSSwitch<@Nullable T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Java Class CS</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Dummy OC Lstdlib Constraint Class</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Java Class CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Dummy OC Lstdlib Constraint Class</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseJavaClassCS(JavaClassCS object)
+	public T caseDummyOCLstdlibConstraintClass(DummyOCLstdlibConstraintClass object)
 	{
 		return null;
 	}

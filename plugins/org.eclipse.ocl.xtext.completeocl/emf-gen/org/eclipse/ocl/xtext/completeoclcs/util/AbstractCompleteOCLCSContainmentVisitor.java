@@ -72,6 +72,11 @@ public abstract class AbstractCompleteOCLCSContainmentVisitor
 	}
 
 	@Override
+	public @Nullable Continuation<?> visitDummyCompleteOCLConstraintClass(org.eclipse.ocl.xtext.completeoclcs.@NonNull DummyCompleteOCLConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Continuation<?> visitFeatureContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull FeatureContextDeclCS csElement) {
 		return visitContextDeclCS(csElement);
 	}

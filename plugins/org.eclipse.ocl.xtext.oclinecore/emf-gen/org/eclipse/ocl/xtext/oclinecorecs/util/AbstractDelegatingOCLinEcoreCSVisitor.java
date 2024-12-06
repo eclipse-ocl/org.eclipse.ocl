@@ -34,6 +34,11 @@ public abstract class AbstractDelegatingOCLinEcoreCSVisitor<R, C, @NonNull D ext
 	}
 
 	@Override
+	public R visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass object) {
+		return delegate.visitDummyOCLinEcoreConstraintClass(object);
+	}
+
+	@Override
 	public R visitOCLinEcoreConstraintCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull OCLinEcoreConstraintCS object) {
 		return delegate.visitOCLinEcoreConstraintCS(object);
 	}

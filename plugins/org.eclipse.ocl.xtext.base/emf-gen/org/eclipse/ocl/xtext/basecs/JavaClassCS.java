@@ -16,7 +16,7 @@ package org.eclipse.ocl.xtext.basecs;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvtd.xtext.qvtbasecs.QVTbaseCSPackage#getJavaClassCS()
+ * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getJavaClassCS()
  * @model
  * @generated
  */

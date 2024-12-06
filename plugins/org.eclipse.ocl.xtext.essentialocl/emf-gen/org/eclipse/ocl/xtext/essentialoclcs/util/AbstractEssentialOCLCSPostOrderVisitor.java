@@ -92,6 +92,11 @@ public abstract class AbstractEssentialOCLCSPostOrderVisitor
 	}
 
 	@Override
+	public @Nullable Continuation<?> visitDummyEssentialOCLConstraintClass(org.eclipse.ocl.xtext.essentialoclcs.@NonNull DummyEssentialOCLConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Continuation<?> visitExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull ExpCS csElement) {
 		return visitModelElementCS(csElement);
 	}

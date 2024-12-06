@@ -42,6 +42,11 @@ public abstract class AbstractOCLinEcoreCSPreOrderVisitor
 	}
 
 	@Override
+	public @Nullable Continuation<?> visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass csElement) {
+		return visitElementCS(csElement);
+	}
+
+	@Override
 	public @Nullable Continuation<?> visitOCLinEcoreConstraintCS(org.eclipse.ocl.xtext.oclinecorecs.@NonNull OCLinEcoreConstraintCS csElement) {
 		return visitConstraintCS(csElement);
 	}
