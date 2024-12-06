@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.serializer;
 
-import com.google.inject.Inject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.serializer.AbstractSerializationMetaData;
@@ -40,6 +39,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.service.GrammarProvider;
+
+import com.google.inject.Inject;
 
 /******* This file is 100% auto-generated - do not edit it *******/
 
@@ -3260,7 +3261,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 		// 45: |InfixExpCS::ownedLeft|
 		serializationMatchTerms[45] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
 		// 46: |JavaImplementationCS::implementation|
-		serializationMatchTerms[46] = createSerializationMatchTermEStructuralFeatureSize(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
+		serializationMatchTerms[46] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
 		// 47: |LambdaLiteralExpCS::ownedExpressionCS|
 		serializationMatchTerms[47] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
 		// 48: |LambdaTypeCS::name.'Lambda'|
@@ -5909,7 +5910,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(8/*'abstract'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME, -1
 				),
@@ -5964,7 +5965,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 64/* TypedMultiplicityRefCS */,
 					(118/*TypedMultiplicityRefCS*/ << 4) | 0 /*[1]*/
@@ -6012,7 +6013,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			),
 			new @NonNull SerializationFeature [] {
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, 1/* AnnotationElementCS */,
 					(3/*AnnotationElementCS*/ << 4) | 2 /*[*]*/
@@ -6097,7 +6098,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(17/*'validating'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(OCLstdlibCSPackage.Literals.LIB_ITERATION_CS__OWNED_ACCUMULATORS, 0/* AccumulatorCS */,
 					(1/*AccumulatorCS*/ << 4) | 2 /*[*]*/
@@ -6195,7 +6196,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(17/*'validating'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(OCLstdlibCSPackage.Literals.LIB_ITERATION_CS__OWNED_ACCUMULATORS, 0/* AccumulatorCS */,
 					(1/*AccumulatorCS*/ << 4) | 2 /*[*]*/
@@ -6287,7 +6288,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(17/*'validating'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, 34/* ParameterCS */,
 					(79/*ParameterCS*/ << 4) | 2 /*[*]*/
@@ -6382,7 +6383,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(17/*'validating'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, 1/* AnnotationElementCS */,
 					(3/*AnnotationElementCS*/ << 4) | 2 /*[*]*/
@@ -6552,7 +6553,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(15/*'static'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(OCLstdlibCSPackage.Literals.LIB_PROPERTY_CS__OWNED_OPPOSITE, 18/* LibOppositeCS */,
 					(49/*LibOppositeCS*/ << 4) | 1 /*[?]*/
@@ -6601,7 +6602,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 					(15/*'static'*/ << 4) | 1 /*[?]*/
 				),
 				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
-				createSerializationReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
+				createSerializationReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, -1
 				),
 				createSerializationReference(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, 1/* AnnotationElementCS */,
 					(3/*AnnotationElementCS*/ << 4) | 2 /*[*]*/
@@ -7202,7 +7203,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 	 */
 	private void initSerializationSteps() {
 		// 0: JavaImplementationCS::implementation=SINGLE_QUOTED_STRING || soft-space value soft-space
-		serializationSteps[0] = createSerializationStepCrossReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, getCrossReference(OCLstdlibCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, "SINGLE_QUOTED_STRING"), 94, 10);
+		serializationSteps[0] = createSerializationStepCrossReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, getCrossReference(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, "SINGLE_QUOTED_STRING"), 94, 10);
 		// 1: StructuredClassCS::isAbstract?='abstract' || soft-space value soft-space
 		serializationSteps[1] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, 8 /* 'abstract' */, 10);
 		// 2: ImportCS::isAll?='::*' || soft-space value soft-space

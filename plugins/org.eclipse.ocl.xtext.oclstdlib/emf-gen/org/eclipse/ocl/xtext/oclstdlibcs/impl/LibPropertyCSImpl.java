@@ -17,11 +17,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.basecs.impl.AttributeCSImpl;
-import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
-import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
@@ -341,7 +340,7 @@ public class LibPropertyCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				case AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0: return 2;
 				default: return -1;
 			}
 		}
@@ -359,7 +358,7 @@ public class LibPropertyCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0;
+				case 2: return AttributeCSImpl.ATTRIBUTE_CS_FEATURE_COUNT + 0;
 				default: return -1;
 			}
 		}

@@ -139,6 +139,11 @@ public class EssentialOCLCSAdapterFactory
 				return createCurlyBracketedClauseCSAdapter();
 			}
 			@Override
+			public Adapter caseDummyEssentialOCLConstraintClass(DummyEssentialOCLConstraintClass object)
+			{
+				return createDummyEssentialOCLConstraintClassAdapter();
+			}
+			@Override
 			public Adapter caseExpCS(ExpCS object)
 			{
 				return createExpCSAdapter();
@@ -544,6 +549,21 @@ public class EssentialOCLCSAdapterFactory
 	 * @generated
 	 */
 	public Adapter createCurlyBracketedClauseCSAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.essentialoclcs.DummyEssentialOCLConstraintClass <em>Dummy Essential OCL Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.DummyEssentialOCLConstraintClass
+	 * @generated
+	 */
+	public Adapter createDummyEssentialOCLConstraintClassAdapter()
 	{
 		return null;
 	}

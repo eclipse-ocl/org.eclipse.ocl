@@ -22,7 +22,7 @@ package org.eclipse.ocl.xtext.basecs;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.JavaImplementationCS#getImplementation <em>Implementation</em>}</li>
  * </ul>
  *
- * @see org.eclipse.qvtd.xtext.qvtbasecs.QVTbaseCSPackage#getJavaImplementationCS()
+ * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getJavaImplementationCS()
  * @model abstract="true"
  * @generated
  */
@@ -38,7 +38,7 @@ public interface JavaImplementationCS extends ElementCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Implementation</em>' reference.
 	 * @see #setImplementation(JavaClassCS)
-	 * @see org.eclipse.qvtd.xtext.qvtbasecs.QVTbaseCSPackage#getJavaImplementationCS_Implementation()
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getJavaImplementationCS_Implementation()
 	 * @model
 	 * @generated
 	 */

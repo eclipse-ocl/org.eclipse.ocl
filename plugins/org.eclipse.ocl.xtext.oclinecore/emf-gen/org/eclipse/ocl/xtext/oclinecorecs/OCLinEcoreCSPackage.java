@@ -71,6 +71,16 @@ public interface OCLinEcoreCSPackage extends EPackage {
 	OCLinEcoreCSPackage eINSTANCE = org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclinecorecs.impl.DummyOCLinEcoreConstraintClassImpl <em>Dummy OC Lin Ecore Constraint Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.DummyOCLinEcoreConstraintClassImpl
+	 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl#getDummyOCLinEcoreConstraintClass()
+	 * @generated
+	 */
+	int DUMMY_OC_LIN_ECORE_CONSTRAINT_CLASS = 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreConstraintCSImpl <em>OC Lin Ecore Constraint CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,7 +88,7 @@ public interface OCLinEcoreCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl#getOCLinEcoreConstraintCS()
 	 * @generated
 	 */
-	int OC_LIN_ECORE_CONSTRAINT_CS = 0;
+	int OC_LIN_ECORE_CONSTRAINT_CS = 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS <em>OC Lin Ecore Constraint CS</em>}'.
@@ -149,7 +159,7 @@ public interface OCLinEcoreCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl#getSysMLCS()
 	 * @generated
 	 */
-	int SYS_MLCS = 1;
+	int SYS_MLCS = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.oclinecorecs.impl.TopLevelCSImpl <em>Top Level CS</em>}' class.
@@ -159,7 +169,17 @@ public interface OCLinEcoreCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl#getTopLevelCS()
 	 * @generated
 	 */
-	int TOP_LEVEL_CS = 2;
+	int TOP_LEVEL_CS = 3;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclinecorecs.DummyOCLinEcoreConstraintClass <em>Dummy OC Lin Ecore Constraint Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dummy OC Lin Ecore Constraint Class</em>'.
+	 * @see org.eclipse.ocl.xtext.oclinecorecs.DummyOCLinEcoreConstraintClass
+	 * @generated
+	 */
+	EClass getDummyOCLinEcoreConstraintClass();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +194,15 @@ public interface OCLinEcoreCSPackage extends EPackage {
 	 * @generated
 	 */
 	interface Literals {
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclinecorecs.impl.DummyOCLinEcoreConstraintClassImpl <em>Dummy OC Lin Ecore Constraint Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.DummyOCLinEcoreConstraintClassImpl
+		 * @see org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreCSPackageImpl#getDummyOCLinEcoreConstraintClass()
+		 * @generated
+		 */
+		EClass DUMMY_OC_LIN_ECORE_CONSTRAINT_CLASS = eINSTANCE.getDummyOCLinEcoreConstraintClass();
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclinecorecs.impl.OCLinEcoreConstraintCSImpl <em>OC Lin Ecore Constraint CS</em>}' class.
 		 * <!-- begin-user-doc -->

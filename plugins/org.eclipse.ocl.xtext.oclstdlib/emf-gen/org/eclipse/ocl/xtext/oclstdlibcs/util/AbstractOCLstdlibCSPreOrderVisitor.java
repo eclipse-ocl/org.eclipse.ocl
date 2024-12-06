@@ -42,12 +42,7 @@ public abstract class AbstractOCLstdlibCSPreOrderVisitor
 	}
 
 	@Override
-	public @Nullable Continuation<?> visitJavaClassCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaClassCS csElement) {
-		return visitNamedElementCS(csElement);
-	}
-
-	@Override
-	public @Nullable Continuation<?> visitJavaImplementationCS(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull JavaImplementationCS csElement) {
+	public @Nullable Continuation<?> visitDummyOCLstdlibConstraintClass(org.eclipse.ocl.xtext.oclstdlibcs.@NonNull DummyOCLstdlibConstraintClass csElement) {
 		return visitElementCS(csElement);
 	}
 
