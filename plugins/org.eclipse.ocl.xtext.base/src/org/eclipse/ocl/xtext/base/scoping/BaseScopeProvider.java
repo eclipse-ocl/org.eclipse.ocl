@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.scoping;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.xtext.base.cs2as.BaseCS2AS;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
@@ -45,7 +50,17 @@ public class BaseScopeProvider extends AbstractDeclarativeScopeProvider
 		if (!(csResource instanceof BaseCSResource)) {
 			return IScope.NULLSCOPE;
 		}
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)((BaseCSResource)csResource).getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context);
+		EClass eReferenceType = reference.getEReferenceType();
+		if (eReferenceType == BaseCSPackage.Literals.JAVA_CLASS_CS) {
+			if (csResource instanceof BaseCSResource) {
+				CS2AS cs2as = ((BaseCSResource)csResource).getCS2AS(environmentFactory);
+				if (cs2as instanceof BaseCS2AS) {
+					return ((BaseCS2AS)cs2as).getJavaClassScope();
+				}
+			}
+			return IScope.NULLSCOPE;
+		}
 		return BaseScopeView.getScopeView(environmentFactory, (ElementCS) context, reference);
 	}
 }
