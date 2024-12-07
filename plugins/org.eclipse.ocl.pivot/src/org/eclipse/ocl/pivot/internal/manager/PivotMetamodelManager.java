@@ -95,6 +95,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -307,7 +308,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
-	private @Nullable Map<Resource,External2AS> es2ases = null;
+	private @Nullable Map<@NonNull URI, @NonNull External2AS> uri2es2as = null;
 
 	/**
 	 * Construct a MetamodelManager that will use environmentFactory to create its artefacts
@@ -340,14 +341,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public void addExternal2AS(@NonNull External2AS es2as) {
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 == null){
-			es2ases = es2ases2 = new HashMap<>();
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			uri2es2as = uri2es2as2 = new HashMap<>();
 		}
-		Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
-		External2AS oldES2AS = es2ases2.put(resource, es2as);
-		assert oldES2AS == null;
+		External2AS oldES2AS = uri2es2as2.put(uri, es2as);
+		assert (oldES2AS == null) || (es2as instanceof InverseConversion);// && !(oldES2AS instanceof InverseConversion));
 		oldES2AS = external2asMap.put(uri, es2as);
 		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
 	}
@@ -693,12 +693,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		globalNamespaces.clear();
 		globalTypes.clear();
 		external2asMap.clear();
-		Map<Resource, External2AS> es2ases2 = es2ases;
-		if (es2ases2 != null) {
-			for (External2AS es2as : es2ases2.values()) {
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 != null) {
+			for (External2AS es2as : uri2es2as2.values()) {
 				es2as.dispose();
 			}
-			es2ases = null;
+			uri2es2as = null;
 		}
 		lockingAnnotation = null;
 		completeModel.dispose();
@@ -809,10 +809,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		return completeModel.getAllCompletePackages();
 	}
-
-	/**
-	 * Return all constraints applicable to a type and its superclasses.
-	 */
 
 	/**
 	 * Return all constraints applicable to a type and its superclasses.
@@ -1047,6 +1043,22 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return defaultExpression;
 	}
 
+	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			return null;
+		}
+		External2AS external2as = uri2es2as2.get(esResource.getURI());
+		if (external2as == null) {
+			return null;
+		}
+		Resource resource = external2as.getResource();
+		if (resource != esResource) {
+			getClass();			// XXX caller checks
+		}
+		return external2as;
+	}
+
 	@Override
 	public @Nullable <T extends EObject> T getEcoreOfPivot(@NonNull Class<T> ecoreClass, @NonNull Element element) {
 		EObject eTarget = element.getESObject();
@@ -1135,7 +1147,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
-		completeModel.getCompletePackage(thatPackage);					// XXX Ensure thatPackage has a complete representation
+		completeModel.getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
 		Model thatModel = PivotUtil.getContainingModel(thatPackage);
 		if (thisModel == thatModel) {
 			return thatPackage;
@@ -1157,10 +1169,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			thesePackages.add(thisPackage);
 		}
 		return thisPackage;
-	}
-
-	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
-		return es2ases != null ? es2ases.get(esResource) : null;
 	}
 
 	@Override
@@ -1838,6 +1846,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
+		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);
@@ -2093,15 +2102,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
-			//	if (eResource instanceof XMLResource) {
-					EObject eObject = eResource.getEObject(fragment);
-					if (eObject != null) {
-						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
-						if (asElement != null) {
-							return asElement;
-						}
+				EObject eObject = eResource.getEObject(fragment);
+				if (eObject != null) {
+					Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
+					if (asElement != null) {
+						return asElement;
 					}
-			//	}
+				}
 			}
 		}
 		if (resource == null) {
@@ -2213,8 +2220,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void removeExternalResource(@NonNull Resource esResource) {
-		if (es2ases != null) {
-			External2AS es2as = es2ases.remove(esResource);
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 != null) {
+			External2AS es2as = uri2es2as2.remove(esResource.getURI());
 			if (es2as != null) {
 				es2as.dispose();
 			}
