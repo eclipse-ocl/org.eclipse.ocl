@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -233,7 +232,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
-	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
 		if (!externalResourceSetWasNull) {
 			if (externalResourceSet instanceof ResourceSetImpl) {
 				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
@@ -267,19 +266,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					}
 				}
 			}
-			List<@NonNull Resource> externalResources = externalResourceSet.getResources();
-			for (int i = 0; i < externalResources.size(); i++) {
-				Resource esResource = externalResources.get(i);
-				if (esResource instanceof CSResource) {
-					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
-					// XXX Need to deep copy if non-null/non-proxy AS references
-				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
-				//	ASResource asResource = ((CSResource)esResource).reloadIn(this);
-				}
-				else {
-					// XXX Ecore
-				}
-			}
 		}
 	}
 
@@ -299,11 +285,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-	//	EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(notifier);
-	//	if (environmentFactoryAdapter != null) {
-	//		assert environmentFactoryAdapter.getEnvironmentFactory() == this;			// XXX verifying redundancy
-	//		return environmentFactoryAdapter;
-	//	}
 		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
@@ -937,7 +918,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable Resource eResource) throws ParserException {
 		if (eResource != null) {
 			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
-			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
 			if (bestHelper != null) {
 				return bestHelper.getASElement(this, pivotClass, eResource.getContents().get(0));		// XXX
 			}
@@ -1123,7 +1103,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 		}
 		else {
-			ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+			ecore2as = External2AS.getAdapter(ecoreResource, this);
 			List<Diagnostic> errors = ecoreResource.getErrors();
 			assert errors != null;
 			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");

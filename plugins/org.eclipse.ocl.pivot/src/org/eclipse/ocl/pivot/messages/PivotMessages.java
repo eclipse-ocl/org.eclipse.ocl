@@ -34,7 +34,7 @@ public class PivotMessages
 	/**
 	 * @since 1.23
 	 */
-	public static String ConflictingResourceSet;			// XXX redundant
+	public static String ConflictingResourceSet;
 	/**
 	 * @since 1.23
 	 */

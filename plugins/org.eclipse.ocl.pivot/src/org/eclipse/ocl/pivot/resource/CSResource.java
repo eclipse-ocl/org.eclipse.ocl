@@ -90,6 +90,22 @@ public interface CSResource extends Resource
 	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
 	@NonNull ProjectManager getProjectManager();
 
+	/**
+	 * Return true if this CSResource is derived from an ASResource.
+	 * @since 1.23
+	 */
+	@Deprecated /* @deprecated only for BaseCSResource */
+	default boolean isDerived() {
+		return false;
+	}
+
+	/**
+	 * Set whether this CSResource is derived from an ASResource.
+	 * @since 1.23
+	 */
+	@Deprecated /* @deprecated only for BaseCSResource */
+	default void setDerived(boolean isDerived) {}
+
 	@Deprecated /* @deprecated only for BaseCSResource */
 	void setParserContext(@Nullable ParserContext parserContext);
 

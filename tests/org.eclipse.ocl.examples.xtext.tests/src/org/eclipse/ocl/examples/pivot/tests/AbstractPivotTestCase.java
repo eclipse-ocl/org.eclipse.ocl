@@ -101,10 +101,10 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-	//	PivotUtilInternal.noDebug = false;
-	//	DEBUG_GC = true;
-	//	DEBUG_ID = true;
-	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+//		PivotUtilInternal.noDebug = false;
+//		DEBUG_GC = true;
+//		DEBUG_ID = true;
+//		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	}
 
 	static long startTime;
@@ -700,21 +700,7 @@ public class AbstractPivotTestCase extends TestCase
 		return methodName != null ? methodName : "<unnamed>";
 	}
 
-	/* qvtd variant
-	public @NonNull String getTestName() {
-		return ClassUtil.nonNullState(super.getName());
-	} */
-
 	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento
-
-	/**
-	 * Dispose of an OCL making sure it uses the current Thread's EnvironmentFactory.
-	 *
-	protected void oclDispose(@NonNull OCL ocl) {
-		ThreadLocalExecutor.resetEnvironmentFactory();
-		ThreadLocalExecutor.attachEnvironmentFactory((EnvironmentFactoryInternal)ocl.getEnvironmentFactory());
-		ocl.dispose();
-	} */
 
 	@Override
 	protected void setUp() throws Exception {

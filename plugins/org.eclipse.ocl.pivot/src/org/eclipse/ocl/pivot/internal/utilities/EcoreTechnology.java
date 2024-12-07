@@ -89,9 +89,4 @@ public class EcoreTechnology extends AbstractTechnology
 		}
 		return false;
 	}
-
-	@Override
-	public boolean needsPivotValidator() {
-		return false;			// AS Constraints are migrated to EAnnotations for evaluation as EMF Validation Delegates
-	}
 }

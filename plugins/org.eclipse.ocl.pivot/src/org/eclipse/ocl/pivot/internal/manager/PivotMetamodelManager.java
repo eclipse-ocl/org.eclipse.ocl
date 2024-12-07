@@ -97,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -310,7 +309,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
-//	private @Nullable Map<Resource,External2AS> es2ases = null;
 	private @Nullable Map<@NonNull URI, @NonNull External2AS> uri2es2as = null;
 
 	/**
@@ -348,7 +346,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (uri2es2as2 == null) {
 			uri2es2as = uri2es2as2 = new HashMap<>();
 		}
-	//	Resource resource = es2as.getResource();
 		URI uri = es2as.getURI();
 		External2AS oldES2AS = uri2es2as2.put(uri, es2as);
 		assert (oldES2AS == null) || (es2as instanceof InverseConversion);// && !(oldES2AS instanceof InverseConversion));
@@ -663,34 +660,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
-	/*	for (@NonNull Resource asResource : new ArrayList<>(environmentFactory.getResourceSet().getResources())) {		-- XXX tidy
-			System.out.println("Unloading " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
-			Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(asResource);
-			for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
-				boolean hasReference = false;
-				for (Setting setting : entry.getValue()) {
-					EStructuralFeature ef = setting.getEStructuralFeature();
-					if (!ef.isTransient() && !ef.isVolatile()) {
-						hasReference = true;
-					}
-				}
-				if (hasReference) {
-					EObject e1 = entry.getKey();
-					EObject reloadableNotifier = e1;
-					if (e1 instanceof ElementImpl) {
-						reloadableNotifier = (EObject) ((ElementImpl)e1).getReloadableNotifier();
-					}
-					System.out.println("\t" + NameUtil.debugSimpleName(e1) + " " + e1 + NameUtil.debugSimpleName(reloadableNotifier) + " " + EcoreUtil.getURI(reloadableNotifier));
-					for (Setting setting : entry.getValue()) {
-						EObject e2 = setting.getEObject();
-						EStructuralFeature ef = setting.getEStructuralFeature();
-						if (!ef.isTransient() && !ef.isVolatile()) {
-							System.out.println("\t\t" + ef.getName() + " " + NameUtil.debugSimpleName(e2) + " " + e2.toString().replace("\n", "\\n"));
-						}
-					}
-				}
-			}
-		} */
 		List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
 		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
@@ -816,7 +785,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);
 		if (es2as == null) {
-			es2as = Ecore2AS.getAdapter(metamodel, environmentFactory);
+			es2as = External2AS.getAdapter(metamodel, environmentFactory);
 		}
 		return es2as.getCreated(pivotClass, eObject);
 	}
@@ -845,7 +814,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages() {
-		if (!libraryLoadInProgress && (asMetamodel == null))  {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing())  {
 			getASmetamodel();
 		}
 		return completeModel.getAllCompletePackages();
@@ -1055,7 +1024,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if (!libraryLoadInProgress && asMetamodel == null && !environmentFactory.isDisposing()) {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing()) {
 			getASmetamodel();
 		}
 		return completeModel.getCompletePackage(asPackage);

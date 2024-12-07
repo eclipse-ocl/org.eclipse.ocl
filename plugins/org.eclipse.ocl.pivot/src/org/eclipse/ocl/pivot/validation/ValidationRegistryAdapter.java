@@ -65,8 +65,6 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 		}
 
 		public static void removeEntry(@NonNull EPackage ePackage, @NonNull ResourceSet resourceSet) {
-
-
 			EValidator globalEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 			if (globalEValidator instanceof DelegatingEValidator) {				// XXX Composed/Composite/...
 				DelegatingEValidator delegatingEValidator = (DelegatingEValidator)globalEValidator;
@@ -80,19 +78,6 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 			else {
 				assert false;
 			}
-		/*
-
-
-			EValidator globalEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-			DelegatingEValidator delegatingEValidator;
-			if (globalEValidator instanceof DelegatingEValidator) {				// XXX Composed/Composite/...
-				delegatingEValidator = (DelegatingEValidator)globalEValidator;
-			}
-			else {
-				delegatingEValidator = new DelegatingEValidator(globalEValidator);
-				EValidator.Registry.INSTANCE.put(ePackage, delegatingEValidator);
-			}
-			delegatingEValidator.put(resourceSet, eValidator); */
 		}
 
 		private final static @Nullable ResourceSet ORIGINAL_GLOBAL_EVALIDATOR_KEY = null;
