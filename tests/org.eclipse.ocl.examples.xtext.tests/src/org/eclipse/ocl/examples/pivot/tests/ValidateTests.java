@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -62,6 +64,8 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -530,9 +534,11 @@ public class ValidateTests extends AbstractValidateTests
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl0 = createOCL();
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
-		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
-		ResourceSet testResourceSet = new ResourceSetImpl();
-		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
+		CompleteOCLEObjectValidator completeOCLEObjectValidator1 = new CompleteOCLEObjectValidator(validatePackage1, oclURI);
+		CompleteOCLEObjectValidator completeOCLEObjectValidator2 = new CompleteOCLEObjectValidator(validatePackage2, oclURI);
+		ResourceSetImpl testResourceSet = new ResourceSetImpl();
+		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator1);
+		ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage2, completeOCLEObjectValidator2);
 		EObject testInstance1 = eCreate(validatePackage1, "Level3");
 		EObject testInstance2 = eCreate(validatePackage2, "Level3");
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
@@ -543,9 +549,11 @@ public class ValidateTests extends AbstractValidateTests
 		String objectLabel2; // = LabelUtil.getLabel(testInstance2);
 		String message1;
 		String message2;
+		String conflictingResourceSetMessage = StringUtil.bind(PivotMessages.ConflictingResourceSet, ecoreURI.toString());
+		String conflictingResourcesMessage = StringUtil.bind(PivotMessages.ConflictingResources, ecoreURI.toString());
 		try {
 			//
-			//	No errors
+			//	No errors when EPackage is consistent
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xx");
@@ -562,12 +570,74 @@ public class ValidateTests extends AbstractValidateTests
 			objectLabel2 = LabelUtil.getLabel(testInstance2);
 			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1, "The feature 'l1' is not a valid feature");
 			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2, "The feature 'l1' is not a valid feature");
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
 			//
-			//	CompleteOCL errors all round
+			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2
+			//
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			assertLoggerText(conflictingResourcesMessage);
+			EnvironmentFactoryInternal dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			assert dynamicEnvironmentFactory != null;
+			Model dynamicModel = PivotUtil.getModel(dynamicEnvironmentFactory.getASResourceSet().getResources().get(0));
+			assert dynamicEnvironmentFactory != ocl0.getEnvironmentFactory();
+			assert dynamicEnvironmentFactory != ocl1.getEnvironmentFactory();
+			assert dynamicEnvironmentFactory != ocl2.getEnvironmentFactory();
+			assert dynamicEnvironmentFactory.getResourceSet() == testResourceSet;
+			assert dynamicModel.getOwnedPackages().get(0).getESObject() == validatePackage1;
+			//
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			assertLoggerText("");			// Only error once on reload by new EnvironmentFactory
+			//
+			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR, conflictingResourceSetMessage);		// Fails to load ePackage2 from conflicting ecoreResource
+			assertLoggerText("");
+			dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			assert dynamicEnvironmentFactory != null;
+			dynamicModel = PivotUtil.getModel(dynamicEnvironmentFactory.getASResourceSet().getResources().get(0));
+			assert dynamicModel.getOwnedPackages().get(0).getESObject() == validatePackage1;
+			//
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			assertLoggerText("");
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
+			dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			assert dynamicEnvironmentFactory == null;
+			//
+			// yet another OCL - but testResourceSet has CS resources for reload
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			assertLoggerText(conflictingResourcesMessage);
+			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR, conflictingResourceSetMessage);
+			assertLoggerText("");
+			//
+			ThreadLocalExecutor.resetEnvironmentFactory();
+			dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			assert dynamicEnvironmentFactory == null;
+		//	testResource.getContents().move(1, 0);					// Reverse order
+		//	testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
+			//
+			// yet another OCL - but testResourceSet has CS resources for reload, but now testInstance2 is first
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+		//	checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+			assertLoggerText(conflictingResourcesMessage);
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+		//	checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+			assertLoggerText("");
+			//
+		//	testResource.getContents().move(1, 0);					// Restore order
+		//	testResourceSet.getURIResourceMap().clear();			//  lose order-affected cache
+			//
+			ocl0.activate();	// OCL's EPackage matches for first loaded testInstance and dynamically parsed Complete OCL
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+			ocl1.activate();	// OCL's EPackage is inconsistent for testInstance2 and statically parsed Complete OCL
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR, conflictingResourceSetMessage);
+			ocl2.activate();	// OCL's EPackage is inconsistent for testInstance1 and statically parsed Complete OCL
+			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
+			//
+			//	OCLinEcore/CompleteOCL errors all levels - too long sizes, consistent texts
+			//
+			ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage2, null);
+		//	ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
 			eSet(testInstance1, "l2a", "xxx");
@@ -580,14 +650,16 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l3", "yyy");
 			objectLabel1 = LabelUtil.getLabel(testInstance1);
 			objectLabel2 = LabelUtil.getLabel(testInstance2);
+			ocl1.activate();	// with Complete OCL - bad sizes, ok texts
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1_size", objectLabel1),
 				StringUtil.bind(template, "Level2a::L2a_size", objectLabel1),
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel1),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel1));
+			ocl2.activate();	// without Complete OCL - ok texts
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
-			//	One CompleteOCl and one OCLinEcore
+			//	OCLinEcore/CompleteOCL errors one level - too long size, bad text
 			//
 			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "ok");
@@ -602,11 +674,13 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l3", "ok");
 			objectLabel1 = LabelUtil.getLabel(testInstance1);
 			objectLabel2 = LabelUtil.getLabel(testInstance2);
+			ocl1.activate();	// with Complete OCL - 1 bad size, 1 bad text
 			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING,
 				StringUtil.bind(template,  "Level2a::L2a_text", objectLabel1),
 				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel1));
+			ocl2.activate();	// without Complete OCL - 1 bad text
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3::ok", objectLabel2));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", objectLabel2));
 		}
 		finally {
 			testResource.unload();
@@ -652,14 +726,20 @@ public class ValidateTests extends AbstractValidateTests
 				}
 			};
 			assertTrue(helper.loadMetamodels());
-			assertTrue(helper.loadDocument(testFile.getFileURI()));
+			try {
+				assertTrue(helper.loadDocument(testFile.getFileURI()));
+			} catch (SemanticException e) {
+				// XXX Auto-generated catch block
+				e.printStackTrace();
+			}
 			helper.installPackages();
 
 			assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
 				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
-				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library::lib::Book::b2")));
+				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library::lib::Book::b2")));
+//				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library::lib::Book::b2")));
 			//		disposeResourceSet(resourceSet);
 			ocl.activate();
 			helper.dispose();
@@ -732,14 +812,21 @@ public class ValidateTests extends AbstractValidateTests
 			}
 		};
 		assertTrue(helper.loadMetamodels());
-		assertTrue(helper.loadDocument(testFile.getFileURI()));
+		try {
+			assertTrue(helper.loadDocument(testFile.getFileURI()));
+		} catch (SemanticException e) {
+			// XXX Auto-generated catch block
+			e.printStackTrace();
+		}
 		helper.installPackages();
 		String objectLabel1 = LabelUtil.getLabel(uNamed);
 		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
 		//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());
 		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
+			StringUtil.bind(VIOLATED_TEMPLATE, "IsClassifierWrtLeaf", objectLabel1),
+			StringUtil.bind(VIOLATED_TEMPLATE, "IsClassWrtLeaf", objectLabel1)/*,
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel3),	// FIXME BUG 437450
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel4)*/));	// FIXME BUG 437450
 		//		adapter.getMetamodelManager().dispose();

@@ -38,6 +38,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/DelegateInstaller.java" type="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
+                <message_argument value="SUPPRESS_DYNAMIC_OCL_DELEGATES"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/delegate/OCLValidationDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global">
         <filter id="338755678">
             <message_arguments>
@@ -134,7 +142,19 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="canValidate(ResourceSet)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="isDisposing()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="loadCompleteOCLResource(EPackage, URI)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -151,6 +171,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal"/>
                 <message_argument value="DEBUG_DEPRECATIONS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/messages/PivotMessages.java" type="org.eclipse.ocl.pivot.messages.PivotMessages">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="ConflictingResourceSet"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="ConflictingResources"/>
             </message_arguments>
         </filter>
     </resource>
@@ -187,10 +221,22 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="getASResourceSet()"/>
+            </message_arguments>
+        </filter>
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="activate()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="addExtraResourceSet(ResourceSet)"/>
             </message_arguments>
         </filter>
     </resource>

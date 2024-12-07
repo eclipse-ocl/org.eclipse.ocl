@@ -82,6 +82,8 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ConstraintImpl;
+import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -583,9 +585,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (eAnnotation != null) {
 			value = eAnnotation.getDetails().get("body");
 		}
-		ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
+		ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
 		if (value != null) {
 			specification.setBody(value);
+		}
+		if (eAnnotation != null) {
+			specification.setESObject(eAnnotation);
 		}
 		constraint.setOwnedSpecification(specification);
 		String commentBody = EcoreUtil.getAnnotation(eOperation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
@@ -664,7 +669,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					converter.error("Unsupported operation constraint " + key);
 					continue;
 				}
-				ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
+				ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
+				specification.setESObject(oclAnnotation);
 				specification.setBody(value);
 				//				constraint.setExprString(entry.getValue());
 				//				constraint.setExprString(entry.getValue());
@@ -815,7 +821,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 			if (bestEntry != null) {
 				String value = bestEntry.getValue();
-				ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
+				ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
+				specification.setESObject(oclAnnotation);
 				specification.setBody(value);
 				pivotElement.setOwnedExpression(specification);
 			}
@@ -897,10 +904,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		/*
-		 * Create explicit constraints.
+		 * Create explicit constraints (ignore dynamic).
 		 */
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
-		if (oclAnnotation != null) {
+		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclAnnotation.getSource())) {
 			if (excludedAnnotations == null) {
 				excludedAnnotations = new ArrayList<>();
 			}
@@ -923,6 +930,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					if (invariant == null) {
 						invariant = PivotFactory.eINSTANCE.createConstraint();
 						invariant.setName(invariantName);
+						// XXX	((ExpressionInOCLImpl)specification).setESObject(oclAnnotation);
+						((ConstraintImpl)invariant).setESObject(oclAnnotation);
 					}
 					else {
 						specification = invariant.getOwnedSpecification();
@@ -933,6 +942,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					}
 					else {
 						expression = PivotFactory.eINSTANCE.createExpressionInOCL();
+						// XXX XXX	((ExpressionInOCLImpl)specification).setESObject(oclAnnotation);
 						invariant.setOwnedSpecification(expression);
 						ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 						contextVariable.setName(PivotConstants.SELF_NAME);

@@ -107,7 +107,16 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 */
 	default void activate() {}
 
+	@Deprecated /* @deprecated only ResourceSet adapters are used and only internally - 3 calls without JUnit coverage remain
+		now that ThreadLocalExecutor.getEnvironmentFactory is available, the 3 adaptions are probably redundant */
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
+
+	/**
+	 * Register extraResourceSet as an additional external ResourceSet for which OCL validation may be applied.
+	 *
+	 * @since 1.23
+	 */
+	default void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {}
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
@@ -175,6 +184,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return a new {@link OCL} instance attached to this {@link EnvironmentFactory}
 	 */
 	@NonNull OCL createOCL();
+
+	/**
+	 * @since 1.23
+	 */
+	@NonNull ResourceSet getASResourceSet();
 
 	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
