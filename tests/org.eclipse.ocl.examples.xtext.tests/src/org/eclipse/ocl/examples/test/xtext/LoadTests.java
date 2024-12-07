@@ -696,8 +696,9 @@ public class LoadTests extends XtextTestCase
 
 	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSResourceLoadFactory()); // XXX $NON-NLS-1$
+		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionToFactoryMap.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		extensionToFactoryMap.put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSResourceLoadFactory()); // XXX $NON-NLS-1$
 		Resource xmiResource = resourceSet.createResource(xmiURI);
 		xmiResource.getContents().addAll(resource.getContents());
 		Map<Object, Object> options = XMIUtil.createSaveOptions();

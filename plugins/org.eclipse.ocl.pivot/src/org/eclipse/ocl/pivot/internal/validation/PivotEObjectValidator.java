@@ -253,20 +253,6 @@ public class PivotEObjectValidator implements EValidator
 		return allOk;
 	}
 
-	/*@Deprecated // XXX experimenting
-	private @NonNull Iterable<@NonNull Object> zall(Iterable<@NonNull Object> onesOrSomes) {
-		List<@NonNull Object> all = new ArrayList<>();
-		for (@NonNull Object oneOrSome : onesOrSomes) {
-			if (oneOrSome instanceof Iterable<?>) {
-				Iterables.addAll(all, (Iterable<?>)oneOrSome);
-			}
-			else {
-				all.add(oneOrSome);
-			}
-		}
-		return all;
-	}*/
-
 	/**
 	 * Validate constraint for object using context to elaborate the validation context.
 	 * Returns null for no problem or a warning/error severity diagnostic for a problem.

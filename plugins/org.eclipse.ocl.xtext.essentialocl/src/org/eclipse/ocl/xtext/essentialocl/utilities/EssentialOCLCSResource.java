@@ -296,7 +296,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	 * OCL-aware application. For OCL-blind application a prevailing EnvironmentFactory is lazily created and
 	 * shared by the ThreadLocalExecutor.
 	 */
-//	private @Nullable ParserContext parserContext = null;
 	private @Nullable WeakHashMap<@NonNull EnvironmentFactory, @NonNull ParserContext> environmentFactory2parserContext = null;
 	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
 
@@ -409,7 +408,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
 		}
 		else {
-		//	System.out.println("createDiagnostic " + NameUtil.debugSimpleName(this) + " " + message.getMessage());
 			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
 			{
 				@Override
@@ -506,70 +504,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		catch (Exception e) {
 			throw new Resource.IOWrappedException(e);
 		}
-	}
-
-	@Override
-	protected void doUnload() {
-	/*	Map<EObject, Collection<Setting>> map = new EcoreUtil.ExternalCrossReferencer(this)
-		{
-			@Override
-			protected Map<EObject, Collection<EStructuralFeature.Setting>> findExternalCrossReferences() {
-				return super.findExternalCrossReferences();
-			}
-
-			@Override
-			protected boolean resolve() {
-				return false;
-			}
-		}.findExternalCrossReferences(); */
-	//	EssentialOCLCSUnloadVisitor unloadVisitor = createUnloadVisitor();
-	//	@NonNull Map<@NonNull Element, @NonNull Element> target2proxy = unloadVisitor.proxify();
-	/*	for (Map.Entry<EObject, Collection<Setting>> entry : map.entrySet()) {
-			boolean hasReference = false;
-			for (Setting setting : entry.getValue()) {
-				EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-				if (!eStructuralFeature.isTransient() && !eStructuralFeature.isVolatile()) {
-					hasReference = true;
-				}
-			}
-			if (hasReference) {
-				EObject eTarget = entry.getKey();
-				EObject eProxy = target2proxy.get(eTarget);
-			//	assert eProxy != null;
-			/*	Notifier reloadableNotifier = eTarget;
-				if (eTarget instanceof ElementImpl) {
-					Notifier reloadableNotifier2 = ((ElementImpl)eTarget).getReloadableNotifier();
-					if (reloadableNotifier2 != null) {
-						reloadableNotifier = reloadableNotifier2;
-					}
-				}
-				EClass eClass = eTarget.eClass();
-				URI reloadableURI;
-				if (reloadableNotifier instanceof EObject) {
-					EObject eObject = (EObject)reloadableNotifier;
-					reloadableURI = EcoreUtil.getURI(eObject);
-				}
-				else {
-					Resource eResource = (Resource)reloadableNotifier;
-					assert eResource != null;
-					reloadableURI = eResource.getURI();
-				} * /
-			//	EObject proxyObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
-			//	((InternalEObject)proxyObject).eSetProxyURI(reloadableURI);
-			//	System.out.println("\t" + NameUtil.debugSimpleName(eTarget) + " " + eTarget + NameUtil.debugSimpleName(reloadableNotifier) + " " + reloadableURI);
-				for (Setting setting : entry.getValue()) {
-					EObject eSource = setting.getEObject();
-					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-					if (!eStructuralFeature.isTransient() && !eStructuralFeature.isVolatile()) {
-						Object object = setting.get(false);
-						if (object != eProxy) {
-							System.err.println("Did not proxify " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " " + NameUtil.debugSimpleName(eSource));
-						}
-					}
-				}
-			}
-		} */
-		super.doUnload();
 	}
 
 	@Override

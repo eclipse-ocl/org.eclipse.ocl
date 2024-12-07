@@ -100,13 +100,11 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		if (eValidator instanceof ExtendedEObjectValidator) {
 			eValidator = ((ExtendedEObjectValidator)eValidator).getEValidator();
 		}
-//		Map<String, EClassifier> name2eClassifier = new HashMap<>();
 		Map<@NonNull Class<?>, @NonNull List<@NonNull EClassifier>> javaClass2eClassifiers = new HashMap<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (monitor.isCanceled()) {
 				return null;
 			}
-//			name2eClassifier.put(eClassifier.getName(), eClassifier);
 			Class<?> javaClass = eClassifier.getInstanceClass();
 			if (javaClass != null) {
 				List<@NonNull EClassifier> eClassifiers = javaClass2eClassifiers.get(javaClass);

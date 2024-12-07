@@ -771,9 +771,6 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
-		if ("trace_Persons2Names2Families".equals(newName)) {
-			getClass();			// XXX
-		}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {

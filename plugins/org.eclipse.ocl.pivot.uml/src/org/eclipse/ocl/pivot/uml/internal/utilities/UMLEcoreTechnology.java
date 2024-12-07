@@ -254,9 +254,4 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		return true;
 	}
-
-	@Override
-	public boolean needsPivotValidator() {
-		return true;			// AS Constraints mujst be handled by a Composed PivotEObjectValidator
-	}
 }

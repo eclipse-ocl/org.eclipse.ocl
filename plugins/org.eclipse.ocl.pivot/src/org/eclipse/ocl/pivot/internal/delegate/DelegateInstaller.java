@@ -638,6 +638,7 @@ public class DelegateInstaller
 	/**
 	 * ValidationContext entry that may be set true when validating an EObject whose ResourceSet lacks an ExtendedEObjectValidatorAdapter.
 	 * This prevents leakage of additional dynamic OCL constraints applied to an Xtext grammar leaking beyond the intended applications.
+	 *
 	 * @since 1.23
 	 */
 	public static final String SUPPRESS_DYNAMIC_OCL_DELEGATES = "suppressDynamicOCLdelegates";

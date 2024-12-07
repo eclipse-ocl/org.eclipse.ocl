@@ -291,7 +291,6 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
 		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-	//	environmentFactory.adapt(resourceSet);
 		return environmentFactory;
 	}
 

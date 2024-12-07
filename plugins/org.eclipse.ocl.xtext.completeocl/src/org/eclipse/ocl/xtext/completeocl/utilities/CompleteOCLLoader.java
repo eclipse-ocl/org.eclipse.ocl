@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -222,20 +221,6 @@ public abstract class CompleteOCLLoader
 		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {
 			CompletePackage completePackage = mmPackage2completePackage.get(mmPackage);
 			assert completePackage != null;
-			boolean needsValidator = false;
-			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-				ASResource asResource = (ASResource)asPackage.eResource();
-				Technology technology = asResource.getASResourceFactory().getTechnology();
-				if (technology.needsPivotValidator()) {			// XXX and has constraints
-			// XXX		needsValidator = true;
-				}
-			}
-			if (needsValidator) {
-				if (extraEValidator == null) {
-					extraEValidator = new PivotEObjectValidator(oclModels);
-				}
-				localValidationRegistry.add(mmPackage, extraEValidator);
-			}
 		}
 	}
 

@@ -104,6 +104,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		return castAdapter;
 	}
 
+	@Deprecated /* @deprecated use External2AS */
 	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		Ecore2AS castAdapter = basicGetAdapter(resource, environmentFactory);
 		if (castAdapter == null) {

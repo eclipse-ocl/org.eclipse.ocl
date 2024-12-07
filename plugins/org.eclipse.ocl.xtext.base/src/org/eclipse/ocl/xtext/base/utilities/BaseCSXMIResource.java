@@ -253,16 +253,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
-	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
-			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
-			if (projectManager == null) {
-				projectManager = ProjectManager.CLASS_PATH;
-			}
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, csResourceSet, null);
-		}
-		return environmentFactory; */
 	}
 
 	@Override

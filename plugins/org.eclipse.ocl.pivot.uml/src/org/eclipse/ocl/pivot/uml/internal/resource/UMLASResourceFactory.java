@@ -114,7 +114,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 				}
 			}
 			else if (eObject instanceof EPackage) {
-				org.eclipse.uml2.uml.Profile umlProfile= getProfileForEPackage(environmentFactory, (EPackage)eObject);
+				org.eclipse.uml2.uml.Profile umlProfile = getProfileForEPackage(environmentFactory, (EPackage)eObject);
 				if (umlProfile != null) {
 					eObject = umlProfile;
 				}

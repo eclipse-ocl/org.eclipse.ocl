@@ -120,6 +120,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 
 	/**
 	 * Register extraResourceSet as an additional external ResourceSet for which OCL validation may be applied.
+	 *
 	 * @since 1.23
 	 */
 	default void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {}
