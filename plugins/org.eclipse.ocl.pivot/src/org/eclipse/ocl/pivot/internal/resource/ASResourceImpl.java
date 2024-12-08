@@ -570,7 +570,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						URI uri = asElement.getReloadableURI(environmentFactory);
 						if (uri != null) {
 							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-								asElement.getReloadableURI(environmentFactory);		// XXX
+								asElement.getReloadableURI(environmentFactory);		// XXX debugging
 							}
 							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
 							asElement2reloadableURI2.put(asElement, uri);

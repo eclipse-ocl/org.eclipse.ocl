@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
@@ -1623,7 +1622,6 @@ implements Operation {
 		return operationId2;
 	}
 
-
 	/**
 	 * @since 1.23
 	 */
@@ -1640,12 +1638,5 @@ implements Operation {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	public boolean isIsImplicit() {
-		return implementation instanceof JavaCompareToOperation;			// FIXME Promote to Feature
 	}
 } //OperationImpl
