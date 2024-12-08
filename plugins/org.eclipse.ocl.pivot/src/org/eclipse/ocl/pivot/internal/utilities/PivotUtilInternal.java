@@ -127,12 +127,12 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.24
 	 */
-	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Notifier notifier) {
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			return environmentFactory;
 		}
-		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(object);
 		if (resourceSet != null) {		// null if working with installed resources
 			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
 			if (environmentFactoryAdapter != null) {

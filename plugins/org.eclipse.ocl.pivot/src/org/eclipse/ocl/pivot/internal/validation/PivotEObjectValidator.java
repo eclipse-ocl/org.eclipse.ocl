@@ -362,9 +362,9 @@ public class PivotEObjectValidator implements EValidator
 	 *
 	 * @since 1.14
 	 */
-	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> context) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, object);
-		return validate(environmentFactory, constraint, object,  context);
+	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> validationContext) {
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
+		return validate(environmentFactory, constraint, object,  validationContext);
 	}
 
 	/**
@@ -374,7 +374,7 @@ public class PivotEObjectValidator implements EValidator
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> validationContext) {
 		EnvironmentFactoryInternal environmentFactory;
 		if (object instanceof Notifier) {
-			environmentFactory = ValidationContext.basicGetEnvironmentFactory(validationContext, (Notifier)object);
+			environmentFactory = ValidationContext.basicGetEnvironmentFactory(validationContext, object);
 		}
 		else {
 			environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
