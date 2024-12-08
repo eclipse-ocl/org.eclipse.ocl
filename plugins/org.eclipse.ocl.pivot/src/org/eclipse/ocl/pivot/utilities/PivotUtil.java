@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -277,16 +276,19 @@ public class PivotUtil
 	/**
 	 * @since 1.23
 	 */
-	public static @Nullable ResourceSet basicGetResourceSet(@Nullable Notifier notifier) {
-		if (notifier instanceof EObject) {
-			Resource resource = ((EObject)notifier).eResource();
+	public static @Nullable ResourceSet basicGetResourceSet(@Nullable Object object) {
+		if (object instanceof EObject) {
+			Resource resource = ((EObject)object).eResource();
 			return resource != null ? resource.getResourceSet() : null;
 		}
-		else if (notifier instanceof Resource) {
-			return ((Resource)notifier).getResourceSet();
+		else if (object instanceof Resource) {
+			return ((Resource)object).getResourceSet();
+		}
+		else if (object instanceof ResourceSet) {
+			return (ResourceSet)object;
 		}
 		else {
-			return (ResourceSet)notifier;
+			return null;
 		}
 	}
 
