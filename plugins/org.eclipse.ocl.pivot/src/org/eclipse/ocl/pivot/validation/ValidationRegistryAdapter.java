@@ -81,6 +81,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 		}
 
 		private final static @Nullable ResourceSet ORIGINAL_GLOBAL_EVALIDATOR_KEY = null;
+
 		/**
 		 * Map from ResourceSet with a local ValidationRegistryAdapter to its local validator.
 		 * null key maps all other ResourceSets to the displaced validator.

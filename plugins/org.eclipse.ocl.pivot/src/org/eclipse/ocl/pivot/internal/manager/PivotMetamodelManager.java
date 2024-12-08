@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -2112,13 +2111,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
-				if (eResource instanceof XMLResource) {
-					EObject eObject = eResource.getEObject(fragment);
-					if (eObject != null) {
-						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
-						if (asElement != null) {
-							return asElement;
-						}
+				EObject eObject = eResource.getEObject(fragment);
+				if (eObject != null) {
+					Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
+					if (asElement != null) {
+						return asElement;
 					}
 				}
 			}
