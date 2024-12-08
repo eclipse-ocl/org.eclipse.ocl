@@ -297,7 +297,6 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 			return null;
 		}
 		org.eclipse.uml2.uml.Profile umlProfile = (org.eclipse.uml2.uml.Profile)eAnnotationParent;		// FIXME could there be hierarchy ?
-	//	org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(NameUtil.getOriginalName(eClass));
 		return umlProfile;
 	}
 
