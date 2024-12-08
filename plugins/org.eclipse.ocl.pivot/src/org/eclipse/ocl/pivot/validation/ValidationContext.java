@@ -36,6 +36,22 @@ public class ValidationContext extends HashMap<Object,Object>
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.basicGetEnvironmentFactory(Notifier).
+	 * Returns null if no EnvironmentFactory available.
+	 *
+	 * @since 1.23
+	 */
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
+		if (validationContext != null) {
+			Object environmentFactory = validationContext.get(EnvironmentFactory.class);
+			if (environmentFactory != null) {
+				return (EnvironmentFactoryInternal)environmentFactory;
+			}
+		}
+		return PivotUtilInternal.basicGetEnvironmentFactory(object);
+	}
+
+	/**
 	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.getEnvironmentFactory(Notifier)
 	 * and caching the result for subsequent use.
 	 *
@@ -75,22 +91,6 @@ public class ValidationContext extends HashMap<Object,Object>
 	    put(EValidator.Registry.class, validationRegistry);
 	//	put(EValidator.SubstitutionLabelProvider.class, diagnostician);
 		put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
-	}
-
-	/**
-	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.basicGetEnvironmentFactory(Notifier).
-	 * Returns null if no EnvironmentFactory available.
-	 *
-	 * @since 1.23
-	 */
-	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Notifier notifier) {
-		if (validationContext != null) {
-			Object environmentFactory = validationContext.get(EnvironmentFactory.class);
-			if (environmentFactory != null) {
-				return (EnvironmentFactoryInternal)environmentFactory;
-			}
-		}
-		return PivotUtilInternal.basicGetEnvironmentFactory(notifier);
 	}
 
 	protected Diagnostician createDiagnostician(EValidator.@NonNull Registry validationRegistry) {
