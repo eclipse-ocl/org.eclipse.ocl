@@ -471,21 +471,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @Nullable EObject getESObject() {
 		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes' esObject");
-	/*	assert super.getESObject() == null;
-		for (org.eclipse.ocl.pivot.Class asClass : partialClasses) {
-			EObject esObject = asClass.getESObject();
-			if (esObject != null) {
-				return esObject;
-			}
-			TemplateableElement asTemplateableElement = asClass.getUnspecializedElement();
-			if (asTemplateableElement != null) {
-				esObject = asTemplateableElement.getESObject();
-				if (esObject != null) {
-					return esObject;
-				}
-			}
-		}
-		return null; */
 	}
 
 	@Override
@@ -629,19 +614,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public void setESObject(@NonNull EObject newTarget) {
 		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
 	}
-
-	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
-		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPivotClass()));	// FIXME cast
-		if (unspecializedFirstType == unspecializedSecondType) {
-			return true;
-		}
-		for (CompleteClass superClass : getSuperCompleteClasses(unspecializedSecondType)) {
-			if ((superClass != null) && isSuperClassOf(unspecializedFirstType, superClass)) {
-				return true;
-			}
-		}
-		return false;
-	} */
 
 	@Override
 	public void uninstall() {

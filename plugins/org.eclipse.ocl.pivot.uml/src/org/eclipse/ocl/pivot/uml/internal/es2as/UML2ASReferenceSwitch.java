@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -312,7 +311,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 						Type asAssociationClassEndType = getToAssociationEndType(asAssociationClass, umlMemberProperty, umlMemberEnds);
 						Property asMember2AssociationProperty = PivotUtil.createProperty(associationName, asAssociationClassEndType);
 						Property asAssociation2MemberProperty = PivotUtil.createProperty(getEndName(umlMemberProperty), asMemberClass);
-						((PropertyImpl)asAssociation2MemberProperty).setESObject(umlMemberProperty);
+						((PivotObjectImpl)asAssociation2MemberProperty).setESObject(umlMemberProperty);
 						//
 						asMember2AssociationProperty.setIsRequired(getToAssociationEndIsRequired(umlMemberProperty, umlMemberEnds));
 						asMember2AssociationProperty.setIsImplicit(!(umlAssociation instanceof AssociationClass));

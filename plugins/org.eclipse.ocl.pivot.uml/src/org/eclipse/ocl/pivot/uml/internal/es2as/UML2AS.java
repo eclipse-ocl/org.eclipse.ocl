@@ -1549,17 +1549,17 @@ public abstract class UML2AS extends AbstractExternal2AS
 		return pivotElement;
 	}
 
-	protected void setOriginalMapping(@NonNull Element pivotElement, @NonNull EObject umlElement) {
-		((PivotObjectImpl)pivotElement).setESObject(umlElement);
-		addCreated(umlElement, pivotElement);
-	}
-
 	/**
 	 * @since 1.23
 	 */
 	@Override
 	public void setEcoreURI(@NonNull URI ecoreURI) {
-		throw new IllegalStateException();			// XXX
+		throw new IllegalStateException("UML2AS should setUMLURI() rather than setEcoreURI()");
+	}
+
+	protected void setOriginalMapping(@NonNull Element pivotElement, @NonNull EObject umlElement) {
+		((PivotObjectImpl)pivotElement).setESObject(umlElement);
+		addCreated(umlElement, pivotElement);
 	}
 
 	public void setUMLURI(URI umlURI) {
