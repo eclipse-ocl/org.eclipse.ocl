@@ -16,7 +16,6 @@ import java.util.Map;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -91,12 +90,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 		 */
 		org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 
-		/**
-		 * @since 1.23
-		 */
-		default @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable Resource eResource) throws ParserException {
-			return null;
-		}
 		@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
 
 		/**
