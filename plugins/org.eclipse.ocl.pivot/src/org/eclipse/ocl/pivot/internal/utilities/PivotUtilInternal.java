@@ -303,7 +303,6 @@ public class PivotUtilInternal //extends PivotUtil
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-	//	return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
 		return getEnvironmentFactory((Notifier)object);
 	}
 

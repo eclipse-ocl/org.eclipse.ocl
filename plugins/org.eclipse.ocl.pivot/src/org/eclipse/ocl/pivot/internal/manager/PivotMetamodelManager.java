@@ -1053,6 +1053,22 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return defaultExpression;
 	}
 
+	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 == null) {
+			return null;
+		}
+		External2AS external2as = uri2es2as2.get(esResource.getURI());
+		if (external2as == null) {
+			return null;
+		}
+		Resource resource = external2as.getResource();
+		if (resource != esResource) {
+			getClass();			// XXX caller checks
+		}
+		return external2as;
+	}
+
 	@Override
 	public @Nullable <T extends EObject> T getEcoreOfPivot(@NonNull Class<T> ecoreClass, @NonNull Element element) {
 		EObject eTarget = element.getESObject();
@@ -1163,22 +1179,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			thesePackages.add(thisPackage);
 		}
 		return thisPackage;
-	}
-
-	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
-		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
-		if (uri2es2as2 == null) {
-			return null;
-		}
-		External2AS external2as = uri2es2as2.get(esResource.getURI());
-		if (external2as == null) {
-			return null;
-		}
-		Resource resource = external2as.getResource();
-		if (resource != esResource) {
-			getClass();			// XXX caller checks
-		}
-		return external2as;
 	}
 
 	@Override
