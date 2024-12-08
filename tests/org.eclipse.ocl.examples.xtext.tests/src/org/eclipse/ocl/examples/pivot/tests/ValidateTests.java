@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -937,8 +936,6 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		OCL ocl = createOCL();
 		Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Validate.oclinecore"));
-		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(ecoreResource.getResourceSet());
-		assert (environmentFactoryAdapter != null) && (environmentFactoryAdapter.getEnvironmentFactory() == ocl.getEnvironmentFactory());		// redundant / consistency check
 		EPackage validatePackage = (EPackage) ecoreResource.getContents().get(0);
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));

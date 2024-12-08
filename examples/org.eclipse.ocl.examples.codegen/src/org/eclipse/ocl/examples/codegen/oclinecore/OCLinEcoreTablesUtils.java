@@ -72,10 +72,8 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -760,8 +758,8 @@ public class OCLinEcoreTablesUtils
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
-		EnvironmentFactoryAdapter resourceSetAdapter = OCLInternal.adapt(genModelResourceSet);
-		return resourceSetAdapter.getMetamodelManager();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genModelResourceSet);
+		return environmentFactory.getMetamodelManager();
 	}
 
 	protected final boolean useNullAnnotations;
