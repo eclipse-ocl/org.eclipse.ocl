@@ -212,7 +212,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);				// XXX externalResourceSet
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
 		}
 		else {
 			this.externalResourceSetWasNull = true;
@@ -351,6 +351,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
 	public void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {
 		List<@NonNull ResourceSet> extraResourceSets2 = extraResourceSets;
@@ -903,23 +906,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (eObject != null) {
 			Resource eResource = eObject.eResource();
 			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
-			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
 			if (bestHelper != null) {
 				return bestHelper.getASElement(this, pivotClass, eObject);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable Resource eResource) throws ParserException {
-		if (eResource != null) {
-			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
-			if (bestHelper != null) {
-				return bestHelper.getASElement(this, pivotClass, eResource.getContents().get(0));		// XXX
 			}
 		}
 		return null;
