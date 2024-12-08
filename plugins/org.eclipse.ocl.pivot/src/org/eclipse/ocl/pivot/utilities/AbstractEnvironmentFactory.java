@@ -283,6 +283,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
+	/**
+	 * @deprecated The addition of an EnvironmentFactoryAdapter to a non-ResourceSet is inefficient.
+	 * Addition to a ResopurceSet is better but now redundant.
+	 */
+	@Deprecated
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
 		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
@@ -299,8 +304,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
+	 * @deprecated The addition of an EnvironmentFactoryAdapter to a ResourceSet is retained for semantic
+	 * compatibility. However the tests work fine if this method is changed to a stub.
+	 *
 	 * @since 1.23
 	 */
+	@Deprecated
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
