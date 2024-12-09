@@ -25,8 +25,7 @@
   </genAnnotations>
   <foreignModel>BaseCS.ecore</foreignModel>
   <genPackages prefix="BaseCS" basePackage="org.eclipse.ocl.xtext" disposableProviderFactory="true"
-      generateExampleClass="false" contentTypeIdentifier="org.eclipse.ocl.oclcs" ecorePackage="BaseCS.ecore#/"
-      publicationLocation="">
+      generateExampleClass="false" ecorePackage="BaseCS.ecore#/" publicationLocation="">
     <genDataTypes ecoreDataType="BaseCS.ecore#//BigNumber"/>
     <genDataTypes ecoreDataType="BaseCS.ecore#//CSI"/>
     <genDataTypes ecoreDataType="BaseCS.ecore#//ScopeFilter"/>
