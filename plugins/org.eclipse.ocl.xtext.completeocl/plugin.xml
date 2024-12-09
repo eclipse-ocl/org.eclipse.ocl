@@ -39,12 +39,6 @@
       </content-type>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.content_parser">
-      <parser
-            contentTypeIdentifier="org.eclipse.ocl.oclcs"
-            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource$CompleteOCLCSResourceLoadFactory"/>
-   </extension>
-
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser type="oclcs"
             class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource$CompleteOCLCSResourceLoadFactory"/>
@@ -64,6 +58,31 @@
             uri="http://www.eclipse.org/ocl/2015/CompleteOCLCS"
             class="org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage"
             genModel="model/CompleteOCLCS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.content_parser">
+      <!-- @generated CompleteOCLCS NOT -->
+      <!--parser
+            contentTypeIdentifier="org.eclipse.ocl.oclcs"
+            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/-->
+      <parser
+            contentTypeIdentifier="org.eclipse.ocl.oclcs"
+            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource$CompleteOCLCSResourceLoadFactory"/>
+   </extension>
+
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <!-- @generated CompleteOCLCS -->
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            file-extensions="completeoclcs"
+            id="org.eclipse.ocl.oclcs"
+            name="%_UI_CompleteOCLCS_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://www.eclipse.org/ocl/2015/CompleteOCLCS"/>
+            <parameter name="kind" value="xmi"/>
+         </describer>
+      </content-type>
    </extension>
 
    <extension point="org.eclipse.team.core.fileTypes">

@@ -25,13 +25,6 @@
             genModel="model/BaseCS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.content_parser">
-      <!-- @generated BaseCS -->
-      <parser
-            contentTypeIdentifier="org.eclipse.ocl.oclcs"
-            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
-   </extension>
-
    <extension point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.emf.ecore.xmi"
