@@ -186,15 +186,10 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		return (ASResource) asResource2;
 	}
 
-	@Override
 	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	@Override
-	protected abstract @NonNull XMLSave createXMLSave();// {
-	//	XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, ((OCLCSResourceSaveImpl)this).csResource);
-	//	return new CSXMISave(xmlHelper);
-//		throw new UnsupportedOperationException();			// XXX move save classes down a level
-//	}
+	protected abstract @NonNull XMLSave createXMLSave();
 
 	public @NonNull String getASContentType() {
 		return asResourceFactory.getContentType();
@@ -261,11 +256,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	public @NonNull ProjectManager getProjectManager() {	// Obsolete CSResource method
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
 		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
@@ -282,6 +272,11 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
 
 	@Override
+	public boolean isDerived() {												// CSResource method demoted to BaseCSResource
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
@@ -292,6 +287,11 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource();
+	}
+
+	@Override
+	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

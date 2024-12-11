@@ -48,7 +48,6 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	/**
 	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
 	 */
-	@Override
 	@NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	/**
@@ -67,8 +66,8 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 */
 	@NonNull URI getASURI(@NonNull URI csURI);
 
-	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
-	@NonNull CS2AS getCS2AS();			// no longer used
+	@Deprecated /* @deprecated not used - Pass known EnvironmentFactory to avoid generally redundant deduction */
+	@NonNull CS2AS getCS2AS();
 
 	/**
 	 * Return the CS2AS adapter to convert this CSResource to its (new) AS Resource equivalent.
