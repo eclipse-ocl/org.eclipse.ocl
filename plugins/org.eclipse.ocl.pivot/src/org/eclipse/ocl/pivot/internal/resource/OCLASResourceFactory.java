@@ -24,7 +24,9 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.library.RegisteredContribution;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 
 /**
  * The <b>Resource Factory</b> for the pivot and extended pivot abstract syntax.
@@ -62,7 +64,7 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 
 	/**
 	 * The ResourceSetAware variant of the ASResourceFactory provides the local extension registration that
-	 * creates the required resource unless an existing as or cs resource is available tobe opened
+	 * creates the required resource unless an existing as or cs resource is available to be opened
 	 * re-using the parsing infrastructure for an earlier resource in the CSResourceSet.
 	 *
 	 * @since 1.10
@@ -142,6 +144,11 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 	 */
 	protected OCLASResourceFactory(@Nullable ResourceSet resourceSet) {
 		super(ASResource.CONTENT_TYPE, ASResource.FILE_EXTENSION, resourceSet);
+	}
+
+	@Override
+	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+		throw new UnsupportedOperationException("There is no CS for the abstract oclas");
 	}
 
 	@Override
