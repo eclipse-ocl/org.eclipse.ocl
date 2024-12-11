@@ -21,7 +21,7 @@ import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
- * BaseCS2AS provides an extensible conversion from CS models to the pivot model.
+ * BaseCS2AS extends the CS to AS conversion managed by CS2AS to support creation of the CS by Xtext parsing.
  */
 public class BaseCS2AS extends CS2AS
 {

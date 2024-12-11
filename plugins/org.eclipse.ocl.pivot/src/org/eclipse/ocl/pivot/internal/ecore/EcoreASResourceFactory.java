@@ -22,12 +22,14 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public final class EcoreASResourceFactory extends AbstractASResourceFactory
@@ -52,6 +54,12 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 
 	public EcoreASResourceFactory() {
 		super(ASResource.ECORE_CONTENT_TYPE, null);
+	}
+
+	@Override
+	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+		// FIXME Defer to OCLinEcoreASResourceFactory
+		throw new UnsupportedOperationException("There is no direct CS for Ecore");
 	}
 
 	@Override
