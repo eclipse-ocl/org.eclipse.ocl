@@ -63,19 +63,19 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
-        <filter id="404000815">
+        <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="createCS2AS(EnvironmentFactoryInternal, CSResource, ASResource)"/>
             </message_arguments>
         </filter>
-        <filter id="404000815">
+        <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="createEnvironmentFactory(ProjectManager)"/>
             </message_arguments>
         </filter>
-        <filter id="404000815">
+        <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="createLUSSIDs(ASResource, Map&lt;Object,Object&gt;)"/>
@@ -201,12 +201,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="createCS2AS(EnvironmentFactoryInternal, ASResource)"/>
-            </message_arguments>
-        </filter>
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>

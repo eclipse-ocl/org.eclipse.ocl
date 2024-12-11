@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 /**
  * ASResourceFactory provides Resource-type-dependent functionality for an OCL Abstract Syntax (Pivot) Model
  * without requiring a corresponding Resource to exist. It is therefore typically used to
- * create ASResource-related artefacts.
+ * create ASResource-related artifacts.
  */
 public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryContribution
 {
@@ -104,22 +104,6 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id);
 
 	/**
-	 * Create an EnvironmentFactory appropriate to the AS Resource using projectManager.
-	 * @since 1.23
-	 */
-	default @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
-		throw new UnsupportedOperationException();			// XXX
-	}
-
-	/**
-	 * Create the LUSSID allocator for an asResource.
-	 * @since 1.23
-	 */
-	default @NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
-		throw new UnsupportedOperationException();			// XXX
-	}
-
-	/**
 	 * Create a visitor to locate orphan specializations.
 	 */
 	@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
@@ -144,12 +128,25 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver asSaver);
 
 	/**
-	 * @param csResource
+	 * Create the CS2AS converter.
+	 *
 	 * @since 1.23
 	 */
-	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();					// XXX
-	}
+	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource);
+
+	/**
+	 * Create an EnvironmentFactory appropriate to the AS Resource using projectManager.
+	 *
+	 * @since 1.23
+	 */
+	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
+
+	/**
+	 * Create the LUSSID allocator for an asResource.
+	 *
+	 * @since 1.23
+	 */
+	@NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options);
 
 	/**
 	 * Create a visitor to provide a pretty printed representation of one or more elements in the resource.
