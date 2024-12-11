@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -39,16 +39,9 @@ public interface CSResource extends Resource
 	public interface CSResourceExtension2 extends CSResourceExtension {}
 
 	/**
-	 * Create the CS2AS converter for the asResource conversions using environmentFactory.
-	 * @since 1.23
-	 */
-	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		throw new UnsupportedOperationException();		// XXX
-	}
-
-	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
+	 *
 	 * @since 1.23
 	 */
 	default void dispose() {}
@@ -70,15 +63,14 @@ public interface CSResource extends Resource
 	 * @since 1.23
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();		// XXX
+		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * @since 1.15
 	 */
-	@Deprecated /* @deprecated use PivotUtilInternal.getEnvironmentFactory */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
-		throw new UnsupportedOperationException();
+		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
 	}
 
 	@Deprecated /* @deprecated only for BaseCSResource */
@@ -87,8 +79,10 @@ public interface CSResource extends Resource
 	/**
 	 * Return the map of known projects.
 	 */
-	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
-	@NonNull ProjectManager getProjectManager();
+	@Deprecated /* @deprecated use getEnvironmentFactory().getProjectManager() */
+	default @NonNull ProjectManager getProjectManager() {
+		return getEnvironmentFactory().getProjectManager();
+	}
 
 	/**
 	 * Return true if this CSResource is derived from an ASResource.

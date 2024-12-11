@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
@@ -70,7 +71,7 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 			}
 		}
 
-		public OCLstdlibCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+		public OCLstdlibCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull BaseCSResource csResource) {
 			super(uri, asResourceFactory, csResource);
 		}
 

@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -159,16 +160,16 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	 */
 	protected static class OCLCSResourceSave extends BaseCSXMIResource
 	{
-		protected final @NonNull CSResource csResource;
+		protected final @NonNull BaseCSResource csResource;
 
-		public OCLCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull CSResource csResource) {
+		public OCLCSResourceSave(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory, @NonNull BaseCSResource csResource) {
 			super(uri, asResourceFactory);
 			this.csResource = csResource;
 		}
 
 		@Override
 		public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-			return (CS2AS)csResource.createCS2AS(environmentFactory, asResource);
+			return csResource.createCS2AS(environmentFactory, asResource);
 		}
 
 		@Override
@@ -240,6 +241,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 		public TransientASResourceFactory() {
 			super("transient", null);
+		}
+
+		@Override
+		public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+			return new EssentialOCLCS2AS(environmentFactory, csResource, asResource);
 		}
 
 		@Override
@@ -381,6 +387,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
+	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
+			@NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
+	}
+
+	@Override
 	public void createAndAddDiagnostic(Triple<EObject, EReference, INode> triple) {
 		if (isValidationDisabled())
 			return;
@@ -399,6 +411,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 		return new EssentialOCLCS2AS(environmentFactory, this, asResource);
+	}
+
+	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
+		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
 	}
 
 	@Override			// FIXME Bug 380232 workaround
@@ -421,16 +437,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 				}
 			};
 		}
-	}
-
-	@Override
-	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
-			@NonNull EnvironmentFactoryInternal environmentFactory) {
-		return new EssentialOCLAS2CS(cs2asResourceMap, environmentFactory);
-	}
-
-	protected @NonNull OCLCSResourceSave createCSResourceSave(@NonNull URI uri) {
-		return new OCLCSResourceSave(uri, getASResourceFactory(), this);
 	}
 
 	@Override
@@ -546,6 +552,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
+	@Deprecated /* @deprecated not used - Pass known EnvironmentFactory to avoid generally redundant deduction */
 	/*final*/ public @NonNull CS2AS getCS2AS() {			// deprecated and assert trapped
 		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
 		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
@@ -644,12 +651,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		ParserContext parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
 		environmentFactory2parserContext2.put(environmentFactory, parserContext);
 		return parserContext;
-	}
-
-	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory()/getProjectManager() */
-	@Override
-	public @NonNull ProjectManager getProjectManager() {
-		return getEnvironmentFactory().getProjectManager();
 	}
 
 	protected boolean hasError(ElementCS csElement) {
