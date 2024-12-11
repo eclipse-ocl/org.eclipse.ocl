@@ -169,7 +169,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	/**
 	 * A MultipleChildCSI defines the CSI for the non-root element in a CSI hierarchy. The element may have siblings which are
-	 * distinguished primarily by name, and then be sequential index of same-named elements.
+	 * distinguished primarily by name, and then by sequential index of same-named elements.
 	 */
 	private static class MultipleChildCSI extends SingleChildCSI
 	{
@@ -424,7 +424,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 					if (pivotElement != null) {
 						map.put(pivotElement, csElement);
 					}
-					//	System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
+				//	System.out.println("as2cs " + NameUtil.debugSimpleName(pivotElement) + " => " + NameUtil.debugSimpleName(csElement));
 				}
 			}
 		}
@@ -533,7 +533,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			modelElementCS = (ModelElementCS)csContainer;
 		}
 		if ((modelElementCS == null) && (pivotElement instanceof ExpressionInOCL)) {	// ExpressionInOCL may be created later
-			EObject eObject = ((ExpressionInOCL)pivotElement).eContainer();
+			EObject eObject = pivotElement.eContainer();
 			if (eObject instanceof Element) {
 				modelElementCS = as2cs2.get(eObject);
 				if (modelElementCS instanceof ConstraintCS) {
@@ -567,10 +567,12 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public void removeCSResource(@NonNull CSResource csResource) {
 		as2cs = null;
 		cs2asResourceMap.remove(csResource);
-		cs2as2as.remove(csResource);			// XXX csi2as too
+		cs2as2as.remove(csResource);
 		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
 			EObject csElement = tit.next();
-			csi2as.remove(csElement);
+			if (csElement instanceof ElementCS) {
+				csi2as.remove(((ElementCS)csElement).getCsi());
+			}
 		}
 	}
 
