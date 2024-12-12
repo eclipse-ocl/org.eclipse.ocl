@@ -287,6 +287,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 			Element element = ((Pivotable)eObject).getPivot();
 			if (element != null) {
 				if (element.eIsProxy()) {
+					assert false;			// XXX XXX
 					ASResource reloadIn = ((CSResource)eObject.eResource()).reloadIn(environmentFactory);			// XXX cast
 					element = ((Pivotable)eObject).getPivot();
 					if (element == null) {
