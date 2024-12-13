@@ -149,6 +149,36 @@ public class LoadTests extends XtextTestCase
 		}
 	}
 
+	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI textCSuri, @NonNull String... messages) throws IOException {
+		URI xmiCSuri = getXMIoutputURI(textCSuri);
+		OCL ocl = createOCLWithProjectMap();
+		try {
+			CSResource csResource = (CSResource)ocl.getResourceSet().getResource(xmiCSuri, true);
+			assertNoResourceErrors("Load failed", csResource);
+			assertNoUnresolvedProxies("Load failed", csResource);
+			ICS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
+			ASResource asResource = cs2as.getASResource();
+			assertNoValidationErrors("Loaded pivot", asResource);
+			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
+			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			AS2ID.assignIds(asResource, saveOptions);
+			assertResourceErrors("Pre-save", asResource, messages);
+		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
+		//	unloadResourceSet(asResource.getResourceSet());
+			asResource.unload();
+		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
+		//	assert (unresolvedProxies.size() > 0) {
+		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
+			EcoreUtil.resolveAll(csResource);
+			assertNoUnresolvedProxies("Unload then resolve failed", csResource);
+			return asResource;
+		}
+		finally {
+			ocl.dispose();
+		}
+	}
+
 	private void checkMultiplicity(TypedElement typedElement, int lower, int upper) {
 		Type type = typedElement.getType();
 		if ((0 <= upper) && (upper <= 1)) {
@@ -1359,13 +1389,20 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-	//	SerializationBuilder.SERIALIZATION.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.SET_PROXY.setState(true);
+	//	PartialModels.PARTIAL_MODELS.setState(true);
+	//	PartialPackages.PARTIAL_PACKAGES.setState(true);
+	//	PartialClasses.PARTIAL_CLASSES.setState(true);
+		//	SerializationBuilder.SERIALIZATION.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		URI inputURI = getTestModelURI("models/ecore/Names.ocl");
 		doLoadOCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {

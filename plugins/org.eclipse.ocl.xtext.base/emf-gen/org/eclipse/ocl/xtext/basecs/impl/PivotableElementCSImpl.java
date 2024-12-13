@@ -14,6 +14,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
@@ -79,6 +84,18 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	@Override
 	public Element getPivot()
 	{
+		if ((pivot != null) && pivot.eIsProxy()) {
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(this);
+			if (environmentFactory != null) {
+				try {
+					ASResource reloadIn = ((CSResource)eResource()).reloadIn(environmentFactory);
+				} catch (SemanticException e) {
+					// XXX TODO Auto-generated catch block
+					e.printStackTrace();
+				}			// XXX cast
+			//	reloadIn();
+			}
+		}
 		return pivot;
 	}
 
@@ -90,6 +107,8 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	@Override
 	public void setPivot(Element newPivot)
 	{
+//		System.out.println("setPivot " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newPivot));
+		assert (newPivot == null) || !newPivot.eIsProxy();			// XXX
 		Element oldPivot = pivot;
 		pivot = newPivot;
 		if (eNotificationRequired())

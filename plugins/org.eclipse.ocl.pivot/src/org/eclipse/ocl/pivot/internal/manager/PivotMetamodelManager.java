@@ -648,8 +648,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public void dispose() {
 		EnvironmentFactoryInternal threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if ((threadEnvironmentFactory != environmentFactory) && (threadEnvironmentFactory != null)) {		// XXX
-			System.out.println("[" + Thread.currentThread().getName() + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
-			System.out.println("[" + Thread.currentThread().getName() + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(threadEnvironmentFactory));
+			Thread thread = Thread.currentThread();
+			String threadName = thread.getName();
+			if (!"Finalizer".equals(threadName)) {
+				System.out.println("[" + threadName + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
+				System.out.println("[" + threadName + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(threadEnvironmentFactory));
+			}
 		}
 		assert (threadEnvironmentFactory == null) || (threadEnvironmentFactory == environmentFactory) : "Cannot dispose() a foreign EnvironmentFactory";
 	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
