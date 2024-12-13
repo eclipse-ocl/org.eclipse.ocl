@@ -28,12 +28,10 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -365,9 +363,10 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return EcoreUtil.getURI(csElement);
 			}
 			csElement = csi2asMapping.getCSElement(this);			// XXX happens for UML2Ecore2AS, and for the dummy ConsistentTransient in Ecore
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+	//		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this) + " " + toString());
 		}
-		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+	//	ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this) + " " + toString());		// XXX cf super duplication
+		assert false : " No URI source when proxifying(e) " + NameUtil.debugSimpleName(this) + " " + toString();
 		return null;
 	}
 } //ImportImpl
