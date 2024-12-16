@@ -1107,6 +1107,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
 		SequenceValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
 		ocl.assertQueryEquals(ocl.pkg1, expected, "Bag{'d', 'b', 'e', 'a', 'c'}->sortedBy(e | e)");
+		ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'ppp', 'zzz', 'qqq', 'zzz', 'yyyy', 'yyyy'}", "Sequence{'x', 'yyyy', 'zzz', 'aa', 'ppp', 'zzz', 'qqq', 'yyyy', 'zzz'}->sortedBy(size())");
 		ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'zzz', 'zzz', 'yyyy', 'yyyy'}", "Bag{'x', 'yyyy', 'zzz', 'aa', 'zzz', 'yyyy', 'zzz'}->sortedBy(size())");
 		ocl.dispose();
 	}

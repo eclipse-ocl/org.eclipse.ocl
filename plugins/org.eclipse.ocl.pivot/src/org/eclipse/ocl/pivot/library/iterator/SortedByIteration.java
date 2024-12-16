@@ -11,11 +11,8 @@
 package org.eclipse.ocl.pivot.library.iterator;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -37,7 +34,6 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -46,14 +42,14 @@ import org.eclipse.ocl.pivot.values.Value;
  */
 public class SortedByIteration extends AbstractIteration
 {
-	protected static class SortingValue extends ValueImpl implements Comparator<Object>
+	protected static class SortingValue extends ValueImpl implements Comparator<@NonNull Integer>
 	{
 		protected final @NonNull CollectionTypeId typeId;
 		private final @NonNull Executor executor;
-		private final boolean isUnique;
 		private final LibraryBinaryOperation.@NonNull LibraryBinaryOperationExtension implementation;
-		private final @NonNull Map<Object, Object> content = new HashMap<Object, Object>();	// User object to sortedBy value
-		private Map<Object, Integer> repeatCounts = null;						// Repeat counts for non-unique content
+		private final @NonNull ArrayList<Object> rawValues = new ArrayList<>();		// Indexed unsorted User objects
+		private final @NonNull ArrayList<Object> rawKeys = new ArrayList<>();		// Index to sortedBy value
+		private @Nullable ArrayList<Object> sortedValues = null;					// Sorted elements
 
 		/** @deprecated use Executor */
 		@Deprecated
@@ -67,34 +63,29 @@ public class SortedByIteration extends AbstractIteration
 			this.typeId = returnTypeId;
 			this.executor = executor;
 			this.implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension)implementation;
-			CollectionTypeId generalizedId = typeId.getGeneralizedId();
-			isUnique = (generalizedId == TypeId.SET) || (generalizedId == TypeId.ORDERED_SET);
+			// FIXME if IterationManager passed the size we could use more arrays rather than lists.
 		}
 
 		@Override
 		public @NonNull Object asObject() {
-			return content;
+			return sortedValues != null ? sortedValues : rawValues;
 		}
 
+		/**
+		 * @since 1.23
+		 */
 		@Override
-		public int compare(Object o1, Object o2) {
-			if (o1 == o2) {
-				return 0;
-			}
-			Object v1 = content.get(o1);
-			Object v2 = content.get(o2);
-			if (v1 == v2) {
-				return 0;
-			}
-			else if (v1 == null) {
-				return -1;
-			}
-			else if (v2 == null) {
-				return 1;
-			}
+		public int compare(@NonNull Integer x1, @NonNull Integer x2) {
+			assert x1 != x2;
+			Object k1 = rawKeys.get(x1);
+			Object k2 = rawKeys.get(x2);
 			try {
-				IntegerValue comparison = ValueUtil.asIntegerValue(implementation.evaluate(executor, TypeId.INTEGER, v1, v2));
-				return comparison.signum();
+				Object comparison = implementation.evaluate(executor, TypeId.INTEGER, k1, k2);
+				int diff = ValueUtil.asIntegerValue(comparison).signum();
+				if (diff == 0) {
+					diff = x1.compareTo(x2);				// Preserve order
+				}
+				return diff;
 			} catch (InvalidValueException e) {
 				throw e;
 			} catch (Exception e) {
@@ -105,29 +96,21 @@ public class SortedByIteration extends AbstractIteration
 		}
 
 		public @NonNull Value createSortedValue() {
-			List<Object> result = new ArrayList<Object>(content.keySet());
-			Collections.sort(result, this);
-			if (isUnique || (repeatCounts == null)) {
-				return executor.getIdResolver().createCollectionOfAll(true, isUnique, typeId, result);
+			int size = rawValues.size();
+			assert rawKeys.size() == size;
+			@NonNull Integer[] indexes = new @NonNull Integer[size];
+			for (int i = 0; i < size; i++) {
+				indexes[i] = Integer.valueOf(i);
 			}
-			else {
-				List<Object> nonUniqueResult = new ArrayList<Object>();
-				for (Object resultValue : result) {
-					nonUniqueResult.add(resultValue);
-					Integer repeatCount = repeatCounts.get(resultValue);
-					if (repeatCount != null) {
-						for (int i = repeatCount; i > 0; i--) {
-							nonUniqueResult.add(resultValue);
-						}
-					}
-				}
-				return executor.getIdResolver().createCollectionOfAll(true, false, typeId, nonUniqueResult);
+			Arrays.sort(indexes, this);
+			ArrayList<Object> sortedValues2 = sortedValues = new ArrayList<>(size);
+			for (@NonNull Integer index : indexes) {
+				sortedValues2.add(rawValues.get(index));
 			}
+			CollectionTypeId generalizedId = typeId.getGeneralizedId();
+			boolean isUnique = (generalizedId == TypeId.SET) || (generalizedId == TypeId.ORDERED_SET);
+			return executor.getIdResolver().createCollectionOfAll(true, isUnique, typeId, sortedValues2);
 		}
-
-		//		public @NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary) {
-		//			return type;
-		//		}
 
 		@Override
 		public @NonNull TypeId getTypeId() {
@@ -135,26 +118,13 @@ public class SortedByIteration extends AbstractIteration
 		}
 
 		public void put(@Nullable Object iterVal, @Nullable Object comparable) {
-			if (content.put(iterVal, comparable) != null) {
-				if (!isUnique) {
-					if (repeatCounts == null) {
-						repeatCounts = new HashMap<Object, Integer>();
-					}
-					Integer repeatCount = repeatCounts.get(iterVal);
-					if (repeatCount == null) {
-						repeatCount = 1;
-					}
-					else {
-						repeatCount++;
-					}
-					repeatCounts.put(iterVal, repeatCount);
-				}
-			}
+			rawValues.add(iterVal);
+			rawKeys.add(comparable);
 		}
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append(content.toString());
+			s.append(sortedValues!= null ? sortedValues.toString() : rawValues.toString());
 		}
 	}
 
