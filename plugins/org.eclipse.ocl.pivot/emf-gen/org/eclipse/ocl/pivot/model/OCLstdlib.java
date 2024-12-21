@@ -208,6 +208,7 @@ public class OCLstdlib extends ASResourceImpl
 	{
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
+			setASonly(true);
 		}
 
 		/**

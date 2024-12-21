@@ -165,6 +165,7 @@ public class CGLibrary extends ASResourceImpl
 	{
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
+			setASonly(true);
 			setSaveable(false);
 		}
 
