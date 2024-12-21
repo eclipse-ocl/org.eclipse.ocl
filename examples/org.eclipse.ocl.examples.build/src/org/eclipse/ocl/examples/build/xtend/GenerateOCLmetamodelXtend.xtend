@@ -293,6 +293,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				{
 					protected ReadOnly(@NonNull URI uri) {
 						super(uri);
+						setASonly(true);
 					}
 			
 					/**

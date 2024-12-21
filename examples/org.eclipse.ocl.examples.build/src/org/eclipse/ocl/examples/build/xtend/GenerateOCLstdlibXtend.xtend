@@ -290,6 +290,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				{
 					protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 						super(asURI, libraryModel);
+						setASonly(true);
 					}
 			
 					/**
