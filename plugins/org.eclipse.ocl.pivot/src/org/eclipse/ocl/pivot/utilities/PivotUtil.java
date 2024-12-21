@@ -141,7 +141,19 @@ public class PivotUtil
 	 * null again once emitted as a prefix.
 	 * @since 1.23
 	 */
-	public static @Nullable String contextLine = null;
+	public static @Nullable String contextLine = "No-context";	// Typically unused init to suppress first blank line
+
+	/**
+	 * Set false to allow debug messages to be emitted to System.err.
+	 *
+	 * @since 1.23
+	 */
+	public static boolean noDebug = true;
+
+	/**
+	 * The start time of a test as updated by debugReset().
+	 */
+	private static long startTime = System.currentTimeMillis();
 
 	/**
 	 * 'Highest' precedence first
@@ -913,6 +925,25 @@ public class PivotUtil
 		System.out.println(s.toString());
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public static void debugPrintln(@Nullable Object string) {
+		if (!noDebug) {
+			System.out.printf("%6.3f [%s] %s\n", 0.001 * (System.currentTimeMillis() - startTime), Thread.currentThread().getName(), String.valueOf(string));
+		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static void debugReset() {
+		startTime = System.currentTimeMillis();
+		if (!noDebug && (contextLine == null)) {
+			System.out.println("");
+		}
+	}
+
 	@Deprecated
 	public static boolean debugWellContainedness(Type type) {
 		return debugWellContainedness((Element)type);
@@ -944,7 +975,7 @@ public class PivotUtil
 			System.err.println(contextLine);
 			contextLine = null;
 		}
-		System.err.println(String.valueOf(string));
+		System.err.printf("%6.3f [%s] %s\n", 0.001 * (System.currentTimeMillis() - startTime), Thread.currentThread().getName(), String.valueOf(string));
 	}
 
 	public static String formatDiagnostics(@NonNull Diagnostic diagnostic, @NonNull String newLine) {
