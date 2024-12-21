@@ -90,7 +90,7 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
-public class PivotUtilInternal //extends PivotUtil
+public class PivotUtilInternal extends PivotUtil
 {
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
 
@@ -101,9 +101,6 @@ public class PivotUtilInternal //extends PivotUtil
 	 * @since 1.23
 	 */
 	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
-
-	public static boolean noDebug = true;
-	private static long startTime = System.currentTimeMillis();
 
 	/**
 	 * @since 1.3
@@ -150,19 +147,6 @@ public class PivotUtilInternal //extends PivotUtil
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
 		return DEBUG_DEPRECATIONS.isActive() ? false : true; 		// False to crash
-	}
-
-	public static void debugPrintln(@Nullable Object string) {
-		if (!noDebug) {
-			System.out.printf("%6.3f [%s] %s\n", 0.001 * (System.currentTimeMillis() - startTime), Thread.currentThread().getName(), String.valueOf(string));
-		}
-	}
-
-	public static void debugReset() {
-		startTime = System.currentTimeMillis();
-		if (!noDebug) {
-			System.out.println("");
-		}
 	}
 
 	@Deprecated /* @deprecated Use ThreadLocalExecutor.basicGetEnvironmentFactory() */
