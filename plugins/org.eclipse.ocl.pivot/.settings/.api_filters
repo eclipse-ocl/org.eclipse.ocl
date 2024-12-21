@@ -281,5 +281,11 @@
                 <message_argument value="contextLine"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.PivotUtil"/>
+                <message_argument value="noDebug"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>
