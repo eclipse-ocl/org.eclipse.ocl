@@ -209,6 +209,7 @@ public class OCLmetamodel extends ASResourceImpl
 	{
 		protected ReadOnly(@NonNull URI uri) {
 			super(uri);
+			setASonly(true);
 		}
 
 		/**
