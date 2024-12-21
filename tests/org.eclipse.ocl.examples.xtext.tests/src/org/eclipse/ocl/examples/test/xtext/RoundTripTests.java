@@ -144,7 +144,7 @@ public class RoundTripTests extends XtextTestCase
 		try {
 			ocl0.dispose();
 			if (!resourceSet.getURIConverter().exists(inputURI, null)) {
-				;				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
+				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
 				return;
 			}
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
