@@ -50,33 +50,39 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 	 * An OverloadsList is a non-empty list of Operations sharing the same name and parameter types.
 	 * It can be sorted into most-derived first order.
 	 */
-	private static class OverloadsList extends ArrayList<@NonNull Operation> implements Comparator</*@NonNull*/ Integer>
+	private static class OverloadsList extends ArrayList<@NonNull Operation>
 	{
 		private static final long serialVersionUID = 1L;
 
-		private /*@NonNull*/ Integer[] keys;
-		private /*@NonNull*/ Integer[] metrics;
+		private static class OverloadsComparator implements Comparator</*@NonNull*/ Integer>
+		{
+			private /*@NonNull*/ Integer @NonNull [] metrics;
+
+			public OverloadsComparator(/*@NonNull*/ Integer @NonNull [] metrics) {
+				this.metrics = metrics;
+			}
+
+			@Override
+			public int compare(/*@NonNull*/ Integer o1, /*@NonNull*/ Integer o2) {
+				/*@NonNull*/ Integer m1 = metrics[o1];
+				/*@NonNull*/ Integer m2 = metrics[o2];
+				return m2 - m1;
+			}
+		}
 
 		public OverloadsList() {
 			super(4);
 		}
 
-		@Override
-		public int compare(/*@NonNull*/ Integer o1, /*@NonNull*/ Integer o2) {
-			/*@NonNull*/ Integer m1 = metrics[o1];
-			/*@NonNull*/ Integer m2 = metrics[o2];
-			return m2 - m1;
-		}
-
 		public void sort(@NonNull EnvironmentFactory environmentFactory) {
 			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			int size = size();
-			@NonNull Integer @NonNull [] keys2 = new @NonNull Integer[size];
-			keys = keys2;
-			metrics = new @NonNull Integer[size];
+			@NonNull Integer @NonNull [] keys = new @NonNull Integer[size];
+			/*@NonNull*/ Integer[] metrics = new @NonNull Integer[size];
+			OverloadsComparator comparator = new OverloadsComparator(metrics);
 			@NonNull Integer index = 0;
 			for (@NonNull Operation operation : this) {
-				keys2[index] = index;
+				keys[index] = index;
 				int metric = 0;
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
 				CompleteInheritance inheritance = owningClass.getInheritance(standardLibrary);
@@ -86,14 +92,12 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				metrics[index] = metric;
 				index++;
 			}
-			Arrays.sort(keys, this);
+			Arrays.sort(keys, comparator);
 			List<@NonNull Operation> savedOperations = new ArrayList<@NonNull Operation>(this);
 			clear();
 			for (int i = 0; i < size; i++) {
 				add(savedOperations.get(keys[i]));
 			}
-			keys = null;
-			metrics = null;
 		}
 	}
 
