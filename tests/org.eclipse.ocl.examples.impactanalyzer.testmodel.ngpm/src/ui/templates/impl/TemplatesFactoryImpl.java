@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     SAP AG - initial API and implementation
  ******************************************************************************
@@ -14,12 +14,12 @@ package ui.templates.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import ui.templates.*;
+import ui.templates.StringTemplate;
+import ui.templates.TemplatesFactory;
+import ui.templates.TemplatesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +36,7 @@ public class TemplatesFactoryImpl extends EFactoryImpl implements TemplatesFacto
 	 */
 	public static TemplatesFactory init() {
 		try {
-			TemplatesFactory theTemplatesFactory = (TemplatesFactory)EPackage.Registry.INSTANCE.getEFactory("http://eclipse.org/ocl/examples/impactanalyzer/testmodel/ngpm/ui/templates.ecore"); 
+			TemplatesFactory theTemplatesFactory = (TemplatesFactory)EPackage.Registry.INSTANCE.getEFactory("http://eclipse.org/ocl/examples/impactanalyzer/testmodel/ngpm/ui/templates.ecore");
 			if (theTemplatesFactory != null) {
 				return theTemplatesFactory;
 			}
@@ -76,6 +76,7 @@ public class TemplatesFactoryImpl extends EFactoryImpl implements TemplatesFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StringTemplate createStringTemplate() {
 		StringTemplateImpl stringTemplate = new StringTemplateImpl();
 		return stringTemplate;
@@ -86,6 +87,7 @@ public class TemplatesFactoryImpl extends EFactoryImpl implements TemplatesFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TemplatesPackage getTemplatesPackage() {
 		return (TemplatesPackage)getEPackage();
 	}

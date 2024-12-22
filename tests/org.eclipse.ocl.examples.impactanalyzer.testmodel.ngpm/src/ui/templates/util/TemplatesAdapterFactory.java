@@ -4,24 +4,22 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     SAP AG - initial API and implementation
  ******************************************************************************
  */
 package ui.templates.util;
 
-import data.classes.FunctionSignatureImplementation;
-import data.classes.SignatureImplementation;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
-import ui.templates.*;
+import data.classes.FunctionSignatureImplementation;
+import data.classes.SignatureImplementation;
+import ui.templates.StringTemplate;
+import ui.templates.TemplatesPackage;
 
 /**
  * <!-- begin-user-doc -->
