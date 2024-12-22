@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toolchains>
-  <!-- JDK toolchains for local usage -->
+  <!-- JDK toolchains for local usage after copying to C:\Users\'user'\.m2\toolchains.xml -->
   <!-- referenced using <dash><dash>global-toolchains ../../local-toolchains.xml on maven command line -->
   <toolchain>
     <type>jdk</type>
@@ -39,7 +39,17 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
- 	  <jdkHome>E:/Tools/Java/jdk-17.0.8/bin</jdkHome>
+ 	  <jdkHome>E:/Tools/Java/jdk-17.0.13/bin</jdkHome>
+   </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>21.0</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+ 	  <jdkHome>E:/Tools/Java/jdk-21.0.5/bin</jdkHome>
    </configuration>
   </toolchain>
 </toolchains>

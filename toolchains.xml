@@ -42,4 +42,14 @@
       <jdkHome>/opt/tools/java/openjdk/jdk-17/latest/bin/java</jdkHome>
     </configuration>
   </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>21.0</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/opt/tools/java/openjdk/jdk-21/latest/bin/java</jdkHome>
+    </configuration>
+  </toolchain>
 </toolchains>

@@ -17,8 +17,8 @@
   <setupTask
       xsi:type="jdt:JRETask"
       version="JavaSE-11"
-      location="${jre.location-17}"
-      name="JRE for JavaSE-17"/>
+      location="${jre.location-21}"
+      name="JRE for JavaSE-21"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
