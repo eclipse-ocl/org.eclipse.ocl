@@ -86,7 +86,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	{
 		if ((pivot != null) && pivot.eIsProxy()) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(this);
-			if (environmentFactory != null) {
+			if ((environmentFactory != null) && !environmentFactory.isDisposing()) {
 				try {
 					ASResource reloadIn = ((CSResource)eResource()).reloadIn(environmentFactory);
 				} catch (SemanticException e) {
