@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -477,13 +476,13 @@ public abstract class ElementImpl
 			}
 		}
 		// Look for alternate ES
-		if (!environmentFactory.isDisposing()) {
+	//	if (!environmentFactory.isDisposing()) {
 			esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
 			if (esObject != null) {
 				return esObject;
 			}
-		}
-		assert false : " No URI source when proxifying(e) " + NameUtil.debugSimpleName(this) + " " + toString();
+	//	}
+	//	assert false : " No URI source when proxifying(e) " + NameUtil.debugSimpleName(this) + " " + toString();
 	//	if (csi2asMapping == null) {
 	//		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this) + " " + toString());
 	//		return null;

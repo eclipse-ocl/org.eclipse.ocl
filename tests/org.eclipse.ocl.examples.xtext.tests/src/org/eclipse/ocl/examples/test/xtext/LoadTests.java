@@ -47,6 +47,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -87,11 +88,13 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
@@ -167,10 +170,22 @@ public class LoadTests extends XtextTestCase
 		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
 		//	unloadResourceSet(asResource.getResourceSet());
 			asResource.unload();
+			for (EObject eObject : new TreeIterable(csResource)) {
+				if (eObject instanceof PivotableElementCS) {
+					Element pivot = ((PivotableElementCS)eObject).getPivot();
+					assert pivot.eIsProxy() : "Failed to proxify is " + NameUtil.debugSimpleName(pivot);
+				}
+			}
 		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
 		//	assert (unresolvedProxies.size() > 0) {
 		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 			EcoreUtil.resolveAll(csResource);
+			for (EObject eObject : new TreeIterable(csResource)) {
+				if (eObject instanceof PivotableElementCS) {
+					Element pivot = ((PivotableElementCS)eObject).getPivot();
+					assert !pivot.eIsProxy() : "Failed to deproxify is " + NameUtil.debugSimpleName(pivot);
+				}
+			}
 			assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 			return asResource;
 		}

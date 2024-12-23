@@ -302,7 +302,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * Creates an instance of the resource.
 	 */
-	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) { // XXX add EnvironmentFactory
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 		//	assert PivotUtilInternal.isASURI(uri);
@@ -568,9 +568,19 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				EObject eObject = tit.next();
 				if (eObject instanceof ElementImpl) {
 					ElementImpl asElement = (ElementImpl)eObject;
-					URI uri = asElement.eProxyURI();
-					if (uri != null) {
-						uri = asElement.getReloadableURI(environmentFactory);
+					URI proxyURI = asElement.eProxyURI();
+					if (proxyURI != null) {												// If we have a proxy
+						URI uri = asElement.getReloadableURI(environmentFactory);		// Make sure it's a reloadable one
+						if (uri != null) {
+							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
+								asElement.getReloadableURI(environmentFactory);		// XXX debugging
+							}
+							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+							asElement2reloadableURI2.put(asElement, uri);
+						}
+					}
+					else {
+						URI uri = asElement.getReloadableURI(environmentFactory);
 						if (uri != null) {
 							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
 								asElement.getReloadableURI(environmentFactory);		// XXX debugging
@@ -683,44 +693,24 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
-		URI eProxyURI = internalEObject.eProxyURI();
 		if ((internalEObject instanceof ModelImpl)) {
-			ThreadLocalExecutor.getEnvironmentFactory().getCompleteModel().getPartialModels().remove(internalEObject);
+			ModelImpl asModel = (ModelImpl)internalEObject;
+			ThreadLocalExecutor.getEnvironmentFactory().getCompleteModel().getPartialModels().remove(asModel);
 		}
-	//	Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
-	/*	if ((eProxyURI == null) && (internalEObject instanceof PivotObjectImpl)) {
-			Object reloadableEObjectOrURI = ((PivotObjectImpl)internalEObject).getReloadableEObjectOrURI();
-			URI uri = null;
-			if (reloadableEObjectOrURI instanceof EObject) {
-				uri = EcoreUtil.getURI((EObject)reloadableEObjectOrURI);
-			}
-			else if (reloadableEObjectOrURI instanceof URI) {
-				uri = (URI)reloadableEObjectOrURI;
-			}
-			if (uri != null) {
-				if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-					getClass();		// XXX
-				}
-			//	internalEObject.eSetProxyURI(uri);		// XXX disrupts UML unload
-			}
-			else {
-			//	internalEObject.eSetProxyURI(PivotObjectImpl.NO_UNLOAD_PROXY_URI);
-			}
-		} */
-	//	if ((internalEObject instanceof PivotObjectImpl) && (eProxyURI == PivotObjectImpl.NO_UNLOAD_PROXY_URI)) {
-	//		internalEObject.eAdapters().clear();
-	//	}
-	//	else {
-
-		if (eProxyURI == null) {
-			URI uri = null;
-			if (asElement2reloadableURI != null) {
-				uri = asElement2reloadableURI.get(internalEObject);
+		Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = asElement2reloadableURI;
+		if (asElement2reloadableURI2 != null) {
+			URI eProxyURI = internalEObject.eProxyURI();
+			if ((eProxyURI == null) && (internalEObject instanceof Element)) {
+				Element asElement = (Element)internalEObject;
+				URI uri = asElement2reloadableURI2.get(asElement);
 				if (uri != null) {
 					internalEObject.eSetProxyURI(uri);
+					internalEObject.eAdapters().clear();
+					return;
 				}
 			}
 		}
+//		super.unloaded(internalEObject);		// Nothing to set for e.g unimplemented Ecore Constraint
 //		super.unloaded(internalEObject);
 //	    if (!internalEObject.eIsProxy())
 //	    {
