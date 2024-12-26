@@ -130,8 +130,9 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	public Object caseBehavior(org.eclipse.uml2.uml.Behavior umlBehavior) {
 		assert umlBehavior != null;
 		DynamicBehavior pivotElement = converter.refreshElement(DynamicBehavior.class, PivotPackage.Literals.DYNAMIC_BEHAVIOR, umlBehavior);
-		pivotElement.setName(((org.eclipse.uml2.uml.Type)umlBehavior).getName());
-		doSwitchAll(pivotElement.getOwnedAnnotations(), ((org.eclipse.uml2.uml.Element)umlBehavior).getOwnedElements(), null);
+		pivotElement.setName(umlBehavior.getName());
+		converter.setOriginalMapping(pivotElement, umlBehavior);
+		doSwitchAll(pivotElement.getOwnedAnnotations(), umlBehavior.getOwnedElements(), null);
 		EClass umlMetaClass = umlBehavior.eClass();
 		Type metaType = metamodelManager.getASOfEcore(Type.class, umlMetaClass);
 		pivotElement.setMetaType(metaType);
