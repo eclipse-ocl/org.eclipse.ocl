@@ -424,7 +424,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 					if (pivotElement != null) {
 						map.put(pivotElement, csElement);
 					}
-					//	System.out.println(ClassUtil.debugSimpleName(pivotElement) + " => " + ClassUtil.debugSimpleName(csElement));
+				//	System.out.println("as2cs " + NameUtil.debugSimpleName(pivotElement) + " => " + NameUtil.debugSimpleName(csElement));
 				}
 			}
 		}
@@ -533,7 +533,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			modelElementCS = (ModelElementCS)csContainer;
 		}
 		if ((modelElementCS == null) && (pivotElement instanceof ExpressionInOCL)) {	// ExpressionInOCL may be created later
-			EObject eObject = ((ExpressionInOCL)pivotElement).eContainer();
+			EObject eObject = pivotElement.eContainer();
 			if (eObject instanceof Element) {
 				modelElementCS = as2cs2.get(eObject);
 				if (modelElementCS instanceof ConstraintCS) {
