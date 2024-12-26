@@ -94,7 +94,7 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
-import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
+import org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
@@ -171,9 +171,14 @@ public class LoadTests extends XtextTestCase
 		//	unloadResourceSet(asResource.getResourceSet());
 			asResource.unload();
 			for (EObject eObject : new TreeIterable(csResource)) {
-				if (eObject instanceof PivotableElementCS) {
-					Element pivot = ((PivotableElementCS)eObject).getPivot();
-					assert pivot.eIsProxy() : "Failed to proxify is " + NameUtil.debugSimpleName(pivot);
+				if (eObject instanceof PivotableElementCSImpl) {
+					Element pivot = ((PivotableElementCSImpl)eObject).basicGetPivot();
+					if (pivot != null) {
+						Resource eResource = pivot.eResource();
+						if (eResource == null) {
+							assert pivot.eIsProxy() : "Failed to proxify is " + NameUtil.debugSimpleName(pivot);
+						}
+					}
 				}
 			}
 		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
@@ -181,9 +186,11 @@ public class LoadTests extends XtextTestCase
 		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 			EcoreUtil.resolveAll(csResource);
 			for (EObject eObject : new TreeIterable(csResource)) {
-				if (eObject instanceof PivotableElementCS) {
-					Element pivot = ((PivotableElementCS)eObject).getPivot();
-					assert !pivot.eIsProxy() : "Failed to deproxify is " + NameUtil.debugSimpleName(pivot);
+				if (eObject instanceof PivotableElementCSImpl) {
+					Element pivot = ((PivotableElementCSImpl)eObject).basicGetPivot();
+					if (pivot != null) {
+						assert !pivot.eIsProxy() : "Failed to deproxify is " + NameUtil.debugSimpleName(pivot);
+					}
 				}
 			}
 			assertNoUnresolvedProxies("Unload then resolve failed", csResource);

@@ -1774,6 +1774,20 @@ implements Property {
 	}
 
 	@Override
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		assert !isIsImplicit();			// XXX redundant debugging
+		return super.getReloadableEObject(environmentFactory);
+	}
+
+	@Override
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		if (isIsImplicit()) {
+			return null;
+		}
+		return super.getReloadableURI(environmentFactory);
+	}
+
+	@Override
 	public void initValue(@NonNull Object objectValue, @Nullable Object ecoreValue) {
 		assert ValueUtil.isEcore(ecoreValue);
 		EObject eTarget = getESObject();

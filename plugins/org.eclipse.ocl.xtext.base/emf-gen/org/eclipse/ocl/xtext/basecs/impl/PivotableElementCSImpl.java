@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.basecs.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -189,5 +190,9 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	@Override
 	public void resetPivot() {
 		setPivot(null);
+	}
+
+	public @Nullable Element basicGetPivot() {
+		return pivot;
 	}
 } //PivotableElementCSImpl
