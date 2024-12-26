@@ -790,21 +790,25 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		//	attachCount = -1;
 		isDisposing = true;
-		List<@NonNull Resource> asResources = asResourceSet.getResources();
-		int savedSize = asResources.size();
-		for (int i = 0; i < asResources.size(); i++) {
-			@NonNull Resource asResource = asResources.get(i);
-			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
-				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
-			}
-			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResourceImpl)) {			// Ignore built-in resources
-				ASResourceImpl asResourceImpl = (ASResourceImpl)asResource;
-				if (!asResourceImpl.isASonly()) {
-					asResourceImpl.preUnload(this);
+		try {
+			List<@NonNull Resource> asResources = asResourceSet.getResources();
+			int savedSize = asResources.size();
+			for (int i = 0; i < asResources.size(); i++) {
+				@NonNull Resource asResource = asResources.get(i);
+				if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
+					logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
+				}
+				if ((asResource.getResourceSet() != null) && (asResource instanceof ASResourceImpl)) {			// Ignore built-in resources
+					ASResourceImpl asResourceImpl = (ASResourceImpl)asResource;
+					if (!asResourceImpl.isASonly()) {
+						asResourceImpl.preUnload(this);
+					}
 				}
 			}
 		}
-		disposeInternal();
+		finally {		// EVen in preUNload crashes proceed with dispose
+			disposeInternal();
+		}
 	}
 
 	protected void disposeInternal() {
