@@ -276,7 +276,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+/*	@Override
 	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
@@ -287,7 +287,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource();
-	}
+	} */
 
 	@Override
 	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
