@@ -94,6 +94,7 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
@@ -171,8 +172,8 @@ public class LoadTests extends XtextTestCase
 		//	unloadResourceSet(asResource.getResourceSet());
 			asResource.unload();
 			for (EObject eObject : new TreeIterable(csResource)) {
-				if (eObject instanceof PivotableElementCSImpl) {
-					Element pivot = ((PivotableElementCSImpl)eObject).basicGetPivot();
+				if (eObject instanceof PivotableElementCS) {
+					Element pivot = ((PivotableElementCS)eObject).basicGetPivot();
 					if (pivot != null) {
 						Resource eResource = pivot.eResource();
 						if (eResource == null) {

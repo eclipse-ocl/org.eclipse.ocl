@@ -192,6 +192,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		setPivot(null);
 	}
 
+	@Override
 	public @Nullable Element basicGetPivot() {
 		return pivot;
 	}

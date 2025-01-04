@@ -368,7 +368,7 @@ public class DelegateInstaller
 			EObject esObject = asConstraint.getESObject();
 			if (esObject instanceof EAnnotation) {								// EMF constraint
 				String constraintName = asConstraint.getName();
-				String constraintNameText = OCLCommon.getDelegateAnnotation((EModelElement)((EAnnotation)esObject).eContainer(), constraintName);
+				String constraintNameText = OCLCommon.getDelegateAnnotation((EModelElement)esObject.eContainer(), constraintName);
 				if (constraintNameText != null) {
 					asConstraints.add(asConstraint);
 				}
@@ -519,7 +519,8 @@ public class DelegateInstaller
 			this.eValidator = eValidator;
 			if (eValidator instanceof EObjectValidator) {
 				try {
-					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorManager.getInstance().findDerivedEObjectValidator(((EObjectValidator)eValidator).getClass());
+					EObjectValidator eObjectValidator = (EObjectValidator)eValidator;
+					Class<? extends DerivedEObjectValidator> derivedEObjectValidatorClass = DerivedEObjectValidatorManager.getInstance().findDerivedEObjectValidator(eObjectValidator.getClass());
 					derivedEValidator = derivedEObjectValidatorClass.getDeclaredConstructor().newInstance();
 				} catch (SemanticException e) {
 					throw e;

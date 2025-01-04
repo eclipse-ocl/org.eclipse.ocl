@@ -678,7 +678,7 @@ public class ValidateTests extends AbstractValidateTests
 			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1, "The feature 'l1' is not a valid feature");
 			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2, "The feature 'l1' is not a valid feature");
 			//
-			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2
+			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2 - CompleteOCLEObjectValidator's Validate.ecore EPackage is inconsistent with Validate.oclinecore import
 			//
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
 			assertLoggerText(conflictingResourcesMessage);
