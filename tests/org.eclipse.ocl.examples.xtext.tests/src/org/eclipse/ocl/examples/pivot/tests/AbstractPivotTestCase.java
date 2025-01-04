@@ -102,7 +102,7 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-//		PivotUtilInternal.noDebug = false;
+		PivotUtilInternal.noDebug = false;
 //		DEBUG_GC = true;
 //		DEBUG_ID = true;
 //		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
