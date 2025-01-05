@@ -670,7 +670,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		return castElement;
 	}
 
-	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
+	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {		// XXX assert needs update
 		//		printDiagnostic("CS2AS.update start", false, 0);
 		@SuppressWarnings("unused") Map<CSI, Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
@@ -682,7 +682,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		boolean wasUpdating = false;
 		ASResource asResource = csi2asMapping.getASResource(csResource);
 		if (asResource != null) {
-			asResource.setUpdating(true);
+			asResource.setUpdating(true);			// XXX colocate with setUpdating(false)
 		}
 		conversion.update(csResource);
 		//		System.out.println("---------------------------------------------------------------------------");

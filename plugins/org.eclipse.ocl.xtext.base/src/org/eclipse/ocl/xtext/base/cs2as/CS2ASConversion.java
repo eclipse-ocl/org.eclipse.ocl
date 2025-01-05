@@ -991,7 +991,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			setOperationContext(pivotSpecification, contextOperation, null);
 		}
 		else {
-			addError(csElement, "Unsupported refreshContextVariable for a specification: " + eContainingFeature);
+			addError(csElement, "Unsupported refreshContextVariable for a specification: " + eContainingFeature);	// Can happen if containment pass failed to resolve ancestral pivot references
 		}
 	}
 
