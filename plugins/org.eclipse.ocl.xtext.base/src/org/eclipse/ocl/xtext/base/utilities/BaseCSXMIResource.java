@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -256,7 +258,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
+	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {		// XXX cf reloadIn
 		super.handleLoadResponse(response, options);
 		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
@@ -276,18 +278,21 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		throw new UnsupportedOperationException();
 	}
 
-/*	@Override
-	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
+	@Override
+	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {			// XXX used by testLoad_Names_ocl checkLoadableFromXMI
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
 		// XXX cf BaseCSXMIResourceImpl.handleLoadResponse
 		CS2AS cs2as = getCS2AS(environmentFactory);
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		cs2as.update(consumer);
+		ASResource asResource = cs2as.getASResource();
+		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)environmentFactory, null);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
 		getErrors().addAll(consumer.getResult(Severity.ERROR));
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource();
-	} */
+	}
 
 	@Override
 	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
