@@ -368,6 +368,15 @@ public class AbstractPivotTestCase extends TestCase
 			fail(message);
 	}
 
+	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull ResourceSet resourceSet) {
+		for (Resource resource : resourceSet.getResources()) {
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix + " for " + resource.getURI(), "\n\t");
+			if (message != null) {
+				fail(message);
+			}
+		}
+	}
+
 	/* qvtd variant
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
 		String message = PivotUtil.formatResourceDiagnostics(resource.getErrors(), prefix, "\n\t");

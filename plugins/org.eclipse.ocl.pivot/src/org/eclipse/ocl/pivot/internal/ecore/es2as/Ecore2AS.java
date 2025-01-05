@@ -369,7 +369,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	@Override
 	public @NonNull Model getASModel() {
 		Model pivotModel2 = pivotModel;
-		if (pivotModel2 == null) {
+		if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 			loadImports(ecoreResource);
 			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
 			ASResource asResource = (ASResource) pivotModel.eResource();
@@ -381,7 +381,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		if (pivotModel == null) {
+		if ((pivotModel == null) || pivotModel.eIsProxy()) {
 			getASModel();
 		}
 		assert eDataTypes == null;
@@ -389,6 +389,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (element == null) {
 			return null;
 		}
+		assert !element.eIsProxy();
 		if (!requiredClass.isAssignableFrom(element.getClass())) {
 			throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
 		}
