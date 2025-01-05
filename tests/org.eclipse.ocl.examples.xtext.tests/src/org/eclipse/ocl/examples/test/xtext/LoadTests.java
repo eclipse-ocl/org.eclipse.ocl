@@ -1454,6 +1454,7 @@ public class LoadTests extends XtextTestCase
 		}
 		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 		EcoreUtil.resolveAll(externalResourceSet);
+		assertNoResourceErrors("Post resolve", externalResourceSet);
 		ocl.dispose();
 		checkLoadable(getOCLoutputURI(inputURI));
 	}
