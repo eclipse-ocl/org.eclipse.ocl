@@ -112,6 +112,8 @@ public class AS2Ecore extends AbstractConversion
 			Element asElement = getCreatedMap().get(eObject);
 			//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 			if (asElement == null) {
+				assert eObject.eResource().getURI() == AS2Ecore.this.ecoreResource.getURI() : "Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + AS2Ecore.this.ecoreResource.getURI();		// XXX
+				assert eObject.eResource() == AS2Ecore.this.ecoreResource : "Wrong Ecore Resource " + eObject.eResource().getURI() + " for " + AS2Ecore.this.ecoreResource.getURI();
 				return null;
 			}
 			if (!requiredClass.isAssignableFrom(asElement.getClass())) {

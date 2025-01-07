@@ -387,6 +387,14 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert eDataTypes == null;
 		Element element = newCreateMap.get(eObject);
 		if (element == null) {
+		//	assert eObject.eResource().getURI() == ecoreResource.getURI() : "Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + ecoreResource.getURI();		// XXX
+		//	assert eObject.eResource() == ecoreResource : "Wrong Ecore Resource " + eObject.eResource().getURI() + " for " + ecoreResource.getURI();
+			if (eObject.eResource().getURI() != ecoreResource.getURI()) {
+				System.out.println("Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + ecoreResource.getURI());		// XXX
+			}
+			if (eObject.eResource() != ecoreResource) {
+				System.out.println("Wrong Ecore Resource " + eObject.eResource().getURI() + " for " + ecoreResource.getURI());
+			}
 			return null;
 		}
 		assert !element.eIsProxy();

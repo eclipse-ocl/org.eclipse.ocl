@@ -14,6 +14,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -58,25 +60,33 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		assert proxy != null;
+		URI proxyURI = proxy.eProxyURI();
 		StringBuilder s = null;
 		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
-			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxyURI);
 		}
 		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;
-		EObject resolvedProxy;
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			resolvedProxy = EcoreUtil.resolve(proxy, environmentFactory.getResourceSet());
-			try {
-				assert resolvedProxy.eResource().getResourceSet() == environmentFactory.getResourceSet();
-				resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		EObject resolvedProxy = null;
+		if (!PivotUtilInternal.isASURI(proxyURI)) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+				resolvedProxy = EcoreUtil.resolve(proxy, externalResourceSet);
+				Resource resolvedResource = resolvedProxy.eResource();
+				if (resolvedResource != null) {
+					ResourceSet resolvedResourceSet = resolvedResource.getResourceSet();
+					assert resolvedResourceSet == externalResourceSet;
+					try {
+						resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
-		else {
+		if (resolvedProxy == null) {
 			resolvedProxy = super.eResolveProxy(proxy);
 		}
 		if (s != null) {
