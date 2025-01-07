@@ -11,10 +11,10 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -64,24 +64,20 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
 		}
 		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;
-		EObject resolvedProxy = super.eResolveProxy(proxy);
-	/*	if (resolvedProxy instanceof Pivotable) {
-			Resource resource = resolvedProxy.eResource();
-			if (resource instanceof CSResource) {
-				((CSResource)resource).getASResource();
+		EObject resolvedProxy;
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			resolvedProxy = EcoreUtil.resolve(proxy, environmentFactory.getResourceSet());
+			try {
+				assert resolvedProxy.eResource().getResourceSet() == environmentFactory.getResourceSet();
+				resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
 		}
-		else */ if (resolvedProxy instanceof EModelElement) {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {
-				try {
-					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		else {
+			resolvedProxy = super.eResolveProxy(proxy);
 		}
 		if (s != null) {
 			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
