@@ -244,6 +244,14 @@ public class AbstractPivotTestCase extends TestCase
 		StringBuilder s1 = null;
 		for (Diagnostic diagnostic : diagnostics) {
 			String actual = diagnostic.getMessage();
+			for (Object data : diagnostic.getData()) {
+				if (data instanceof Throwable) {
+					Throwable t = (Throwable)data;
+					if (!actual.equals(t.getMessage())) {		// e.g EvaluationException message promoted
+						actual += "\n\t" + t.getClass().getSimpleName() + " - " + t.getMessage();
+					}
+				}
+			}
 			Integer expectedCount = expected.get(actual);
 			if ((expectedCount == null) || (expectedCount <= 0)) {
 				if (s1 == null) {

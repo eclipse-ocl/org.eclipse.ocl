@@ -21,11 +21,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.examples.pivot.tests.AbstractValidateTests;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -150,8 +152,8 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		EClass independentEcoreClass = ((EClass)((EPackage)independentEcoreResource.getContents().get(0)).getEClassifier("BadClass"));
 		assertNoValidationErrors("Independent Ecore validation without extra OCL", independentEcoreResource);
 		independentEcoreClass.setName("M i n u t e");
-		String badMinuteName = "The name 'M i n u t e' is not well formed";
-		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteName));
+		String badMinuteMessage = "The name 'M i n u t e' is not well formed";
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteMessage));
 		ThreadLocalExecutor.resetEnvironmentFactory();
 
 		ResourceSet resourceSet = createExternalResourceSet();
@@ -177,7 +179,12 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Verify that the Independent Ecore is not affected by the loaded OCL.
 		//
-		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteName));
+		String iseMessage = "\n\t" + IllegalStateException.class.getSimpleName() + " - " + StringUtil.bind(PivotMessages.ConflictingResource, ecoreURI);
+		String mustBeTrueMessage = StringUtil.bind(AbstractValidateTests.VALIDATION_EXCEPTION, "Bad::M i n u t e::mustBeTrue::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot") + iseMessage;
+		String uncachedDerivedMessage = StringUtil.bind(AbstractValidateTests.VALIDATION_EXCEPTION, "Bad::M i n u t e::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot") + iseMessage;
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with wrong OCL support", independentEcoreResource, getMessages(badMinuteMessage, mustBeTrueMessage, uncachedDerivedMessage));
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation with OCL support", independentEcoreResource, getMessages(badMinuteMessage));
 		independentEcoreClass.setName("Minute");
 		assertLazyValidationDiagnostics("Uncorrupted Independent Ecore validation with OCL support", independentEcoreResource, null);
 		//
@@ -204,7 +211,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
-					badMinuteName,
+					badMinuteMessage,
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "DerivationIsUninitialized", ecoreObjectLabel)));
 			}
 		});

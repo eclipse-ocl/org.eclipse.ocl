@@ -260,7 +260,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
 								if ((old != null) && (old != resource)) {
 									uriResourceMap.put(uri, old);						// Stick with the first
-									logger.error(StringUtil.bind(PivotMessages.ConflictingResources, uri));
+									logger.error(StringUtil.bind(PivotMessages.ConflictingResource, uri));
 								}
 							}
 						}
@@ -1104,7 +1104,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		External2AS ecore2as = External2AS.findAdapter(ecoreResource, this);
 		if (ecore2as != null) {
 			if (ecore2as.getResource() != ecoreResource) {
-				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResourceSet, ecoreResource.getURI()));
+				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResource, ecoreResource.getURI()));
 			}
 		}
 		else {

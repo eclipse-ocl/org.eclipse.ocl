@@ -190,13 +190,7 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
-                <message_argument value="ConflictingResourceSet"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
-                <message_argument value="ConflictingResources"/>
+                <message_argument value="ConflictingResource"/>
             </message_arguments>
         </filter>
     </resource>
