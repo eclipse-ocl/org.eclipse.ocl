@@ -2077,8 +2077,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		// if (EPackage.Registry.INSTANCE.containsKey(resourceOrNsURI))
 		// return EPackage.Registry.INSTANCE.getEPackage(resourceOrNsURI);
-		ResourceSet externalResourceSet = resourceSet != null ? resourceSet : environmentFactory.getResourceSet();
-		EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
+		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+		EPackage.Registry packageRegistry = (resourceSet != null ? resourceSet : externalResourceSet).getPackageRegistry();
 		String uriString = resourceURI.toString();
 		Resource resource = null;
 		String fragment = uri.fragment();
