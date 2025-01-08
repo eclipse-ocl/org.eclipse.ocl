@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -375,6 +376,9 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	private @Nullable HashedCSIs hashedCSIs = null;
 
+	private @Nullable UniqueList<@NonNull CSResource> cs2asUpdateQueue = null;
+	private int cs2asUpdateIndex = 0;
+
 	/**
 	 * Available CS2AS converters.
 	 */
@@ -580,32 +584,39 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 * Update the mapping to cache the Pivot elements with respect to the CSIs for all CS elements in csResources.
 	 */
 	public void update() {
+		UniqueList<@NonNull CSResource> cs2asUpdateQueue2 = cs2asUpdateQueue;
+		if (cs2asUpdateQueue2 != null) {
+			return;
+		}
+		cs2asUpdateQueue2 = cs2asUpdateQueue = new UniqueList<>(cs2asResourceMap.keySet());
+		cs2asUpdateIndex = 0;
 		as2cs = null;
 		csi2as.clear();
-		List<@NonNull CSResource> iterationDomain = new ArrayList<>(cs2asResourceMap.keySet());
-		int oldSize = cs2asResourceMap.size();
-		while (true) {
-			for (@NonNull CSResource csResource : iterationDomain) {
-				for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
-					EObject eObject = it.next();
-					if (eObject instanceof ModelElementCS) {
-						ModelElementCS csElement = (ModelElementCS)eObject;
-						Element pivotElement = csElement.getPivot();
+		while (cs2asUpdateIndex < cs2asUpdateQueue2.size()) {
+			@NonNull CSResource csResource = cs2asUpdateQueue2.get(cs2asUpdateIndex++);
+			for (Iterator<EObject> it = csResource.getAllContents(); it.hasNext(); ) {
+				EObject eObject = it.next();
+				if (eObject instanceof ModelElementCS) {
+					ModelElementCS csElement = (ModelElementCS)eObject;
+					Element pivotElement = csElement.basicGetPivot();
+					if (pivotElement == null) {
+						pivotElement = csElement.getPivot();
+					}
+					else if (pivotElement.eIsProxy()) {
+						pivotElement = csElement.getPivot();
+						break;
+					}
+					else {
 						put(csElement, pivotElement);
 					}
 				}
 			}
-			int newSize = cs2asResourceMap.size();		// Bug 538551 - this iterationDomain was observed to grow
-			if (newSize <= oldSize) {
-				break;
-			}
-			oldSize = newSize;
 			Set<@NonNull CSResource> newIterationDomain = new HashSet<>(cs2asResourceMap.keySet());
-			newIterationDomain.removeAll(iterationDomain);
-			iterationDomain.clear();
-			iterationDomain.addAll(newIterationDomain);
-			assert iterationDomain.size() > 0;
-			assert iterationDomain.size() == (newSize - oldSize);
+			newIterationDomain.removeAll(cs2asUpdateQueue2);
+			cs2asUpdateQueue2.addAll(newIterationDomain);
 		}
+		cs2asUpdateQueue = null;
+		cs2asUpdateIndex = 0;
 	}
 }
+

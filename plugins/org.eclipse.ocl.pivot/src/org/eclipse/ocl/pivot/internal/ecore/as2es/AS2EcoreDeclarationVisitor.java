@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -223,11 +224,17 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		EStructuralFeature eContainingFeature = pivotConstraint.eContainingFeature();
 		EAnnotation eAnnotation = delegateInstaller.createConstraintDelegate(eModelElement, pivotConstraint, context.getEcoreURI());
 		if (eAnnotation != null) {
-			if (!(eModelElement instanceof EOperation)) {
-				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
+			if (eModelElement instanceof EOperation) {
+				if (eContainingFeature != PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+					AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
+				}
+				assert (pivotConstraint.getESObject() == null) || (pivotConstraint.getESObject().eClass() == eModelElement.eClass());
+				((ElementImpl)pivotConstraint).setESObject(eModelElement);
 			}
-			else if (eContainingFeature != PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
-				AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
+			else {
+				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
+				assert (pivotConstraint.getESObject() == null) || (pivotConstraint.getESObject().eClass() == eAnnotation.eClass());
+				((ElementImpl)pivotConstraint).setESObject(eAnnotation);
 			}
 		}
 		return eAnnotation;
