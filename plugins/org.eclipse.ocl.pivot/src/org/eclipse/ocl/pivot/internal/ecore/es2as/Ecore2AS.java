@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -79,6 +80,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
@@ -387,13 +389,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert eDataTypes == null;
 		Element element = newCreateMap.get(eObject);
 		if (element == null) {
-		//	assert eObject.eResource().getURI() == ecoreResource.getURI() : "Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + ecoreResource.getURI();		// XXX
-		//	assert eObject.eResource() == ecoreResource : "Wrong Ecore Resource " + eObject.eResource().getURI() + " for " + ecoreResource.getURI();
-			if (eObject.eResource().getURI() != ecoreResource.getURI()) {
-				System.out.println("Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + ecoreResource.getURI());		// XXX
-			}
-			if (eObject.eResource() != ecoreResource) {
-				System.out.println("Wrong Ecore Resource " + eObject.eResource().getURI() + " for " + ecoreResource.getURI());
+			Resource eObjectResource = eObject.eResource();
+			URI eObjectResourceURI = eObjectResource.getURI();
+			if ((eObjectResource != ecoreResource) || (eObjectResourceURI != ecoreResource.getURI())) {
+				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));
 			}
 			return null;
 		}

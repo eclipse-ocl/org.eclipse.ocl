@@ -34,11 +34,7 @@ public class PivotMessages
 	/**
 	 * @since 1.23
 	 */
-	public static String ConflictingResourceSet;
-	/**
-	 * @since 1.23
-	 */
-	public static String ConflictingResources;
+	public static String ConflictingResource;
 	public static String ConvertibleValueRequired;
 	public static String EObjectRequired;
 	public static String EmptyCollection;
