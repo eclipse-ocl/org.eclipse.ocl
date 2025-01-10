@@ -779,7 +779,7 @@ public class PivotHelper
 			asTypedElement.setIsRequired(isRequired);
 		}
 		if (primaryType != null) {
-			PivotUtil.debugWellContainedness(primaryType);
+			PivotUtil.debugWellContainedness((Element)primaryType);
 		}
 	}
 }

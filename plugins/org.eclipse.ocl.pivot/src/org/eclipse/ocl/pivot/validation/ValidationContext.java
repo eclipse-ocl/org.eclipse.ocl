@@ -48,7 +48,11 @@ public class ValidationContext extends HashMap<Object,Object>
 				return (EnvironmentFactoryInternal)environmentFactory;
 			}
 		}
-		return PivotUtilInternal.basicGetEnvironmentFactory(object);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(object);
+		if ((environmentFactory != null) && (validationContext != null)) {
+			validationContext.put(EnvironmentFactory.class, environmentFactory);
+		}
+		return environmentFactory;
 	}
 
 	/**

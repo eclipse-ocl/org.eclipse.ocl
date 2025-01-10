@@ -93,7 +93,6 @@ import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
@@ -150,7 +149,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private @Nullable List<@NonNull ResourceSet> extraResourceSets = null;
 	private final @NonNull ResourceSet asResourceSet;
-	protected final boolean externalResourceSetWasNull;
+	@Deprecated /* @deprecated no longer used */
+	protected final boolean externalResourceSetWasNull = false;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	private final @NonNull StandardLibraryInternal standardLibrary;
@@ -195,35 +195,26 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
-	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet, @Nullable ResourceSet asResourceSet) {
+	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {
+		// assert finalASResourceSet == null;	-- always null
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
 			PivotUtilInternal.debugPrintln("Create " + toDebugString()
-			+ " " + NameUtil.debugSimpleName(externalResourceSet) + " " + NameUtil.debugSimpleName(asResourceSet));
+			+ " " + NameUtil.debugSimpleName(userResourceSet) + " " + NameUtil.debugSimpleName(zzASResourceSet));
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
 		this.projectManager = projectManager;
-		if (asResourceSet == null) {
-			asResourceSet = createASResourceSet();
-		}
-		this.asResourceSet = asResourceSet;
-		if (externalResourceSet != null) {
-			this.externalResourceSetWasNull = false;
-			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
-		}
-		else {
-			this.externalResourceSetWasNull = true;
-			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
-			projectManager.initializeResourceSet(externalResourceSet);
-			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
-			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+		this.asResourceSet = zzASResourceSet != null ? zzASResourceSet : createASResourceSet();
+		this.externalResourceSet = createExternalResourceSet(userResourceSet);
+	//	if (finalESResourceSet != null) {
+	//		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
+	//	}
+	//	else {
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
-		}
+	//	}
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
@@ -234,28 +225,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
-		if (!externalResourceSetWasNull) {
-			if (externalResourceSet instanceof ResourceSetImpl) {
-				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
-				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
-				if (uriResourceMap == null) {
-					uriResourceMap = new HashMap<>();
-					resourceSetImpl.setURIResourceMap(uriResourceMap);
-				}
-			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
-				List<@NonNull EPackage> allEPackages = new UniqueList<>();
-				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
-				for (int i = 0; i < transitiveExternalResources.size(); i++) {
-					Resource esResource = transitiveExternalResources.get(i);
+		if (userResourceSet != null) {
+			Map<URI, Resource> uriResourceMap = ((ResourceSetImpl)externalResourceSet).getURIResourceMap();
+			assert uriResourceMap != null;
+			List<@NonNull EPackage> allEPackages = new UniqueList<>();
+			List</* @NonNull */Resource> transitiveExternalResources = new UniqueList<>(uriResourceMap.values());
+			for (int i = 0; i < transitiveExternalResources.size(); i++) {
+				Resource esResource = transitiveExternalResources.get(i);
+				if (esResource != null) {
 					for (@NonNull EObject eObject : new TreeIterable(esResource)) {
 						EClass eClass = eObject.eClass();
 						EPackage ePackage = eClass.getEPackage();
-						assert ePackage != null;
+						assert ePackage != null : "No EPackage for " + eClass;
 						if (allEPackages.add(ePackage)) {		// EPackage.nsURI schizophrenia is ok (e.g http:/... vs platform:/.../*.ecore)
 							Resource resource = ePackage.eResource();
-							assert resource != null;
-							if (!transitiveExternalResources.contains(resource)) {
-								transitiveExternalResources.add(resource);
+							assert resource != null : "No eResource for " + ePackage;
+							if (transitiveExternalResources.add(resource)) {
 								URI uri = resource.getURI();
 								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
 								if ((old != null) && (old != resource)) {
@@ -326,8 +311,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void addExternal2AS(@NonNull External2AS external2as) {
-		Resource resource = external2as.getResource();
-		if ((resource != null) && ClassUtil.isRegistered(resource)) {
+		@NonNull Resource resource = external2as.getResource();
+		if (ClassUtil.isRegistered(resource)) {
 			ResourceSet externalResourceSet2 = getResourceSet();
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}
@@ -561,6 +546,44 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			executor.setInterpretedExecutor(interpretedExecutor);
 		} */
 		return interpretedExecutor;
+	}
+
+	/**
+	 * Create the ResourceSet 'using' whatever external user resources and other facilities from the userResourceSet.
+	 * We cannot just re-use the userResourceSet since any additional ES facilities resulting from OCL processing would be
+	 * inflicted on unsuspecting callers such as the Sample Ecore Model Editor. Copying the user resources is undesirable and
+	 * re-using impossible since they are contained by the userResourceSet. We therefore copy the resources as URIResourceMap entries.
+	 *
+	 * @since 1.23
+	 */
+	protected @NonNull ResourceSet createExternalResourceSet(@Nullable ResourceSet userResourceSet) {
+		ResourceSetImpl externalResourceSet = new ResourceSetImpl();
+		projectManager.initializeResourceSet(externalResourceSet);
+		Resource.Factory.Registry externalResourceFactoryRegistry = externalResourceSet.getResourceFactoryRegistry();
+		if (userResourceSet != null) {
+			externalResourceSet.setURIConverter(userResourceSet.getURIConverter());
+			Resource.Factory.Registry userResourceFactoryRegistry = userResourceSet.getResourceFactoryRegistry();
+			externalResourceFactoryRegistry.getContentTypeToFactoryMap().putAll(userResourceFactoryRegistry.getContentTypeToFactoryMap());
+			externalResourceFactoryRegistry.getExtensionToFactoryMap().putAll(userResourceFactoryRegistry.getExtensionToFactoryMap());
+			externalResourceFactoryRegistry.getProtocolToFactoryMap().putAll(userResourceFactoryRegistry.getProtocolToFactoryMap());
+			Map<URI, Resource> uriResourceMap = externalResourceSet.getURIResourceMap();
+			if (userResourceSet instanceof ResourceSetImpl) {
+				Map<URI, Resource> userResourceMap = ((ResourceSetImpl)userResourceSet).getURIResourceMap();
+				if (userResourceMap != null) {
+					uriResourceMap.putAll(userResourceMap);
+				}
+			}
+			for (Resource resource : userResourceSet.getResources()) {
+				Resource old = uriResourceMap.put(resource.getURI(), resource);
+				assert (old == null) || (old == resource);
+			}
+		}
+		else {
+			Map<String, Object> extensionToFactoryMap = externalResourceFactoryRegistry.getExtensionToFactoryMap();
+			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
+			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+		}
+		return externalResourceSet;
 	}
 
 	/**
@@ -806,7 +829,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				}
 			}
 		}
-		finally {		// EVen in preUNload crashes proceed with dispose
+		finally {		// Even in preUnload crashes proceed with dispose
 			disposeInternal();
 		}
 	}
@@ -814,7 +837,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected void disposeInternal() {
 		assert !isDisposed() && isDisposing();
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposed() test
-		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		try {
 			if (metamodelManager != null) {
 				metamodelManager.dispose();
@@ -822,59 +844,49 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
 			EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
-			if (externalResourceSetWasNull || isGlobal) {
-				//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
-				projectManager.unload(externalResourceSet);
-				externalResourceSetAdapters.remove(projectManager);							// cf PivotTestSuite.disposeResourceSet
-				//			StandaloneProjectMap.dispose(externalResourceSet2);
-				externalResourceSet.setPackageRegistry(null);
-				externalResourceSet.setResourceFactoryRegistry(null);
-				externalResourceSet.setURIConverter(null);
-				if (externalResourceSet instanceof ResourceSetImpl) {
-					((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
-				}
-				for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
-					if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
-						// This guard is needed to ensure that clear doesn't make the resource become loaded.
-						//
-						if (!resource.getContents().isEmpty())
-						{
-							resource.getContents().clear();
-						}
-						resource.getErrors().clear();
-						resource.getWarnings().clear();
-						/*				    if (idToEObjectMap != null)
-					    {
-					      idToEObjectMap.clear();
-					    }
-
-					    if (eObjectToIDMap != null)
-					    {
-					      eObjectToIDMap.clear();
-					    }
-
-					    if (eObjectToExtensionMap != null)
-					    {
-					      eObjectToExtensionMap.clear();
-					    } */
-
-					}
-					else {
-						resource.unload();
-					}
-					resource.eAdapters().clear();
-				}
-				externalResourceSetAdapters.clear();
-				//			externalResourceSet = null;
+			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
+			projectManager.unload(externalResourceSet);
+			externalResourceSetAdapters.remove(projectManager);							// cf PivotTestSuite.disposeResourceSet
+			//			StandaloneProjectMap.dispose(externalResourceSet2);
+			externalResourceSet.setPackageRegistry(null);
+			externalResourceSet.setResourceFactoryRegistry(null);
+			externalResourceSet.setURIConverter(null);
+			if (externalResourceSet instanceof ResourceSetImpl) {
+				((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
 			}
-			else {
-				for (Adapter adapter : externalResourceSetAdapters) {
-					if ((adapter instanceof EnvironmentFactoryAdapter) && (((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory() == this)) {
-						externalResourceSetAdapters.remove(adapter);
-						break;
+			for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
+				if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
+					// This guard is needed to ensure that clear doesn't make the resource become loaded.
+					//
+					if (!resource.getContents().isEmpty())
+					{
+						resource.getContents().clear();
 					}
+					resource.getErrors().clear();
+					resource.getWarnings().clear();
+					/*				    if (idToEObjectMap != null)
+				    {
+				      idToEObjectMap.clear();
+				    }
+
+				    if (eObjectToIDMap != null)
+				    {
+				      eObjectToIDMap.clear();
+				    }
+
+				    if (eObjectToExtensionMap != null)
+				    {
+				      eObjectToExtensionMap.clear();
+				    } */
+
 				}
+				else {
+					resource.unload();
+				}
+				resource.eAdapters().clear();
 			}
+			externalResourceSetAdapters.clear();
+			//			externalResourceSet = null;
 			if (idResolver != null) {
 				idResolver.dispose();
 				idResolver = null;
