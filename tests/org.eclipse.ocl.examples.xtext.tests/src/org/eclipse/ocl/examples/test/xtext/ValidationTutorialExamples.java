@@ -90,14 +90,14 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		@NonNull URI xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/XMITestFile.xmi", true);
 		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
 		@NonNull URI ocl4xmiURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraXMIValidation.ocl", true);
-		ResourceSet resourceSet = createExternalResourceSet();
-		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		ResourceSet userResourceSet = createExternalResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), userResourceSet);
 		//
 		//	Load the XMI (and its ecore) - emulate Open XMITestFile.xmi with Sample Ecore Model Editor
 		//
-		Resource xmiResource = resourceSet.getResource(xmiURI, true);
+		Resource xmiResource = userResourceSet.getResource(xmiURI, true);
 		assert xmiResource != null;
-		Resource ecoreResource = resourceSet.getResource(ecoreURI, false);			// Already loaded
+		Resource ecoreResource = userResourceSet.getResource(ecoreURI, false);			// Already loaded
 		assert ecoreResource != null;
 		//
 		EObject xmiObject = xmiResource.getContents().get(0);
@@ -110,7 +110,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Load the two Complete OCL documents - emulate OCL -> Load Document for the two *.ocls
 		//
-		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory(), userResourceSet);
 		ASResource ocl4xmiResource = (ASResource)helper.loadResource(ocl4xmiURI);
 		assert ocl4xmiResource != null;
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
@@ -119,7 +119,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Validate the XMI - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
@@ -132,7 +132,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 			}
 		});
 
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				assertValidationDiagnostics("XMI validation with extra OCL", xmiResource, getMessages(
@@ -156,26 +156,27 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assertLazyValidationDiagnostics("Corrupted Independent Ecore validation without OCL support", independentEcoreResource, getMessages(badMinuteMessage));
 		ThreadLocalExecutor.resetEnvironmentFactory();
 
-		ResourceSet resourceSet = createExternalResourceSet();
-		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		ResourceSet userResourceSet = createExternalResourceSet();
 		//
 		//	Load the ecore - emulate Open EcoreTestFile.ecore with Sample Ecore Model Editor
 		//
-		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
+		Resource ecoreResource = userResourceSet.getResource(ecoreURI, true);
 		assert ecoreResource != null;
 		//
 		EClass ecoreClass = ((EClass)((EPackage)ecoreResource.getContents().get(0)).getEClassifier("BadClass"));
 		EStructuralFeature ecoreFeature = ecoreClass.getEStructuralFeature("uncachedDerived");
+		//
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), userResourceSet);
 		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
 		String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
-		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory(), userResourceSet);
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
 		assert ocl4ecoreResource != null;
 		//	helper.dispose();												// Does ocl0.dispose()
-		ocl0.dispose();
+//		ocl0.dispose();
 		//
 		//	Verify that the Independent Ecore is not affected by the loaded OCL.
 		//
@@ -190,7 +191,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Validate the ecore - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
@@ -206,7 +207,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		ecoreClass.setName("M i n u t e");
 		ecoreFeature.setTransient(true);
 		ecoreFeature.setVolatile(true);
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
@@ -243,12 +244,12 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 				StringUtil.bind(NAMED_ELEMENT_NOT_DISTINGUISHABLE_TEMPLATE, independentUML_lowercase_Label, independentUMLModelLabel),
 				StringUtil.bind(MEMBERS_NOT_DISTINGUISHABLE_TEMPLATE, independentUMLModelLabel)));
 
-		ResourceSet resourceSet = createExternalResourceSet();
-		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		ResourceSet userResourceSet = createExternalResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), userResourceSet);
 		//
 		//	Load the uml - emulate Open PapyrusTestFile.uml with Sample UML Model Editor
 		//
-		Resource umlResource = resourceSet.getResource(umlURI, true);
+		Resource umlResource = userResourceSet.getResource(umlURI, true);
 		assert umlResource != null;
 		//
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
@@ -259,7 +260,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
-		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory(), userResourceSet);
 		ASResource ocl4umlResource = (ASResource)helper.loadResource(ocl4umlURI);
 		assert ocl4umlResource != null;
 		//
@@ -274,7 +275,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Validate the UML - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String uml_lowercase_ClassLabel = LabelUtil.getLabel(uml_lowercase_Class);
@@ -286,7 +287,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//	Revalidate the UML after removing errors.
 		//
 		uml_lowercase_Class.setName("LowerCase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				assertValidationDiagnostics("UML validation with extra OCL", umlResource, getMessages());
@@ -296,7 +297,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//	Revalidate the UML with a UML 'error'.
 		//
 		uml_UPPERCASE_Class.setName("LowerCase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String uml_UPPERCASE_Label = LabelUtil.getLabel(uml_UPPERCASE_Class);
@@ -313,7 +314,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		uml_UPPERCASE_Class.setName("uppercase");
 		uml_lowercase_Class.setName("uppercase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String uml_UPPERCASE_Label = LabelUtil.getLabel(uml_UPPERCASE_Class);
@@ -345,12 +346,12 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assertLazyValidationDiagnostics("Corrupted Independent Xtext validation without OCL support", independentXtextResource, getMessages(
 				"The first rule must be a parser rule."));
 
-		ResourceSet resourceSet = createXtextResourceSet();
-		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), resourceSet);
+		ResourceSet xtextResourceSet = createXtextResourceSet();
+		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), xtextResourceSet);
 		//
 		//	Load the xtext - emulate Open XtextTestFile.xtext with Xtext Editor
 		//
-		Resource xtextResource = resourceSet.getResource(xtextURI, true);
+		Resource xtextResource = xtextResourceSet.getResource(xtextURI, true);
 		assert xtextResource != null;
 		//
 		Grammar xtextGrammar = (Grammar)xtextResource.getContents().get(0);
@@ -363,7 +364,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
-		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory(), xtextResourceSet);
 		ASResource ocl4xtextResource = (ASResource)helper.loadResource(ocl4xtextURI);
 		assert ocl4xtextResource != null;
 	//	helper.dispose();												// Does ocl0.dispose()
@@ -377,10 +378,10 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		//	Validate the Xtext - emulate live validation or manual validate on a worker thread inheriting OCL from main thread.
 		//
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
-		//		String xtext_lowercase_ClassLabel = "xyzzy"; //LabelUtil.getLabel(xtext_lowercase_Class);
+		//			String xtext_lowercase_ClassLabel = "xyzzy"; //LabelUtil.getLabel(xtext_lowercase_Class);
 				assertLazyValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages(
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
 					StringUtil.bind(VIOLATED_CONSTRAINT_TEMPLATE, "NoActions", "Grammar::ParserRule::Group::Group::Alternatives::Group::Action"),
@@ -394,7 +395,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//	Revalidate the Xtext after removing errors.
 		//
 /*		xtext_lowercase_Class.setName("LowerCase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				assertValidationDiagnostics("Xtext validation with extra OCL", xtextResource, getMessages());
@@ -404,7 +405,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//	Revalidate the Xtext with a Xtext 'error'.
 		//
 		xtext_UPPERCASE_Class.setName("LowerCase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String xtext_UPPERCASE_Label = LabelUtil.getLabel(xtext_UPPERCASE_Class);
@@ -421,7 +422,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		xtext_UPPERCASE_Class.setName("uppercase");
 		xtext_lowercase_Class.setName("uppercase");
-		doTestRunnable(new TestRunnable() {
+		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
 				String xtext_UPPERCASE_Label = LabelUtil.getLabel(xtext_UPPERCASE_Class);

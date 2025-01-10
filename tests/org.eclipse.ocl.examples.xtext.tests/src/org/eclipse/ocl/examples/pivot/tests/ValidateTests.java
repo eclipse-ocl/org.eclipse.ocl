@@ -687,7 +687,7 @@ public class ValidateTests extends AbstractValidateTests
 			assert dynamicEnvironmentFactory != ocl0.getEnvironmentFactory();
 			assert dynamicEnvironmentFactory != ocl1.getEnvironmentFactory();
 			assert dynamicEnvironmentFactory != ocl2.getEnvironmentFactory();
-			assert dynamicEnvironmentFactory.getResourceSet() == testResourceSet;
+			assert dynamicEnvironmentFactory.getResourceSet() != testResourceSet;
 			assert dynamicModel.getOwnedPackages().get(0).getESObject() == validatePackage1;
 			//
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);

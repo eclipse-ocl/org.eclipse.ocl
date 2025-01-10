@@ -414,20 +414,33 @@ public class PivotTestCase extends AbstractPivotTestCase
 	{
 		static int count = 0;
 
-		String name = null;
-		Throwable throwable = null;
+		private @Nullable EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull String name;
+		private @Nullable Throwable throwable = null;
 
 		protected TestRunnable() {
-			name = "test" + count++;
+			this(null);
+		}
+
+		protected TestRunnable(@Nullable EnvironmentFactory environmentFactory) {
+			this.environmentFactory = (EnvironmentFactoryInternal)environmentFactory;
+			this.name = "test" + count++;
 		}
 
 		@Override
 		public void run() {
 			try {
+				if (environmentFactory != null) {
+					ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				}
 				runWithThrowable();
 			}
 			catch (Throwable t) {
 				throwable = t;
+				if (environmentFactory != null) {
+					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+					environmentFactory = null;
+				}
 			}
 		}
 		protected abstract void runWithThrowable() throws Throwable;

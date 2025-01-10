@@ -185,8 +185,8 @@ public class AbstractPivotTestCase extends TestCase
 	 */
 	public static final class TestCompleteOCLLoader extends CompleteOCLLoader
 	{
-		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
-			super(environmentFactory);
+		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
+			super(environmentFactory, extraResourceSets);
 		}
 
 		@Override
