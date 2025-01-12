@@ -839,14 +839,14 @@ public class DelegateInstaller
 	 * Ensure that eClass has an EcorePackage.eNS_URI EAnnotation with a "constraints" key corresponding to
 	 * the presence or absence of constraintNames.
 	 */
-	private static void setConstraintNames(@NonNull EClass eClass, @Nullable List<@NonNull String> constraintNames) {
-		EAnnotation constraintNamesAnnotation = eClass.getEAnnotation(EcorePackage.eNS_URI);
+	private static void setConstraintNames(@NonNull EClassifier eClassifier, @Nullable List<@NonNull String> constraintNames) {
+		EAnnotation constraintNamesAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if ((constraintNames == null) || constraintNames.isEmpty()) {
 			if (constraintNamesAnnotation != null) {
 				EMap<String, String> details = constraintNamesAnnotation.getDetails();
 				details.removeKey(CONSTRAINTS_KEY);
 				if (details.isEmpty()) {
-					eClass.getEAnnotations().remove(constraintNamesAnnotation);
+					eClassifier.getEAnnotations().remove(constraintNamesAnnotation);
 				}
 			}
 		}
@@ -856,7 +856,7 @@ public class DelegateInstaller
 			Collections.sort(castConstraintNames);
 			String splicedConstraintNames = StringUtil.splice(castConstraintNames, " ");
 			if (constraintNamesAnnotation == null) {
-				EcoreUtil.setAnnotation(eClass, EcorePackage.eNS_URI, CONSTRAINTS_KEY, splicedConstraintNames);
+				EcoreUtil.setAnnotation(eClassifier, EcorePackage.eNS_URI, CONSTRAINTS_KEY, splicedConstraintNames);
 			}
 			else {
 				EMap<String, String> details = constraintNamesAnnotation.getDetails();
@@ -1172,7 +1172,7 @@ public class DelegateInstaller
 	}
 
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		Set<@NonNull String> constraintNameSet = null;
+		List<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {
@@ -1193,18 +1193,7 @@ public class DelegateInstaller
 				}
 			}
 		}
-		EAnnotation constraintNamesAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
-		if (s != null) {
-			if (constraintNamesAnnotation == null) {
-				constraintNamesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				constraintNamesAnnotation.setSource(EcorePackage.eNS_URI);
-				eClassifier.getEAnnotations().add(/*0,*/ constraintNamesAnnotation);
-			}
-			constraintNamesAnnotation.getDetails().put(CONSTRAINTS_KEY, s.toString());
-		}
-		else {
-			eClassifier.getEAnnotations().remove(constraintNamesAnnotation);
-		}
+		setConstraintNames(eClassifier, constraintNameSet);
 	}
 
 	public void installDelegates(@NonNull EPackage ePackage) {
@@ -1271,7 +1260,8 @@ public class DelegateInstaller
 	 *
 	 * @since 1.23
 	 */
-	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) { // XXX asymmetric wrt install
+	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) {
+		// XXX asymmetric wrt install -- if asResource had been unloaded we could share a refreshCompleteOCLDelegates
 		List<@NonNull EAnnotation> eAnnotationsToRemove = new ArrayList<>();
 		//
 		//	Uninstall EClass EAnnotations for AS Constraints.
@@ -1291,7 +1281,7 @@ public class DelegateInstaller
 					String old = completeOCLbodiesAnnotation.getDetails().removeKey(constraintName);			// XXX toString
 				}
 				setConstraintNames(eClass, constraintNames);
-				if (constraintNames.isEmpty() && completeOCLbodiesAnnotation.getDetails().isEmpty()) {
+				if (/*constraintNames.isEmpty() &&*/ completeOCLbodiesAnnotation.getDetails().isEmpty()) {
 					eAnnotationsToRemove.add(completeOCLbodiesAnnotation);
 				//	eClass.getEAnnotations().remove(completeOCLbodiesAnnotation);	// defer till ExtendedEObjectValidator.uninstallFor done.
 				}
@@ -1306,7 +1296,7 @@ public class DelegateInstaller
 			boolean usesCompleteOCL = false;
 			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 				EAnnotation completeOCLbodiesAnnotation = eClassifier.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
-				if (completeOCLbodiesAnnotation != null) {
+				if ((completeOCLbodiesAnnotation != null) && !completeOCLbodiesAnnotation.getDetails().isEmpty()) {
 					usesCompleteOCL = true;
 				}
 			}
