@@ -21,12 +21,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -248,18 +244,20 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		if ((eProxyURI != null) && !eProxyURI.hasFragment()) {
 		    Resource resource = eResource().getResourceSet().getResource(eProxyURI, true);
 			EObject eObject = resource.getContents().get(0);
-			if ((eObject != null) && eObject.eIsProxy()) {
+			assert (eObject != null) && !eObject.eIsProxy();
+			/*	if ((eObject != null) && eObject.eIsProxy()) {
 				assert false;			// XXX XXX
 				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-				ASResource asResource;
 				try {
-					asResource = ((CSResource)resource).reloadIn(environmentFactory);
+					CSResource csResource = (CSResource)eResource();
+					assert csResource != null;
+					ASResource asResource = environmentFactory.reload(csResource);
 					eObject = asResource.getContents().get(0);
 				} catch (SemanticException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+			} */
 			return eObject;
 		}
 		else {

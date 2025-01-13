@@ -286,14 +286,16 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		if (eObject instanceof Pivotable) {
 			Element element = ((Pivotable)eObject).getPivot();
 			if (element != null) {
-				if (element.eIsProxy()) {
+				assert !element.eIsProxy();
+			/*	if (element.eIsProxy()) {
 					assert false;			// XXX XXX
-					ASResource reloadIn = ((CSResource)eObject.eResource()).reloadIn(environmentFactory);			// XXX cast
+					CSResource csResource = (CSResource)eObject.eResource();			// XXX cast
+					ASResource asResource = environmentFactory.reload(csResource);
 					element = ((Pivotable)eObject).getPivot();
 					if (element == null) {
 						return null;
 					}
-				}
+				} */
 				if (!requiredClass.isAssignableFrom(element.getClass())) {
 					throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
 				}

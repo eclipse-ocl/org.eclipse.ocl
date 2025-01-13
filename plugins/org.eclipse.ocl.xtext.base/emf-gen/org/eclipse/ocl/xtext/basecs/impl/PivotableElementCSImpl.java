@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
@@ -89,12 +90,15 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(this);
 			if ((environmentFactory != null) && !environmentFactory.isDisposing()) {
 				try {
-					ASResource reloadIn = ((CSResource)eResource()).reloadIn(environmentFactory);
+					CSResource csResource = (CSResource)eResource();
+					assert csResource != null;
+					CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
+					@SuppressWarnings("unused")
+					ASResource asResource = cs2as.reload();
 				} catch (SemanticException e) {
 					// XXX TODO Auto-generated catch block
 					e.printStackTrace();
-				}			// XXX cast
-			//	reloadIn();
+				}
 			}
 		}
 		return pivot;
