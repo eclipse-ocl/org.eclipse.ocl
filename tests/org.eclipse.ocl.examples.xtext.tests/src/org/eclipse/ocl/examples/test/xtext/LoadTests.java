@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -94,6 +96,7 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
@@ -173,11 +176,22 @@ public class LoadTests extends XtextTestCase
 			asResource.unload();
 			for (EObject eObject : new TreeIterable(csResource)) {
 				if (eObject instanceof PivotableElementCS) {
+					for (EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
+						if (eStructuralFeature instanceof EReference) {
+							EReference eReference = (EReference)eStructuralFeature;
+							EClass eType = eReference.getEReferenceType();
+							if (!eReference.isContainment() && !BaseCSPackage.Literals.ELEMENT_CS.isSuperTypeOf(eType)) {
+						//	if (!eReference.isResolveProxies()) {
+								System.out.println("!isResolveProxies " + eReference + " " + eReference.isResolveProxies());
+						//	}
+							}
+						}
+					}
 					Element pivot = ((PivotableElementCS)eObject).basicGetPivot();
 					if (pivot != null) {
 						Resource eResource = pivot.eResource();
 						if (eResource == null) {
-							assert pivot.eIsProxy() : "Failed to proxify is " + NameUtil.debugSimpleName(pivot);
+							assert pivot.eIsProxy() : "Failed to proxify " + NameUtil.debugSimpleName(pivot);
 						}
 					}
 				}
@@ -190,7 +204,7 @@ public class LoadTests extends XtextTestCase
 				if (eObject instanceof PivotableElementCSImpl) {
 					Element pivot = ((PivotableElementCSImpl)eObject).basicGetPivot();
 					if (pivot != null) {
-						assert !pivot.eIsProxy() : "Failed to deproxify is " + NameUtil.debugSimpleName(pivot);
+						assert !pivot.eIsProxy() : "Failed to deproxify " + NameUtil.debugSimpleName(pivot);
 					}
 				}
 			}
