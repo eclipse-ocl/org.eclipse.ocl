@@ -373,7 +373,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		EObject asResolvedProxy = null;
 		if (esResolvedProxy instanceof Pivotable) {
 			asResolvedProxy = ((Pivotable)esResolvedProxy).getPivot();
-			if ((asResolvedProxy != null) && asResolvedProxy.eIsProxy()) {	// XXX pivot is never a proxy
+		/*	if ((asResolvedProxy != null) && asResolvedProxy.eIsProxy()) {	// XXX pivot is never a proxy
 			//	proxy = (InternalEObject)eResolveProxy(proxy);			// XXX need to displace stale AS
 				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ThreadLocalExecutor.getEnvironmentFactory();
 				try {
@@ -382,6 +382,14 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 					// XXX Auto-generated catch block
 					e.printStackTrace();
 				}
+			} */
+			if (asResolvedProxy != null) {
+				getClass();		// XXX
+				if (s != null) {
+					s.append(" => " + NameUtil.debugSimpleName(asResolvedProxy));
+					ASResourceImpl.RESOLVE_PROXY.println(s.toString());
+				}
+				return asResolvedProxy;
 			}
 			if (proxy instanceof Parameter) {
 				ExpressionInOCL asExpression = null;
