@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Element;
  */
 public interface PivotableElementCS extends ElementCS, org.eclipse.ocl.pivot.utilities.Pivotable
 {
+	@Deprecated /* @deprecated redundant */
 	default @Nullable Element basicGetPivot() {
 		return null;
 	}
@@ -46,7 +47,7 @@ public interface PivotableElementCS extends ElementCS, org.eclipse.ocl.pivot.uti
 	 * @return the value of the '<em>Pivot</em>' reference.
 	 * @see #setPivot(Element)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPivotableElementCS_Pivot()
-	 * @model resolveProxies="false" transient="true"
+	 * @model resolveProxies="false" transient="true" volatile="true" derived="true"
 	 * @generated
 	 */
 	@Override

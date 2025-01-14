@@ -10,17 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.basecs.impl;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
-import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
@@ -47,15 +39,6 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	 * @ordered
 	 */
 	public static final int PIVOTABLE_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
-	/**
-	 * The cached value of the '{@link #getPivot() <em>Pivot</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPivot()
-	 * @generated
-	 * @ordered
-	 */
-	protected Element pivot;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -79,27 +62,25 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	}
 
 	/**
+	 * The cached value of the '{@link #getPivot() <em>Pivot</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @see #getPivot()
+	 * @generated NOT
+	 * @ordered
+	 */
+	private Element pivot;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	@Override
 	public Element getPivot()
 	{
 		if ((pivot != null) && pivot.eIsProxy()) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(this);
-			if ((environmentFactory != null) && !environmentFactory.isDisposing()) {
-				try {
-					CSResource csResource = (CSResource)eResource();
-					assert csResource != null;
-					CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
-					@SuppressWarnings("unused")
-					ASResource asResource = cs2as.reload();
-				} catch (SemanticException e) {
-					// XXX TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			pivot = null;
 		}
 		return pivot;
 	}
@@ -107,7 +88,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setPivot(Element newPivot)
@@ -116,8 +97,6 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		assert (newPivot == null) || !newPivot.eIsProxy();			// XXX
 		Element oldPivot = pivot;
 		pivot = newPivot;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPivot, pivot));
 	}
 
 	/**
@@ -181,7 +160,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		switch (featureID)
 		{
 			case 2:
-				return pivot != null;
+				return getPivot() != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -196,8 +175,8 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		setPivot(null);
 	}
 
-	@Override
+	@Override @Deprecated /* @deprecated redundant */
 	public @Nullable Element basicGetPivot() {
-		return pivot;
+		return getPivot();
 	}
 } //PivotableElementCSImpl

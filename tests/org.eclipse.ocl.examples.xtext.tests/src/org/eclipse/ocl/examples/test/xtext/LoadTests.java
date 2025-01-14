@@ -182,7 +182,7 @@ public class LoadTests extends XtextTestCase
 							EClass eType = eReference.getEReferenceType();
 							if (!eReference.isContainment() && !BaseCSPackage.Literals.ELEMENT_CS.isSuperTypeOf(eType)) {
 						//	if (!eReference.isResolveProxies()) {
-								System.out.println("!isResolveProxies " + eReference + " " + eReference.isResolveProxies());
+						//		System.out.println("!isResolveProxies " + eReference + " " + eReference.isResolveProxies());
 						//	}
 							}
 						}
