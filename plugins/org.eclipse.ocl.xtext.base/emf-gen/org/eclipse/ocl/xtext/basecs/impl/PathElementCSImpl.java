@@ -367,12 +367,26 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		StringBuilder s = null;
 		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
-			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + proxy.eProxyURI());
+			s.append(NameUtil.debugSimpleName(this) + " \"" + proxy.eProxyURI() + "\" (" + NameUtil.debugSimpleName(proxy) + ")");
+		}
+		if (!proxy.eProxyURI().toString().contains("|")) {
+//			getClass();		// XXX
+		}
+		if (proxy instanceof ParameterVariable) {
+			getClass();		// XXX
 		}
 		EObject esResolvedProxy = super.eResolveProxy(proxy);
+		String.valueOf(esResolvedProxy);		// XXX
 		EObject asResolvedProxy = null;
 		if (esResolvedProxy instanceof Pivotable) {
 			asResolvedProxy = ((Pivotable)esResolvedProxy).getPivot();
+			if (asResolvedProxy == null) {
+				// need to reload but need to avoid recursion/repetition - a CSResource error lock out
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+			//	environmentFactory.re
+			//	ASResource asResource = environmentFactory.reload(csResource);
+			//	element = ((Pivotable)eObject).getPivot();
+			}
 		/*	if ((asResolvedProxy != null) && asResolvedProxy.eIsProxy()) {	// XXX pivot is never a proxy
 			//	proxy = (InternalEObject)eResolveProxy(proxy);			// XXX need to displace stale AS
 				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ThreadLocalExecutor.getEnvironmentFactory();
@@ -392,6 +406,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				return asResolvedProxy;
 			}
 			if (proxy instanceof Parameter) {
+				assert false;
 				ExpressionInOCL asExpression = null;
 				for (EObject eObject = this; eObject != null; eObject = eObject.eContainer()) {
 					if (eObject instanceof PivotableElementCS) {

@@ -1452,7 +1452,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
-	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	SerializationBuilder.SERIALIZATION.setState(true);
 		OCL ocl = createOCLWithProjectMap();
