@@ -163,6 +163,7 @@ public class LoadTests extends XtextTestCase
 			CSResource csResource = (CSResource)ocl.getResourceSet().getResource(xmiCSuri, true);
 			assertNoResourceErrors("Load failed", csResource);
 			assertNoUnresolvedProxies("Load failed", csResource);
+			assertNoUnresolvedPivots("Load failed", csResource);
 			ICS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
 			ASResource asResource = cs2as.getASResource();
 			assertNoValidationErrors("Loaded pivot", asResource);
@@ -209,6 +210,7 @@ public class LoadTests extends XtextTestCase
 				}
 			}
 			assertNoUnresolvedProxies("Unload then resolve failed", csResource);
+			assertNoUnresolvedPivots("Unload then resolve failed", csResource);
 			return asResource;
 		}
 		finally {
@@ -256,6 +258,7 @@ public class LoadTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 		assertNoUnresolvedProxies("Unresolved proxies", csResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+		assertNoUnresolvedPivots("Unresolved pivots", csResource);
 		if (csResource.getContents().size() > 0) {
 			assertNoValidationErrors("Validation errors", csResource.getContents().get(0));
 		}
@@ -292,6 +295,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+			assertNoUnresolvedPivots("Unresolved pivots", xtextResource);
 			assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			xtextResource.setURI(oclOutputURI);
@@ -646,6 +650,7 @@ public class LoadTests extends XtextTestCase
 		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+		assertNoUnresolvedPivots("Unresolved pivots", xtextResource);
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(oclOutputURI);
@@ -712,6 +717,7 @@ public class LoadTests extends XtextTestCase
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 			assertNoUnresolvedProxies("Unresolved proxies", csResource);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+			assertNoUnresolvedPivots("Unresolved pivots", csResource);
 			assertNoValidationErrors("Validation errors", csResource.getContents().get(0));
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			//			xtextResource.setURI(output2URI);
@@ -737,11 +743,12 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public Resource doLoad_URI(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
-		Resource resource = ocl.getResourceSet().getResource(inputURI, true);
-		assertNoResourceErrors("Load failed", resource);
-		assertNoUnresolvedProxies("Unresolved proxies", resource);
-		assertNoValidationErrors("Validation errors", resource.getContents().get(0));
-		return resource;
+		CSResource csResource = (CSResource) ocl.getResourceSet().getResource(inputURI, true);
+		assertNoResourceErrors("Load failed", csResource);
+		assertNoUnresolvedProxies("Unresolved proxies", csResource);
+		assertNoUnresolvedPivots("Unresolved pivots", csResource);
+		assertNoValidationErrors("Validation errors", csResource.getContents().get(0));
+		return csResource;
 	}
 
 	protected @NonNull URI getOCLoutputURI(@NonNull URI inputURI) {
@@ -905,6 +912,7 @@ public class LoadTests extends XtextTestCase
 			e.printStackTrace();
 		}
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
+		assertNoUnresolvedPivots("Unresolved pivots", xtextResource);
 		assertNoValidationErrors("Second validation", asResource);
 		ocl.dispose();
 	}
@@ -962,6 +970,7 @@ public class LoadTests extends XtextTestCase
 			e.printStackTrace();
 		}
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
+		assertNoUnresolvedPivots("Unresolved pivots", xtextResource);
 		assertNoValidationErrors("Second validation", asResource);
 		ocl.dispose();
 	}

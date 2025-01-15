@@ -47,6 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -60,15 +61,18 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Value;
@@ -391,6 +395,34 @@ public class AbstractPivotTestCase extends TestCase
 		if (message != null)
 			fail(message);
 	} */
+
+	public static void assertNoUnresolvedPivots(@NonNull String message, @NonNull CSResource csResource) {
+		StringBuilder s = null;
+		for (EObject eObject : new TreeIterable(csResource)) {
+			if (eObject instanceof Pivotable) {
+				Pivotable pivotable = (Pivotable)eObject;
+				Element pivot = pivotable.getPivot();
+				if (pivot == null) {
+					if (s == null) {
+						s = new StringBuilder();
+						s.append(message);
+						s.append(" unresolved pivots in ");
+						s.append(csResource.getURI());
+					}
+					s.append("\n\t");
+					s.append(eObject.eClass().getName());
+					s.append(" : ");
+					s.append(eObject);
+				}
+				else {
+					assert !pivot.eIsProxy();
+				}
+			}
+		}
+		if (s != null) {
+			fail(s.toString());
+		}
+	}
 
 	public static void assertNoUnresolvedProxies(@NonNull String message, @NonNull Resource resource) {
 		Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(resource);
