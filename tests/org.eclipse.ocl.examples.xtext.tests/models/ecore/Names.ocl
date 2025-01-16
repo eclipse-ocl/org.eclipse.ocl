@@ -3,7 +3,7 @@ import 'Names.ecore'
 package names
 
 context Named::r : Real
-init: 0.0
+init: 0.0 + t
 
 context Named::s : String
 derive: ''

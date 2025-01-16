@@ -174,6 +174,7 @@ public class LoadTests extends XtextTestCase
 			assertResourceErrors("Pre-save", asResource, messages);
 		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
 		//	unloadResourceSet(asResource.getResourceSet());
+			asResource = (ASResource)ocl.getEnvironmentFactory().getASResourceSet().getResources().get(1);		// XXX
 			asResource.unload();
 			for (EObject eObject : new TreeIterable(csResource)) {
 				if (eObject instanceof PivotableElementCS) {
@@ -188,12 +189,12 @@ public class LoadTests extends XtextTestCase
 							}
 						}
 					}
-					Element pivot = ((PivotableElementCS)eObject).basicGetPivot();
+					Element pivot = ((PivotableElementCS)eObject).getPivot();
 					if (pivot != null) {
 						Resource eResource = pivot.eResource();
-						if (eResource == null) {
-							assert pivot.eIsProxy() : "Failed to proxify " + NameUtil.debugSimpleName(pivot);
-						}
+					//	if (eResource == null) {
+							assert eResource != null : "Failed to proxify " + NameUtil.debugSimpleName(pivot);
+					//	}
 					}
 				}
 			}
@@ -201,9 +202,9 @@ public class LoadTests extends XtextTestCase
 		//	assert (unresolvedProxies.size() > 0) {
 		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 			EcoreUtil.resolveAll(csResource);
-			for (EObject eObject : new TreeIterable(csResource)) {
+			for (EObject eObject : new TreeIterable(csResource)) {		// XXX redundant
 				if (eObject instanceof PivotableElementCSImpl) {
-					Element pivot = ((PivotableElementCSImpl)eObject).basicGetPivot();
+					Element pivot = ((PivotableElementCSImpl)eObject).getPivot();
 					if (pivot != null) {
 						assert !pivot.eIsProxy() : "Failed to deproxify " + NameUtil.debugSimpleName(pivot);
 					}
@@ -1461,7 +1462,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	SerializationBuilder.SERIALIZATION.setState(true);
 		OCL ocl = createOCLWithProjectMap();
