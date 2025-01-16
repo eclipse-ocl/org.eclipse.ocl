@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.ocl.xtext.basecs.impl;
@@ -19,7 +19,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -226,7 +228,6 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 
 	@Override
 	public void eSetProxyURI(URI uri) {
-		StringBuilder s = null;
 		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
 		assert (uri == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 		super.eSetProxyURI(uri);
@@ -234,35 +235,8 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
-		URI eProxyURI = proxy.eProxyURI();
-	//	StringBuilder s = null;
-	//	if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
-	//		s = new StringBuilder();
-	//		s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + ":" + eProxyURI);
-	//		ASResourceImpl.RESOLVE_PROXY.println(s.toString());
-	//	}
-		if ((eProxyURI != null) && !eProxyURI.hasFragment()) {
-		    Resource resource = eResource().getResourceSet().getResource(eProxyURI, true);
-			EObject eObject = resource.getContents().get(0);
-			assert (eObject != null) && !eObject.eIsProxy();
-			/*	if ((eObject != null) && eObject.eIsProxy()) {
-				assert false;			// XXX XXX
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-				try {
-					CSResource csResource = (CSResource)eResource();
-					assert csResource != null;
-					ASResource asResource = environmentFactory.reload(csResource);
-					eObject = asResource.getContents().get(0);
-				} catch (SemanticException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} */
-			return eObject;
-		}
-		else {
-			return super.eResolveProxy(proxy);
-		}
+		EObject eObject = resolveProxy(proxy);
+		return eObject != null ? eObject : proxy;
 	}
 
 	/**
@@ -275,5 +249,21 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	{
 		EObject eContainer = eContainer();
 		return eContainer instanceof ElementCS ? (ElementCS) eContainer : null;		// Avoid CCE for Bug 432749
+	}
+
+	protected @Nullable EObject resolveProxy(/*@NonNull*/ InternalEObject proxy) {
+		assert proxy != null;
+		URI eProxyURI = proxy.eProxyURI();
+		assert eProxyURI != null;
+		ResourceSet resourceSet = eResource().getResourceSet();
+		URI resourceURI = eProxyURI.trimFragment();
+		Resource resource = resourceSet.getResource(resourceURI, true);
+		String fragment = eProxyURI.fragment();
+		if (fragment == null) {
+			fragment = "/";
+		}
+		EObject esResolvedProxy = resource.getEObject(fragment);
+	//	assert (esResolvedProxy == null) || !esResolvedProxy.eIsProxy();
+		return esResolvedProxy;
 	}
 } //ElementCSImpl
