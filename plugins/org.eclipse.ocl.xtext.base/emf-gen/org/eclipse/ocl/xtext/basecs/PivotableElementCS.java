@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.basecs;
 
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 
 /**
@@ -32,10 +31,6 @@ import org.eclipse.ocl.pivot.Element;
  */
 public interface PivotableElementCS extends ElementCS, org.eclipse.ocl.pivot.utilities.Pivotable
 {
-	@Deprecated /* @deprecated redundant */
-	default @Nullable Element basicGetPivot() {
-		return null;
-	}
 	/**
 	 * Returns the value of the '<em><b>Pivot</b></em>' reference.
 	 * <!-- begin-user-doc -->

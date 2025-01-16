@@ -598,15 +598,9 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				EObject eObject = it.next();
 				if (eObject instanceof ModelElementCS) {
 					ModelElementCS csElement = (ModelElementCS)eObject;
-					Element pivotElement = csElement.basicGetPivot();
-					if (pivotElement == null) {
-						pivotElement = csElement.getPivot();
-					}
-					else if (pivotElement.eIsProxy()) {
-						pivotElement = csElement.getPivot();
-						break;
-					}
-					else {
+					Element pivotElement = csElement.getPivot();
+					if (pivotElement != null) {
+						assert !pivotElement.eIsProxy();
 						put(csElement, pivotElement);
 					}
 				}

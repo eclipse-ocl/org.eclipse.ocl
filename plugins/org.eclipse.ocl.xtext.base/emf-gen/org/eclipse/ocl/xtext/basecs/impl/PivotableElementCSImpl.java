@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.basecs.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
@@ -173,10 +172,5 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	@Override
 	public void resetPivot() {
 		setPivot(null);
-	}
-
-	@Override @Deprecated /* @deprecated redundant */
-	public @Nullable Element basicGetPivot() {
-		return getPivot();
 	}
 } //PivotableElementCSImpl
