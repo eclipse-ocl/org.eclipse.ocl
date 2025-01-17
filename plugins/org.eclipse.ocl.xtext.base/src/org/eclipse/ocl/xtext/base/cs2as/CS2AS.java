@@ -92,44 +92,6 @@ import org.eclipse.xtext.util.Tuples;
  */
 public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXME migrate functionality to PivotHelper
 {
-	/**
-	 * A RecursiveUpdateGuard identifies a CS2AS update failure and so enables termination of a potentially infinite
-	 * recursion of failed attempts to resolve pivots.
-	 */
-	private static final class RecursiveUpdateGuard implements Resource.Diagnostic
-	{
-		protected final @NonNull String message;
-
-		public RecursiveUpdateGuard(@NonNull String message) {
-			this.message = message;
-		}
-
-		@Override
-		public String getMessage() {
-			return message;//.replace("\n",  "\\n");
-		}
-
-		@Override
-		public String getLocation() {
-			return null;
-		}
-
-		@Override
-		public int getLine() {
-			return 0;
-		}
-
-		@Override
-		public int getColumn() {
-			return 0;
-		}
-
-		@Override
-		public String toString() {
-			return message;
-		}
-	}
-
 	public static interface UnresolvedProxyMessageProvider
 	{
 		@NonNull EReference getEReference();
@@ -717,22 +679,20 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		if (isUpdating) {
 			return null;
 		}
-	//	isUpdating = true;
-		for (Resource.Diagnostic diagnostic : csResource.getErrors()) {
-			if (diagnostic instanceof RecursiveUpdateGuard) {
-				throw new SemanticException("Recursive reload of " + csResource.getURI());//, e);
-			}
-		}
-		// install guard ???
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		update(consumer);
 		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)getHelper().getEnvironmentFactory(), null);
 		delegateInstaller.installCompleteOCLDelegates(asResource);
 		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
 		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
-		// conditionally remove guard ???
-	//	isUpdating = true;
 		return asResource;
+	}
+
+	public void update() {
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		update(consumer);
+		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
+		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
 	}
 
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {		// XXX assert needs update

@@ -48,8 +48,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.xtext.diagnostics.Severity;
-import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 /**
  * The BaseCSXMIResource implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
@@ -256,13 +254,11 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {		// XXX cf reloadIn
+	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
-		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
-		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
-		cs2as.update(consumer);
-		getErrors().addAll(consumer.getResult(Severity.ERROR));
-		getWarnings().addAll(consumer.getResult(Severity.WARNING));
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+		CS2AS cs2as = getCS2AS(environmentFactory);
+		cs2as.update();
 	}
 
 	/**

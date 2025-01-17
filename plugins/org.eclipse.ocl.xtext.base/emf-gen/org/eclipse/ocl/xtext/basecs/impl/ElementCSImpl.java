@@ -38,7 +38,6 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
-import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -278,7 +277,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		}
 		CSResource csResource = (CSResource)eResource();
 		String fragment = eProxyURI.fragment();
-		if ((fragment != null) && !fragment.startsWith("|")  && !(this instanceof PathElementWithURICS)) {			// XXX why instanceof PathElementWithURICS
+		if ((fragment != null) && !fragment.startsWith("|")  /*&& !(this instanceof PathElementWithURICS)*/) {			// XXX why instanceof PathElementWithURICS
 			for (EObject eObject : csResource.getContents()) {
 				if (eObject instanceof Pivotable) {
 					Pivotable csElement = (Pivotable)eObject;
