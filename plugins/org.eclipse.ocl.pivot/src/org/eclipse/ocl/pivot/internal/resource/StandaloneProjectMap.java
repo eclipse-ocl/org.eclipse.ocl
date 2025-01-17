@@ -1510,12 +1510,12 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The platform resource URI of the EPackage (e.g. platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
-		private @Nullable  URI platformResourceURI = null;
+		private @Nullable URI platformResourceURI = null;
 
 		/**
 		 * The platform plugin URI of the EPackage (e.g. platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
-		private @Nullable  URI platformPluginURI = null;
+		private @Nullable URI platformPluginURI = null;
 
 		/**
 		 * The package descriptors for each of the multiple packages in the genmodel.
