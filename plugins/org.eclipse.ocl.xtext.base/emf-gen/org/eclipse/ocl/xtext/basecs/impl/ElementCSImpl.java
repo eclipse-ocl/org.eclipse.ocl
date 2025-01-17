@@ -11,7 +11,10 @@
 
 package org.eclipse.ocl.xtext.basecs.impl;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -23,12 +26,19 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -235,8 +245,14 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
-		EObject eObject = resolveProxy(proxy);
-		return eObject != null ? eObject : proxy;
+		Notifier notifier = resolveProxy(proxy);
+		if (notifier instanceof Resource) {
+			List<@NonNull EObject> contents = ((Resource)notifier).getContents();
+			return contents.size() > 0 ? contents.get(0) : proxy;
+		}
+		else {
+			return notifier != null ? (EObject) notifier : proxy;
+		}
 	}
 
 	/**
@@ -251,19 +267,65 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		return eContainer instanceof ElementCS ? (ElementCS) eContainer : null;		// Avoid CCE for Bug 432749
 	}
 
-	protected @Nullable EObject resolveProxy(/*@NonNull*/ InternalEObject proxy) {
+	protected @Nullable Notifier resolveProxy(/*@NonNull*/ InternalEObject proxy) {
 		assert proxy != null;
 		URI eProxyURI = proxy.eProxyURI();
 		assert eProxyURI != null;
-		ResourceSet resourceSet = eResource().getResourceSet();
+		StringBuilder s = null;
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
+			s = new StringBuilder();
+			s.append(NameUtil.debugSimpleName(this) + " «" + proxy.eProxyURI() + "» (" + NameUtil.debugSimpleName(proxy) + ")");
+		}
+		CSResource csResource = (CSResource)eResource();
+		String fragment = eProxyURI.fragment();
+		if ((fragment != null) && !fragment.startsWith("|")  && !(this instanceof PathElementWithURICS)) {			// XXX why instanceof PathElementWithURICS
+			for (EObject eObject : csResource.getContents()) {
+				if (eObject instanceof Pivotable) {
+					Pivotable csElement = (Pivotable)eObject;
+					if (csElement.getPivot() == null) {
+						EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+						CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
+
+						try {
+							@SuppressWarnings("unused") ASResource asResource = cs2as.reload();
+						/*	if (asResource == null) {		// If reloading, resolve proxies
+								Element asPivot = csElement.getPivot();
+								if (asPivot == null) {
+									if (s != null) {
+										s.append(" => null");
+										ASResourceImpl.RESOLVE_PROXY.println(s.toString());
+									}
+									return null;
+								}
+								assert  asPivot != null;
+							} */
+						} catch (SemanticException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+			}
+		}
+		ResourceSet resourceSet = csResource.getResourceSet();
 		URI resourceURI = eProxyURI.trimFragment();
 		Resource resource = resourceSet.getResource(resourceURI, true);
-		String fragment = eProxyURI.fragment();
 		if (fragment == null) {
-			fragment = "/";
+			if (s != null) {
+				s.append(" => " + NameUtil.debugSimpleName(resource));
+				ASResourceImpl.RESOLVE_PROXY.println(s.toString());
+			}
+			return resource;
 		}
-		EObject esResolvedProxy = resource.getEObject(fragment);
-	//	assert (esResolvedProxy == null) || !esResolvedProxy.eIsProxy();
-		return esResolvedProxy;
+		else {
+			EObject esResolvedProxy = resource.getEObject(fragment);
+			if (s != null) {
+				s.append(" => " + NameUtil.debugSimpleName(esResolvedProxy));
+				ASResourceImpl.RESOLVE_PROXY.println(s.toString());
+			}
+		//	assert (esResolvedProxy == null) || !esResolvedProxy.eIsProxy();
+			return esResolvedProxy;
+		}
 	}
 } //ElementCSImpl

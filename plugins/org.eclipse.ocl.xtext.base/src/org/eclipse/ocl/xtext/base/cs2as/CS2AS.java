@@ -92,6 +92,44 @@ import org.eclipse.xtext.util.Tuples;
  */
 public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXME migrate functionality to PivotHelper
 {
+	/**
+	 * A RecursiveUpdateGuard identifies a CS2AS update failure and so enables termination of a potentially infinite
+	 * recursion of failed attempts to resolve pivots.
+	 */
+	private static final class RecursiveUpdateGuard implements Resource.Diagnostic
+	{
+		protected final @NonNull String message;
+
+		public RecursiveUpdateGuard(@NonNull String message) {
+			this.message = message;
+		}
+
+		@Override
+		public String getMessage() {
+			return message;//.replace("\n",  "\\n");
+		}
+
+		@Override
+		public String getLocation() {
+			return null;
+		}
+
+		@Override
+		public int getLine() {
+			return 0;
+		}
+
+		@Override
+		public int getColumn() {
+			return 0;
+		}
+
+		@Override
+		public String toString() {
+			return message;
+		}
+	}
+
 	public static interface UnresolvedProxyMessageProvider
 	{
 		@NonNull EReference getEReference();
@@ -389,6 +427,8 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	 */
 	private @Nullable PivotHelper helper = null;
 
+	private boolean isUpdating = false;
+
 	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
@@ -673,17 +713,31 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		return castElement;
 	}
 
-	public @NonNull ASResource reload() throws SemanticException {
+	public @Nullable ASResource reload() throws SemanticException {
+		if (isUpdating) {
+			return null;
+		}
+	//	isUpdating = true;
+		for (Resource.Diagnostic diagnostic : csResource.getErrors()) {
+			if (diagnostic instanceof RecursiveUpdateGuard) {
+				throw new SemanticException("Recursive reload of " + csResource.getURI());//, e);
+			}
+		}
+		// install guard ???
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		update(consumer);
 		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)getHelper().getEnvironmentFactory(), null);
 		delegateInstaller.installCompleteOCLDelegates(asResource);
 		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
 		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
+		// conditionally remove guard ???
+	//	isUpdating = true;
 		return asResource;
 	}
 
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {		// XXX assert needs update
+		assert !isUpdating;
+		isUpdating = true;
 		//		printDiagnostic("CS2AS.update start", false, 0);
 		@SuppressWarnings("unused") Map<@NonNull CSI, @Nullable Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<@NonNull CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
@@ -719,5 +773,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
 		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		isUpdating  = false;
 	}
 }

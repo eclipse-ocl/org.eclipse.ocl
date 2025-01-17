@@ -157,6 +157,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI textCSuri, @NonNull String... messages) throws IOException {
+		System.out.println("checkLoadableFromXMI " + textCSuri);
 		URI xmiCSuri = getXMIoutputURI(textCSuri);
 		OCL ocl = createOCLWithProjectMap();
 		try {
@@ -174,8 +175,14 @@ public class LoadTests extends XtextTestCase
 			assertResourceErrors("Pre-save", asResource, messages);
 		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
 		//	unloadResourceSet(asResource.getResourceSet());
-			asResource = (ASResource)ocl.getEnvironmentFactory().getASResourceSet().getResources().get(1);		// XXX
-			asResource.unload();
+			for (Resource resource : ocl.getEnvironmentFactory().getASResourceSet().getResources()) {
+				if (!"http".equals(resource.getURI().scheme())) {
+					System.out.println("checkLoadableFromXMI unload " + resource.getURI());
+					resource.unload();
+				}
+			}
+		//	asResource = (ASResource)ocl.getEnvironmentFactory().getASResourceSet().getResources().get(1);		// XXX
+		//	asResource.unload();
 			for (EObject eObject : new TreeIterable(csResource)) {
 				if (eObject instanceof PivotableElementCS) {
 					for (EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
@@ -201,7 +208,9 @@ public class LoadTests extends XtextTestCase
 		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
 		//	assert (unresolvedProxies.size() > 0) {
 		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
+			System.out.println("checkLoadableFromXMI pre-resolveAll");
 			EcoreUtil.resolveAll(csResource);
+			System.out.println("checkLoadableFromXMI post-resolveAll");
 			for (EObject eObject : new TreeIterable(csResource)) {		// XXX redundant
 				if (eObject instanceof PivotableElementCSImpl) {
 					Element pivot = ((PivotableElementCSImpl)eObject).getPivot();
@@ -1423,7 +1432,9 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = getTestModelURI("models/ecore/Imports.ocl");
 		doLoadOCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
@@ -1436,7 +1447,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	PartialModels.PARTIAL_MODELS.setState(true);
 	//	PartialPackages.PARTIAL_PACKAGES.setState(true);
