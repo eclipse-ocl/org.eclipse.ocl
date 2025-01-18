@@ -25,11 +25,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -309,12 +312,37 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		}
 		ResourceSet resourceSet = csResource.getResourceSet();
 		URI resourceURI = eProxyURI.trimFragment();
+	//	Resource resource = resourceSet.getResource(resourceURI, false);
+	//	if (resource == null) {
+			if (PivotUtilInternal.isASURI(resourceURI)) {
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				if (environmentFactory != null) {
+					try {
+						Element element = environmentFactory.getMetamodelManager().loadResource(eProxyURI, null, null);
+						return element;
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+	//		assert resource != null;		// XXX
+	//	}
 		Resource resource = resourceSet.getResource(resourceURI, true);
+	//	try {
+	//		resource.load(null);
+	//	} catch (IOException e) {
+			// TODO Auto-generated catch block
+	//		e.printStackTrace();
+	//	}
 		if (fragment == null) {
 			if (s != null) {
 				s.append(" => " + NameUtil.debugSimpleName(resource));
 				ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 			}
+		//	if (resource instanceof DelegatedSinglePackageResource) {
+		//		resource = ((DelegatedSinglePackageResource)resource).getResource();
+		//	}
 			return resource;
 		}
 		else {

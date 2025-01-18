@@ -1424,10 +1424,13 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = getTestModelURI("models/uml/Fruit.ocl");
 		doLoadOCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Imports_ocl() throws IOException, InterruptedException {
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		URI inputURI = getTestModelURI("models/ecore/Imports.ocl");
 		doLoadOCL(ocl, inputURI);
@@ -1443,11 +1446,13 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = getTestModelURI("models/ocl/MiniPivot.ocl");
 		doLoad_OCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	PartialModels.PARTIAL_MODELS.setState(true);
 	//	PartialPackages.PARTIAL_PACKAGES.setState(true);
@@ -1469,7 +1474,9 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = getTestModelURI("models/ecore/OCLTest.ocl");
 		doLoadOCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
@@ -1491,7 +1498,9 @@ public class LoadTests extends XtextTestCase
 		EcoreUtil.resolveAll(externalResourceSet);
 		assertNoResourceErrors("Post resolve", externalResourceSet);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoadSaveAsCSLoad_OCLTest_ocl() throws IOException, InterruptedException {
@@ -1532,7 +1541,9 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model/Pivot.ocl", true);
 		doLoad_OCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_RoyalAndLoyal_ocl() throws IOException, InterruptedException {
@@ -1541,7 +1552,9 @@ public class LoadTests extends XtextTestCase
 		URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ocl", true);
 		doLoadOCL(ocl, inputURI);
 		ocl.dispose();
-		checkLoadable(getOCLoutputURI(inputURI));
+		URI oclOutputURI = getOCLoutputURI(inputURI);
+		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Internationalized_profile_uml() throws IOException, InterruptedException, ParserException {

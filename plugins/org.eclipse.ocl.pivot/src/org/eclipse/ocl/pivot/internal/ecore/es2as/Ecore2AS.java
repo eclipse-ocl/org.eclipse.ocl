@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -391,7 +392,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (element == null) {
 			Resource eObjectResource = eObject.eResource();
 			URI eObjectResourceURI = eObjectResource.getURI();
-			if ((eObjectResource != ecoreResource) || (eObjectResourceURI != ecoreResource.getURI())) {
+			Resource nonDelegatedResource = ecoreResource instanceof DelegatedSinglePackageResource ? ((DelegatedSinglePackageResource)ecoreResource).getResource() : ecoreResource;
+			if ((eObjectResource != nonDelegatedResource) || (eObjectResourceURI != nonDelegatedResource.getURI())) {
 				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));
 			}
 			return null;
