@@ -84,7 +84,7 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
-                <message_argument value="getExternal2AS(Resource, EnvironmentFactoryInternal)"/>
+                <message_argument value="createExternal2AS(Resource, EnvironmentFactoryInternal)"/>
             </message_arguments>
         </filter>
     </resource>

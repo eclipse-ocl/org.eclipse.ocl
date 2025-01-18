@@ -63,6 +63,14 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 		throw new UnsupportedOperationException("There is no direct CS for Ecore");
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new Ecore2AS(resource, environmentFactory);
+	}
+
 	@Override
 	public @NonNull Resource createResource(URI uri) {
 		assert uri != null;
@@ -83,14 +91,6 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public @NonNull ASResourceFactory getASResourceFactory() {
 		return getInstance();
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public @NonNull Ecore2AS getExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		return Ecore2AS.getAdapter(resource, environmentFactory);
 	}
 
 	@Override

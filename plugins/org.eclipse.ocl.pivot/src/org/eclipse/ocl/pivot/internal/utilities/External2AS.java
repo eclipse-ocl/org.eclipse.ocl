@@ -46,7 +46,7 @@ public interface External2AS
 			if (asResourceFactory == null) {
 				asResourceFactory = EcoreASResourceFactory.getInstance();
 			}
-			es2as = asResourceFactory.getExternal2AS(resource, environmentFactory);
+			es2as = asResourceFactory.createExternal2AS(resource, environmentFactory);
 		}
 		return es2as;
 	}

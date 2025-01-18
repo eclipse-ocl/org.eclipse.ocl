@@ -87,6 +87,14 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		throw new UnsupportedOperationException("There is no CS for UML");
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return UML2AS.getAdapter(resource, environmentFactory);
+	}
+
 	@Override
 	public @NonNull Resource createResource(URI uri) {
 		assert uri != null;
@@ -255,14 +263,6 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public @NonNull External2AS getExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		return UML2AS.getAdapter(resource, environmentFactory);
 	}
 
 	@Override

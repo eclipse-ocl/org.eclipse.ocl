@@ -14,7 +14,7 @@ inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{stat
 	let extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in
 	let missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in
 	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status
-	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status
+	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(q | q.name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status
 	else Tuple{status:Boolean[1]=true, message:String[1]=''}.status
 	endif endif endif
 

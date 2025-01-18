@@ -106,11 +106,18 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public static final @NonNull String STEREOTYPE_BASE_PREFIX = org.eclipse.uml2.uml.Extension.METACLASS_ROLE_PREFIX; //"base_";
 	public static final @NonNull String STEREOTYPE_EXTENSION_PREFIX = org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX; //"extension_";
 
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull UML2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new Outer(resource, environmentFactory);
+	}
+
 	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
 		UML2AS adapter = (UML2AS)External2AS.findAdapter(resource, environmentFactory);
 		if (adapter == null) {
-			adapter = new Outer(resource, environmentFactory);
+			adapter = createExternal2AS(resource, environmentFactory);
 		}
 		return adapter;
 	}

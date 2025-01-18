@@ -143,6 +143,13 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
 
 	/**
+	 * @since 1.23
+	 */
+	default @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Create the LUSSID allocator for an asResource.
 	 *
 	 * @since 1.23
@@ -181,13 +188,6 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@Nullable EOperation getEOperation(@NonNull ASResource asResource, @NonNull EObject eObject);
 
 	@Nullable EReference getEReference(@NonNull ASResource asResource, @NonNull EObject eObject);
-
-	/**
-	 * @since 1.23
-	 */
-	default @NonNull External2AS getExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		throw new UnsupportedOperationException();
-	}
 
 	@NonNull Technology getTechnology();
 

@@ -314,7 +314,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		URI resourceURI = eProxyURI.trimFragment();
 	//	Resource resource = resourceSet.getResource(resourceURI, false);
 	//	if (resource == null) {
-			if (PivotUtilInternal.isASURI(resourceURI)) {
+			if (PivotUtilInternal.isASURI(resourceURI)) {				// XXX review
 				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					try {
