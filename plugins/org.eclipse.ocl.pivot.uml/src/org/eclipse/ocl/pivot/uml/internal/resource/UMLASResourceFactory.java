@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -254,6 +255,14 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull External2AS getExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return UML2AS.getAdapter(resource, environmentFactory);
 	}
 
 	@Override

@@ -103,17 +103,16 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
-		Ecore2AS castAdapter = (Ecore2AS) adapter;
+		Ecore2AS castAdapter = (Ecore2AS)adapter;
 		return castAdapter;
 	}
 
-	@Deprecated /* @deprecated use External2AS */
 	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		Ecore2AS castAdapter = basicGetAdapter(resource, environmentFactory);
-		if (castAdapter == null) {
-			castAdapter = new Ecore2AS(resource, environmentFactory);
+		Ecore2AS adapter = (Ecore2AS)External2AS.findAdapter(resource, environmentFactory);
+		if (adapter == null) {
+			adapter = new Ecore2AS(resource, environmentFactory);
 		}
-		return castAdapter;
+		return adapter;
 	}
 
 	/**
@@ -287,6 +286,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
+		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
 	}
 
 	/**

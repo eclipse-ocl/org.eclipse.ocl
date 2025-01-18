@@ -108,7 +108,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
-		UML2AS adapter = (UML2AS) External2AS.findAdapter(resource, environmentFactory);
+		UML2AS adapter = (UML2AS)External2AS.findAdapter(resource, environmentFactory);
 		if (adapter == null) {
 			adapter = new Outer(resource, environmentFactory);
 		}

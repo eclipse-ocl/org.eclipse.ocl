@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -471,11 +470,8 @@ public class LoadTests extends XtextTestCase
 			List<Resource> importedResources = rootAdapter.getImportedResources();
 			if (importedResources != null) {
 				for (Resource uResource : importedResources) {
-					External2AS anAdapter = External2AS.findAdapter(uResource, environmentFactory);
-					if (anAdapter == null) {
-						anAdapter = UML2AS.getAdapter(uResource, environmentFactory);
-					}
-					Model asModel = anAdapter.getASModel();
+					UML2AS uml2as = UML2AS.getAdapter(uResource, environmentFactory);
+					Model asModel = uml2as.getASModel();
 					Resource asResource = asModel.eResource();
 					allResources.add(asResource);
 				}
@@ -1418,6 +1414,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Fruit_ocl() throws IOException, InterruptedException {
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 		UMLStandaloneSetup.init();
 		OCL ocl = createOCLWithProjectMap();
 		UMLPackage.eINSTANCE.getClass();

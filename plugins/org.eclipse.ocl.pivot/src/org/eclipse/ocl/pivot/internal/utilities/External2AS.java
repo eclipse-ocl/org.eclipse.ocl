@@ -19,7 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -38,9 +40,13 @@ public interface External2AS
 	 * @since 1.23
 	 */
 	public static @NonNull External2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		External2AS es2as = External2AS.findAdapter(resource, environmentFactory);
+		External2AS es2as = External2AS.findAdapter(resource, environmentFactory);		// XXX review prolific guards
 		if (es2as == null) {
-			es2as = Ecore2AS.getAdapter(resource, environmentFactory);
+			ASResourceFactory asResourceFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(resource);
+			if (asResourceFactory == null) {
+				asResourceFactory = EcoreASResourceFactory.getInstance();
+			}
+			es2as = asResourceFactory.getExternal2AS(resource, environmentFactory);
 		}
 		return es2as;
 	}

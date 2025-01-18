@@ -379,7 +379,14 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		}
 		else if (esResolvedProxy instanceof EModelElement) {			// If resolution is to an Ecore element resolve to its AS
 			EModelElement eModelElement = (EModelElement)esResolvedProxy;
-			assert !eModelElement.eIsProxy();
+			assert !eModelElement.eIsProxy();	// Skip id eResource() .isLoading for UML
+			Resource eResource = eModelElement.eResource();
+			if (((Resource.Internal)eResource).isLoading()) {
+				if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
+					ASResourceImpl.RESOLVE_PROXY.println("\t\t\t\t\t\t\t\t" + NameUtil.debugFullName(esResolvedProxy) + " => still loading");
+				}
+				return proxy;
+			}
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
@@ -395,7 +402,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		else if (esResolvedProxy instanceof Element) {
 			Element asElement = (Element)esResolvedProxy;
 			assert !asElement.eIsProxy();
-			asResolvedProxy = asElement;								// Xtext proxies are resolved directly to AS
+			return asElement;								// Xtext proxies are resolved directly to AS
 		}
 		else if (esResolvedProxy instanceof Pivotable) {				// If resolution is to a CS element resolve to its AS
 			Pivotable esPivotable = (Pivotable)esResolvedProxy;
@@ -406,7 +413,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			assert false;												// unsupported never happens
 		}
 		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
-			ASResourceImpl.RESOLVE_PROXY.println("\t\t\t\t\t\t\t\t" + NameUtil.debugSimpleName(esResolvedProxy) + " => " + NameUtil.debugSimpleName(asResolvedProxy));
+			ASResourceImpl.RESOLVE_PROXY.println("\t\t\t\t\t\t\t\t" + NameUtil.debugFullName(esResolvedProxy) + " => " + NameUtil.debugFullName(asResolvedProxy));
 		}
 		return asResolvedProxy != null ? asResolvedProxy : (EObject)esResolvedProxy;
 	}

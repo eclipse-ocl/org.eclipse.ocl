@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -180,6 +181,13 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@Nullable EOperation getEOperation(@NonNull ASResource asResource, @NonNull EObject eObject);
 
 	@Nullable EReference getEReference(@NonNull ASResource asResource, @NonNull EObject eObject);
+
+	/**
+	 * @since 1.23
+	 */
+	default @NonNull External2AS getExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		throw new UnsupportedOperationException();
+	}
 
 	@NonNull Technology getTechnology();
 
