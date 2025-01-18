@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Willink Transformations and others.
+ * Copyright (c) 2011, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,5 @@ package org.eclipse.ocl.xtext.oclinecore.scoping;
 
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
 
-@Deprecated /* @deprecated not used */
 public abstract class AbstractOCLinEcoreScopeProvider extends EssentialOCLScopeProvider {
 }
