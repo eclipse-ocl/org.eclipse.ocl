@@ -187,7 +187,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	protected NavigatingArgCS createNavigatingArgCS(@Nullable String prefix, /*@NonNull*/ NamedElement asNamedElement, @Nullable TypedElement asTypedElement, @Nullable OCLExpression csInit) {
 		NavigatingArgCS csNavigatingArg = EssentialOCLCSFactory.eINSTANCE.createNavigatingArgCS();
 		csNavigatingArg.setPrefix(prefix);
-		csNavigatingArg.setOwnedNameExpression(createNameExpCS(asNamedElement));
+		csNavigatingArg.setOwnedNameExpression(createStringLiteralExpCS(asNamedElement.getName()));
 		if (asTypedElement != null) {
 			csNavigatingArg.setOwnedType(createTypeRefCS(asTypedElement.getType()));
 		}
@@ -241,6 +241,12 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			csSquareBracketedClause.getOwnedTerms().add(csExp);
 		}
 		return csSquareBracketedClause;
+	}
+
+	protected @NonNull StringLiteralExpCS createStringLiteralExpCS(/*@NonNull*/String asString) {
+		StringLiteralExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createStringLiteralExpCS();
+		csNameExp.getSegments().add(asString);
+		return csNameExp;
 	}
 
 	protected @Nullable TypedRefCS createTypeRefCS(@Nullable Type asType) {
