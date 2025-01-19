@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -329,6 +330,9 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	//		assert resource != null;		// XXX
 	//	}
 		Resource resource = resourceSet.getResource(resourceURI, true);
+		if (resource instanceof DelegatedSinglePackageResource) {
+			resource = ((DelegatedSinglePackageResource)resource).getResource();
+		}
 	//	try {
 	//		resource.load(null);
 	//	} catch (IOException e) {
