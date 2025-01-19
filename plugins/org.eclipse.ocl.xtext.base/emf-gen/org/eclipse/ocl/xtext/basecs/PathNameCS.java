@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getScopeFilter <em>Scope Filter</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
@@ -147,5 +148,61 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * @generated
 	 */
 	void setScopeFilter(ScopeFilter value);
+
+	/**
+	 * Returns the value of the '<em><b>Serialized</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Serialized</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The derived serialized value persists the path name when the CS resource is saved and loaded directly. The textual values are normally provided by Xtext's Node model.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Serialized</em>' attribute.
+	 * @see #isSetSerialized()
+	 * @see #unsetSerialized()
+	 * @see #setSerialized(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Serialized()
+	 * @model unsettable="true" volatile="true" derived="true"
+	 * @generated
+	 */
+	String getSerialized();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Serialized</em>' attribute.
+	 * @see #isSetSerialized()
+	 * @see #unsetSerialized()
+	 * @see #getSerialized()
+	 * @generated
+	 */
+	void setSerialized(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetSerialized()
+	 * @see #getSerialized()
+	 * @see #setSerialized(String)
+	 * @generated
+	 */
+	void unsetSerialized();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Serialized</em>' attribute is set.
+	 * @see #unsetSerialized()
+	 * @see #getSerialized()
+	 * @see #setSerialized(String)
+	 * @generated
+	 */
+	boolean isSetSerialized();
 
 } // QualifiedElementRefCS

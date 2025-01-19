@@ -162,8 +162,8 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			}
 			ICompositeNode node = NodeModelUtils.getNode(csName);
 			System.out.println(NameUtil.debugSimpleName(csArgument) + " \"" + csArgument + "\" " + NameUtil.debugSimpleName(csName) + " \"" + csName + "\" " + NameUtil.debugSimpleName(node));
-			if (node != null) {
-				String varName = ElementUtil.getTextName(csName);
+		//	if (node != null) {
+				String varName = node != null ? ElementUtil.getTextName(csName) : csPathName.getSerialized();
 				System.out.println(	"\t\t\"" + varName + "\"");
 				assert varName != null;
 				helper.refreshName(parameter, varName);
@@ -171,7 +171,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				PathElementCS csPathElement = path.get(path.size()-1);
 				csPathElement.setReferredElement(parameter);	// Resolve the reference that is actually a definition
 				csPathElement.setElementType(null);		// Indicate a definition to the syntax colouring
-			}
+		//	}
 		}
 	}
 

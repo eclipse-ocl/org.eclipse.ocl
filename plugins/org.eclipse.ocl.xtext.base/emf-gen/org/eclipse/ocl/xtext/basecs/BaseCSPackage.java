@@ -1612,6 +1612,17 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getPathNameCS_ScopeFilter();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Serialized</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized()
+	 * @see #getPathNameCS()
+	 * @generated
+	 */
+	EAttribute getPathNameCS_Serialized();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.PivotableElementCS <em>Pivotable Element CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3094,6 +3105,14 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PATH_NAME_CS__SCOPE_FILTER = eINSTANCE.getPathNameCS_ScopeFilter();
+
+		/**
+		 * The meta object literal for the '<em><b>Serialized</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_NAME_CS__SERIALIZED = eINSTANCE.getPathNameCS_Serialized();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl <em>Pivotable Element CS</em>}' class.

@@ -293,6 +293,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
+		assert !(ecoreResource instanceof DelegatedSinglePackageResource);			// XXX
 		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
 	}
 

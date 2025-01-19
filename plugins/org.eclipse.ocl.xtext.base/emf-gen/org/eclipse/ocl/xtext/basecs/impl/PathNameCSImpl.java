@@ -28,6 +28,8 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,6 +43,7 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getScopeFilter <em>Scope Filter</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getSerialized <em>Serialized</em>}</li>
  * </ul>
  *
  * @generated
@@ -54,7 +57,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 4;
+	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
@@ -104,6 +107,16 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @ordered
 	 */
 	protected ScopeFilter scopeFilter = SCOPE_FILTER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getSerialized() <em>Serialized</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSerialized()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SERIALIZED_EDEFAULT = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +189,8 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				return basicGetReferredElement();
 			case 5:
 				return getScopeFilter();
+			case 6:
+				return getSerialized();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -201,6 +216,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				setScopeFilter((ScopeFilter)newValue);
 				return;
+			case 6:
+				setSerialized((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -224,6 +242,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				setScopeFilter(SCOPE_FILTER_EDEFAULT);
 				return;
+			case 6:
+				unsetSerialized();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -246,6 +267,8 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				return basicGetReferredElement() != null;
 			case 5:
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
+			case 6:
+				return isSetSerialized();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -353,6 +376,58 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		scopeFilter = newScopeFilter;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldScopeFilter, scopeFilter));
+	}
+
+	private String serialized = null;
+	private static final @NonNull String NO_VALUE = "$There is no value$";
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String getSerialized()
+	{
+		if (serialized == null) {
+			ICompositeNode node = NodeModelUtils.getNode(this);
+			String text = node != null ? NodeModelUtils.getTokenText(node) : null;
+			serialized = text != null ? text : NO_VALUE;
+		}
+		return serialized != NO_VALUE ? serialized : null;				// NB = rather than equals to avoid user equivalent collision
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void setSerialized(String newSerialized)
+	{
+		serialized = newSerialized;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void unsetSerialized()
+	{
+		serialized = null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isSetSerialized()
+	{
+		return getSerialized() != null;
 	}
 
 	/**
