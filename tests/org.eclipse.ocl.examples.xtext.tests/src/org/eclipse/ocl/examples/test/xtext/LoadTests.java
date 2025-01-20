@@ -155,9 +155,8 @@ public class LoadTests extends XtextTestCase
 		}
 	}
 
-	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI textCSuri, @NonNull String... messages) throws IOException {
-		System.out.println("checkLoadableFromXMI " + textCSuri);
-		URI xmiCSuri = getXMIoutputURI(textCSuri);
+	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI xmiCSuri, @NonNull String... messages) throws IOException {
+		System.out.println("checkLoadableFromXMI " + xmiCSuri);
 		OCL ocl = createOCLWithProjectMap();
 		try {
 			CSResource csResource = (CSResource)ocl.getResourceSet().getResource(xmiCSuri, true);
@@ -175,7 +174,8 @@ public class LoadTests extends XtextTestCase
 		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
 		//	unloadResourceSet(asResource.getResourceSet());
 			for (Resource resource : ocl.getEnvironmentFactory().getASResourceSet().getResources()) {
-				if (!"http".equals(resource.getURI().scheme())) {
+				String scheme = resource.getURI().scheme();
+				if (!"http".equals(scheme) && !"pathmap".equals(scheme)) {
 					System.out.println("checkLoadableFromXMI unload " + resource.getURI());
 					resource.unload();
 				}
@@ -1423,6 +1423,16 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
+	}
+
+	/*
+	 * Repeat the final checkLoadableFromXMI stage of testLoad_Fruit_ocl as a debug aid.
+	 */
+	public void testLoad_Fruit_oclcs() throws IOException, InterruptedException {
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
+		UMLStandaloneSetup.init();
+		URI oclOutputURI = getTestModelURI("models/uml/Fruit.saved.oclcs");		// Copied from testLoad_Fruit_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
 
@@ -1434,7 +1444,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
@@ -1445,6 +1455,14 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
+	}
+
+	/*
+	 * Repeat the final checkLoadableFromXMI stage of testLoad_MiniPivot_ocl as a debug aid.
+	 */
+	public void testLoad_MiniPivot_oclcs() throws IOException, InterruptedException {
+		URI oclOutputURI = getTestModelURI("models/ocl/MiniPivot.saved.oclcs");		// Copied from testLoad_MiniPivot_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
 
@@ -1462,7 +1480,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
@@ -1473,7 +1491,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoadUnloadReload_OCLTest_ocl() throws IOException, InterruptedException {
@@ -1497,7 +1515,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoadSaveAsCSLoad_OCLTest_ocl() throws IOException, InterruptedException {
@@ -1540,7 +1558,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoad_RoyalAndLoyal_ocl() throws IOException, InterruptedException {
@@ -1551,7 +1569,7 @@ public class LoadTests extends XtextTestCase
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
-		checkLoadableFromXMI(oclOutputURI);
+		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
 	}
 
 	public void testLoad_Internationalized_profile_uml() throws IOException, InterruptedException, ParserException {
