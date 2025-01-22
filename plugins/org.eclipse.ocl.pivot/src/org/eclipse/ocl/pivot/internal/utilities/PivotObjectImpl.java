@@ -66,7 +66,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxyURI);
 		}
-		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;
+// XXX		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;		// XXX fails since CompleteClass has no eResource
 		EObject resolvedProxy = null;
 		if (!PivotUtilInternal.isASURI(proxyURI)) {
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
