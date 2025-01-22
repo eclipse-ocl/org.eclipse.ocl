@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
@@ -381,6 +383,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	private String serialized = null;
 	private static final @NonNull String NO_VALUE = "$There is no value$";
 
+	public String basicGetSerialized() {
+		return serialized;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -465,6 +471,17 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	@Override
 	public Element getReferredElement()
 	{
+		if (serialized != null) {
+			assert ownedPathElements != null;
+			assert ownedPathElements.size() == 1;
+			Element element = ownedPathElements.get(0).getReferredElement();
+			if (PivotConstants.RESULT_NAME.equals(serialized)) {
+				assert element instanceof Operation;
+			}
+			else {
+
+			}
+		}
 		if (ownedPathElements == null) {
 			return null;
 		}

@@ -409,6 +409,11 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				}
 			}
 		}
+	//	else if (esResolvedProxy instanceof Operation) {
+	//		Element asElement = (Element)esResolvedProxy;
+	//		assert !asElement.eIsProxy();
+	//		return asElement;								// Xtext proxies are resolved directly to AS
+	//	}
 		else if (esResolvedProxy instanceof Element) {
 			Element asElement = (Element)esResolvedProxy;
 			assert !asElement.eIsProxy();

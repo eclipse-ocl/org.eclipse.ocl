@@ -27,14 +27,14 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
-import org.eclipse.ocl.xtext.essentialoclcs.ShadowExpCS;
-import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.IterateCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.IterationCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.OperationCallExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.PropertyCallExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.ShadowExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableExpCS;
@@ -741,5 +741,16 @@ public class NameExpCSImpl
 		else {
 			return super.accept(visitor);
 		}
+	}
+
+	@Override
+	public void setPivot(Element newPivot) {
+		if ((newPivot != null) && "result".equals(toString())) {
+			getClass();		// XXX
+		}
+		if ((newPivot != null) && "Membership".equals(toString())) {
+			getClass();		// XXX
+		}
+		super.setPivot(newPivot);
 	}
 } //NamedElementRefCSImpl

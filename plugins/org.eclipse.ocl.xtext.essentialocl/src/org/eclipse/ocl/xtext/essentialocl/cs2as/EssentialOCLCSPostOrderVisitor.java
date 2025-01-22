@@ -57,6 +57,9 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 			// b) refreshing an ExpressionInOCL for a simple statusExpression
 			// c) refreshing an ExpressionInOCL+PropertyCallExp of a TupleLiteralExp for statusExpression+messageExpression
 			Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csElement);
+			if (String.valueOf(asConstraint).startsWith("postcondition:")) {
+				getClass();		// XXX
+			}
 			ExpSpecificationCS csStatusSpecification = (ExpSpecificationCS)csElement.getOwnedSpecification();
 			if ((asConstraint != null) && (csStatusSpecification != null)) {
 				ExpCS csStatusExpression = csStatusSpecification.getOwnedExpression();

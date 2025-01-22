@@ -29,7 +29,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -45,6 +48,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -78,8 +82,11 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 
 		@Override
 		public String getHREF(EObject obj) {
+			if (String.valueOf(obj).contains("Membership")) {
+				getClass();		// XXX
+			}
 			String href2 = getHREF2(obj);
-		//	System.out.println(obj + " => " + href2);		// XXX
+			System.out.println(obj + " => " + href2);		// XXX
 			return href2;
 		}
 
@@ -116,9 +123,27 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 			Object value = super.getValue(obj, f);
 			if (value instanceof ParameterVariable) {
 				//
-				//	ParameterVariable has no distinct CS equivalent so must reference its Parameter.
+				//	ParameterVariable has no distinct CS equivalent so must reference its Type/Parameter/Operation.
 				//
-				value = ((ParameterVariable)value).getRepresentedParameter();
+				ParameterVariable parameterVariable = (ParameterVariable)value;
+				EStructuralFeature eContainingFeature = parameterVariable.eContainingFeature();
+				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
+					assert parameterVariable.getRepresentedParameter() == null;
+					value = parameterVariable.getType();			// Never happens: SelfExpCS rather than NameExpCS
+				}
+				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+					Parameter representedParameter = parameterVariable.getRepresentedParameter();
+					assert representedParameter != null;
+					value = representedParameter;
+				}
+				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
+					assert parameterVariable.getRepresentedParameter() == null;
+					Operation asOperation = PivotUtil.getContainingOperation(parameterVariable);
+					value = asOperation;
+				}
+				else {
+					throw new UnsupportedOperationException();
+				}
 			}
 			return value;
 		}

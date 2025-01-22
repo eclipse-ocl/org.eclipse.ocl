@@ -75,6 +75,7 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
+import org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.xtext.diagnostics.Diagnostic;
@@ -658,6 +659,9 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	public @Nullable Element lookupUndecoratedName(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName) {
+		if ("result".equals(((PathNameCSImpl)csPathName).basicGetSerialized())) {
+			getClass();		// XXX
+		}
 		setElementType(csPathName, PivotPackage.Literals.ELEMENT, csElement, UndecoratedNameFilter.INSTANCE);
 		Element namedElement = csPathName.getReferredElement();
 		return namedElement;

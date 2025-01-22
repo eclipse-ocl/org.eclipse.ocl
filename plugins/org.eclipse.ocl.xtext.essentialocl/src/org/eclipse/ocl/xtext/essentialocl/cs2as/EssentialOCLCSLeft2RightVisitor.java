@@ -109,6 +109,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
+import org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl;
 import org.eclipse.ocl.xtext.essentialocl.attributes.AbstractOperationMatcher;
 import org.eclipse.ocl.xtext.essentialocl.attributes.BinaryOperationMatcher;
 import org.eclipse.ocl.xtext.essentialocl.attributes.NavigationUtil;
@@ -1056,7 +1057,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OperatorExpCS csParent = csNameExp.getLocalParent();
 		boolean isSafe = false;
 		if (csParent instanceof InfixExpCS) {
-			String operatorName = ((InfixExpCS)csParent).getName();
+			String operatorName = csParent.getName();
 			isSafe = PivotConstants.SAFE_AGGREGATE_NAVIGATION_OPERATOR.equals(operatorName);
 		}
 		//		boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
@@ -1471,7 +1472,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected Element resolveRoundBracketedTerm(@NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		OperatorExpCS csParent = csNameExp.getLocalParent();
-		if (NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && (csNameExp != ((InfixExpCS)csParent).getSource())) {
+		if (NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && (csNameExp != csParent.getSource())) {
 			// source.name(), source->name() are resolved by the parent NavigationOperatorCS
 			return PivotUtil.getPivot(OCLExpression.class, csNameExp);
 		}
@@ -2132,13 +2133,16 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
-		//		csNameExp.getPathName().get
+		if ("result".equals(((PathNameCSImpl)csPathName).basicGetSerialized())) {
+			getClass();			// XXX
+		}
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);
 		if ((element == null) || element.eIsProxy()) {
 			Element pivot = csNameExp.getPivot();
 			if (pivot instanceof InvalidLiteralExp) {
 				return pivot;
 			}
+			Element xxelement = context.lookupUndecoratedName(csNameExp, csPathName);		// XXX
 			InvalidLiteralExp invalidLiteralExp = metamodelManager.createInvalidExpression();
 			context.installPivotUsage(csNameExp, invalidLiteralExp);
 			return invalidLiteralExp;
