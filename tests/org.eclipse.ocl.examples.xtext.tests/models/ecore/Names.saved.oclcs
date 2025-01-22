@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<completeoclcs:CompleteOCLDocumentCS xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
+    xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
+  <ownedImports>
+    <ownedPathName serialized="'platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore'">
+      <ownedPathElements xsi:type="basecs:PathElementWithURICS">
+        <referredElement xsi:type="pivot:Model" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore"/>
+      </ownedPathElements>
+    </ownedPathName>
+  </ownedImports>
+  <ownedPackages>
+    <ownedPathName serialized="names">
+      <ownedPathElements>
+        <referredElement xsi:type="pivot:Package" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#/"/>
+      </ownedPathElements>
+    </ownedPathName>
+    <ownedContexts xsi:type="completeoclcs:PropertyContextDeclCS">
+      <ownedPathName serialized="Named::r">
+        <ownedPathElements>
+          <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named"/>
+        </ownedPathElements>
+        <ownedPathElements>
+          <referredElement xsi:type="pivot:Property" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named/r"/>
+        </ownedPathElements>
+      </ownedPathName>
+      <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="Real"/>
+      <ownedDefaultExpressions>
+        <ownedExpression xsi:type="essentialoclcs:InfixExpCS" name="+">
+          <ownedRight xsi:type="essentialoclcs:NameExpCS">
+            <ownedPathName serialized="t">
+              <ownedPathElements>
+                <referredElement xsi:type="pivot:Property" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named/t"/>
+              </ownedPathElements>
+            </ownedPathName>
+          </ownedRight>
+          <ownedLeft xsi:type="essentialoclcs:NumberLiteralExpCS" symbol="0.0"/>
+        </ownedExpression>
+      </ownedDefaultExpressions>
+    </ownedContexts>
+    <ownedContexts xsi:type="completeoclcs:PropertyContextDeclCS">
+      <ownedPathName serialized="Named::s">
+        <ownedPathElements>
+          <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named"/>
+        </ownedPathElements>
+        <ownedPathElements>
+          <referredElement xsi:type="pivot:Property" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named/s"/>
+        </ownedPathElements>
+      </ownedPathName>
+      <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String"/>
+      <ownedDefaultExpressions>
+        <ownedExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+          <segments></segments>
+        </ownedExpression>
+      </ownedDefaultExpressions>
+    </ownedContexts>
+  </ownedPackages>
+</completeoclcs:CompleteOCLDocumentCS>

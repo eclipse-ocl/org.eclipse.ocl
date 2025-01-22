@@ -1462,12 +1462,13 @@ public class LoadTests extends XtextTestCase
 	 * Repeat the final checkLoadableFromXMI stage of testLoad_MiniPivot_ocl as a debug aid.
 	 */
 	public void testLoad_MiniPivot_oclcs() throws IOException, InterruptedException {
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 		URI oclOutputURI = getTestModelURI("models/ocl/MiniPivot.saved.oclcs");		// Copied from testLoad_MiniPivot_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	PartialModels.PARTIAL_MODELS.setState(true);
 	//	PartialPackages.PARTIAL_PACKAGES.setState(true);
@@ -1481,6 +1482,15 @@ public class LoadTests extends XtextTestCase
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);
 		checkLoadableFromXMI(getXMIoutputURI(oclOutputURI));
+	}
+
+	/*
+	 * Repeat the final checkLoadableFromXMI stage of testLoad_Names_ocl as a debug aid.
+	 */
+	public void testLoad_Names_oclcs() throws IOException, InterruptedException {
+		ASResourceImpl.RESOLVE_PROXY.setState(true);
+		URI oclOutputURI = getTestModelURI("models/ecore/Names.saved.oclcs");		// Copied from testLoad_Names_ocl outputs
+		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
