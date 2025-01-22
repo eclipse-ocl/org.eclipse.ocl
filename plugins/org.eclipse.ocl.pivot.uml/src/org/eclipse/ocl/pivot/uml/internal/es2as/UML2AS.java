@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -75,6 +76,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -502,6 +504,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			else {
 //				System.out.println("Assigned : " + eObject);
 			} */
+			System.out.println("addCreated " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement.toString().replace("\r", " ").replace("\n", " "));
 		}
 
 		@Override
@@ -567,7 +570,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		public void addProperty(org.eclipse.ocl.pivot.@NonNull Class asType, @NonNull Property asProperty) {
 			List<@NonNull Property> asProperties = type2properties.get(asType);
 			if (asProperties == null) {
-				asProperties = new ArrayList<>();
+				asProperties = new UniqueList<>();
 				type2properties.put(asType, asProperties);
 			}
 			asProperties.add(asProperty);
@@ -618,7 +621,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@Override
 		public @NonNull Model getASModel() throws ParserException {
 			Model pivotModel2 = pivotModel;
-			if (pivotModel2 == null) {
+			if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 				URI pivotURI = createPivotURI();
 				ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
 				try {
@@ -733,6 +736,17 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 			@SuppressWarnings("unchecked")
 			T castElement = (T) element;
+			if ((castElement != null) && castElement.eIsProxy()) {
+				System.out.println(NameUtil.debugSimpleName(this) + " proxy " + NameUtil.debugSimpleName(castElement) + " " + castElement);
+				for (Entry<@NonNull EObject, @NonNull Element> entry : createMap.entrySet()) {
+					EObject key = entry.getKey();
+					Element value = entry.getValue();
+					String replace = key.toString().replace("\r", "").replace("\n", " ");
+					String replace2 = value.toString().replace("\r", "").replace("\n", " ");
+					System.out.println(NameUtil.debugSimpleName(key) + " " + replace + " => " + NameUtil.debugSimpleName(value) + " " + replace2);
+				}
+			}
+
 			return castElement;
 		}
 
@@ -1017,6 +1031,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		completeModel.addPackageURI2completeURI(ClassUtil.nonNullEMF(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
 		completeModel.addPackageURI2completeURI(ClassUtil.nonNullEMF(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
 		// FIXME All known synonyms
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + umlResource.getURI());
 	}
 
 	/*public*/ void addAssociationClassProperties(@NonNull AssociationClass asAssociationClass, @NonNull AssociationClassProperties asProperties) {

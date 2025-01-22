@@ -28,10 +28,12 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -366,6 +368,14 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		EObject asResolvedProxy = null;
 		if (esResolvedProxy == null) {									// Not resolved
 		}
+		else if (esResolvedProxy instanceof CSResource) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				CSResource csResource = (CSResource)esResolvedProxy;
+				CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
+				asResolvedProxy = cs2as.getASModel();
+			}
+		}
 		else if (esResolvedProxy instanceof Resource) {					// If resolution is to an Ecore resource resolve to its AS Model
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
@@ -373,7 +383,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 					External2AS es2as = External2AS.getAdapter((Resource)esResolvedProxy, environmentFactory);
 					asResolvedProxy = es2as.getASModel();
 				} catch (ParserException e) {
-					throw new IllegalStateException(e);					// Never happens proxies do not parse
+					throw new IllegalStateException(e);					// Never happens proxies do not parse // XXX but validation can fail
 				}
 			}
 		}

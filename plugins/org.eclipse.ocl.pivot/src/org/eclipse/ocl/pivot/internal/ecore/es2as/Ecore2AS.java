@@ -295,6 +295,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		this.environmentFactory.addExternal2AS(this);
 		assert !(ecoreResource instanceof DelegatedSinglePackageResource);			// XXX
 		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + ecoreResource.getURI());
 	}
 
 	/**
@@ -303,6 +304,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
+//		System.out.println("addCreated " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement);
 	}
 
 	@Override
@@ -869,7 +871,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-	/*	Element oldElement = */ addCreated(eModelElement, castElement);
+	/*	Element oldElement = */ addCreated(eModelElement, castElement);			// XXX redundant wrt later addMapping (see testLoad_Names_oclcs)
 	//	assert oldElement == null;
 		return castElement;
 	}
@@ -1180,6 +1182,7 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	public void update(@NonNull Resource resource, @NonNull Collection<@NonNull EObject> ecoreContents) {
 		ASResource asResource = (ASResource)resource;		// FIXME change signature
+//		System.out.println("update " + NameUtil.debugSimpleName(this) + " for " + ecoreResource.getURI());
 		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 		allConverters.clear();
 		newCreateMap = new HashMap<>();

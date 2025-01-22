@@ -87,6 +87,7 @@ import org.eclipse.ocl.xtext.base.utilities.BasePlugin;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -1575,6 +1576,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	protected void visitInPostOrder(@NonNull ElementCS csElement, @NonNull List<BasicContinuation<?>> continuations) {
+		if ((csElement instanceof Pivotable) && (csElement instanceof ConstraintCS)) {
+			Element asElement = ((Pivotable)csElement).getPivot();
+			assert (asElement != null) && (asElement.eResource() != null);				// XXX
+		}
 		for (EObject eContent : csElement.eContents()) {
 			if (eContent instanceof ElementCS) {
 				visitInPostOrder((ElementCS) eContent, continuations);

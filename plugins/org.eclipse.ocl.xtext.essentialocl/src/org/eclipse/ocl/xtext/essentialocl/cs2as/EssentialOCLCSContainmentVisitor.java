@@ -161,10 +161,10 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				parameter = context.refreshModelElement(Variable.class, PivotPackage.Literals.VARIABLE, csName);
 			}
 			ICompositeNode node = NodeModelUtils.getNode(csName);
-			System.out.println(NameUtil.debugSimpleName(csArgument) + " \"" + csArgument + "\" " + NameUtil.debugSimpleName(csName) + " \"" + csName + "\" " + NameUtil.debugSimpleName(node));
+		//	System.out.println(NameUtil.debugSimpleName(csArgument) + " \"" + csArgument + "\" " + NameUtil.debugSimpleName(csName) + " \"" + csName + "\" " + NameUtil.debugSimpleName(node));
 		//	if (node != null) {
 				String varName = node != null ? ElementUtil.getTextName(csName) : csPathName.getSerialized();
-				System.out.println(	"\t\t\"" + varName + "\"");
+		//		System.out.println(	"\t\t\"" + varName + "\"");
 				assert varName != null;
 				helper.refreshName(parameter, varName);
 				List<PathElementCS> path = csPathName.getOwnedPathElements();
