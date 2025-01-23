@@ -184,9 +184,9 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        transient="true" unsettable="true" derived="true"/>
+        volatile="true" unsettable="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resultName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        transient="true" unsettable="true" derived="true"/>
+        volatile="true" unsettable="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PivotableElementCS" abstract="true"
       eSuperTypes="#//ElementCS">

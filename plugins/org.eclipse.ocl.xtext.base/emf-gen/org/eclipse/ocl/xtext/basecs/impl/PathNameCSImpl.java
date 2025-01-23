@@ -131,25 +131,6 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected static final String PARAMETER_NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getParameterName() <em>Parameter Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParameterName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String parameterName = PARAMETER_NAME_EDEFAULT;
-
-	/**
-	 * This is true if the Parameter Name attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean parameterNameESet;
-
-	/**
 	 * The default value of the '{@link #getResultName() <em>Result Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -158,25 +139,6 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @ordered
 	 */
 	protected static final String RESULT_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getResultName() <em>Result Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResultName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String resultName = RESULT_NAME_EDEFAULT;
-
-	/**
-	 * This is true if the Result Name attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean resultNameESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -515,9 +477,16 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	}
 
 	/**
+	 * The serialization when this is the name of a ParamterVariable that has no CS counterpart.
+	 *
+	 * (It is declared volatile to avoid confusing Xtext.)
+	 */
+	private String parameterName = null;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getParameterName()
@@ -528,50 +497,47 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setParameterName(String newParameterName)
 	{
-		String oldParameterName = parameterName;
 		parameterName = newParameterName;
-		boolean oldParameterNameESet = parameterNameESet;
-		parameterNameESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldParameterName, parameterName, !oldParameterNameESet));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void unsetParameterName()
 	{
-		String oldParameterName = parameterName;
-		boolean oldParameterNameESet = parameterNameESet;
-		parameterName = PARAMETER_NAME_EDEFAULT;
-		parameterNameESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, 7, oldParameterName, PARAMETER_NAME_EDEFAULT, oldParameterNameESet));
+		parameterName = null;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isSetParameterName()
 	{
-		return parameterNameESet;
+		return parameterName != null;
 	}
+
+	/**
+	 * The serialization when this is the name of a ResultVariable that has no CS counterpart.
+	 *
+	 * (It is declared volatile to avoid confusing Xtext.)
+	 */
+	private String resultName = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getResultName()
@@ -582,44 +548,34 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setResultName(String newResultName)
 	{
-		String oldResultName = resultName;
 		resultName = newResultName;
-		boolean oldResultNameESet = resultNameESet;
-		resultNameESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldResultName, resultName, !oldResultNameESet));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void unsetResultName()
 	{
-		String oldResultName = resultName;
-		boolean oldResultNameESet = resultNameESet;
-		resultName = RESULT_NAME_EDEFAULT;
-		resultNameESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, 8, oldResultName, RESULT_NAME_EDEFAULT, oldResultNameESet));
+		resultName = null;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isSetResultName()
 	{
-		return resultNameESet;
+		return resultName != null;
 	}
 
 	/**

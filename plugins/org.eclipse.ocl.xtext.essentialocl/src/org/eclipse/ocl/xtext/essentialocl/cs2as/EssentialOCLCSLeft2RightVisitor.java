@@ -60,10 +60,12 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -1549,9 +1551,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
+		PathNameCS csPathName = csNameExp.getOwnedPathName();
+		String variableName = variableDeclaration.getName();
+		if (variableDeclaration instanceof ParameterVariable) {
+			csPathName.setParameterName(variableName);
+			csPathName.unsetResultName();
+		}
+		else if (variableDeclaration instanceof ResultVariable) {
+			csPathName.unsetParameterName();
+			csPathName.setResultName(variableName);
+		}
+		else {
+			csPathName.unsetParameterName();
+			csPathName.unsetResultName();
+		}
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
-		expression.setName(variableDeclaration.getName());
+		expression.setName(variableName);
 		helper.setType(expression, variableDeclaration.getType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
 		return expression;
 	}
@@ -2133,6 +2149,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
+		if ("result".equals(((PathNameCSImpl)csPathName).toString())) {
+			getClass();			// XXX
+		}
 		if ("result".equals(((PathNameCSImpl)csPathName).basicGetSerialized())) {
 			getClass();			// XXX
 		}

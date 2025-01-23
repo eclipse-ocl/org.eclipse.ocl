@@ -470,7 +470,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public void setExternalURI(String newExternalURI)
 	{
-		if ("model/Pivot.genmodel.ecore".equals(newExternalURI.toString())) {
+		if ("model/Pivot.genmodel.ecore".equals(newExternalURI)) {
 			getClass();		// XXX
 		}
 		assert (newExternalURI == null) || !newExternalURI.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad externalURI " + newExternalURI;			// XXX

@@ -220,7 +220,7 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * @see #unsetParameterName()
 	 * @see #setParameterName(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ParameterName()
-	 * @model unsettable="true" transient="true" derived="true"
+	 * @model unsettable="true" volatile="true" derived="true"
 	 * @generated
 	 */
 	String getParameterName();
@@ -273,7 +273,7 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * @see #unsetResultName()
 	 * @see #setResultName(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ResultName()
-	 * @model unsettable="true" transient="true" derived="true"
+	 * @model unsettable="true" volatile="true" derived="true"
 	 * @generated
 	 */
 	String getResultName();

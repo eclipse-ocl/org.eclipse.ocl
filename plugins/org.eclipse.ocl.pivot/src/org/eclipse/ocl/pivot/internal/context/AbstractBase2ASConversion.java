@@ -208,7 +208,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		if (returnType != null) {					// FIXME BUG 385711 Use OclVoid rather than null
 			Variable resultVariable = pivotSpecification.getOwnedResult();
 			if (resultVariable == null) {
-				resultVariable = PivotFactory.eINSTANCE.createParameterVariable();
+				resultVariable = PivotFactory.eINSTANCE.createResultVariable();
 			}
 			resultVariable.setName(resultName);
 			if (!contextOperation.eIsProxy()) {
