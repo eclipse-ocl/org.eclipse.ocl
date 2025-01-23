@@ -183,6 +183,10 @@
         <details key="documentation" value="The derived serialized value persists the path name when the CS resource is saved and loaded directly. The textual values are normally provided by Xtext's Node model."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        transient="true" unsettable="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resultName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        transient="true" unsettable="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PivotableElementCS" abstract="true"
       eSuperTypes="#//ElementCS">

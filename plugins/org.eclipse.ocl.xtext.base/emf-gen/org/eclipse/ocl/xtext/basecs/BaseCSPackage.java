@@ -1623,6 +1623,28 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getPathNameCS_Serialized();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parameter Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName()
+	 * @see #getPathNameCS()
+	 * @generated
+	 */
+	EAttribute getPathNameCS_ParameterName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Result Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName()
+	 * @see #getPathNameCS()
+	 * @generated
+	 */
+	EAttribute getPathNameCS_ResultName();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.PivotableElementCS <em>Pivotable Element CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3113,6 +3135,22 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PATH_NAME_CS__SERIALIZED = eINSTANCE.getPathNameCS_Serialized();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameter Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_NAME_CS__PARAMETER_NAME = eINSTANCE.getPathNameCS_ParameterName();
+
+		/**
+		 * The meta object literal for the '<em><b>Result Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_NAME_CS__RESULT_NAME = eINSTANCE.getPathNameCS_ResultName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl <em>Pivotable Element CS</em>}' class.

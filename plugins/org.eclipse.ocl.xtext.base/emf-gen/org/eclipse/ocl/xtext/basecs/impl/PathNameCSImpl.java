@@ -22,9 +22,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
@@ -46,6 +44,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getScopeFilter <em>Scope Filter</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getSerialized <em>Serialized</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getParameterName <em>Parameter Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getResultName <em>Result Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,7 +59,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 5;
+	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 7;
 
 	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
@@ -119,6 +119,64 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @ordered
 	 */
 	protected static final String SERIALIZED_EDEFAULT = null;
+
+	/**
+	 * The default value of the '{@link #getParameterName() <em>Parameter Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameterName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PARAMETER_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getParameterName() <em>Parameter Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameterName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String parameterName = PARAMETER_NAME_EDEFAULT;
+
+	/**
+	 * This is true if the Parameter Name attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean parameterNameESet;
+
+	/**
+	 * The default value of the '{@link #getResultName() <em>Result Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResultName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RESULT_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getResultName() <em>Result Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResultName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String resultName = RESULT_NAME_EDEFAULT;
+
+	/**
+	 * This is true if the Result Name attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean resultNameESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -193,6 +251,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				return getScopeFilter();
 			case 6:
 				return getSerialized();
+			case 7:
+				return getParameterName();
+			case 8:
+				return getResultName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -221,6 +283,12 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 6:
 				setSerialized((String)newValue);
 				return;
+			case 7:
+				setParameterName((String)newValue);
+				return;
+			case 8:
+				setResultName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -247,6 +315,12 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 6:
 				unsetSerialized();
 				return;
+			case 7:
+				unsetParameterName();
+				return;
+			case 8:
+				unsetResultName();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -271,6 +345,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
 			case 6:
 				return isSetSerialized();
+			case 7:
+				return isSetParameterName();
+			case 8:
+				return isSetResultName();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -439,6 +517,114 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getParameterName()
+	{
+		return parameterName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setParameterName(String newParameterName)
+	{
+		String oldParameterName = parameterName;
+		parameterName = newParameterName;
+		boolean oldParameterNameESet = parameterNameESet;
+		parameterNameESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldParameterName, parameterName, !oldParameterNameESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void unsetParameterName()
+	{
+		String oldParameterName = parameterName;
+		boolean oldParameterNameESet = parameterNameESet;
+		parameterName = PARAMETER_NAME_EDEFAULT;
+		parameterNameESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 7, oldParameterName, PARAMETER_NAME_EDEFAULT, oldParameterNameESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSetParameterName()
+	{
+		return parameterNameESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getResultName()
+	{
+		return resultName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setResultName(String newResultName)
+	{
+		String oldResultName = resultName;
+		resultName = newResultName;
+		boolean oldResultNameESet = resultNameESet;
+		resultNameESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldResultName, resultName, !oldResultNameESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void unsetResultName()
+	{
+		String oldResultName = resultName;
+		boolean oldResultNameESet = resultNameESet;
+		resultName = RESULT_NAME_EDEFAULT;
+		resultNameESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 8, oldResultName, RESULT_NAME_EDEFAULT, oldResultNameESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSetResultName()
+	{
+		return resultNameESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -471,7 +657,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	@Override
 	public Element getReferredElement()
 	{
-		if (serialized != null) {
+	/*	if (serialized != null) {
 			assert ownedPathElements != null;
 			assert ownedPathElements.size() == 1;
 			Element element = ownedPathElements.get(0).getReferredElement();
@@ -481,7 +667,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			else {
 
 			}
-		}
+		} */
 		if (ownedPathElements == null) {
 			return null;
 		}

@@ -29,6 +29,8 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getScopeFilter <em>Scope Filter</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
@@ -204,5 +206,111 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * @generated
 	 */
 	boolean isSetSerialized();
+
+	/**
+	 * Returns the value of the '<em><b>Parameter Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameter Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameter Name</em>' attribute.
+	 * @see #isSetParameterName()
+	 * @see #unsetParameterName()
+	 * @see #setParameterName(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ParameterName()
+	 * @model unsettable="true" transient="true" derived="true"
+	 * @generated
+	 */
+	String getParameterName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parameter Name</em>' attribute.
+	 * @see #isSetParameterName()
+	 * @see #unsetParameterName()
+	 * @see #getParameterName()
+	 * @generated
+	 */
+	void setParameterName(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetParameterName()
+	 * @see #getParameterName()
+	 * @see #setParameterName(String)
+	 * @generated
+	 */
+	void unsetParameterName();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Parameter Name</em>' attribute is set.
+	 * @see #unsetParameterName()
+	 * @see #getParameterName()
+	 * @see #setParameterName(String)
+	 * @generated
+	 */
+	boolean isSetParameterName();
+
+	/**
+	 * Returns the value of the '<em><b>Result Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Result Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Result Name</em>' attribute.
+	 * @see #isSetResultName()
+	 * @see #unsetResultName()
+	 * @see #setResultName(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ResultName()
+	 * @model unsettable="true" transient="true" derived="true"
+	 * @generated
+	 */
+	String getResultName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Result Name</em>' attribute.
+	 * @see #isSetResultName()
+	 * @see #unsetResultName()
+	 * @see #getResultName()
+	 * @generated
+	 */
+	void setResultName(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetResultName()
+	 * @see #getResultName()
+	 * @see #setResultName(String)
+	 * @generated
+	 */
+	void unsetResultName();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Result Name</em>' attribute is set.
+	 * @see #unsetResultName()
+	 * @see #getResultName()
+	 * @see #setResultName(String)
+	 * @generated
+	 */
+	boolean isSetResultName();
 
 } // QualifiedElementRefCS
