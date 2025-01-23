@@ -4049,8 +4049,10 @@ implements PivotPackage  {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @deprecated
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public EOperation getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map()
 	{
@@ -4060,8 +4062,10 @@ implements PivotPackage  {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @deprecated
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public EOperation getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map()
 	{
@@ -7199,6 +7203,7 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("deprecation")
 	public void createPackageContents()
 	{
 		if (isCreated) return;
@@ -10353,21 +10358,21 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "not ownedInit?.isRequired implies not isRequired" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null implies ownedInit.type?.conformsTo(type)" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getResultVariable__ValidateHasInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit <> null" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedInit = null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getSelfType__SpecializeIn__CallExp_Type(),
