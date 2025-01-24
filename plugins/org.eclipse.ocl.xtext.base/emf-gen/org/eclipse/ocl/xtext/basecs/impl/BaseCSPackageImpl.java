@@ -2843,7 +2843,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		addEEnumLiteral(pathRoleEEnum, PathRole.NULL);
 		addEEnumLiteral(pathRoleEEnum, PathRole.ITERATOR);
 		addEEnumLiteral(pathRoleEEnum, PathRole.PARAMETER);
-		addEEnumLiteral(pathRoleEEnum, PathRole.RESULT);
+		addEEnumLiteral(pathRoleEEnum, PathRole.RETURN);
 
 		// Initialize data types
 		initEDataType(bigNumberEDataType, Number.class, "BigNumber", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

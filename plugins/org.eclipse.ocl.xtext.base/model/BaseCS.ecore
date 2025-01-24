@@ -311,6 +311,6 @@
     <eLiterals name="NULL"/>
     <eLiterals name="ITERATOR"/>
     <eLiterals name="PARAMETER"/>
-    <eLiterals name="RESULT"/>
+    <eLiterals name="RETURN"/>
   </eClassifiers>
 </ecore:EPackage>

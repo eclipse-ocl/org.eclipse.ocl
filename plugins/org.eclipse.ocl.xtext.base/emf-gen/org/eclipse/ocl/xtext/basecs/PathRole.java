@@ -53,17 +53,15 @@ public enum PathRole implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	PARAMETER(0, "PARAMETER", "PARAMETER"), //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
-	 * The '<em><b>RESULT</b></em>' literal object.
+	PARAMETER(0, "PARAMETER", "PARAMETER"), /**
+	 * The '<em><b>RETURN</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #RESULT_VALUE
+	 * @see #RETURN_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	RESULT(0, "RESULT", "RESULT"); //$NON-NLS-1$ //$NON-NLS-2$
+	RETURN(0, "RETURN", "RETURN"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>NULL</b></em>' literal value.
@@ -99,15 +97,15 @@ public enum PathRole implements Enumerator
 	public static final int PARAMETER_VALUE = 0;
 
 	/**
-	 * The '<em><b>RESULT</b></em>' literal value.
+	 * The '<em><b>RETURN</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #RESULT
+	 * @see #RETURN
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESULT_VALUE = 0;
+	public static final int RETURN_VALUE = 0;
 
 	/**
 	 * An array of all the '<em><b>Path Role</b></em>' enumerators.
@@ -121,7 +119,7 @@ public enum PathRole implements Enumerator
 			NULL,
 			ITERATOR,
 			PARAMETER,
-			RESULT,
+			RETURN,
 		};
 
 	/**

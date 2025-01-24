@@ -30,7 +30,7 @@
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/NULL"/>
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/ITERATOR"/>
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/PARAMETER"/>
-      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/RESULT"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/RETURN"/>
     </genEnums>
     <genDataTypes ecoreDataType="BaseCS.ecore#//BigNumber"/>
     <genDataTypes ecoreDataType="BaseCS.ecore#//CSI"/>

@@ -134,11 +134,6 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected PathNameCSImpl()
 	{
 		super();
-//		System.out.println("ctor:" + count + " " + NameUtil.debugSimpleName(this));
-//		if (count == 71) {
-//			getClass();			// XXX
-//		}
-//		count++;
 	}
 
 	/**
@@ -460,14 +455,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		ICompositeNode node = NodeModelUtils.getNode(this);
 		if (node == null) {
-			if (role == PathRole.RESULT) {
+			if (role == PathRole.RETURN) {
 				assert ownedPathElements != null;
 				assert ownedPathElements.size() == 1;
 				Constraint asPostcondition = (Constraint)ownedPathElements.get(0).getReferredElement();
 				ExpressionInOCL asExpression = (ExpressionInOCL)asPostcondition.getOwnedSpecification();
-				/*Parameter*/Variable asResultVariable = asExpression.getOwnedResult();
-				if (asResultVariable != null) {
-					return asResultVariable;
+				/*Parameter*/Variable asReturnVariable = asExpression.getOwnedResult();
+				if (asReturnVariable != null) {
+					return asReturnVariable;
 				}
 				// XXX errors
 				return asPostcondition;
