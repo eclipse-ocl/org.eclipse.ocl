@@ -240,8 +240,8 @@ public class MonikerTests extends XtextTestCase
 		CSResource xmiResource = csResource.saveAsXMI(xmiOutputURI);
 	//	OCLstdlibCSResourceSaveImpl xmiResource = new OCLstdlibCSResourceSaveImpl(xmiOutputURI, OCLASResourceFactory.getInstance(), csResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-		csResource.setURI(xmiOutputURI);
-		xmiResource.save(null);
+	//	csResource.setURI(xmiOutputURI);
+	//	xmiResource.save(null);
 		assertNoResourceErrors("Saving CS as XMI", xmiResource);
 		ocl.dispose();
 

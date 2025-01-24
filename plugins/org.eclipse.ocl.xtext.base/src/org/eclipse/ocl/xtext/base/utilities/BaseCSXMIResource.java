@@ -27,12 +27,14 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -86,7 +88,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 				getClass();		// XXX
 			}
 			String href2 = getHREF2(obj);
-			System.out.println(obj + " => " + href2);		// XXX
+//			System.out.println(obj + " => " + href2);		// XXX
 			return href2;
 		}
 
@@ -123,23 +125,40 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 			Object value = super.getValue(obj, f);
 			if (value instanceof ParameterVariable) {
 				//
-				//	ParameterVariable has no distinct CS equivalent so must reference its Type/Parameter/Operation.
+				//	ParameterVariable has no distinct CS equivalent so must reference its Operation/Constraint.
 				//
 				ParameterVariable parameterVariable = (ParameterVariable)value;
 				EStructuralFeature eContainingFeature = parameterVariable.eContainingFeature();
-				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
-					assert parameterVariable.getRepresentedParameter() == null;
-					value = parameterVariable.getType();			// Never happens: SelfExpCS rather than NameExpCS
-				}
-				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
 					Parameter representedParameter = parameterVariable.getRepresentedParameter();
 					assert representedParameter != null;
-					value = representedParameter;
+					Constraint asConstraint = PivotUtil.getContainingConstraint(parameterVariable);
+					if (asConstraint != null) {
+						value = asConstraint;
+					}
+					else {
+						Operation asOperation = PivotUtil.getContainingOperation(parameterVariable);
+						if (asOperation != null) {
+							value = asOperation;
+						}
+					}
+				//	value = representedParameter;
 				}
-				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
-					assert parameterVariable.getRepresentedParameter() == null;
-					Operation asOperation = PivotUtil.getContainingOperation(parameterVariable);
-					value = asOperation;
+				else {
+					throw new UnsupportedOperationException();
+				}
+			}
+			else if (value instanceof ResultVariable) {
+				//
+				//	ResultVariable has no distinct CS equivalent so must reference its postcondition.
+				//
+				ResultVariable resultVariable = (ResultVariable)value;
+				EStructuralFeature eContainingFeature = resultVariable.eContainingFeature();
+				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
+					assert resultVariable.getRepresentedParameter() == null;
+					Constraint asConstraint = PivotUtil.getContainingConstraint(resultVariable);
+					assert asConstraint != null;
+					value = asConstraint;
 				}
 				else {
 					throw new UnsupportedOperationException();

@@ -156,8 +156,10 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 		switch (eDataType.getClassifierID())
 		{
 			case 57:
+				return createPathRoleFromString(eDataType, initialValue);
+			case 58:
 				return createBigNumberFromString(eDataType, initialValue);
-			case 59:
+			case 60:
 				return createScopeFilterFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -175,8 +177,10 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 		switch (eDataType.getClassifierID())
 		{
 			case 57:
+				return convertPathRoleToString(eDataType, instanceValue);
+			case 58:
 				return convertBigNumberToString(eDataType, instanceValue);
-			case 59:
+			case 60:
 				return convertScopeFilterToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -578,6 +582,28 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	public @NonNull WildcardTypeRefCS createWildcardTypeRefCS() {
 		WildcardTypeRefCSImpl wildcardTypeRefCS = new WildcardTypeRefCSImpl();
 		return wildcardTypeRefCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PathRole createPathRoleFromString(EDataType eDataType, String initialValue)
+	{
+		PathRole result = PathRole.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertPathRoleToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

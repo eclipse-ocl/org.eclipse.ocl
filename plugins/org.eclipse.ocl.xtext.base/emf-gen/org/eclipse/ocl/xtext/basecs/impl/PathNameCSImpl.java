@@ -21,12 +21,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -43,9 +48,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getScopeFilter <em>Scope Filter</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getSerialized <em>Serialized</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getParameterName <em>Parameter Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getResultName <em>Result Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getRole <em>Role</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,7 +63,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 7;
+	public static final int PATH_NAME_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 6;
 
 	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
@@ -70,15 +74,6 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @ordered
 	 */
 	protected ElementCS context;
-
-	/**
-	 * This is true if the Context reference has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean contextESet;
 
 	/**
 	 * The cached value of the '{@link #getOwnedPathElements() <em>Owned Path Elements</em>}' containment reference list.
@@ -111,35 +106,26 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected ScopeFilter scopeFilter = SCOPE_FILTER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getSerialized() <em>Serialized</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSerialized()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SERIALIZED_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getParameterName() <em>Parameter Name</em>}' attribute.
+	 * The default value of the '{@link #getRole() <em>Role</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParameterName()
+	 * @see #getRole()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAMETER_NAME_EDEFAULT = null;
+	protected static final PathRole ROLE_EDEFAULT = PathRole.NULL;
 
-	/**
-	 * The default value of the '{@link #getResultName() <em>Result Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResultName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String RESULT_NAME_EDEFAULT = null;
-
+//	private static int count = 0;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -148,6 +134,11 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected PathNameCSImpl()
 	{
 		super();
+//		System.out.println("ctor:" + count + " " + NameUtil.debugSimpleName(this));
+//		if (count == 71) {
+//			getClass();			// XXX
+//		}
+//		count++;
 	}
 
 	/**
@@ -212,11 +203,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				return getScopeFilter();
 			case 6:
-				return getSerialized();
+				return getName();
 			case 7:
-				return getParameterName();
-			case 8:
-				return getResultName();
+				return getRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -243,13 +232,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				setScopeFilter((ScopeFilter)newValue);
 				return;
 			case 6:
-				setSerialized((String)newValue);
+				setName((String)newValue);
 				return;
 			case 7:
-				setParameterName((String)newValue);
-				return;
-			case 8:
-				setResultName((String)newValue);
+				setRole((PathRole)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -266,7 +252,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		switch (featureID)
 		{
 			case 2:
-				unsetContext();
+				setContext((ElementCS)null);
 				return;
 			case 3:
 				getOwnedPathElements().clear();
@@ -275,13 +261,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				setScopeFilter(SCOPE_FILTER_EDEFAULT);
 				return;
 			case 6:
-				unsetSerialized();
+				setName(NAME_EDEFAULT);
 				return;
 			case 7:
-				unsetParameterName();
-				return;
-			case 8:
-				unsetResultName();
+				setRole(ROLE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -298,7 +281,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		switch (featureID)
 		{
 			case 2:
-				return isSetContext();
+				return context != null;
 			case 3:
 				return ownedPathElements != null && !ownedPathElements.isEmpty();
 			case 4:
@@ -306,11 +289,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
 			case 6:
-				return isSetSerialized();
+				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
 			case 7:
-				return isSetParameterName();
-			case 8:
-				return isSetResultName();
+				return getRole() != ROLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -362,37 +343,8 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		ElementCS oldContext = context;
 		context = newContext;
-		boolean oldContextESet = contextESet;
-		contextESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldContext, context, !oldContextESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void unsetContext()
-	{
-		ElementCS oldContext = context;
-		boolean oldContextESet = contextESet;
-		context = null;
-		contextESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, 2, oldContext, null, oldContextESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isSetContext()
-	{
-		return contextESet;
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldContext, context));
 	}
 
 	/**
@@ -420,11 +372,17 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldScopeFilter, scopeFilter));
 	}
 
-	private String serialized = null;
-	private static final @NonNull String NO_VALUE = "$There is no value$";
+	private String name = null;
 
-	public String basicGetSerialized() {
-		return serialized;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String getName()
+	{
+		return name;
 	}
 
 	/**
@@ -433,14 +391,25 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @generated NOT
 	 */
 	@Override
-	public String getSerialized()
+	public void setName(String newName)
 	{
-		if (serialized == null) {
-			ICompositeNode node = NodeModelUtils.getNode(this);
-			String text = node != null ? NodeModelUtils.getTokenText(node) : null;
-			serialized = text != null ? text : NO_VALUE;
-		}
-		return serialized != NO_VALUE ? serialized : null;				// NB = rather than equals to avoid user equivalent collision
+		assert name == null;
+		assert (newName == null) || newName.equals(newName.trim());
+		this.name = newName;
+//		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + name);
+	}
+
+	private PathRole role = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public PathRole getRole()
+	{
+		return role;
 	}
 
 	/**
@@ -449,133 +418,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * @generated NOT
 	 */
 	@Override
-	public void setSerialized(String newSerialized)
+	public void setRole(PathRole newRole)
 	{
-		serialized = newSerialized;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void unsetSerialized()
-	{
-		serialized = null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public boolean isSetSerialized()
-	{
-		return getSerialized() != null;
-	}
-
-	/**
-	 * The serialization when this is the name of a ParamterVariable that has no CS counterpart.
-	 *
-	 * (It is declared volatile to avoid confusing Xtext.)
-	 */
-	private String parameterName = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public String getParameterName()
-	{
-		return parameterName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void setParameterName(String newParameterName)
-	{
-		parameterName = newParameterName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void unsetParameterName()
-	{
-		parameterName = null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public boolean isSetParameterName()
-	{
-		return parameterName != null;
-	}
-
-	/**
-	 * The serialization when this is the name of a ResultVariable that has no CS counterpart.
-	 *
-	 * (It is declared volatile to avoid confusing Xtext.)
-	 */
-	private String resultName = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public String getResultName()
-	{
-		return resultName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void setResultName(String newResultName)
-	{
-		resultName = newResultName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void unsetResultName()
-	{
-		resultName = null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public boolean isSetResultName()
-	{
-		return resultName != null;
+		role = newRole;
 	}
 
 	/**
@@ -613,6 +458,54 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	@Override
 	public Element getReferredElement()
 	{
+		ICompositeNode node = NodeModelUtils.getNode(this);
+		if (node == null) {
+			if (role == PathRole.RESULT) {
+				assert ownedPathElements != null;
+				assert ownedPathElements.size() == 1;
+				Constraint asPostcondition = (Constraint)ownedPathElements.get(0).getReferredElement();
+				ExpressionInOCL asExpression = (ExpressionInOCL)asPostcondition.getOwnedSpecification();
+				/*Parameter*/Variable asResultVariable = asExpression.getOwnedResult();
+				if (asResultVariable != null) {
+					return asResultVariable;
+				}
+				// XXX errors
+				return asPostcondition;
+			}
+			if (role == PathRole.PARAMETER) {
+				assert ownedPathElements != null;
+				assert ownedPathElements.size() == 1;
+				Element asElement = ownedPathElements.get(0).getReferredElement();
+				if (asElement instanceof Constraint) {
+					Constraint asConstraint = (Constraint)asElement;
+					ExpressionInOCL asExpression = (ExpressionInOCL)asConstraint.getOwnedSpecification();
+					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
+						if (asParameterVariable.getName().equals(getName())) {
+							return asParameterVariable;
+						}
+					}
+				}
+				else if (asElement instanceof Operation) {
+					Operation asOperation = (Operation)asElement;
+					ExpressionInOCL asExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
+						if (asParameterVariable.getName().equals(getName())) {
+							return asParameterVariable;
+						}
+					}
+				}
+			/*	Parameter asParameter = (Parameter)asElement;
+				Operation asOperation = asParameter.getOwningOperation();
+				ExpressionInOCL asExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+				for (/ *Parameter* /Variable asParameterVariable : asExpression.getOwnedParameters()) {
+					if (asParameterVariable.getRepresentedParameter() == asParameter) {
+						return asParameterVariable;
+					}
+				} */
+				// XXX errors
+				return asElement;
+			}
+		}
 	/*	if (serialized != null) {
 			assert ownedPathElements != null;
 			assert ownedPathElements.size() == 1;

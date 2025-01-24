@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -75,7 +74,6 @@ import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
-import org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.xtext.diagnostics.Diagnostic;
@@ -401,7 +399,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		this.csResource = csResource;
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {
@@ -410,7 +408,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		this.asResource = aConverter.asResource;
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		//		csi2asMapping.add(this);
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {
@@ -659,9 +657,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	public @Nullable Element lookupUndecoratedName(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName) {
-		if ("result".equals(((PathNameCSImpl)csPathName).basicGetSerialized())) {
-			getClass();		// XXX
-		}
 		setElementType(csPathName, PivotPackage.Literals.ELEMENT, csElement, UndecoratedNameFilter.INSTANCE);
 		Element namedElement = csPathName.getReferredElement();
 		return namedElement;
@@ -715,7 +710,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {		// XXX assert needs update
 		assert !isUpdating;
 		isUpdating = true;
-		System.out.println("update " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
+//		System.out.println("update " + NameUtil.debugSimpleName(this) + " for " + csResource.getURI());
 		//		printDiagnostic("CS2AS.update start", false, 0);
 		@SuppressWarnings("unused") Map<@NonNull CSI, @Nullable Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<@NonNull CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
@@ -743,6 +738,17 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
 //			metamodelManager.kill(deadPivot);
 		} */
+
+	/*	for (EObject eObject : new TreeIterable(csResource)) {
+			if (eObject instanceof PathNameCS) {
+				PathNameCS pathNameCS = (PathNameCS)eObject;
+				System.out.println("update " + NameUtil.debugSimpleName(eObject) + " \"" + pathNameCS.getName() + "\" " + ((PathNameCS)eObject).getRole());
+				if (pathNameCS.getName() == null) {
+					getClass();			// XXX
+				}
+			}
+		} */
+
 		Map<CSResource, ASResource> cs2asResourceMap = new HashMap<>();
 		asResource = csi2asMapping.getASResource(csResource);
 		assert asResource != null;

@@ -110,8 +110,8 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
-import org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl;
 import org.eclipse.ocl.xtext.essentialocl.attributes.AbstractOperationMatcher;
 import org.eclipse.ocl.xtext.essentialocl.attributes.BinaryOperationMatcher;
 import org.eclipse.ocl.xtext.essentialocl.attributes.NavigationUtil;
@@ -1553,17 +1553,16 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
 		PathNameCS csPathName = csNameExp.getOwnedPathName();
 		String variableName = variableDeclaration.getName();
-		if (variableDeclaration instanceof ParameterVariable) {
-			csPathName.setParameterName(variableName);
-			csPathName.unsetResultName();
+		assert variableName != null;
+	//	csPathName.setName(variableName);
+		if (variableDeclaration instanceof IteratorVariable) {
+			csPathName.setRole(PathRole.ITERATOR);
+		}
+		else if (variableDeclaration instanceof ParameterVariable) {
+			csPathName.setRole(PathRole.PARAMETER);
 		}
 		else if (variableDeclaration instanceof ResultVariable) {
-			csPathName.unsetParameterName();
-			csPathName.setResultName(variableName);
-		}
-		else {
-			csPathName.unsetParameterName();
-			csPathName.unsetResultName();
+			csPathName.setRole(PathRole.RESULT);
 		}
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
@@ -2138,6 +2137,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (csPathName == null) {
 			return context.addBadExpressionError(csNameExp, "Missing path name");
 		}
+		if (csPathName.getRole() == PathRole.RESULT) {
+			getClass();			// XXX
+		}
 		RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
 		if (csNameExp.getOwnedCurlyBracketedClause() != null) {
 			return resolveShadowExp(csNameExp);
@@ -2149,10 +2151,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
-		if ("result".equals(((PathNameCSImpl)csPathName).toString())) {
-			getClass();			// XXX
-		}
-		if ("result".equals(((PathNameCSImpl)csPathName).basicGetSerialized())) {
+		if (csPathName.getName() != null) {
 			getClass();			// XXX
 		}
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);

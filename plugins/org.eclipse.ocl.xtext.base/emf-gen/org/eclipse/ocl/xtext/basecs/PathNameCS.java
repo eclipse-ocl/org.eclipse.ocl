@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.basecs;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 
@@ -28,9 +29,8 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getScopeFilter <em>Scope Filter</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
@@ -81,11 +81,9 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Context</em>' reference.
-	 * @see #isSetContext()
-	 * @see #unsetContext()
 	 * @see #setContext(ElementCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Context()
-	 * @model resolveProxies="false" unsettable="true" transient="true"
+	 * @model resolveProxies="false" transient="true"
 	 * @generated
 	 */
 	ElementCS getContext();
@@ -95,35 +93,10 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Context</em>' reference.
-	 * @see #isSetContext()
-	 * @see #unsetContext()
 	 * @see #getContext()
 	 * @generated
 	 */
 	void setContext(ElementCS value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getContext <em>Context</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetContext()
-	 * @see #getContext()
-	 * @see #setContext(ElementCS)
-	 * @generated
-	 */
-	void unsetContext();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getContext <em>Context</em>}' reference is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Context</em>' reference is set.
-	 * @see #unsetContext()
-	 * @see #getContext()
-	 * @see #setContext(ElementCS)
-	 * @generated
-	 */
-	boolean isSetContext();
 
 	/**
 	 * Returns the value of the '<em><b>Scope Filter</b></em>' attribute.
@@ -152,165 +125,57 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	void setScopeFilter(ScopeFilter value);
 
 	/**
-	 * Returns the value of the '<em><b>Serialized</b></em>' attribute.
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Serialized</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * The derived serialized value persists the path name when the CS resource is saved and loaded directly. The textual values are normally provided by Xtext's Node model.
+	 * The name of the VariableDeclaration when this is the name of a variable or parameter
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Serialized</em>' attribute.
-	 * @see #isSetSerialized()
-	 * @see #unsetSerialized()
-	 * @see #setSerialized(String)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Serialized()
-	 * @model unsettable="true" volatile="true" derived="true"
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Name()
+	 * @model volatile="true" derived="true"
 	 * @generated
 	 */
-	String getSerialized();
+	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Serialized</em>' attribute.
-	 * @see #isSetSerialized()
-	 * @see #unsetSerialized()
-	 * @see #getSerialized()
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
 	 * @generated
 	 */
-	void setSerialized(String value);
+	void setName(String value);
 
 	/**
-	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute.
+	 * Returns the value of the '<em><b>Role</b></em>' attribute.
+	 * The default value is <code>"NULL"</code>.
+	 * The literals are from the enumeration {@link org.eclipse.ocl.xtext.basecs.PathRole}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isSetSerialized()
-	 * @see #getSerialized()
-	 * @see #setSerialized(String)
+	 * <!-- begin-model-doc -->
+	 * The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour when there is no referenceable CS as for a result or parameter.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Role</em>' attribute.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see #setRole(PathRole)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Role()
+	 * @model default="NULL" volatile="true" derived="true"
 	 * @generated
 	 */
-	void unsetSerialized();
+	PathRole getRole();
 
 	/**
-	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}' attribute is set.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Serialized</em>' attribute is set.
-	 * @see #unsetSerialized()
-	 * @see #getSerialized()
-	 * @see #setSerialized(String)
+	 * @param value the new value of the '<em>Role</em>' attribute.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see #getRole()
 	 * @generated
 	 */
-	boolean isSetSerialized();
-
-	/**
-	 * Returns the value of the '<em><b>Parameter Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Parameter Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameter Name</em>' attribute.
-	 * @see #isSetParameterName()
-	 * @see #unsetParameterName()
-	 * @see #setParameterName(String)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ParameterName()
-	 * @model unsettable="true" volatile="true" derived="true"
-	 * @generated
-	 */
-	String getParameterName();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Parameter Name</em>' attribute.
-	 * @see #isSetParameterName()
-	 * @see #unsetParameterName()
-	 * @see #getParameterName()
-	 * @generated
-	 */
-	void setParameterName(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetParameterName()
-	 * @see #getParameterName()
-	 * @see #setParameterName(String)
-	 * @generated
-	 */
-	void unsetParameterName();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Parameter Name</em>' attribute is set.
-	 * @see #unsetParameterName()
-	 * @see #getParameterName()
-	 * @see #setParameterName(String)
-	 * @generated
-	 */
-	boolean isSetParameterName();
-
-	/**
-	 * Returns the value of the '<em><b>Result Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Result Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Result Name</em>' attribute.
-	 * @see #isSetResultName()
-	 * @see #unsetResultName()
-	 * @see #setResultName(String)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ResultName()
-	 * @model unsettable="true" volatile="true" derived="true"
-	 * @generated
-	 */
-	String getResultName();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Result Name</em>' attribute.
-	 * @see #isSetResultName()
-	 * @see #unsetResultName()
-	 * @see #getResultName()
-	 * @generated
-	 */
-	void setResultName(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetResultName()
-	 * @see #getResultName()
-	 * @see #setResultName(String)
-	 * @generated
-	 */
-	void unsetResultName();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Result Name</em>' attribute is set.
-	 * @see #unsetResultName()
-	 * @see #getResultName()
-	 * @see #setResultName(String)
-	 * @generated
-	 */
-	boolean isSetResultName();
+	void setRole(PathRole value);
 
 } // QualifiedElementRefCS

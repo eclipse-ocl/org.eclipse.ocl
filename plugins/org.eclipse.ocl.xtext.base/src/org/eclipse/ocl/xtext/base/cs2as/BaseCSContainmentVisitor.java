@@ -94,6 +94,8 @@ import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.util.AbstractExtendingBaseCSVisitor;
 import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Continuation<?>, @NonNull CS2ASConversion>
 {
@@ -484,6 +486,10 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitPathNameCS(@NonNull PathNameCS csElement) {
+		ICompositeNode node = NodeModelUtils.getNode(csElement);
+		if (node != null) {
+			csElement.setName(node.getText().trim());			// Cache the source text for a CSREsource save and reload
+		}
 		return null;
 	}
 

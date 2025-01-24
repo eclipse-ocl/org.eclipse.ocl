@@ -14,6 +14,7 @@ package org.eclipse.ocl.xtext.basecs;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -304,6 +305,16 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 */
 	int WILDCARD_TYPE_REF_CS = 56;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getPathRole()
+	 * @generated
+	 */
+	int PATH_ROLE = 57;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.impl.TypeRefCSImpl <em>Type Ref CS</em>}' class.
@@ -643,7 +654,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getBigNumber()
 	 * @generated
 	 */
-	int BIG_NUMBER = 57;
+	int BIG_NUMBER = 58;
 
 	/**
 	 * The meta object id for the '<em>CSI</em>' data type.
@@ -653,7 +664,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getCSI()
 	 * @generated
 	 */
-	int CSI = 58;
+	int CSI = 59;
 
 	/**
 	 * The meta object id for the '<em>Scope Filter</em>' data type.
@@ -663,7 +674,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getScopeFilter()
 	 * @generated
 	 */
-	int SCOPE_FILTER = 59;
+	int SCOPE_FILTER = 60;
 
 
 	/**
@@ -1612,37 +1623,26 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getPathNameCS_ScopeFilter();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized <em>Serialized</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Serialized</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getSerialized()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getName()
 	 * @see #getPathNameCS()
 	 * @generated
 	 */
-	EAttribute getPathNameCS_Serialized();
+	EAttribute getPathNameCS_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName <em>Parameter Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Parameter Name</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getParameterName()
+	 * @return the meta object for the attribute '<em>Role</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getRole()
 	 * @see #getPathNameCS()
 	 * @generated
 	 */
-	EAttribute getPathNameCS_ParameterName();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName <em>Result Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Result Name</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getResultName()
-	 * @see #getPathNameCS()
-	 * @generated
-	 */
-	EAttribute getPathNameCS_ResultName();
+	EAttribute getPathNameCS_Role();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.PivotableElementCS <em>Pivotable Element CS</em>}'.
@@ -2292,6 +2292,16 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWildcardTypeRefCS_OwnedSuper();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Path Role</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @generated
+	 */
+	EEnum getPathRole();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Big Number</em>}'.
@@ -3129,28 +3139,20 @@ public interface BaseCSPackage extends EPackage {
 		EAttribute PATH_NAME_CS__SCOPE_FILTER = eINSTANCE.getPathNameCS_ScopeFilter();
 
 		/**
-		 * The meta object literal for the '<em><b>Serialized</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PATH_NAME_CS__SERIALIZED = eINSTANCE.getPathNameCS_Serialized();
+		EAttribute PATH_NAME_CS__NAME = eINSTANCE.getPathNameCS_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Role</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PATH_NAME_CS__PARAMETER_NAME = eINSTANCE.getPathNameCS_ParameterName();
-
-		/**
-		 * The meta object literal for the '<em><b>Result Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PATH_NAME_CS__RESULT_NAME = eINSTANCE.getPathNameCS_ResultName();
+		EAttribute PATH_NAME_CS__ROLE = eINSTANCE.getPathNameCS_Role();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl <em>Pivotable Element CS</em>}' class.
@@ -3685,6 +3687,16 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WILDCARD_TYPE_REF_CS__OWNED_SUPER = eINSTANCE.getWildcardTypeRefCS_OwnedSuper();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.basecs.PathRole
+		 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getPathRole()
+		 * @generated
+		 */
+		EEnum PATH_ROLE = eINSTANCE.getPathRole();
 
 		/**
 		 * The meta object literal for the '<em>Big Number</em>' data type.

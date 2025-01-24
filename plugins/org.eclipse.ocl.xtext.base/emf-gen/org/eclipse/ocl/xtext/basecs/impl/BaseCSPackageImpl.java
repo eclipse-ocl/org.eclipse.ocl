@@ -14,6 +14,7 @@ package org.eclipse.ocl.xtext.basecs.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
@@ -56,6 +57,7 @@ import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.ReferenceCS;
@@ -486,6 +488,13 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	private EClass wildcardTypeRefCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum pathRoleEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1555,7 +1564,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getPathNameCS_Serialized()
+	public EAttribute getPathNameCS_Name()
 	{
 		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(4);
 	}
@@ -1566,20 +1575,9 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getPathNameCS_ParameterName()
+	public EAttribute getPathNameCS_Role()
 	{
 		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPathNameCS_ResultName()
-	{
-		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -2241,6 +2239,17 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EEnum getPathRole()
+	{
+		return pathRoleEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EDataType getBigNumber()
 	{
 		return bigNumberEDataType;
@@ -2422,7 +2431,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEAttribute(pathNameCSEClass, 5);
 		createEAttribute(pathNameCSEClass, 6);
 		createEAttribute(pathNameCSEClass, 7);
-		createEAttribute(pathNameCSEClass, 8);
 
 		pivotableElementCSEClass = createEClass(34);
 		createEReference(pivotableElementCSEClass, 2);
@@ -2508,10 +2516,13 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(wildcardTypeRefCSEClass, 3);
 		createEReference(wildcardTypeRefCSEClass, 4);
 
+		// Create enums
+		pathRoleEEnum = createEEnum(57);
+
 		// Create data types
-		bigNumberEDataType = createEDataType(57);
-		csiEDataType = createEDataType(58);
-		scopeFilterEDataType = createEDataType(59);
+		bigNumberEDataType = createEDataType(58);
+		csiEDataType = createEDataType(59);
+		scopeFilterEDataType = createEDataType(60);
 	}
 
 	/**
@@ -2736,13 +2747,12 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEAttribute(getPathElementWithURICS_Uri(), thePivotPackage.getString(), "uri", null, 0, 1, PathElementWithURICS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(pathNameCSEClass, PathNameCS.class, "PathNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getPathNameCS_Context(), this.getElementCS(), null, "context", null, 0, 1, PathNameCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getPathNameCS_Context(), this.getElementCS(), null, "context", null, 0, 1, PathNameCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getPathNameCS_OwnedPathElements(), this.getPathElementCS(), this.getPathElementCS_OwningPathName(), "ownedPathElements", null, 1, -1, PathNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getPathNameCS_ReferredElement(), thePivotPackage.getElement(), null, "referredElement", null, 1, 1, PathNameCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getPathNameCS_ScopeFilter(), this.getScopeFilter(), "scopeFilter", null, 0, 1, PathNameCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPathNameCS_Serialized(), ecorePackage.getEString(), "serialized", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPathNameCS_ParameterName(), ecorePackage.getEString(), "parameterName", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPathNameCS_ResultName(), ecorePackage.getEString(), "resultName", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getPathNameCS_Name(), ecorePackage.getEString(), "name", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getPathNameCS_Role(), this.getPathRole(), "role", "NULL", 0, 1, PathNameCS.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(pivotableElementCSEClass, PivotableElementCS.class, "PivotableElementCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getPivotableElementCS_Pivot(), thePivotPackage.getElement(), null, "pivot", null, 0, 1, PivotableElementCS.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2827,6 +2837,13 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEClass(wildcardTypeRefCSEClass, WildcardTypeRefCS.class, "WildcardTypeRefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getWildcardTypeRefCS_OwnedExtends(), this.getTypedRefCS(), null, "ownedExtends", null, 0, 1, WildcardTypeRefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWildcardTypeRefCS_OwnedSuper(), this.getTypedRefCS(), null, "ownedSuper", null, 0, 1, WildcardTypeRefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		// Initialize enums and add enum literals
+		initEEnum(pathRoleEEnum, PathRole.class, "PathRole"); //$NON-NLS-1$
+		addEEnumLiteral(pathRoleEEnum, PathRole.NULL);
+		addEEnumLiteral(pathRoleEEnum, PathRole.ITERATOR);
+		addEEnumLiteral(pathRoleEEnum, PathRole.PARAMETER);
+		addEEnumLiteral(pathRoleEEnum, PathRole.RESULT);
 
 		// Initialize data types
 		initEDataType(bigNumberEDataType, Number.class, "BigNumber", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
