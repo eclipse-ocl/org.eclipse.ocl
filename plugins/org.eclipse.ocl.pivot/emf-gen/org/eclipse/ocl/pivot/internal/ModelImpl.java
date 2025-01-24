@@ -139,6 +139,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	protected ModelImpl()
 	{
 		super();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -227,6 +228,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		externalURI = newExternalURI;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExternalURI, externalURI));
+		System.out.println("setExternalURI " + NameUtil.debugSimpleName(this) + " " + externalURI);
 	}
 
 	/**

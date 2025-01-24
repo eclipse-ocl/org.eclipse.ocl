@@ -998,16 +998,16 @@
     </ownedClasses>
     <ownedClasses xmi:id="qV29F" name="ResultVariable" superClasses="#t4j6T">
       <ownedInvariants xmi:id="GN5Vj" isCallable="true" name="CompatibleNullityForInitializer">
-        <ownedComments body="@deprecated"/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true"/>
+        <ownedComments body="A nullable expression cannot initialize a not-nullable Result variable."/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="not ownedInit?.isRequired implies not isRequired"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="hAvWf" isCallable="true" name="CompatibleTypeForInitializer">
-        <ownedComments body="@deprecated"/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true"/>
+        <ownedComments body="The type of a Result variable initializer expression conforms to the type of the Result variable."/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="i30ll" isCallable="true" name="HasInitializer">
-        <ownedComments body="Result variable has no initializer."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit = null"/>
+        <ownedComments body="Result variable has an initializer."/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit &lt;> null"/>
       </ownedInvariants>
     </ownedClasses>
     <ownedClasses xmi:id="Xhrcl" name="SelfType" superClasses="#pDcbe">

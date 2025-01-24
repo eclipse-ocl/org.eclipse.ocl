@@ -2773,10 +2773,8 @@ extends EPackage
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
 	 * @see org.eclipse.ocl.pivot.ResultVariable#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @deprecated
 	 * @generated
 	 */
-	@Deprecated
 	EOperation getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
 
 	/**
@@ -2785,10 +2783,8 @@ extends EPackage
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Validate Compatible Type For Initializer</em>' operation.
 	 * @see org.eclipse.ocl.pivot.ResultVariable#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @deprecated
 	 * @generated
 	 */
-	@Deprecated
 	EOperation getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
 
 	/**
@@ -8087,20 +8083,16 @@ extends EPackage
 		 * The meta object literal for the '<em><b>Validate Compatible Nullity For Initializer</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @deprecated
 		 * @generated
 		 */
-		@Deprecated
 		EOperation RESULT_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Compatible Type For Initializer</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @deprecated
 		 * @generated
 		 */
-		@Deprecated
 		EOperation RESULT_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
 
 		/**

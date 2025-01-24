@@ -2585,10 +2585,10 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateCompatibleNullityForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true"/>
+        <details key="body" value="not ownedInit?.isRequired implies not isRequired"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="@deprecated"/>
+        <details key="documentation" value="A nullable expression cannot initialize a not-nullable Result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleNullityForInitializer"/>
@@ -2603,10 +2603,10 @@
     </eOperations>
     <eOperations name="validateCompatibleTypeForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="true"/>
+        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="@deprecated"/>
+        <details key="documentation" value="The type of a Result variable initializer expression conforms to the type of the Result variable."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleTypeForInitializer"/>
@@ -2621,10 +2621,10 @@
     </eOperations>
     <eOperations name="validateHasInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit = null"/>
+        <details key="body" value="ownedInit &lt;> null"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Result variable has no initializer."/>
+        <details key="documentation" value="Result variable has an initializer."/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="HasInitializer"/>

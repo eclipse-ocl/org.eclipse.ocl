@@ -31,29 +31,27 @@ public interface ResultVariable extends Variable
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * @deprecated
+	 * A nullable expression cannot initialize a not-nullable Result variable.
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	@Deprecated
 	boolean validateCompatibleNullityForInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * @deprecated
+	 * The type of a Result variable initializer expression conforms to the type of the Result variable.
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	@Deprecated
 	boolean validateCompatibleTypeForInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Result variable has no initializer.
+	 * Result variable has an initializer.
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */

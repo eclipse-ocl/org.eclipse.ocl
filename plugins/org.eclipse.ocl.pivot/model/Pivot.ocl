@@ -428,12 +428,12 @@ inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies owned
 --inv StaticSourceIsNull: referredProperty.isStatic implies source.oclAsType(Type).conformsTo(getSpecializedReferredPropertyOwningType())
 
 context ResultVariable
-/* Result variable has no initializer.*/
-inv HasInitializer: ownedInit = null
-/* @deprecated */
-inv CompatibleTypeForInitializer: true
-/* @deprecated */
-inv CompatibleNullityForInitializer: true
+/* Result variable has an initializer.*/
+inv HasInitializer: ownedInit <> null
+/* The type of a Result variable initializer expression conforms to the type of the Result variable. */
+inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
+/* A nullable expression cannot initialize a not-nullable Result variable. */
+inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isRequired
 
 --context Class
 --def: allProperties() : Set(Property[*|1]) = self->closure(superClasses)?.ownedProperties->asSet()

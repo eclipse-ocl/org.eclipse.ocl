@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Willink Transformations and others.
+ * Copyright (c) 2010, 2024 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -4671,9 +4671,9 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Constraint iv_PropertyCallExp_NonStaticSourceTypeIsConformant = createInvariant("NonStaticSourceTypeIsConformant", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())");
 		private final @NonNull Constraint iv_PropertyCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
 		private final @NonNull Constraint iv_PropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_ResultVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "true");
-		private final @NonNull Constraint iv_ResultVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "true");
-		private final @NonNull Constraint iv_ResultVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit = null");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "not ownedInit?.isRequired implies not isRequired");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_ResultVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit <> null");
 		private final @NonNull Constraint iv_ShadowExp_ClassHasNoStringValueInitializer = createInvariant("ClassHasNoStringValueInitializer", "true");
 		private final @NonNull Constraint iv_ShadowExp_DataTypeHasNoPartInitializers = createInvariant("DataTypeHasNoPartInitializers", "true");
 		private final @NonNull Constraint iv_ShadowExp_DataTypeHasOnePartInitializer = createInvariant("DataTypeHasOnePartInitializer", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1");
@@ -5241,9 +5241,9 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Region_ownedTransitions, "The set of Transitions owned by the Region.");
 			installComment(pr_Region_owningState, "The State that owns the Region. If a Region is owned by a State, then it cannot also be owned by a StateMachine.");
 			installComment(pr_Region_owningStateMachine, "The StateMachine that owns the Region. If a Region is owned by a StateMachine, then it cannot also be owned by a State.");
-			installComment(iv_ResultVariable_CompatibleNullityForInitializer, "@deprecated");
-			installComment(iv_ResultVariable_CompatibleTypeForInitializer, "@deprecated");
-			installComment(iv_ResultVariable_HasInitializer, "Result variable has no initializer.");
+			installComment(iv_ResultVariable_CompatibleNullityForInitializer, "A nullable expression cannot initialize a not-nullable Result variable.");
+			installComment(iv_ResultVariable_CompatibleTypeForInitializer, "The type of a Result variable initializer expression conforms to the type of the Result variable.");
+			installComment(iv_ResultVariable_HasInitializer, "Result variable has an initializer.");
 			installComment(_Signal, "A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.");
 			installComment(_Slot, "A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.");
 			installComment(pr_Slot_definingProperty, "The StructuralFeature that specifies the values that may be held by the Slot.");
