@@ -29,8 +29,6 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getScopeFilter <em>Scope Filter</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName <em>Path Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole <em>Path Role</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
@@ -123,58 +121,5 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * @generated
 	 */
 	void setScopeFilter(ScopeFilter value);
-
-	/**
-	 * Returns the value of the '<em><b>Path Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The name of the VariableDeclaration when this is the name of a variable or parameter
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Path Name</em>' attribute.
-	 * @see #setPathName(String)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_PathName()
-	 * @model derived="true"
-	 * @generated
-	 */
-	String getPathName();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName <em>Path Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Path Name</em>' attribute.
-	 * @see #getPathName()
-	 * @generated
-	 */
-	void setPathName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Path Role</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.ocl.xtext.basecs.PathRole}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Path Role</em>' attribute.
-	 * @see org.eclipse.ocl.xtext.basecs.PathRole
-	 * @see #setPathRole(PathRole)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_PathRole()
-	 * @model derived="true"
-	 * @generated
-	 */
-	PathRole getPathRole();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole <em>Path Role</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Path Role</em>' attribute.
-	 * @see org.eclipse.ocl.xtext.basecs.PathRole
-	 * @see #getPathRole()
-	 * @generated
-	 */
-	void setPathRole(PathRole value);
 
 } // QualifiedElementRefCS

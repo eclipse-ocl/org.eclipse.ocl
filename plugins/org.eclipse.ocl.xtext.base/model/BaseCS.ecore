@@ -162,6 +162,18 @@
         eType="#//PathNameCS" eOpposite="#//PathNameCS/ownedPathElements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredElement" lowerBound="1"
         eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Element"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The name of the VariableDeclaration when this is the name of a variable or parameter"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="#//PathRole"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PathElementWithURICS" eSuperTypes="#//PathElementCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"
@@ -177,18 +189,6 @@
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scopeFilter" eType="#//ScopeFilter"
         transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the VariableDeclaration when this is the name of a variable or parameter"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathRole" eType="#//PathRole"
-        derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS."/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PivotableElementCS" abstract="true"
       eSuperTypes="#//ElementCS">
@@ -309,6 +309,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PathRole">
     <eLiterals name="NULL"/>
+    <eLiterals name="ACCUMULATOR"/>
+    <eLiterals name="ITERATOR"/>
     <eLiterals name="PARAMETER"/>
     <eLiterals name="RETURN"/>
   </eClassifiers>

@@ -3,20 +3,20 @@
     xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
     xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
   <ownedImports>
-    <ownedPathName serialized="'platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml'">
+    <ownedPathName>
       <ownedPathElements xsi:type="basecs:PathElementWithURICS">
         <referredElement xsi:type="pivot:Model" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml"/>
       </ownedPathElements>
     </ownedPathName>
   </ownedImports>
   <ownedPackages>
-    <ownedPathName serialized="fruit">
+    <ownedPathName>
       <ownedPathElements>
         <referredElement xsi:type="pivot:Package" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_kFEgAJaZEdunUqiNpqprXQ"/>
       </ownedPathElements>
     </ownedPathName>
     <ownedContexts xsi:type="completeoclcs:ClassifierContextDeclCS">
-      <ownedPathName serialized="Fruit">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_qpGNsJaZEdunUqiNpqprXQ"/>
         </ownedPathElements>
@@ -28,7 +28,7 @@
       </ownedInvariants>
     </ownedContexts>
     <ownedContexts xsi:type="completeoclcs:PropertyContextDeclCS">
-      <ownedPathName serialized="Fruit::color">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_qpGNsJaZEdunUqiNpqprXQ"/>
         </ownedPathElements>
@@ -37,7 +37,7 @@
         </ownedPathElements>
       </ownedPathName>
       <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
-        <ownedPathName serialized="Color">
+        <ownedPathName>
           <ownedPathElements>
             <referredElement xsi:type="pivot:Enumeration" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_AOeasJaaEdunUqiNpqprXQ"/>
           </ownedPathElements>
@@ -45,7 +45,7 @@
       </ownedType>
       <ownedDefaultExpressions>
         <ownedExpression xsi:type="essentialoclcs:NameExpCS">
-          <ownedPathName serialized="Color::black">
+          <ownedPathName>
             <ownedPathElements>
               <referredElement xsi:type="pivot:Enumeration" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_AOeasJaaEdunUqiNpqprXQ"/>
             </ownedPathElements>
@@ -57,7 +57,7 @@
       </ownedDefaultExpressions>
     </ownedContexts>
     <ownedContexts xsi:type="completeoclcs:OperationContextDeclCS">
-      <ownedPathName serialized="Fruit::preferredColor">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_qpGNsJaZEdunUqiNpqprXQ"/>
         </ownedPathElements>
@@ -66,7 +66,7 @@
         </ownedPathElements>
       </ownedPathName>
       <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
-        <ownedPathName serialized="Color">
+        <ownedPathName>
           <ownedPathElements>
             <referredElement xsi:type="pivot:Enumeration" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_AOeasJaaEdunUqiNpqprXQ"/>
           </ownedPathElements>
@@ -74,7 +74,7 @@
       </ownedType>
       <ownedBodies>
         <ownedExpression xsi:type="essentialoclcs:NameExpCS">
-          <ownedPathName serialized="Color::red">
+          <ownedPathName>
             <ownedPathElements>
               <referredElement xsi:type="pivot:Enumeration" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/uml/Fruit.uml#_AOeasJaaEdunUqiNpqprXQ"/>
             </ownedPathElements>

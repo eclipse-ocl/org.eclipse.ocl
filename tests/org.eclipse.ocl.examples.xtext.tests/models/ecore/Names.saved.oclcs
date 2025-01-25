@@ -3,20 +3,20 @@
     xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
     xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
   <ownedImports>
-    <ownedPathName serialized="'platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore'">
+    <ownedPathName>
       <ownedPathElements xsi:type="basecs:PathElementWithURICS">
         <referredElement xsi:type="pivot:Model" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore"/>
       </ownedPathElements>
     </ownedPathName>
   </ownedImports>
   <ownedPackages>
-    <ownedPathName serialized="names">
+    <ownedPathName>
       <ownedPathElements>
         <referredElement xsi:type="pivot:Package" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#/"/>
       </ownedPathElements>
     </ownedPathName>
     <ownedContexts xsi:type="completeoclcs:PropertyContextDeclCS">
-      <ownedPathName serialized="Named::r">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named"/>
         </ownedPathElements>
@@ -28,7 +28,7 @@
       <ownedDefaultExpressions>
         <ownedExpression xsi:type="essentialoclcs:InfixExpCS" name="+">
           <ownedRight xsi:type="essentialoclcs:NameExpCS">
-            <ownedPathName serialized="t">
+            <ownedPathName>
               <ownedPathElements>
                 <referredElement xsi:type="pivot:Property" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named/t"/>
               </ownedPathElements>
@@ -39,7 +39,7 @@
       </ownedDefaultExpressions>
     </ownedContexts>
     <ownedContexts xsi:type="completeoclcs:PropertyContextDeclCS">
-      <ownedPathName serialized="Named::s">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="platform:/resource/org.eclipse.ocl.examples.xtext.tests/models/ecore/Names.ecore#//Named"/>
         </ownedPathElements>

@@ -1031,7 +1031,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		completeModel.addPackageURI2completeURI(ClassUtil.nonNullEMF(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
 		completeModel.addPackageURI2completeURI(ClassUtil.nonNullEMF(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
 		// FIXME All known synonyms
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + umlResource.getURI());
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " for " + umlResource.getURI());
 	}
 
 	/*public*/ void addAssociationClassProperties(@NonNull AssociationClass asAssociationClass, @NonNull AssociationClassProperties asProperties) {

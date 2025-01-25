@@ -35,7 +35,23 @@ public enum PathRole implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	NULL(0, "NULL", "NULL"), //$NON-NLS-1$ //$NON-NLS-2$
+	NULL(0, "NULL", "NULL"), /**
+	 * The '<em><b>ACCUMULATOR</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ACCUMULATOR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ACCUMULATOR(0, "ACCUMULATOR", "ACCUMULATOR"), /**
+	 * The '<em><b>ITERATOR</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ITERATOR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ITERATOR(0, "ITERATOR", "ITERATOR"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>PARAMETER</b></em>' literal object.
@@ -65,6 +81,28 @@ public enum PathRole implements Enumerator
 	 * @ordered
 	 */
 	public static final int NULL_VALUE = 0;
+
+	/**
+	 * The '<em><b>ACCUMULATOR</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ACCUMULATOR
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ACCUMULATOR_VALUE = 0;
+
+	/**
+	 * The '<em><b>ITERATOR</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ITERATOR
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ITERATOR_VALUE = 0;
 
 	/**
 	 * The '<em><b>PARAMETER</b></em>' literal value.
@@ -98,6 +136,8 @@ public enum PathRole implements Enumerator
 		new PathRole[]
 		{
 			NULL,
+			ACCUMULATOR,
+			ITERATOR,
 			PARAMETER,
 			RETURN,
 		};

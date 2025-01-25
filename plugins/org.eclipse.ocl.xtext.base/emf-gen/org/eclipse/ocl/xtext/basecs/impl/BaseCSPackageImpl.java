@@ -1476,6 +1476,28 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getPathElementCS_Name()
+	{
+		return (EAttribute)pathElementCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getPathElementCS_Role()
+	{
+		return (EAttribute)pathElementCSEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getPathElementCS_ElementType()
 	{
 		return (EReference)pathElementCSEClass.getEStructuralFeatures().get(0);
@@ -1556,28 +1578,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	public EAttribute getPathNameCS_ScopeFilter()
 	{
 		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPathNameCS_PathName()
-	{
-		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPathNameCS_PathRole()
-	{
-		return (EAttribute)pathNameCSEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -2420,17 +2420,17 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(pathElementCSEClass, 2);
 		createEReference(pathElementCSEClass, 3);
 		createEReference(pathElementCSEClass, 4);
+		createEAttribute(pathElementCSEClass, 5);
+		createEAttribute(pathElementCSEClass, 6);
 
 		pathElementWithURICSEClass = createEClass(32);
-		createEAttribute(pathElementWithURICSEClass, 5);
+		createEAttribute(pathElementWithURICSEClass, 7);
 
 		pathNameCSEClass = createEClass(33);
 		createEReference(pathNameCSEClass, 2);
 		createEReference(pathNameCSEClass, 3);
 		createEReference(pathNameCSEClass, 4);
 		createEAttribute(pathNameCSEClass, 5);
-		createEAttribute(pathNameCSEClass, 6);
-		createEAttribute(pathNameCSEClass, 7);
 
 		pivotableElementCSEClass = createEClass(34);
 		createEReference(pivotableElementCSEClass, 2);
@@ -2742,6 +2742,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEReference(getPathElementCS_ElementType(), ecorePackage.getEClassifier(), null, "elementType", null, 0, 1, PathElementCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getPathElementCS_OwningPathName(), this.getPathNameCS(), this.getPathNameCS_OwnedPathElements(), "owningPathName", null, 1, 1, PathElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getPathElementCS_ReferredElement(), thePivotPackage.getElement(), null, "referredElement", null, 1, 1, PathElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getPathElementCS_Name(), ecorePackage.getEString(), "name", null, 0, 1, PathElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getPathElementCS_Role(), this.getPathRole(), "role", null, 0, 1, PathElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(pathElementWithURICSEClass, PathElementWithURICS.class, "PathElementWithURICS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getPathElementWithURICS_Uri(), thePivotPackage.getString(), "uri", null, 0, 1, PathElementWithURICS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2751,8 +2753,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEReference(getPathNameCS_OwnedPathElements(), this.getPathElementCS(), this.getPathElementCS_OwningPathName(), "ownedPathElements", null, 1, -1, PathNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getPathNameCS_ReferredElement(), thePivotPackage.getElement(), null, "referredElement", null, 1, 1, PathNameCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getPathNameCS_ScopeFilter(), this.getScopeFilter(), "scopeFilter", null, 0, 1, PathNameCS.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPathNameCS_PathName(), ecorePackage.getEString(), "pathName", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getPathNameCS_PathRole(), this.getPathRole(), "pathRole", null, 0, 1, PathNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(pivotableElementCSEClass, PivotableElementCS.class, "PivotableElementCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getPivotableElementCS_Pivot(), thePivotPackage.getElement(), null, "pivot", null, 0, 1, PivotableElementCS.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2841,6 +2841,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		// Initialize enums and add enum literals
 		initEEnum(pathRoleEEnum, PathRole.class, "PathRole"); //$NON-NLS-1$
 		addEEnumLiteral(pathRoleEEnum, PathRole.NULL);
+		addEEnumLiteral(pathRoleEEnum, PathRole.ACCUMULATOR);
+		addEEnumLiteral(pathRoleEEnum, PathRole.ITERATOR);
 		addEEnumLiteral(pathRoleEEnum, PathRole.PARAMETER);
 		addEEnumLiteral(pathRoleEEnum, PathRole.RETURN);
 

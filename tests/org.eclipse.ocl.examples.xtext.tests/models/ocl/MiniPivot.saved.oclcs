@@ -3,20 +3,20 @@
     xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
     xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
   <ownedImports>
-    <ownedPathName serialized="'platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'">
+    <ownedPathName>
       <ownedPathElements xsi:type="basecs:PathElementWithURICS">
         <referredElement xsi:type="pivot:Model" href="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore"/>
       </ownedPathElements>
     </ownedPathName>
   </ownedImports>
   <ownedPackages>
-    <ownedPathName serialized="ocl">
+    <ownedPathName>
       <ownedPathElements>
         <referredElement xsi:type="pivot:Library" href="http://www.eclipse.org/ocl/2015/Library#/"/>
       </ownedPathElements>
     </ownedPathName>
     <ownedContexts xsi:type="completeoclcs:ClassifierContextDeclCS">
-      <ownedPathName serialized="ShadowExp">
+      <ownedPathName>
         <ownedPathElements>
           <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-ShadowExp"/>
         </ownedPathElements>
@@ -26,7 +26,7 @@
           <ownedExpression xsi:type="essentialoclcs:IfExpCS">
             <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name=".">
               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                <ownedPathName serialized="oclIsKindOf">
+                <ownedPathName>
                   <ownedPathElements>
                     <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#MuzAj"/>
                   </ownedPathElements>
@@ -34,7 +34,7 @@
                 <ownedRoundBracketedClause>
                   <ownedArguments>
                     <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                      <ownedPathName serialized="DataType">
+                      <ownedPathName>
                         <ownedPathElements>
                           <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-DataType"/>
                         </ownedPathElements>
@@ -44,7 +44,7 @@
                 </ownedRoundBracketedClause>
               </ownedRight>
               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                <ownedPathName serialized="type">
+                <ownedPathName>
                   <ownedPathElements>
                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
                   </ownedPathElements>
@@ -60,7 +60,7 @@
                         <ownedInExpression xsi:type="essentialoclcs:IfExpCS">
                           <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name="->">
                             <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="notEmpty">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#XxcWz"/>
                                 </ownedPathElements>
@@ -68,7 +68,7 @@
                               <ownedRoundBracketedClause/>
                             </ownedRight>
                             <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="extraProperties">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                 </ownedPathElements>
@@ -78,7 +78,7 @@
                           <ownedElseExpression xsi:type="essentialoclcs:IfExpCS">
                             <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name="->">
                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="notEmpty">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#XxcWz"/>
                                   </ownedPathElements>
@@ -86,7 +86,7 @@
                                 <ownedRoundBracketedClause/>
                               </ownedRight>
                               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="missingProperties">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                   </ownedPathElements>
@@ -95,7 +95,7 @@
                             </ownedCondition>
                             <ownedElseExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="status">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
                                   </ownedPathElements>
@@ -120,7 +120,7 @@
                             </ownedElseExpression>
                             <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="status">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
                                   </ownedPathElements>
@@ -137,7 +137,7 @@
                                   <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
                                     <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                        <ownedPathName serialized="iterate">
+                                        <ownedPathName>
                                           <ownedPathElements>
                                             <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
                                           </ownedPathElements>
@@ -145,8 +145,8 @@
                                         <ownedRoundBracketedClause>
                                           <ownedArguments>
                                             <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                              <ownedPathName serialized="p">
-                                                <ownedPathElements>
+                                              <ownedPathName>
+                                                <ownedPathElements name="p" role="ITERATOR">
                                                   <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                                 </ownedPathElements>
                                               </ownedPathName>
@@ -157,8 +157,8 @@
                                               <segments>Missing initializers:</segments>
                                             </ownedInitExpression>
                                             <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                              <ownedPathName serialized="acc">
-                                                <ownedPathElements>
+                                              <ownedPathName>
+                                                <ownedPathElements name="acc" role="ACCUMULATOR">
                                                   <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
                                                 </ownedPathElements>
                                               </ownedPathName>
@@ -170,14 +170,14 @@
                                               <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="+">
                                                 <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
                                                   <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                                    <ownedPathName serialized="name">
+                                                    <ownedPathName>
                                                       <ownedPathElements>
                                                         <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
                                                       </ownedPathElements>
                                                     </ownedPathName>
                                                   </ownedRight>
                                                   <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                                    <ownedPathName serialized="p">
+                                                    <ownedPathName>
                                                       <ownedPathElements>
                                                         <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                                       </ownedPathElements>
@@ -189,7 +189,7 @@
                                                 </ownedLeft>
                                               </ownedRight>
                                               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                                <ownedPathName serialized="acc">
+                                                <ownedPathName>
                                                   <ownedPathElements>
                                                     <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
                                                   </ownedPathElements>
@@ -200,7 +200,7 @@
                                         </ownedRoundBracketedClause>
                                       </ownedRight>
                                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                        <ownedPathName serialized="sortedBy">
+                                        <ownedPathName>
                                           <ownedPathElements>
                                             <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
                                           </ownedPathElements>
@@ -208,8 +208,8 @@
                                         <ownedRoundBracketedClause>
                                           <ownedArguments>
                                             <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                              <ownedPathName serialized="q">
-                                                <ownedPathElements>
+                                              <ownedPathName>
+                                                <ownedPathElements name="q" role="ITERATOR">
                                                   <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedLeft/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                                 </ownedPathElements>
                                               </ownedPathName>
@@ -218,14 +218,14 @@
                                           <ownedArguments prefix="|">
                                             <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                                <ownedPathName serialized="name">
+                                                <ownedPathName>
                                                   <ownedPathElements>
                                                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
                                                   </ownedPathElements>
                                                 </ownedPathName>
                                               </ownedRight>
                                               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                                <ownedPathName serialized="q">
+                                                <ownedPathName>
                                                   <ownedPathElements>
                                                     <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedLeft/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                                   </ownedPathElements>
@@ -237,7 +237,7 @@
                                       </ownedLeft>
                                     </ownedRight>
                                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="missingProperties">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                         </ownedPathElements>
@@ -253,7 +253,7 @@
                           </ownedElseExpression>
                           <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                             <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="status">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
                                 </ownedPathElements>
@@ -270,7 +270,7 @@
                                 <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
                                   <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                                     <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="iterate">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
                                         </ownedPathElements>
@@ -278,8 +278,8 @@
                                       <ownedRoundBracketedClause>
                                         <ownedArguments>
                                           <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                            <ownedPathName serialized="p">
-                                              <ownedPathElements>
+                                            <ownedPathName>
+                                              <ownedPathElements name="p" role="ITERATOR">
                                                 <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                               </ownedPathElements>
                                             </ownedPathName>
@@ -290,8 +290,8 @@
                                             <segments>Unexpected initializers:</segments>
                                           </ownedInitExpression>
                                           <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                            <ownedPathName serialized="acc">
-                                              <ownedPathElements>
+                                            <ownedPathName>
+                                              <ownedPathElements name="acc" role="ACCUMULATOR">
                                                 <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
                                               </ownedPathElements>
                                             </ownedPathName>
@@ -303,14 +303,14 @@
                                             <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="+">
                                               <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
                                                 <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                                  <ownedPathName serialized="name">
+                                                  <ownedPathName>
                                                     <ownedPathElements>
                                                       <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
                                                     </ownedPathElements>
                                                   </ownedPathName>
                                                 </ownedRight>
                                                 <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                                  <ownedPathName serialized="p">
+                                                  <ownedPathName>
                                                     <ownedPathElements>
                                                       <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
                                                     </ownedPathElements>
@@ -322,7 +322,7 @@
                                               </ownedLeft>
                                             </ownedRight>
                                             <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                              <ownedPathName serialized="acc">
+                                              <ownedPathName>
                                                 <ownedPathElements>
                                                   <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
                                                 </ownedPathElements>
@@ -333,7 +333,7 @@
                                       </ownedRoundBracketedClause>
                                     </ownedRight>
                                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="sortedBy">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
                                         </ownedPathElements>
@@ -341,7 +341,7 @@
                                       <ownedRoundBracketedClause>
                                         <ownedArguments>
                                           <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                            <ownedPathName serialized="name">
+                                            <ownedPathName>
                                               <ownedPathElements>
                                                 <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
                                               </ownedPathElements>
@@ -352,7 +352,7 @@
                                     </ownedLeft>
                                   </ownedRight>
                                   <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                    <ownedPathName serialized="extraProperties">
+                                    <ownedPathName>
                                       <ownedPathElements>
                                         <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                       </ownedPathElements>
@@ -369,7 +369,7 @@
                         <ownedVariables name="missingProperties">
                           <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
                             <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="excludingAll">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
                                 </ownedPathElements>
@@ -377,7 +377,7 @@
                               <ownedRoundBracketedClause>
                                 <ownedArguments>
                                   <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                    <ownedPathName serialized="partProperties">
+                                    <ownedPathName>
                                       <ownedPathElements>
                                         <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedVariables.0"/>
                                       </ownedPathElements>
@@ -387,7 +387,7 @@
                               </ownedRoundBracketedClause>
                             </ownedRight>
                             <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="requiredClassProperties">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                 </ownedPathElements>
@@ -397,7 +397,7 @@
                           <ownedType xsi:type="essentialoclcs:CollectionTypeCS" name="Set">
                             <ownedCollectionMultiplicity xsi:type="basecs:MultiplicityStringCS" isNullFree="true" stringBounds="*"/>
                             <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
-                              <ownedPathName serialized="NamedElement">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-NamedElement"/>
                                 </ownedPathElements>
@@ -409,7 +409,7 @@
                       <ownedVariables name="extraProperties">
                         <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
                           <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                            <ownedPathName serialized="excludingAll">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
                               </ownedPathElements>
@@ -417,7 +417,7 @@
                             <ownedRoundBracketedClause>
                               <ownedArguments>
                                 <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                  <ownedPathName serialized="classProperties">
+                                  <ownedPathName>
                                     <ownedPathElements>
                                       <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                                     </ownedPathElements>
@@ -427,7 +427,7 @@
                             </ownedRoundBracketedClause>
                           </ownedRight>
                           <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                            <ownedPathName serialized="partProperties">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedVariables.0"/>
                               </ownedPathElements>
@@ -437,7 +437,7 @@
                         <ownedType xsi:type="essentialoclcs:CollectionTypeCS" name="Set">
                           <ownedCollectionMultiplicity xsi:type="basecs:MultiplicityStringCS" isNullFree="true" stringBounds="*"/>
                           <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
-                            <ownedPathName serialized="NamedElement">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-NamedElement"/>
                               </ownedPathElements>
@@ -452,7 +452,7 @@
                           <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                             <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="reject">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                                   </ownedPathElements>
@@ -462,14 +462,14 @@
                                     <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="and">
                                       <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
                                         <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                          <ownedPathName serialized="isComposite">
+                                          <ownedPathName>
                                             <ownedPathElements>
                                               <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isComposite"/>
                                             </ownedPathElements>
                                           </ownedPathName>
                                         </ownedRight>
                                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                          <ownedPathName serialized="opposite">
+                                          <ownedPathName>
                                             <ownedPathElements>
                                               <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-opposite"/>
                                             </ownedPathElements>
@@ -480,7 +480,7 @@
                                         <ownedExpression xsi:type="essentialoclcs:InfixExpCS" name="&lt;>">
                                           <ownedRight xsi:type="essentialoclcs:NullLiteralExpCS"/>
                                           <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                            <ownedPathName serialized="opposite">
+                                            <ownedPathName>
                                               <ownedPathElements>
                                                 <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-opposite"/>
                                               </ownedPathElements>
@@ -493,7 +493,7 @@
                                 </ownedRoundBracketedClause>
                               </ownedRight>
                               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="reject">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                                   </ownedPathElements>
@@ -502,7 +502,7 @@
                                   <ownedArguments>
                                     <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                        <ownedPathName serialized="oclIsKindOf">
+                                        <ownedPathName>
                                           <ownedPathElements>
                                             <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#MuzAj"/>
                                           </ownedPathElements>
@@ -510,7 +510,7 @@
                                         <ownedRoundBracketedClause>
                                           <ownedArguments>
                                             <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                              <ownedPathName serialized="CollectionType">
+                                              <ownedPathName>
                                                 <ownedPathElements>
                                                   <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-CollectionType"/>
                                                 </ownedPathElements>
@@ -520,7 +520,7 @@
                                         </ownedRoundBracketedClause>
                                       </ownedRight>
                                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                        <ownedPathName serialized="type">
+                                        <ownedPathName>
                                           <ownedPathElements>
                                             <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
                                           </ownedPathElements>
@@ -532,7 +532,7 @@
                               </ownedLeft>
                             </ownedRight>
                             <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="reject">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                                 </ownedPathElements>
@@ -542,7 +542,7 @@
                                   <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="or">
                                     <ownedRight xsi:type="essentialoclcs:PrefixExpCS" name="not">
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                        <ownedPathName serialized="isRequired">
+                                        <ownedPathName>
                                           <ownedPathElements>
                                             <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-isRequired"/>
                                           </ownedPathElements>
@@ -550,7 +550,7 @@
                                       </ownedRight>
                                     </ownedRight>
                                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="isVolatile">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isVolatile"/>
                                         </ownedPathElements>
@@ -562,7 +562,7 @@
                             </ownedLeft>
                           </ownedRight>
                           <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                            <ownedPathName serialized="reject">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                               </ownedPathElements>
@@ -572,7 +572,7 @@
                                 <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="&lt;>">
                                   <ownedRight xsi:type="essentialoclcs:NullLiteralExpCS"/>
                                   <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                    <ownedPathName serialized="defaultValueString">
+                                    <ownedPathName>
                                       <ownedPathElements>
                                         <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-defaultValueString"/>
                                       </ownedPathElements>
@@ -584,7 +584,7 @@
                           </ownedLeft>
                         </ownedRight>
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                          <ownedPathName serialized="classProperties">
+                          <ownedPathName>
                             <ownedPathElements>
                               <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
                             </ownedPathElements>
@@ -597,7 +597,7 @@
                     <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
                       <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                         <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                          <ownedPathName serialized="reject">
+                          <ownedPathName>
                             <ownedPathElements>
                               <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                             </ownedPathElements>
@@ -606,7 +606,7 @@
                             <ownedArguments>
                               <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="?.">
                                 <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                  <ownedPathName serialized="startsWith">
+                                  <ownedPathName>
                                     <ownedPathElements>
                                       <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#s7Aws"/>
                                     </ownedPathElements>
@@ -620,7 +620,7 @@
                                   </ownedRoundBracketedClause>
                                 </ownedRight>
                                 <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                  <ownedPathName serialized="name">
+                                  <ownedPathName>
                                     <ownedPathElements>
                                       <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
                                     </ownedPathElements>
@@ -631,7 +631,7 @@
                           </ownedRoundBracketedClause>
                         </ownedRight>
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                          <ownedPathName serialized="reject">
+                          <ownedPathName>
                             <ownedPathElements>
                               <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
                             </ownedPathElements>
@@ -642,14 +642,14 @@
                                 <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="or">
                                   <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="or">
                                     <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="isTransient">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isTransient"/>
                                         </ownedPathElements>
                                       </ownedPathName>
                                     </ownedRight>
                                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                      <ownedPathName serialized="isStatic">
+                                      <ownedPathName>
                                         <ownedPathElements>
                                           <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Feature-isStatic"/>
                                         </ownedPathElements>
@@ -657,7 +657,7 @@
                                     </ownedLeft>
                                   </ownedRight>
                                   <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                    <ownedPathName serialized="isImplicit">
+                                    <ownedPathName>
                                       <ownedPathElements>
                                         <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isImplicit"/>
                                       </ownedPathElements>
@@ -665,7 +665,7 @@
                                   </ownedLeft>
                                 </ownedRight>
                                 <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                                  <ownedPathName serialized="isDerived">
+                                  <ownedPathName>
                                     <ownedPathElements>
                                       <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isDerived"/>
                                     </ownedPathElements>
@@ -677,7 +677,7 @@
                         </ownedLeft>
                       </ownedRight>
                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                        <ownedPathName serialized="allProperties">
+                        <ownedPathName>
                           <ownedPathElements>
                             <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedVariables.0"/>
                           </ownedPathElements>
@@ -692,7 +692,7 @@
                       <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
                         <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                           <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                            <ownedPathName serialized="asSet">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#tj4Xc"/>
                               </ownedPathElements>
@@ -700,7 +700,7 @@
                             <ownedRoundBracketedClause/>
                           </ownedRight>
                           <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                            <ownedPathName serialized="ownedProperties">
+                            <ownedPathName>
                               <ownedPathElements>
                                 <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Class-ownedProperties"/>
                               </ownedPathElements>
@@ -708,7 +708,7 @@
                           </ownedLeft>
                         </ownedRight>
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                          <ownedPathName serialized="closure">
+                          <ownedPathName>
                             <ownedPathElements>
                               <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#tQoce"/>
                             </ownedPathElements>
@@ -716,7 +716,7 @@
                           <ownedRoundBracketedClause>
                             <ownedArguments>
                               <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                                <ownedPathName serialized="superClasses">
+                                <ownedPathName>
                                   <ownedPathElements>
                                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Class-superClasses"/>
                                   </ownedPathElements>
@@ -727,7 +727,7 @@
                         </ownedLeft>
                       </ownedRight>
                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                        <ownedPathName serialized="oclAsType">
+                        <ownedPathName>
                           <ownedPathElements>
                             <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#xOh0M"/>
                           </ownedPathElements>
@@ -735,7 +735,7 @@
                         <ownedRoundBracketedClause>
                           <ownedArguments>
                             <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
-                              <ownedPathName serialized="Class">
+                              <ownedPathName>
                                 <ownedPathElements>
                                   <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-Class"/>
                                 </ownedPathElements>
@@ -746,7 +746,7 @@
                       </ownedLeft>
                     </ownedRight>
                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                      <ownedPathName serialized="type">
+                      <ownedPathName>
                         <ownedPathElements>
                           <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
                         </ownedPathElements>
@@ -759,7 +759,7 @@
                 <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
                   <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
                     <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                      <ownedPathName serialized="asSet">
+                      <ownedPathName>
                         <ownedPathElements>
                           <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#tj4Xc"/>
                         </ownedPathElements>
@@ -767,7 +767,7 @@
                       <ownedRoundBracketedClause/>
                     </ownedRight>
                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                      <ownedPathName serialized="referredProperty">
+                      <ownedPathName>
                         <ownedPathElements>
                           <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-ShadowPart-referredProperty"/>
                         </ownedPathElements>
@@ -775,7 +775,7 @@
                     </ownedLeft>
                   </ownedRight>
                   <ownedLeft xsi:type="essentialoclcs:NameExpCS">
-                    <ownedPathName serialized="ownedParts">
+                    <ownedPathName>
                       <ownedPathElements>
                         <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-ShadowExp-ownedParts"/>
                       </ownedPathElements>
@@ -786,7 +786,7 @@
             </ownedElseExpression>
             <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
               <ownedRight xsi:type="essentialoclcs:NameExpCS">
-                <ownedPathName serialized="status">
+                <ownedPathName>
                   <ownedPathElements>
                     <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
                   </ownedPathElements>

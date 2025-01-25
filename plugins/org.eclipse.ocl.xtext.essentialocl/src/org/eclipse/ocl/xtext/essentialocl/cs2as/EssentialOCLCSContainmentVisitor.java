@@ -68,6 +68,7 @@ import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.essentialoclcs.BooleanLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionLiteralExpCS;
@@ -164,14 +165,24 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			ICompositeNode node = NodeModelUtils.getNode(csName);
 		//	System.out.println(NameUtil.debugSimpleName(csArgument) + " \"" + csArgument + "\" " + NameUtil.debugSimpleName(csName) + " \"" + csName + "\" " + NameUtil.debugSimpleName(node));
 		//	if (node != null) {
-			String varName = node != null ? ElementUtil.getTextName(csName) : csPathName.getPathName();
+			List<PathElementCS> csPathElements = csPathName.getOwnedPathElements();
+			int csPathElementsSize = csPathElements.size();
+			assert csPathElementsSize == 1;
+			PathElementCS csPathElement = csPathElements.get(csPathElementsSize-1);
+			String varName;
+			if (node != null) {
+				varName = ElementUtil.getTextName(csName);
+				csPathElement.setRole(aRole == NavigationRole.ITERATOR ? PathRole.ITERATOR : PathRole.ACCUMULATOR);	// Resolve the reference that is actually a definition
+				csPathElement.setName(varName);	// Resolve the reference that is actually a definition
+			}
+			else {
+				varName = csPathElement.getName();
+			}
+			csPathElement.setReferredElement(parameter);	// Resolve the reference that is actually a definition
+			csPathElement.setElementType(null);				// Indicate a definition to the syntax colouring
 		//		System.out.println(	"\t\t\"" + varName + "\"");
 			assert varName != null;
 			helper.refreshName(parameter, varName);
-			List<PathElementCS> path = csPathName.getOwnedPathElements();
-			PathElementCS csPathElement = path.get(path.size()-1);
-			csPathElement.setReferredElement(parameter);	// Resolve the reference that is actually a definition
-			csPathElement.setElementType(null);		// Indicate a definition to the syntax colouring
 		//	}
 		}
 	}

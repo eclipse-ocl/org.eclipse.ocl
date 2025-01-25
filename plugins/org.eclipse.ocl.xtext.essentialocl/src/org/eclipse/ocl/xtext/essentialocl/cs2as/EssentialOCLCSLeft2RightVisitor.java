@@ -152,6 +152,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.util.AbstractEssentialOCLCSLeft2RightVisitor;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2RightVisitor
 {
@@ -1550,19 +1552,22 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
+	//	System.out.println("resolveVariableExp " + NameUtil.debugSimpleName(variableDeclaration));
 		PathNameCS csPathName = csNameExp.getOwnedPathName();
 		String variableName = variableDeclaration.getName();
 		assert variableName != null;
-	//	csPathName.setName(variableName);
-		/*if (variableDeclaration instanceof IteratorVariable) {
-			csPathName.setPathRole(PathRole.ITERATOR);
+		if (variableDeclaration instanceof ParameterVariable) {
+			List<PathElementCS> csPathElements = csPathName.getOwnedPathElements();
+			assert csPathElements.size() == 1;
+			PathElementCS csPathElement = csPathElements.get(0);
+			ICompositeNode node = NodeModelUtils.getNode(csPathElement);
+			if (node != null) {
+				ParameterVariable asParameterVariable = (ParameterVariable)variableDeclaration;
+				Parameter asParameter = asParameterVariable.getRepresentedParameter();
+				csPathElement.setName(node.getText().trim());			// Cache the source text for a CSResource save and reload
+				csPathElement.setRole(asParameter != null ? PathRole.PARAMETER : PathRole.RETURN);
+			}
 		}
-		else*/ if (variableDeclaration instanceof ParameterVariable) {
-			csPathName.setPathRole(((ParameterVariable)variableDeclaration).getRepresentedParameter() != null ? PathRole.PARAMETER : PathRole.RETURN);
-		}
-	//	else if (variableDeclaration instanceof ResultVariable) {		// XXX
-	//		csPathName.setRole(PathRole.RESULT);
-	//	}
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
 		expression.setName(variableName);
@@ -2136,9 +2141,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (csPathName == null) {
 			return context.addBadExpressionError(csNameExp, "Missing path name");
 		}
-		if (csPathName.getPathRole() == PathRole.RETURN) {
-			getClass();			// XXX
-		}
 		RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
 		if (csNameExp.getOwnedCurlyBracketedClause() != null) {
 			return resolveShadowExp(csNameExp);
@@ -2150,9 +2152,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
-		if (csPathName.getPathName() != null) {
-			getClass();			// XXX
-		}
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);
 		if ((element == null) || element.eIsProxy()) {
 			Element pivot = csNameExp.getPivot();
