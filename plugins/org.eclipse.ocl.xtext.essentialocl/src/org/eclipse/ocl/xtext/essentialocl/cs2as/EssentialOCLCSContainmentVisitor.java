@@ -164,7 +164,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			ICompositeNode node = NodeModelUtils.getNode(csName);
 		//	System.out.println(NameUtil.debugSimpleName(csArgument) + " \"" + csArgument + "\" " + NameUtil.debugSimpleName(csName) + " \"" + csName + "\" " + NameUtil.debugSimpleName(node));
 		//	if (node != null) {
-			String varName = node != null ? ElementUtil.getTextName(csName) : csPathName.getName();
+			String varName = node != null ? ElementUtil.getTextName(csName) : csPathName.getPathName();
 		//		System.out.println(	"\t\t\"" + varName + "\"");
 			assert varName != null;
 			helper.refreshName(parameter, varName);

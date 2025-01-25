@@ -504,7 +504,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			else {
 //				System.out.println("Assigned : " + eObject);
 			} */
-			System.out.println("addCreated " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement.toString().replace("\r", " ").replace("\n", " "));
+//			System.out.println("addCreated " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement.toString().replace("\r", " ").replace("\n", " "));
 		}
 
 		@Override

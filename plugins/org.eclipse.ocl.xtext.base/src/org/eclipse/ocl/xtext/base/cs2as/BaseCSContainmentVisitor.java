@@ -488,7 +488,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	public Continuation<?> visitPathNameCS(@NonNull PathNameCS csElement) {
 		ICompositeNode node = NodeModelUtils.getNode(csElement);
 		if (node != null) {
-			csElement.setName(node.getText().trim());			// Cache the source text for a CSREsource save and reload
+			csElement.setPathName(node.getText().trim());			// Cache the source text for a CSResource save and reload
 		}
 		return null;
 	}

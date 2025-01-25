@@ -188,10 +188,4 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		}
 		return asRepresentedElement.getReloadableEObject(environmentFactory);
 	}
-
-	@Override
-	public void setName(String newName) {
-		assert !"result".equals(newName);			// XXX
-		super.setName(newName);
-	}
 } //ParameterVariableImpl

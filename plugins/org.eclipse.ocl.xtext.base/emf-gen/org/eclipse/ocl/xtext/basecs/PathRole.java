@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -35,15 +35,7 @@ public enum PathRole implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	NULL(0, "NULL", "NULL"), /**
-	 * The '<em><b>ITERATOR</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ITERATOR_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	ITERATOR(0, "ITERATOR", "ITERATOR"), //$NON-NLS-1$ //$NON-NLS-2$
+	NULL(0, "NULL", "NULL"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>PARAMETER</b></em>' literal object.
@@ -73,17 +65,6 @@ public enum PathRole implements Enumerator
 	 * @ordered
 	 */
 	public static final int NULL_VALUE = 0;
-
-	/**
-	 * The '<em><b>ITERATOR</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #ITERATOR
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int ITERATOR_VALUE = 0;
 
 	/**
 	 * The '<em><b>PARAMETER</b></em>' literal value.
@@ -117,7 +98,6 @@ public enum PathRole implements Enumerator
 		new PathRole[]
 		{
 			NULL,
-			ITERATOR,
 			PARAMETER,
 			RETURN,
 		};
@@ -267,5 +247,5 @@ public enum PathRole implements Enumerator
 	{
 		return literal;
 	}
-	
+
 } //PathRole

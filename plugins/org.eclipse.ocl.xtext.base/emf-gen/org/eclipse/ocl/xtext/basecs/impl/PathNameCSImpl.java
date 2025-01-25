@@ -48,8 +48,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getScopeFilter <em>Scope Filter</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getRole <em>Role</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getPathName <em>Path Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathNameCSImpl#getPathRole <em>Path Role</em>}</li>
  * </ul>
  *
  * @generated
@@ -106,26 +106,45 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected ScopeFilter scopeFilter = SCOPE_FILTER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #getPathName() <em>Path Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getPathName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String PATH_NAME_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getRole() <em>Role</em>}' attribute.
+	 * The cached value of the '{@link #getPathName() <em>Path Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRole()
+	 * @see #getPathName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final PathRole ROLE_EDEFAULT = PathRole.NULL;
+	protected String pathName = PATH_NAME_EDEFAULT;
 
-//	private static int count = 0;
+	/**
+	 * The default value of the '{@link #getPathRole() <em>Path Role</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPathRole()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final PathRole PATH_ROLE_EDEFAULT = PathRole.NULL;
+
+	/**
+	 * The cached value of the '{@link #getPathRole() <em>Path Role</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPathRole()
+	 * @generated
+	 * @ordered
+	 */
+	protected PathRole pathRole = PATH_ROLE_EDEFAULT;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -198,9 +217,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				return getScopeFilter();
 			case 6:
-				return getName();
+				return getPathName();
 			case 7:
-				return getRole();
+				return getPathRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -227,10 +246,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				setScopeFilter((ScopeFilter)newValue);
 				return;
 			case 6:
-				setName((String)newValue);
+				setPathName((String)newValue);
 				return;
 			case 7:
-				setRole((PathRole)newValue);
+				setPathRole((PathRole)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -256,10 +275,10 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				setScopeFilter(SCOPE_FILTER_EDEFAULT);
 				return;
 			case 6:
-				setName(NAME_EDEFAULT);
+				setPathName(PATH_NAME_EDEFAULT);
 				return;
 			case 7:
-				setRole(ROLE_EDEFAULT);
+				setPathRole(PATH_ROLE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -284,9 +303,9 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			case 5:
 				return SCOPE_FILTER_EDEFAULT == null ? scopeFilter != null : !SCOPE_FILTER_EDEFAULT.equals(scopeFilter);
 			case 6:
-				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
+				return PATH_NAME_EDEFAULT == null ? pathName != null : !PATH_NAME_EDEFAULT.equals(pathName);
 			case 7:
-				return getRole() != ROLE_EDEFAULT;
+				return pathRole != PATH_ROLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -367,55 +386,54 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldScopeFilter, scopeFilter));
 	}
 
-	private String name = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
-	public String getName()
+	public String getPathName()
 	{
-		return name;
+		return pathName;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
-	public void setName(String newName)
+	public void setPathName(String newPathName)
 	{
-		assert name == null;
-		assert (newName == null) || newName.equals(newName.trim());
-		this.name = newName;
-//		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + name);
-	}
-
-	private PathRole role = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public PathRole getRole()
-	{
-		return role;
+		String oldPathName = pathName;
+		pathName = newPathName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldPathName, pathName));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
-	public void setRole(PathRole newRole)
+	public PathRole getPathRole()
 	{
-		role = newRole;
+		return pathRole;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setPathRole(PathRole newPathRole)
+	{
+		PathRole oldPathRole = pathRole;
+		pathRole = newPathRole == null ? PATH_ROLE_EDEFAULT : newPathRole;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldPathRole, pathRole));
 	}
 
 	/**
@@ -455,7 +473,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		ICompositeNode node = NodeModelUtils.getNode(this);
 		if (node == null) {
-			if (role == PathRole.RETURN) {
+			if (pathRole == PathRole.RETURN) {
 				assert ownedPathElements != null;
 				assert ownedPathElements.size() == 1;
 				Constraint asPostcondition = (Constraint)ownedPathElements.get(0).getReferredElement();
@@ -467,7 +485,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 				// XXX errors
 				return asPostcondition;
 			}
-			if (role == PathRole.PARAMETER) {
+			if (pathRole == PathRole.PARAMETER) {
 				assert ownedPathElements != null;
 				assert ownedPathElements.size() == 1;
 				Element asElement = ownedPathElements.get(0).getReferredElement();
@@ -475,7 +493,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 					Constraint asConstraint = (Constraint)asElement;
 					ExpressionInOCL asExpression = (ExpressionInOCL)asConstraint.getOwnedSpecification();
 					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
-						if (asParameterVariable.getName().equals(getName())) {
+						if (asParameterVariable.getName().equals(pathName)) {
 							return asParameterVariable;
 						}
 					}
@@ -484,7 +502,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 					Operation asOperation = (Operation)asElement;
 					ExpressionInOCL asExpression = (ExpressionInOCL)asOperation.getBodyExpression();
 					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
-						if (asParameterVariable.getName().equals(getName())) {
+						if (asParameterVariable.getName().equals(pathName)) {
 							return asParameterVariable;
 						}
 					}

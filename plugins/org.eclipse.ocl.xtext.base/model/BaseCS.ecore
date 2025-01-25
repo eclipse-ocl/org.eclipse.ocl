@@ -177,16 +177,16 @@
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scopeFilter" eType="#//ScopeFilter"
         transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        volatile="true" derived="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The name of the VariableDeclaration when this is the name of a variable or parameter"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="#//PathRole"
-        volatile="true" defaultValueLiteral="NULL" derived="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathRole" eType="#//PathRole"
+        derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour when there is no referenceable CS as for a result or parameter."/>
+        <details key="documentation" value="The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -309,7 +309,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PathRole">
     <eLiterals name="NULL"/>
-    <eLiterals name="ITERATOR"/>
     <eLiterals name="PARAMETER"/>
     <eLiterals name="RETURN"/>
   </eClassifiers>

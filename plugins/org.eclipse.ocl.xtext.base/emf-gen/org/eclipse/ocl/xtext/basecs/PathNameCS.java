@@ -29,8 +29,8 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getOwnedPathElements <em>Owned Path Elements</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getScopeFilter <em>Scope Filter</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName <em>Path Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole <em>Path Role</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS()
@@ -125,57 +125,56 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	void setScopeFilter(ScopeFilter value);
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Path Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The name of the VariableDeclaration when this is the name of a variable or parameter
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Name()
-	 * @model volatile="true" derived="true"
+	 * @return the value of the '<em>Path Name</em>' attribute.
+	 * @see #setPathName(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_PathName()
+	 * @model derived="true"
 	 * @generated
 	 */
-	String getName();
+	String getPathName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName <em>Path Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Path Name</em>' attribute.
+	 * @see #getPathName()
 	 * @generated
 	 */
-	void setName(String value);
+	void setPathName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Role</b></em>' attribute.
-	 * The default value is <code>"NULL"</code>.
+	 * Returns the value of the '<em><b>Path Role</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.ocl.xtext.basecs.PathRole}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour when there is no referenceable CS as for a result or parameter.
+	 * The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Role</em>' attribute.
+	 * @return the value of the '<em>Path Role</em>' attribute.
 	 * @see org.eclipse.ocl.xtext.basecs.PathRole
-	 * @see #setRole(PathRole)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Role()
-	 * @model default="NULL" volatile="true" derived="true"
+	 * @see #setPathRole(PathRole)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_PathRole()
+	 * @model derived="true"
 	 * @generated
 	 */
-	PathRole getRole();
+	PathRole getPathRole();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole <em>Path Role</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Role</em>' attribute.
+	 * @param value the new value of the '<em>Path Role</em>' attribute.
 	 * @see org.eclipse.ocl.xtext.basecs.PathRole
-	 * @see #getRole()
+	 * @see #getPathRole()
 	 * @generated
 	 */
-	void setRole(PathRole value);
+	void setPathRole(PathRole value);
 
 } // QualifiedElementRefCS

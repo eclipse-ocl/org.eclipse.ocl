@@ -28,7 +28,6 @@
       generateExampleClass="false" ecorePackage="BaseCS.ecore#/" publicationLocation="">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BaseCS.ecore#//PathRole">
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/NULL"/>
-      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/ITERATOR"/>
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/PARAMETER"/>
       <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/RETURN"/>
     </genEnums>
@@ -156,8 +155,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathNameCS/ownedPathElements"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//PathNameCS/referredElement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/scopeFilter"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/role"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/pathName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathNameCS/pathRole"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//PivotableElementCS">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PivotableElementCS/pivot"/>

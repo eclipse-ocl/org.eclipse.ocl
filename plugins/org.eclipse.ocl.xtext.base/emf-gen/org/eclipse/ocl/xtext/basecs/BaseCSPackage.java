@@ -1623,26 +1623,26 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getPathNameCS_ScopeFilter();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName <em>Path Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getName()
+	 * @return the meta object for the attribute '<em>Path Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getPathName()
 	 * @see #getPathNameCS()
 	 * @generated
 	 */
-	EAttribute getPathNameCS_Name();
+	EAttribute getPathNameCS_PathName();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getRole <em>Role</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole <em>Path Role</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Role</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getRole()
+	 * @return the meta object for the attribute '<em>Path Role</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathNameCS#getPathRole()
 	 * @see #getPathNameCS()
 	 * @generated
 	 */
-	EAttribute getPathNameCS_Role();
+	EAttribute getPathNameCS_PathRole();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.PivotableElementCS <em>Pivotable Element CS</em>}'.
@@ -3139,20 +3139,20 @@ public interface BaseCSPackage extends EPackage {
 		EAttribute PATH_NAME_CS__SCOPE_FILTER = eINSTANCE.getPathNameCS_ScopeFilter();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Path Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PATH_NAME_CS__NAME = eINSTANCE.getPathNameCS_Name();
+		EAttribute PATH_NAME_CS__PATH_NAME = eINSTANCE.getPathNameCS_PathName();
 
 		/**
-		 * The meta object literal for the '<em><b>Role</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Path Role</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PATH_NAME_CS__ROLE = eINSTANCE.getPathNameCS_Role();
+		EAttribute PATH_NAME_CS__PATH_ROLE = eINSTANCE.getPathNameCS_PathRole();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl <em>Pivotable Element CS</em>}' class.

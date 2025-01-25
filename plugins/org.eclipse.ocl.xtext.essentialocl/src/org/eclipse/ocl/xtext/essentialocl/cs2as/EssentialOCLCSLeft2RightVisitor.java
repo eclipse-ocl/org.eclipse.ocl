@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -1555,15 +1554,15 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		String variableName = variableDeclaration.getName();
 		assert variableName != null;
 	//	csPathName.setName(variableName);
-		if (variableDeclaration instanceof IteratorVariable) {
-			csPathName.setRole(PathRole.ITERATOR);
+		/*if (variableDeclaration instanceof IteratorVariable) {
+			csPathName.setPathRole(PathRole.ITERATOR);
 		}
-		else if (variableDeclaration instanceof ParameterVariable) {
-			csPathName.setRole(PathRole.PARAMETER);
+		else*/ if (variableDeclaration instanceof ParameterVariable) {
+			csPathName.setPathRole(((ParameterVariable)variableDeclaration).getRepresentedParameter() != null ? PathRole.PARAMETER : PathRole.RETURN);
 		}
-		else if (variableDeclaration instanceof ResultVariable) {
-			csPathName.setRole(PathRole.RESULT);
-		}
+	//	else if (variableDeclaration instanceof ResultVariable) {		// XXX
+	//		csPathName.setRole(PathRole.RESULT);
+	//	}
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
 		expression.setName(variableName);
@@ -2137,7 +2136,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (csPathName == null) {
 			return context.addBadExpressionError(csNameExp, "Missing path name");
 		}
-		if (csPathName.getRole() == PathRole.RESULT) {
+		if (csPathName.getPathRole() == PathRole.RETURN) {
 			getClass();			// XXX
 		}
 		RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
@@ -2151,7 +2150,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
-		if (csPathName.getName() != null) {
+		if (csPathName.getPathName() != null) {
 			getClass();			// XXX
 		}
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);
