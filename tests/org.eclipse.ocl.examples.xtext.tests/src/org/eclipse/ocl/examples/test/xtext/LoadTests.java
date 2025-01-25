@@ -156,7 +156,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI xmiCSuri, @NonNull String... messages) throws IOException {
-		System.out.println("checkLoadableFromXMI " + xmiCSuri);
+	//	System.out.println("checkLoadableFromXMI " + xmiCSuri);
 		OCL ocl = createOCLWithProjectMap();
 		try {
 			CSResource csResource = (CSResource)ocl.getResourceSet().getResource(xmiCSuri, true);
@@ -176,7 +176,7 @@ public class LoadTests extends XtextTestCase
 			for (Resource resource : ocl.getEnvironmentFactory().getASResourceSet().getResources()) {
 				String scheme = resource.getURI().scheme();
 				if (!"http".equals(scheme) && !"pathmap".equals(scheme)) {
-					System.out.println("checkLoadableFromXMI unload " + resource.getURI());
+				//	System.out.println("checkLoadableFromXMI unload " + resource.getURI());
 					resource.unload();
 				}
 			}
@@ -207,9 +207,9 @@ public class LoadTests extends XtextTestCase
 		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
 		//	assert (unresolvedProxies.size() > 0) {
 		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
-			System.out.println("checkLoadableFromXMI pre-resolveAll");
+		//	System.out.println("checkLoadableFromXMI pre-resolveAll");
 			EcoreUtil.resolveAll(csResource);
-			System.out.println("checkLoadableFromXMI post-resolveAll");
+		//	System.out.println("checkLoadableFromXMI post-resolveAll");
 			for (EObject eObject : new TreeIterable(csResource)) {		// XXX redundant
 				if (eObject instanceof PivotableElementCSImpl) {
 					Element pivot = ((PivotableElementCSImpl)eObject).getPivot();
@@ -1414,7 +1414,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Fruit_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		UMLStandaloneSetup.init();
 		OCL ocl = createOCLWithProjectMap();
 		UMLPackage.eINSTANCE.getClass();
@@ -1430,14 +1430,14 @@ public class LoadTests extends XtextTestCase
 	 * Repeat the final checkLoadableFromXMI stage of testLoad_Fruit_ocl as a debug aid.
 	 */
 	public void testLoad_Fruit_oclcs() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		UMLStandaloneSetup.init();
 		URI oclOutputURI = getTestModelURI("models/uml/Fruit.saved.oclcs");		// Copied from testLoad_Fruit_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Imports_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		URI inputURI = getTestModelURI("models/ecore/Imports.ocl");
 		doLoadOCL(ocl, inputURI);
@@ -1462,13 +1462,13 @@ public class LoadTests extends XtextTestCase
 	 * Repeat the final checkLoadableFromXMI stage of testLoad_MiniPivot_ocl as a debug aid.
 	 */
 	public void testLoad_MiniPivot_oclcs() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		URI oclOutputURI = getTestModelURI("models/ocl/MiniPivot.saved.oclcs");		// Copied from testLoad_MiniPivot_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
 
 	public void testLoad_Names_ocl() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 	//	ASResourceImpl.SET_PROXY.setState(true);
 	//	PartialModels.PARTIAL_MODELS.setState(true);
 	//	PartialPackages.PARTIAL_PACKAGES.setState(true);
@@ -1488,7 +1488,7 @@ public class LoadTests extends XtextTestCase
 	 * Repeat the final checkLoadableFromXMI stage of testLoad_Names_ocl as a debug aid.
 	 */
 	public void testLoad_Names_oclcs() throws IOException, InterruptedException {
-		ASResourceImpl.RESOLVE_PROXY.setState(true);
+	//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		URI oclOutputURI = getTestModelURI("models/ecore/Names.saved.oclcs");		// Copied from testLoad_Names_ocl outputs
 		checkLoadableFromXMI(oclOutputURI);
 	}
