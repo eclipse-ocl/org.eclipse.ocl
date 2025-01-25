@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -693,10 +692,16 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		}
 		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
 		update(consumer);
+		/*
+		 * auto (re-)installation of delegates by reload is dubious and not needed by any tests.
+		 *
+		 * If required, the caller should probably (re-)install to ensure consistent (re-)uninstall.
+		 *
 		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)getHelper().getEnvironmentFactory(), null);
 		delegateInstaller.installCompleteOCLDelegates(asResource);
 		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
 		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
+		*/
 		return asResource;
 	}
 
