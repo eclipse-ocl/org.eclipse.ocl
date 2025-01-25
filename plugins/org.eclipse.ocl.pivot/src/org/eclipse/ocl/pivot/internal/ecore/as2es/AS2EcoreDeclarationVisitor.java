@@ -611,25 +611,30 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						importAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 						importAnnotation.setSource(PivotConstants.IMPORT_ANNOTATION_SOURCE);
 					}
-					EObject eTarget = importedNamespace.getESObject();
 					String value;
-					if (eTarget != null) {
-						URI uri = null;
-						Resource eResource = eTarget.eResource();
-						if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eResource)) {
-							uri = eResource.getURI();
-						}
-						if (uri == null) {
-							uri = EcoreUtil.getURI(eTarget);
-						}
-						URI uri2 = URIUtil.deresolve(uri, ecoreURI, true, true, true);
-						value = uri2.toString();
-					}
-					else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
-						value = ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI();
+					if (importedNamespace instanceof Model) {
+						value = ((Model)importedNamespace).getExternalURI();
 					}
 					else {
-						value = importedNamespace.toString();
+						EObject eTarget = importedNamespace.getESObject();
+						if (eTarget != null) {
+							URI uri = null;
+							Resource eResource = eTarget.eResource();
+							if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eResource)) {
+								uri = eResource.getURI();
+							}
+							if (uri == null) {
+								uri = EcoreUtil.getURI(eTarget);
+							}
+							URI uri2 = URIUtil.deresolve(uri, ecoreURI, true, true, true);
+							value = uri2.toString();
+						}
+						else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
+							value = ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI();
+						}
+						else {
+							value = importedNamespace.toString();
+						}
 					}
 					String key = anImport.getName();
 					if ((noNames > 1) && ((key == null) || "".equals(key))) {
