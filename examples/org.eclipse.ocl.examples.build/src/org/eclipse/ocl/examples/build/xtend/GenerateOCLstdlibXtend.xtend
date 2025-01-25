@@ -348,17 +348,17 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				}
 			
 				@Deprecated /* Provide externalURI */
-				public static @NonNull OCLstdlib create(@NonNull String asURI) {
+				public static @NonNull «javaClassName» create(@NonNull String asURI) {
 					Contents contents = new Contents(asURI);
-					return new OCLstdlib(asURI, contents.getModel());
+					return new «javaClassName»(asURI, contents.getModel());
 				}
 			
 				/**
 				 * @since 1.23
 				 */
-				public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
+				public static @NonNull «javaClassName» create(@NonNull String asURI, @NonNull String externalURI) {
 					Contents contents = new Contents(externalURI);
-					return new OCLstdlib(asURI, contents.getModel());
+					return new «javaClassName»(asURI, contents.getModel());
 				}
 			
 				/**
