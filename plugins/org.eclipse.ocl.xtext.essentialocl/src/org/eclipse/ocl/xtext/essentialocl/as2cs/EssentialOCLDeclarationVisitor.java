@@ -187,7 +187,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	protected NavigatingArgCS createNavigatingArgCS(@Nullable String prefix, /*@NonNull*/ NamedElement asNamedElement, @Nullable TypedElement asTypedElement, @Nullable OCLExpression csInit) {
 		NavigatingArgCS csNavigatingArg = EssentialOCLCSFactory.eINSTANCE.createNavigatingArgCS();
 		csNavigatingArg.setPrefix(prefix);
-		csNavigatingArg.setOwnedNameExpression(createStringLiteralExpCS(asNamedElement.getName()));
+		csNavigatingArg.setOwnedNameExpression(createNameExpCS(asNamedElement));
 		if (asTypedElement != null) {
 			csNavigatingArg.setOwnedType(createTypeRefCS(asTypedElement.getType()));
 		}
