@@ -354,17 +354,11 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				}
 			
 				/**
-<<<<<<< Upstream, based on origin/ewillink/proto-flat-target-best-approx
 				 *	Construct a copy of the OCL Standard Library with specified AS resource URI,
 				 *  and external URI.
 				 * @since 1.23
 				 */
 				public static @NonNull «javaClassName» create(@NonNull String asURI, @NonNull String externalURI) {
-=======
-				 * @since 1.23
-				 */
-				public static @NonNull OCLstdlib create(@NonNull String asURI, @NonNull String externalURI) {
->>>>>>> bc5aa76 Tidy
 					Contents contents = new Contents(externalURI);
 					return new «javaClassName»(asURI, contents.getModel());
 				}
