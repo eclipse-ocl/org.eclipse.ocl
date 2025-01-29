@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -167,21 +166,14 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		protected void init(XMLResource xmlResource, Map<?, ?> options) {
 			CSResource csResource = (CSResource)xmlResource;
 			EnvironmentFactory environmentFactory = csResource.getEnvironmentFactory();
-			ICS2AS cs2as = csResource.getCS2AS(environmentFactory);
 			Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 			if (options != null) {
 				for (Object key : options.keySet()) {
 					saveOptions.put(String.valueOf(key), options.get(key));
 				}
 			}
-			ASResource asResource = cs2as.getASResource();
-			ResourceSet asResourceSet = asResource.getResourceSet();
-			if (asResourceSet != null) {
-				AS2ID.assignIds(asResourceSet.getResources(), saveOptions);
-			}
-			else {
-				AS2ID.assignIds(asResource, saveOptions);
-			}
+			ResourceSet asResourceSet = environmentFactory.getASResourceSet();
+			AS2ID.assignIds(asResourceSet.getResources(), saveOptions);
 			super.init(xmlResource, options);
 		}
 	}
