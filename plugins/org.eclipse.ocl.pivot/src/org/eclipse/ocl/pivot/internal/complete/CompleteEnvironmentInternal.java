@@ -27,6 +27,10 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
 	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
+	/**
+	 * @since 1.23
+	 */
+	default @Nullable CompleteClassInternal basicGetCompleteClass(@NonNull Type asType) { return null; }
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	void dispose();
