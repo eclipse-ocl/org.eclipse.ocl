@@ -123,6 +123,24 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable CompleteClassInternal basicGetCompleteClass(@NonNull Type pivotType) {
+		if (pivotType instanceof TemplateParameter) {
+			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
+		}
+		if (pivotType instanceof ElementExtension) {
+			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();
+			if (stereotype != null) {
+				pivotType = stereotype;
+			}
+		}
+		CompleteClassInternal completeClass = class2completeClass.get(pivotType);
+		return completeClass;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT

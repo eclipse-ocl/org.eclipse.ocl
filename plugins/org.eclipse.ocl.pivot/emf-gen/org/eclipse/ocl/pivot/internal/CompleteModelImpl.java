@@ -722,6 +722,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ownedCompletePackages.basicGetCompletePackage(asPackage);
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

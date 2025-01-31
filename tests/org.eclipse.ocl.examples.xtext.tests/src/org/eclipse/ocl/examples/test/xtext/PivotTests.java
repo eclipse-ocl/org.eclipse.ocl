@@ -46,6 +46,7 @@ import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
  */
 public class PivotTests extends XtextTestCase
 {
+	// FIXME This functionality was commented out seven years ago.
 	public static class Checker extends BaseCS2AS
 	{
 		private Checker(@NonNull BaseCS2AS aConverter) {
