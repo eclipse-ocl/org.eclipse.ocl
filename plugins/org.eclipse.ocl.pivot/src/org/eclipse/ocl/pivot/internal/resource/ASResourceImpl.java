@@ -164,6 +164,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						if (featureID == RESOURCE__WARNINGS) {
 							return;
 						}
+	//					if (featureID == RESOURCE__CONTENTS) {							// Happens for undesirable content mutation - typically child stealing
+	//						return;
+	//					}
 						featureID = notification.getFeatureID(Resource.class);			// missing container case
 					}
 					else if (notifier instanceof org.eclipse.ocl.pivot.Class) {
@@ -305,8 +308,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) { // XXX add EnvironmentFactory
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
-		//	assert PivotUtilInternal.isASURI(uri);
-		//	PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
+	//	assert PivotUtilInternal.isASURI(uri);				// Disabled since some standalone tests use *.xml
+	//	PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
 	}
 
 	/**
