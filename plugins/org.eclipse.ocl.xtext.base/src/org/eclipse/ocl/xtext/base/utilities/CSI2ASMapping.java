@@ -357,7 +357,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	protected final @NonNull Map<@NonNull CSResource, @NonNull ASResource> cs2asResourceMap = new HashMap<>();
 
-	protected final @NonNull Map<@NonNull CSResource, @NonNull CS2AS> cs2as2as = new HashMap<>();
+	protected final @NonNull Map<@NonNull CSResource, @NonNull CS2AS> cs2cs2as = new HashMap<>();
 
 	/**
 	 * The map from CS element (identified by URI) to pivot element at the end of the last update. This map enables
@@ -396,7 +396,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public void add(@NonNull CSResource csResource, @NonNull CS2AS cs2as) {
 		as2cs = null;
 		this.cs2asResourceMap.put(csResource, cs2as.getASResource());
-		this.cs2as2as.put(csResource, cs2as);
+		this.cs2cs2as.put(csResource, cs2as);
 		//		List<CS2AS> cs2ases2 = cs2ases;
 		//		if (cs2ases2 == null) {
 		//			cs2ases = cs2ases2 = new ArrayList<>();
@@ -437,7 +437,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	@Override
 	public void dispose() {
-		for (@NonNull CSResource csResource : new ArrayList<>(cs2as2as.keySet())) {
+		for (@NonNull CSResource csResource : new ArrayList<>(cs2cs2as.keySet())) {
 			csResource.dispose();
 		}
 		csi2as.clear();
@@ -468,7 +468,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	}
 
 	public @Nullable CS2AS getCS2AS(@NonNull CSResource csResource) {
-		return cs2as2as.get(csResource);
+		return cs2cs2as.get(csResource);
 	}
 
 	/**
@@ -571,7 +571,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	public void removeCSResource(@NonNull CSResource csResource) {
 		as2cs = null;
 		cs2asResourceMap.remove(csResource);
-		cs2as2as.remove(csResource);
+		cs2cs2as.remove(csResource);
 		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
 			EObject csElement = tit.next();
 			if (csElement instanceof ElementCS) {
