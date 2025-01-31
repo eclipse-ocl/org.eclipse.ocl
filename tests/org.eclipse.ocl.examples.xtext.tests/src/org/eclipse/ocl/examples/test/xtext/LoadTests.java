@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
@@ -98,7 +97,6 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSXMIResource;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.impl.PivotableElementCSImpl;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource.CompleteOCLCSResourceLoadFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -668,7 +666,7 @@ public class LoadTests extends XtextTestCase
 		debugTimestamp.log("Serialization save done");
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
-		saveAsXMI(xtextResource, xmiOutputURI);
+		xtextResource.saveAsXMI(xmiOutputURI);
 		assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
 		if (asResource.isSaveable()) {
 			asResource.setURI(pivotURI);
@@ -772,20 +770,6 @@ public class LoadTests extends XtextTestCase
 	}
 
 	protected void initializeExtraURIMappings(@NonNull ResourceSet resourceSet) {
-	}
-
-	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-		extensionToFactoryMap.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-		extensionToFactoryMap.put(PivotConstants.OCL_CS_FILE_EXTENSION, new CompleteOCLCSResourceLoadFactory()); // XXX $NON-NLS-1$
-		Resource xmiResource = resourceSet.createResource(xmiURI);
-		xmiResource.getContents().addAll(resource.getContents());
-		Map<Object, Object> options = XMIUtil.createSaveOptions();
-		//		options.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
-		xmiResource.save(options);
-		assertNoResourceErrors("Save failed", xmiResource);
-		resource.getContents().addAll(xmiResource.getContents());
 	}
 
 	@Override

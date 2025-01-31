@@ -744,11 +744,13 @@ implements org.eclipse.ocl.pivot.Package {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(this);
-		for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
-			EObject esObject = asPackage.getESObject();
-			if (esObject != null) {
-				return esObject;
+		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().basicGetCompletePackage(this);
+		if (completePackage != null) {
+			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
+				EObject esObject = asPackage.getESObject();
+				if (esObject != null) {
+					return esObject;
+				}
 			}
 		}
 		return null;

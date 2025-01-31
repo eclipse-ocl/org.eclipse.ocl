@@ -476,24 +476,18 @@ public abstract class ElementImpl
 			}
 		}
 		// Look for alternate ES
-	//	if (!environmentFactory.isDisposing()) {
-			esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
-			if (esObject != null) {
-				return esObject;
-			}
-	//	}
-	//	assert false : " No URI source when proxifying(e) " + NameUtil.debugSimpleName(this) + " " + toString();
-	//	if (csi2asMapping == null) {
-	//		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this) + " " + toString());
-	//		return null;
-	//	}
-		//	ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this) + " " + toString());
+		esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
+		if (esObject != null) {
+			return esObject;
+		}
 		return null;
 	}
 
 	/**
-	 * Return the EObject whose URI should enable the esObject to be reloaded by searching Comp;letePackage/Class siblings.
-	 * @param environmentFactory
+	 * Return the EObject whose URI should enable the esObject to be reloaded by searching CompletePackage/Class siblings.
+	 * Since this method may be called during dispose() no attempt is made to create missing CompletePackages/CompleteClasses;
+	 * null is returned when no esObject is readily available. CVallewrs should make sure that all required CompleteClasses
+	 * have been created if reloading of a persisted CS resource is required.
 	 *
 	 * @since 1.23
 	 */
@@ -504,7 +498,7 @@ public abstract class ElementImpl
 	/**
 	 * Return the URI of an EObject that can be used to reload the ES object.
 	 *
-	 * Default implementation rreturns the URI of the getReloadableEObject().
+	 * Default implementation returns the URI of the getReloadableEObject().
 	 *
 	 * EObject-less elements such as Model and Precedence overload.
 	 *

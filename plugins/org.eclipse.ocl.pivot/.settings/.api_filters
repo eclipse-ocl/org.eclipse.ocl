@@ -30,6 +30,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/complete/CompleteEnvironmentInternal.java" type="org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal"/>
+                <message_argument value="basicGetCompleteClass(Type)"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal"/>
+                <message_argument value="getEnvironmentFactory()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/complete/CompleteModelInternal.java" type="org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal"/>
+                <message_argument value="basicGetCompletePackage(Package)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/delegate/AbstractOCLDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.AbstractOCLDelegateFactory">
         <filter id="336658481">
             <message_arguments>
