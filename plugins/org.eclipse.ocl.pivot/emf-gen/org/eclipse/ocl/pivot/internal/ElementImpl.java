@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
@@ -39,7 +40,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -49,10 +49,9 @@ import org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -446,11 +445,11 @@ public abstract class ElementImpl
 	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
 	 *
 	 * The default implementation return a non-null esObject directly else attempts to return a CS object via the
-	 * csi2asMapping.
+	 * csi2asMapping. Returns null in the absence of CS.
 	 *
-	 * Derived classes whose complete classes/packages may provide alternate ES Object values must overload.
+	 * Derived classes whose complete classes/packages may provide alternate ES Object should overload getReloadableEObjectFromCompleteAS.
 	 *
-	 * The derivation for a Model (that has no ESObject) should return the externalURI.
+	 * Derived classes that have no ES Object or delegate to another should overload.
 	 *
 	 * @since 1.23
 	 */
@@ -461,6 +460,13 @@ public abstract class ElementImpl
 		if (esObject != null) {
 			return esObject;
 		}
+		// Return null for an ASonly resource.
+		Resource eResource = eResource();
+		if (eResource instanceof ASResource) {
+			if (((ASResource)eResource).isASonly()) {
+				return null;
+			}
+		}
 		// Look for a specific CS
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
 		if (csi2asMapping != null) {
@@ -470,23 +476,18 @@ public abstract class ElementImpl
 			}
 		}
 		// Look for alternate ES
-		if (!environmentFactory.isDisposing()) {
-			esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
-			if (esObject != null) {
-				return esObject;
-			}
+		esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
+		if (esObject != null) {
+			return esObject;
 		}
-		if (csi2asMapping == null) {
-			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
-			return null;
-		}
-		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
 		return null;
 	}
 
 	/**
-	 * Return the EObject whose URI should enable the esObject to be reloaded by searching Comp;letePackage/Class siblings.
-	 * @param environmentFactory
+	 * Return the EObject whose URI should enable the esObject to be reloaded by searching CompletePackage/Class siblings.
+	 * Since this method may be called during dispose() no attempt is made to create missing CompletePackages/CompleteClasses;
+	 * null is returned when no esObject is readily available. CVallewrs should make sure that all required CompleteClasses
+	 * have been created if reloading of a persisted CS resource is required.
 	 *
 	 * @since 1.23
 	 */
@@ -497,7 +498,7 @@ public abstract class ElementImpl
 	/**
 	 * Return the URI of an EObject that can be used to reload the ES object.
 	 *
-	 * Default implementation rreturns the URI of the getReloadableEObject().
+	 * Default implementation returns the URI of the getReloadableEObject().
 	 *
 	 * EObject-less elements such as Model and Precedence overload.
 	 *

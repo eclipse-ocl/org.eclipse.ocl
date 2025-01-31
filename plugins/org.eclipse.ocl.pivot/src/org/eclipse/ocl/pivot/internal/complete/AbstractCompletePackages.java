@@ -56,6 +56,33 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		didAdd(completePackage);
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+		CompletePackageInternal completePackage = null;
+		if (pivotPackage instanceof CompletePackageInternal) {
+			completePackage = (CompletePackageInternal)pivotPackage;
+		}
+		else {
+			CompleteURIs completeURIs = getCompleteModel().getCompleteURIs();
+			completePackage = completeURIs.getCompletePackage(pivotPackage);
+			if (completePackage == null) {
+				org.eclipse.ocl.pivot.Package pivotPackageParent = pivotPackage.getOwningPackage();
+				if (pivotPackageParent == null) {
+					return null;
+				}
+				CompletePackageInternal completeParentPackage = basicGetCompletePackage(pivotPackageParent);
+				if (completeParentPackage == null) {
+					return null;
+				}
+				return completeParentPackage.getOwnedCompletePackage(pivotPackage.getName());
+			}
+		}
+		completePackage.assertSamePackage(pivotPackage);
+		return completePackage;
+	}
+
 	public abstract @NonNull CompletePackageInternal createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 
 	protected void didAdd(@NonNull CompletePackage completePackage) {
