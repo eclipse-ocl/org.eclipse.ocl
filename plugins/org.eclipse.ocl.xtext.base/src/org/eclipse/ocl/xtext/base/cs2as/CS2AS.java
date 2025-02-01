@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -79,6 +81,7 @@ import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 import org.eclipse.xtext.util.Triple;
 import org.eclipse.xtext.util.Tuples;
 
@@ -386,6 +389,8 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	 */
 	private @Nullable PivotHelper helper = null;
 
+	private boolean isUpdating = false;
+
 	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
@@ -670,19 +675,41 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		return castElement;
 	}
 
-	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
+	public @Nullable ASResource reload() throws SemanticException {
+		if (isUpdating) {
+			return null;
+		}
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		update(consumer);
+		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)getHelper().getEnvironmentFactory(), null);
+		delegateInstaller.installCompleteOCLDelegates(asResource);
+		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
+		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
+		return asResource;
+	}
+
+	public void update() {
+		ListBasedDiagnosticConsumer consumer = new ListBasedDiagnosticConsumer();
+		update(consumer);
+		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
+		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));
+	}
+
+	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {		// XXX assert needs update
+		assert !isUpdating;
+		isUpdating = true;
 		//		printDiagnostic("CS2AS.update start", false, 0);
-		@SuppressWarnings("unused") Map<CSI, Element> oldCSI2AS = csi2asMapping.getMapping();
-		@SuppressWarnings("unused") Set<CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
+		@SuppressWarnings("unused") Map<@NonNull CSI, @Nullable Element> oldCSI2AS = csi2asMapping.getMapping();
+		@SuppressWarnings("unused") Set<@NonNull CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
 		//		System.out.println("==========================================================================");
 		//		for (Resource csResource : csResources) {
 		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " " + csResource.getURI());
 		//		}
 		CS2ASConversion conversion = createConversion(diagnosticsConsumer, csResource);
-		boolean wasUpdating = false;
+	//	boolean wasUpdating = false;
 		ASResource asResource = csi2asMapping.getASResource(csResource);
 		if (asResource != null) {
-			asResource.setUpdating(true);
+			asResource.setUpdating(true);			// XXX colocate with setUpdating(false)
 		}
 		conversion.update(csResource);
 		//		System.out.println("---------------------------------------------------------------------------");
@@ -706,5 +733,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
 		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		isUpdating  = false;
 	}
 }
