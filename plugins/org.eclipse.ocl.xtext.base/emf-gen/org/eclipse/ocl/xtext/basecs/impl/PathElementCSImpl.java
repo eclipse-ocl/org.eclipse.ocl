@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 
 /**
@@ -48,6 +49,8 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathElementCSImpl#getElementType <em>Element Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathElementCSImpl#getOwningPathName <em>Owning Path Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathElementCSImpl#getReferredElement <em>Referred Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathElementCSImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.PathElementCSImpl#getRole <em>Role</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,7 +64,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PATH_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 3;
+	public static final int PATH_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The cached value of the '{@link #getElementType() <em>Element Type</em>}' reference.
@@ -82,6 +85,46 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	 * @ordered
 	 */
 	protected Element referredElement;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getRole() <em>Role</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRole()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final PathRole ROLE_EDEFAULT = PathRole.NULL;
+
+	/**
+	 * The cached value of the '{@link #getRole() <em>Role</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRole()
+	 * @generated
+	 * @ordered
+	 */
+	protected PathRole role = ROLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -163,6 +206,56 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		referredElement = newReferredElement;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldReferredElement, referredElement));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setName(String newName)
+	{
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public PathRole getRole()
+	{
+		return role;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setRole(PathRole newRole)
+	{
+		PathRole oldRole = role;
+		role = newRole == null ? ROLE_EDEFAULT : newRole;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldRole, role));
 	}
 
 	/**
@@ -278,6 +371,10 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			case 4:
 				if (resolve) return getReferredElement();
 				return basicGetReferredElement();
+			case 5:
+				return getName();
+			case 6:
+				return getRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -300,6 +397,12 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				return;
 			case 4:
 				setReferredElement((Element)newValue);
+				return;
+			case 5:
+				setName((String)newValue);
+				return;
+			case 6:
+				setRole((PathRole)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -324,6 +427,12 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			case 4:
 				setReferredElement((Element)null);
 				return;
+			case 5:
+				setName(NAME_EDEFAULT);
+				return;
+			case 6:
+				setRole(ROLE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -344,8 +453,31 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				return getOwningPathName() != null;
 			case 4:
 				return referredElement != null;
+			case 5:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 6:
+				return role != ROLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (name: "); //$NON-NLS-1$
+		result.append(name);
+		result.append(", role: "); //$NON-NLS-1$
+		result.append(role);
+		result.append(')');
+		return result.toString();
 	}
 
 	/**
