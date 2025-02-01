@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -62,7 +62,7 @@ public abstract class AbstractConstraintEvaluator<T>
 
 	protected final @NonNull ExpressionInOCL query;
 	protected final @NonNull OCLExpression body;
-	
+
 	/**
 	 * Construct an helper for the evaluation of an expression
 	 */
@@ -70,14 +70,14 @@ public abstract class AbstractConstraintEvaluator<T>
 		this.query = query;
 		this.body = getConstraintExpression(query);
 	}
-	
+
 	/**
 	 * Use the evaluationVisitor to execute my expression on the objects within the evaluationVisitor's evaluationEnvironment,
 	 * invoking one of handleSuccessResult, handleFailureResult, handleInvalidResult or handleExceptionResult to provide the return value.
 	 */
 	public T evaluate(@NonNull EvaluationVisitor evaluationVisitor) {
-		if ((query.getOwnedContext() == null) && (body instanceof StringLiteralExp)) {
-			@SuppressWarnings("null")@NonNull String stringSymbol = ((StringLiteralExp)body).getStringSymbol();
+		if ((query.getOwnedContext() == null) && (body instanceof StringLiteralExp)) {	// ?? StringLiteralExp used by OCLMetamodel but how does it avoid parsing ??
+			@SuppressWarnings("null")@NonNull String stringSymbol = ((StringLiteralExp)body).getStringSymbol();	// XXX never happens
 			return handleInvalidExpression(stringSymbol);
 		}
 		Object result = null;
@@ -120,7 +120,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		else if (result == null) {
 			return StringUtil.bind(PivotMessagesInternal.ValidationResultIsNull_ERROR_,
 				getConstraintTypeName(), getConstraintName(), getObjectLabel());
-			
+
 		}
 		return StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_,
 				getConstraintTypeName() + "::" + getConstraintName(), getObjectLabel());

@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -100,17 +101,23 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
-		Ecore2AS castAdapter = (Ecore2AS) adapter;
+		Ecore2AS castAdapter = (Ecore2AS)adapter;
 		return castAdapter;
 	}
 
-	@Deprecated /* @deprecated use External2AS */
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new Ecore2AS(resource, environmentFactory);
+	}
+
 	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		Ecore2AS castAdapter = basicGetAdapter(resource, environmentFactory);
-		if (castAdapter == null) {
-			castAdapter = new Ecore2AS(resource, environmentFactory);
+		Ecore2AS adapter = (Ecore2AS)External2AS.findAdapter(resource, environmentFactory);
+		if (adapter == null) {
+			adapter = createExternal2AS(resource, environmentFactory);
 		}
-		return castAdapter;
+		return adapter;
 	}
 
 	/**
@@ -284,6 +291,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
+		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
 	}
 
 	/**
@@ -369,7 +377,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	@Override
 	public @NonNull Model getASModel() {
 		Model pivotModel2 = pivotModel;
-		if (pivotModel2 == null) {
+		if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 			loadImports(ecoreResource);
 			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
 			ASResource asResource = (ASResource) pivotModel.eResource();
@@ -381,7 +389,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		if (pivotModel == null) {
+		if ((pivotModel == null) || pivotModel.eIsProxy()) {
 			getASModel();
 		}
 		assert eDataTypes == null;
@@ -389,6 +397,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (element == null) {
 			return null;
 		}
+		assert !element.eIsProxy();
 		if (!requiredClass.isAssignableFrom(element.getClass())) {
 			throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
 		}
