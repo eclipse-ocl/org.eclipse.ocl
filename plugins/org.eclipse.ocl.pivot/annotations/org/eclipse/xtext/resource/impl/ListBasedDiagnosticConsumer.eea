@@ -1,0 +1,4 @@
+class org/eclipse/xtext/resource/impl/ListBasedDiagnosticConsumer
+getResult
+ (Lorg/eclipse/xtext/diagnostics/Severity;)Ljava/util/List<Lorg/eclipse/xtext/diagnostics/Diagnostic;>;
+ (Lorg/eclipse/xtext/diagnostics/Severity;)L1java/util/List<L1org/eclipse/xtext/diagnostics/Diagnostic;>;
