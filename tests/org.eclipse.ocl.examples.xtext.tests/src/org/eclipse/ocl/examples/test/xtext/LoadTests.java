@@ -390,11 +390,8 @@ public class LoadTests extends XtextTestCase
 			List<Resource> importedResources = rootAdapter.getImportedResources();
 			if (importedResources != null) {
 				for (Resource uResource : importedResources) {
-					External2AS anAdapter = External2AS.findAdapter(uResource, environmentFactory);
-					if (anAdapter == null) {
-						anAdapter = UML2AS.getAdapter(uResource, environmentFactory);
-					}
-					Model asModel = anAdapter.getASModel();
+					UML2AS uml2as = UML2AS.getAdapter(uResource, environmentFactory);
+					Model asModel = uml2as.getASModel();
 					Resource asResource = asModel.eResource();
 					allResources.add(asResource);
 				}

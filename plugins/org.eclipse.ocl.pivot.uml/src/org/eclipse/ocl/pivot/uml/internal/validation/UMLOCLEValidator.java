@@ -38,9 +38,7 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
-import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -324,24 +322,21 @@ public class UMLOCLEValidator implements EValidator
 							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
 							environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 						}
-						External2AS external2as = External2AS.findAdapter(umlResource, environmentFactory);
-						if (external2as == null) {
-							external2as = UML2AS.getAdapter(umlResource, environmentFactory);
-						}
-						external2as.getASModel();
+						UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
+						uml2as.getASModel();
 						Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);
 						for (@SuppressWarnings("null")@NonNull EObject umlStereotypeApplication : umlStereotypeApplications) {
 							List<Element> umlStereotypedElements = umlStereotypeApplication2umlStereotypedElements.get(umlStereotypeApplication);
 							assert umlStereotypedElements != null;
 							org.eclipse.ocl.pivot.Stereotype stereotype = null;
-							if (external2as instanceof UML2AS) {
-								stereotype = ((UML2AS)external2as).resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
+							if (uml2as instanceof UML2AS) {					// XXX rtedundant test
+								stereotype = uml2as.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
 							}
 							else {
-								ClassUtil.nonNullState(external2as.getASModel());
+								ClassUtil.nonNullState(uml2as.getASModel());
 								EClass umlStereotypeEClass = umlStereotypeApplication.eClass();
 								if (!(umlStereotypeApplication instanceof DynamicEObjectImpl)) {					// If stereotyped element has been genmodelled
-									stereotype = ((AbstractConversion)external2as).getEnvironmentFactory().getMetamodelManager().getASOfEcore(Stereotype.class, umlStereotypeEClass); // then it is already a Type rather than a Stereotype
+									stereotype = uml2as.getEnvironmentFactory().getMetamodelManager().getASOfEcore(Stereotype.class, umlStereotypeEClass); // then it is already a Type rather than a Stereotype
 								}
 							}
 							if (stereotype != null) {
