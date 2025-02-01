@@ -136,7 +136,9 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 				}
 			}
 		}
-		return uml2as.getCreated(pivotClass, eObject);
+		@Nullable T asElement = uml2as.getCreated(pivotClass, eObject);
+		assert (asElement == null) || !asElement.eIsProxy();
+		return asElement;
 	}
 
 	@Override

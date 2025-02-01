@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<completeoclcs:CompleteOCLDocumentCS xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
+    xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
+  <ownedImports>
+    <ownedPathName>
+      <ownedPathElements xsi:type="basecs:PathElementWithURICS">
+        <referredElement xsi:type="pivot:Model" href="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore"/>
+      </ownedPathElements>
+    </ownedPathName>
+  </ownedImports>
+  <ownedPackages>
+    <ownedPathName>
+      <ownedPathElements>
+        <referredElement xsi:type="pivot:Library" href="http://www.eclipse.org/ocl/2015/Library#/"/>
+      </ownedPathElements>
+    </ownedPathName>
+    <ownedContexts xsi:type="completeoclcs:ClassifierContextDeclCS">
+      <ownedPathName>
+        <ownedPathElements>
+          <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-ShadowExp"/>
+        </ownedPathElements>
+      </ownedPathName>
+      <ownedInvariants name="InitializesAllClassProperties">
+        <ownedSpecification xsi:type="essentialoclcs:ExpSpecificationCS">
+          <ownedExpression xsi:type="essentialoclcs:IfExpCS">
+            <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name=".">
+              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                <ownedPathName>
+                  <ownedPathElements>
+                    <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#MuzAj"/>
+                  </ownedPathElements>
+                </ownedPathName>
+                <ownedRoundBracketedClause>
+                  <ownedArguments>
+                    <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                      <ownedPathName>
+                        <ownedPathElements>
+                          <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-DataType"/>
+                        </ownedPathElements>
+                      </ownedPathName>
+                    </ownedNameExpression>
+                  </ownedArguments>
+                </ownedRoundBracketedClause>
+              </ownedRight>
+              <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                <ownedPathName>
+                  <ownedPathElements>
+                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                  </ownedPathElements>
+                </ownedPathName>
+              </ownedLeft>
+            </ownedCondition>
+            <ownedElseExpression xsi:type="essentialoclcs:LetExpCS">
+              <ownedInExpression xsi:type="essentialoclcs:LetExpCS">
+                <ownedInExpression xsi:type="essentialoclcs:LetExpCS">
+                  <ownedInExpression xsi:type="essentialoclcs:LetExpCS">
+                    <ownedInExpression xsi:type="essentialoclcs:LetExpCS">
+                      <ownedInExpression xsi:type="essentialoclcs:LetExpCS">
+                        <ownedInExpression xsi:type="essentialoclcs:IfExpCS">
+                          <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name="->">
+                            <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#XxcWz"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                              <ownedRoundBracketedClause/>
+                            </ownedRight>
+                            <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                            </ownedLeft>
+                          </ownedCondition>
+                          <ownedElseExpression xsi:type="essentialoclcs:IfExpCS">
+                            <ownedCondition xsi:type="essentialoclcs:InfixExpCS" name="->">
+                              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#XxcWz"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                                <ownedRoundBracketedClause/>
+                              </ownedRight>
+                              <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                              </ownedLeft>
+                            </ownedCondition>
+                            <ownedElseExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                              </ownedRight>
+                              <ownedLeft xsi:type="essentialoclcs:TupleLiteralExpCS">
+                                <ownedParts name="status">
+                                  <ownedInitExpression xsi:type="essentialoclcs:BooleanLiteralExpCS" symbol="true"/>
+                                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="Boolean">
+                                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                  </ownedType>
+                                </ownedParts>
+                                <ownedParts name="message">
+                                  <ownedInitExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+                                    <segments></segments>
+                                  </ownedInitExpression>
+                                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String">
+                                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                  </ownedType>
+                                </ownedParts>
+                              </ownedLeft>
+                            </ownedElseExpression>
+                            <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                              </ownedRight>
+                              <ownedLeft xsi:type="essentialoclcs:TupleLiteralExpCS">
+                                <ownedParts name="status">
+                                  <ownedInitExpression xsi:type="essentialoclcs:BooleanLiteralExpCS" symbol="false"/>
+                                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="Boolean">
+                                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                  </ownedType>
+                                </ownedParts>
+                                <ownedParts name="message">
+                                  <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                                    <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                                      <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                        <ownedPathName>
+                                          <ownedPathElements>
+                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
+                                          </ownedPathElements>
+                                        </ownedPathName>
+                                        <ownedRoundBracketedClause>
+                                          <ownedArguments>
+                                            <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                              <ownedPathName>
+                                                <ownedPathElements name="p" role="ITERATOR">
+                                                  <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                                </ownedPathElements>
+                                              </ownedPathName>
+                                            </ownedNameExpression>
+                                          </ownedArguments>
+                                          <ownedArguments prefix=";">
+                                            <ownedInitExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+                                              <segments>Missing initializers:</segments>
+                                            </ownedInitExpression>
+                                            <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                              <ownedPathName>
+                                                <ownedPathElements name="acc" role="ACCUMULATOR">
+                                                  <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
+                                                </ownedPathElements>
+                                              </ownedPathName>
+                                            </ownedNameExpression>
+                                            <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String"/>
+                                          </ownedArguments>
+                                          <ownedArguments prefix="|">
+                                            <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="+">
+                                              <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="+">
+                                                <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
+                                                  <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                                    <ownedPathName>
+                                                      <ownedPathElements>
+                                                        <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
+                                                      </ownedPathElements>
+                                                    </ownedPathName>
+                                                  </ownedRight>
+                                                  <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                                    <ownedPathName>
+                                                      <ownedPathElements>
+                                                        <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                                      </ownedPathElements>
+                                                    </ownedPathName>
+                                                  </ownedLeft>
+                                                </ownedRight>
+                                                <ownedLeft xsi:type="essentialoclcs:StringLiteralExpCS">
+                                                  <segments> </segments>
+                                                </ownedLeft>
+                                              </ownedRight>
+                                              <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                                <ownedPathName>
+                                                  <ownedPathElements>
+                                                    <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
+                                                  </ownedPathElements>
+                                                </ownedPathName>
+                                              </ownedLeft>
+                                            </ownedNameExpression>
+                                          </ownedArguments>
+                                        </ownedRoundBracketedClause>
+                                      </ownedRight>
+                                      <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                        <ownedPathName>
+                                          <ownedPathElements>
+                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
+                                          </ownedPathElements>
+                                        </ownedPathName>
+                                        <ownedRoundBracketedClause>
+                                          <ownedArguments>
+                                            <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                              <ownedPathName>
+                                                <ownedPathElements name="q" role="ITERATOR">
+                                                  <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedLeft/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                                </ownedPathElements>
+                                              </ownedPathName>
+                                            </ownedNameExpression>
+                                          </ownedArguments>
+                                          <ownedArguments prefix="|">
+                                            <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                                              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                                <ownedPathName>
+                                                  <ownedPathElements>
+                                                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
+                                                  </ownedPathElements>
+                                                </ownedPathName>
+                                              </ownedRight>
+                                              <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                                <ownedPathName>
+                                                  <ownedPathElements>
+                                                    <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedElseExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedLeft/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                                  </ownedPathElements>
+                                                </ownedPathName>
+                                              </ownedLeft>
+                                            </ownedNameExpression>
+                                          </ownedArguments>
+                                        </ownedRoundBracketedClause>
+                                      </ownedLeft>
+                                    </ownedRight>
+                                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                    </ownedLeft>
+                                  </ownedInitExpression>
+                                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String">
+                                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                  </ownedType>
+                                </ownedParts>
+                              </ownedLeft>
+                            </ownedThenExpression>
+                          </ownedElseExpression>
+                          <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                            <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                            </ownedRight>
+                            <ownedLeft xsi:type="essentialoclcs:TupleLiteralExpCS">
+                              <ownedParts name="status">
+                                <ownedInitExpression xsi:type="essentialoclcs:BooleanLiteralExpCS" symbol="false"/>
+                                <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="Boolean">
+                                  <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                </ownedType>
+                              </ownedParts>
+                              <ownedParts name="message">
+                                <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                                  <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                                    <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                      <ownedRoundBracketedClause>
+                                        <ownedArguments>
+                                          <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                            <ownedPathName>
+                                              <ownedPathElements name="p" role="ITERATOR">
+                                                <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                              </ownedPathElements>
+                                            </ownedPathName>
+                                          </ownedNameExpression>
+                                        </ownedArguments>
+                                        <ownedArguments prefix=";">
+                                          <ownedInitExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+                                            <segments>Unexpected initializers:</segments>
+                                          </ownedInitExpression>
+                                          <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                            <ownedPathName>
+                                              <ownedPathElements name="acc" role="ACCUMULATOR">
+                                                <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
+                                              </ownedPathElements>
+                                            </ownedPathName>
+                                          </ownedNameExpression>
+                                          <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String"/>
+                                        </ownedArguments>
+                                        <ownedArguments prefix="|">
+                                          <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="+">
+                                            <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="+">
+                                              <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
+                                                <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                                  <ownedPathName>
+                                                    <ownedPathElements>
+                                                      <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
+                                                    </ownedPathElements>
+                                                  </ownedPathName>
+                                                </ownedRight>
+                                                <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                                  <ownedPathName>
+                                                    <ownedPathElements>
+                                                      <referredElement xsi:type="pivot:IteratorVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.0"/>
+                                                    </ownedPathElements>
+                                                  </ownedPathName>
+                                                </ownedLeft>
+                                              </ownedRight>
+                                              <ownedLeft xsi:type="essentialoclcs:StringLiteralExpCS">
+                                                <segments> </segments>
+                                              </ownedLeft>
+                                            </ownedRight>
+                                            <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                              <ownedPathName>
+                                                <ownedPathElements>
+                                                  <referredElement xsi:type="pivot:ResultVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedThenExpression/@ownedLeft/@ownedParts.1/@ownedInitExpression/@ownedRight/@ownedRight/@ownedRoundBracketedClause/@ownedArguments.1"/>
+                                                </ownedPathElements>
+                                              </ownedPathName>
+                                            </ownedLeft>
+                                          </ownedNameExpression>
+                                        </ownedArguments>
+                                      </ownedRoundBracketedClause>
+                                    </ownedRight>
+                                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                      <ownedRoundBracketedClause>
+                                        <ownedArguments>
+                                          <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                            <ownedPathName>
+                                              <ownedPathElements>
+                                                <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
+                                              </ownedPathElements>
+                                            </ownedPathName>
+                                          </ownedNameExpression>
+                                        </ownedArguments>
+                                      </ownedRoundBracketedClause>
+                                    </ownedLeft>
+                                  </ownedRight>
+                                  <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                    <ownedPathName>
+                                      <ownedPathElements>
+                                        <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                      </ownedPathElements>
+                                    </ownedPathName>
+                                  </ownedLeft>
+                                </ownedInitExpression>
+                                <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String">
+                                  <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                                </ownedType>
+                              </ownedParts>
+                            </ownedLeft>
+                          </ownedThenExpression>
+                        </ownedInExpression>
+                        <ownedVariables name="missingProperties">
+                          <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                            <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                              <ownedRoundBracketedClause>
+                                <ownedArguments>
+                                  <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                    <ownedPathName>
+                                      <ownedPathElements>
+                                        <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedVariables.0"/>
+                                      </ownedPathElements>
+                                    </ownedPathName>
+                                  </ownedNameExpression>
+                                </ownedArguments>
+                              </ownedRoundBracketedClause>
+                            </ownedRight>
+                            <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                            </ownedLeft>
+                          </ownedInitExpression>
+                          <ownedType xsi:type="essentialoclcs:CollectionTypeCS" name="Set">
+                            <ownedCollectionMultiplicity xsi:type="basecs:MultiplicityStringCS" isNullFree="true" stringBounds="*"/>
+                            <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-NamedElement"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                            </ownedType>
+                          </ownedType>
+                        </ownedVariables>
+                      </ownedInExpression>
+                      <ownedVariables name="extraProperties">
+                        <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                          <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                            <ownedRoundBracketedClause>
+                              <ownedArguments>
+                                <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                  <ownedPathName>
+                                    <ownedPathElements>
+                                      <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                                    </ownedPathElements>
+                                  </ownedPathName>
+                                </ownedNameExpression>
+                              </ownedArguments>
+                            </ownedRoundBracketedClause>
+                          </ownedRight>
+                          <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedVariables.0"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                          </ownedLeft>
+                        </ownedInitExpression>
+                        <ownedType xsi:type="essentialoclcs:CollectionTypeCS" name="Set">
+                          <ownedCollectionMultiplicity xsi:type="basecs:MultiplicityStringCS" isNullFree="true" stringBounds="*"/>
+                          <ownedType xsi:type="essentialoclcs:TypeNameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-NamedElement"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                          </ownedType>
+                        </ownedType>
+                      </ownedVariables>
+                    </ownedInExpression>
+                    <ownedVariables name="requiredClassProperties">
+                      <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                        <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                          <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                            <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                                <ownedRoundBracketedClause>
+                                  <ownedArguments>
+                                    <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="and">
+                                      <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
+                                        <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                          <ownedPathName>
+                                            <ownedPathElements>
+                                              <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isComposite"/>
+                                            </ownedPathElements>
+                                          </ownedPathName>
+                                        </ownedRight>
+                                        <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                          <ownedPathName>
+                                            <ownedPathElements>
+                                              <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-opposite"/>
+                                            </ownedPathElements>
+                                          </ownedPathName>
+                                        </ownedLeft>
+                                      </ownedRight>
+                                      <ownedLeft xsi:type="essentialoclcs:NestedExpCS">
+                                        <ownedExpression xsi:type="essentialoclcs:InfixExpCS" name="&lt;>">
+                                          <ownedRight xsi:type="essentialoclcs:NullLiteralExpCS"/>
+                                          <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                            <ownedPathName>
+                                              <ownedPathElements>
+                                                <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-opposite"/>
+                                              </ownedPathElements>
+                                            </ownedPathName>
+                                          </ownedLeft>
+                                        </ownedExpression>
+                                      </ownedLeft>
+                                    </ownedNameExpression>
+                                  </ownedArguments>
+                                </ownedRoundBracketedClause>
+                              </ownedRight>
+                              <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                                <ownedRoundBracketedClause>
+                                  <ownedArguments>
+                                    <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                                      <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                        <ownedPathName>
+                                          <ownedPathElements>
+                                            <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#MuzAj"/>
+                                          </ownedPathElements>
+                                        </ownedPathName>
+                                        <ownedRoundBracketedClause>
+                                          <ownedArguments>
+                                            <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                              <ownedPathName>
+                                                <ownedPathElements>
+                                                  <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-CollectionType"/>
+                                                </ownedPathElements>
+                                              </ownedPathName>
+                                            </ownedNameExpression>
+                                          </ownedArguments>
+                                        </ownedRoundBracketedClause>
+                                      </ownedRight>
+                                      <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                        <ownedPathName>
+                                          <ownedPathElements>
+                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                                          </ownedPathElements>
+                                        </ownedPathName>
+                                      </ownedLeft>
+                                    </ownedNameExpression>
+                                  </ownedArguments>
+                                </ownedRoundBracketedClause>
+                              </ownedLeft>
+                            </ownedRight>
+                            <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                              <ownedRoundBracketedClause>
+                                <ownedArguments>
+                                  <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="or">
+                                    <ownedRight xsi:type="essentialoclcs:PrefixExpCS" name="not">
+                                      <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                        <ownedPathName>
+                                          <ownedPathElements>
+                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-isRequired"/>
+                                          </ownedPathElements>
+                                        </ownedPathName>
+                                      </ownedRight>
+                                    </ownedRight>
+                                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isVolatile"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                    </ownedLeft>
+                                  </ownedNameExpression>
+                                </ownedArguments>
+                              </ownedRoundBracketedClause>
+                            </ownedLeft>
+                          </ownedRight>
+                          <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                            <ownedRoundBracketedClause>
+                              <ownedArguments>
+                                <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="&lt;>">
+                                  <ownedRight xsi:type="essentialoclcs:NullLiteralExpCS"/>
+                                  <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                    <ownedPathName>
+                                      <ownedPathElements>
+                                        <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-defaultValueString"/>
+                                      </ownedPathElements>
+                                    </ownedPathName>
+                                  </ownedLeft>
+                                </ownedNameExpression>
+                              </ownedArguments>
+                            </ownedRoundBracketedClause>
+                          </ownedLeft>
+                        </ownedRight>
+                        <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                          <ownedPathName>
+                            <ownedPathElements>
+                              <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedInExpression/@ownedVariables.0"/>
+                            </ownedPathElements>
+                          </ownedPathName>
+                        </ownedLeft>
+                      </ownedInitExpression>
+                    </ownedVariables>
+                  </ownedInExpression>
+                  <ownedVariables name="classProperties">
+                    <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name="->">
+                      <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                        <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                          <ownedPathName>
+                            <ownedPathElements>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                            </ownedPathElements>
+                          </ownedPathName>
+                          <ownedRoundBracketedClause>
+                            <ownedArguments>
+                              <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="?.">
+                                <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                  <ownedPathName>
+                                    <ownedPathElements>
+                                      <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#s7Aws"/>
+                                    </ownedPathElements>
+                                  </ownedPathName>
+                                  <ownedRoundBracketedClause>
+                                    <ownedArguments>
+                                      <ownedNameExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+                                        <segments>ocl</segments>
+                                      </ownedNameExpression>
+                                    </ownedArguments>
+                                  </ownedRoundBracketedClause>
+                                </ownedRight>
+                                <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                  <ownedPathName>
+                                    <ownedPathElements>
+                                      <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-NamedElement-name"/>
+                                    </ownedPathElements>
+                                  </ownedPathName>
+                                </ownedLeft>
+                              </ownedNameExpression>
+                            </ownedArguments>
+                          </ownedRoundBracketedClause>
+                        </ownedRight>
+                        <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                          <ownedPathName>
+                            <ownedPathElements>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                            </ownedPathElements>
+                          </ownedPathName>
+                          <ownedRoundBracketedClause>
+                            <ownedArguments>
+                              <ownedNameExpression xsi:type="essentialoclcs:InfixExpCS" name="or">
+                                <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="or">
+                                  <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="or">
+                                    <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isTransient"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                    </ownedRight>
+                                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                      <ownedPathName>
+                                        <ownedPathElements>
+                                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Feature-isStatic"/>
+                                        </ownedPathElements>
+                                      </ownedPathName>
+                                    </ownedLeft>
+                                  </ownedRight>
+                                  <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                    <ownedPathName>
+                                      <ownedPathElements>
+                                        <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isImplicit"/>
+                                      </ownedPathElements>
+                                    </ownedPathName>
+                                  </ownedLeft>
+                                </ownedRight>
+                                <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                                  <ownedPathName>
+                                    <ownedPathElements>
+                                      <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Property-isDerived"/>
+                                    </ownedPathElements>
+                                  </ownedPathName>
+                                </ownedLeft>
+                              </ownedNameExpression>
+                            </ownedArguments>
+                          </ownedRoundBracketedClause>
+                        </ownedLeft>
+                      </ownedRight>
+                      <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                        <ownedPathName>
+                          <ownedPathElements>
+                            <referredElement xsi:type="pivot:LetVariable" href="#//@ownedPackages.0/@ownedContexts.0/@ownedInvariants.0/@ownedSpecification/@ownedExpression/@ownedElseExpression/@ownedInExpression/@ownedVariables.0"/>
+                          </ownedPathElements>
+                        </ownedPathName>
+                      </ownedLeft>
+                    </ownedInitExpression>
+                  </ownedVariables>
+                </ownedInExpression>
+                <ownedVariables name="allProperties">
+                  <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                    <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                      <ownedRight xsi:type="essentialoclcs:InfixExpCS" name=".">
+                        <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                          <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#tj4Xc"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                            <ownedRoundBracketedClause/>
+                          </ownedRight>
+                          <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                            <ownedPathName>
+                              <ownedPathElements>
+                                <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Class-ownedProperties"/>
+                              </ownedPathElements>
+                            </ownedPathName>
+                          </ownedLeft>
+                        </ownedRight>
+                        <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                          <ownedPathName>
+                            <ownedPathElements>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#tQoce"/>
+                            </ownedPathElements>
+                          </ownedPathName>
+                          <ownedRoundBracketedClause>
+                            <ownedArguments>
+                              <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                                <ownedPathName>
+                                  <ownedPathElements>
+                                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-Class-superClasses"/>
+                                  </ownedPathElements>
+                                </ownedPathName>
+                              </ownedNameExpression>
+                            </ownedArguments>
+                          </ownedRoundBracketedClause>
+                        </ownedLeft>
+                      </ownedRight>
+                      <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                        <ownedPathName>
+                          <ownedPathElements>
+                            <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#xOh0M"/>
+                          </ownedPathElements>
+                        </ownedPathName>
+                        <ownedRoundBracketedClause>
+                          <ownedArguments>
+                            <ownedNameExpression xsi:type="essentialoclcs:NameExpCS">
+                              <ownedPathName>
+                                <ownedPathElements>
+                                  <referredElement xsi:type="pivot:Class" href="http://www.eclipse.org/ocl/2015/Pivot#T-pivot-Class"/>
+                                </ownedPathElements>
+                              </ownedPathName>
+                            </ownedNameExpression>
+                          </ownedArguments>
+                        </ownedRoundBracketedClause>
+                      </ownedLeft>
+                    </ownedRight>
+                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                      <ownedPathName>
+                        <ownedPathElements>
+                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                        </ownedPathElements>
+                      </ownedPathName>
+                    </ownedLeft>
+                  </ownedInitExpression>
+                </ownedVariables>
+              </ownedInExpression>
+              <ownedVariables name="partProperties">
+                <ownedInitExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+                  <ownedRight xsi:type="essentialoclcs:InfixExpCS" name="->">
+                    <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                      <ownedPathName>
+                        <ownedPathElements>
+                          <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#tj4Xc"/>
+                        </ownedPathElements>
+                      </ownedPathName>
+                      <ownedRoundBracketedClause/>
+                    </ownedRight>
+                    <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                      <ownedPathName>
+                        <ownedPathElements>
+                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-ShadowPart-referredProperty"/>
+                        </ownedPathElements>
+                      </ownedPathName>
+                    </ownedLeft>
+                  </ownedRight>
+                  <ownedLeft xsi:type="essentialoclcs:NameExpCS">
+                    <ownedPathName>
+                      <ownedPathElements>
+                        <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-ShadowExp-ownedParts"/>
+                      </ownedPathElements>
+                    </ownedPathName>
+                  </ownedLeft>
+                </ownedInitExpression>
+              </ownedVariables>
+            </ownedElseExpression>
+            <ownedThenExpression xsi:type="essentialoclcs:InfixExpCS" name=".">
+              <ownedRight xsi:type="essentialoclcs:NameExpCS">
+                <ownedPathName>
+                  <ownedPathElements>
+                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Orphanage.oclas#NklaF"/>
+                  </ownedPathElements>
+                </ownedPathName>
+              </ownedRight>
+              <ownedLeft xsi:type="essentialoclcs:TupleLiteralExpCS">
+                <ownedParts name="status">
+                  <ownedInitExpression xsi:type="essentialoclcs:BooleanLiteralExpCS" symbol="true"/>
+                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="Boolean">
+                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                  </ownedType>
+                </ownedParts>
+                <ownedParts name="message">
+                  <ownedInitExpression xsi:type="essentialoclcs:StringLiteralExpCS">
+                    <segments></segments>
+                  </ownedInitExpression>
+                  <ownedType xsi:type="basecs:PrimitiveTypeRefCS" name="String">
+                    <ownedMultiplicity xsi:type="basecs:MultiplicityBoundsCS"/>
+                  </ownedType>
+                </ownedParts>
+              </ownedLeft>
+            </ownedThenExpression>
+          </ownedExpression>
+        </ownedSpecification>
+      </ownedInvariants>
+    </ownedContexts>
+  </ownedPackages>
+</completeoclcs:CompleteOCLDocumentCS>

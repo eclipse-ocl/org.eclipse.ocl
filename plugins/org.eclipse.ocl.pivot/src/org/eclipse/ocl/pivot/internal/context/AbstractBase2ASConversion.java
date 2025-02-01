@@ -206,20 +206,20 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	public void setResultVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @NonNull String resultName) {
 		Type returnType = contextOperation.getType();
 		if (returnType != null) {					// FIXME BUG 385711 Use OclVoid rather than null
-			Variable resultVariable = pivotSpecification.getOwnedResult();
-			if (resultVariable == null) {
-				resultVariable = PivotFactory.eINSTANCE.createParameterVariable();
+			Variable returnVariable = pivotSpecification.getOwnedResult();
+			if (returnVariable == null) {
+				returnVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			}
-			resultVariable.setName(resultName);
+			returnVariable.setName(resultName);
 			if (!contextOperation.eIsProxy()) {
 				Type type = PivotUtil.getType(contextOperation);
 				if (type.eIsProxy()) {
 					type = null;
 				}
 				boolean isRequired = contextOperation.isIsRequired();
-				getHelper().setType(resultVariable, type, isRequired);
+				getHelper().setType(returnVariable, type, isRequired);
 			}
-			pivotSpecification.setOwnedResult(resultVariable);
+			pivotSpecification.setOwnedResult(returnVariable);
 		}
 		else {
 			pivotSpecification.setOwnedResult(null);

@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -567,7 +568,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		public void addProperty(org.eclipse.ocl.pivot.@NonNull Class asType, @NonNull Property asProperty) {
 			List<@NonNull Property> asProperties = type2properties.get(asType);
 			if (asProperties == null) {
-				asProperties = new ArrayList<>();
+				asProperties = new UniqueList<>();
 				type2properties.put(asType, asProperties);
 			}
 			asProperties.add(asProperty);
@@ -618,7 +619,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@Override
 		public @NonNull Model getASModel() throws ParserException {
 			Model pivotModel2 = pivotModel;
-			if (pivotModel2 == null) {
+			if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 				URI pivotURI = createPivotURI();
 				ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
 				try {

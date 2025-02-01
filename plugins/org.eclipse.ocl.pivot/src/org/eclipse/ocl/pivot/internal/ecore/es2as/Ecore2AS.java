@@ -293,6 +293,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
+		assert !(ecoreResource instanceof DelegatedSinglePackageResource);			// XXX
 		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
 	}
 
@@ -868,7 +869,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-	/*	Element oldElement = */ addCreated(eModelElement, castElement);
+	/*	Element oldElement = */ addCreated(eModelElement, castElement);			// XXX redundant wrt later addMapping (see testLoad_Names_oclcs)
 	//	assert oldElement == null;
 		return castElement;
 	}
