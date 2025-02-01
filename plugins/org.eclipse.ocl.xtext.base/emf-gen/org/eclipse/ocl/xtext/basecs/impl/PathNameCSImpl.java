@@ -67,15 +67,6 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	protected ElementCS context;
 
 	/**
-	 * This is true if the Context reference has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean contextESet;
-
-	/**
 	 * The cached value of the '{@link #getOwnedPathElements() <em>Owned Path Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -216,7 +207,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		switch (featureID)
 		{
 			case 2:
-				unsetContext();
+				setContext((ElementCS)null);
 				return;
 			case 3:
 				getOwnedPathElements().clear();
@@ -239,7 +230,7 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		switch (featureID)
 		{
 			case 2:
-				return isSetContext();
+				return context != null;
 			case 3:
 				return ownedPathElements != null && !ownedPathElements.isEmpty();
 			case 4:
@@ -297,37 +288,8 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	{
 		ElementCS oldContext = context;
 		context = newContext;
-		boolean oldContextESet = contextESet;
-		contextESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldContext, context, !oldContextESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void unsetContext()
-	{
-		ElementCS oldContext = context;
-		boolean oldContextESet = contextESet;
-		context = null;
-		contextESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, 2, oldContext, null, oldContextESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isSetContext()
-	{
-		return contextESet;
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldContext, context));
 	}
 
 	/**

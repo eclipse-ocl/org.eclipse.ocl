@@ -26,6 +26,13 @@
   <foreignModel>BaseCS.ecore</foreignModel>
   <genPackages prefix="BaseCS" basePackage="org.eclipse.ocl.xtext" disposableProviderFactory="true"
       generateExampleClass="false" ecorePackage="BaseCS.ecore#/" publicationLocation="">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BaseCS.ecore#//PathRole">
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/NULL"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/ACCUMULATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/ITERATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/PARAMETER"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseCS.ecore#//PathRole/RETURN"/>
+    </genEnums>
     <genDataTypes ecoreDataType="BaseCS.ecore#//BigNumber"/>
     <genDataTypes ecoreDataType="BaseCS.ecore#//CSI"/>
     <genDataTypes ecoreDataType="BaseCS.ecore#//ScopeFilter"/>
@@ -141,6 +148,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/elementType"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/owningPathName"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//PathElementCS/referredElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathElementCS/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathElementCS/role"/>
     </genClasses>
     <genClasses ecoreClass="BaseCS.ecore#//PathElementWithURICS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//PathElementWithURICS/uri"/>
