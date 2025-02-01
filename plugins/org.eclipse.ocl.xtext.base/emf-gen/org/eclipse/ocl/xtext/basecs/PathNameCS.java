@@ -78,11 +78,9 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Context</em>' reference.
-	 * @see #isSetContext()
-	 * @see #unsetContext()
 	 * @see #setContext(ElementCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Context()
-	 * @model resolveProxies="false" unsettable="true" transient="true"
+	 * @model resolveProxies="false" transient="true"
 	 * @generated
 	 */
 	ElementCS getContext();
@@ -92,35 +90,10 @@ public interface PathNameCS extends ElementCS, org.eclipse.ocl.pivot.utilities.P
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Context</em>' reference.
-	 * @see #isSetContext()
-	 * @see #unsetContext()
 	 * @see #getContext()
 	 * @generated
 	 */
 	void setContext(ElementCS value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getContext <em>Context</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetContext()
-	 * @see #getContext()
-	 * @see #setContext(ElementCS)
-	 * @generated
-	 */
-	void unsetContext();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.ocl.xtext.basecs.PathNameCS#getContext <em>Context</em>}' reference is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Context</em>' reference is set.
-	 * @see #unsetContext()
-	 * @see #getContext()
-	 * @see #setContext(ElementCS)
-	 * @generated
-	 */
-	boolean isSetContext();
 
 	/**
 	 * Returns the value of the '<em><b>Scope Filter</b></em>' attribute.
