@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -154,6 +155,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	public static String toString(@NonNull Element asElement) {
+		if (asElement.eIsProxy()) {
+			return "«" + EcoreUtil.getURI(asElement) +"»";
+		}
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			assert !environmentFactory.isDisposed() : "Use of ToStringVisitor while disposed";
