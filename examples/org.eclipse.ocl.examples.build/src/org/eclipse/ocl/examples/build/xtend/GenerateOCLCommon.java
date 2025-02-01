@@ -767,7 +767,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		EObject eContainer = element.eContainer();
 		if (eContainer == null) {
 			if (element instanceof Model) {
-				return ((Model)element).eResource().getClass().getName() + ".getDefaultModel()";
+				return element.eResource().getClass().getName() + ".getDefaultModel()";
 			}
 		}
 		else {
@@ -806,10 +806,16 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
+		if (operation.getESObject() != null) {
+			return nameQueries.getEcoreLiteral(operation);
+		}
 		return '"' + operation.getName() + '"';
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Property property) {
+		if (property.getESObject() != null) {
+			return nameQueries.getEcoreLiteral(property);
+		}
 		return '"' + property.getName() + '"';
 	}
 
