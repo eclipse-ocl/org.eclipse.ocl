@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -121,6 +122,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
+			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
 			if (useOCLstdlib) {
 				environmentFactory.getStandardLibrary().getOclAnyType();
 			}
@@ -172,7 +174,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			}
 			if (ecoreFile != null) {
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
-				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), asResource, ecoreURI, null);
+				AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, null);
 				XMLResource eResource = converter.getEcoreResource();
 				EPackage ePackage = (EPackage) ClassUtil.nonNullState(eResource.getContents().get(0));
 				if (libraryName != null) {
@@ -308,6 +310,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, savedContribution);
 			}
 		}
+	}
+
+	@Override
+	public boolean isExcluded(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return excludedEClassifierNames.contains(asClass.getName());
 	}
 
 	private void setInstanceClassName(@NonNull EPackage ePackage, String typeName, Class<?> javaClass, @Nullable String comment) {
