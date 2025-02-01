@@ -11,10 +11,12 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -58,30 +60,50 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		assert proxy != null;
+		URI proxyURI = proxy.eProxyURI();
 		StringBuilder s = null;
 		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
-			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
+			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxyURI);
 		}
-		assert (eResource() != null) && (eResource().getResourceSet() != null) : "ResourceSet required for " + eClass().getName() + " "  + this;
-		EObject resolvedProxy = super.eResolveProxy(proxy);
-	/*	if (resolvedProxy instanceof Pivotable) {
-			Resource resource = resolvedProxy.eResource();
-			if (resource instanceof CSResource) {
-				((CSResource)resource).getASResource();
-			}
-			resolvedProxy = ((Pivotable)resolvedProxy).getPivot();
-		}
-		else */ if (resolvedProxy instanceof EModelElement) {
+		EObject resolvedProxy = null;
+		if (!PivotUtilInternal.isASURI(proxyURI)) {
+			//
+			//	A non-AS (ES) proxy must try to resolve in the externalResourceSet.
+			//
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
-				try {
-					resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+				resolvedProxy = EcoreUtil.resolve(proxy, externalResourceSet);
+				Resource resolvedResource = resolvedProxy.eResource();
+				if (resolvedResource != null) {
+					ResourceSet resolvedResourceSet = resolvedResource.getResourceSet();
+					assert resolvedResourceSet == externalResourceSet;
+					try {
+						resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+		}
+		if (resolvedProxy == null) {
+			//
+			//	An AS (or fallback ES) proxy resolves to the containing ResourceSet.
+			//
+			ResourceSet resourceSet = null;
+			Resource eResource = eResource();
+			if (eResource != null) {
+				resourceSet = eResource.getResourceSet();
+			}
+			if (resourceSet == null) {				// CompleteClass has no eResource()
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				if (environmentFactory != null) {
+					resourceSet = environmentFactory.getResourceSet();
+				}
+			}
+			resolvedProxy = EcoreUtil.resolve(proxy, resourceSet);
 		}
 		if (s != null) {
 			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
@@ -92,7 +114,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 
 	@Override
 	public void eSetProxyURI(URI uri) {
-		StringBuilder s = null;
 		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " " + NameUtil.debugSimpleName(this) + " " + uri);
 		assert (uri == null) || (eContainer == null) || !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad AS proxy " + uri;		// eContainer null during SAX parsing
 		if ((uri != null) && uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
