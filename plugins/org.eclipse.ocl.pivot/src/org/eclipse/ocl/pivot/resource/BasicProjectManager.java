@@ -88,6 +88,7 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
+		StandaloneProjectMap.initializeURIResourceMap(resourceSet);
 		if (resourceSet != null) {
 			List<Adapter> eAdapters = resourceSet.eAdapters();
 			if (!eAdapters.contains(this)) {
