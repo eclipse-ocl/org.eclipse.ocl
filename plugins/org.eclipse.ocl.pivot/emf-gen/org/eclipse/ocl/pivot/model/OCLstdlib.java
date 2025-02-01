@@ -3166,22 +3166,22 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 
-		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", tp_Collection_T);
-		private final @NonNull Property pr_Collection_lower = createProperty("lower", _Integer);
-		private final @NonNull Property pr_Collection_upper = createProperty("upper", _Integer);
+		private final @NonNull Property pr_Collection_elementType = createProperty(OCLstdlibPackage.Literals.COLLECTION__ELEMENT_TYPE, tp_Collection_T);
+		private final @NonNull Property pr_Collection_lower = createProperty(OCLstdlibPackage.Literals.COLLECTION__LOWER, _Integer);
+		private final @NonNull Property pr_Collection_upper = createProperty(OCLstdlibPackage.Literals.COLLECTION__UPPER, _Integer);
 		private final @NonNull Property pr_CollectionType_elementType = createProperty("elementType", _Type);
 		private final @NonNull Property pr_CollectionType_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _Integer);
-		private final @NonNull Property pr_Map_keyType = createProperty("keyType", tp_Map_K);
-		private final @NonNull Property pr_Map_valueType = createProperty("valueType", tp_Map_V);
+		private final @NonNull Property pr_Map_keyType = createProperty(OCLstdlibPackage.Literals.MAP__KEY_TYPE, tp_Map_K);
+		private final @NonNull Property pr_Map_valueType = createProperty(OCLstdlibPackage.Literals.MAP__VALUE_TYPE, tp_Map_V);
 		private final @NonNull Property pr_MapType_keyType = createProperty("keyType", _Type);
 		private final @NonNull Property pr_MapType_valueType = createProperty("valueType", _Type);
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid_F);
-		private final @NonNull Property pr_OclElement_oclContainer = createProperty("oclContainer", _OclElement);
-		private final @NonNull Property pr_OclElement_oclContents = createProperty("oclContents", _Set_OclElement_T);
+		private final @NonNull Property pr_OclElement_oclContainer = createProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER, _OclElement);
+		private final @NonNull Property pr_OclElement_oclContents = createProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS, _Set_OclElement_T);
 		private final @NonNull Property pr_OclElement_OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement_F);
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement_F);
-		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty("oclBadProperty", _OclAny);
+		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, _OclAny);
 		private final @NonNull Property pr_Type_CollectionType_elementType = createProperty("CollectionType", _Bag_CollectionType_F);
 		private final @NonNull Property pr_Type_MapType_keyType = createProperty("MapType", _Bag_MapType_F);
 		private final @NonNull Property pr_Type_MapType_valueType = createProperty("MapType", _Bag_MapType_F);
