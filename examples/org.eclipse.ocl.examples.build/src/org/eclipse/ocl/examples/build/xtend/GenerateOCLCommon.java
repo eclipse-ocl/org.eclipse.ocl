@@ -767,7 +767,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		EObject eContainer = element.eContainer();
 		if (eContainer == null) {
 			if (element instanceof Model) {
-				return ((Model)element).eResource().getClass().getName() + ".getDefaultModel()";
+				return element.eResource().getClass().getName() + ".getDefaultModel()";
 			}
 		}
 		else {
@@ -806,10 +806,16 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
+	//	if (operation.getESObject() != null) {						// BooleanType::allInstances() is missing
+	//		return nameQueries.getEcoreLiteral(operation);
+	//	}
 		return '"' + operation.getName() + '"';
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Property property) {
+		if ((property.getESObject() != null) && !isExcluded(property.getOwningClass())) {
+			return nameQueries.getEcoreLiteral(property);
+		}
 		return '"' + property.getName() + '"';
 	}
 
@@ -1267,6 +1273,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				return true;
 			}
 		}
+		return false;
+	}
+
+	public boolean isExcluded(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return false;
 	}
 
