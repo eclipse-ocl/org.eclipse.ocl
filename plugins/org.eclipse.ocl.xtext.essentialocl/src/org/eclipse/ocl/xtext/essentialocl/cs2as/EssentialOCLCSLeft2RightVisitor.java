@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -108,6 +109,7 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.PathRole;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.essentialocl.attributes.AbstractOperationMatcher;
 import org.eclipse.ocl.xtext.essentialocl.attributes.BinaryOperationMatcher;
@@ -150,6 +152,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 import org.eclipse.ocl.xtext.essentialoclcs.util.AbstractEssentialOCLCSLeft2RightVisitor;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2RightVisitor
 {
@@ -1056,7 +1060,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OperatorExpCS csParent = csNameExp.getLocalParent();
 		boolean isSafe = false;
 		if (csParent instanceof InfixExpCS) {
-			String operatorName = ((InfixExpCS)csParent).getName();
+			String operatorName = csParent.getName();
 			isSafe = PivotConstants.SAFE_AGGREGATE_NAVIGATION_OPERATOR.equals(operatorName);
 		}
 		//		boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
@@ -1223,7 +1227,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * implicit opposite properties. Iterator bodies are left unresolved.
 	 */
 	protected void resolveOperationArgumentTypes(@Nullable List<Parameter> parameters, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
-		int argIndex = 0;
+		@SuppressWarnings("unused") int argIndex = 0;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
 			if (csArgument.getRole() == NavigationRole.ITERATOR) {
 				break;
@@ -1471,7 +1475,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected Element resolveRoundBracketedTerm(@NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		OperatorExpCS csParent = csNameExp.getLocalParent();
-		if (NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && (csNameExp != ((InfixExpCS)csParent).getSource())) {
+		if (NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && (csNameExp != csParent.getSource())) {
 			// source.name(), source->name() are resolved by the parent NavigationOperatorCS
 			return PivotUtil.getPivot(OCLExpression.class, csNameExp);
 		}
@@ -1548,9 +1552,24 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
+		PathNameCS csPathName = csNameExp.getOwnedPathName();
+		String variableName = variableDeclaration.getName();
+		assert variableName != null;
+		if (variableDeclaration instanceof ParameterVariable) {
+			List<PathElementCS> csPathElements = csPathName.getOwnedPathElements();
+			assert csPathElements.size() == 1;
+			PathElementCS csPathElement = csPathElements.get(0);
+			ICompositeNode node = NodeModelUtils.getNode(csPathElement);
+			if (node != null) {
+				ParameterVariable asParameterVariable = (ParameterVariable)variableDeclaration;
+				Parameter asParameter = asParameterVariable.getRepresentedParameter();
+				csPathElement.setName(node.getText().trim());			// Cache the source text for a CSResource save and reload
+				csPathElement.setRole(asParameter != null ? PathRole.PARAMETER : PathRole.RETURN);
+			}
+		}
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
-		expression.setName(variableDeclaration.getName());
+		expression.setName(variableName);
 		helper.setType(expression, variableDeclaration.getType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
 		return expression;
 	}
@@ -2132,7 +2151,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return resolveRoundBracketedTerm(csRoundBracketedClause);
 		}
 		checkForInvalidImplicitSourceType(csNameExp);
-		//		csNameExp.getPathName().get
 		Element element = context.lookupUndecoratedName(csNameExp, csPathName);
 		if ((element == null) || element.eIsProxy()) {
 			Element pivot = csNameExp.getPivot();

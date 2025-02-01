@@ -22,16 +22,22 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -111,10 +117,10 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getRole()
-	 * @generated
+	 * @generated NOT
 	 * @ordered
 	 */
-	protected static final PathRole ROLE_EDEFAULT = PathRole.NULL;
+	protected static final PathRole ROLE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getRole() <em>Role</em>}' attribute.
@@ -464,20 +470,11 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (name: "); //$NON-NLS-1$
-		result.append(name);
-		result.append(", role: "); //$NON-NLS-1$
-		result.append(role);
-		result.append(')');
-		return result.toString();
+	public String toString() {
+		return super.toString();
 	}
 
 	/**
@@ -498,6 +495,14 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		EObject asResolvedProxy = null;
 		if (esResolvedProxy == null) {									// Not resolved
 		}
+		else if (esResolvedProxy instanceof CSResource) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				CSResource csResource = (CSResource)esResolvedProxy;
+				CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
+				asResolvedProxy = cs2as.getASModel();
+			}
+		}
 		else if (esResolvedProxy instanceof Resource) {					// If resolution is to an Ecore resource resolve to its AS Model
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
@@ -505,7 +510,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 					External2AS es2as = External2AS.getAdapter((Resource)esResolvedProxy, environmentFactory);
 					asResolvedProxy = es2as.getASModel();
 				} catch (ParserException e) {
-					throw new IllegalStateException(e);					// Never happens proxies do not parse
+					throw new IllegalStateException(e);					// Never happens proxies do not parse // XXX but validation can fail
 				}
 			}
 		}
@@ -540,6 +545,37 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			Pivotable esPivotable = (Pivotable)esResolvedProxy;
 			assert !esPivotable.eIsProxy();
 			asResolvedProxy = esPivotable.getPivot();
+			if (role == PathRole.RETURN) {
+				assert asResolvedProxy != null;
+				Constraint asPostcondition = (Constraint)asResolvedProxy;
+				ExpressionInOCL asExpression = (ExpressionInOCL)asPostcondition.getOwnedSpecification();
+				/*Parameter*/Variable asReturnVariable = asExpression.getOwnedResult();
+				if (asReturnVariable != null) {
+					asResolvedProxy = asReturnVariable;
+				}
+				// XXX errors
+			}
+			else if (role == PathRole.PARAMETER) {
+				EObject asElement = asResolvedProxy;
+				if (asElement instanceof Constraint) {
+					Constraint asConstraint = (Constraint)asElement;
+					ExpressionInOCL asExpression = (ExpressionInOCL)asConstraint.getOwnedSpecification();
+					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
+						if (asParameterVariable.getName().equals(name)) {
+							asResolvedProxy = asParameterVariable;
+						}
+					}
+				}
+				else if (asElement instanceof Operation) {
+					Operation asOperation = (Operation)asElement;
+					ExpressionInOCL asExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+					for (/*Parameter*/Variable asParameterVariable : asExpression.getOwnedParameters()) {
+						if (asParameterVariable.getName().equals(name)) {
+							asResolvedProxy = asParameterVariable;
+						}
+					}
+				}
+			}
 		}
 		else {
 			assert false;												// unsupported never happens
