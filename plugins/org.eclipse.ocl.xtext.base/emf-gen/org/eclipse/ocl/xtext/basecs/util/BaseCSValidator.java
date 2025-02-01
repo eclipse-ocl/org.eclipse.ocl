@@ -267,10 +267,12 @@ public class BaseCSValidator extends EObjectValidator
 			case 56:
 				return validateWildcardTypeRefCS((WildcardTypeRefCS)value, diagnostics, context);
 			case 57:
-				return validateBigNumber((Number)value, diagnostics, context);
+				return validatePathRole((PathRole)value, diagnostics, context);
 			case 58:
-				return validateCSI((CSI)value, diagnostics, context);
+				return validateBigNumber((Number)value, diagnostics, context);
 			case 59:
+				return validateCSI((CSI)value, diagnostics, context);
+			case 60:
 				return validateScopeFilter((ScopeFilter)value, diagnostics, context);
 			default:
 				return true;
@@ -886,6 +888,16 @@ public class BaseCSValidator extends EObjectValidator
 	public boolean validateWildcardTypeRefCS(WildcardTypeRefCS wildcardTypeRefCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(wildcardTypeRefCS, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validatePathRole(PathRole pathRole, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return true;
 	}
 
 	/**

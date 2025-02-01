@@ -14,6 +14,7 @@ package org.eclipse.ocl.xtext.basecs;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -304,6 +305,16 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 */
 	int WILDCARD_TYPE_REF_CS = 56;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getPathRole()
+	 * @generated
+	 */
+	int PATH_ROLE = 57;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.impl.TypeRefCSImpl <em>Type Ref CS</em>}' class.
@@ -643,7 +654,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getBigNumber()
 	 * @generated
 	 */
-	int BIG_NUMBER = 57;
+	int BIG_NUMBER = 58;
 
 	/**
 	 * The meta object id for the '<em>CSI</em>' data type.
@@ -653,7 +664,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getCSI()
 	 * @generated
 	 */
-	int CSI = 58;
+	int CSI = 59;
 
 	/**
 	 * The meta object id for the '<em>Scope Filter</em>' data type.
@@ -663,7 +674,7 @@ public interface BaseCSPackage extends EPackage {
 	 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getScopeFilter()
 	 * @generated
 	 */
-	int SCOPE_FILTER = 59;
+	int SCOPE_FILTER = 60;
 
 
 	/**
@@ -1526,6 +1537,28 @@ public interface BaseCSPackage extends EPackage {
 	EReference getPathElementCS_ReferredElement();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathElementCS#getName()
+	 * @see #getPathElementCS()
+	 * @generated
+	 */
+	EAttribute getPathElementCS_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getRole <em>Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Role</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathElementCS#getRole()
+	 * @see #getPathElementCS()
+	 * @generated
+	 */
+	EAttribute getPathElementCS_Role();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getElementType <em>Element Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2259,6 +2292,16 @@ public interface BaseCSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWildcardTypeRefCS_OwnedSuper();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Path Role</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @generated
+	 */
+	EEnum getPathRole();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Big Number</em>}'.
@@ -3028,6 +3071,22 @@ public interface BaseCSPackage extends EPackage {
 		EReference PATH_ELEMENT_CS__REFERRED_ELEMENT = eINSTANCE.getPathElementCS_ReferredElement();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_ELEMENT_CS__NAME = eINSTANCE.getPathElementCS_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Role</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_ELEMENT_CS__ROLE = eINSTANCE.getPathElementCS_Role();
+
+		/**
 		 * The meta object literal for the '<em><b>Element Type</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3628,6 +3687,16 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WILDCARD_TYPE_REF_CS__OWNED_SUPER = eINSTANCE.getWildcardTypeRefCS_OwnedSuper();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.PathRole <em>Path Role</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.basecs.PathRole
+		 * @see org.eclipse.ocl.xtext.basecs.impl.BaseCSPackageImpl#getPathRole()
+		 * @generated
+		 */
+		EEnum PATH_ROLE = eINSTANCE.getPathRole();
 
 		/**
 		 * The meta object literal for the '<em>Big Number</em>' data type.

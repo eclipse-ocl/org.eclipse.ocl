@@ -26,6 +26,8 @@ import org.eclipse.ocl.pivot.Element;
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getElementType <em>Element Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getOwningPathName <em>Owning Path Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getReferredElement <em>Referred Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getRole <em>Role</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathElementCS()
@@ -87,6 +89,59 @@ public interface PathElementCS extends ElementCS, org.eclipse.ocl.pivot.utilitie
 	 * @generated
 	 */
 	void setReferredElement(Element value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The name of the VariableDeclaration when this is the name of a variable or parameter
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathElementCS_Name()
+	 * @model derived="true"
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Role</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.ocl.xtext.basecs.PathRole}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The role of the VariableDeclaration when this is the name of a variable or parameter. This role corrects the type of the ownedPathElements[0].referredElement when the reference is to a pragmatic neighbour of a return or parameter variable for which there is no referenceable CS.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Role</em>' attribute.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see #setRole(PathRole)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathElementCS_Role()
+	 * @model derived="true"
+	 * @generated
+	 */
+	PathRole getRole();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getRole <em>Role</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Role</em>' attribute.
+	 * @see org.eclipse.ocl.xtext.basecs.PathRole
+	 * @see #getRole()
+	 * @generated
+	 */
+	void setRole(PathRole value);
 
 	/**
 	 * Returns the value of the '<em><b>Element Type</b></em>' reference.
