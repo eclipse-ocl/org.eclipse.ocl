@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
@@ -46,6 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -59,15 +61,18 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Value;
@@ -121,15 +126,15 @@ public class AbstractPivotTestCase extends TestCase
 		private @NonNull HashMap<String, Object> contentTypeIdentifierToServiceProviderMap;
 
 		public GlobalStateMemento() {
-			validatorReg = new HashMap<EPackage, Object>(EValidator.Registry.INSTANCE);
-			epackageReg = new HashMap<String, Object>(EPackage.Registry.INSTANCE);
-			protocolToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
+			validatorReg = new HashMap<>(EValidator.Registry.INSTANCE);
+			epackageReg = new HashMap<>(EPackage.Registry.INSTANCE);
+			protocolToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
+			extensionToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
+			contentTypeIdentifierToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
 
-			protocolToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
+			protocolToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
+			extensionToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
+			contentTypeIdentifierToServiceProviderMap = new HashMap<>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
 		}
 
 		public void restoreGlobalState() {
@@ -184,8 +189,8 @@ public class AbstractPivotTestCase extends TestCase
 	 */
 	public static final class TestCompleteOCLLoader extends CompleteOCLLoader
 	{
-		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
-			super(environmentFactory);
+		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
+			super(environmentFactory, extraResourceSets);
 		}
 
 		@Override
@@ -234,7 +239,7 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @Nullable Resource resource, @NonNull List<Diagnostic> diagnostics, @NonNull String... messages) {
-		Map<String, Integer> expected = new HashMap<String, Integer>();
+		Map<String, Integer> expected = new HashMap<>();
 		for (@NonNull String message : messages) {
 			Integer count = expected.get(message);
 			count = count == null ? 1 : count + 1;
@@ -243,6 +248,14 @@ public class AbstractPivotTestCase extends TestCase
 		StringBuilder s1 = null;
 		for (Diagnostic diagnostic : diagnostics) {
 			String actual = diagnostic.getMessage();
+			for (Object data : diagnostic.getData()) {
+				if (data instanceof Throwable) {
+					Throwable t = (Throwable)data;
+					if (!actual.equals(t.getMessage())) {		// e.g EvaluationException message promoted
+						actual += "\n\t" + t.getClass().getSimpleName() + " - " + t.getMessage();
+					}
+				}
+			}
 			Integer expectedCount = expected.get(actual);
 			if ((expectedCount == null) || (expectedCount <= 0)) {
 				if (s1 == null) {
@@ -297,7 +310,7 @@ public class AbstractPivotTestCase extends TestCase
 
 	/* qvtd variant
 	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, String... messages) {
-		Map<String, Integer> expected = new HashMap<String, Integer>();
+		Map<String, Integer> expected = new HashMap<>();
 		for (String message : messages) {
 			Integer count = expected.get(message);
 			count = count == null ? 1 : count + 1;
@@ -391,10 +404,10 @@ public class AbstractPivotTestCase extends TestCase
 					EObject eSource = setting.getEObject();
 					EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 					try {
-					//	Object eGet = eSource.eGet(eStructuralFeature);		// debugging
-					//	if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
-					//		EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
-					//	}
+						Object eGet = eSource.eGet(eStructuralFeature);		// XXX debugging
+						if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
+							EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
+						}
 						s.append(eSource.toString());
 					}
 					catch (Exception e) {
@@ -505,7 +518,7 @@ public class AbstractPivotTestCase extends TestCase
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
 			Diagnostician diagnostician = validationContext.getDiagnostician();
-			List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+			List<Diagnostic> diagnostics = new ArrayList<>();
 			for (EObject eObject : resource.getContents()) {
 				Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);		// FIXME inline 1 call level
 				diagnostics.addAll(diagnostic.getChildren());
