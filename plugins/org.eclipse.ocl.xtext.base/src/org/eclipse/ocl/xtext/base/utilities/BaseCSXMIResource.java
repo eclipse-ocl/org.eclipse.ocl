@@ -27,9 +27,13 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -45,6 +49,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -114,11 +119,36 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		@Override
 		public Object getValue(EObject obj, EStructuralFeature f) {
 			Object value = super.getValue(obj, f);
-			if (value instanceof ParameterVariable) {
+			if (value instanceof Variable) {
 				//
-				//	ParameterVariable has no distinct CS equivalent so must reference its Parameter.
+				//	ParameterVariable has no distinct CS equivalent so must reference its Operation/Constraint.
 				//
-				value = ((ParameterVariable)value).getRepresentedParameter();
+				Variable asVariable = (Variable)value;
+				EStructuralFeature eContainingFeature = asVariable.eContainingFeature();
+				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+					Parameter representedParameter = asVariable.getRepresentedParameter();
+					assert representedParameter != null;
+					Constraint asConstraint = PivotUtil.getContainingConstraint(asVariable);
+					if (asConstraint != null) {
+						value = asConstraint;
+					}
+					else {
+						Operation asOperation = PivotUtil.getContainingOperation(asVariable);
+						if (asOperation != null) {
+							value = asOperation;
+						}
+					}
+				//	value = representedParameter;
+				}
+				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
+					assert asVariable.getRepresentedParameter() == null;
+					Constraint asConstraint = PivotUtil.getContainingConstraint(asVariable);
+					assert asConstraint != null;
+					value = asConstraint;
+				}
+				else {
+				//	throw new UnsupportedOperationException();		// iterators/accumulator
+				}
 			}
 			return value;
 		}
