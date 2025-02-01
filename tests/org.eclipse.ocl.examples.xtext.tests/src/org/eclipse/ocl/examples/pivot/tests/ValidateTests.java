@@ -677,7 +677,7 @@ public class ValidateTests extends AbstractValidateTests
 			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1, "The feature 'l1' is not a valid feature");
 			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2, "The feature 'l1' is not a valid feature");
 			//
-			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2
+			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2 - CompleteOCLEObjectValidator's Validate.ecore EPackage is inconsistent with Validate.oclinecore import
 			//
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
 			assertLoggerText(conflictingResourceMessage);
@@ -687,7 +687,7 @@ public class ValidateTests extends AbstractValidateTests
 			assert dynamicEnvironmentFactory != ocl0.getEnvironmentFactory();
 			assert dynamicEnvironmentFactory != ocl1.getEnvironmentFactory();
 			assert dynamicEnvironmentFactory != ocl2.getEnvironmentFactory();
-			assert dynamicEnvironmentFactory.getResourceSet() == testResourceSet;
+			assert dynamicEnvironmentFactory.getResourceSet() != testResourceSet;
 			assert dynamicModel.getOwnedPackages().get(0).getESObject() == validatePackage1;
 			//
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
@@ -721,7 +721,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			// yet another OCL - but testResourceSet has CS resources for reload, but now testInstance2 is first
 			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
-		//	checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceSetMessage);
+		//	checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceMessage);
 			assertLoggerText(conflictingResourceMessage);
 			checkValidationDiagnostics(testInstance1, Diagnostic.ERROR, conflictingResourceMessage);
 		//	checkValidationDiagnostics(testInstance2, Diagnostic.OK);

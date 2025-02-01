@@ -93,7 +93,6 @@ import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
@@ -223,28 +222,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
-		if (!externalResourceSetWasNull) {
-			if (externalResourceSet instanceof ResourceSetImpl) {
-				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
-				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
-				if (uriResourceMap == null) {
-					uriResourceMap = new HashMap<>();
-					resourceSetImpl.setURIResourceMap(uriResourceMap);
-				}
-			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
-				List<@NonNull EPackage> allEPackages = new UniqueList<>();
-				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
-				for (int i = 0; i < transitiveExternalResources.size(); i++) {
-					Resource esResource = transitiveExternalResources.get(i);
+		if (userResourceSet != null) {
+			Map<URI, Resource> uriResourceMap = ((ResourceSetImpl)externalResourceSet).getURIResourceMap();
+			assert uriResourceMap != null;
+			List<@NonNull EPackage> allEPackages = new UniqueList<>();
+			List</* @NonNull */Resource> transitiveExternalResources = new UniqueList<>(uriResourceMap.values());
+			for (int i = 0; i < transitiveExternalResources.size(); i++) {
+				Resource esResource = transitiveExternalResources.get(i);
+				if (esResource != null) {
 					for (@NonNull EObject eObject : new TreeIterable(esResource)) {
 						EClass eClass = eObject.eClass();
 						EPackage ePackage = eClass.getEPackage();
-						assert ePackage != null;
+						assert ePackage != null : "No EPackage for " + eClass;
 						if (allEPackages.add(ePackage)) {		// EPackage.nsURI schizophrenia is ok (e.g http:/... vs platform:/.../*.ecore)
 							Resource resource = ePackage.eResource();
-							assert resource != null;
-							if (!transitiveExternalResources.contains(resource)) {
-								transitiveExternalResources.add(resource);
+							assert resource != null : "No eResource for " + ePackage;
+							if (transitiveExternalResources.add(resource)) {
 								URI uri = resource.getURI();
 								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
 								if ((old != null) && (old != resource)) {
@@ -817,24 +810,30 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		//	attachCount = -1;
 		isDisposing = true;
-		List<@NonNull Resource> asResources = asResourceSet.getResources();
-		int savedSize = asResources.size();
-		for (int i = 0; i < asResources.size(); i++) {
-			@NonNull Resource asResource = asResources.get(i);
-			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
-				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
-			}
-			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResourceImpl)) {			// Ignore built-in resources
-				((ASResourceImpl)asResource).preUnload(this);
+		try {
+			List<@NonNull Resource> asResources = asResourceSet.getResources();
+			int savedSize = asResources.size();
+			for (int i = 0; i < asResources.size(); i++) {
+				@NonNull Resource asResource = asResources.get(i);
+				if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
+					logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
+				}
+				if ((asResource.getResourceSet() != null) && (asResource instanceof ASResourceImpl)) {			// Ignore built-in resources
+					ASResourceImpl asResourceImpl = (ASResourceImpl)asResource;
+					if (!asResourceImpl.isASonly()) {
+						asResourceImpl.preUnload(this);
+					}
+				}
 			}
 		}
-		disposeInternal();
+		finally {		// Even in preUnload crashes proceed with dispose
+			disposeInternal();
+		}
 	}
 
 	protected void disposeInternal() {
 		assert !isDisposed() && isDisposing();
 	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposed() test
-		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		try {
 			if (metamodelManager != null) {
 				metamodelManager.dispose();
@@ -842,59 +841,49 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
 			EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
-			if (externalResourceSetWasNull || isGlobal) {
-				//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
-				projectManager.unload(externalResourceSet);
-				externalResourceSetAdapters.remove(projectManager);							// cf PivotTestSuite.disposeResourceSet
-				//			StandaloneProjectMap.dispose(externalResourceSet2);
-				externalResourceSet.setPackageRegistry(null);
-				externalResourceSet.setResourceFactoryRegistry(null);
-				externalResourceSet.setURIConverter(null);
-				if (externalResourceSet instanceof ResourceSetImpl) {
-					((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
-				}
-				for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
-					if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
-						// This guard is needed to ensure that clear doesn't make the resource become loaded.
-						//
-						if (!resource.getContents().isEmpty())
-						{
-							resource.getContents().clear();
-						}
-						resource.getErrors().clear();
-						resource.getWarnings().clear();
-						/*				    if (idToEObjectMap != null)
-					    {
-					      idToEObjectMap.clear();
-					    }
-
-					    if (eObjectToIDMap != null)
-					    {
-					      eObjectToIDMap.clear();
-					    }
-
-					    if (eObjectToExtensionMap != null)
-					    {
-					      eObjectToExtensionMap.clear();
-					    } */
-
-					}
-					else {
-						resource.unload();
-					}
-					resource.eAdapters().clear();
-				}
-				externalResourceSetAdapters.clear();
-				//			externalResourceSet = null;
+			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
+			projectManager.unload(externalResourceSet);
+			externalResourceSetAdapters.remove(projectManager);							// cf PivotTestSuite.disposeResourceSet
+			//			StandaloneProjectMap.dispose(externalResourceSet2);
+			externalResourceSet.setPackageRegistry(null);
+			externalResourceSet.setResourceFactoryRegistry(null);
+			externalResourceSet.setURIConverter(null);
+			if (externalResourceSet instanceof ResourceSetImpl) {
+				((ResourceSetImpl)externalResourceSet).setURIResourceMap(null);
 			}
-			else {
-				for (Adapter adapter : externalResourceSetAdapters) {
-					if ((adapter instanceof EnvironmentFactoryAdapter) && (((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory() == this)) {
-						externalResourceSetAdapters.remove(adapter);
-						break;
+			for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
+				if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
+					// This guard is needed to ensure that clear doesn't make the resource become loaded.
+					//
+					if (!resource.getContents().isEmpty())
+					{
+						resource.getContents().clear();
 					}
+					resource.getErrors().clear();
+					resource.getWarnings().clear();
+					/*				    if (idToEObjectMap != null)
+				    {
+				      idToEObjectMap.clear();
+				    }
+
+				    if (eObjectToIDMap != null)
+				    {
+				      eObjectToIDMap.clear();
+				    }
+
+				    if (eObjectToExtensionMap != null)
+				    {
+				      eObjectToExtensionMap.clear();
+				    } */
+
 				}
+				else {
+					resource.unload();
+				}
+				resource.eAdapters().clear();
 			}
+			externalResourceSetAdapters.clear();
+			//			externalResourceSet = null;
 			if (idResolver != null) {
 				idResolver.dispose();
 				idResolver = null;
