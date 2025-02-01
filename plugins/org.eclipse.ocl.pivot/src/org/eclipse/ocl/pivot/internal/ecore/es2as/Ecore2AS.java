@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -80,6 +81,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
@@ -395,6 +397,12 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert eDataTypes == null;
 		Element element = newCreateMap.get(eObject);
 		if (element == null) {
+			Resource eObjectResource = eObject.eResource();
+			URI eObjectResourceURI = eObjectResource.getURI();
+			Resource nonDelegatedResource = ecoreResource instanceof DelegatedSinglePackageResource ? ((DelegatedSinglePackageResource)ecoreResource).getResource() : ecoreResource;
+			if ((eObjectResource != nonDelegatedResource) || (eObjectResourceURI != nonDelegatedResource.getURI())) {
+				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));
+			}
 			return null;
 		}
 		assert !element.eIsProxy();
