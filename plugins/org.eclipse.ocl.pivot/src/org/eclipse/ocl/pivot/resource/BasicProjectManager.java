@@ -87,6 +87,7 @@ public class BasicProjectManager extends AbstractProjectManager
 
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
+		StandaloneProjectMap.initializeURIResourceMap(resourceSet);
 		if (resourceSet != null) {
 			List<Adapter> eAdapters = resourceSet.eAdapters();
 			if (!eAdapters.contains(this)) {
