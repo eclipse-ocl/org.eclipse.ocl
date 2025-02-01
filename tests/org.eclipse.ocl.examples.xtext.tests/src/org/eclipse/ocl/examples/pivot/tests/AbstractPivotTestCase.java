@@ -380,12 +380,49 @@ public class AbstractPivotTestCase extends TestCase
 			fail(message);
 	}
 
+	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull ResourceSet resourceSet) {
+		for (Resource resource : resourceSet.getResources()) {
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix + " for " + resource.getURI(), "\n\t");
+			if (message != null) {
+				fail(message);
+			}
+		}
+	}
+
 	/* qvtd variant
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
 		String message = PivotUtil.formatResourceDiagnostics(resource.getErrors(), prefix, "\n\t");
 		if (message != null)
 			fail(message);
 	} */
+
+	public static void assertNoUnresolvedPivots(@NonNull String message, @NonNull CSResource csResource) {
+		StringBuilder s = null;
+		for (EObject eObject : new TreeIterable(csResource)) {
+			if (eObject instanceof Pivotable) {
+				Pivotable pivotable = (Pivotable)eObject;
+				Element pivot = pivotable.getPivot();
+				if (pivot == null) {
+					if (s == null) {
+						s = new StringBuilder();
+						s.append(message);
+						s.append(" unresolved pivots in ");
+						s.append(csResource.getURI());
+					}
+					s.append("\n\t");
+					s.append(eObject.eClass().getName());
+					s.append(" : ");
+					s.append(eObject);
+				}
+				else {
+					assert !pivot.eIsProxy();
+				}
+			}
+		}
+		if (s != null) {
+			fail(s.toString());
+		}
+	}
 
 	public static void assertNoUnresolvedProxies(@NonNull String message, @NonNull Resource resource) {
 		Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(resource);
