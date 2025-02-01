@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -428,6 +430,14 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 	public void dispose() {
 		csi2asMapping.removeCSResource(csResource);
+	}
+
+	public @NonNull Model getASModel() {
+		List<@NonNull EObject> contents = asResource.getContents();
+		if ((contents.size() <= 0) || contents.get(0).eIsProxy()) {
+			update();
+		}
+		return PivotUtil.getModel(asResource);
 	}
 
 	@Override
