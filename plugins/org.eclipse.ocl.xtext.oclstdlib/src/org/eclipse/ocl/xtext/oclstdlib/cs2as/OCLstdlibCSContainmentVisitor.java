@@ -274,6 +274,9 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		Resource eResource = csElement.eResource();
 		if (eResource instanceof CSResource) {
 			@NonNull Model pivotElement = refreshRootPackage(Model.class, PivotPackage.Literals.MODEL, csElement);
+			assert (pivotElement.eResource() == null)											// normal case
+				|| (pivotElement.eResource() == context.getConverter().getASResource())			// happens when a new CS2AS updates what an old CS2AS originally updated
+				: "Attempted re-use of " + pivotElement;
 			context.refreshPivotList(Import.class, pivotElement.getOwnedImports(), csElement.getOwnedImports());
 			context.installRootElement((CSResource) eResource, pivotElement);		// Ensure containment viable for imported library type references
 			importPackages(csElement);			// FIXME This has to be after refreshPackage which is irregular and prevents local realization of ImportCS etc
