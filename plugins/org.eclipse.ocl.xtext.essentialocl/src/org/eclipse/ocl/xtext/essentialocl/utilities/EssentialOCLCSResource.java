@@ -174,6 +174,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return new CSXMISave(xmlHelper);
 		}
 
+		@Override
+		public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
+			return csResource.getCS2AS(environmentFactory);
+		}
+
 		/**
 		 * Return the top level resource contents delegating to the Xtext-friendly CSResource.
 		 */
