@@ -11,11 +11,16 @@
 package org.eclipse.ocl.pivot.validation;
 
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
@@ -38,6 +43,55 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
  */
 public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements Adapter.Internal
 {
+	/**
+	 * A DelegatingEValidator instance displaces a global EValidator.Registry.INSTANCE to redirect validations for
+	 * EPackages associated with REsoureceSets with loval ValidationRegistryAdapters to use the local adapter.
+	 *
+	 * @since 1.22
+	 */
+	protected static class DelegatingEValidator implements EValidator
+	{
+		/**
+		 * Map from ResourceSet with a local ValidationREgistryAdapter to its local validator.
+		 * null key maps all other ResourceSets to the displaced validator.
+		 * WeakHashMap should ensure that stale ResourceSets vanish.
+		 */
+		private final @NonNull WeakHashMap<@Nullable ResourceSet, @Nullable EValidator> resourceSet2delegateEvalidator = new WeakHashMap<>();
+
+		protected DelegatingEValidator(@Nullable EValidator oldEValidator) {
+			resourceSet2delegateEvalidator.put(null, oldEValidator);
+		}
+
+		protected @Nullable EValidator getEValidator(EObject eObject) {
+			Resource resource = eObject != null ? eObject.eResource() : null;
+			ResourceSet resourceSet = resource != null ? resource.getResourceSet() : null;
+			return resourceSet2delegateEvalidator.get(resourceSet);
+		}
+
+		public void put(@NonNull ResourceSet resourceSet, @NonNull EValidator eValidator) {
+			EValidator old = resourceSet2delegateEvalidator.put(resourceSet, eValidator);
+			assert (old == null) || (old == eValidator);
+		}
+
+		@Override
+		public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			EValidator eValidator = getEValidator(eObject);
+			return eValidator != null ? eValidator.validate(eObject, diagnostics, context) : diagnostics != null;
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			EValidator eValidator = getEValidator(eObject);
+			return eValidator != null ? eValidator.validate(eClass, eObject, diagnostics, context) : diagnostics != null;
+		}
+
+		@Override
+		public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			EValidator eValidator = getEValidator(eDataType);
+			return eValidator != null ? eValidator.validate(eDataType, value, diagnostics, context) : diagnostics != null;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ValidationRegistryAdapter.class);
 	/**
@@ -174,6 +228,24 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 
 	@Override
 	public void notifyChanged(Notification notification) {}
+
+	/**
+	 * @since 1.22
+	 */
+	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
+		put(ePackage, eValidator);
+		ResourceSet resourceSet = getTarget();
+		EValidator oldEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+		DelegatingEValidator delegatingEValidator;
+		if (oldEValidator instanceof DelegatingEValidator) {
+			delegatingEValidator = (DelegatingEValidator)oldEValidator;
+		}
+		else {
+			delegatingEValidator = new DelegatingEValidator(oldEValidator);
+			EValidator.Registry.INSTANCE.put(ePackage, delegatingEValidator);
+		}
+		delegatingEValidator.put(resourceSet, eValidator);
+	}
 
 	@Override
 	public void setTarget(Notifier newTarget) {

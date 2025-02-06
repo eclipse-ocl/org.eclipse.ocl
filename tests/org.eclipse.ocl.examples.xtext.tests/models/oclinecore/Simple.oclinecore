@@ -1,0 +1,7 @@
+package simple : simple = 'http:/simple'
+{
+	class Simple
+	{
+		invariant OCLinEcoreAlwaysFalse: false;
+	}
+}
