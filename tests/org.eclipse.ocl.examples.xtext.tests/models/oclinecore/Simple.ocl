@@ -1,0 +1,8 @@
+import 'Simple.oclinecore'
+
+package simple
+
+context Simple
+inv CompleteOCLAlwaysFalse: false
+
+endpackage
