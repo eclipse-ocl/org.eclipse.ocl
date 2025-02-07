@@ -26,7 +26,7 @@ public interface DelegatedBehavior<E, R, F>
 	
 	@NonNull EPackage getEPackage(@NonNull E eObject);
 	
-	@NonNull List<F> getFactories(@NonNull E eObject);
+	@NonNull List<@NonNull F> getFactories(@NonNull E eObject);
 	
 	@Nullable F getFactory(@NonNull E eObject);
 	

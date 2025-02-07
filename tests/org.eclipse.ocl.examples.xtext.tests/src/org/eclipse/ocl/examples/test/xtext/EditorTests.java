@@ -312,6 +312,8 @@ public class EditorTests extends XtextTestCase
 
 	@Override
 	protected void setUp() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUIUtil.suppressGitPrefixPopUp();
 		TestUIUtil.closeIntro();
 		super.setUp();
@@ -435,7 +437,7 @@ public class EditorTests extends XtextTestCase
 		}
 	}
 
-	// FIXME Disabled for BUG 425505
+	// FIXME Disabled for BUG 425505 -- needs duplicates/redefines support
 	public void zztestEditor_OpenOCLinEcoreEditor4Pivot_Ecore() throws Exception {
 		URI uri = URI.createPlatformPluginURI(PivotConstantsInternal.PIVOT_ECORE, true);
 		String documentText = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, uri);

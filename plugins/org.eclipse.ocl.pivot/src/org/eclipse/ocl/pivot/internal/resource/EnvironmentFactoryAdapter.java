@@ -58,7 +58,7 @@ public class EnvironmentFactoryAdapter implements Adapter.Internal
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull Notifier notifier;
+	protected final @NonNull Notifier notifier;			// XXX change to ResourceSet
 
 	public EnvironmentFactoryAdapter(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Notifier notifier) {
 		this.environmentFactory = environmentFactory;

@@ -233,5 +233,4 @@ public class DetailImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitDetail(this);
 	}
-
 } //DetailImpl
