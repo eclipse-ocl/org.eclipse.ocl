@@ -47,7 +47,7 @@ org.eclipse.emf.mwe2.runtime.workflow.Workflow {
 	}
 	bean = XtextStandaloneSetupBean {}
 	bean = OCLDelegateSetup { resourceSet = resourceSet }
-	bean = org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler {}			// Needed for OCLstdlib
+	bean = org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler {}			// Needed for OCLstdlib
     bean = ProjectMapSetup { resourceSet = resourceSet }
 //    bean = DynamicEPackageSetup { resourceSet = resourceSet
 //		dynamicEPackage = "/${projectName}/model/XBNF.ecore"

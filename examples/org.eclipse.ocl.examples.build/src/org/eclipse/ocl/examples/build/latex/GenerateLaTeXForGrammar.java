@@ -21,9 +21,9 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
-import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.XtextStandaloneSetup;
@@ -37,7 +37,7 @@ public abstract class GenerateLaTeXForGrammar extends GenerateLaTeXUtils
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		XtextStandaloneSetup.doSetup();
 		CompleteOCLStandaloneSetup.doSetup();
-		ClasspathURIHandler.init(resourceSet);
+		ClasspathURIHandler.init(resourceSet, null);
 		File folder = new File(rootPath + latexFolder);
 		folder.mkdirs();
 		try {

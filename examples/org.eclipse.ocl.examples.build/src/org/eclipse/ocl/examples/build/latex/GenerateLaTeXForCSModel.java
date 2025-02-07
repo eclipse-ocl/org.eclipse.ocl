@@ -21,7 +21,6 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
-import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.XtextStandaloneSetup;
@@ -53,7 +53,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 		OCL ocl = OCL.newInstance();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		ClasspathURIHandler.init(resourceSet);
+		ClasspathURIHandler.init(resourceSet, null);
 		try {
 			org.eclipse.ocl.pivot.Package asPackage = null;
 			org.eclipse.ocl.pivot.Package cs2asPackage = null;
