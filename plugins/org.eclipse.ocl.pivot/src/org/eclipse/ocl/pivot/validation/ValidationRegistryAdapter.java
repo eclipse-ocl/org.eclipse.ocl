@@ -47,7 +47,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	 * A DelegatingEValidator instance displaces a global EValidator.Registry.INSTANCE to redirect validations for
 	 * EPackages associated with REsoureceSets with loval ValidationRegistryAdapters to use the local adapter.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	protected static class DelegatingEValidator implements EValidator
 	{
@@ -230,7 +230,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	public void notifyChanged(Notification notification) {}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
 		put(ePackage, eValidator);

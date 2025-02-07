@@ -164,5 +164,4 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIteratorVariable(this);
 	}
-
 } //IteratorVariableImpl

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -24,7 +24,7 @@ import org.eclipse.ocl.common.delegate.DelegateResourceSetAdapter;
 
 /**
  * Factory for OCL derived-classifier validation delegates.
- * 
+ *
  * @since 3.0
  */
 public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
@@ -32,15 +32,15 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 
 	/**
 	 * Construct a factory for an unknown delegate domain; often the global factory.
-	 * 
+	 *
 	 * @deprecated Specify explicit delegateURI
 	 */
 	@Deprecated
 	public OCLValidationDelegateFactory() {}
-	
+
 	/**
 	 * Construct a factory for a known delegate domain.
-	 * 
+	 *
 	 * @param delegateURI the delegate domain.
 	 * @since 3.2
 	 */
@@ -50,7 +50,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 
 	/**
 	 * Construct a factory for a known delegate domain.
-	 * 
+	 *
 	 * @param delegateDomain the delegate domain.
 	 * @deprecated Use String argument to avoid leak hazards
 	 */
@@ -59,6 +59,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		super(delegateDomain);
 	}
 
+	@Override
 	public ValidationDelegate createValidationDelegate(EClassifier classifier) {
 		EPackage ePackage = classifier.getEPackage();
 		return new OCLValidationDelegate(getDelegateDomain(ePackage), classifier);
@@ -75,24 +76,27 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		return validationDelegate;
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, EOperation invariant, String expression) {
 		ValidationDelegate validationDelegate = getValidationDelegate(eClass);
 		return validationDelegate.validate(eClass, eObject, context, invariant, expression);
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, String constraint, String expression) {
 		ValidationDelegate validationDelegate = getValidationDelegate(eClass);
 		return validationDelegate.validate(eClass, eObject, context, constraint, expression);
 	}
 
+	@Override
 	public boolean validate(EDataType eDataType, Object value,
 			Map<Object, Object> context, String constraint, String expression) {
 		ValidationDelegate validationDelegate = getValidationDelegate(eDataType);
 		return validationDelegate.validate(eDataType, value, context, constraint, expression);
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
@@ -104,6 +108,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 			super(OCLConstants.OCL_DELEGATE_URI_LPG);
 		}
 
+		@Override
 		public ValidationDelegate createValidationDelegate(EClassifier classifier) {
 			ValidationDelegate.Factory.Registry localRegistry = DelegateResourceSetAdapter.getRegistry(
 				classifier, ValidationDelegate.Factory.Registry.class, null);
@@ -114,8 +119,9 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 			return super.createValidationDelegate(classifier);
-		}	
-		
+		}
+
+		@Override
 		protected ValidationDelegate getValidationDelegate(EClassifier eClassifier) {
 //			if (delegateDomain == null) {
 //				EPackage ePackage = eClassifier.getEPackage();

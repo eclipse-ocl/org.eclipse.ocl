@@ -8,40 +8,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/Environment.java" type="org.eclipse.ocl.Environment">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.Environment"/>
-                <message_argument value="createOCL()"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.Environment"/>
-                <message_argument value="createToStringVisitor(Environment&lt;?,C,O,P,EL,PM,S,COA,SSA,CT,?,?&gt;)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/OCL.java" type="org.eclipse.ocl.OCL">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.OCL"/>
-                <message_argument value="newInstance(Environment&lt;PK,C,O,P,EL,PM,S,COA,SSA,CT,CLS,E&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.OCL"/>
-                <message_argument value="newInstance(EnvironmentFactory&lt;PK,C,O,P,EL,PM,S,COA,SSA,CT,CLS,E&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.OCL"/>
-                <message_argument value="newInstance(EnvironmentFactory&lt;PK,C,O,P,EL,PM,S,COA,SSA,CT,CLS,E&gt;, Resource)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/parser/OCLKWLexerprs.java" type="org.eclipse.ocl.parser.OCLKWLexerprs">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -71,14 +37,6 @@
             <message_arguments>
                 <message_argument value="OCLBacktrackingLexersym"/>
                 <message_argument value="OCLBacktrackingLexerprs"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/util/ToStringVisitor.java" type="org.eclipse.ocl.util.ToStringVisitor">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.util.ToStringVisitor"/>
-                <message_argument value="getInstance(TypedElement&lt;C&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
