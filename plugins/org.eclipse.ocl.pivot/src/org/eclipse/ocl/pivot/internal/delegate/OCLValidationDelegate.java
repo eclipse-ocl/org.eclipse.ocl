@@ -128,7 +128,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static class CompleteOCLValidationDelegate extends OCLValidationDelegate
 	{

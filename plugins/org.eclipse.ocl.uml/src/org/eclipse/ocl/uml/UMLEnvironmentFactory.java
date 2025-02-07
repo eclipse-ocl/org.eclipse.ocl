@@ -270,7 +270,7 @@ public class UMLEnvironmentFactory
 	}
 
 	/**
-	 * @since 5.22
+	 * @since 5.23
 	 */
 	@Override
 	public OCL createOCL() {
@@ -278,7 +278,7 @@ public class UMLEnvironmentFactory
 	}
 
 	/**
-	 * @since 5.22
+	 * @since 5.23
 	 */
 	@Override
 	public OCL createOCL(Resource resource) {

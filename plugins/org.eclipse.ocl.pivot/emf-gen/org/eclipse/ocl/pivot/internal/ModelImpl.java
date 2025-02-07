@@ -498,7 +498,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
 	protected void resetESObject() {}
