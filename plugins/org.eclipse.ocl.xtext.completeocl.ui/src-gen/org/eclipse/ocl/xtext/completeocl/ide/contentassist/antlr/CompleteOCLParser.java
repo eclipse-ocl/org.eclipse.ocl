@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Willink Transformations and others.
+ * Copyright (c) 2011, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -47,8 +47,11 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefCSAccess().getAlternatives(), "rule__DefCS__Alternatives");
 			builder.put(grammarAccess.getImportCSAccess().getAlternatives_0(), "rule__ImportCS__Alternatives_0");
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getAlternatives_8(), "rule__OperationContextDeclCS__Alternatives_8");
-			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getAlternatives_4(), "rule__PropertyContextDeclCS__Alternatives_4");
+			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAlternatives_4_0(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAlternatives_4_0");
 			builder.put(grammarAccess.getSpecificationCSAccess().getAlternatives(), "rule__SpecificationCS__Alternatives");
+			builder.put(grammarAccess.getBodySpecificationCSAccess().getAlternatives_3(), "rule__BodySpecificationCS__Alternatives_3");
+			builder.put(grammarAccess.getDeriveSpecificationCSAccess().getAlternatives_3(), "rule__DeriveSpecificationCS__Alternatives_3");
+			builder.put(grammarAccess.getInitSpecificationCSAccess().getAlternatives_3(), "rule__InitSpecificationCS__Alternatives_3");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getAlternatives(), "rule__TemplateSignatureCS__Alternatives");
 			builder.put(grammarAccess.getTypedRefCSAccess().getAlternatives(), "rule__TypedRefCS__Alternatives");
 			builder.put(grammarAccess.getUnrestrictedNameAccess().getAlternatives(), "rule__UnrestrictedName__Alternatives");
@@ -94,10 +97,15 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getUPPERAccess().getAlternatives(), "rule__UPPER__Alternatives");
 			builder.put(grammarAccess.getCompleteOCLDocumentCSAccess().getGroup(), "rule__CompleteOCLDocumentCS__Group__0");
 			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getGroup(), "rule__ClassifierContextDeclCS__Group__0");
-			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getGroup_4_0(), "rule__ClassifierContextDeclCS__Group_4_0__0");
-			builder.put(grammarAccess.getConstraintCSAccess().getGroup(), "rule__ConstraintCS__Group__0");
-			builder.put(grammarAccess.getConstraintCSAccess().getGroup_0(), "rule__ConstraintCS__Group_0__0");
-			builder.put(grammarAccess.getConstraintCSAccess().getGroup_0_1(), "rule__ConstraintCS__Group_0_1__0");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getGroup(), "rule__InvConstraintCS__Group__0");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getGroup_1(), "rule__InvConstraintCS__Group_1__0");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getGroup_1_1(), "rule__InvConstraintCS__Group_1_1__0");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getGroup(), "rule__PreConstraintCS__Group__0");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getGroup_1(), "rule__PreConstraintCS__Group_1__0");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getGroup_1_1(), "rule__PreConstraintCS__Group_1_1__0");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getGroup(), "rule__PostConstraintCS__Group__0");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getGroup_1(), "rule__PostConstraintCS__Group_1__0");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getGroup_1_1(), "rule__PostConstraintCS__Group_1_1__0");
 			builder.put(grammarAccess.getDefOperationCSAccess().getGroup(), "rule__DefOperationCS__Group__0");
 			builder.put(grammarAccess.getDefOperationCSAccess().getGroup_7(), "rule__DefOperationCS__Group_7__0");
 			builder.put(grammarAccess.getDefOperationCSAccess().getGroup_7_1(), "rule__DefOperationCS__Group_7_1__0");
@@ -108,16 +116,13 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup(), "rule__OperationContextDeclCS__Group__0");
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup_4(), "rule__OperationContextDeclCS__Group_4__0");
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup_4_1(), "rule__OperationContextDeclCS__Group_4_1__0");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup_8_0(), "rule__OperationContextDeclCS__Group_8_0__0");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup_8_1(), "rule__OperationContextDeclCS__Group_8_1__0");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getGroup_8_2(), "rule__OperationContextDeclCS__Group_8_2__0");
 			builder.put(grammarAccess.getPackageDeclarationCSAccess().getGroup(), "rule__PackageDeclarationCS__Group__0");
-			builder.put(grammarAccess.getPackageDeclarationCSAccess().getGroup_2(), "rule__PackageDeclarationCS__Group_2__0");
 			builder.put(grammarAccess.getParameterCSAccess().getGroup(), "rule__ParameterCS__Group__0");
 			builder.put(grammarAccess.getParameterCSAccess().getGroup_0(), "rule__ParameterCS__Group_0__0");
 			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getGroup(), "rule__PropertyContextDeclCS__Group__0");
-			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getGroup_4_0(), "rule__PropertyContextDeclCS__Group_4_0__0");
-			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getGroup_4_1(), "rule__PropertyContextDeclCS__Group_4_1__0");
+			builder.put(grammarAccess.getBodySpecificationCSAccess().getGroup(), "rule__BodySpecificationCS__Group__0");
+			builder.put(grammarAccess.getDeriveSpecificationCSAccess().getGroup(), "rule__DeriveSpecificationCS__Group__0");
+			builder.put(grammarAccess.getInitSpecificationCSAccess().getGroup(), "rule__InitSpecificationCS__Group__0");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getGroup_0(), "rule__TemplateSignatureCS__Group_0__0");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getGroup_0_2(), "rule__TemplateSignatureCS__Group_0_2__0");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getGroup_1(), "rule__TemplateSignatureCS__Group_1__0");
@@ -233,11 +238,17 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getOwnedSignatureAssignment_1(), "rule__ClassifierContextDeclCS__OwnedSignatureAssignment_1");
 			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getSelfNameAssignment_2(), "rule__ClassifierContextDeclCS__SelfNameAssignment_2");
 			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getOwnedPathNameAssignment_3(), "rule__ClassifierContextDeclCS__OwnedPathNameAssignment_3");
-			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getOwnedInvariantsAssignment_4_0_1(), "rule__ClassifierContextDeclCS__OwnedInvariantsAssignment_4_0_1");
+			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getOwnedInvariantsAssignment_4_0(), "rule__ClassifierContextDeclCS__OwnedInvariantsAssignment_4_0");
 			builder.put(grammarAccess.getClassifierContextDeclCSAccess().getOwnedDefinitionsAssignment_4_1(), "rule__ClassifierContextDeclCS__OwnedDefinitionsAssignment_4_1");
-			builder.put(grammarAccess.getConstraintCSAccess().getNameAssignment_0_0(), "rule__ConstraintCS__NameAssignment_0_0");
-			builder.put(grammarAccess.getConstraintCSAccess().getOwnedMessageSpecificationAssignment_0_1_1(), "rule__ConstraintCS__OwnedMessageSpecificationAssignment_0_1_1");
-			builder.put(grammarAccess.getConstraintCSAccess().getOwnedSpecificationAssignment_2(), "rule__ConstraintCS__OwnedSpecificationAssignment_2");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getNameAssignment_1_0(), "rule__InvConstraintCS__NameAssignment_1_0");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getOwnedMessageSpecificationAssignment_1_1_1(), "rule__InvConstraintCS__OwnedMessageSpecificationAssignment_1_1_1");
+			builder.put(grammarAccess.getInvConstraintCSAccess().getOwnedSpecificationAssignment_3(), "rule__InvConstraintCS__OwnedSpecificationAssignment_3");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getNameAssignment_1_0(), "rule__PreConstraintCS__NameAssignment_1_0");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getOwnedMessageSpecificationAssignment_1_1_1(), "rule__PreConstraintCS__OwnedMessageSpecificationAssignment_1_1_1");
+			builder.put(grammarAccess.getPreConstraintCSAccess().getOwnedSpecificationAssignment_3(), "rule__PreConstraintCS__OwnedSpecificationAssignment_3");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getNameAssignment_1_0(), "rule__PostConstraintCS__NameAssignment_1_0");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getOwnedMessageSpecificationAssignment_1_1_1(), "rule__PostConstraintCS__OwnedMessageSpecificationAssignment_1_1_1");
+			builder.put(grammarAccess.getPostConstraintCSAccess().getOwnedSpecificationAssignment_3(), "rule__PostConstraintCS__OwnedSpecificationAssignment_3");
 			builder.put(grammarAccess.getDefOperationCSAccess().getIsStaticAssignment_0(), "rule__DefOperationCS__IsStaticAssignment_0");
 			builder.put(grammarAccess.getDefOperationCSAccess().getOwnedSignatureAssignment_4(), "rule__DefOperationCS__OwnedSignatureAssignment_4");
 			builder.put(grammarAccess.getDefOperationCSAccess().getNameAssignment_5(), "rule__DefOperationCS__NameAssignment_5");
@@ -259,20 +270,25 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedParametersAssignment_4_0(), "rule__OperationContextDeclCS__OwnedParametersAssignment_4_0");
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedParametersAssignment_4_1_1(), "rule__OperationContextDeclCS__OwnedParametersAssignment_4_1_1");
 			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedTypeAssignment_7(), "rule__OperationContextDeclCS__OwnedTypeAssignment_7");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedPreconditionsAssignment_8_0_1(), "rule__OperationContextDeclCS__OwnedPreconditionsAssignment_8_0_1");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedPostconditionsAssignment_8_1_1(), "rule__OperationContextDeclCS__OwnedPostconditionsAssignment_8_1_1");
-			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedBodiesAssignment_8_2_3(), "rule__OperationContextDeclCS__OwnedBodiesAssignment_8_2_3");
+			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedPreconditionsAssignment_8_0(), "rule__OperationContextDeclCS__OwnedPreconditionsAssignment_8_0");
+			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedPostconditionsAssignment_8_1(), "rule__OperationContextDeclCS__OwnedPostconditionsAssignment_8_1");
+			builder.put(grammarAccess.getOperationContextDeclCSAccess().getOwnedBodiesAssignment_8_2(), "rule__OperationContextDeclCS__OwnedBodiesAssignment_8_2");
 			builder.put(grammarAccess.getPackageDeclarationCSAccess().getOwnedPathNameAssignment_1(), "rule__PackageDeclarationCS__OwnedPathNameAssignment_1");
-			builder.put(grammarAccess.getPackageDeclarationCSAccess().getOwnedInvariantsAssignment_2_1(), "rule__PackageDeclarationCS__OwnedInvariantsAssignment_2_1");
+			builder.put(grammarAccess.getPackageDeclarationCSAccess().getOwnedInvariantsAssignment_2(), "rule__PackageDeclarationCS__OwnedInvariantsAssignment_2");
 			builder.put(grammarAccess.getPackageDeclarationCSAccess().getOwnedContextsAssignment_3(), "rule__PackageDeclarationCS__OwnedContextsAssignment_3");
 			builder.put(grammarAccess.getParameterCSAccess().getNameAssignment_0_0(), "rule__ParameterCS__NameAssignment_0_0");
 			builder.put(grammarAccess.getParameterCSAccess().getOwnedTypeAssignment_1(), "rule__ParameterCS__OwnedTypeAssignment_1");
 			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedPathNameAssignment_1(), "rule__PropertyContextDeclCS__OwnedPathNameAssignment_1");
 			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedTypeAssignment_3(), "rule__PropertyContextDeclCS__OwnedTypeAssignment_3");
-			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_0_3(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_0_3");
-			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4_1_3(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4_1_3");
+			builder.put(grammarAccess.getPropertyContextDeclCSAccess().getOwnedDefaultExpressionsAssignment_4(), "rule__PropertyContextDeclCS__OwnedDefaultExpressionsAssignment_4");
 			builder.put(grammarAccess.getSpecificationCSAccess().getOwnedExpressionAssignment_0(), "rule__SpecificationCS__OwnedExpressionAssignment_0");
 			builder.put(grammarAccess.getSpecificationCSAccess().getExprStringAssignment_1(), "rule__SpecificationCS__ExprStringAssignment_1");
+			builder.put(grammarAccess.getBodySpecificationCSAccess().getOwnedExpressionAssignment_3_0(), "rule__BodySpecificationCS__OwnedExpressionAssignment_3_0");
+			builder.put(grammarAccess.getBodySpecificationCSAccess().getExprStringAssignment_3_1(), "rule__BodySpecificationCS__ExprStringAssignment_3_1");
+			builder.put(grammarAccess.getDeriveSpecificationCSAccess().getOwnedExpressionAssignment_3_0(), "rule__DeriveSpecificationCS__OwnedExpressionAssignment_3_0");
+			builder.put(grammarAccess.getDeriveSpecificationCSAccess().getExprStringAssignment_3_1(), "rule__DeriveSpecificationCS__ExprStringAssignment_3_1");
+			builder.put(grammarAccess.getInitSpecificationCSAccess().getOwnedExpressionAssignment_3_0(), "rule__InitSpecificationCS__OwnedExpressionAssignment_3_0");
+			builder.put(grammarAccess.getInitSpecificationCSAccess().getExprStringAssignment_3_1(), "rule__InitSpecificationCS__ExprStringAssignment_3_1");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getOwnedParametersAssignment_0_1(), "rule__TemplateSignatureCS__OwnedParametersAssignment_0_1");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getOwnedParametersAssignment_0_2_1(), "rule__TemplateSignatureCS__OwnedParametersAssignment_0_2_1");
 			builder.put(grammarAccess.getTemplateSignatureCSAccess().getOwnedParametersAssignment_1_1(), "rule__TemplateSignatureCS__OwnedParametersAssignment_1_1");

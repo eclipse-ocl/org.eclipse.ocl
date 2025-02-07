@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2023 Willink Transformations and others.
+ * Copyright (c) 2015, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -104,7 +104,6 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_ClassifierContextDeclCS = createParserRule("ClassifierContextDeclCS", createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS));
 		private static final @NonNull ParserRule PR_CompleteOCLDocumentCS = createParserRule("CompleteOCLDocumentCS", createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS));
 		private static final @NonNull ParserRule PR_CompleteOCLNavigationOperatorName = createParserRule("CompleteOCLNavigationOperatorName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
-		private static final @NonNull ParserRule PR_ConstraintCS = createParserRule("ConstraintCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS));
 		private static final @NonNull ParserRule PR_ContextDeclCS = createParserRule("ContextDeclCS", createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.CONTEXT_DECL_CS));
 		private static final @NonNull ParserRule PR_DefCS = createParserRule("DefCS", createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.DEF_CS));
 		private static final @NonNull ParserRule PR_DefOperationCS = createParserRule("DefOperationCS", createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.DEF_OPERATION_CS));
@@ -122,6 +121,12 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_TemplateSignatureCS = createParserRule("TemplateSignatureCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS));
 		private static final @NonNull ParserRule PR_TypedRefCS = createParserRule("TypedRefCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_REF_CS));
 		private static final @NonNull ParserRule PR_UnrestrictedName = createParserRule("UnrestrictedName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
+		private static final @NonNull ParserRule PR_bodySpecificationCS = createParserRule("bodySpecificationCS", createTypeRef(MM_essentialocl, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS));
+		private static final @NonNull ParserRule PR_deriveSpecificationCS = createParserRule("deriveSpecificationCS", createTypeRef(MM_essentialocl, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS));
+		private static final @NonNull ParserRule PR_initSpecificationCS = createParserRule("initSpecificationCS", createTypeRef(MM_essentialocl, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS));
+		private static final @NonNull ParserRule PR_invConstraintCS = createParserRule("invConstraintCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS));
+		private static final @NonNull ParserRule PR_postConstraintCS = createParserRule("postConstraintCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS));
+		private static final @NonNull ParserRule PR_preConstraintCS = createParserRule("preConstraintCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS));
 
 		private static void initParserRules() {
 			PR_ClassifierContextDeclCS.setAlternatives(
@@ -131,9 +136,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					setCardinality("?", createAssignment("selfName", "=", createRuleCall(PR_UnrestrictedName))),
 					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					setCardinality("+", createAlternatives(
-						createGroup(
-							createKeyword("inv"),
-							createAssignment("ownedInvariants", "+=", createRuleCall(PR_ConstraintCS))),
+						createAssignment("ownedInvariants", "+=", createRuleCall(PR_invConstraintCS)),
 						createAssignment("ownedDefinitions", "+=", createRuleCall(PR_DefCS))))));
 			PR_CompleteOCLDocumentCS.setAlternatives(
 				createGroup(
@@ -145,16 +148,6 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				createAlternatives(
 					createKeyword("^"),
 					createKeyword("^^")));
-			PR_ConstraintCS.setAlternatives(
-				createGroup(
-					setCardinality("?", createGroup(
-						createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
-						setCardinality("?", createGroup(
-							createKeyword("("),
-							createAssignment("ownedMessageSpecification", "=", createRuleCall(PR_SpecificationCS)),
-							createKeyword(")"))))),
-					createKeyword(":"),
-					createAssignment("ownedSpecification", "=", createRuleCall(PR_SpecificationCS))));
 			PR_ContextDeclCS.setAlternatives(
 				createAlternatives(
 					createRuleCall(PR_PropertyContextDeclCS),
@@ -237,24 +230,14 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword(":"),
 					setCardinality("?", createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS))),
 					setCardinality("*", createAlternatives(
-						createGroup(
-							createKeyword("pre"),
-							createAssignment("ownedPreconditions", "+=", createRuleCall(PR_ConstraintCS))),
-						createGroup(
-							createKeyword("post"),
-							createAssignment("ownedPostconditions", "+=", createRuleCall(PR_ConstraintCS))),
-						createGroup(
-							createKeyword("body"),
-							setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-							createKeyword(":"),
-							createAssignment("ownedBodies", "+=", createRuleCall(PR_SpecificationCS)))))));
+						createAssignment("ownedPreconditions", "+=", createRuleCall(PR_preConstraintCS)),
+						createAssignment("ownedPostconditions", "+=", createRuleCall(PR_postConstraintCS)),
+						createAssignment("ownedBodies", "+=", createRuleCall(PR_bodySpecificationCS))))));
 			PR_PackageDeclarationCS.setAlternatives(
 				createGroup(
 					createKeyword("package"),
 					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
-					setCardinality("*", createGroup(
-						createKeyword("inv"),
-						createAssignment("ownedInvariants", "+=", createRuleCall(PR_ConstraintCS)))),
+					setCardinality("*", createAssignment("ownedInvariants", "+=", createRuleCall(PR_invConstraintCS))),
 					setCardinality("*", createAssignment("ownedContexts", "+=", createRuleCall(PR_ContextDeclCS))),
 					createKeyword("endpackage")));
 			PR_ParameterCS.setAlternatives(
@@ -282,17 +265,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS)),
-					setCardinality("*", createAlternatives(
-						createGroup(
-							createKeyword("derive"),
-							setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-							createKeyword(":"),
-							createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_SpecificationCS))),
-						createGroup(
-							createKeyword("init"),
-							setCardinality("?", createRuleCall(PR_UnrestrictedName)),
-							createKeyword(":"),
-							createAssignment("ownedDefaultExpressions", "+=", createRuleCall(PR_SpecificationCS)))))));
+					setCardinality("*", createAssignment("ownedDefaultExpressions", "+=", createAlternatives(
+						createRuleCall(PR_deriveSpecificationCS),
+						createRuleCall(PR_initSpecificationCS))))));
 			PR_SpecificationCS.setAlternatives(
 				createAlternatives(
 					createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
@@ -326,6 +301,63 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("include"),
 					createKeyword("library")));
 			addAnnotation(PR_UnrestrictedName, "Override");
+			PR_bodySpecificationCS.setAlternatives(
+				createGroup(
+					createKeyword("body"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
+			PR_deriveSpecificationCS.setAlternatives(
+				createGroup(
+					createKeyword("derive"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
+			PR_initSpecificationCS.setAlternatives(
+				createGroup(
+					createKeyword("init"),
+					setCardinality("?", createRuleCall(PR_UnrestrictedName)),
+					createKeyword(":"),
+					createAlternatives(
+						createAssignment("ownedExpression", "=", createRuleCall(_EssentialOCL.PR_ExpCS)),
+						createAssignment("exprString", "=", createRuleCall(TR_UNQUOTED_STRING)))));
+			PR_invConstraintCS.setAlternatives(
+				createGroup(
+					createKeyword("inv"),
+					setCardinality("?", createGroup(
+						createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
+						setCardinality("?", createGroup(
+							createKeyword("("),
+							createAssignment("ownedMessageSpecification", "=", createRuleCall(PR_SpecificationCS)),
+							createKeyword(")"))))),
+					createKeyword(":"),
+					createAssignment("ownedSpecification", "=", createRuleCall(PR_SpecificationCS))));
+			PR_postConstraintCS.setAlternatives(
+				createGroup(
+					createKeyword("post"),
+					setCardinality("?", createGroup(
+						createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
+						setCardinality("?", createGroup(
+							createKeyword("("),
+							createAssignment("ownedMessageSpecification", "=", createRuleCall(PR_SpecificationCS)),
+							createKeyword(")"))))),
+					createKeyword(":"),
+					createAssignment("ownedSpecification", "=", createRuleCall(PR_SpecificationCS))));
+			PR_preConstraintCS.setAlternatives(
+				createGroup(
+					createKeyword("pre"),
+					setCardinality("?", createGroup(
+						createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
+						setCardinality("?", createGroup(
+							createKeyword("("),
+							createAssignment("ownedMessageSpecification", "=", createRuleCall(PR_SpecificationCS)),
+							createKeyword(")"))))),
+					createKeyword(":"),
+					createAssignment("ownedSpecification", "=", createRuleCall(PR_SpecificationCS))));
 		}
 
 		private static @NonNull Grammar initGrammar() {
@@ -346,7 +378,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				rules.add(TR_UNQUOTED_STRING);
 				rules.add(PR_CompleteOCLNavigationOperatorName);
 				rules.add(PR_ClassifierContextDeclCS);
-				rules.add(PR_ConstraintCS);
+				rules.add(PR_invConstraintCS);
+				rules.add(PR_preConstraintCS);
+				rules.add(PR_postConstraintCS);
 				rules.add(PR_ContextDeclCS);
 				rules.add(PR_DefCS);
 				rules.add(PR_DefOperationCS);
@@ -358,6 +392,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				rules.add(PR_ParameterCS);
 				rules.add(PR_PropertyContextDeclCS);
 				rules.add(PR_SpecificationCS);
+				rules.add(PR_bodySpecificationCS);
+				rules.add(PR_deriveSpecificationCS);
+				rules.add(PR_initSpecificationCS);
 				rules.add(PR_TemplateSignatureCS);
 				rules.add(PR_TypedRefCS);
 				rules.add(PR_UnrestrictedName);
