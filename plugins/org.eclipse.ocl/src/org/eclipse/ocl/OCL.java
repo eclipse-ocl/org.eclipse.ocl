@@ -153,7 +153,7 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 * @param envFactory
 	 *            an environment factory
 	 * @return the OCL fa&ccedil;ade
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> envFactory) {
@@ -174,7 +174,7 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 * @param env
 	 *            the root environment
 	 * @return the OCL fa&ccedil;ade
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env) {
@@ -199,7 +199,7 @@ public class OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
 	 * @param resource
 	 *            a resource in which the root environment is persisted
 	 * @return the OCL fa&ccedil;ade
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	public static <PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> OCL<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> newInstanceAbstract(
 			EnvironmentFactory<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> envFactory,

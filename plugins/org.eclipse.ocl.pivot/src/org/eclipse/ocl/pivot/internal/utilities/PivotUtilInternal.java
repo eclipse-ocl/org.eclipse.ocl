@@ -98,7 +98,7 @@ public class PivotUtilInternal //extends PivotUtil
 	 * If DEBUG_DEPRECATIONS is set active debugDeprecation() returns false causing debugged deprecations
 	 * to fail their assertions.
 	 *
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
 
@@ -123,7 +123,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);

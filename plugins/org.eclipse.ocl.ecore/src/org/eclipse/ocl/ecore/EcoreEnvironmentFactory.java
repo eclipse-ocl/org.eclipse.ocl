@@ -201,7 +201,7 @@ public class EcoreEnvironmentFactory
 	}
 
 	/**
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	@Override
 	public OCL createOCL() {
@@ -209,7 +209,7 @@ public class EcoreEnvironmentFactory
 	}
 
 	/**
-	 * @since 3.22
+	 * @since 3.23
 	 */
 	@Override
 	public OCL createOCL(Resource resource) {

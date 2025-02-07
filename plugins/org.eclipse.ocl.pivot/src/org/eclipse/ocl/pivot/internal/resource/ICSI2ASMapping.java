@@ -28,7 +28,7 @@ public interface ICSI2ASMapping
 	void dispose();
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	default @Nullable EObject getCSElement(@NonNull PivotObject asElement) {
 		return null;

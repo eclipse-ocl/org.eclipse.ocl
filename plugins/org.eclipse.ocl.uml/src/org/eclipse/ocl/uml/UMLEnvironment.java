@@ -802,7 +802,7 @@ public class UMLEnvironment
     }
 
 	/**
-	 * @since 5.22
+	 * @since 5.23
 	 */
 	@Override
 	public OCL createOCL() {
@@ -810,7 +810,7 @@ public class UMLEnvironment
 	}
 
 	/**
-	 * @since 5.22
+	 * @since 5.23
 	 */
 	@Override
 	public ToStringVisitor createToStringVisitor(
