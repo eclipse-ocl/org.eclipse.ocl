@@ -333,5 +333,4 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitLetVariable(this);
 	}
-
 } //LetVariableImpl

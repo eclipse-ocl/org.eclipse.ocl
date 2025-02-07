@@ -154,5 +154,4 @@ implements CollectionLiteralPart {
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCollectionLiteralPart(this);
 	}
-
 } //CollectionLiteralPartImpl

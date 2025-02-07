@@ -11,12 +11,8 @@
 
 package org.eclipse.ocl.xtext.essentialocl;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScoping;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLASResourceFactory;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;

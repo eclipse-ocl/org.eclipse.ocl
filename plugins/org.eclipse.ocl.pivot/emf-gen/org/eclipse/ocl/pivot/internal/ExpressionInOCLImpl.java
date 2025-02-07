@@ -543,7 +543,7 @@ public class ExpressionInOCLImpl
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.23
 	 */
 	@Override
 	public void preUnload() {

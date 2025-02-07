@@ -73,5 +73,4 @@ public class TopLevelCSImpl extends RootPackageCSImpl implements TopLevelCS
 			return super.accept(visitor);
 		}
 	}
-
 } //TopLevelCSImpl
