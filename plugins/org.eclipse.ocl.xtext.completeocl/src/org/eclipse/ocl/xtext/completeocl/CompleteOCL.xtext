@@ -39,7 +39,7 @@ CompleteOCLNavigationOperatorName:
 ClassifierContextDeclCS returns ClassifierContextDeclCS:
 	'context' (ownedSignature=TemplateSignatureCS)? (selfName=UnrestrictedName)?
 	ownedPathName=UnreservedPathNameCS
-	(('inv' ownedInvariants+=ConstraintCS)
+	(ownedInvariants+=invConstraintCS
 	| ownedDefinitions+=DefCS
 	)+;
 
@@ -52,8 +52,12 @@ ClassifierContextDeclCS returns ClassifierContextDeclCS:
  * additionally have a name which may be followed by a parenthesized expression defining an OCL
  * expression to be evaluated to provide an error message.
  */
-ConstraintCS returns base::ConstraintCS:
-	(name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+invConstraintCS returns base::ConstraintCS:
+	'inv' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+preConstraintCS returns base::ConstraintCS:
+	'pre' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+postConstraintCS returns base::ConstraintCS:
+	'post' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
 
 /*
  * A Context declaration can be a Classifier, Operation of Property Context declaration.
@@ -123,13 +127,13 @@ ImportCS returns base::ImportCS:
 OperationContextDeclCS returns OperationContextDeclCS:
 	'context' (ownedSignature=TemplateSignatureCS)? ownedPathName=UnreservedPathNameCS
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')' ':' (ownedType=TypeExpCS)?
-	(('pre' ownedPreconditions+=ConstraintCS)
-	| ('post' ownedPostconditions+=ConstraintCS)
-	| ('body' UnrestrictedName? ':' ownedBodies+=SpecificationCS)
+	(ownedPreconditions+=preConstraintCS
+	| ownedPostconditions+=postConstraintCS
+	| ownedBodies+=bodySpecificationCS
 	)*;
 
 PackageDeclarationCS returns PackageDeclarationCS:
-	'package' ownedPathName=UnreservedPathNameCS ('inv' ownedInvariants+=ConstraintCS)* (ownedContexts+=ContextDeclCS)* 'endpackage';
+	'package' ownedPathName=UnreservedPathNameCS ownedInvariants+=invConstraintCS* (ownedContexts+=ContextDeclCS)* 'endpackage';
 
 ParameterCS returns base::ParameterCS:
 	(name=UnrestrictedName ':')? ownedType=TypeExpCS;
@@ -159,12 +163,16 @@ ParameterCS returns base::ParameterCS:
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:
 	'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
-	(('derive' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
-	| ('init' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
-	)*;
+	ownedDefaultExpressions+=(deriveSpecificationCS|initSpecificationCS)*;
 
 SpecificationCS returns essentialocl::ExpSpecificationCS:
 	ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+bodySpecificationCS returns essentialocl::ExpSpecificationCS:
+	'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
+deriveSpecificationCS returns essentialocl::ExpSpecificationCS:
+	'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
+initSpecificationCS returns essentialocl::ExpSpecificationCS:
+	'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 
 //---------------------------------------------------------------------------------
 //	Base overrides
