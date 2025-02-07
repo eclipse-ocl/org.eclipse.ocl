@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
-import org.eclipse.ocl.examples.xtext.tests.ClasspathURIHandler;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -78,6 +78,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 	public Resource doLoad_Idioms(@NonNull OCL ocl, URI inputURI) throws IOException {
+		((PivotMetamodelManager)ocl.getMetamodelManager()).addClassLoader(getClass().getClassLoader());	// Ensure that the missing classpath: support is worked around - Xtext Bug 446073
 		ResourceSet resourceSet = doReformatInit(ocl);
 		String oldText = doReformatReference(resourceSet, inputURI);
 		String extension = inputURI.fileExtension();
@@ -190,7 +191,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	protected void doReformatText(@NonNull DeclarativeFormatter declarativeFormatter, @NonNull ICompositeNode rootNode, int selectOffset, int selectLength, String referenceText) {
 		String text = rootNode.getText();
 		int selectEnd = selectOffset+selectLength;
-		String unformattedText = text.substring(selectOffset, selectEnd);
+	//	String unformattedText = text.substring(selectOffset, selectEnd);
 		IFormattedRegion region = declarativeFormatter.format(rootNode, selectOffset, selectLength);
 		String formattedText = text.substring(0, selectOffset) + region.getFormattedText() + text.substring(selectEnd);
 		assertEquals(referenceText, formattedText);
@@ -278,7 +279,6 @@ public class IdiomsLoadTests extends XtextTestCase
 			return;
 		}
 		TestOCL ocl = createOCL();
-		ClasspathURIHandler.init(ocl.getResourceSet());
 		URI idiomsURI = getTestFileURI("EssentialOCL.idioms", EssentialOCLStandaloneSetup.class.getResourceAsStream("EssentialOCL.idioms"));
 		doLoad_Idioms(ocl, idiomsURI);
 		ocl.dispose();
@@ -391,7 +391,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms1() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -421,13 +421,13 @@ public class IdiomsLoadTests extends XtextTestCase
 	//	String indentedKey2 = "ES {\n\tat \"{\"";
 	//	String reformattedKey2 = "\t at \"{\"";
 		int i2 = -indentedWindow-1;
-		System.out.println(i2 + " " + (indentedOffset+i2));
+	//	System.out.println(i2 + " " + (indentedOffset+i2));
 		doReformatText(declarativeFormatter, rootNode, indentedOffset+i2, indentedWindow, replacedText);//.replace(indentedKey2, reformattedKey2));
 
 		ocl.dispose();
 	}
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms2() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -450,7 +450,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void zztestIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
+	public void testIdiomsLoad_Reformat_Idioms_idioms3() throws IOException, InterruptedException {
 		DeclarativeFormatter declarativeFormatter = IdiomsStandaloneSetup.getInjector().getInstance(DeclarativeFormatter.class);
 		TestOCL ocl = createOCL();
 		URI idiomsURI = getTestFileURI("Idioms.idioms", IdiomsStandaloneSetup.class.getResourceAsStream("Idioms.idioms"));
@@ -465,7 +465,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		int keyOffset = referenceText.indexOf(key);
 		assert (100 < keyOffset) && ((keyOffset + 100) < referenceText.length());
 		int i = -2;
-			System.out.println(i);
+//			System.out.println(i);
 			doReformatText(declarativeFormatter, rootNode, keyOffset + i, 100, referenceText);
 
 		ocl.dispose();
