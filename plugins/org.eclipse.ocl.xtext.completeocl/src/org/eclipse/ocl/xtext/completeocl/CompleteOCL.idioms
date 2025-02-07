@@ -10,3 +10,69 @@
  *******************************************************************************/
 model org.eclipse.ocl.xtext.completeocl.CompleteOCL
 with "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.idioms"
+import "platform:/resource/org.eclipse.ocl.xtext.completeocl/model/CompleteOCLCS.ecore#/" as completeoclcs
+grammar "platform:/resource/org.eclipse.ocl.xtext.completeocl/src/org/eclipse/ocl/xtext/completeocl/CompleteOCL.xtext" as completeoclx
+
+idiom AT_PRE {
+	at "@" do soft-space value no-space;
+	at "pre" do no-space value soft-space;
+}
+
+idiom IMPORTS_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedImports do half-new-line value half-new-line;
+
+idiom CLASSIFIER_SPACING1 for completeoclcs::ClassifierContextDeclCS at "context" do soft-new-line value soft-space;
+
+idiom invCONSTRAINT_SPACING {
+	at rule completeoclx::invConstraintCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom postCONSTRAINT_SPACING1 in "postConstraintCS" {
+	at rule completeoclx::postConstraintCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom postCONSTRAINT_SPACING2 in "postConstraintCS" at "=" do soft-space value string " =postConstraintCS " printable soft-space;
+
+idiom preCONSTRAINT_SPACING1 in "preConstraintCS" {
+	at rule completeoclx::preConstraintCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom preCONSTRAINT_SPACING2 in "preConstraintCS" at "=" do soft-space value soft-space;
+
+idiom DEF_OPERATION_SPACING for completeoclcs::DefOperationCS {
+	at rule completeoclx::DefOperationCS do soft-new-line push value pop pop;
+	at "=" do soft-space value soft-new-line push;
+}
+
+idiom DEF_PROPERTY_SPACING1 for completeoclcs::DefPropertyCS {
+	at rule completeoclx::DefPropertyCS do soft-new-line push value pop pop;
+	at "=" do soft-space value soft-new-line push;
+}
+
+idiom BODY_SPECIFICATION_SPACING in "bodySpecificationCS" {
+	at rule completeoclx::bodySpecificationCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom DERIVE_SPECIFICATION_SPACING in "deriveSpecificationCS" {
+	at rule completeoclx::deriveSpecificationCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom INIT_SPECIFICATION_SPACING in "initSpecificationCS" {
+	at rule completeoclx::initSpecificationCS do soft-new-line push value pop pop;
+	at ":" do soft-space value soft-new-line push;
+}
+
+idiom OPERATION_SPACING for completeoclcs::OperationContextDeclCS at "context" do soft-new-line value soft-space;
+
+idiom PACKAGE_SPACING for completeoclcs::PackageDeclarationCS {
+	at "package" do half-new-line value push;
+	at "endpackage" do pop soft-new-line value soft-new-line half-new-line;
+}
+
+idiom PACKAGES_SPACING at assignment completeoclcs::CompleteOCLDocumentCS::ownedPackages do half-new-line soft-new-line value half-new-line;
+
+idiom PROPERTY_SPACING for completeoclcs::PropertyContextDeclCS at "context" do soft-new-line value soft-space;
