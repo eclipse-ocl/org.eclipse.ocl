@@ -55,9 +55,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -768,10 +768,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		protected void installAliases(@NonNull Resource asResource) {
-			AliasAdapter umlAdapter = AliasAdapter.findAdapter(umlResource);
+			MonikerAliasAdapter umlAdapter = MonikerAliasAdapter.findAdapter(umlResource);
 			if (umlAdapter != null) {
 				Map<EObject, String> umlAliasMap = umlAdapter.getAliasMap();
-				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+				MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
 				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 				for (EObject eObject : umlAliasMap.keySet()) {
 					String alias = umlAliasMap.get(eObject);

@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
+import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -258,7 +258,7 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 
 	@Override
 	public Object caseEPackage(EPackage eElement) {
-		String alias = AliasAdapter.getAlias(eElement);
+		String alias = Ecore2Moniker.MonikerAliasAdapter.getAlias(eElement);
 		if (alias != null) {
 			append(alias);
 			return true;
