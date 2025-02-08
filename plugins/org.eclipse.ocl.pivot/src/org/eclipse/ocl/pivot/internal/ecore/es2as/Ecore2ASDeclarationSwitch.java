@@ -89,9 +89,9 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -482,7 +482,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		if (!(ePackage.eContainer() instanceof EAnnotation)) {
 			String moniker = AS2Moniker.toString(pivotElement);
-			AliasAdapter adapter = AliasAdapter.getAdapter(ePackage.eResource());
+			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ePackage.eResource());
 			if (adapter != null) {
 				adapter.getAliasMap().put(ePackage, moniker);
 			}
