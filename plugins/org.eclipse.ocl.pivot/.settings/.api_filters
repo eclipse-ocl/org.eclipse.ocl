@@ -60,6 +60,26 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AliasAdapter.java" type="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter"/>
+                <message_argument value="findAdapter(Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter"/>
+                <message_argument value="getAdapter(Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter.Creator"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
         <filter id="404000815">
             <message_arguments>
