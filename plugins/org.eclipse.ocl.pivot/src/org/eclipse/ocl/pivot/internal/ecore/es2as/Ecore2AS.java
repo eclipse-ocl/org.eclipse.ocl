@@ -57,9 +57,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
+import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -178,10 +178,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 
-		AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
+		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
 			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			AliasAdapter pivotAdapter = AliasAdapter.getAdapter(ecoreASResource);
+			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(ecoreASResource);
 			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 			for (EObject eObject : ecoreAliasMap.keySet()) {
 				String alias = ecoreAliasMap.get(eObject);
@@ -855,10 +855,10 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @since 1.17
 	 */
 	protected void resolveAliases(@NonNull Resource asResource) {
-		AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
+		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
 			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
 			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
 			for (EObject eObject : ecoreAliasMap.keySet()) {
 				String alias = ecoreAliasMap.get(eObject);
