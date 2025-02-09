@@ -656,7 +656,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template,  "Level2a::L2a_size", objectLabel));
 			objectLabel = LabelUtil.getLabel(testInstance2);
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3 ok", objectLabel));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a_text", "Level3::ok", objectLabel));
 		}
 		finally {
 			ocl0.dispose();
@@ -686,9 +686,9 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
 			assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
-				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3")));
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3")));
 			//
 			CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
 				@Override
@@ -702,10 +702,10 @@ public class ValidateTests extends AbstractValidateTests
 			helper.installPackages();
 
 			assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
-				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
-				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2")));
+				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
+				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library::lib::Book::b2")));
 			//		disposeResourceSet(resourceSet);
 			helper.dispose();
 		}
