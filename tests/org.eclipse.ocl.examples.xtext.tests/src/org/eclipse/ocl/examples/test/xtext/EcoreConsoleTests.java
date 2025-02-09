@@ -78,7 +78,7 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		@SuppressWarnings("unchecked")
 		EObject aLoan = ((List<EObject>) xmiLibrary.eGet(ecoreLoans)).get(0);
 		//
-		assertConsoleResult(consolePage, xmiLibrary, "books->sortedBy(name)", "Library lib::Book b1\nLibrary lib::Book b2\n");
+		assertConsoleResult(consolePage, xmiLibrary, "books->sortedBy(name)", "Library::lib::Book::b1\nLibrary::lib::Book::b2\n");
 		assertConsoleResult(consolePage, xmiLibrary, "isAvailable()", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Operation '::isAvailable()'\n</error>");
 		assertConsoleResult(consolePage, b2Book, "isAvailable()", "false\n");
 		assertConsoleResult(consolePage, b1Book, "isAvailable()", "true\n");
