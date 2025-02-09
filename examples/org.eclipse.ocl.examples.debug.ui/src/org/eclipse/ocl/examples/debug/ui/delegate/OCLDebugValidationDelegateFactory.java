@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -35,10 +35,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactory
 		implements ValidationDelegate.Factory, ValidationDelegate
 {
-	public OCLDebugValidationDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+	public OCLDebugValidationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
 		EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
@@ -54,6 +55,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate;
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, EOperation invariant, String expression) {
 		if (eClass == null) {
@@ -66,6 +68,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate.validate(eClass, eObject, context, invariant, expression);
 	}
 
+	@Override
 	public boolean validate(EClass eClass, EObject eObject,
 			Map<Object, Object> context, String constraint, String expression) {
 		if (eClass == null) {
@@ -78,6 +81,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate.validate(eClass, eObject, context, constraint, expression);
 	}
 
+	@Override
 	public boolean validate(EDataType eDataType, Object value,
 			Map<Object, Object> context, String constraint, String expression) {
 		if (eDataType == null) {
@@ -90,6 +94,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate.validate(eDataType, value, context, constraint, expression);
 	}
 
+	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context,
 			@NonNull EOperation invariant, String expression, int severity, String source, int code) {
@@ -100,6 +105,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate.validate(eClass, eObject, diagnostics, context, invariant, expression, severity, source, code);
 	}
 
+	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context,
 			@NonNull String constraint, String expression, int severity, String source, int code) {
@@ -110,6 +116,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 		return validationDelegate.validate(eClass, eObject, diagnostics, context, constraint, expression, severity, source, code);
 	}
 
+	@Override
 	public boolean validate(@NonNull EDataType eDataType, @NonNull Object value,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context,
 			@NonNull String constraint, String expression, int severity, String source, int code) {
@@ -128,9 +135,9 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 	public static class Global extends OCLDebugValidationDelegateFactory
 	{
 		public static final @NonNull Global INSTANCE = new Global();
-		
+
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override
@@ -144,6 +151,6 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 				}
 			}
 			return super.createValidationDelegate(classifier);
-		}	
+		}
 	}
 }

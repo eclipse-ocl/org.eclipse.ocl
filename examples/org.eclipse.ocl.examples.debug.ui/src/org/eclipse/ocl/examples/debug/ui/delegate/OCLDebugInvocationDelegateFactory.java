@@ -25,10 +25,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		implements EOperation.Internal.InvocationDelegate.Factory
 {
-	public OCLDebugInvocationDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+	public OCLDebugInvocationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public EOperation.Internal.@Nullable InvocationDelegate createInvocationDelegate(EOperation operation) {
 		if (operation == null) {
 			return null;
@@ -46,7 +47,7 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 	public static class Global extends OCLDebugInvocationDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override

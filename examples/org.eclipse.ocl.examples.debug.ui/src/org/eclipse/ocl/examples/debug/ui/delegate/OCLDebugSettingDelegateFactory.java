@@ -25,10 +25,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 		implements EStructuralFeature.Internal.SettingDelegate.Factory
 {
-	public OCLDebugSettingDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+	public OCLDebugSettingDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public EStructuralFeature.Internal.@Nullable SettingDelegate createSettingDelegate(EStructuralFeature structuralFeature) {
 		if (structuralFeature == null) {
 			return null;
@@ -49,7 +50,7 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLDebugSettingDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override

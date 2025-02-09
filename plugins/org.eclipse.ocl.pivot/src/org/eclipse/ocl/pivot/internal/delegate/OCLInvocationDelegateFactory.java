@@ -19,18 +19,37 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL operation-invocation delegates.
+ * @since 1.23
  */
 public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		implements EOperation.Internal.InvocationDelegate.Factory
 {
+	@Deprecated
 	public OCLInvocationDelegateFactory(@NonNull String delegateURI) {
 		super(delegateURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public OCLInvocationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
 	@Override
 	public EOperation.Internal.@Nullable InvocationDelegate createInvocationDelegate(EOperation operation) {
 		if (operation == null) {
 			return null;
+		}
+		if (isGlobal) {
+			Class<EOperation.Internal.InvocationDelegate.Factory.@NonNull Registry> castClass = EOperation.Internal.InvocationDelegate.Factory.Registry.class;
+			EOperation.Internal.InvocationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(operation, castClass, null);
+			if (localRegistry != null) {
+				EOperation.Internal.InvocationDelegate.Factory factory = localRegistry.getFactory(delegateURI);
+				if (factory != null) {
+					return factory.createInvocationDelegate(operation);
+				}
+			}
 		}
 		EPackage ePackage = ClassUtil.nonNullEMF(operation.getEContainingClass().getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
@@ -45,23 +64,7 @@ public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLInvocationDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		}
-
-		@Override
-		public EOperation.Internal.@Nullable InvocationDelegate createInvocationDelegate(EOperation operation) {
-			if (operation == null) {
-				return null;
-			}
-			Class<EOperation.Internal.InvocationDelegate.Factory.@NonNull Registry> castClass = EOperation.Internal.InvocationDelegate.Factory.Registry.class;
-			EOperation.Internal.InvocationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(operation, castClass, null);
-			if (localRegistry != null) {
-				EOperation.Internal.InvocationDelegate.Factory factory = localRegistry.getFactory(delegateURI);
-				if (factory != null) {
-					return factory.createInvocationDelegate(operation);
-				}
-			}
-			return super.createInvocationDelegate(operation);
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
 		}	
 	}
 }

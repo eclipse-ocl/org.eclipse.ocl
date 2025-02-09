@@ -41,17 +41,36 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * 		target,                     // the context instance
  * 		map-of-name-to-object);     // the external variable bindings
  * </pre>
+ * @since 1.23
  */
 public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
-		implements QueryDelegate.Factory {
+		implements QueryDelegate.Factory
+{
+	@Deprecated
 	public OCLQueryDelegateFactory(@NonNull String delegateURI) {
 		super(delegateURI);
+	}
+	/**
+	 * @since 1.23
+	 */
+	public OCLQueryDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
 	@Override
 	public QueryDelegate createQueryDelegate(EClassifier context, Map<String, EClassifier> parameters, String expression) {
 		if ((context == null) || (expression == null)) {
 			return null;
+		}
+		if (isGlobal) {
+			Class<QueryDelegate.Factory.@NonNull Registry> castClass = QueryDelegate.Factory.Registry.class;
+			QueryDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(context, castClass, null);
+			if (localRegistry != null) {
+				QueryDelegate.Factory factory = localRegistry.getFactory(delegateURI);
+				if (factory != null) {
+					return factory.createQueryDelegate(context, parameters, expression);
+				}
+			}
 		}
 		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.nonNullEMF(context.getEPackage()));
 		if (delegateDomain == null) {
@@ -68,24 +87,7 @@ public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLQueryDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		}
-
-		@Override
-		public QueryDelegate createQueryDelegate(EClassifier context,
-				Map<String, EClassifier> parameters, String expression) {
-			if ((context == null) || (expression == null)) {
-				return null;
-			}
-			Class<QueryDelegate.Factory.@NonNull Registry> castClass = QueryDelegate.Factory.Registry.class;
-			QueryDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(context, castClass, null);
-			if (localRegistry != null) {
-				QueryDelegate.Factory factory = localRegistry.getFactory(delegateURI);
-				if (factory != null) {
-					return factory.createQueryDelegate(context, parameters, expression);
-				}
-			}
-			return super.createQueryDelegate(context, parameters, expression);
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
 		}	
 	}
 }

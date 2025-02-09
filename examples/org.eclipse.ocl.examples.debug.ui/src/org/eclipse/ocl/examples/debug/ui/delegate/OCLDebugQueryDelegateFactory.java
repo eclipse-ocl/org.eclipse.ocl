@@ -43,12 +43,13 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * 		map-of-name-to-object);     // the external variable bindings
  * </pre>
  */
-public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory
-		implements QueryDelegate.Factory {
-	public OCLDebugQueryDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory implements QueryDelegate.Factory
+{
+	public OCLDebugQueryDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public QueryDelegate createQueryDelegate(EClassifier context, Map<String, EClassifier> parameters, String expression) {
 		if ((context == null) || (expression == null)) {
 			return null;
@@ -68,7 +69,7 @@ public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLDebugQueryDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override

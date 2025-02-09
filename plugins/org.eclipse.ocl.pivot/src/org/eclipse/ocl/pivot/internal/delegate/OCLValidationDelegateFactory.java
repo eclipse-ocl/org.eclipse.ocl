@@ -22,22 +22,40 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegate.CompleteOCLValidationDelegate;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL derived-classifier validation delegates.
+ * @since 1.23
  */
 public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		implements ValidationDelegate.Factory, ValidationDelegate
 {
+	@Deprecated
 	public OCLValidationDelegateFactory(@NonNull String delegateURI) {
 		super(delegateURI);
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public OCLValidationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
+	}
+
 	@Override
 	public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
+		if (isGlobal) {
+			Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
+			ValidationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(classifier, castClass, null);
+			if (localRegistry != null) {
+				ValidationDelegate.Factory factory = localRegistry.getValidationDelegate(delegateURI);
+				if (factory != null) {
+					return factory.createValidationDelegate(classifier);
+				}
+			}
+		}
 		EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		if (delegateDomain == null) {
@@ -73,6 +91,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		}
 		ValidationDelegate validationDelegate = getValidationDelegate(eClass);
 		if (validationDelegate == null) {
+			validationDelegate = getValidationDelegate(eClass);			// XXX debugging
 			throw new IllegalStateException("No '" + delegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 		}
 		return validationDelegate.validate(eClass, eObject, context, constraint, expression);
@@ -125,60 +144,35 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
+	 * The Global variant of the Factory delegates OCL_DELEGATE_URI_PIVOT to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
 	 * by the DelegateResourceSetAdapter.
+	 * @since 1.23
 	 */
 	public static class Global extends OCLValidationDelegateFactory
 	{
 		public static final @NonNull Global INSTANCE = new Global();
 
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		}
-
-		@Override
-		public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
-			Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
-			ValidationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(classifier, castClass, null);
-			if (localRegistry != null) {
-				ValidationDelegate.Factory factory = localRegistry.getValidationDelegate(delegateURI);
-				if (factory != null) {
-					return factory.createValidationDelegate(classifier);
-				}
-			}
-			return super.createValidationDelegate(classifier);
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
 		}
 	}
 
 	/**
+	 * The Dynamic variant of the Factory delegates OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL to a local ResourceSet factory if one
+	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
+	 * by the DelegateResourceSetAdapter.
+	 *
 	 * @since 1.23
 	 */
 	public static class CompleteOCL extends OCLValidationDelegateFactory
 	{
-		public static final @NonNull CompleteOCL INSTANCE = new CompleteOCL();
-
 		public CompleteOCL() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL);
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true);
 		}
 
-		@Override
-		public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
-			Class<ValidationDelegate.Factory.@NonNull Registry> castClass = ValidationDelegate.Factory.Registry.class;
-			ValidationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(classifier, castClass, null);
-			if (localRegistry != null) {
-				ValidationDelegate.Factory factory = localRegistry.getValidationDelegate(delegateURI);
-				if (factory != null) {
-					return factory.createValidationDelegate(classifier);
-				}
-			}
-		//	return super.createValidationDelegate(classifier);
-			EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
-			OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
-			if (delegateDomain == null) {
-				return null;
-			}
-			return new CompleteOCLValidationDelegate(delegateDomain, classifier);
+		public CompleteOCL(@NonNull String delegateURI, boolean isGlobal) {
+			super(delegateURI, isGlobal);
 		}
 	}
 }
