@@ -16,6 +16,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/AbstractOCLDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.AbstractOCLDelegateFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.AbstractOCLDelegateFactory"/>
+                <message_argument value="isGlobal"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
         <filter id="404000815">
             <message_arguments>

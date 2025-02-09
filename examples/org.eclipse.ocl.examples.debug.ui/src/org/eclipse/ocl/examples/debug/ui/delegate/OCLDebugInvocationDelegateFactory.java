@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -25,10 +25,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		implements EOperation.Internal.InvocationDelegate.Factory
 {
-	public OCLDebugInvocationDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+	public OCLDebugInvocationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public EOperation.Internal.@Nullable InvocationDelegate createInvocationDelegate(EOperation operation) {
 		if (operation == null) {
 			return null;
@@ -37,7 +38,7 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		return delegateDomain != null ? new OCLDebugInvocationDelegate(delegateDomain, operation) : null;
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
@@ -46,7 +47,7 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 	public static class Global extends OCLDebugInvocationDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override
@@ -63,6 +64,6 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 				}
 			}
 			return super.createInvocationDelegate(operation);
-		}	
+		}
 	}
 }

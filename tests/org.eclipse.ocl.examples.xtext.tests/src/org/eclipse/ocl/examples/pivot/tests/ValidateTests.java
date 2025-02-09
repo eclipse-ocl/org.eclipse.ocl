@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
@@ -147,7 +146,7 @@ public class ValidateTests extends AbstractValidateTests
 
 		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
-			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, new OCLValidationDelegateFactory.CompleteOCL());
+// XXX			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, new OCLValidationDelegateFactory.CompleteOCL());
 		}
 
 
