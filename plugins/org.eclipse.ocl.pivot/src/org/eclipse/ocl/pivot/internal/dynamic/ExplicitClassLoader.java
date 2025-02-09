@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.dynamic;
+package org.eclipse.ocl.pivot.internal.dynamic;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,6 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * FIXME This class confuses two cases.
  * Reloading neds to verride loadClass as this class does.
  * Additional path loading should use findClass to preserve the parent loader.
+ * @since 1.23
  */
 public class ExplicitClassLoader extends ClassLoader
 {

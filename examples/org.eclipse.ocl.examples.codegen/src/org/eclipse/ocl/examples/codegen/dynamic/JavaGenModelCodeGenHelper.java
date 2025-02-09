@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.oclinjunit.JUnitCodeGenerator;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.dynamic.OCL2JavaFileObject;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
