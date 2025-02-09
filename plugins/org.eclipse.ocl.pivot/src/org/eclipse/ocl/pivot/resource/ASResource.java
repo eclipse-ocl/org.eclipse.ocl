@@ -114,6 +114,15 @@ public interface ASResource extends XMIResource
 	 int getXmiidVersion();
 
 	/**
+	 * Return true if this AS exists without a corresponding CS or ES.
+	 *
+	 * @since 1.23
+	 */
+	default boolean isASonly() {
+		return false;
+	}
+
+	/**
 	 * Return true if this Resource is a container for orphan model elements.
 	 *
 	 * @since 1.5
@@ -135,6 +144,14 @@ public interface ASResource extends XMIResource
 	 * @since 1.5
 	 */
 	void resetLUSSIDs();
+
+	/**
+	 * Specify that this AS exists without a corresponding CS or ES and so avoid invocation of preUnload()
+	 * and creation CS/ES proxies when unloading.
+	 *
+	 * @since 1.23
+	 */
+	default void setASonly(boolean isASonly) {}
 
 	/**
 	 * Enable or disable saving of this resource. Saving is normally disabled automatically for model content

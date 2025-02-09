@@ -43,6 +43,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.junit.Test;
 
 public class StandaloneExecutionTests extends StandaloneTestCase
@@ -354,6 +355,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"referredType=\"pivot:Class &_2;#pDcbe\"",
 			"referredType=\"pivot:Class &_2;#0kVqz\""},
 			new @NonNull String[] {"<errors>"});
+		((ASResource)standaloneApplication.getEnvironmentFactory().getResourceSet().getResources().get(0)).setASonly(true);
 		standaloneApplication.stop();
 	}
 
