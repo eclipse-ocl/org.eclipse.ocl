@@ -225,6 +225,9 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 					object = parent2.getValueOf(referredVariable);
 				}
 				else {
+					for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+						System.out.println(stackTraceElement.getClassName() + " " + stackTraceElement.getMethodName());
+					}
 					throw new InvalidValueException("Undefined Variable " + referredVariable);
 				}
 			}
