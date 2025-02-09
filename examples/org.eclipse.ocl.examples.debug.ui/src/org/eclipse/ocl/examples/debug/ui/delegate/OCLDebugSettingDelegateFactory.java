@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -25,10 +25,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 		implements EStructuralFeature.Internal.SettingDelegate.Factory
 {
-	public OCLDebugSettingDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
+	public OCLDebugSettingDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
+	@Override
 	public EStructuralFeature.Internal.@Nullable SettingDelegate createSettingDelegate(EStructuralFeature structuralFeature) {
 		if (structuralFeature == null) {
 			return null;
@@ -40,7 +41,7 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 		}
 		return new OCLDebugSettingDelegate(delegateDomain, structuralFeature);
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the EStructuralFeature.Internal.SettingDelegate.Factory.Registry
@@ -49,7 +50,7 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 	public static class Global extends OCLDebugSettingDelegateFactory
 	{
 		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_DEBUG);
+			super(PivotConstants.OCL_DELEGATE_URI_DEBUG, true);
 		}
 
 		@Override
@@ -66,6 +67,6 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 			return super.createSettingDelegate(structuralFeature);
-		}	
+		}
 	}
 }
