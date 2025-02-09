@@ -119,7 +119,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 			if (root instanceof Model) {
 				Model model = (Model)root;
 				if (model.getExternalURI() == null) {
-					model.setExternalURI(asResource.getURI().toString());
+					model.setExternalURI(asResource.getURI().trimFileExtension().toString());
 				}
 			}
 		}
