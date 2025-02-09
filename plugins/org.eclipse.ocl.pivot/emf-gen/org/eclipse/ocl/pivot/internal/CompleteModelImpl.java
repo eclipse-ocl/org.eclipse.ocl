@@ -13,12 +13,17 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -29,9 +34,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -71,6 +78,8 @@ import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
+import com.google.common.collect.Lists;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Model</b></em>'.
@@ -89,8 +98,29 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  *
  * @generated
  */
-public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
+public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, CompleteModelInternal
 {
+	/**
+	 * @since 1.23
+	 */
+	protected static final class ConstraintExecutabilityComparator implements Comparator<@NonNull Constraint>
+	{
+		public static final @NonNull ConstraintExecutabilityComparator INSTANCE = new ConstraintExecutabilityComparator();
+
+		@Override
+		public int compare(@NonNull Constraint o1, @NonNull Constraint o2) {
+			EObject e1 = o1.getESObject();
+			EObject e2 = o2.getESObject();
+			if ((e1 != null) && (e2 == null)) {
+				return 1;
+			}
+			if ((e1 == null) && (e2 != null)) {
+				return 1;
+			}
+			return 0;		// XXX $$complete-ocl$$ comparison
+		}
+	}
+
 	/**
 	 * The number of structural features of the '<em>Complete Model</em>' class.
 	 * <!-- begin-user-doc -->
@@ -529,6 +559,68 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull CompleteEnvironmentInternal getCompleteEnvironment() {
 		assert completeEnvironment != null;
 		return completeEnvironment;
+	}
+
+	/**
+	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
+	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constriant> rather than just a Constraint.
+	 * The multiples are most-executable first. Returns null for none.
+	 */
+	@Override
+	public @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) {
+		List<@NonNull Object> knownInvariantOrInvariants = null;
+		Iterable<@NonNull CompleteClass> allSuperCompleteClasses = environmentFactory.getMetamodelManager().getAllSuperCompleteClasses(asType);
+		for (CompleteClass superType : allSuperCompleteClasses) {
+			Map<@NonNull String, @NonNull Object> name2invariantOrInvariants = null;
+			List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = ClassUtil.nullFree(superType.getPartialClasses());
+			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : partialClasses) {
+				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
+				if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
+					for (@NonNull Constraint asInvariant : ClassUtil.nullFree(partialSuperType.getOwnedInvariants())) {
+						if (name2invariantOrInvariants == null) {
+							name2invariantOrInvariants = new HashMap<>();
+						}
+						String name = String.valueOf(asInvariant.getName());
+						Object invariantOrInvariants = name2invariantOrInvariants.get(name);
+						if (invariantOrInvariants == null) {
+							name2invariantOrInvariants.put(name, asInvariant);
+						}
+						else if (invariantOrInvariants instanceof Constraint) {
+							invariantOrInvariants = Lists.newArrayList((Constraint)invariantOrInvariants, asInvariant);
+							name2invariantOrInvariants.put(name, invariantOrInvariants);
+						}
+						else {
+							@SuppressWarnings("unchecked")
+							List<@NonNull Constraint> asInvariants = (List<@NonNull Constraint>)invariantOrInvariants;
+							asInvariants.add(asInvariant);
+						}
+					}
+				}
+			}
+			if (name2invariantOrInvariants != null) {
+				if (knownInvariantOrInvariants == null) {
+					knownInvariantOrInvariants = new ArrayList<>();
+				}
+				List<@NonNull String> names = new ArrayList<>(name2invariantOrInvariants.keySet());
+				if (names.size() > 1) {
+					Collections.sort(names);
+				}
+				for (@NonNull String name : names) {
+					Object invariantOrInvariants = name2invariantOrInvariants.get(name);
+					assert invariantOrInvariants != null;
+					if (invariantOrInvariants instanceof Constraint) {
+						knownInvariantOrInvariants.add(invariantOrInvariants);
+					}
+					else {
+						@SuppressWarnings("unchecked")
+						List<@NonNull Constraint> asInvariants = (List<@NonNull Constraint>)invariantOrInvariants;
+						Collections.sort(asInvariants, ConstraintExecutabilityComparator.INSTANCE);
+						knownInvariantOrInvariants.add(asInvariants);
+					}
+				}
+			}
+		}
+		return knownInvariantOrInvariants;
 	}
 
 	@Override
