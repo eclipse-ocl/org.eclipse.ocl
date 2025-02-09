@@ -43,6 +43,10 @@ public final class TestCaseLogger extends ConsoleAppender
 		@Override
 		public void append(LoggingEvent event) {
 			if (event.getLevel().isGreaterOrEqual(Level.INFO)) {
+				int length = s.length();
+				if ((length > 0) && (s.charAt(length-1) != '\n')) {
+					s.append("\n");
+				}
 				String renderedMessage = event.getRenderedMessage();
 				s.append(renderedMessage);
 			}
