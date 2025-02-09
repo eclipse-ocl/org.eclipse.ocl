@@ -174,7 +174,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		//
 		//		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		conversion.pivotModel = PivotUtil.createModel(ecoreASResource.getURI().toString());
+		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
 
