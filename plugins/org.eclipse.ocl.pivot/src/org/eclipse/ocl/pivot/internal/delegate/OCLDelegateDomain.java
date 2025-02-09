@@ -86,7 +86,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 		@Override
 		public ValidationDelegate getValidationDelegate(String uri) {
-			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(uri);				// XXX
+			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(uri);				// XXX
 			return OCLValidationDelegateFactory_INSTANCE;
 		}
 	}
