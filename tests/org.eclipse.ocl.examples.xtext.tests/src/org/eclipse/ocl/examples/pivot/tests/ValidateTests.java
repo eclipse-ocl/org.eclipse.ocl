@@ -120,7 +120,7 @@ public class ValidateTests extends AbstractValidateTests
 
 	public void zztestValidate_Simple_oclinecore() throws IOException, InterruptedException {
 		EPackage ecoreEPackage = EcorePackage.eINSTANCE;
-		EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, "key", "value");
+		EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, "key", "value");
 		//
 		//	Create model
 		//
@@ -145,8 +145,8 @@ public class ValidateTests extends AbstractValidateTests
 		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
 
 		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL)) {
-// XXX			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, new OCLValidationDelegateFactory.CompleteOCL());
+		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
+// XXX			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, new OCLValidationDelegateFactory.CompleteOCL());
 		}
 
 
