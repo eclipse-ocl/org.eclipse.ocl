@@ -184,7 +184,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 						Resource elementResource = namedElement.eResource();
 						if ((elementResource != csResource) && (elementResource != asResource)) {
 							AliasAnalysis adapter = AliasAnalysis.getAdapter(csResource);
-							String alias = adapter.getAlias(namedElement, null);
+							String alias = adapter.getKnownAlias(namedElement);
 							if (alias != null) {
 								name = alias;
 							}

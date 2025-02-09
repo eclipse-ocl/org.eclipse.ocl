@@ -127,7 +127,7 @@ public class QualifiedPath extends QualifiedName
 				if ((csResource != null) && (elementResource != csResource) && (elementResource != asResource)) {
 					AliasAnalysis adapter = AliasAnalysis.getAdapter(csResource);
 					if (segmentCount == 1) {
-						String alias = adapter.getAlias(firstElement, null);
+						String alias = adapter.getKnownAlias(firstElement);
 						if (alias != null) {
 							segments.add(alias);
 							segments.add(getFirstSegment());
@@ -137,7 +137,7 @@ public class QualifiedPath extends QualifiedName
 						for (int i = segmentCount - 2; i >= 0; i--) {
 							EObject element = pathElements.get(i).getElement();
 							if (element != null) {
-								String alias = adapter.getAlias(element, null);
+								String alias = adapter.getKnownAlias(element);
 								if (alias != null) {
 									segments.add(alias);
 									if (segmentCount == 1) {
