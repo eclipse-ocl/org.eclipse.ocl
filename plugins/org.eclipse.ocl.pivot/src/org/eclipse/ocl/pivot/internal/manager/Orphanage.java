@@ -74,6 +74,7 @@ public class Orphanage extends PackageImpl
 			super(uri, OCLASResourceFactory.getInstance());
 			setUpdating(true);
 			setSaveable(false);
+			setASonly(true);
 		}
 
 		@Override
@@ -554,7 +555,7 @@ public class Orphanage extends PackageImpl
 	/**
 	 * Return true if asPackage is a local or shared orphanage for synthesized model elements.
 	 */
-	@Deprecated /* @deprected use isOrphanage() */
+	@Deprecated /* @deprecated use isOrphanage() */
 	public static boolean isTypeOrphanage(org.eclipse.ocl.pivot.@Nullable Package asPackage) {
 		if (asPackage == null) {
 			return false;
