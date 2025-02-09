@@ -218,22 +218,34 @@ public class PivotEObjectValidator implements EValidator
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
-			for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
-				if (constraint !=  null) {
-					if (complementingModels != null) {
-						Model containingModel = PivotUtil.getContainingModel(constraint);
-						if (!complementingModels.contains(containingModel)) {
-							continue;
-						}
+			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
+			if (allInvariantOrInvariants != null) {
+				for (@NonNull Object invariantOrInvariants : /*all(*/allInvariantOrInvariants/*)*/) {
+					Constraint constraint;
+					if (invariantOrInvariants instanceof Constraint) {
+						constraint = (Constraint)invariantOrInvariants;
 					}
-					Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
-					if (diagnostic != null) {
-						if (diagnostics != null) {
-							diagnostics.add(diagnostic);
+					else {
+						@SuppressWarnings("unchecked")
+						List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
+						constraint = invariants.get(0);
+					}
+					if (constraint !=  null) {
+						if (complementingModels != null) {
+							Model containingModel = PivotUtil.getContainingModel(constraint);
+							if (!complementingModels.contains(containingModel)) {
+								continue;
+							}
 						}
-						allOk = false;
-						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-							return allOk;		// Generate many warnings but only one error
+						Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
+						if (diagnostic != null) {
+							if (diagnostics != null) {
+								diagnostics.add(diagnostic);
+							}
+							allOk = false;
+							if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+								return allOk;		// Generate many warnings but only one error
+							}
 						}
 					}
 				}
@@ -369,7 +381,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EObject to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EObject to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -381,7 +393,7 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * Overriden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
+	 * Overridden to intercept the validation of an EDataType value to add the additional Pivot-defined validation.
 	 */
 	@Override
 	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
