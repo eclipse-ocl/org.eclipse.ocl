@@ -159,19 +159,19 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * The Dynamic variant of the Factory delegates OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL to a local ResourceSet factory if one
+	 * The Dynamic variant of the Factory delegates OCL_DELEGATE_URI_PIVOT_DYNAMIC to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
 	 * by the DelegateResourceSetAdapter.
 	 *
 	 * @since 1.23
 	 */
-	public static class CompleteOCL extends OCLValidationDelegateFactory
+	public static class Dynamic extends OCLValidationDelegateFactory
 	{
-		public CompleteOCL() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL, true);
+		public Dynamic() {
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, true);
 		}
 
-		public CompleteOCL(@NonNull String delegateURI, boolean isGlobal) {
+		public Dynamic(@NonNull String delegateURI, boolean isGlobal) {
 			super(delegateURI, isGlobal);
 		}
 	}

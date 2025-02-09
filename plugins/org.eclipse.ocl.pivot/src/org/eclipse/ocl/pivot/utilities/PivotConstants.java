@@ -201,9 +201,9 @@ public interface PivotConstants
 	static final @NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_DEBUG;
 
 	/**
-	 * The delegate URI for run-time synthesised Ecore annotations to support Complete OCL document using the Pivot evaluator.
+	 * The delegate URI for dynamically synthesised Ecore annotations to support Complete OCL documents using the Pivot evaluator.
 	 *
 	 * @since 1.23
 	 */
-	static final @NonNull String OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL = OCLConstants.OCL_DELEGATE_URI_PIVOT + "/CompleteOCL";
+	static final @NonNull String OCL_DELEGATE_URI_PIVOT_DYNAMIC = OCLConstants.OCL_DELEGATE_URI_PIVOT + "/Dynamic";
 }
