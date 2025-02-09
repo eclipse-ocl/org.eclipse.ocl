@@ -127,7 +127,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			name = ((NamedElement)asStereotypedElement).getName();
 		}
 		else if (asStereotypedElement instanceof DynamicElement) {
-			EObject eObject = ((DynamicElement)asStereotypedElement).getESObject();
+			EObject eObject = asStereotypedElement.getESObject();
 			if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {
 				name = ((org.eclipse.uml2.uml.NamedElement)eObject).getName();
 			}
@@ -142,12 +142,12 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			metamodel = IdManager.METAMODEL;
 		}
 		else if (eObject2 instanceof UMLPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = UMLPackage.eNS_URI;
+			@NonNull String nsUri = UMLPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.UML_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
 		}
 		else if (eObject2 instanceof TypesPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = TypesPackage.eNS_URI;
+			@NonNull String nsUri = TypesPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.TYPES_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
 		}
@@ -253,5 +253,13 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean needsPivotValidator() {
+		return true;			// AS Constraints mujst be handled by a Composed PivotEObjectValidator
 	}
 }
