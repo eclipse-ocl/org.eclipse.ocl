@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
+import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
