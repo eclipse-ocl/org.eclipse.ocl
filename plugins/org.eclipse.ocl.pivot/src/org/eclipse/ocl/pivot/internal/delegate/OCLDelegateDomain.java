@@ -61,19 +61,19 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		}
 
 		public @NonNull OCLInvocationDelegateFactory createInvocationDelegateFactory(@NonNull String oclDelegateURI) {
-			return new OCLInvocationDelegateFactory(oclDelegateURI);
+			return new OCLInvocationDelegateFactory(oclDelegateURI, false);
 		}
 
 		public @NonNull OCLQueryDelegateFactory createQueryDelegateFactory(@NonNull String oclDelegateURI) {
-			return new OCLQueryDelegateFactory(oclDelegateURI);
+			return new OCLQueryDelegateFactory(oclDelegateURI, false);
 		}
 
 		public @NonNull OCLSettingDelegateFactory createSettingDelegateFactory(@NonNull String oclDelegateURI) {
-			return new OCLSettingDelegateFactory(oclDelegateURI);
+			return new OCLSettingDelegateFactory(oclDelegateURI, false);
 		}
 
 		public @NonNull OCLValidationDelegateFactory createValidationDelegateFactory(@NonNull String oclDelegateURI) {
-			return new OCLValidationDelegateFactory(oclDelegateURI);
+			return new OCLValidationDelegateFactory(oclDelegateURI, false);
 		}
 	}
 
@@ -82,10 +82,12 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		private static final long serialVersionUID = 1L;
 
 		public static final @NonNull PivotOnlyRegistry INSTANCE = new PivotOnlyRegistry();
+		private static final @NonNull OCLValidationDelegateFactory OCLValidationDelegateFactory_INSTANCE = new OCLValidationDelegateFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
 
 		@Override
 		public ValidationDelegate getValidationDelegate(String uri) {
-			return OCLValidationDelegateFactory.Global.INSTANCE;
+			assert !PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL.equals(uri);				// XXX
+			return OCLValidationDelegateFactory_INSTANCE;
 		}
 	}
 

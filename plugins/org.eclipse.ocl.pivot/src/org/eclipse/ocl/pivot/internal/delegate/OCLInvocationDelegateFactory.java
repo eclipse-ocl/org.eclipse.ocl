@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -19,12 +19,21 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * Factory for OCL operation-invocation delegates.
+ * @since 1.23
  */
 public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		implements EOperation.Internal.InvocationDelegate.Factory
 {
+	@Deprecated
 	public OCLInvocationDelegateFactory(@NonNull String delegateURI) {
 		super(delegateURI);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public OCLInvocationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		super(delegateURI, isGlobal);
 	}
 
 	@Override
@@ -32,27 +41,7 @@ public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 		if (operation == null) {
 			return null;
 		}
-		EPackage ePackage = ClassUtil.nonNullEMF(operation.getEContainingClass().getEPackage());
-		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
-		return delegateDomain != null ? new OCLInvocationDelegate(delegateDomain, operation) : null;
-	}
-	
-	/**
-	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
-	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
-	 * by the DelegateResourceSetAdapter.
-	 */
-	public static class Global extends OCLInvocationDelegateFactory
-	{
-		public Global() {
-			super(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		}
-
-		@Override
-		public EOperation.Internal.@Nullable InvocationDelegate createInvocationDelegate(EOperation operation) {
-			if (operation == null) {
-				return null;
-			}
+		if (isGlobal) {
 			Class<EOperation.Internal.InvocationDelegate.Factory.@NonNull Registry> castClass = EOperation.Internal.InvocationDelegate.Factory.Registry.class;
 			EOperation.Internal.InvocationDelegate.Factory.@Nullable Registry localRegistry = OCLDelegateDomain.getDelegateResourceSetRegistry(operation, castClass, null);
 			if (localRegistry != null) {
@@ -61,7 +50,21 @@ public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 					return factory.createInvocationDelegate(operation);
 				}
 			}
-			return super.createInvocationDelegate(operation);
-		}	
+		}
+		EPackage ePackage = ClassUtil.nonNullEMF(operation.getEContainingClass().getEPackage());
+		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
+		return delegateDomain != null ? new OCLInvocationDelegate(delegateDomain, operation) : null;
+	}
+
+	/**
+	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
+	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
+	 * by the DelegateResourceSetAdapter.
+	 */
+	public static class Global extends OCLInvocationDelegateFactory
+	{
+		public Global() {
+			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
+		}
 	}
 }
