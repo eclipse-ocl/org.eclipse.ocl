@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
@@ -55,8 +56,6 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 /**
  * ASResourceImpl is the mandatory implementation of the ASResource interface that refines an
  * a standard EMF XMIResource to be used as a Pivot AS Resource.
- * @author ed
- *
  */
 public class ASResourceImpl extends XMIResourceImpl implements ASResource
 {
@@ -264,6 +263,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * Set true/false by setUpdating(). (See Bug 579109, we can aspire to eliminating many usages of this.)
 	 */
 	private boolean isUpdating = false;
+
+	/**
+	 * True if this AS exists without corresponding CS/ES. Perehaps it is a built-in AS, perhaps it is a tranmsformation intermediate.
+	 */
+	private boolean isASonly = false;
 
 	/**
 	 * Creates an instance of the resource.
@@ -506,6 +510,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
+	public boolean isASonly() {
+		return isASonly;
+	}
+
+	@Override
 	public boolean isOrphanage() {
 		return false;
 	}
@@ -542,6 +551,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			super.save(options);
 			assert SKIP_CHECK_BAD_REFERENCES || isFreeOfBadReferences();
 		}
+	}
+
+	@Override
+	public void setASonly(boolean isASonly) {
+		this.isASonly = isASonly;
 	}
 
 	/**
@@ -598,6 +612,11 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	protected String superGetURIFragment(EObject eObject) {
 		return super.getURIFragment(eObject);		// Bypass assignIds for use by OrphanResource
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
 	}
 
 	@Override
