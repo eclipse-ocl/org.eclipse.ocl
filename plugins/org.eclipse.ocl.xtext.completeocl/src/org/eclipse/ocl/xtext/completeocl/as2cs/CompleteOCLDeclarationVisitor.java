@@ -159,10 +159,10 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 			Resource resource = object.eResource();
 			AliasAnalysis adapter = resource != null ? AliasAnalysis.getAdapter(resource) : null;
 			if (adapter != null) {
-				for (@NonNull CompletePackage aliased : adapter.getAliases()) {
+				for (@NonNull CompletePackage aliased : adapter.getKnownAliases()) {
 					org.eclipse.ocl.pivot.Package primary = aliased.getPrimaryPackage();
 					if (primary != null) {
-						String alias = adapter.getAlias(primary, null);
+						String alias = adapter.getKnownAlias(primary);
 						if (alias != null) {
 							prettyPrintOptions.addAliases(primary, alias);
 						}
