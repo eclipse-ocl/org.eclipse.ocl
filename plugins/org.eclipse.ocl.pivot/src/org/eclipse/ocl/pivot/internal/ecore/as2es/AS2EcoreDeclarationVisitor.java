@@ -557,7 +557,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		EModelElement firstElement = null;
 		List<EObject> outputObjects = new ArrayList<EObject>();
 		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pivotObject : pivotModel.getOwnedPackages()) {
-			if (!Orphanage.isTypeOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
+			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
 				Object ecoreObject = safeVisit(pivotObject);
 				if (ecoreObject instanceof EObject) {
 					outputObjects.add((EObject) ecoreObject);
