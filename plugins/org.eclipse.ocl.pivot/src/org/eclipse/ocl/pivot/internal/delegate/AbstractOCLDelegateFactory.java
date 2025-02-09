@@ -17,16 +17,32 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Partial implementation of a factory of OCL delegates for Ecore features.
+ * @since 1.23
  */
 public abstract class AbstractOCLDelegateFactory
 {
-	protected final @NonNull String delegateURI;
+	protected final @NonNull String delegateURI;	// The URI supported by delegates created by this factory
+	/**
+	 * @since 1.23
+	 */
+	protected final boolean isGlobal;				// true if factory installed in a global registry, false if in a DelegateResourceSetRegistry
 
 	/**
 	 * Construct a factory for an unknown delegate domain; often the global factory.
 	 */
+	@Deprecated
 	protected AbstractOCLDelegateFactory(@NonNull String delegateURI) {
 		this.delegateURI = delegateURI;
+		this.isGlobal = false;
+	}
+
+	/**
+	 * Construct a factory for an unknown delegate domain; often the global factory.
+	 * @since 1.23
+	 */
+	protected AbstractOCLDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
+		this.delegateURI = delegateURI;
+		this.isGlobal = isGlobal;
 	}
 
 	protected @Nullable OCLDelegateDomain getDelegateDomain(@NonNull EPackage ePackage) {
