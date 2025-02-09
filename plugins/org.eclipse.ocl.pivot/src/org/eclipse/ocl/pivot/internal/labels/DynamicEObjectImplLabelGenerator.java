@@ -61,7 +61,7 @@ public final class DynamicEObjectImplLabelGenerator extends AbstractLabelGenerat
 			labeler = (IItemLabelProvider) reflectiveAdapterFactory.adapt(object, IItemLabelProvider.class);
 		}		
 		if (labeler != null) {
-			labelBuilder.appendString(labeler.getText(object));
+			labelBuilder.appendString(labeler.getText(object).replace(" ", "::"));
 		}
 		else {
 			labelBuilder.appendString(String.valueOf(object));
