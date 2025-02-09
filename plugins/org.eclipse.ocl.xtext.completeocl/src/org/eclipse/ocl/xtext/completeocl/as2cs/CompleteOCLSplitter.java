@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotSwitch;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  *
@@ -152,7 +153,7 @@ public class CompleteOCLSplitter
 			Model separateObject = (Model) getElementByName(separateSiblings, name);
 			if (separateObject == null) {
 				separateObject = PivotFactory.eINSTANCE.createModel();
-				separateObject.setExternalURI(separateResource.getURI().toString());
+				separateObject.setExternalURI(separateResource.getURI().toString().replace(PivotConstants.DOT_OCL_AS_FILE_EXTENSION, ""));
 				separateSiblings.add(separateObject);
 				//				metamodelManager.addRoot(separateObject);
 			}

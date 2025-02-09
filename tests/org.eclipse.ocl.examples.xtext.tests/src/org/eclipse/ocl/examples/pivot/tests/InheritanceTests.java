@@ -48,7 +48,7 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryContribution mutableLibrary = new OCLstdlib.Loader() {
 			@Override
 			public @NonNull Resource getResource() {
-				return OCLstdlib.create(libraryClone + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+				return OCLstdlib.create(libraryClone + PivotConstants.DOT_OCL_AS_FILE_EXTENSION, libraryClone);
 			}
 		};
 		StandardLibraryContribution.REGISTRY.put(libraryClone, mutableLibrary );
