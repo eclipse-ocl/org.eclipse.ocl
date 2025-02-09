@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -464,6 +465,14 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return getOwningCompletePackage().getCompleteModel();
 	}
 
+	/**
+	 * Return the ES object from a partial class.
+	 */
+	@Override
+	public @Nullable EObject getESObject() {
+		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes' esObject");
+	}
+
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteModel().getEnvironmentFactory();
@@ -601,18 +610,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return partialClasses.getSuperCompleteClasses();
 	}
 
-	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
-		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPivotClass()));	// FIXME cast
-		if (unspecializedFirstType == unspecializedSecondType) {
-			return true;
-		}
-		for (CompleteClass superClass : getSuperCompleteClasses(unspecializedSecondType)) {
-			if ((superClass != null) && isSuperClassOf(unspecializedFirstType, superClass)) {
-				return true;
-			}
-		}
-		return false;
-	} */
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
+	}
 
 	@Override
 	public void uninstall() {
