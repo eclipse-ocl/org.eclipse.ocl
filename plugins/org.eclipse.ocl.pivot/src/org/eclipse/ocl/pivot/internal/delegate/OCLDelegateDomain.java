@@ -36,8 +36,8 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -110,6 +110,10 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		}
 	}
 
+	private static @NonNull FactoryFactory getDelegateFactoryFactory(@Nullable FactoryFactory delegateFactoryFactory) {
+		return delegateFactoryFactory != null ? delegateFactoryFactory : FactoryFactory.INSTANCE;
+	}
+
 	// FIXME workaround BUG 485093 giving a false non-null analysis
 	@SuppressWarnings("null")
 	private static @NonNull DelegateResourceSetAdapter getDelegateResourceSetAdapter(@NonNull ResourceSet resourceSet) {
@@ -152,8 +156,10 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	 * to support usage of the Pivot OCL Delegate Evaluator for the oclDelegateURI.
 	 */
 	public static void initialize(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
-		lazyInitializeGlobals(oclDelegateURI, true);
-		if (resourceSet != null) {
+		if (resourceSet == null) {
+			lazyInitializeGlobals(oclDelegateURI, true);
+		}
+		else {
 			lazyInitializeLocals(resourceSet, oclDelegateURI, true, null);
 		}
 	}
@@ -170,26 +176,58 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	}
 
 	/**
-	 * Initialize the local resourceSet delegate registries to support the oclDelegateURI.
-	 * A non-null delegateFactoryFactory may be specified for test purposes to intercept factory creation.
+	 * @since 1.23
 	 */
-	public static void lazyInitializeLocals(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
+	public static void lazyInitializeGlobalValidationRegistry(@NonNull String oclDelegateURI, boolean forceInitialization) {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
+			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
+			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
+				Object validationDelegateFactory = PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclDelegateURI) ? new OCLValidationDelegateFactory.Dynamic(oclDelegateURI, true) : new OCLValidationDelegateFactory(oclDelegateURI, true);
+				validationRegistry.put(oclDelegateURI, validationDelegateFactory);
+			}
+		}
+	}
+
+	/**
+	 * Initialize any currently uninitialized global delegate registries to support the oclDelegateURI.
+	 * @since 1.23
+	 */
+	public static void lazyInitializeGlobals(@NonNull String oclDelegateURI, boolean forceInitialization) {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
+			EOperation.Internal.InvocationDelegate.Factory.Registry invocationRegistry = EOperation.Internal.InvocationDelegate.Factory.Registry.INSTANCE;
+			if (forceInitialization || !invocationRegistry.containsKey(oclDelegateURI)) {
+				OCLInvocationDelegateFactory invocationDelegateFactory = new OCLInvocationDelegateFactory(oclDelegateURI, true);
+				invocationRegistry.put(oclDelegateURI, invocationDelegateFactory);
+			}
+			EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingRegistry = EStructuralFeature.Internal.SettingDelegate.Factory.Registry.INSTANCE;
+			if (forceInitialization || !settingRegistry.containsKey(oclDelegateURI)) {
+				OCLSettingDelegateFactory settingDelegateFactory = new OCLSettingDelegateFactory(oclDelegateURI, true);
+				settingRegistry.put(oclDelegateURI, settingDelegateFactory);
+			}
+			lazyInitializeGlobalValidationRegistry(oclDelegateURI, forceInitialization);
+			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
+			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {
+				OCLQueryDelegateFactory queryDelegateFactory = new OCLQueryDelegateFactory(oclDelegateURI, true);
+				queryRegistry.put(oclDelegateURI, queryDelegateFactory);
+			}
+		}
+	}
+
+	/**
+	 * Install a local DelegateDomain.Factory and a local ValidationDelegate.Factory
+	 *
+	 * @since 1.23
+	 */
+	public static void lazyInitializeLocalValidationRegistry(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
 			@Nullable FactoryFactory delegateFactoryFactory) {
-		if (delegateFactoryFactory == null) {
-			delegateFactoryFactory = FactoryFactory.INSTANCE;
-		}
-		FactoryFactory delegateFactoryFactory2 = ClassUtil.nonNullState(delegateFactoryFactory);  // Try to avoid spurious build failure
-		// Install a DelegateResourceSetAdapter to supervise local registries and resource post-loading
+		delegateFactoryFactory = getDelegateFactoryFactory(delegateFactoryFactory);
+
 		@SuppressWarnings("null")@NonNull DelegateResourceSetAdapter adapter = DelegateResourceSetAdapter.getAdapter(resourceSet);
-		VirtualDelegateMapping delegationMode = CommonOptions.DEFAULT_DELEGATION_MODE;
-		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, VirtualDelegateMapping.class) == null)) {
-			putDelegateResourceSetRegistry(adapter, VirtualDelegateMapping.class, new VirtualDelegateMapping(delegationMode.getPluginId(), delegationMode.getKey(), delegationMode.getPreferredValue()));
-		}
 
 		// Install a local DelegateDomain.Factory
 		DelegateDomain.Factory.Registry.Impl delegateDomainFactory = new DelegateDomain.Factory.Registry.Impl();
 		if (forceInitialization || !delegateDomainFactory.containsKey(oclDelegateURI)) {
-			delegateDomainFactory.put(oclDelegateURI, delegateFactoryFactory2.createDelegateDomainFactory());
+			delegateDomainFactory.put(oclDelegateURI, delegateFactoryFactory.createDelegateDomainFactory());
 		}
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, DelegateDomain.Factory.Registry.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, DelegateDomain.Factory.Registry.class, delegateDomainFactory);
@@ -198,16 +236,38 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		// Install a local ValidationDelegate.Factory
 		ValidationDelegate.Factory.Registry validationDelegateFactoryRegistry = new ValidationDelegate.Factory.Registry.Impl();
 		if (forceInitialization || !validationDelegateFactoryRegistry.containsKey(oclDelegateURI)) {
-			validationDelegateFactoryRegistry.put(oclDelegateURI, delegateFactoryFactory2.createValidationDelegateFactory(oclDelegateURI));
+			OCLValidationDelegateFactory validationDelegateFactory = delegateFactoryFactory.createValidationDelegateFactory(oclDelegateURI);
+			validationDelegateFactoryRegistry.put(oclDelegateURI, validationDelegateFactory);
 		}
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, ValidationDelegate.Factory.Registry.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, ValidationDelegate.Factory.Registry.class, validationDelegateFactoryRegistry);
 		}
+	}
+
+	/**
+	 * Initialize the local resourceSet delegate registries to support the oclDelegateURI.
+	 * A non-null delegateFactoryFactory may be specified for test purposes to intercept factory creation.
+	 * @since 1.23
+	 */
+	public static void lazyInitializeLocals(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
+			@Nullable FactoryFactory delegateFactoryFactory) {
+		delegateFactoryFactory = getDelegateFactoryFactory(delegateFactoryFactory);
+
+		// Install a DelegateResourceSetAdapter to supervise local registries and resource post-loading
+		@SuppressWarnings("null")@NonNull DelegateResourceSetAdapter adapter = DelegateResourceSetAdapter.getAdapter(resourceSet);
+		VirtualDelegateMapping delegationMode = CommonOptions.DEFAULT_DELEGATION_MODE;
+		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, VirtualDelegateMapping.class) == null)) {
+			putDelegateResourceSetRegistry(adapter, VirtualDelegateMapping.class, new VirtualDelegateMapping(delegationMode.getPluginId(), delegationMode.getKey(), delegationMode.getPreferredValue()));
+		}
+
+		// Install a local DelegateDomain.Factory and a local ValidationDelegate.Factory
+		lazyInitializeLocalValidationRegistry(resourceSet, oclDelegateURI, forceInitialization, delegateFactoryFactory);
 
 		// Install a local SettingDelegate.Factory
 		EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingDelegateFactoryRegistry = new EStructuralFeature.Internal.SettingDelegate.Factory.Registry.Impl();
 		if (forceInitialization || !settingDelegateFactoryRegistry.containsKey(oclDelegateURI)) {
-			settingDelegateFactoryRegistry.put(oclDelegateURI, delegateFactoryFactory2.createSettingDelegateFactory(oclDelegateURI));
+			OCLSettingDelegateFactory settingDelegateFactory = delegateFactoryFactory.createSettingDelegateFactory(oclDelegateURI);
+			settingDelegateFactoryRegistry.put(oclDelegateURI, settingDelegateFactory);
 		}
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, EStructuralFeature.Internal.SettingDelegate.Factory.Registry.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, EStructuralFeature.Internal.SettingDelegate.Factory.Registry.class, settingDelegateFactoryRegistry);
@@ -216,7 +276,8 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		// Install a local InvocationDelegate.Factory
 		EOperation.Internal.InvocationDelegate.Factory.Registry invocationDelegateFactoryRegistry = new EOperation.Internal.InvocationDelegate.Factory.Registry.Impl();
 		if (forceInitialization || !invocationDelegateFactoryRegistry.containsKey(oclDelegateURI)) {
-			invocationDelegateFactoryRegistry.put(oclDelegateURI, delegateFactoryFactory2.createInvocationDelegateFactory(oclDelegateURI));
+			OCLInvocationDelegateFactory invocationDelegateFactory = delegateFactoryFactory.createInvocationDelegateFactory(oclDelegateURI);
+			invocationDelegateFactoryRegistry.put(oclDelegateURI, invocationDelegateFactory);
 		}
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, EOperation.Internal.InvocationDelegate.Factory.Registry.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, EOperation.Internal.InvocationDelegate.Factory.Registry.class, invocationDelegateFactoryRegistry);
@@ -225,34 +286,11 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		// Install a local QueryDelegate.Factory
 		QueryDelegate.Factory.Registry queryDelegateFactoryRegistry = new QueryDelegate.Factory.Registry.Impl();
 		if (forceInitialization || !queryDelegateFactoryRegistry.containsKey(oclDelegateURI)) {
-			queryDelegateFactoryRegistry.put(oclDelegateURI, delegateFactoryFactory2.createQueryDelegateFactory(oclDelegateURI));
+			OCLQueryDelegateFactory queryDelegateFactory = delegateFactoryFactory.createQueryDelegateFactory(oclDelegateURI);
+			queryDelegateFactoryRegistry.put(oclDelegateURI, queryDelegateFactory);
 		}
 		if (forceInitialization || (getDelegateResourceSetAdapterRegistry(adapter, QueryDelegate.Factory.Registry.class) == null)) {
 			putDelegateResourceSetRegistry(adapter, QueryDelegate.Factory.Registry.class, queryDelegateFactoryRegistry);
-		}
-	}
-
-	/**
-	 * Initialize any currently uninitialized global delegate registries to support the oclDelegateURI.
-	 */
-	public static void lazyInitializeGlobals(@NonNull String oclDelegateURI, boolean forceInitialization) {
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
-			EOperation.Internal.InvocationDelegate.Factory.Registry invocationRegistry = EOperation.Internal.InvocationDelegate.Factory.Registry.INSTANCE;
-			if (forceInitialization || !invocationRegistry.containsKey(oclDelegateURI)) {
-				invocationRegistry.put(oclDelegateURI, new OCLInvocationDelegateFactory.Global());
-			}
-			EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingRegistry = EStructuralFeature.Internal.SettingDelegate.Factory.Registry.INSTANCE;
-			if (forceInitialization || !settingRegistry.containsKey(oclDelegateURI)) {
-				settingRegistry.put(oclDelegateURI, new OCLSettingDelegateFactory.Global());
-			}
-			EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-			if (forceInitialization || !validationRegistry.containsKey(oclDelegateURI)) {
-				validationRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory.Global());
-			}
-			QueryDelegate.Factory.Registry queryRegistry = QueryDelegate.Factory.Registry.INSTANCE;
-			if (forceInitialization || !queryRegistry.containsKey(oclDelegateURI)) {
-				queryRegistry.put(oclDelegateURI, new OCLQueryDelegateFactory.Global());
-			}
 		}
 	}
 
@@ -263,7 +301,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 	protected final @NonNull String uri;
 	protected final @NonNull EPackage ePackage;
-	@Deprecated /* @deprecated replaced getEnvironmentFactory() frpm loacal thread */
+	@Deprecated /* @deprecated replaced getEnvironmentFactory() from local thread */
 	protected OCL ocl = null;				// Lazily initialized and re-initialized
 	// FIXME Introduce a lightweight function (? a lambda function) to avoid the need for a CompleteEnvironment for queries
 	//	private Map<CompletePackage, org.eclipse.ocl.pivot.Package> queryPackages = null;
@@ -293,6 +331,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {		// cf PivotUtilInternal.getEnvironmentFactory
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
@@ -331,6 +370,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		return envFactory;
 	} */
 
+	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public final @NonNull MetamodelManager getMetamodelManager() {
 		return getEnvironmentFactory().getMetamodelManager();
 	}
@@ -356,7 +396,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	}
 
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension)getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(eObject);
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {
