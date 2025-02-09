@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -303,8 +304,7 @@ public class CGUtil
 	 * running under the supervision of the maven-surefire-plugin..
 	 */
 	public static boolean isMavenSurefire() {
-		String testNameSuffix = System.getProperty("testNameSuffix", "");
-		return (testNameSuffix != null) && testNameSuffix.startsWith("maven");
+		return PivotUtilInternal.isMavenSurefire();
 	}
 
 	/**
@@ -312,8 +312,7 @@ public class CGUtil
 	 * running under the supervision of the tycho-surefire-plugin..
 	 */
 	public static boolean isTychoSurefire() {
-		String testNameSuffix = System.getProperty("testNameSuffix", "");
-		return (testNameSuffix != null) && testNameSuffix.startsWith("tycho");
+		return PivotUtilInternal.isTychoSurefire();
 	}
 
 	/**
