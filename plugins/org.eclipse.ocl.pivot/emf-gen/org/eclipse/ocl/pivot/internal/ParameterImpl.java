@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -407,12 +408,11 @@ public class ParameterImpl
 	 */
 	@Override
 	public String toString() {
-		return super.toString();
+		return NameUtil.debugSimpleName(this) + ":" + super.toString();
 	}
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameter(this);
 	}
-
 } //ParameterImpl
