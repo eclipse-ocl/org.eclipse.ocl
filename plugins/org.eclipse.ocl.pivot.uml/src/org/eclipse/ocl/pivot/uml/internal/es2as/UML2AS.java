@@ -282,7 +282,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static UML2AS loadFromUML(@NonNull ASResource umlASResource, @NonNull URI umlURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource.getResourceSet());
 		Resource umlResource = environmentFactory.getResourceSet().getResource(umlURI, true);
 		if (umlResource == null) {
 			return null;
@@ -478,12 +478,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		@Override
 		public void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-			//			if ((eObject instanceof ENamedElement) && "EnglishClass".equals(((ENamedElement)eObject).getName())) {
-			//				System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
-			//			}
-			//			else if ((eObject instanceof org.eclipse.uml2.uml.NamedElement) && "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
-			//				System.out.println("Define " + ClassUtil.debugSimpleName(eObject) + " => " + ClassUtil.debugSimpleName(pivotElement));
-			//			}
+			//	if (eObject instanceof ENamedElement) {//&& "EnglishClass".equals(((ENamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
+			//	}
+			//	else if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {//&& "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
+			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement));
+			//	}
 			@SuppressWarnings("unused")
 			Element oldElement = createMap.put(eObject, pivotElement);
 			/*			if ((oldElement != null) && (oldElement != pivotElement)) {
@@ -782,7 +782,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		protected void installImports() throws ParserException {
-			List<Resource> importedResources2 = importedResources;
+			List<@NonNull Resource> importedResources2 = importedResources;
 			if (importedResources2 != null) {
 				for (int i = 0; i < importedResources2.size(); i++) {			// List may grow re-entrantly
 					Resource importedResource = importedResources2.get(i);
@@ -808,7 +808,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 							}
 						}
 					}
-					else if (importedResource != null) {
+					else {
 						environmentFactory.loadResource(importedResource, null);
 					}
 				}
@@ -1552,6 +1552,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 	protected void setOriginalMapping(@NonNull Element pivotElement, @NonNull EObject umlElement) {
 		((PivotObjectImpl)pivotElement).setESObject(umlElement);
 		addCreated(umlElement, pivotElement);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void setEcoreURI(@NonNull URI ecoreURI) {
+		throw new IllegalStateException();			// XXX
 	}
 
 	public void setUMLURI(URI umlURI) {

@@ -177,7 +177,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			if (ecoreFile != null) {
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), ecoreURI, null);
-				XMLResource eResource = converter.convertResource(asResource, ecoreURI);
+				XMLResource eResource = converter.getEcoreResource();
 				EPackage ePackage = (EPackage) ClassUtil.nonNullState(eResource.getContents().get(0));
 				if (libraryName != null) {
 					ePackage.setName(libraryName);
