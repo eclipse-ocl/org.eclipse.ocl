@@ -63,8 +63,8 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	 * @param operation
 	 *            the operation that I handle
 	 */
-	public OCLInvocationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EOperation operation) {
-		super(operation);
+	public OCLInvocationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EOperation eOperation) {
+		super(eOperation);
 		this.delegateDomain = delegateDomain;
 	}
 
@@ -77,7 +77,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			ModelManager modelManager = executor.getModelManager();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query2 = query;
-			if (query2 == null) {
+			if ((query2 == null) || query2.eIsProxy()) {
 				Operation operation2 = operation;
 				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
 				if (namedElement instanceof Operation) {
@@ -114,7 +114,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	 */
 	protected Object evaluate(@NonNull EnvironmentFactory environmentFactory, @NonNull ModelManager modelManager, InternalEObject ecoreObject, List<?> arguments) {
 		ExpressionInOCL query2 = query;
-		assert query2 != null;
+		assert (query2 != null) && !query2.eIsProxy();
 		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		try {
 			if (savedExecutor != null) {
@@ -154,7 +154,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 
 	public @NonNull Operation getOperation() {
 		Operation operation2 = operation;
-		if (operation2 == null) {
+		if ((operation2 == null) || operation2.eIsProxy()) {
 			NamedElement pivot = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
 			if (pivot instanceof Operation) {
 				operation2 = operation = (Operation) pivot;
@@ -168,7 +168,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 
 	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) {
 		LanguageExpression specification = constraint.getOwnedSpecification();
-		if (specification == null) {
+		if ((specification == null) || specification.eIsProxy()) {
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint.getContext(), PivotConstantsInternal.BODY_ROLE));
 		}
 		try {
