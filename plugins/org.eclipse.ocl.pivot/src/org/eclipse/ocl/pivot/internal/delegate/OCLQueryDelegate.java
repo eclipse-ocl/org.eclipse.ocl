@@ -99,7 +99,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	public Object execute(@Nullable Object target, Map<String, ?> arguments) throws InvocationTargetException {
 		@NonNull Map<String, ?> nonNullArguments = (arguments != null ? arguments : (Map<String, ?>)Collections.<String, Object>emptyMap());
 		try {
-			if (specification == null) {
+			if ((specification == null) || specification.eIsProxy()) {
 				prepare();
 			}
 			@SuppressWarnings("null")
@@ -192,7 +192,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	@Override
 	public void prepare() throws InvocationTargetException {
 		try {
-			if (specification == null) {
+			if ((specification == null) || specification.eIsProxy()) {
 				specification = parserContext.parse(parserContext.getClassContext(), expression);
 			}
 		} catch (Exception e) {
