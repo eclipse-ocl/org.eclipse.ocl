@@ -133,7 +133,6 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -538,7 +537,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
-		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
+		if (!upper.equals(ValueUtil.ONE_VALUE)) {
 			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
@@ -1067,8 +1066,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		else {
 			ecoreURI = ClassUtil.nonNullEMF(externalURI.appendFileExtension("ecore"));
 		}
-		AS2Ecore converter = new AS2Ecore(environmentFactory, ecoreURI, null);
-		converter.convertResource(asResource, ecoreURI);
+		AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, null);
 		return converter.getCreated(ecoreClass, element);
 	}
 
@@ -2084,7 +2082,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			if (ePackage != null) {
 				Resource eResource = ePackage.eResource();
 				if (eResource instanceof XMLResource) {
-					EObject eObject = ((XMLResource)eResource).getEObject(fragment);
+					EObject eObject = eResource.getEObject(fragment);
 					if (eObject != null) {
 						Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
 						if (asElement != null) {

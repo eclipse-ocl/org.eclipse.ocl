@@ -19,15 +19,16 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public final class EcoreASResourceFactory extends AbstractASResourceFactory
 {
@@ -93,9 +94,16 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 
 	@Override
 	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource, @Nullable URI uri) {
-		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
-		conversion.setEcoreURI(uri != null ? uri.trimFragment() : null);
-		Model pivotModel = conversion.getASModel();
+		External2AS conversion = External2AS.getAdapter(ecoreResource, environmentFactory);
+		if (uri != null) {
+			conversion.setEcoreURI(uri.trimFragment());
+		}
+		Model pivotModel = null;
+		try {
+			pivotModel = conversion.getASModel();
+		} catch (ParserException e) {
+			throw new IllegalStateException(e);				// Never happens in inverse direction
+		}
 		String uriFragment = uri != null ? uri.fragment() : null;
 		if (uriFragment == null) {
 			return pivotModel;
@@ -105,7 +113,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 			if (eObject == null) {
 				return null;
 			}
-			return conversion.getCreated(eObject);
+			return conversion.getCreated(Element.class, eObject);
 		}
 	}
 

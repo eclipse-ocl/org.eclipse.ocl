@@ -32,6 +32,26 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore$InverseConversion">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion"/>
+                <message_argument value="asModel"/>
+            </message_arguments>
+        </filter>
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion"/>
+                <message_argument value="InverseConversion(AS2Ecore, Resource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion"/>
+                <message_argument value="ecoreResource"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceFactory.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory">
         <filter id="404000815">
             <message_arguments>
@@ -101,6 +121,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="isDisposing()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/External2AS.java" type="org.eclipse.ocl.pivot.internal.utilities.External2AS">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.External2AS"/>
+                <message_argument value="setEcoreURI(URI)"/>
             </message_arguments>
         </filter>
     </resource>
