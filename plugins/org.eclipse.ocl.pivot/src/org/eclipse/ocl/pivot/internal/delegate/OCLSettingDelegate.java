@@ -161,7 +161,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 
 	public @NonNull Property getProperty() {
 		Property property2 = property;
-		if (property2 == null) {
+		if ((property2 == null) || property2.eIsProxy()) {
 			property2 = property = delegateDomain.getPivot(Property.class, ClassUtil.nonNullEMF(eStructuralFeature));
 			if (property2 == null) {
 				throw new OCLDelegateException(new SemanticException("No pivot property for " + eStructuralFeature)) ;
@@ -175,7 +175,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	 */
 	protected @NonNull ExpressionInOCL getQuery() {
 		ExpressionInOCL query2 = query;
-		if (query2 == null) {
+		if ((query2 == null) || query2.eIsProxy()) {
 		//	OCL ocl = delegateDomain.getOCL();
 		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
