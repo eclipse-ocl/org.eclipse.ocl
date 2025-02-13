@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -272,6 +273,22 @@ public class PivotUtil
 			templateParameter = (TemplateParameter) pivotType;
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	public static @Nullable ResourceSet basicGetResourceSet(@Nullable Notifier notifier) {
+		if (notifier instanceof EObject) {
+			Resource resource = ((EObject)notifier).eResource();
+			return resource != null ? resource.getResourceSet() : null;
+		}
+		else if (notifier instanceof Resource) {
+			return ((Resource)notifier).getResourceSet();
+		}
+		else {
+			return (ResourceSet)notifier;
+		}
 	}
 
 	/**
@@ -527,6 +544,15 @@ public class PivotUtil
 		T pivotModel = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
 		pivotModel.setExternalURI(externalURI);
 		return pivotModel;
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	public static <T extends NamedElement> @NonNull T createNamedElement(@NonNull T asNamedElement) {
+		@SuppressWarnings("unchecked") T asClone = (T)PivotFactory.eINSTANCE.create(asNamedElement.eClass());
+		asClone.setName(asNamedElement.getName());
+		return asClone;
 	}
 
 	/**
