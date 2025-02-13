@@ -32,6 +32,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/DelegateInstaller.java" type="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
+                <message_argument value="SUPPRESS_DYNAMIC_OCL_DELEGATES"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore$InverseConversion">
         <filter id="336658481">
             <message_arguments>

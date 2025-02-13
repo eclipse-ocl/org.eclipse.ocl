@@ -330,7 +330,7 @@ public class ValidateTests extends AbstractValidateTests
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
-		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 0 since using outer OCL (not 1 for outer validation, 2 more for inner validations)
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 1 for outer validation, 2 more for inner validations
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations
 		ocl.dispose();
 	}
@@ -701,11 +701,13 @@ public class ValidateTests extends AbstractValidateTests
 			assertTrue(helper.loadDocument(testFile.getFileURI()));
 			helper.installPackages();
 
-			assertValidationDiagnostics("With Complete OCL", resource, getMessages(//validationContext,
-				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
-				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
-				StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library::lib::Book::b2")));
+			@NonNull String[] messages = getMessages(//validationContext,
+					StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
+					StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
+					StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
+					StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library::lib::Book::b2"));
+				//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
+				assertValidationDiagnostics("With Complete OCL", resource, messages);
 			//		disposeResourceSet(resourceSet);
 			helper.dispose();
 		}
@@ -769,13 +771,7 @@ public class ValidateTests extends AbstractValidateTests
 		assert uNamed != null;
 		assertValidationDiagnostics("Without Complete OCL", resource, NO_MESSAGES);
 		//
-		CompleteOCLLoader helper = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
-			@Override
-			protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-				TestCase.fail(primaryMessage + "\n\t" + detailMessage);
-				return false;
-			}
-		};
+		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl.getEnvironmentFactory());
 		assertTrue(helper.loadMetamodels());
 		assertTrue(helper.loadDocument(testFile.getFileURI()));
 		helper.installPackages();
@@ -783,8 +779,10 @@ public class ValidateTests extends AbstractValidateTests
 		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
 		//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());
 		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
+		//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
+			StringUtil.bind(VIOLATED_TEMPLATE, "IsClassifierWrtLeaf", objectLabel1),
+			StringUtil.bind(VIOLATED_TEMPLATE, "IsClassWrtLeaf", objectLabel1)/*,
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel3),	// FIXME BUG 437450
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel4)*/));	// FIXME BUG 437450
 		//		adapter.getMetamodelManager().dispose();

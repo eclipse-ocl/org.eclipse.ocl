@@ -77,7 +77,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected static final @NonNull String ECORE_MODEL_NAME2 = "model/validityModelTest.ecoretest";
 	protected static final @NonNull String ECORE_MODEL_NAME3 = "model/ecoreTest2.ecore";
 
-	protected static final Integer EXPECTED_SUCCESSES = 145; //147; //145;
+	protected static final Integer EXPECTED_SUCCESSES = 155; //145; //147; //145;
 	protected static final Integer EXPECTED_INFOS = 2;
 	protected static final Integer EXPECTED_WARNINGS = 2;
 	protected static final Integer EXPECTED_ERRORS = 2;
