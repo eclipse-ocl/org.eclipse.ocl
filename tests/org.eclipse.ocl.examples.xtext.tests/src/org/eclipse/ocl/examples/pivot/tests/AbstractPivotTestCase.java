@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.BaseStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
+import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
@@ -174,6 +175,22 @@ public class AbstractPivotTestCase extends TestCase
 				EPackage.Registry.INSTANCE.put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
 			if (!EPackage.Registry.INSTANCE.containsKey(XtextPackage.eNS_URI))
 				EPackage.Registry.INSTANCE.put(XtextPackage.eNS_URI, XtextPackage.eINSTANCE);
+		}
+	}
+
+	/**
+	 * Refine the standard CompleteOCLLoader to redirect the error callback to a TestCase.fail().
+	 */
+	public static final class TestCompleteOCLLoader extends CompleteOCLLoader
+	{
+		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
+			super(environmentFactory);
+		}
+
+		@Override
+		protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
+			TestCase.fail(primaryMessage + "\n\t" + detailMessage);
+			return false;
 		}
 	}
 

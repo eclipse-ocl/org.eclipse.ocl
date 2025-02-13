@@ -30,7 +30,16 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * DelegateEClassifierAdapter extends an EClassifier to cache its ValidationDelegate.
  */
-public class DelegateEClassifierAdapter extends AdapterImpl {
+public class DelegateEClassifierAdapter extends AdapterImpl
+{
+	/**
+	 *	Return the DelegateEClassifierAdapter for eClassifier, if there is one, or null if none.
+	 *
+	 * @since 1.23
+	 */
+	public static @Nullable DelegateEClassifierAdapter findAdapter(@NonNull EClassifier eClassifier) {
+		return (DelegateEClassifierAdapter) EcoreUtil.getAdapter(eClassifier.eAdapters(), DelegateEClassifierAdapter.class);
+	}
 
 	public static @NonNull DelegateEClassifierAdapter getAdapter(@NonNull EClassifier eClassifier) {
 		DelegateEClassifierAdapter adapter;
@@ -45,7 +54,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl {
 		return adapter;
 	}
 
-	protected /*@LazyNonNull*/ Map<String, ValidationDelegate> validationDelegateMap;
+	protected /*@LazyNonNull*/ Map<@NonNull String, @NonNull ValidationDelegate> validationDelegateMap;
 
 	public @Nullable ValidationDelegate getValidationDelegate(@NonNull String delegateURI) {
 		if (validationDelegateMap == null) {
@@ -54,12 +63,19 @@ public class DelegateEClassifierAdapter extends AdapterImpl {
 		return validationDelegateMap.get(delegateURI);
 	}
 	
-	public synchronized  @NonNull Map<String, ValidationDelegate> getValidationDelegates() {
-		Map<String, ValidationDelegate> validationDelegateMap2 = validationDelegateMap;
-		if (validationDelegateMap2 == null) {
+	public @NonNull Map<@NonNull String, @NonNull ValidationDelegate> getValidationDelegates() {
+		return getValidationDelegates(false);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public synchronized @NonNull Map<@NonNull String, @NonNull ValidationDelegate> getValidationDelegates(boolean force) {
+		Map<@NonNull String, @NonNull ValidationDelegate> validationDelegateMap2 = validationDelegateMap;
+		if (force || (validationDelegateMap2 == null)) {
 			EClassifier eClassifier = ClassUtil.nonNullState(getTarget());
-			validationDelegateMap = validationDelegateMap2 = new HashMap<String, ValidationDelegate>();
-			List<ValidationDelegate.Factory> factories = ValidationBehavior.INSTANCE.getFactories(eClassifier);
+			validationDelegateMap = validationDelegateMap2 = new HashMap<>();
+			List<ValidationDelegate.@NonNull Factory> factories = ValidationBehavior.INSTANCE.getFactories(eClassifier);
 			if (eClassifier instanceof EClass) {
 				for (EOperation eOperation : ((EClass)eClassifier).getEOperations()) {
 					if ((eOperation != null) && EcoreUtil.isInvariant(eOperation)) {					
@@ -76,13 +92,17 @@ public class DelegateEClassifierAdapter extends AdapterImpl {
 				}
 			}
 			if (!factories.isEmpty()) {
-				for (ValidationDelegate.Factory factory : factories) {
+				for (ValidationDelegate.@NonNull Factory factory : factories) {
 					ValidationDelegate validationDelegate = factory.createValidationDelegate(eClassifier);
 					if (validationDelegate != null) {
 						validationDelegateMap2.put(factory.getURI(), validationDelegate);
 					}
 				}
 			}
+		//	System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " => " + validationDelegateMap.size());
+		}
+		else {
+		//	System.out.println("getValidationDelegates " + NameUtil.debugSimpleName(this) + " for " + NameUtil.debugSimpleName(target) + " " + getTarget().getEPackage().getName() + "::" + getTarget().getName() + " = " + validationDelegateMap.size());
 		}
 		return validationDelegateMap2;
 	}
