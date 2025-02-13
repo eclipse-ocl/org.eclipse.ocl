@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
@@ -53,7 +54,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
 		Registry validationRegistry = EValidator.Registry.INSTANCE;
 		for (@NonNull Resource resource : resources) {
-			ValidationRegistryAdapter validationRegistryAdapter = ValidationRegistryAdapter.getAdapter(resource);
+			ValidationRegistryAdapter validationRegistryAdapter = ValidationRegistryAdapter.getAdapter(resource);		// XXX Use ResourceSet directly
 			validationRegistry = validationRegistryAdapter;
 			break;
 		}
@@ -72,7 +73,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 				List<LeafConstrainingNode> oldList = map.get(eClassifier);
 				assert oldList != null;
 				if (oldList.size() > 1) {
-					ArrayList<LeafConstrainingNode> newList = new ArrayList<LeafConstrainingNode>(oldList);
+					ArrayList<LeafConstrainingNode> newList = new ArrayList<>(oldList);
 					for (LeafConstrainingNode constraint : newList) {
 						if ("".equals(constraint.getLabel())) {
 							oldList.remove(constraint);
@@ -90,30 +91,31 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 
 	protected @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map,
 			@NonNull ValidityModel validityModel, @NonNull EPackage ePackage, @NonNull EValidator eValidator, @NonNull Monitor monitor) {
-		if (eValidator instanceof ComposedEValidator) {
+		if (eValidator instanceof ComposedEValidator) {			// XXX ComposedEValidator deprecated
 			for (@SuppressWarnings("null")@NonNull EValidator child : ((ComposedEValidator) eValidator).getChildren()) {
 				map = getConstraints(map, validityModel, ePackage, child, monitor);
 			}
 			return map;
 		}
-//		Map<String, EClassifier> name2eClassifier = new HashMap<String, EClassifier>();
-		Map<@NonNull Class<?>, @NonNull List<@NonNull EClassifier>> javaClass2eClassifiers = new HashMap<@NonNull Class<?>, @NonNull List<@NonNull EClassifier>>();
+		if (eValidator instanceof ExtendedEObjectValidator) {
+			eValidator = ((ExtendedEObjectValidator)eValidator).getEValidator();
+		}
+		Map<@NonNull Class<?>, @NonNull List<@NonNull EClassifier>> javaClass2eClassifiers = new HashMap<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (monitor.isCanceled()) {
 				return null;
 			}
-//			name2eClassifier.put(eClassifier.getName(), eClassifier);
 			Class<?> javaClass = eClassifier.getInstanceClass();
 			if (javaClass != null) {
 				List<@NonNull EClassifier> eClassifiers = javaClass2eClassifiers.get(javaClass);
 				if (eClassifiers == null) {
-					eClassifiers = new ArrayList<@NonNull EClassifier>();
+					eClassifiers = new ArrayList<>();
 					javaClass2eClassifiers.put(javaClass, eClassifiers);
 				}
 				eClassifiers.add(eClassifier);
 			}
 		}
-		for (Method method : eValidator.getClass().getDeclaredMethods()) {
+		for (Method method : eValidator.getClass().getMethods()) {
 			if (monitor.isCanceled()) {
 				return null;
 			}
@@ -176,7 +178,7 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 
 	protected @NonNull String print(@NonNull Map<EClassifier, @NonNull List<LeafConstrainingNode>> map) {
 		StringBuilder s = new StringBuilder();
-		ArrayList<EClassifier> sortedList = new ArrayList<EClassifier>(map.keySet());
+		ArrayList<EClassifier> sortedList = new ArrayList<>(map.keySet());
 		Collections.sort(sortedList, new Comparator<EClassifier>()
 		{
 			@Override
