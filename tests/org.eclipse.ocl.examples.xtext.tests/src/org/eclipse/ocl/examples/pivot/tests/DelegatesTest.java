@@ -155,14 +155,14 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 	public boolean usedLocalRegistry;
 
-	protected @NonNull OCLInternal configureMetamodelManagerForDelegate(@NonNull EPackage ePackage) {
+	protected @NonNull OCLInternal configureMetamodelManagerForDelegate(@NonNull EPackage ePackage, @NonNull ResourceSet resourceSet) {
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
 		DelegateDomain delegateDomain = adapter.getDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (delegateDomain == null) {
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
-		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getEnvironmentFactory();
-		return OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		return OCLInternal.newInstance(environmentFactory);
 	}
 
 	protected @NonNull ResourceSet createResourceSet() {
@@ -278,10 +278,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
-		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		environmentFactory.adapt(resourceSet);
+	//	environmentFactory.adapt(resourceSet);
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
 		if (message != null)
 			fail(message);
@@ -504,7 +504,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	public void doTest_queryExecution(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
 		initModel(resourceSet, modelName);
-		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -560,7 +560,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	@SuppressWarnings("null")
 	public void doTest_queryExecutionWithExceptions(@NonNull ResourceSet resourceSet, @NonNull String modelName) throws InvocationTargetException {
 		initModel(resourceSet, modelName);
-		OCL ocl = configureMetamodelManagerForDelegate(companyPackage);
+		OCL ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 
@@ -1672,7 +1672,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
 		try {
-			ocl.getEnvironmentFactory().adapt(resourceSet);
+		//	ocl.getEnvironmentFactory().adapt(resourceSet);
 			URI xmiURI = getTestModelURI("models/documentation/Tutorial.xmi");
 			Resource ecoreResource = resourceSet.getResource(getTestModelURI(ecoreURI), true);
 			EPackage ePackage = (EPackage) ecoreResource.getContents().get(0);
