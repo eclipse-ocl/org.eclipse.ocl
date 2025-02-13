@@ -128,22 +128,6 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 	}
 
-	/**
-	 * @since 1.23
-	 */
-	public static class CompleteOCLValidationDelegate extends OCLValidationDelegate
-	{
-		public CompleteOCLValidationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier classifier) {
-			super(delegateDomain, classifier);
-		}
-
-		@Override
-		protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
-				Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-			return super.validatePivot(eClassifier, value, diagnostics, context, constraintName, source, code);
-		}
-	}
-
 	protected final @NonNull OCLDelegateDomain delegateDomain;
 	protected final @NonNull EClassifier eClassifier;
 
