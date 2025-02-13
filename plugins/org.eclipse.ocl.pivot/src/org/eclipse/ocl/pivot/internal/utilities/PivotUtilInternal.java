@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
@@ -74,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -112,6 +114,32 @@ public class PivotUtilInternal //extends PivotUtil
 		String fileExtension = uri.fileExtension();
 		assert !fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 		return uri.trimFileExtension().appendFileExtension(fileExtension + PivotConstants.AS_EXTENSION_SUFFIX);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+		//	ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		//	if (resourceSet != null) {
+		//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//		if (environmentFactoryAdapter == null) {						// Null if working with user ResourceSet
+		//			environmentFactoryAdapter = environmentFactory.adapt(resourceSet);
+		//		}
+		//		assert environmentFactoryAdapter.getEnvironmentFactory() == environmentFactory;						// XXX
+		//	}
+			return environmentFactory;
+		}
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				return environmentFactoryAdapter.getEnvironmentFactory();
+			}
+		}
+		return null;
 	}
 
 	/**

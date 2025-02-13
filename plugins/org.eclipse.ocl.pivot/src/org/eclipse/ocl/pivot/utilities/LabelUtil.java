@@ -37,8 +37,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.labels.LabelSubstitutionLabelProvider;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 //import org.eclipse.ocl.ecore.Constraint;
 //import org.eclipse.ocl.ecore.delegate.InvocationBehavior;
@@ -46,6 +44,7 @@ import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 //import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 public class LabelUtil
 {
@@ -122,8 +121,7 @@ public class LabelUtil
 		context.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
 		context.put(EValidator.class, eValidator);
 	//	context.put(EValidator.ValidationDelegate.Registry.class, diagnostician.get);
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
-		context.put(EnvironmentFactory.class, environmentFactory);
+		ValidationContext.getEnvironmentFactory(context, null);			// Eager EnvironmentFactory resolution
 		return context;
 	}
 
