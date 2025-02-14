@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
@@ -1633,7 +1634,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			doTestRunnable(new TestRunnable() {
 				@Override
 				public void runWithThrowable() {
-					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(null); //GlobalEnvironmentFactory.getInstance();
+					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null); //GlobalEnvironmentFactory.getInstance();
 					OCL ocl = environmentFactory.createOCL();
 					//
 					//	Projects on classpath should be accessible as platform:/plugin or platform:/project

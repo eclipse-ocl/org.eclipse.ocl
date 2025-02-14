@@ -100,7 +100,7 @@ public class RoundTripTests extends XtextTestCase
 			return asResource;
 		}
 		finally {
-			xtextResource.dispose();
+		//	xtextResource.dispose();		-- inhibits proxification
 		}
 	}
 	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
@@ -144,7 +144,7 @@ public class RoundTripTests extends XtextTestCase
 		try {
 			ocl0.dispose();
 			if (!resourceSet.getURIConverter().exists(inputURI, null)) {
-				;				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
+				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
 				return;
 			}
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -158,7 +158,7 @@ public class RoundTripTests extends XtextTestCase
 			URI outputURI = inputURI.trimFileExtension().appendFileExtension("regenerated.ocl");
 			OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
 			EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
-			environmentFactory1.adapt(resourceSet);
+		//	environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
 			pivotResource1.save(XMIUtil.createSaveOptions());
@@ -297,6 +297,7 @@ public class RoundTripTests extends XtextTestCase
 		String actual = EmfFormatter.listToStr(pivotResource3.getContents()).replace(".regenerated.oclinecore", ".oclinecore");
 		assertEquals(expected, actual);
 		ocl3.dispose();
+		ocl1.activate();
 		ocl1.dispose();
 	}
 

@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.NotXMLContentHandlerImpl;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.cs2as.CompleteOCLCS2AS;
 
 public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
@@ -66,7 +65,7 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
-		return new CompleteOCLCS2AS(environmentFactory, (BaseCSResource)csResource, asResource);
+		return new CompleteOCLCS2AS(environmentFactory, csResource, asResource);
 	}
 
 	@Override
