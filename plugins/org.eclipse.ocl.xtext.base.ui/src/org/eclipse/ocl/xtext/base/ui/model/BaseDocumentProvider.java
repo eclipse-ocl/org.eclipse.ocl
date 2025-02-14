@@ -20,7 +20,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
@@ -46,8 +48,16 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 	protected void disconnected() {
 		OCL ocl2 = ocl;
 		if (ocl2 != null) {
+			EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ocl2.getEnvironmentFactory();
+			if (savedEnvironmentFactory != environmentFactory) {
+				environmentFactory.activate();
+			}
 			ocl = null;
 			ocl2.dispose();
+			if (savedEnvironmentFactory != environmentFactory) {
+				ThreadLocalExecutor.resetEnvironmentFactory();
+			}
 		}
 		super.disconnected();
 	}
@@ -77,7 +87,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 		if (resource != null) {
 			ResourceSet resourceSet = resource.getResourceSet();
 			if (resourceSet != null) {
-				getEnvironmentFactory().adapt(resourceSet);
+// XXX				getEnvironmentFactory().adapt(resourceSet);
 			}
 		}
 		super.loadResource(resource, document, encoding);

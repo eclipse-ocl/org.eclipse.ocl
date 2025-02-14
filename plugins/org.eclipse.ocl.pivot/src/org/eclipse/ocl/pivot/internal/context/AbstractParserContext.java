@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -56,8 +55,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
 {
-	private static final Logger logger = Logger.getLogger(AbstractParserContext.class);
-
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
@@ -99,7 +96,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				throw new ParserException("Failed to create Xtext resource for '" + uri + "'" + getDoSetupMessage());
 			}
 			CSResource baseResource = (CSResource)resource;
-			getEnvironmentFactory().adapt(resource);
+		// XXX	getEnvironmentFactory().adapt(resource);
 			baseResource.setParserContext(this);
 			if (inputStream != null) {
 				baseResource.load(inputStream, null);

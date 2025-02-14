@@ -110,7 +110,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			URI pivotURI = getTestFileURI(pivotName);
 			BaseCSResource xtextResource = (BaseCSResource) getResourceSet().createResource(inputURI);
 			JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
-			getEnvironmentFactory().adapt(xtextResource);
+		// XXX	getEnvironmentFactory().adapt(xtextResource);
 			xtextResource.load(null);
 			assertNoResourceErrors("Load failed", xtextResource);
 		//	CS2AS cs2as = xtextResource.findCS2AS();

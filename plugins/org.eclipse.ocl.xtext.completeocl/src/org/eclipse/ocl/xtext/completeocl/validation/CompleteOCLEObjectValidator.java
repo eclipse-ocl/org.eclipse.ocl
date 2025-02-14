@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
@@ -147,7 +148,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
 		initialize(environmentFactory);
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {

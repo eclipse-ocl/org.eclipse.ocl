@@ -127,7 +127,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private @Nullable List<@NonNull ResourceSet> extraResourceSets = null;
 	private final @NonNull ResourceSet asResourceSet;
-	protected final boolean externalResourceSetWasNull;
+	@Deprecated /* @deprecated no longer used */
+	protected final boolean externalResourceSetWasNull = false;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	private final @NonNull StandardLibraryInternal standardLibrary;
@@ -148,7 +149,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Debug lust of the System.identityHashCode of each active owners of an attach
 	 *
-	 * System.identityHashCode avoids problmes with finalized attachOwners.
+	 * System.identityHashCode avoids problems with finalized attachOwners.
 	 */
 	private List<@NonNull Integer> attachOwners = new ArrayList<>();
 
@@ -186,35 +187,21 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
-	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet, @Nullable ResourceSet asResourceSet) {
+	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {
+		assert zzASResourceSet == null;
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
 			PivotUtilInternal.debugPrintln("Create " + toDebugString()
-			+ " " + NameUtil.debugSimpleName(externalResourceSet) + " " + NameUtil.debugSimpleName(asResourceSet));
+			+ " " + NameUtil.debugSimpleName(userResourceSet) + " " + NameUtil.debugSimpleName(zzASResourceSet));
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
 		this.projectManager = projectManager;
-		if (asResourceSet == null) {
-			asResourceSet = createASResourceSet();
-		}
-		this.asResourceSet = asResourceSet;
-		if (externalResourceSet != null) {
-			this.externalResourceSetWasNull = false;
-			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
-		}
-		else {
-			this.externalResourceSetWasNull = true;
-			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
-			projectManager.initializeResourceSet(externalResourceSet);
-			Map<String, Object> extensionToFactoryMap = externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
-			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
-		}
+		this.asResourceSet = createASResourceSet();
+		this.externalResourceSet = createExternalResourceSet(userResourceSet);
+		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
@@ -226,26 +213,63 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void activate() {
+		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
+		}
+		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	}
+
+	/**
+	 * @deprecated The addition of an EnvironmentFactoryAdapter to a non-ResourceSet is inefficient.
+	 * Addition to a ResopurceSet is better but now redundant.
+	 */
+	@Deprecated
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
+		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
-			if (adapter.getEnvironmentFactory() != this) {
-				adapter = null;
-			}
+			assert adapter.getEnvironmentFactory() == this;
 		}
-		if (adapter == null) {
+		else {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
 		}
 		return adapter;
 	}
 
+	/**
+	 * @deprecated The addition of an EnvironmentFactoryAdapter to a ResourceSet is retained for semantic
+	 * compatibility. However the tests work fine if this method is changed to a stub.
+	 *
+	 * @since 1.23
+	 */
+	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
+		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
+		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
+		if (adapter == null) {
+			adapter = new EnvironmentFactoryAdapter(this, resourceSet);
+			eAdapters.add(adapter);
+		}
+		else {
+			assert adapter.getEnvironmentFactory() == this : "ResourceSet already has an EnvironmentFactoryAdapter for a diffent EnvironmentFactory.";
+		}
+		return adapter;
+	}
+
 	@Override
 	public void addExternal2AS(@NonNull External2AS external2as) {
-		Resource resource = external2as.getResource();
-		if ((resource != null) && ClassUtil.isRegistered(resource)) {
+		@NonNull Resource resource = external2as.getResource();
+		if (ClassUtil.isRegistered(resource)) {
 			ResourceSet externalResourceSet2 = getResourceSet();
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}
@@ -479,6 +503,44 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			executor.setInterpretedExecutor(interpretedExecutor);
 		} */
 		return interpretedExecutor;
+	}
+
+	/**
+	 * Create the ResourceSet 'using' whatever external user resources and other facilities from the userResourceSet.
+	 * We cannot just re-use the userResourceSet since any additional ES facilities resulting from OCL processing would be
+	 * inflicted on unsuspecting callers such as the Sample Ecore Model Editor. Copying the user resources is undesirable and
+	 * re-using impossible since they are contained by the userResourceSet. We therefore copy the resources as URIResourceMap entries.
+	 *
+	 * @since 1.23
+	 */
+	protected @NonNull ResourceSet createExternalResourceSet(@Nullable ResourceSet userResourceSet) {
+		ResourceSetImpl externalResourceSet = new ResourceSetImpl();
+		projectManager.initializeResourceSet(externalResourceSet);
+		Resource.Factory.Registry externalResourceFactoryRegistry = externalResourceSet.getResourceFactoryRegistry();
+		if (userResourceSet != null) {
+			externalResourceSet.setURIConverter(userResourceSet.getURIConverter());
+			Resource.Factory.Registry userResourceFactoryRegistry = userResourceSet.getResourceFactoryRegistry();
+			externalResourceFactoryRegistry.getContentTypeToFactoryMap().putAll(userResourceFactoryRegistry.getContentTypeToFactoryMap());
+			externalResourceFactoryRegistry.getExtensionToFactoryMap().putAll(userResourceFactoryRegistry.getExtensionToFactoryMap());
+			externalResourceFactoryRegistry.getProtocolToFactoryMap().putAll(userResourceFactoryRegistry.getProtocolToFactoryMap());
+			Map<URI, Resource> uriResourceMap = externalResourceSet.getURIResourceMap();
+			if (userResourceSet instanceof ResourceSetImpl) {
+				Map<URI, Resource> userResourceMap = ((ResourceSetImpl)userResourceSet).getURIResourceMap();
+				if (userResourceMap != null) {
+					uriResourceMap.putAll(userResourceMap);
+				}
+			}
+			for (Resource resource : userResourceSet.getResources()) {
+				Resource old = uriResourceMap.put(resource.getURI(), resource);
+				assert (old == null) || (old == resource);
+			}
+		}
+		else {
+			Map<String, Object> extensionToFactoryMap = externalResourceFactoryRegistry.getExtensionToFactoryMap();
+			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl()); //$NON-NLS-1$
+			extensionToFactoryMap.put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
+		}
+		return externalResourceSet;
 	}
 
 	/**
@@ -823,7 +885,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (eObject != null) {
 			Resource eResource = eObject.eResource();
 			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
-			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
 			if (bestHelper != null) {
 				return bestHelper.getASElement(this, pivotClass, eObject);
 			}
@@ -834,6 +895,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
+	@Override
 	public @NonNull ResourceSet getASResourceSet() {
 		return asResourceSet;
 	}

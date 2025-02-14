@@ -100,6 +100,15 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 		@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 	}
 
+	/**
+	 * Configure this as the EnvironmentFactory for the current thread.
+	 *
+	 * @since 1.23
+	 */
+	default void activate() {}
+
+	@Deprecated /* @deprecated only ResourceSet adapters are used and only internally - 3 calls without JUnit coverage remain
+		now that ThreadLocalExecutor.getEnvironmentFactory is available, the 3 adaptions are probably redundant */
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
 	/**
@@ -174,6 +183,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @return a new {@link OCL} instance attached to this {@link EnvironmentFactory}
 	 */
 	@NonNull OCL createOCL();
+
+	/**
+	 * @since 1.23
+	 */
+	@NonNull ResourceSet getASResourceSet();
 
 	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
