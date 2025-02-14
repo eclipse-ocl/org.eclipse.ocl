@@ -837,7 +837,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						}
 						ResourceSet resourceSet = editor.getResourceSet();
 						if (resourceSet != null) {
-							environmentFactory.adapt(resourceSet);
+					// XXX		environmentFactory.adapt(resourceSet);
 						}
 						csResource.setParserContext(parserContext);
 					}
