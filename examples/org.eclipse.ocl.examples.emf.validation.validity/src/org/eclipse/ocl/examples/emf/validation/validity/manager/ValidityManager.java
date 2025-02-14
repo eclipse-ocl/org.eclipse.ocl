@@ -693,7 +693,8 @@ public class ValidityManager
 			return;
 		}
 
-		ThreadLocalExecutor.resetEnvironmentFactory();
+	//	ThreadLocalExecutor.resetEnvironmentFactory();
+		ThreadLocalExecutor.setExecutor(null);
 		monitor.worked(ValidityModel.WORK_FOR_CLEAN_UP);
 		monitor.setTaskName("Creating model");
 		ValidityModel model2 = model = createModel(newResources);

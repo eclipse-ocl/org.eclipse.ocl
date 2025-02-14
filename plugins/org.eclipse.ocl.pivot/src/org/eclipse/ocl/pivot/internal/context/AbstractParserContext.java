@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -46,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -54,13 +54,26 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  * AbstractParserContext provides the default implementation of the ParserContext API that all clients
  * should extend.
  */
-public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
+public abstract class AbstractParserContext implements ParserContext
 {
-	private static final Logger logger = Logger.getLogger(AbstractParserContext.class);
+	private static final class ParsingResourceSet extends ResourceSetImpl
+	{
+		private final Resource.Factory.@NonNull Registry resourceFactoryRegistry;
+
+		protected ParsingResourceSet(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {
+			this.resourceFactoryRegistry = resourceFactoryRegistry;
+		}
+
+		@Override
+		public Registry getResourceFactoryRegistry() {
+			return resourceFactoryRegistry;
+		}
+	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
+	private @Nullable ResourceSet parsingResourceSet;
 
 	protected AbstractParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
 		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
@@ -68,7 +81,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 			this.uri = uri;
 		}
 		else {
-			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + ".essentialocl"));
+			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + "." + PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION));
 		}
 	}
 
@@ -84,14 +97,13 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
 		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
 		try {
-			ResourceSet parsingResourceSet = new ResourceSetImpl()
-			{
-				@Override
-				public Registry getResourceFactoryRegistry() {
-					return environmentFactory.getResourceSet().getResourceFactoryRegistry();
-				}
-			};
-			Resource resource = parsingResourceSet.createResource(uri);
+			ResourceSet parsingResourceSet2 = parsingResourceSet;
+			if (parsingResourceSet2 == null) {
+				Resource.Factory.Registry resourceFactoryRegistry = environmentFactory.getResourceSet().getResourceFactoryRegistry();
+				assert resourceFactoryRegistry != null;
+				this.parsingResourceSet = parsingResourceSet2 = new ParsingResourceSet(resourceFactoryRegistry);
+			}
+			Resource resource = parsingResourceSet2.createResource(uri);
 			if (resource == null) {
 				throw new ParserException("Failed to load '" + uri + "'" + getDoSetupMessage());
 			}
@@ -99,7 +111,6 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				throw new ParserException("Failed to create Xtext resource for '" + uri + "'" + getDoSetupMessage());
 			}
 			CSResource baseResource = (CSResource)resource;
-			getEnvironmentFactory().adapt(resource);
 			baseResource.setParserContext(this);
 			if (inputStream != null) {
 				baseResource.load(inputStream, null);

@@ -431,8 +431,9 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(children2Type, "self.Parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, children2Type, "Parent");
 		//
 		ocl.assertQueryTrue(parent, "child1 = child1");
-		ocl1.dispose();
 		ocl.dispose();
+		ocl1.activate();
+		ocl1.dispose();
 	}
 
 	/**

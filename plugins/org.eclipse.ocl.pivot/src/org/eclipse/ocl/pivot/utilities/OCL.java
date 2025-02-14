@@ -169,15 +169,14 @@ public class OCL
 	}
 
 	/**
-	 * Configure this OCL as the provider of the Endeactivation provided by deactivate().vironmentFactory for the current thread. This may be used to
+	 * Configure this OCL's EnvironmentFactory as the EnvironmentFactory for the current thread. This may be used to
 	 * reverse the deactivation provided by deactivate().
 	 *
 	 * @since 1.14
 	 */
 	public void activate() {
-		ThreadLocalExecutor.reset();
 		assert environmentFactory != null;
-		ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+		environmentFactory.activate();
 	}
 
 	/**
@@ -381,6 +380,7 @@ public class OCL
 	public synchronized void dispose() {
 		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
+		//	assert environmentFactory2 == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Disposing non-thread EnvironmentFactory";
 			environmentFactory2.detach(this);
 			environmentFactory2.detachRedundantThreadLocal();			// Detach the TLE ownership only if attachCount == 1
 			environmentFactory = null;
@@ -464,13 +464,13 @@ public class OCL
 			}
 		}
 		CSResource csResource = (CSResource) resource;
-		getEnvironmentFactory().adapt(csResource);
+	// XXX	getEnvironmentFactory().adapt(csResource);
 		csResource.load(null);
 		return csResource;
 	}
 
 	public @NonNull CSResource getCSResource(@NonNull URI uri, @NonNull InputStream inputStream) throws IOException {
-		Resource resource = new ResourceSetImpl().createResource(uri);
+		Resource resource = getResourceSet().createResource(uri);
 		if (!(resource instanceof CSResource)) {
 			String doSetup = environmentFactory.getDoSetupName(uri);
 			if (doSetup != null) {
@@ -481,7 +481,7 @@ public class OCL
 			}
 		}
 		CSResource csResource = (CSResource) resource;
-		getEnvironmentFactory().adapt(csResource);
+	// XXX	getEnvironmentFactory().adapt(csResource);
 		csResource.load(inputStream, null);
 		return csResource;
 	}

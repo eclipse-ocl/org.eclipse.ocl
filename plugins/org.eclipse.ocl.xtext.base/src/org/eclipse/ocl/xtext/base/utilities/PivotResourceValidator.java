@@ -186,8 +186,8 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 		previousCancelIndicator = thisCancelIndicator;
 		boolean locallyCreatedEnvironmentFactory = false;
-		if (environmentFactory == null) {
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resource);		// GC will eventually clean up
+		if (environmentFactory == null) {			// XXX revise
+			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resource.getResourceSet());		// GC will eventually clean up
 			locallyCreatedEnvironmentFactory = true;
 		}
 		assert environmentFactory != null;

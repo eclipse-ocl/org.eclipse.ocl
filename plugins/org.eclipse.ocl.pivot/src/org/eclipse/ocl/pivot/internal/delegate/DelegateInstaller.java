@@ -100,7 +100,7 @@ public class DelegateInstaller
 	/**
 	 * ExtendedEObjectValidatorAdapter adapts a ResourceSet to enable the ExtendedEObjectValidator functionality for
 	 * elements of the ResourceSet.
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static class ExtendedEObjectValidatorAdapter implements Adapter
 	{
@@ -191,7 +191,7 @@ public class DelegateInstaller
 	/**
 	 * An ExtendedEObjectValidator instance displaces and wraps the regular EObjectValidator entry in the EValidator.Registry.INSTANCE
 	 * to add support for the additional constraints and invariants supported by validation delegates.
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static class ExtendedEObjectValidator extends EObjectValidator
 	{
@@ -640,7 +640,7 @@ public class DelegateInstaller
 	 * ValidationContext entry that may be set true when validating an EObject whose ResourceSet lacks an ExtendedEObjectValidatorAdapter.
 	 * This prevents leakage of additional dynamic OCL constraints applied to an Xtext grammar leaking beyond the intended applications.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static final String SUPPRESS_DYNAMIC_OCL_DELEGATES = "suppressDynamicOCLdelegates";
 
@@ -989,7 +989,7 @@ public class DelegateInstaller
 	 * convert the Constraints in asResource into a format the regular Diagnostician supports..
 	 * @throws SemanticException
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public void installCompleteOCLDelegates(@NonNull ASResource asResource) throws SemanticException {
 		//
@@ -1269,7 +1269,7 @@ public class DelegateInstaller
 	/**
 	 * Remove the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations synthesized from asResource.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public void uninstallCompleteOCLDelegates(@NonNull ASResource asResource) { // XXX asymmetric wrt install
 		List<@NonNull EAnnotation> eAnnotationsToRemove = new ArrayList<>();
