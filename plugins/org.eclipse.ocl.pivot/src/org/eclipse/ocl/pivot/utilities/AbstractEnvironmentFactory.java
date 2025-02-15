@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -70,6 +72,7 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -83,6 +86,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -91,8 +95,11 @@ import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
@@ -253,6 +260,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 *
 	 * @since 1.23
 	 */
+	@Deprecated
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
@@ -1055,6 +1063,52 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public boolean isEvaluationTracingEnabled() {
 		return traceEvaluation;
+	}
+
+	@Override
+	public @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
+		Resource ecoreResource = ePackage.eResource();
+		if (ecoreResource == null) {
+			return null;
+		}
+		External2AS ecore2as = External2AS.findAdapter(ecoreResource, this);
+		if (ecore2as != null) {
+			if (ecore2as.getResource() != ecoreResource) {
+				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResource, ecoreResource.getURI()));
+			}
+		}
+		else {
+			ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+			List<Diagnostic> errors = ecoreResource.getErrors();
+			assert errors != null;
+			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+			if (message != null) {
+				throw new ParserException("Failed to load Ecore '" + ecoreResource.getURI() + message);
+			}
+		}
+		Model pivotModel = ecore2as.getASModel();				// XXX only need ASResource
+		List<Diagnostic> errors = pivotModel.eResource().getErrors();
+		assert errors != null;
+		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load Pivot from '" + ecoreResource.getURI() + message);
+		}
+		CSResource xtextResource = (CSResource)externalResourceSet.getResource(oclURI, true);
+		errors = xtextResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load '" + oclURI + message);
+		}
+		ICS2AS cs2as = xtextResource.getCS2AS(this);
+		ASResource asResource = cs2as.getASResource();
+		errors = asResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load Pivot from '" + oclURI + message);
+		}
+		return asResource;
 	}
 
 	@Override
