@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -38,7 +38,7 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		return delegateDomain != null ? new OCLDebugInvocationDelegate(delegateDomain, operation) : null;
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
@@ -64,6 +64,6 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 				}
 			}
 			return super.createInvocationDelegate(operation);
-		}	
+		}
 	}
 }
