@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -41,7 +41,7 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 		}
 		return new OCLDebugSettingDelegate(delegateDomain, structuralFeature);
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the EStructuralFeature.Internal.SettingDelegate.Factory.Registry
@@ -67,6 +67,6 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 			return super.createSettingDelegate(structuralFeature);
-		}	
+		}
 	}
 }
