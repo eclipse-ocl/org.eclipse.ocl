@@ -549,6 +549,6 @@ public class ExpressionInOCLImpl
 	public void preUnload() {
 	    assert eResource() != null;
 	//	assert getESObject() == null;
-		ASResourceImpl.PROXIES.println("No proxy needed for " + NameUtil.debugSimpleName(this));
+		ASResourceImpl.SET_PROXY.println("No proxy needed for " + NameUtil.debugSimpleName(this));
 	}
 } //ExpressionInOCLImpl

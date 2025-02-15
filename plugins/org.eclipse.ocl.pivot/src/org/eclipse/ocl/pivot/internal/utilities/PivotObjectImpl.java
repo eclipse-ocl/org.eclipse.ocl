@@ -62,7 +62,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 		StringBuilder s = null;
-		if (ASResourceImpl.PROXIES.isActive()) {
+		if (ASResourceImpl.RESOLVE_PROXY.isActive()) {
 			s = new StringBuilder();
 			s.append("eResolveProxy " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxy.eProxyURI());
 		}
@@ -87,7 +87,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		}
 		if (s != null) {
 			s.append(" => " + NameUtil.debugSimpleName(resolvedProxy));
-			ASResourceImpl.PROXIES.println(s.toString());
+			ASResourceImpl.RESOLVE_PROXY.println(s.toString());
 		}
 		return resolvedProxy;
 	}
@@ -95,7 +95,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	@Override
 	public void eSetProxyURI(URI uri) {
 		StringBuilder s = null;
-		ASResourceImpl.PROXIES.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
+		ASResourceImpl.SET_PROXY.println("eSetProxyURI " + NameUtil.debugSimpleName(this) + " " + uri);
 		super.eSetProxyURI(uri);
 	}
 
@@ -157,18 +157,18 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		else {										// else need a CS
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
-				ASResourceImpl.PROXIES.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+				ASResourceImpl.SET_PROXY.println("No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
 				return;
 			}
 			// Look for a specific CS
 			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
 			if (csi2asMapping == null) {
-				ASResourceImpl.PROXIES.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
+				ASResourceImpl.SET_PROXY.println("No CSI2ASMappings when proxifying  " + NameUtil.debugSimpleName(this));
 				return;
 			}
 			EObject csElement = csi2asMapping.getCSElement(this);
 			if (csElement == null) {		// If a CS Element references that AS Element
-				ASResourceImpl.PROXIES.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+				ASResourceImpl.SET_PROXY.println("No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
 			}
 			esProxyTarget = csElement;
 			if ((esProxyTarget == null) && !environmentFactory.isDisposing()) {
@@ -185,7 +185,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			eSetProxyURI(uri);
 		}
 		else {
-			ASResourceImpl.PROXIES.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
+			ASResourceImpl.SET_PROXY.println("No ES or CS Object when proxifying " + NameUtil.debugSimpleName(this));
 		}
 		this.esObject = null;
 	}
