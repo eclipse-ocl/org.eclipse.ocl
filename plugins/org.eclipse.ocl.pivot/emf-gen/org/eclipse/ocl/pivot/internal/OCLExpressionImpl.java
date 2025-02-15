@@ -351,6 +351,14 @@ implements OCLExpression {
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;
+	}
+
+	/**
 	 * Return true if the FlowAnalysis proves that this expression is not null-valued.
 	 *
 	 * An UnsupportedOperationException is the usual consequence of a failure to ensure that this expression's eResource()

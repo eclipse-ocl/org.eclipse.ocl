@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -358,4 +359,8 @@ public class MapLiteralPartImpl extends ElementImpl implements MapLiteralPart
 		return visitor.visitMapLiteralPart(this);
 	}
 
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;			// MapLiteralPart cannot be referenced
+	}
 } //MapLiteralPartImpl
