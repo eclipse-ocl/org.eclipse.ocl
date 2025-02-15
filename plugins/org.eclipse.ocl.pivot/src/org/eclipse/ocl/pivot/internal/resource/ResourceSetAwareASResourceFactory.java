@@ -96,7 +96,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	//	if (projectManager == null) {
 	//		projectManager = OCL.CLASS_PATH;
 	//	}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);		// XXX revise
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);		// XXX revise
 //		environmentFactory.getMetamodelManager();		// Create the AS ResourceSet adapter
 		return environmentFactory.getResourceSet();		// Return the auto-created CS ResourceSet
 	}
