@@ -118,70 +118,30 @@ public class ValidateTests extends AbstractValidateTests
 		super.tearDown();
 	}
 
-	public void zztestValidate_Simple_oclinecore() throws IOException, InterruptedException {
-		EPackage ecoreEPackage = EcorePackage.eINSTANCE;
-		EcoreUtil.setAnnotation(ecoreEPackage, PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, "key", "value");
+	public void testValidate_Simple_oclinecore() throws IOException, InterruptedException {
 		//
 		//	Create model
 		//
-		OCL ocl1 = createOCL();
-		URI inputURI = getTestFile("Simple.oclinecore", ocl1, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
-		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
-		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
-		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
-		ThreadLocalExecutor.resetEnvironmentFactory();
-
-
-
-
 		OCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
-	//	Resource ecoreResource = doLoadOCLinEcore(ocl, getTestModelURI("models/oclinecore/Simple.oclinecore"));
-	//	EPackage simplePackage = (EPackage) ecoreResource.getContents().get(0);
-
-		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
-		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(simplePackage, oclURI);
-//XXX		completeOCLEObjectValidator.initialize(environmentFactory);
-//XXX		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
-
-		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
-		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
-// XXX			validationRegistry.put(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, new OCLValidationDelegateFactory.CompleteOCL());
-		}
-
-
-	//	ThreadLocalExecutor.resetEnvironmentFactory();
-
+		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
+		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		//
+		//	Create test model
+		//
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 		EObject testInstance = eCreate(simplePackage, "Simple");
 		testResource.getContents().add(testInstance);
-
 		//
-		//	Basic validation - just OCLinEcore
+		//	Validate it
 		//
-		String template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-		String objectLabel = LabelUtil.getLabel(testInstance);
-		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
-			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel),
-			StringUtil.bind(template, "CompleteOCLAlwaysFalse", objectLabel));
+		String objectLabel1 = LabelUtil.getLabel(testInstance);
+		checkValidationDiagnostics(testInstance, Diagnostic.ERROR,
+			StringUtil.bind(VIOLATED_TEMPLATE, "OCLinEcoreAlwaysFalse", objectLabel1));
 
-	//	ThreadLocalExecutor.resetEnvironmentFactory();
-
-	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-	//	completeOCLEObjectValidator.initialize(environmentFactory);
-	//	ResourceSet testResourceSet = new ResourceSetImpl();
-	//	ValidationRegistryAdapter.getAdapter(testResourceSet).putWithGlobalDelegation(validatePackage1, completeOCLEObjectValidator);
-
-		//
-		//	Basic revalidation - just OCLinEcore active, CompleteOCL quiescent
-		//
-		template = VIOLATED_TEMPLATE; //PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
-		objectLabel = LabelUtil.getLabel(testInstance);
-		checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
-			StringUtil.bind(template, "OCLinEcoreAlwaysFalse", objectLabel));
-
-
+		testResource.unload();
 		ocl.dispose();
 	}
 
