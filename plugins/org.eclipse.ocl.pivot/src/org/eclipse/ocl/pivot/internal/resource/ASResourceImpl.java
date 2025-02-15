@@ -68,11 +68,18 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public static final TracingOption CHECK_IMMUTABILITY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/checkImmutability"); //$NON-NLS-1$
 
 	/**
-	 * If PROXIES is set active, the proxification and deproxification of the PivotEObjectImpl.esObject is traced.
+	 * If RESOLVE_PROXY is set active, the deproxification of the PivotEObjectImpl.esObject is traced.
 	 *
 	 * @since 1.23
 	 */
-	public static final TracingOption PROXIES = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/proxies"); //$NON-NLS-1$
+	public static final TracingOption RESOLVE_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/resolve-proxy"); //$NON-NLS-1$
+
+	/**
+	 * If SET_PROXY is set active, the proxification of the PivotEObjectImpl.esObject is traced.
+	 *
+	 * @since 1.23
+	 */
+	public static final TracingOption SET_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/set-proxy"); //$NON-NLS-1$
 
 	/**
 	 * QVTd JUnit tests may set this false to load the saved XMI as text for validation that it is free of
