@@ -16,9 +16,11 @@ import java.util.Map;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -26,6 +28,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -164,4 +167,72 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
 	}
+
+	@Override
+	public @Nullable EObject getESObject() {
+		EObject esObject = super.getESObject();
+		assert esObject == null;
+	/*	Parameter asParameter = getRepresentedParameter();
+		if (asParameter != null) {
+			return asParameter.getESObject();		// XXX else cs
+		}
+		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
+		return getType().getESObject();
+	//	}
+	//	getContextVar */
+		return esObject;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		EObject esObject = super.getESObject();
+		assert esObject == null;
+		Parameter asParameter = getRepresentedParameter();
+		if (asParameter != null) {
+			return ((PivotObjectImpl)asParameter).getReloadableEObjectOrURI();		// XXX else cs
+		}
+		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
+		return ((PivotObjectImpl)getType()).getReloadableEObjectOrURI();
+	}
+
+	/**
+	 * @since 1.22
+	 *
+	@Override
+	protected boolean setReloadableProxy() {
+		assert super.getESObject() == null;
+		EReference eContainmentFeature = eContainmentFeature();
+		if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
+		//	assert representedParameter == null;		-- null for OCL self, non-null for QVTd this
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
+			assert representedParameter == null;
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
+			assert representedParameter != null;
+			Notifier esProxyTarget = ((PivotObjectImpl)representedParameter).getReloadableNotifier();		// XXX else cs
+			if (esProxyTarget instanceof EObject) {
+				URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
+				eSetProxyURI(uri);
+				return true;
+			}
+			else {
+				assert false;			// XXX
+				eSetProxyURI(NO_UNLOAD_PROXY_URI);
+				return false;
+			}
+		}
+		else {
+			assert false;			// XXX
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+	} */
 } //ParameterVariableImpl

@@ -876,6 +876,14 @@ implements Constraint {
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -891,8 +899,7 @@ implements Constraint {
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
 	}
 } //ConstraintImpl
