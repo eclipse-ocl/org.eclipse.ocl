@@ -141,8 +141,8 @@ public class ValidateTests extends AbstractValidateTests
 
 		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(simplePackage, oclURI);
-		completeOCLEObjectValidator.initialize(environmentFactory);
-		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
+//XXX		completeOCLEObjectValidator.initialize(environmentFactory);
+//XXX		completeOCLEObjectValidator.initializeDelegation(environmentFactory);
 
 		EValidator.ValidationDelegate.Registry validationRegistry = EValidator.ValidationDelegate.Registry.INSTANCE;
 		if (/*forceInitialization ||*/ !validationRegistry.containsKey(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC)) {
