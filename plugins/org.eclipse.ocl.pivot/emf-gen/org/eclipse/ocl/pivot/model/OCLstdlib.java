@@ -240,6 +240,13 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		/**
+		 * Overridden to avoid computing proxies for the shared instance.
+		 * @since 1.24
+		 */
+		@Override
+		public void preUnload() {}
+
+		/**
 		 * Overridden to inhibit unloading of the shared instance.
 		 */
 		@Override

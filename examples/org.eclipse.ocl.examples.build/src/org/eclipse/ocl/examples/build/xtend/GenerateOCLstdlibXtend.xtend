@@ -324,6 +324,13 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 			
 					/**
+					 * Overridden to avoid computing proxies for the shared instance.
+					 * @since 1.23
+					 */
+					@Override
+					public void preUnload() {}
+			
+					/**
 					 * Overridden to inhibit unloading of the shared instance.
 					 */
 					@Override
