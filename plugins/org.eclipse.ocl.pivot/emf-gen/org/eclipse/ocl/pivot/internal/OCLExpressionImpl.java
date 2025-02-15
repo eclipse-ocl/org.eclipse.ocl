@@ -350,6 +350,11 @@ implements OCLExpression {
 		return visitor.visitOCLExpression(this);
 	}
 
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		return null;
+	}
+
 	/**
 	 * Return true if the FlowAnalysis proves that this expression is not null-valued.
 	 *

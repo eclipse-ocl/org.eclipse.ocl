@@ -27,17 +27,15 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -53,7 +51,7 @@ import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
 
 /**
- * The BaseCSXMIResourceImpl implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
+ * The BaseCSXMIResource implementation of BaseCSResource that ensures that loading resolves references to CS/ES elements
  * to equivalent AS references and conversely ensures that saving replaces AS references by CS/ES references.
  * <br>
  * Derived implementations provide the appropriate CS2AS mapping.
@@ -61,7 +59,7 @@ import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
  * While this implementation supports saving as XMI rather than Xtext serialization, it is not intended to be used as a regular
  * Resource. It is not expected to be added to a ResourceSet or to be unloaded then reloaded. (A reload should be a load from XMI.)
  */
-public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements CSResource
+public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSResource
 {
 	/**
 	 * CSXMISaveHelper overloads getHREF to persist references to internal AS elements as their persistable CS/ES equivalents.
@@ -81,10 +79,13 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 
 		@Override
 		public String getHREF(EObject obj) {
+			String href2 = getHREF2(obj);
+		//	System.out.println(obj + " => " + href2);		// XXX
+			return href2;
+		}
+
+		public String getHREF2(EObject obj) {
 			if (obj instanceof ElementImpl) {										// AS is not persisted and so not referenceable
-				if (obj instanceof Parameter) {
-					getClass();			// XXX
-				}
 				Object reloadableEObjectOrURI = ((ElementImpl)obj).getReloadableEObjectOrURI();
 				if (reloadableEObjectOrURI instanceof EObject) {
 					EObject reloadableEObject = (EObject)reloadableEObjectOrURI;
@@ -106,7 +107,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 				else {																// No replacement available
 				//	throw new NullPointerException("getHREF");
 				}
-			/*	//	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
+			/*	XXX //	Use known ES			-- legacy code that should be in relevant getReloadableEObjectOrURI()
 				if (obj instanceof Model) {
 					return ((Model)obj).getExternalURI();
 				}
@@ -236,7 +237,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	/**
 	 * Creates an instance of the resource.
 	 */
-	protected BaseCSXMIResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+	protected BaseCSXMIResource(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 	}
@@ -262,11 +263,11 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	@Override
-	protected @NonNull XMLSave createXMLSave() {
+	protected abstract @NonNull XMLSave createXMLSave();// {
 	//	XMIHelperImpl xmlHelper = new CSXMISaveHelper(this, ((OCLCSResourceSaveImpl)this).csResource);
 	//	return new CSXMISave(xmlHelper);
-		throw new UnsupportedOperationException();			// XXX move save classes down a level
-	}
+//		throw new UnsupportedOperationException();			// XXX move save classes down a level
+//	}
 
 	public @NonNull String getASContentType() {
 		return asResourceFactory.getContentType();
@@ -322,8 +323,10 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	}
 
 	@Override
+	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
 			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
@@ -332,7 +335,7 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 			}
 			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, csResourceSet, null);
 		}
-		return environmentFactory;
+		return environmentFactory; */
 	}
 
 	@Override
@@ -361,7 +364,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 	 */
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
 
-
 	@Override
 	public ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
 	//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
@@ -373,7 +375,6 @@ public abstract class BaseCSXMIResourceImpl extends XMIResourceImpl implements C
 		getWarnings().addAll(consumer.getResult(Severity.WARNING));
 
 		return cs2as.getASResource();
-	//	throw new UnsupportedOperationException();
 	}
 
 	@Override

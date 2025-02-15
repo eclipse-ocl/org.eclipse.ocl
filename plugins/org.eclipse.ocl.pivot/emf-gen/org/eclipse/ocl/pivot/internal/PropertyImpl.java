@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -614,6 +612,8 @@ implements Property {
 	 */
 	@Override
 	public void setOpposite(Property newOpposite) {
+		assert (eResource() == null) || (eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
+		assert (newOpposite == null) || (newOpposite.eResource() == null) || (newOpposite.eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
@@ -1772,26 +1772,6 @@ implements Property {
 	 * @since 1.23
 	 */
 	@Override
-	protected void resetESObject() {
-		ASResource asResource = (ASResource)eResource();
-		super.resetESObject();
-		Property asOpposite = basicGetOpposite();
-		if (asOpposite != null) {
-			Resource eResource = asOpposite.eResource();
-			if ((eResource != null) && (eResource != asResource)) {
-				asOpposite.setOwningClass(null);
-			}
-			asOpposite.setType(null);
-			asOpposite.setOpposite(null);
-			setOpposite(null);
-		}
-		setType(null);				// Easier to set them all than just the base_xxx ones
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
 		org.eclipse.ocl.pivot.Class asOwningClass = getOwningClass();
 		if (asOwningClass != null) {
@@ -1808,4 +1788,45 @@ implements Property {
 		}
 		return null;
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("bag0".equals(newName)) {
+			getClass();				// XXX
+		}
+		super.setName(newName);
+	}
+
+	/**
+	 * @return
+	 * @since 1.22
+	 *
+	@Override
+	protected boolean setReloadableProxy() {		// XXX getReloadableNotifier
+		if ("ownedContents".equals(name)) {
+			getClass();				// XXX
+		}
+	//	if (isIsDerived() || isIsImplicit() || isIsTransient() || isIsVolatile()) {
+		if (isIsImplicit()) {
+		//	assert getESObject() == null;				Ecore::EAttribute.eAttributeType has esObject
+			eSetProxyURI(NO_UNLOAD_PROXY_URI);
+			return false;
+		}
+		else {
+			boolean isReloadableProxy = super.setReloadableProxy();
+			Property asOpposite = basicGetOpposite();					// XXX ??? redundant
+			if (asOpposite != null) {
+				ASResource asResource = (ASResource)eResource();
+				Resource eResource = asOpposite.eResource();
+				if ((eResource != null) && (eResource != asResource)) {
+					asOpposite.setOwningClass(null);
+				}
+				asOpposite.setType(null);
+				asOpposite.setOpposite(null);
+				setOpposite(null);
+			}
+			setType(null);				// Easier to set them all than just the base_xxx ones
+			return isReloadableProxy;
+		}
+	} */
 } //PropertyImpl

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -29,14 +29,14 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
  *		.getFactory(OCLDelegateDomain.OCL_DELEGATE_URI);
  * </pre>
- * from which a query delegate may be created by: 
+ * from which a query delegate may be created by:
  * <pre>
  * QueryDelegate delegate = factory.createQueryDelegate(
  * 		classifier,                 // the context type
  * 		map-of-name-to-classifier,  // the external variable names and types
  * 		string);                    // the OCL expression text
  * </pre>
- * and (repeatedly) invoked by: 
+ * and (repeatedly) invoked by:
  * <pre>
  * Object result = delegate.execute(
  * 		target,                     // the context instance
@@ -60,7 +60,7 @@ public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory imp
 		}
 		return new OCLDebugQueryDelegate(delegateDomain, context, parameters, expression);
 	}
-	
+
 	/**
 	 * The Global variant of the Factory delegates to a local ResourceSet factory if one
 	 * can be located at the QueryDelegate.Factory.Registry
@@ -87,6 +87,6 @@ public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory imp
 				}
 			}
 			return super.createQueryDelegate(context, parameters, expression);
-		}	
+		}
 	}
 }

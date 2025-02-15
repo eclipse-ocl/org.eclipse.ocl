@@ -127,7 +127,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			name = ((NamedElement)asStereotypedElement).getName();
 		}
 		else if (asStereotypedElement instanceof DynamicElement) {
-			EObject eObject = asStereotypedElement.getESObject();
+			EObject eObject = ((DynamicElement)asStereotypedElement).getESObject();
 			if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {
 				name = ((org.eclipse.uml2.uml.NamedElement)eObject).getName();
 			}
@@ -255,9 +255,6 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		return true;
 	}
 
-	/**
-	 * @since 1.23
-	 */
 	@Override
 	public boolean needsPivotValidator() {
 		return true;			// AS Constraints mujst be handled by a Composed PivotEObjectValidator

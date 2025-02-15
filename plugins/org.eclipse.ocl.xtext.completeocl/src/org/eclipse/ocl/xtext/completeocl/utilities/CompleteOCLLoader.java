@@ -190,7 +190,6 @@ public abstract class CompleteOCLLoader
 		return allOk;
 	}
 
-
 	/**
 	 * Install each of the oclURIs documents, then loadMetamodels and finally installPackages.
 	 *
@@ -241,7 +240,7 @@ public abstract class CompleteOCLLoader
 		}
 	}
 
-	public boolean loadDocument(@NonNull URI oclURI) {
+	public boolean loadDocument(@NonNull URI oclURI) throws SemanticException {
 		return loadDocument(oclURI, null);
 	}
 
@@ -279,6 +278,7 @@ public abstract class CompleteOCLLoader
 	/**
 	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
 	 * Return null after invoking error() to display any errors in a pop-up.
+	 * @throws SemanticException
 	 */
 	public Resource loadResource(@NonNull URI oclURI) throws SemanticException {
 		return loadResource(oclURI, null);
@@ -288,6 +288,7 @@ public abstract class CompleteOCLLoader
 	 * Load the Xtext resource from oclURI, then convert it to a pivot representation and return it.
 	 * If sErrors is null, return null after invoking error() to display any errors in a pop-up.
 	 * Else returns error messages to sErrors.
+	 * @throws SemanticException
 	 */
 	public Resource loadResource(@NonNull URI oclURI, @Nullable StringBuilder sErrors) {
 		CompleteOCLStandaloneSetup.init();
@@ -347,7 +348,7 @@ public abstract class CompleteOCLLoader
 					DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
 					try {
 						delegateInstaller.installCompleteOCLDelegates(asResource);
-					return asResource;
+						return asResource;
 					} catch (SemanticException e) {
 						// XXX Auto-generated catch block
 						e.printStackTrace();

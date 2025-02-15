@@ -151,8 +151,6 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	 */
 	public static class Global extends OCLValidationDelegateFactory
 	{
-		public static final @NonNull Global INSTANCE = new Global();
-
 		public Global() {
 			super(PivotConstants.OCL_DELEGATE_URI_PIVOT, true);
 		}
@@ -171,8 +169,74 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 			super(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC, true);
 		}
 
-		public Dynamic(@NonNull String delegateURI, boolean isGlobal) {
+		public Dynamic(String delegateURI, boolean isGlobal) {
 			super(delegateURI, isGlobal);
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject,
+				Map<Object, Object> context, EOperation invariant,
+				String expression) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eClass, eObject, context, invariant, expression);
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject,
+				Map<Object, Object> context, String constraint,
+				String expression) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eClass, eObject, context, constraint, expression);
+		}
+
+		@Override
+		public boolean validate(EDataType eDataType, Object value,
+				Map<Object, Object> context, String constraint,
+				String expression) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eDataType, value, context, constraint, expression);
+		}
+
+		@Override
+		public boolean validate(@NonNull EClass eClass,
+				@NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
+				Map<Object, Object> context, @NonNull EOperation invariant,
+				String expression, int severity, String source, int code) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eClass, eObject, diagnostics, context, invariant,
+				expression, severity, source, code);
+		}
+
+		@Override
+		public boolean validate(@NonNull EClass eClass,
+				@NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
+				Map<Object, Object> context, @NonNull String constraint,
+				String expression, int severity, String source, int code) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eClass, eObject, diagnostics, context, constraint,
+				expression, severity, source, code);
+		}
+
+		@Override
+		public boolean validate(@NonNull EDataType eDataType,
+				@NonNull Object value, @Nullable DiagnosticChain diagnostics,
+				Map<Object, Object> context, @NonNull String constraint,
+				String expression, int severity, String source, int code) {
+			if (Boolean.TRUE.equals(context.get(DelegateInstaller.SUPPRESS_DYNAMIC_OCL_DELEGATES))) {
+				return true;			// Skip dynamic
+			}
+			return super.validate(eDataType, value, diagnostics, context, constraint,
+				expression, severity, source, code);
 		}
 	}
 }

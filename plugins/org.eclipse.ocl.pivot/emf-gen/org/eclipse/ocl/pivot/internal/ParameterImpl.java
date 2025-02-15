@@ -416,4 +416,17 @@ public class ParameterImpl
 		return visitor.visitParameter(this);
 	}
 
+	/**
+	 * @since 1.22
+	 *
+	@Override
+	protected boolean setReloadableProxy() {
+		Operation asOperation = getOwningOperation();
+		if ((asOperation instanceof OperationImpl) && ((OperationImpl)asOperation).isIsImplicit()) {
+			return setReloadableProxy(null);
+		}
+		else {
+			return super.setReloadableProxy();
+		}
+	} */
 } //ParameterImpl

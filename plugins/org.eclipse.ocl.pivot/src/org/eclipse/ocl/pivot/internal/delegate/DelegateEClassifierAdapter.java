@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  * 	 E.D.Willink - Bug 306079
  *******************************************************************************/
@@ -62,7 +62,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 		}
 		return validationDelegateMap.get(delegateURI);
 	}
-	
+
 	public @NonNull Map<@NonNull String, @NonNull ValidationDelegate> getValidationDelegates() {
 		return getValidationDelegates(false);
 	}
@@ -78,7 +78,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 			List<ValidationDelegate.@NonNull Factory> factories = ValidationBehavior.INSTANCE.getFactories(eClassifier);
 			if (eClassifier instanceof EClass) {
 				for (EOperation eOperation : ((EClass)eClassifier).getEOperations()) {
-					if ((eOperation != null) && EcoreUtil.isInvariant(eOperation)) {					
+					if ((eOperation != null) && EcoreUtil.isInvariant(eOperation)) {
 						List<DelegateDomain> opDelegateDomains = InvocationBehavior.INSTANCE.getDelegateDomains(eOperation);
 						for (DelegateDomain opDelegateDomain : opDelegateDomains) {
 							if (opDelegateDomain != null) {

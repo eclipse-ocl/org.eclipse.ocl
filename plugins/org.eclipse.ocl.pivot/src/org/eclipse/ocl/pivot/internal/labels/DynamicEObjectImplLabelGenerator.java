@@ -31,9 +31,9 @@ public final class DynamicEObjectImplLabelGenerator extends AbstractLabelGenerat
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 	public static void initialize(Registry registry) {
-		registry.install(DynamicEObjectImpl.class, new DynamicEObjectImplLabelGenerator());		
+		registry.install(DynamicEObjectImpl.class, new DynamicEObjectImplLabelGenerator());
 	}
-	
+
 	public DynamicEObjectImplLabelGenerator() {
 		super(DynamicEObjectImpl.class);
 	}
@@ -56,10 +56,10 @@ public final class DynamicEObjectImplLabelGenerator extends AbstractLabelGenerat
 				}
 			}
 		}
-		IItemLabelProvider labeler = (IItemLabelProvider) defaultAdapterFactory.adapt(object, IItemLabelProvider.class);		
+		IItemLabelProvider labeler = (IItemLabelProvider) defaultAdapterFactory.adapt(object, IItemLabelProvider.class);
 		if (labeler == null) {
 			labeler = (IItemLabelProvider) reflectiveAdapterFactory.adapt(object, IItemLabelProvider.class);
-		}		
+		}
 		if (labeler != null) {
 			labelBuilder.appendString(labeler.getText(object).replace(" ", "::"));
 		}

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -62,7 +63,7 @@ public interface External2AS
 	/**
 	 * Return the map of all external objects to all AS elements.
 	 */
-	@Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap();
+	@Nullable Map<@NonNull Notifier, @NonNull Element> getCreatedMap();
 
 	/**
 	 * Return the external resource.

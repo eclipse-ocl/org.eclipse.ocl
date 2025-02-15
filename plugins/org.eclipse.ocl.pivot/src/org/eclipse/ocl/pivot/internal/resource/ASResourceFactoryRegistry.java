@@ -67,7 +67,11 @@ public class ASResourceFactoryRegistry
 		}
 	}
 
-	public static final @NonNull ASResourceFactoryRegistry INSTANCE = new ASResourceFactoryRegistry();
+	/**
+	 * The INSTANCE maintains a registry of known AS resource factories. OCL-based aplications may assign
+	 * a derived instance to override createEnvironmentFactory.
+	 */
+	public static @NonNull ASResourceFactoryRegistry INSTANCE = new ASResourceFactoryRegistry();
 
 	protected final @NonNull Map<@NonNull String, @NonNull ASResourceFactoryContribution> contentType2resourceFactory = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull ASResourceFactoryContribution> extension2resourceFactory = new HashMap<>();
@@ -139,19 +143,20 @@ public class ASResourceFactoryRegistry
 				return environmentFactoryAdapter.getEnvironmentFactory();
 			}
 		}
-		return new PivotEnvironmentFactory(projectManager, externalResourceSet, null);
+		return createEnvironmentFactory(projectManager, externalResourceSet, null);
 	}
 
 	/**
 	 * @since 1.10
 	 */
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
-		if (csResourceSet != null) {
-			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
-			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
-			}
-		}
+	//	assert PivotUtilInternal.debugDeprecation("ASResourceFactoryRegistry.createEnvironmentFactory");
+	//	if (csResourceSet != null) {
+	//		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(csResourceSet);
+	//		if (environmentFactoryAdapter != null) {
+	//			return environmentFactoryAdapter.getEnvironmentFactory();
+	//		}
+	//	}
 		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
 	}
 

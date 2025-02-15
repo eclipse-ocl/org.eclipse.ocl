@@ -17,16 +17,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
@@ -41,6 +44,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -70,6 +74,7 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -83,6 +88,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -91,8 +97,11 @@ import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.ObjectValue;
@@ -108,6 +117,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
 
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
+
 	/**
 	 * @since 1.23
 	 */
@@ -121,6 +132,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			System.out.println(s.toString());
 		}
 	}
+
+	/**
+	 * Leak debugging aid. Set non-null by AbstractPivotTestCase to diagnose EnvironmentFactory construction and finalization.
+	 *
+	 * @since 1.14
+	 */
+	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
+
+	/**
+	 * @since 1.7
+	 */
+	public static int CONSTRUCTION_COUNT = 0;
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
@@ -148,7 +171,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Debug lust of the System.identityHashCode of each active owners of an attach
 	 *
-	 * System.identityHashCode avoids problmes with finalized attachOwners.
+	 * System.identityHashCode avoids problems with finalized attachOwners.
 	 */
 	private List<@NonNull Integer> attachOwners = new ArrayList<>();
 
@@ -163,20 +186,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * True once dispose() has started.
 	 */
 	private boolean isDisposing = false;
-
-	/**
-	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
-	 * Beware, stale EnvironmentFactory instances may live on beyond a test until GC catches up. To ensure
-	 * timely GC, set DEBUG_GC (and probably DEBUG_ID) true in the PivotTestCase static initialization.
-	 *
-	 * @since 1.14
-	 */
-	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
-
-	/**
-	 * @since 1.7
-	 */
-	public static int CONSTRUCTION_COUNT = 0;
 
 	@Deprecated /* @deprecated supply null asResourceSet argument */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
@@ -204,7 +213,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (externalResourceSet != null) {
 			this.externalResourceSetWasNull = false;
 			this.externalResourceSet = externalResourceSet;
-			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);
+			ASResourceFactoryRegistry.INSTANCE.configureResourceSets(null, asResourceSet);				// XXX externalResourceSet
 		}
 		else {
 			this.externalResourceSetWasNull = true;
@@ -224,20 +233,102 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
+		if (!externalResourceSetWasNull) {
+			if (externalResourceSet instanceof ResourceSetImpl) {
+				ResourceSetImpl resourceSetImpl = (ResourceSetImpl)externalResourceSet;
+				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
+				if (uriResourceMap == null) {
+					uriResourceMap = new HashMap<>();
+					resourceSetImpl.setURIResourceMap(uriResourceMap);
+				}
+			//	StandaloneProjectMap.initializeURIResourceMap(externalResourceSet);
+				List<@NonNull EPackage> allEPackages = new UniqueList<>();
+				List<@NonNull Resource> transitiveExternalResources = new ArrayList<>(externalResourceSet.getResources());
+				for (int i = 0; i < transitiveExternalResources.size(); i++) {
+					Resource esResource = transitiveExternalResources.get(i);
+					for (@NonNull EObject eObject : new TreeIterable(esResource)) {
+						EClass eClass = eObject.eClass();
+						EPackage ePackage = eClass.getEPackage();
+						assert ePackage != null;
+						if (allEPackages.add(ePackage)) {		// EPackage.nsURI schizophrenia is ok (e.g http:/... vs platform:/.../*.ecore)
+							Resource resource = ePackage.eResource();
+							assert resource != null;
+							if (!transitiveExternalResources.contains(resource)) {
+								transitiveExternalResources.add(resource);
+								URI uri = resource.getURI();
+								Resource old = uriResourceMap.put(uri, resource);		// Resource.uri schizophrenia is not ok ??? why not ???
+								if ((old != null) && (old != resource)) {
+									uriResourceMap.put(uri, old);						// Stick with the first
+									logger.error(StringUtil.bind(PivotMessages.ConflictingResource, uri));
+								}
+							}
+						}
+					}
+				}
+			}
+			List<@NonNull Resource> externalResources = externalResourceSet.getResources();
+			for (int i = 0; i < externalResources.size(); i++) {
+				Resource esResource = externalResources.get(i);
+				if (esResource instanceof CSResource) {
+					// XXX Need to deproxify OCLinEcoreCS reload before CompleteOCLCS reload as in testValidate_Validate_completeocl
+					// XXX Need to deep copy if non-null/non-proxy AS references
+				//	ASResource asResource = ((CSResource)esResource).getCS2AS(this).getASResource();
+				//	ASResource asResource = ((CSResource)esResource).reloadIn(this);
+				}
+				else {
+					// XXX Ecore
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void activate() {
+		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
+	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
+		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
+		}
+		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
+	//	EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(notifier);
+	//	if (environmentFactoryAdapter != null) {
+	//		assert environmentFactoryAdapter.getEnvironmentFactory() == this;			// XXX verifying redundancy
+	//		return environmentFactoryAdapter;
+	//	}
+		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
 		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
 		if (adapter != null) {
-			if (adapter.getEnvironmentFactory() != this) {
-				adapter = null;
-			}
+			assert adapter.getEnvironmentFactory() == this;
 		}
-		if (adapter == null) {
+		else {
 			adapter = new EnvironmentFactoryAdapter(this, notifier);
 			eAdapters.add(adapter);
+		}
+		return adapter;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
+		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
+		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
+		if (adapter == null) {
+			adapter = new EnvironmentFactoryAdapter(this, resourceSet);
+			eAdapters.add(adapter);
+		}
+		else {
+			assert adapter.getEnvironmentFactory() == this : "ResourceSet already has an EnvironmentFactoryAdapter for a diffent EnvironmentFactory.";
 		}
 		return adapter;
 	}
@@ -279,9 +370,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
-	/**
-	 * @since 1.23
-	 */
 	@Override
 	public void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {
 		List<@NonNull ResourceSet> extraResourceSets2 = extraResourceSets;
@@ -707,13 +795,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		List<@NonNull Resource> asResources = asResourceSet.getResources();
+		int savedSize = asResources.size();
+		for (int i = 0; i < asResources.size(); i++) {
+			@NonNull Resource asResource = asResources.get(i);
+			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
+				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
+			}
+			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
+				((ASResource)asResource).preUnload();
+			}
+		}
 		isDisposing = true;
 		disposeInternal();
 	}
 
 	protected void disposeInternal() {
 		assert !isDisposed() && isDisposing();
-	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
+	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		try {
 			if (metamodelManager != null) {
@@ -832,8 +931,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable Resource eResource) throws ParserException {
+		if (eResource != null) {
+			ASResourceFactory bestHelper = eResource != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(eResource) : EcoreASResourceFactory.getInstance();
+			//			ASResourceFactory bestHelper = ASResourceFactoryRegistry.INSTANCE.getResourceFactory(eObject);
+			if (bestHelper != null) {
+				return bestHelper.getASElement(this, pivotClass, eResource.getContents().get(0));		// XXX
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.10
 	 */
+	@Override
 	public @NonNull ResourceSet getASResourceSet() {
 		return asResourceSet;
 	}
@@ -996,6 +1111,52 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
+		Resource ecoreResource = ePackage.eResource();
+		if (ecoreResource == null) {
+			return null;
+		}
+		External2AS ecore2as = External2AS.findAdapter(ecoreResource, this);
+		if (ecore2as != null) {
+			if (ecore2as.getResource() != ecoreResource) {
+				throw new ParserException(StringUtil.bind(PivotMessages.ConflictingResource, ecoreResource.getURI()));
+			}
+		}
+		else {
+			ecore2as = Ecore2AS.getAdapter(ecoreResource, this);
+			List<Diagnostic> errors = ecoreResource.getErrors();
+			assert errors != null;
+			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+			if (message != null) {
+				throw new ParserException("Failed to load Ecore '" + ecoreResource.getURI() + message);
+			}
+		}
+		Model pivotModel = ecore2as.getASModel();				// XXX only need ASResource
+		List<Diagnostic> errors = pivotModel.eResource().getErrors();
+		assert errors != null;
+		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load Pivot from '" + ecoreResource.getURI() + message);
+		}
+		CSResource xtextResource = (CSResource)externalResourceSet.getResource(oclURI, true);
+		errors = xtextResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load '" + oclURI + message);
+		}
+		ICS2AS cs2as = xtextResource.getCS2AS(this);
+		ASResource asResource = cs2as.getASResource();
+		errors = asResource.getErrors();
+		assert errors != null;
+		message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+		if (message != null) {
+			throw new ParserException("Failed to load Pivot from '" + oclURI + message);
+		}
+		return asResource;
+	}
+
+	@Override
 	public EPackage loadEPackage(@NonNull EPackage ePackage) {
 		return externalResourceSet.getPackageRegistry().getEPackage(ePackage.getNsURI());
 	}
@@ -1111,5 +1272,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public Object toDebugString() {
 		return NameUtil.debugSimpleName(this) + "(" + attachCount + ")";
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public void unload(@NonNull CSResource csResource) {
+		ICSI2ASMapping csi2asMapping2 = csi2asMapping;
+		assert csi2asMapping2 != null;
+		ASResource asResource = csi2asMapping2.getASResource(csResource);
+		assert asResource != null;
+		Model asModel = PivotUtil.getModel(asResource);
+		completeModel.getPartialModels().remove(asModel);
+		asResource.unload();
+		asResourceSet.getResources().remove(asResource);
+		csi2asMapping2.removeCSResource(csResource);
+		csResource.unload();
+		externalResourceSet.getResources().remove(csResource);
 	}
 }

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -104,7 +105,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 1.23
 	 */
 	protected static final class ConstraintExecutabilityComparator implements Comparator<@NonNull Constraint>
-{
+	{
 		public static final @NonNull ConstraintExecutabilityComparator INSTANCE = new ConstraintExecutabilityComparator();
 
 		@Override
@@ -572,7 +573,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		Iterable<@NonNull CompleteClass> allSuperCompleteClasses = environmentFactory.getMetamodelManager().getAllSuperCompleteClasses(asType);
 		for (CompleteClass superType : allSuperCompleteClasses) {
 			Map<@NonNull String, @NonNull Object> name2invariantOrInvariants = null;
-			List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = ClassUtil.nullFree(superType.getPartialClasses());
+			List<@NonNull Class> partialClasses = ClassUtil.nullFree(superType.getPartialClasses());
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : partialClasses) {
 				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
 				if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
@@ -837,6 +838,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		this.completeEnvironment = completeEnvironment;
 		this.environmentFactory = completeEnvironment.getEnvironmentFactory();
 		partialModels = new PartialModels(this);
+		assert !environmentFactory.isDisposed() && !environmentFactory.isDisposing();
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;
 	}

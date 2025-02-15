@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -151,6 +150,10 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
+	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
+	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
+	 *
 	 * @since 1.23
 	 */
 	public static boolean debugDeprecation(String string) {
@@ -259,32 +262,56 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return environmentFactory;
+		}
+		ProjectManager projectManager = null;
+		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
+		if (resourceSet != null) {		// null if working with installed resources
+			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
+			if (environmentFactoryAdapter != null) {
+				environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				return environmentFactory;
+			}
+			projectManager = ProjectMap.findAdapter(resourceSet);
+		}
+		if (projectManager == null) {
+			projectManager = ProjectManager.CLASS_PATH;
+		}
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
+		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
+	//	environmentFactory.adapt(resourceSet);
+		return environmentFactory;
+	}
+
+	/**
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated use Notifier argument */		// XXX
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory2 != null) {
 			return environmentFactory2;
 		}
-		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+	//	return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+		return getEnvironmentFactory((Notifier)object);
 	}
 
+	@Deprecated /* @deprecated use Notifier argument */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			ProjectManager projectManager = null;
-			ResourceSet asResourceSet = null;
-			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
-				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
-				projectManager = ProjectMap.findAdapter(asResourceSet);
-			}
-			if (projectManager == null) {
-				projectManager = ProjectManager.CLASS_PATH;
-			}
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
-			ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-		}
-		return environmentFactory;
+		return getEnvironmentFactory((Notifier)resource);
 	}
 
 	/** @deprecated use getExecutor() */

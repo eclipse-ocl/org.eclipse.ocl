@@ -222,6 +222,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		pivotElement.setName(newName);
+	//	System.out.println("extra setESObject " + (eClass instanceof ENamedElement ? ((ENamedElement)eClass).getName() : "???") + " " + NameUtil.debugSimpleName(eClass) + " " + NameUtil.debugSimpleName(pivotElement));	// XXX
+	//	((ClassImpl)pivotElement).setESObject(eClass);
 		List<EAnnotation> excludedAnnotations = null;
 		EAnnotation duplicatesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 		if (duplicatesAnnotation != null) {
@@ -905,7 +907,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 * Create explicit constraints.
 		 */
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
-		if (oclAnnotation != null) {
+		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclAnnotation.getSource())) {
 			if (excludedAnnotations == null) {
 				excludedAnnotations = new ArrayList<>();
 			}

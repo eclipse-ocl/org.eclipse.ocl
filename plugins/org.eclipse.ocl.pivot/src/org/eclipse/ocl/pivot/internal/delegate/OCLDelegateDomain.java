@@ -157,7 +157,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	 */
 	public static void initialize(@Nullable ResourceSet resourceSet, @NonNull String oclDelegateURI) {
 		if (resourceSet == null) {
-		lazyInitializeGlobals(oclDelegateURI, true);
+			lazyInitializeGlobals(oclDelegateURI, true);
 		}
 		else {
 			lazyInitializeLocals(resourceSet, oclDelegateURI, true, null);
@@ -288,7 +288,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 			//	System.out.println("global QueryDelegateRegistry " + NameUtil.debugSimpleName(queryRegistry) + " [" + oclDelegateURI + "] = " + NameUtil.debugSimpleName(queryDelegateFactory));
 			}
 		}
-			}
+	}
 
 	/**
 	 * @since 1.23
