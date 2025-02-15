@@ -31,6 +31,10 @@ public class PivotMessages
 	 * @since 1.20
 	 */
 	public static String BadASResourceForSirius;
+	/**
+	 * @since 1.23
+	 */
+	public static String ConflictingResource;
 	public static String ConvertibleValueRequired;
 	public static String EObjectRequired;
 	public static String EmptyCollection;
