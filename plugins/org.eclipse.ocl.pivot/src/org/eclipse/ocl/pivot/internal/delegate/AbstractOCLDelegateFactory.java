@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  *   E.D.Willink - Bug 353171
@@ -59,7 +59,7 @@ public abstract class AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * Return the DelegateDomain for this package, creating one if it does not already exist. 
+	 * Return the DelegateDomain for this package, creating one if it does not already exist.
 	 */
 	protected OCLDelegateDomain loadDelegateDomain(@NonNull EPackage ePackage) {
 		DelegateEPackageAdapter ePackageAdapter = DelegateEPackageAdapter.getAdapter(ePackage);
