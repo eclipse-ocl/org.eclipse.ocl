@@ -450,7 +450,7 @@ public class TemplateParameterImpl
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;
 		if (selfType != null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expr);
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory();
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			return metamodelManager.specializeType(this, expr, selfType, null);
 		}
