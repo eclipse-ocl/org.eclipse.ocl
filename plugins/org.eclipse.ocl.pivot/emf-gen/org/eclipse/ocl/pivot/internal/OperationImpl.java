@@ -61,13 +61,20 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1620,6 +1627,55 @@ implements Operation {
 			}
 		}
 		return operationId2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object getReloadableEObjectOrURI() {
+		// Look for a specific ES
+		EObject esObject = getESObject();
+		if (esObject != null) {
+			return esObject;
+		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No EnvironmentFactory when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		// Look for a specific CS
+		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+		if (csi2asMapping != null) {
+			EObject csElement = csi2asMapping.getCSElement(this);
+			if (csElement != null) {		// If a CS Element references that AS Element
+				return csElement;
+			}
+		}
+		// Look for any ES
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(getOwningClass());
+		Iterable<@NonNull Operation> operationOverloads = completeClass.getOperationOverloads(this);
+		if (operationOverloads != null) {
+			for (Operation asOperation : operationOverloads) {
+				esObject = asOperation.getESObject();
+				if (esObject != null) {
+					return esObject;
+				}
+			}
+		}
+		if (csi2asMapping == null) {
+			ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMappings when proxifying " + NameUtil.debugSimpleName(this));
+			return null;
+		}
+		ASResourceImpl.SET_PROXY.println(ThreadLocalExecutor.getBracketedThreadName() + " No CSI2ASMapping when proxifying " + NameUtil.debugSimpleName(this));
+		return null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public boolean isIsImplicit() {
+		return implementation instanceof JavaCompareToOperation;			// FIXME Promote to Feature
 	}
 
 	/**

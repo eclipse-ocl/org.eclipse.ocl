@@ -464,15 +464,6 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		return visitor.visitStereotypeExtender(this);
 	}
 
-	/**
-	 * @since 1.22
-	 */
-	@Override
-	protected void resetESObject() {
-		super.resetESObject();
-		setClass(null);
-	}
-
 	@Override
 	public String toString() {
 		return super.toString();
