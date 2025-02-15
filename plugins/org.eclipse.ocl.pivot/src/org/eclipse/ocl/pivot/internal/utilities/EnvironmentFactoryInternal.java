@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -178,6 +179,18 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * @since 1.23
 	 */
 	default boolean isDisposing() { return false; }
+
+	/**
+	 * Perform the loading and installation of the Complete OCL complement to ePackage, loading from
+	 * oclURI, returning true if successful.
+	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
+	 * overheads up front. Returns the ASResource if successful.
+	 *
+	 * @since 1.23
+	 */
+	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
+		return null;			// XXX
+	}
 
 	/**
 	 * Ensure that EPackage has been loaded in the externalResourceSet PackageRegistry.
