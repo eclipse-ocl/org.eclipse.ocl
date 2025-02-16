@@ -28,12 +28,12 @@
    <extension point="org.eclipse.emf.ecore.content_parser">
       <parser
             contentTypeIdentifier="org.eclipse.ocl.oclcs"
-            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFactory"/>
+            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource$CompleteOCLCSResourceLoadFactory"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser type="oclcs"
-            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSXMIResourceFactory"/>
+            class="org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource$CompleteOCLCSResourceLoadFactory"/>
    </extension>
 
    <extension point="org.eclipse.emf.validation.constraintProviders"
