@@ -802,7 +802,7 @@ implements org.eclipse.ocl.pivot.Package {
 	/**
 	 * @since 1.23
 	 */
-	@Override
+	@Override @Deprecated
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {
 		assert false;		// XXX
 		CompletePackage completePackage = completeModel.getCompletePackage(this);
