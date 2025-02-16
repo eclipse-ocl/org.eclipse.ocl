@@ -51,6 +51,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDown
 {
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
+	public static final @NonNull String VALIDATION_EXCEPTION = "Validation failed with an exception for ''{0}''";	// _UI_ValidationFailed_diagnostic = Validation failed with an exception for ''{0}''
 
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
 		EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
@@ -85,6 +86,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		if (s != null) {
 			fail("Inconsistent validation: (expected/actual) message" + s);
 		}
+		assertEquals("Inconsistent severity", severity, diagnostics.getSeverity());
 	}
 
 	protected @NonNull OCL createOCL() {
@@ -126,7 +128,6 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		URI inputURI = getTestFileURI(inputName);
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
 		assert xtextResource != null;
-	// XXX	ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Load failed", xtextResource);
