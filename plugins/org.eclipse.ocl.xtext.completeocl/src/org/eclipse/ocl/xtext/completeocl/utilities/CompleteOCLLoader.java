@@ -190,7 +190,6 @@ public abstract class CompleteOCLLoader
 		return allOk;
 	}
 
-
 	/**
 	 * Install each of the oclURIs documents, then loadMetamodels and finally installPackages.
 	 *
@@ -347,7 +346,7 @@ public abstract class CompleteOCLLoader
 					DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
 					try {
 						delegateInstaller.installCompleteOCLDelegates(asResource);
-					return asResource;
+						return asResource;
 					} catch (SemanticException e) {
 						// XXX Auto-generated catch block
 						e.printStackTrace();
