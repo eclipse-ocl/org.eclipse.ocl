@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -114,6 +115,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.4
 	 */
 	public static final @NonNull TracingOption ENVIRONMENT_FACTORY_ATTACH = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/attach");
+
+	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	/**
 	 * @since 1.23
@@ -777,13 +780,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " already disposed");
 		}
 		//	attachCount = -1;
+		List<@NonNull Resource> asResources = asResourceSet.getResources();
+		int savedSize = asResources.size();
+		for (int i = 0; i < asResources.size(); i++) {
+			@NonNull Resource asResource = asResources.get(i);
+			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
+				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
+			}
+			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
+				((ASResource)asResource).preUnload();
+			}
+		}
 		isDisposing = true;
 		disposeInternal();
 	}
 
 	protected void disposeInternal() {
 		assert !isDisposed() && isDisposing();
-	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
+	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		try {
 			if (metamodelManager != null) {
@@ -1227,5 +1241,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	public Object toDebugString() {
 		return NameUtil.debugSimpleName(this) + "(" + attachCount + ")";
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public void unload(@NonNull CSResource csResource) {
+		ICSI2ASMapping csi2asMapping2 = csi2asMapping;
+		assert csi2asMapping2 != null;
+		ASResource asResource = csi2asMapping2.getASResource(csResource);
+		assert asResource != null;
+		Model asModel = PivotUtil.getModel(asResource);
+		completeModel.getPartialModels().remove(asModel);
+		asResource.unload();
+		asResourceSet.getResources().remove(asResource);
+		csi2asMapping2.removeCSResource(csResource);
+		csResource.unload();
+		externalResourceSet.getResources().remove(csResource);
 	}
 }
