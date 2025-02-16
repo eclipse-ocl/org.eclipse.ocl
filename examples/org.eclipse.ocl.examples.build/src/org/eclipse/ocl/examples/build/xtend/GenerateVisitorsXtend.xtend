@@ -34,7 +34,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import «contextClass.getName()»;
-			«IF isDerived»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
+			«IF isDerived»import «superVisitorPackageName.replace("cs.",".")»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 
 			/**
 			 * An Abstract«projectPrefix»«generic»Visitor provides a default implementation for each
