@@ -45,12 +45,43 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 {
 	/**
 	 * A DelegatingEValidator instance displaces a global EValidator.Registry.INSTANCE to redirect validations for
-	 * EPackages associated with REsoureceSets with loval ValidationRegistryAdapters to use the local adapter.
+	 * EPackages associated with ResourceSets with local ValidationRegistryAdapters to use the local adapter.
 	 *
 	 * @since 1.23
 	 */
 	protected static class DelegatingEValidator implements EValidator
 	{
+		public static void addEntry(@NonNull EPackage ePackage, @NonNull ResourceSet resourceSet, @NonNull EValidator eValidator) {
+			EValidator globalEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+			DelegatingEValidator delegatingEValidator;
+			if (globalEValidator instanceof DelegatingEValidator) {				// XXX Composed/Composite/...
+				delegatingEValidator = (DelegatingEValidator)globalEValidator;
+			}
+			else {
+				delegatingEValidator = new DelegatingEValidator(globalEValidator);
+				EValidator.Registry.INSTANCE.put(ePackage, delegatingEValidator);
+			}
+			delegatingEValidator.resourceSet2delegateEvalidator.put(resourceSet, eValidator);
+		}
+
+		public static void removeEntry(@NonNull EPackage ePackage, @NonNull ResourceSet resourceSet) {
+			EValidator globalEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
+			if (globalEValidator instanceof DelegatingEValidator) {				// XXX Composed/Composite/...
+				DelegatingEValidator delegatingEValidator = (DelegatingEValidator)globalEValidator;
+				WeakHashMap<@Nullable ResourceSet, @Nullable EValidator> resourceSet2delegateEvalidator = delegatingEValidator.resourceSet2delegateEvalidator;
+				resourceSet2delegateEvalidator.remove(resourceSet);
+				if (resourceSet2delegateEvalidator.size() == 1) {
+					Object oldEValidator = resourceSet2delegateEvalidator.get(ORIGINAL_GLOBAL_EVALIDATOR_KEY);
+					EValidator.Registry.INSTANCE.put(ePackage, oldEValidator);
+				}
+			}
+			else {
+				assert false;
+			}
+		}
+
+		private final static @Nullable ResourceSet ORIGINAL_GLOBAL_EVALIDATOR_KEY = null;
+
 		/**
 		 * Map from ResourceSet with a local ValidationREgistryAdapter to its local validator.
 		 * null key maps all other ResourceSets to the displaced validator.
@@ -58,19 +89,23 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 		 */
 		private final @NonNull WeakHashMap<@Nullable ResourceSet, @Nullable EValidator> resourceSet2delegateEvalidator = new WeakHashMap<>();
 
-		protected DelegatingEValidator(@Nullable EValidator oldEValidator) {
-			resourceSet2delegateEvalidator.put(null, oldEValidator);
+		private DelegatingEValidator(@Nullable EValidator oldEValidator) {
+			resourceSet2delegateEvalidator.put(ORIGINAL_GLOBAL_EVALIDATOR_KEY, oldEValidator);
 		}
 
 		protected @Nullable EValidator getEValidator(EObject eObject) {
-			Resource resource = eObject != null ? eObject.eResource() : null;
-			ResourceSet resourceSet = resource != null ? resource.getResourceSet() : null;
+			if (eObject == null) {
+				return null;
+			}
+			Resource resource = eObject.eResource();
+			if (resource == null) {
+				return null;
+			}
+			ResourceSet resourceSet = resource.getResourceSet();
+			if (resourceSet == null) {
+				return null;
+			}
 			return resourceSet2delegateEvalidator.get(resourceSet);
-		}
-
-		public void put(@NonNull ResourceSet resourceSet, @NonNull EValidator eValidator) {
-			EValidator old = resourceSet2delegateEvalidator.put(resourceSet, eValidator);
-			assert (old == null) || (old == eValidator);
 		}
 
 		@Override
@@ -230,21 +265,25 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	public void notifyChanged(Notification notification) {}
 
 	/**
+	 * Register a non-null eValidator as the validator for ePackage in the global validation registry, but only for use
+	 * with the ResourceSet that this ValidationRegistryAdapter adapts. For other ResourceSets delegation
+	 * redirects to any displaced eValiadtor.
+	 *
+	 * For a null eValidator, retract the previous registration.
+	 *
 	 * @since 1.23
 	 */
-	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @NonNull EValidator eValidator) {
-		put(ePackage, eValidator);
+	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @Nullable EValidator eValidator) {
 		ResourceSet resourceSet = getTarget();
-		EValidator oldEValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
-		DelegatingEValidator delegatingEValidator;
-		if (oldEValidator instanceof DelegatingEValidator) {
-			delegatingEValidator = (DelegatingEValidator)oldEValidator;
+		assert resourceSet != null;
+		if (eValidator != null) {
+			put(ePackage, eValidator);
+			DelegatingEValidator.addEntry(ePackage, resourceSet, eValidator);
 		}
 		else {
-			delegatingEValidator = new DelegatingEValidator(oldEValidator);
-			EValidator.Registry.INSTANCE.put(ePackage, delegatingEValidator);
+			remove(ePackage);
+			DelegatingEValidator.removeEntry(ePackage, resourceSet);
 		}
-		delegatingEValidator.put(resourceSet, eValidator);
 	}
 
 	@Override
