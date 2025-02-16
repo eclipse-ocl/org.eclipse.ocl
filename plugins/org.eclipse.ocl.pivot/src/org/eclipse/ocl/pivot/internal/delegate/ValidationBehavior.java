@@ -10,17 +10,23 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -28,8 +34,8 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
@@ -46,9 +52,33 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
-			Constraint constraint = NameUtil.getNameable(((MetamodelManagerInternal)metamodelManager).getAllInvariants(type), constraintName);
-			if (constraint != null) {
-				return constraint;
+			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
+			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {
+				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
+					org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
+					if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
+						for (Constraint asConstraint : partialSuperType.getOwnedInvariants()) {
+							if (constraintName.equals(asConstraint.getName())) {
+								knownInvariants.add(asConstraint);
+							}
+						}
+					}
+				}
+			}
+			for (@NonNull Constraint asConstraint : knownInvariants) {
+				LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
+				if (asSpecification instanceof ExpressionInOCL) {
+					ExpressionInOCL asExpression = (ExpressionInOCL)asSpecification;
+					if (asExpression.getOwnedBody() != null) {
+						return asConstraint;
+					}
+					String body = asExpression.getBody();
+					if (body != null) {
+						if (!PivotConstants.DUMMY_COMPLETE_OCL_BODY.equals(body)) {
+							return asConstraint;
+						}
+					}
+				}
 			}
 		}
 		throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, type, PivotConstantsInternal.CONSTRAINT_ROLE));
