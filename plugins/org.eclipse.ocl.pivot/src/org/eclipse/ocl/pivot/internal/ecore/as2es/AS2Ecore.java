@@ -589,11 +589,6 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
-//	@Deprecated /* @deprecated use Notifier argument */
-//	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
-//		putCreated(pivotElement, (Notifier)eModelElement);
-//	}
-
 	protected void setGenerationInProgress(@NonNull Resource asResource, boolean isLoading) {
 		for (EObject eRoot : asResource.getContents()) {
 			if (eRoot instanceof Model) {
