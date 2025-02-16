@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,7 +31,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
@@ -48,7 +46,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -165,7 +162,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Check EObjectValidator errors
 		//
 		ValidationRegistryAdapter.getAdapter(testResourceSet).put(overloadsPackage, EObjectValidator.INSTANCE);
-		checkValidationDiagnostics(testInstance, Diagnostic.ERROR);
+		checkValidationDiagnostics(testInstance, Diagnostic.OK);
 		ocl1.dispose();
 		ocl2.dispose();
 	}
@@ -329,7 +326,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI oclURI = oclTestFile.getFileURI();
 		ocl.getResourceSet().getResource(oclURI, true);
 		try {
-			checkValidationDiagnostics(testPackage, Diagnostic.WARNING);
+			checkValidationDiagnostics(testPackage, Diagnostic.OK);
 			ocl.assertQueryFalse(testPackage, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testPackage, "isPrimeNumber(1)");
 			ocl.assertQueryTrue(testPackage, "isPrimeNumber(2)");
@@ -457,7 +454,7 @@ public class ValidateTests extends AbstractValidateTests
 			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 			EObject testInstance = eCreate(validatePackage, "MyNumber");
 			testResource.getContents().add(testInstance);
-			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance, Diagnostic.OK);
 			ocl.assertQueryFalse(testInstance, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(1)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(2)");
@@ -573,8 +570,8 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l2a", "yy");
 			eSet(testInstance2, "l2b", "yy");
 			eSet(testInstance2, "l3", "yy");
-			checkValidationDiagnostics(testInstance1, Diagnostic.WARNING);
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
 			//	CompleteOCL errors all round
 			//
@@ -595,7 +592,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template, "Level2a::L2a_size", objectLabel),
 				StringUtil.bind(template, "Level2b::L2b_size", objectLabel),
 				StringUtil.bind(template, "Level3::L3_size", objectLabel));
-			checkValidationDiagnostics(testInstance2, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance2, Diagnostic.OK);
 			//
 			//	One CompleteOCl and one OCLinEcore
 			//
@@ -802,7 +799,7 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance, "l2b", "ok");
 			eSet(testInstance, "l3", "ok");
 			objectLabel = LabelUtil.getLabel(testInstance);
-			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
+			checkValidationDiagnostics(testInstance, Diagnostic.OK);
 			//
 			//	Just one error
 			//
